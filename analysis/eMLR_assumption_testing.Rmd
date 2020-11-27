@@ -1,0 +1,379 @@
+---
+title: "eMLR - assumption testing"
+author: "Jens Daniel Müller"
+date:  "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  workflowr::wflow_html:
+    number_sections: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+editor_options:
+  chunk_output_type: console
+---
+
+```{r parent, child = here::here("analysis/child/setup.Rmd")}
+```
+
+# Libraries
+
+Loading libraries specific to the the analysis performed in this section.
+
+```{r load_libraries_specific, message=FALSE, warning=FALSE}
+library(lubridate)
+library(GGally)
+library(olsrr)
+library(knitr)
+library(kableExtra)
+library(broom)
+library(corrr)
+```
+
+# Required data
+
+Required are:
+
+- cleaned and prepared GLODAPv2.2020 file
+
+```{r read_GLODAP_used_for_fitting}
+
+GLODAP <-
+  read_csv(
+    here::here(
+      "data/interim",
+      "GLODAPv2.2020_MLR_fitting_ready.csv"
+    )
+  )
+
+```
+
+
+# Predictor correlation
+
+The correlation between:  
+
+- pairs of seven potential predictor variables and
+- C* and seven potential predictor variables
+
+were investigated based on:  
+
+- property-property plots and
+- calculated correlation coeffcients.
+
+## Correlation plots
+
+For an overview, a random subset of data from all eras was plotted separately 
+for both basins, with color indicating neutral density slabs (high density = dark-purple color).
+
+```{r predictor_correlation_Atlantic, fig.asp=1}
+
+GLODAP %>% 
+  filter(basin == "Atlantic") %>% 
+  sample_frac(0.05) %>% 
+  ggpairs(columns = c("cstar",
+                      "sal",
+                      "tem",
+                      "aou",
+                      "oxygen",
+                      "silicate",
+                      "phosphate",
+                      "phosphate_star"),
+          upper = "blank",
+          ggplot2::aes(col = gamma_slab, fill = gamma_slab, alpha = 0.01)) +
+      scale_fill_viridis_d(direction = -1) +
+      scale_color_viridis_d(direction = -1) +
+      labs(title = paste("Basin: Atlantic | era: all | subsample size: 5 % of",
+                         nrow(GLODAP %>% filter(basin == "Atlantic"))))
+
+```
+
+```{r predictor_correlation_Indo_Pacific, fig.asp=1}
+
+GLODAP %>% 
+  filter(basin == "Indo-Pacific") %>% 
+  sample_frac(0.05) %>% 
+  ggpairs(columns = c("cstar",
+                      "sal",
+                      "tem",
+                      "aou",
+                      "oxygen",
+                      "silicate",
+                      "phosphate",
+                      "phosphate_star"),
+          upper = "blank",
+          ggplot2::aes(col = gamma_slab, fill = gamma_slab, alpha = 0.01)) +
+      scale_fill_viridis_d(direction = -1) +
+      scale_color_viridis_d(direction = -1) +
+      labs(title = paste("Basin: Indo-Pacific | era: all | subsample size: 5 % of",
+                         nrow(GLODAP %>% filter(basin == "Indo-Pacific") )))
+
+
+```
+
+Individual correlation plots for each basin, era and neutral density (gamma) slab are available [here](https://github.com/jens-daniel-mueller/Cant_eMLR/tree/master/output/figure/eMLR/predictor_correlation){target="_blank"}.
+
+```{r predictor_correlation_per_basin_era_slab, eval=FALSE}
+
+
+
+for (i_basin in unique(GLODAP$basin)) {
+  for (i_era in unique(GLODAP$era)) {
+    # i_basin <- unique(GLODAP$basin)[1]
+    # i_era   <- unique(GLODAP$era)[1]
+    
+    print(i_basin)
+    print(i_era)
+    
+    GLODAP_basin_era <- GLODAP %>%
+      filter(basin == i_basin,
+             era == i_era)
+    
+    for (i_gamma_slab in unique(GLODAP_basin_era$gamma_slab)) {
+      # i_gamma_slab <- unique(GLODAP_basin_era$gamma_slab)[5]
+      print(i_gamma_slab)
+      
+      GLODAP_highlight <- GLODAP_basin_era %>%
+        mutate(gamma_highlight = if_else(gamma_slab == i_gamma_slab,
+                                         "in", "out")) %>%
+        arrange(desc(gamma_highlight))
+      
+      p <- GLODAP_highlight %>%
+        ggpairs(
+          columns = c(
+            "cstar",
+            "sal",
+            "tem",
+            "aou",
+            "oxygen",
+            "silicate",
+            "phosphate",
+            "phosphate_star"
+          ),
+          ggplot2::aes(
+            col = gamma_highlight,
+            fill = gamma_highlight,
+            alpha = 0.01
+          )
+        ) +
+        scale_fill_manual(values = c("red", "grey")) +
+        scale_color_manual(values = c("red", "grey")) +
+        labs(
+          title = paste(
+            i_basin,
+            "|",
+            i_era,
+            "| Gamma slab",
+            i_gamma_slab,
+            "| # obs total",
+            nrow(GLODAP_basin_era),
+            "| # obs slab",
+            nrow(GLODAP_highlight %>%
+                   filter(gamma_highlight == "in"))
+          )
+        )
+      
+      
+      png(
+        here::here(
+          "output/figure/eMLR/predictor_correlation",
+          paste(
+            "predictor_correlation",
+            i_basin,
+            i_era,
+            i_gamma_slab,
+            ".png",
+            sep = "_"
+          )
+        ),
+        width = 12,
+        height = 12,
+        units = "in",
+        res = 300
+      )
+      
+      print(p)
+      
+      dev.off()
+      
+    }
+  }
+}
+
+
+```
+
+## Correlation assesment
+
+### Calculation of correlation coeffcients
+
+Correlation coefficients were calculated indivdually within each slabs, era and basin.
+
+```{r calculate_correlation_coefficients, results='hide'}
+
+for (i_basin in unique(GLODAP$basin)) {
+  for (i_era in unique(GLODAP$era)) {
+
+# i_basin <- unique(GLODAP$basin)[1]
+# i_era   <- unique(GLODAP$era)[1]
+print(i_basin)
+print(i_era)
+
+GLODAP_basin_era <- GLODAP %>% 
+  filter(basin == i_basin,
+         era == i_era) %>% 
+  select(basin,
+         era,
+         gamma_slab,
+         cstar,
+         sal,
+         tem,
+         aou,
+         oxygen,
+         silicate,
+         phosphate,
+         phosphate_star)
+
+for (i_gamma_slab in unique(GLODAP_basin_era$gamma_slab)) {
+  
+  # i_gamma_slab <- unique(GLODAP_basin_era$gamma_slab)[5]
+  print(i_gamma_slab)
+  
+  GLODAP_basin_era_slab <- GLODAP_basin_era %>%
+    filter(gamma_slab == i_gamma_slab)
+
+  cor_cstar_predictor_temp <- GLODAP_basin_era_slab %>% 
+    select(-c(basin, era, gamma_slab)) %>% 
+    correlate() %>% 
+    focus(cstar) %>% 
+    mutate(basin = i_basin,
+       era = i_era,
+       gamma_slab = i_gamma_slab)
+  
+  if (exists("cor_cstar_predictor")) {
+        cor_cstar_predictor <- bind_rows(cor_cstar_predictor, cor_cstar_predictor_temp)
+      }
+      
+    if (!exists("cor_cstar_predictor")) {
+        cor_cstar_predictor <- cor_cstar_predictor_temp
+    }
+  
+  
+  cor_predictors_temp <- GLODAP_basin_era_slab %>% 
+    select(-c(basin, era, gamma_slab)) %>% 
+    correlate() %>% 
+    shave %>% 
+    stretch() %>% 
+    filter(!is.na(r),
+           x != "cstar",
+           y != "cstar") %>% 
+    mutate(pair = paste(x, y, sep = " + ")) %>% 
+    select(-c(x, y)) %>% 
+    mutate(basin = i_basin,
+       era = i_era,
+       gamma_slab = i_gamma_slab)
+  
+    if (exists("cor_predictors")) {
+        cor_predictors <- bind_rows(cor_predictors, cor_predictors_temp)
+      }
+      
+    if (!exists("cor_predictors")) {
+        cor_predictors <- cor_predictors_temp
+    }
+  
+  
+  
+    }
+  }
+}
+
+
+cor_predictors %>%
+  write_csv(here::here("data/eMLR",
+                       "cor_predictors.csv"))
+
+cor_cstar_predictor %>%
+  write_csv(here::here("data/eMLR",
+                       "cor_cstar_predictor.csv"))
+
+rm(cor_predictors_temp, cor_cstar_predictor_temp,
+   i_gamma_slab, i_era, i_basin,
+   GLODAP_basin_era, GLODAP_basin_era_slab)
+
+```
+
+### Predictor pairs
+
+Below, the range of correlations coefficients for each predictor pair is plotted per basin (facet) and density slab (color). Note that the range indicates the min and max values of in total 3 calculated coefficients (one per era).
+
+```{r correlation_predictor_pairs, fig.asp=1.8}
+
+cor_predictors_stats <- cor_predictors %>% 
+  group_by(pair, basin, gamma_slab) %>% 
+  summarise(mean_r = mean(r),
+            min_r = min(r),
+            max_r = max(r)) %>% 
+  ungroup()
+
+cor_predictors_stats %>% 
+  mutate(pair = reorder(pair, mean_r)) %>%
+  ggplot() +
+  geom_vline(xintercept = c(-0.9, 0.9), col = "red") +
+  geom_vline(xintercept = 0) +
+  geom_linerange(
+    aes(y = pair, xmin = min_r, xmax = max_r, col = gamma_slab),
+    position = position_dodge(width = 0.6)) +
+  facet_wrap(~basin) +
+  scale_color_viridis_d(direction = -1) +
+  labs(x = "correlation coefficient", y = "") +
+  theme(legend.position = "top")
+
+kable(cor_predictors_stats) %>%
+  add_header_above() %>%
+  kable_styling() %>%
+  scroll_box(width = "100%", height = "400px")
+
+rm(cor_predictors, cor_predictors_stats)
+
+```
+
+### C* vs individual predictors
+
+
+Below, the range of correlations coefficients for C* with each predictor is plotted per basin (facet) and density slab (color). Note that the range indicates the min and max values of in total 3 calculated coefficients (one per era).
+
+```{r correlation_predictors, fig.asp=1.5}
+
+cor_cstar_predictor <-
+  read_csv(here::here("data/eMLR",
+                       "cor_cstar_predictor.csv")) %>% 
+  rename(predictor = rowname)
+
+cor_cstar_predictor_stats <- cor_cstar_predictor %>% 
+  group_by(predictor, basin, gamma_slab) %>% 
+  summarise(mean_r = mean(cstar),
+            min_r = min(cstar),
+            max_r = max(cstar)) %>% 
+  ungroup()
+
+cor_cstar_predictor_stats %>% 
+  mutate(predictor = reorder(predictor, mean_r)) %>%
+  ggplot() +
+  geom_vline(xintercept = c(-0.9, 0.9), col = "red") +
+  geom_vline(xintercept = 0) +
+  geom_linerange(
+    aes(y = predictor, xmin = min_r, xmax = max_r, col = gamma_slab),
+    position = position_dodge(width = 0.6)) +
+  facet_wrap(~basin) +
+  scale_color_viridis_d(direction = -1) +
+  labs(x = "correlation coefficient", y = "C* correlation with...") +
+  theme(legend.position = "top")
+
+kable(cor_cstar_predictor_stats) %>%
+  add_header_above() %>%
+  kable_styling() %>%
+  scroll_box(width = "100%", height = "400px")
+
+rm(cor_cstar_predictor, cor_cstar_predictor_stats)
+
+```
+

@@ -1,0 +1,66 @@
+name: Cant_eMLR
+output_dir: ../docs
+navbar:
+  title: Cant - eMLR(C*)
+  left:
+  - text: Config
+    menu:
+    - text: Dependencies
+      href: config_dependencies.html
+    - text: Nomenclature
+      href: config_nomenclature.html
+    - text: Parameterization
+      href: config_parameterization.html
+  - text: Data base
+    menu:
+    - text: World Ocean Atlas 2018
+      href: read_World_Ocean_Atlas_2018.html
+    - text: GLODAPv2_2020
+      href: read_GLODAPv2_2020.html
+    - text: GLODAPv2_2016_MappedClimatologies
+      href: read_GLODAPv2_2016_MappedClimatologies.html
+    - text: Cant Gruber 2019
+      href: read_Gruber_2019_Cant.html
+    - text: Cant Sabine 2004
+      href: read_Sabine_2004_Cant.html
+    - text: Atmospheric CO2
+      href: read_CO2_atm.html
+  - text: eMLR
+    menu:
+    - text: Data preparation
+      href: eMLR_data_preparation.html
+    - text: Assumption testing
+      href: eMLR_assumption_testing.html
+    - text: Model fitting
+      href: eMLR_model_fitting.html
+  - text: Mapping
+    menu:
+    - text: Predictor preparation
+      href: mapping_predictor_preparation.html
+    - text: Cant calculation
+      href: mapping_cant_calculation.html
+    - text: Cstar calculation
+      href: mapping_cstar_calculation.html
+    href: mapping.html
+  - text: Analysis
+    menu:
+    - text: This study vs Gruber 2019
+      href: analysis_this_study_vs_Gruber_2019.html
+    - text: This study
+      href: analysis_this_study.html
+  right:
+  - icon: fa-github
+    text: Source code
+    href: https://github.com/jens-daniel-mueller/Cant_eMLR
+  - icon: fa-home
+    text: Jens' homepage
+    href: https://jens-daniel-mueller.github.io/
+output:
+  workflowr::wflow_html:
+    toc: yes
+    toc_float:
+      collapsed: false
+    toc_depth: 3
+    theme: flatly
+    code_folding: hide
+    highlight: textmate

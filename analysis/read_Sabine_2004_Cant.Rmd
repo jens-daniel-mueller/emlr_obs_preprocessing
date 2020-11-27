@@ -1,0 +1,190 @@
+---
+title: "Anthropogenic CO2 from 1994 to 2007"
+author: "Jens Daniel Müller"
+date:  "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  workflowr::wflow_html:
+    number_sections: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+editor_options:
+  chunk_output_type: console
+---
+
+```{r parent, child = here::here("analysis/child/setup.Rmd")}
+```
+
+# Data source
+
+- Anthropogenic CO2 estimates (1800-1994) by Sabine et al. (2004) downloaded in August 2020 from [NOAA/NCEI Ocean Carbon Data System (OCADS)](ftp://ftp.nodc.noaa.gov/pub/data.nodc/ncei/ocads/data/0001644/){target="_blank"}
+
+# Read ncdfs
+
+```{r read_Sabine_2004}
+
+AnthCO2_data <-
+  read_csv(
+    "data/input/GLODAPv1_1/GLODAP_gridded.data/AnthCO2.data/AnthCO2.data.txt",
+    col_names = FALSE,
+    na = "-999",
+    col_types = list(.default = "d")
+  )
+
+Depth_centers <-
+  read_file("data/input/GLODAPv1_1/GLODAP_gridded.data/Depth.centers.txt")
+
+Depth_centers <- Depth_centers %>%
+  str_split(",") %>%
+  as_vector()
+
+Lat_centers <-
+  read_file("data/input/GLODAPv1_1/GLODAP_gridded.data/Lat.centers.txt")
+
+Lat_centers <- Lat_centers %>%
+  str_split(",") %>%
+  as_vector()
+
+Long_centers <-
+  read_file("data/input/GLODAPv1_1/GLODAP_gridded.data/Long.centers.txt")
+
+Long_centers <- Long_centers %>%
+  str_split(",") %>%
+  as_vector()
+
+names(AnthCO2_data) <- Lat_centers
+
+Long_Depth <-
+  expand_grid(depth = Depth_centers, lon = Long_centers) %>%
+  mutate(lon = as.numeric(lon),
+         depth = as.numeric(depth))
+
+cant_3d <- bind_cols(AnthCO2_data, Long_Depth)
+
+cant_3d <- cant_3d %>%
+  pivot_longer(1:180, names_to = "lat", values_to = "cant") %>%
+  mutate(lat = as.numeric(lat))
+
+cant_3d <- cant_3d %>%
+  drop_na()
+
+cant_3d <- cant_3d %>%
+  mutate(lon = if_else(lon < 20, lon + 360, lon))
+
+rm(AnthCO2_data,
+   Long_Depth,
+   Depth_centers,
+   Lat_centers,
+   Long_centers)
+
+```
+
+# Apply basin mask
+
+```{r apply_basin_mask}
+
+cant_3d <- inner_join(cant_3d, basinmask)
+
+```
+
+
+# Inventory calculation
+
+```{r calculate_inventory}
+
+cant_3d <- cant_3d %>% 
+  mutate(cant_pos = if_else(cant <= 0, 0, cant),
+         eras = "1800-1994")
+
+cant_inv <- m_cant_inv(cant_3d) 
+
+# cant_inv <- cant_3d %>% 
+#   filter(depth <= parameters$inventory_depth) %>% 
+#   group_by(lon, lat, basin, basin_AIP) %>% 
+#   summarise(cant_inv = sum(layer_inv_pos, na.rm = TRUE) / 1000,
+#             cant_inv_incl_neg = sum(layer_inv, na.rm = TRUE) / 1000) %>% 
+#   ungroup()
+
+```
+
+# Cant plots
+
+Below, following subsets of the climatologies are plotted for all relevant parameters:  
+
+- Horizontal planes at `r parameters$depth_levels`m
+- Meridional sections at longitudes: `r parameters$longitude_sections_basin`
+
+Section locations are indicated as white lines in maps.
+
+
+## Horizontal plane maps
+
+```{r cant_maps, fig.asp=0.6}
+
+p_map_climatology(
+  df = cant_3d,
+  var = "cant",
+  col = "divergent")
+
+```
+
+## Sections
+
+```{r cant_sections}
+
+p_section_global(
+  df = cant_3d,
+  var = "cant",
+  col = "divergent")
+
+```
+
+## Sections at regular longitudes
+
+```{r cant_sections_regular, fig.asp=2}
+
+p_section_climatology_regular(
+  df = cant_3d,
+  var = "cant",
+  col = "divergent")
+
+```
+
+## Zonal mean section
+
+```{r calculate_zonal_mean_section}
+
+cant_zonal <- m_zonal_mean_section(cant_3d %>% select(-basin))
+
+```
+
+## Inventory maps
+
+```{r cant_inv_pos_maps, fig.asp=0.6}
+
+p_map_cant_inv(
+  df = cant_inv,
+  var = "cant_pos_inv",
+  breaks = seq(0,max(cant_inv$cant_pos_inv),5))
+
+```
+
+
+## Write files
+
+```{r write_Sabine_2004_cant_file}
+
+cant_3d %>% 
+  write_csv(here::here("data/interim",
+                       "S04_cant_3d.csv"))
+
+cant_inv %>% 
+  write_csv(here::here("data/interim",
+                       "S04_cant_inv.csv"))
+
+cant_zonal %>% 
+  write_csv(here::here("data/interim",
+                       "S04_cant_zonal.csv"))
+
+
+```

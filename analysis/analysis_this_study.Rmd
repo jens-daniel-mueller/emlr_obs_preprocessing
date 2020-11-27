@@ -1,0 +1,562 @@
+---
+title: "Analysis of cant estimates"
+author: "Jens Daniel Müller"
+date:  "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  workflowr::wflow_html:
+    number_sections: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+editor_options:
+  chunk_output_type: console
+---
+
+```{r parent, child = here::here("analysis/child/setup.Rmd")}
+```
+
+# Libraries
+
+Loading libraries specific to the the analysis performed in this section.
+
+```{r load_libraries_specific, message=FALSE, warning=FALSE}
+library(scales)
+library(marelac)
+library(kableExtra)
+```
+
+# Data sources
+
+cant estimates from this study:
+
+- Mean and SD per grid cell (lat, lon, depth)
+- Zonal mean and SD (basin, lat, depth)
+- Inventories (lat, lon)
+
+
+```{r read_cant_files}
+
+
+cant_3d <-
+  read_csv(here::here("data/output",
+                         "cant_3d.csv"))
+
+cant_zonal <-
+  read_csv(here::here("data/output",
+                         "cant_zonal.csv"))
+
+cant_predictor_zonal <-
+  read_csv(here::here("data/output",
+                         "cant_predictor_zonal.csv"))
+
+cant_inv <-
+  read_csv(here::here("data/output",
+                         "cant_inv.csv"))
+
+```
+
+C* estimates from this study:
+
+- Mean and SD per grid cell (lat, lon, depth)
+- Zonal mean and SD (basin, lat, depth)
+
+```{r read_cstar_files}
+
+cstar_3d <-
+  read_csv(here::here("data/output",
+                         "cstar_3d.csv"))
+
+cstar_zonal <-
+  read_csv(here::here("data/output",
+                         "cstar_zonal.csv"))
+
+
+```
+
+Cleaned GLODAPv2_2020 file as used in this study
+
+```{r read_GLODAP_used_for_fitting}
+
+GLODAP <-
+  read_csv(
+    here::here(
+      "data/interim",
+      "GLODAPv2.2020_MLR_fitting_ready.csv"
+    )
+  )
+
+```
+
+# C~ant~ budgets
+
+Global C~ant~ inventories were estimated in units of Pg C. Please note that here we only added positive C~ant~ values in the upper `r parameters$inventory_depth`m and do not apply additional corrections for areas not covered.
+
+```{r calculate_global_inventory}
+
+cant_inv_budget <- cant_inv %>% 
+  mutate(surface_area = earth_surf(lat, lon),
+         cant_inv_grid = cant_inv*surface_area) %>% 
+  group_by(eras, basin_AIP) %>% 
+  summarise(cant_total = sum(cant_inv_grid)*12*1e-15,
+            cant_total = round(cant_total,1)) %>% 
+  ungroup() %>% 
+  arrange(desc(eras)) %>% 
+  pivot_wider(values_from = cant_total, names_from = basin_AIP) %>% 
+  mutate(total = Atlantic + Indian + Pacific)
+
+cant_inv_budget %>% 
+  kableExtra::kable() %>% 
+  add_header_above() %>%
+  kable_styling(full_width = FALSE)
+
+rm(cant_inv_budget)
+
+```
+
+
+
+# Cant - positive
+
+In a first series of plots we explore the distribution of cant, taking only positive estimates into account (positive here refers to the mean cant estimate across 10 eMLR model predictions available for each grid cell). Negative values were set to zero before calculating mean sections and inventories.
+
+## Zonal mean sections
+
+
+```{r cant_pos_zonal_mean_sections, fig.asp=0.6}
+
+# i_basin_AIP <- unique(cant_zonal$basin_AIP)[2]
+# i_eras <- unique(cant_zonal$eras)[1]
+
+for (i_basin_AIP in unique(cant_zonal$basin_AIP)) {
+  for (i_eras in unique(cant_zonal$eras)) {
+   
+     print(
+      p_section_zonal(
+        df = cant_zonal %>%
+          filter(basin_AIP == i_basin_AIP,
+                 eras == i_eras),
+        var = "cant_pos_mean",
+        subtitle_text =
+          paste("Basin:", i_basin_AIP, "| eras:", i_eras))
+    )
+    
+  }
+}
+  
+```
+
+## Isoneutral slab distribution
+
+Mean of positive cant within each horizontal grid cell (lon x lat) per isoneutral slab.
+
+Please note that:
+
+- density slabs covering values >28.1 occur by definition only either in the Atlantic or Indo-Pacific basin
+- gaps in the maps represent areas where (thin) density layers fit between discrete depth levels used for mapping
+
+```{r calculate_gamma_slab_maps}
+
+cant_gamma_maps <- m_cant_slab(cant_3d)
+
+cant_gamma_maps <- cant_gamma_maps %>% 
+  arrange(gamma_slab, eras)
+
+```
+
+```{r cant_pos_gamma_slab_maps, fig.asp=0.5}
+
+# i_eras <- unique(cant_gamma_maps$eras)[1]
+# i_gamma_slab <- unique(cant_gamma_maps$gamma_slab)[1]
+
+for (i_eras in unique(cant_gamma_maps$eras)) {
+  for (i_gamma_slab in unique(cant_gamma_maps$gamma_slab)) {
+    print(
+      p_map_cant_slab(
+        df = cant_gamma_maps %>%
+          filter(eras == i_eras,
+                 gamma_slab == i_gamma_slab),
+        subtitle_text = paste(
+          "Eras:", i_eras,
+          "| Neutral density:", i_gamma_slab)
+        )
+    )
+    
+  }
+}
+
+
+```
+
+## Inventory map
+
+Column inventory of positive cant between the surface and `r parameters$inventory_depth`m water depth per horizontal grid cell (lat x lon).
+
+```{r cant_pos_inventory_map, fig.asp=0.5}
+
+# i_eras <- unique(cant_inv$eras)[1]
+
+for (i_eras in unique(cant_inv$eras)) {
+  
+  print(
+    p_map_cant_inv(
+      df = cant_inv %>% filter(eras == i_eras),
+      var = "cant_pos_inv",
+      subtitle_text = paste("Eras:", i_eras))
+  )
+  
+}
+
+```
+
+
+## Global sections
+
+```{r cant_sections_positive_mean_one_lon_JGOFS_GO, fig.asp=0.6}
+
+
+for (i_eras in unique(cant_3d$eras)) {
+  print(
+    p_section_global(
+      df = cant_3d %>% filter(eras == i_eras),
+      var = "cant_pos",
+      subtitle_text = paste("Eras:", i_eras)
+    )
+  )
+  
+}
+
+```
+
+
+# Cant - all
+
+In a second series of plots we explore the distribution of cant, taking positive and negative estimates into account.
+
+## Zonal mean sections
+
+```{r cant_all_zonal_mean_sections, fig.asp=0.6}
+
+# i_eras <- unique(cant_zonal$eras)[1]
+# i_basin_AIP <- unique(cant_zonal$basin_AIP)[1]
+
+for (i_basin_AIP in unique(cant_zonal$basin_AIP)) {
+  for (i_eras in unique(cant_zonal$eras)) {
+    print(
+      p_section_zonal(
+        df = cant_zonal %>%
+          filter(basin_AIP == i_basin_AIP,
+                 eras == i_eras),
+        var = "cant_mean",
+        gamma = "gamma_mean",
+        breaks = parameters$breaks_cant,
+        col = "divergent",
+        subtitle_text =
+          paste("Basin:", i_basin_AIP, "| eras:", i_eras))
+    )
+    
+  }
+}
+  
+```
+
+## Isoneutral slab distribution
+
+Mean of cant within each horizontal grid cell (lon x lat) per isoneutral slab.
+
+Please note that:
+
+- density slabs covering values >28.1 occur by definition only either in the Atlantic or Indo-Pacific basin
+- gaps in the maps represent areas where (thin) density layers fit between discrete depth levels used for mapping
+
+
+```{r cant_all_gamma_slab_maps, fig.asp=0.5}
+
+# i_eras <- unique(cant_gamma_maps$eras)[1]
+# i_gamma_slab <- unique(cant_gamma_maps$gamma_slab)[5]
+
+for (i_eras in unique(cant_gamma_maps$eras)) {
+  for (i_gamma_slab in unique(cant_gamma_maps$gamma_slab)) {
+    print(
+      p_map_cant_slab(
+        df = cant_gamma_maps %>%
+          filter(eras == i_eras,
+                 gamma_slab == i_gamma_slab),
+        var = "cant",
+        col = "divergent",
+        subtitle_text = paste(
+          "Eras:", i_eras,
+          "| Neutral density:", i_gamma_slab))
+    )
+    
+  }
+}
+
+
+```
+
+## Inventory map
+
+Column inventory of positive cant between the surface and `r parameters$inventory_depth`m water depth per horizontal grid cell (lat x lon).
+
+```{r cant_all_inventory_map, fig.asp=0.5}
+
+# i_eras <- unique(cant_inv$eras)[1]
+
+for (i_eras in unique(cant_inv$eras)) {
+  
+  print(
+    p_map_cant_inv(
+      df = cant_inv %>% filter(eras == i_eras),
+      var = "cant_inv",
+      col = "divergent",
+      subtitle_text = paste("Eras:", i_eras))
+  )
+  
+}
+
+```
+
+# Cant - standard deviation 
+
+## Across models
+
+Standard deviation across Cant from all MLR models was calculate for each grid cell (XYZ). The zonal mean of this standard deviation should reflect the uncertainty associated to the predictor selection within each slab and era. 
+
+```{r cant_sections_sd_models, fig.asp=0.6}
+
+# i_eras <- unique(cant_zonal$eras)[1]
+# i_basin_AIP <- unique(cant_zonal$basin_AIP)[2]
+
+for (i_basin_AIP in unique(cant_zonal$basin_AIP)) {
+  for (i_eras in unique(cant_zonal$eras)) {
+    print(
+      p_section_zonal(
+        df = cant_zonal %>%
+          filter(basin_AIP == i_basin_AIP,
+                 eras == i_eras),
+        var = "cant_sd_mean",
+        gamma = "gamma_mean",
+        legend_title = "sd",
+        title_text = "Zonal mean section of Cant sd between models",
+        subtitle_text =
+          paste("Basin:", i_basin_AIP, "| eras:", i_eras))
+    )
+    
+  }
+}
+  
+
+```
+
+## Across basins
+
+Standard deviation of mean cant values was calculate across all longitudes. This standard deviation should reflect the zonal variability of cant within the basin and era.
+
+```{r cant_sections_sd_cant, fig.asp=0.6}
+
+# i_eras <- unique(cant_zonal$eras)[1]
+# i_basin_AIP <- unique(cant_zonal$basin_AIP)[2]
+
+for (i_basin_AIP in unique(cant_zonal$basin_AIP)) {
+  for (i_eras in unique(cant_zonal$eras)) {
+    print(
+      p_section_zonal(
+        df = cant_zonal %>%
+          filter(basin_AIP == i_basin_AIP,
+                 eras == i_eras),
+        var = "cant_sd",
+        gamma = "gamma_mean",
+        legend_title = "sd",
+        title_text = "Zonal mean section of sd between model mean Cant",
+        subtitle_text =
+          paste("Basin:", i_basin_AIP, "| eras:", i_eras))
+    )
+    
+  }
+}
+
+```
+
+## Correlation
+
+### Cant vs model SD
+
+```{r cant_vs_sd_by_basin_era}
+
+cant_3d <- cant_3d  %>% 
+  mutate(eras = factor(eras, c("JGOFS_GO", "GO_new")))
+
+cant_3d %>% 
+  ggplot(aes(cant, cant_sd)) +
+  geom_vline(xintercept = 0) +
+  geom_hline(yintercept = 10) +
+  geom_bin2d() +
+  scale_fill_viridis_c(option = "magma",
+                       direction = -1,
+                       trans = "log10",
+                       name = "log10(n)") +
+  facet_grid(basin_AIP ~ eras)
+
+```
+
+```{r cant_vs_sd_by_basin_gamma, fig.asp=2}
+
+cant_3d %>% 
+  ggplot(aes(cant, cant_sd)) +
+  geom_vline(xintercept = 0) +
+  geom_hline(yintercept = 10) +
+  geom_bin2d() +
+  scale_fill_viridis_c(option = "magma",
+                       direction = -1,
+                       trans = "log10",
+                       name = "log10(n)") +
+  facet_grid(gamma_slab ~ basin_AIP)
+
+```
+
+### Cant vs regional SD
+
+```{r cant_vs_sd_by_basin_era_zonal}
+
+cant_zonal %>% 
+  ggplot(aes(cant_mean, cant_sd)) +
+  geom_vline(xintercept = 0) +
+  geom_hline(yintercept = 10) +
+  geom_bin2d() +
+  scale_fill_viridis_c(option = "magma",
+                       direction = -1,
+                       trans = "log10",
+                       name = "log10(n)") +
+  facet_grid(basin_AIP ~ eras)
+
+```
+
+```{r cant_vs_sd_by_basin_gamma_zonal, fig.asp=2}
+
+cant_zonal %>% 
+  ggplot(aes(cant_mean, cant_sd)) +
+  geom_vline(xintercept = 0) +
+  geom_hline(yintercept = 10) +
+  geom_bin2d() +
+  scale_fill_viridis_c(option = "magma",
+                       direction = -1,
+                       trans = "log10",
+                       name = "log10(n)") +
+  facet_grid(gamma_slab ~ basin_AIP)
+
+```
+
+# Cant - predictor contribution
+
+```{r cant_section_predictor_contribution}
+
+cant_predictor_zonal <- cant_predictor_zonal %>% 
+  mutate(eras = factor(eras, c("JGOFS_GO", "GO_new")))
+
+variable <- "cant_intercept"
+
+for (variable in c(
+  "cant_intercept",
+  "cant_aou",
+  "cant_oxygen",
+  "cant_phosphate",
+  "cant_phosphate_star",
+  "cant_silicate",
+  "cant_tem",
+  "cant_sal")) {
+
+print(
+p_section_zonal_divergent_gamma_eras_basin(
+  df = cant_predictor_zonal,
+  var = variable,
+  gamma = "gamma")
+)
+    
+}
+
+
+rm(variable)
+```
+
+
+# Neutral density
+
+## Slab depth
+
+Please note that:
+
+- density slabs covering values >28.1 occur by definition only either in the Atlantic or Indo-Pacific basin
+- predictor density slabs are only shown for the upper `r parameters$inventory_depth`m as used for the mapping, whereas GLODAP observations are displayed for the entire water column as used for fitting eMLRs (in both cases shallow waters are excluded at low density)
+
+```{r gamma_maps, fig.asp=2.5}
+
+GLODAP_obs_coverage <- GLODAP %>% 
+  count(lat, lon, gamma_slab, era) %>% 
+  mutate(era = factor(era, c("JGOFS_WOCE", "GO_SHIP", "new_era")))
+  
+map +
+  geom_raster(data = cant_gamma_maps,
+              aes(lon, lat, fill = depth_max)) +
+  geom_raster(data = GLODAP_obs_coverage,
+              aes(lon, lat), fill = "red") +
+  facet_grid(gamma_slab ~ era) +
+  scale_fill_viridis_c(direction = -1) +
+  theme(axis.ticks = element_blank(),
+        axis.text = element_blank(),
+        legend.position = "top")
+
+rm(GLODAP_obs_coverage)
+
+```
+
+# C*
+
+## Zonal mean sections
+
+```{r cstar_zonal_mean_era}
+
+cstar_zonal <- cstar_zonal %>% 
+    mutate(era = factor(era, c("JGOFS_WOCE", "GO_SHIP", "new_era"))) 
+
+slab_breaks <- c(parameters$slabs_Atl[1:12],Inf)
+
+cstar_zonal %>% 
+    ggplot(aes(lat, depth, z = cstar_mean)) +
+    geom_contour_filled(bins = 11) +
+    scale_fill_viridis_d(name = "cstar") +
+    geom_contour(aes(lat, depth, z = gamma_mean),
+                 breaks = slab_breaks,
+                 col = "white") +
+    geom_text_contour(
+      aes(lat, depth, z = gamma_mean),
+      breaks = slab_breaks,
+      col = "white",
+      skip = 1
+    ) +
+    scale_y_reverse() +
+    scale_x_continuous(breaks = seq(-100,100,20)) +
+    coord_cartesian(expand = 0) +
+    guides(fill = guide_colorsteps(barheight = unit(10, "cm"))) +
+    facet_grid(basin_AIP ~ era)
+
+rm(slab_breaks)
+
+```
+
+# Sections by model
+
+Zonal sections plots are produced for every 20° longitude, each era and for all models individually and can be downloaded [here](https://github.com/jens-daniel-mueller/cant_eMLR/tree/master/output/figure/mapping){target="_blank"}.
+
+
+# Known issues
+
+Deviations between this study and the results by Gruber et al (2019), short G19, for the same period, might be attributable to following known differences in the implementation of the eMLR(C*) method:
+
+- GLODAPv2_2020 here vs an extended version of GLODAPv2 in G19
+- flagging: Here, we accept f flags 0 and 2 (except for tco2, where only 0 is accepted). G19 claim to use 0 throughout, yet have a high coverage of talk observations in the SE Pacific  
+- Neutral density calculation: Here and in GLODAPv2_2020 a polynomial approximation is used, whereas G19 uses the original Matlab code  
+- Predictor climatology: Here we used WOA18, whereas G19 used WOA13
+- Missing data in the GLODAP mapped climatology, eg NO3 at surface, where not filled in this study
+- cant on neutral density levels calculate as slab mean, rather than on one surface
+- Here, surface delta cant were calculated based on Luecker constants, rather than Mehrbach as in G19
+- Here, pCO2 was calculated from DIC/TA Climatology

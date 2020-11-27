@@ -1,0 +1,180 @@
+---
+title: "GLODAPv2_2016: Mapped Climatologies"
+author: "Jens Daniel Müller"
+date:  "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  workflowr::wflow_html:
+    number_sections: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r parent, child = here::here("analysis/child/setup.Rmd")}
+```
+
+# Libraries
+
+Loading libraries specific to the the analysis performed in this section.
+
+```{r load_libraries_specific, message=FALSE, warning=FALSE}
+library(stars)
+```
+
+# Read source files
+
+Data source: Globally mapped climatologies from Lauvset et al. (2016) downloaded in June 2020 from [glodap.info](https://www.glodap.info/).
+
+Following files were used: 
+
+```{r GLODAPv2_2016_Mappedclimatologies_file_list}
+
+file_list <- list.files(path = "data/input/GLODAPv2_2016b_Mappedclimatologies", pattern = "*.nc")
+print(file_list)
+
+```
+
+# Plot data and write csv
+
+Below, subsets of the climatologies are plotted, which display for all relevant parameters:
+
+- maps at depth levels
+- concentration along global section
+
+The global section path is indicated as white line in maps.
+
+Please note that NA values in the climatologies were filled with neighbouring values on the longitudinal axis.
+
+```{r GLODAPv2_2016_Mappedclimatologies}
+
+# file <- file_list[2]
+
+for (file in file_list) {
+ 
+clim <- read_stars(here::here("data/input/GLODAPv2_2016b_Mappedclimatologies",
+                          file),
+                   quiet = TRUE)
+
+# extract parameter name
+
+parameter <- str_split(file, pattern = "6b.", simplify = TRUE)[2]
+parameter <- str_split(parameter, pattern = ".nc", simplify = TRUE)[1]
+print(parameter)
+
+# extract parameter
+
+clim <- clim %>% select(all_of(parameter))
+
+#convert to table
+
+clim_tibble <- clim %>% 
+  as_tibble()
+
+# harmonize column names
+
+clim_tibble <- clim_tibble %>% 
+  rename(lat = y,
+         lon = x,
+         depth = depth_surface)
+
+# join with basin mask and remove data outside basin mask
+
+clim_tibble <- inner_join(clim_tibble, basinmask)
+
+# determine bottomdepth
+
+bottom_depth <- clim_tibble %>% 
+  filter(!is.na(!!sym(parameter))) %>% 
+  group_by(lon, lat) %>% 
+  summarise(bottom_depth = max(depth)) %>%
+  ungroup()
+
+# remove data below bottom depth
+clim_tibble <- left_join(clim_tibble, bottom_depth)
+rm(bottom_depth)
+
+clim_tibble <- clim_tibble %>% 
+  filter(depth <= bottom_depth) %>% 
+  select(-bottom_depth)
+
+# fill NAs with closest value along longitude
+
+clim_tibble <- clim_tibble %>%
+  group_by(lat, depth, basin, basin_AIP) %>%
+  arrange(lon) %>%
+  fill(!!sym(parameter), .direction = "downup") %>%
+  ungroup()
+
+# # plot column NA inventory
+# 
+# clim_tibble_grid <- clim_tibble %>%
+#   filter(!is.na(!!sym(parameter))) %>%
+#   group_by(lat, lon) %>%
+#   summarise(depth_max = max(depth)) %>%
+#   ungroup()
+# 
+# clim_tibble_grid <- full_join(clim_tibble, clim_tibble_grid)
+# 
+# clim_tibble_grid <- clim_tibble_grid %>%
+#   filter(depth <= depth_max) %>%
+#   select(-depth_max)
+# 
+# clim_tibble_grid <- clim_tibble_grid %>%
+#   filter(is.na(!!sym(parameter)),
+#          depth <= parameters$inventory_depth) %>%
+#   count(lat, lon)
+# 
+# # plot NA map
+# print(
+# 
+#   map +
+#     geom_raster(data = clim_tibble_grid,
+#                 aes(lon, lat, fill = n)) +
+#     scale_fill_viridis_c() +
+#     theme(axis.title = element_blank()) +
+#     labs(title = paste(parameter, "colum NA"))
+# 
+# )
+# 
+# rm(clim_tibble_grid)
+
+# remove NAs
+
+clim_tibble <- clim_tibble %>% 
+  drop_na()
+
+# plot maps
+
+print(
+  p_map_climatology(
+    df = clim_tibble,
+    var = parameter)
+  )
+
+# plot sections
+
+print(
+  p_section_global(
+    df = clim_tibble,
+    var = parameter,
+    title_text = "GLODAPv2_2016_Mapped_Climatology")
+)
+
+
+# write csv file
+
+clim_tibble %>% 
+  write_csv(here::here(
+    "data/interim",
+    paste("GLODAPv2_2016_MappedClimatology",
+          parameter,
+          ".csv",
+          sep = "")))
+
+}
+
+
+```

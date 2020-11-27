@@ -1,0 +1,52 @@
+
+```{r set_options_global, include = FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+```{r load_libraries_global, include=FALSE}
+library(tidyverse)
+library(collapse)
+library(patchwork)
+library(scico)
+library(metR)
+```
+
+```{r read_parameters, include = FALSE}
+parameters <-
+  read_rds(here::here("data/auxillary",
+                       "parameters.rds"))
+
+```
+
+```{r read_basinmask_file_global, include = FALSE}
+basinmask <-
+  read_csv(
+    here::here(
+      "data/auxillary",
+      "basin_mask_WOA18.csv"
+    )
+  )
+
+```
+
+```{r read_section_coordinates_global, include = FALSE}
+section_global_coordinates <-
+  read_csv(here::here("data/auxillary",
+                       "section_global_coordinates.csv"))
+```
+
+```{r read_ggplot_basemap_global, include = FALSE}
+map <-
+  read_rds(here::here("data/auxillary",
+                       "map_landmask_WOA18.rds"))
+```
+
+```{r read_functions_global, include = FALSE}
+source(here::here("code", "plotting_functions.R"))
+source(here::here("code", "mapping_functions.R"))
+source(here::here("code", "biogeochemical_functions.R"))
+```
+
+```{r set_ggplot_theme_global, include = FALSE}
+theme_set(theme_bw())
+```

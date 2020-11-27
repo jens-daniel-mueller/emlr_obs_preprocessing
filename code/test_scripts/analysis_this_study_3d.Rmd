@@ -1,0 +1,175 @@
+---
+title: "Analysis of cant estimates - 3d vis"
+author: "Jens Daniel Müller"
+date:  "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  workflowr::wflow_html:
+    number_sections: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include = FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+```{r library, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(patchwork)
+library(scico)
+library(scales)
+library(metR)
+library(marelac)
+library(kableExtra)
+library(threejs)
+```
+
+
+```{r read_parameters, include = FALSE}
+parameters <-
+  read_rds(here::here("data",
+                       "parameters.rds"))
+
+slab_breaks <- c(parameters$slabs_Atl[1:12],Inf)
+```
+
+```{r read_mask_files, include = FALSE}
+basinmask <-
+  read_csv(
+    here::here(
+      "data/World_Ocean_Atlas_2018/_summarized_files",
+      "basin_mask_WOA18.csv"
+    )
+  )
+basinmask_AIP <-
+  read_csv(
+    here::here(
+      "data/World_Ocean_Atlas_2018/_summarized_files",
+      "basin_mask_WOA18_AIP.csv"
+    )
+  )
+landmask <-
+  read_csv(
+    here::here(
+      "data/World_Ocean_Atlas_2018/_summarized_files",
+      "land_mask_WOA18.csv"
+    )
+  )
+
+section_global_coordinates <-
+  read_csv(here::here("data",
+                       "section_global_coordinates.csv"))
+```
+
+```{r read_functions, include = FALSE}
+source(here::here("code", "plotting_functions.R"))
+```
+
+```{r ggplot_theme, include = FALSE}
+theme_set(theme_bw())
+```
+
+# Data sources
+
+cant estimates from this study:
+
+- Inventories (lat, lon)
+
+
+```{r read_cant_files}
+
+cant_inv <-
+  read_csv(here::here("data/mapping/_summarized_files",
+                         "cant_inv.csv"))
+
+```
+
+# Color scale
+
+For ease of comparison with Gruber et al (2019) we adapt their color scale, including the ranges and breaks applied in various types of visualizations.
+
+```{r define_Gruber_rainbow}
+
+rgb2hex <- function(r, g, b)
+  rgb(r, g, b, maxColorValue = 100)
+
+cols = c(rgb2hex(95, 95, 95),
+         rgb2hex(0, 0, 95),
+         rgb2hex(100, 0, 0),
+         rgb2hex(100, 100, 0))
+
+Gruber_rainbow <- colorRampPalette(cols)
+
+rm(rgb2hex, cols)
+
+```
+
+
+# cant - positive
+
+In a first series of plots we explore the distribution of cant, taking only positive estimates into account (positive here refers to the mean cant estimate across 10 eMLR model predictions available for each grid cell). Negative values were set to zero before calculating mean sections and inventories.
+
+## Inventory
+
+### Map
+
+Column inventory of positive cant between the surface and `r parameters$inventory_depth`m water depth per horizontal grid cell (lat x lon).
+
+```{r cant_pos_inventory_map}
+
+breaks <- c(seq(0,16,2),Inf)
+breaks_n <- length(breaks) - 1
+
+cant_inv <- cant_inv %>% 
+  mutate(cant_inv_pos_int = cut(cant_inv_pos, 
+                                breaks,
+                                right = FALSE)) %>% 
+  mutate(eras = factor(eras, c("JGOFS_GO", "GO_new")))
+
+cant_inv %>%
+  filter(eras == "JGOFS_GO") %>%
+  ggplot() +
+  geom_raster(data = landmask,
+              aes(lon, lat), fill = "grey30") +
+  geom_raster(aes(lon, lat, fill = cant_inv_pos_int)) +
+  coord_quickmap(expand = 0) +
+  scale_fill_manual(values = Gruber_rainbow(breaks_n),
+                    name = "cant") +
+  theme(axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        axis.text = element_blank(),
+        legend.position = "bottom")
+
+```
+
+### Interactive Globe
+
+```{r cant_pos_inventory_globe_JGOFS_GO, fig.asp=1}
+
+x <- cant_inv %>%
+  filter(eras == "JGOFS_GO") %>%
+  select(lon, lat, cant_inv_pos) %>%
+  mutate(cant_col = as.character(cut(
+    cant_inv_pos,
+    breaks,
+    Gruber_rainbow(breaks_n)
+  )))
+
+
+globejs(
+  lat = x$lat,
+  long = x$lon,
+  color = x$cant_col,
+  val = 0,
+  pointsize = 2,
+  bg = "white",
+  rotationlong = -0.8,
+  rotationlat = 0.3
+)
+
+rm(x)
+
+```

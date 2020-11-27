@@ -1,0 +1,713 @@
+---
+title: "World Ocean Atlas 2018"
+author: "Jens Daniel Müller"
+date:  "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  workflowr::wflow_html:
+    number_sections: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include = FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+```{r library, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(tidync)
+library(reticulate)
+library(oce)
+library(gsw)
+library(geosphere)
+library(patchwork)
+```
+
+```{r read_parameters, include = FALSE}
+parameters <-
+  read_rds(here::here("data/auxillary",
+                       "parameters.rds"))
+```
+
+```{r read_functions, include = FALSE}
+source(here::here("code", "plotting_functions.R"))
+```
+
+```{r ggplot_theme, include = FALSE}
+theme_set(theme_bw())
+```
+
+# Data source
+- Data source: [World Ocean Atlas 2018](https://www.nodc.noaa.gov/OC5/woa18/woa18data.html){target="_blank"}
+
+# Masks
+
+
+## Land
+
+### Read mask
+
+The land sea mask with 1x1° resolution from the file `landsea_01.msk` was used.
+
+```{r read_landsea_mask}
+
+landsea_01 <- read_csv(here::here("data/input/World_Ocean_Atlas_2018",
+                                  "landsea_01.msk"),
+                         skip = 1,
+                         col_types = list(.default = "d"))
+
+```
+
+### Label
+
+According to the [WOA18 documentation](https://data.nodc.noaa.gov/woa/WOA18/DOC/woa18documentation.pdf){target="_blank"} document:  
+
+*"The landsea_XX.msk contains the standard depth level number at which the bottom of the ocean is first encountered at each quarter-degree or one-degree square for the entire world.  Land will have a value of 1, corresponding to the surface."*
+
+The landmask was derived as coordinates with value 1.
+
+```{r format_landmask}
+
+landmask <- landsea_01 %>%
+  mutate(region = if_else(Bottom_Standard_Level == "1",
+                          "land", "ocean")) %>%
+  select(-Bottom_Standard_Level)
+
+landmask <- landmask %>%
+  rename(lat = Latitude,
+         lon = Longitude) %>%
+  mutate(lon = if_else(lon < 20, lon + 360, lon))
+
+landmask <- landmask %>%
+  filter(region == "land",
+         lat >= parameters$lat_min,
+         lat <= parameters$lat_max) %>%
+  select(-region)
+
+rm(landsea_01)
+
+```
+
+## Basins
+
+### Read mask
+
+The surface mask (0m) with 1x1° resolution from the file `basinmask_01.msk` was used.
+
+```{r read_and_format_basinmask}
+
+basinmask_01 <- read_csv(here::here("data/input/World_Ocean_Atlas_2018",
+                                    "basinmask_01.msk"),
+                         skip = 1,
+                         col_types = list(.default = "d"))
+
+basinmask_01 <- basinmask_01 %>% 
+  select(Latitude:Basin_0m) %>% 
+  mutate(Basin_0m = as.factor(Basin_0m)) %>% 
+  rename(lat = Latitude, lon = Longitude)
+  
+```
+
+
+### Labels
+
+According to [WOA FAQ](https://www.nodc.noaa.gov/OC5/WOD/wod-woa-faqs.html){target="_blank"} website and [WOA18 documentation](https://data.nodc.noaa.gov/woa/WOA18/DOC/woa18documentation.pdf){target="_blank"}, number codes in the mask files were used to assign ocean basins as follows:  
+
+Atlantic Ocean:  
+
+- 1: Atlantic Ocean
+- 10: Southern Ocean between 63°W and 20°E
+- 11: Arctic Ocean (restricted by northern latitude limit `r parameters$lat_max`N)
+
+Indian Ocean:  
+
+- 3: Indian Ocean 
+- 10: Southern Ocean between 20°E and 147°E
+- 56: Bay of Bengal
+
+Pacific Ocean:  
+
+- 2: Pacific Ocean
+- 10: Southern Ocean between 147°E and 63°W
+- 12: Sea of Japan
+
+For eMLR model fitting and mapping, Indian and Pacific Ocean were combined as Indo-Pacific.
+
+```{r assign_basin_labels}
+
+basinmask_01 <- basinmask_01 %>%
+  filter(Basin_0m %in% c("1", "2", "3", "10", "11", "12", "56"),
+         lat <= parameters$lat_max) %>%
+  mutate(
+    basin_AIP = "none",
+    basin_AIP = case_when(
+      Basin_0m == "1" ~ "Atlantic",
+      Basin_0m == "10" & lon >= -63 & lon < 20 ~ "Atlantic",
+      Basin_0m == "11" ~ "Atlantic",
+      Basin_0m == "3" ~ "Indian",
+      Basin_0m == "56" ~ "Indian",
+      Basin_0m == "10" & lon >= 20 & lon < 147 ~ "Indian",
+      Basin_0m == "2" ~ "Pacific",
+      Basin_0m == "12" ~ "Pacific",
+      Basin_0m == "10" &
+        lon >= 147 | lon < -63 ~ "Pacific"
+    )
+  ) %>%
+  mutate(basin = if_else(basin_AIP == "Atlantic",
+                         "Atlantic",
+                         "Indo-Pacific")) %>%
+  select(-Basin_0m) %>%
+  mutate(lon = if_else(lon < 20, lon + 360, lon))
+
+```
+
+### Map
+
+```{r basin_masks_WOA18_map, fig.asp=0.6}
+
+map <- 
+  ggplot() +
+  geom_raster(data = landmask,
+              aes(lon, lat), fill = "grey80") +
+  coord_quickmap(expand = 0) +
+  theme(axis.title = element_blank())
+
+map +
+  geom_raster(data = basinmask_01,
+              aes(lon, lat, fill = basin_AIP)) +
+  scale_fill_brewer(palette = "Dark2") +
+  theme(legend.position = "top",
+        legend.title = element_blank())
+
+```
+
+```{r write_base_map_as_rds_file}
+
+map %>%  
+  write_rds(here::here("data/auxillary",
+                       "map_landmask_WOA18.rds"))
+```
+
+
+
+## Global section
+
+To plot sections from the North Atlantic south to the Southern Ocean, around Antartica and back North across the Pacific Ocean, corresponding coordinates were subsetted from the basin mask and distances between coordinate grid points calculated.
+
+```{r Create_coordinates_of_section_global}
+
+section <- basinmask_01 %>%
+  select(lon, lat)
+
+Atl_NS <- section %>%
+  filter(
+    lon == parameters$lon_Atl_section,
+    lat <= parameters$lat_section_N,
+    lat >= parameters$lat_section_S
+  ) %>%
+  arrange(-lat)
+
+Atl_SO <- section %>%
+  filter(lon > parameters$lon_Atl_section,
+         lat == parameters$lat_section_S) %>%
+  arrange(lon)
+
+Pac_SO <- section %>%
+  filter(lon < parameters$lon_Pac_section,
+         lat == parameters$lat_section_S) %>%
+  arrange(lon)
+
+Pac_SN <- section %>%
+  filter(
+    lon == parameters$lon_Pac_section,
+    lat <= parameters$lat_section_N,
+    lat >= parameters$lat_section_S
+  ) %>%
+  arrange(lat)
+
+section_global_coordinates <- bind_rows(Atl_NS,
+                     Atl_SO,
+                     Pac_SO,
+                     Pac_SN)
+
+section_global_coordinates <- section_global_coordinates %>%
+  mutate(lon_180 = if_else(lon > 180, lon - 360, lon))
+
+section_global_coordinates <- section_global_coordinates %>%
+  mutate(dist_int = distGeo(cbind(lon_180, lat)) / 1e6) %>%
+  mutate(dist = cumsum(dist_int))
+
+
+section_global_coordinates <- section_global_coordinates %>%
+  select(lon, lat, dist) %>% 
+  drop_na()
+
+rm(Atl_NS, Atl_SO, Pac_SN, Pac_SO, section)
+
+```
+
+```{r section_global_map, fig.asp=0.6}
+
+map +
+  geom_point(data = section_global_coordinates,
+             aes(lon, lat, col = dist)) +
+  scale_colour_viridis_b(name = "Distance (Mm)") +
+  theme(legend.position = "top")
+
+```
+
+
+## Write files
+
+```{r write_files}
+
+basinmask_01 %>% 
+  write_csv(here::here("data/auxillary",
+                       "basin_mask_WOA18.csv"))
+
+landmask %>% 
+  write_csv(here::here("data/auxillary",
+                       "land_mask_WOA18.csv"))
+
+section_global_coordinates %>%
+  write_csv(here::here("data/auxillary",
+                       "section_global_coordinates.csv"))
+
+```
+
+
+# Climatology S and T
+
+Copied from the WOA FAQ website, the file naming conventions is:  
+
+PREF_DDDD_VTTFFGG.EXT, where:
+
+- PREF: prefix
+- DDDD: decade
+- V: variable
+- TT: time period
+- FF: field type
+- GG: grid (5deg- 5°, 01- 1°, 04 - 1/4°)
+- EXT: file extention
+
+Short description of two statistical fields in WOA
+
+- Objectively analyzed climatologies are the objectively interpolated mean fields for oceanographic variables at standard - depth levels for the World Ocean.
+- The statistical mean is the average of all unflagged interpolated values at each standard depth level for each variable - in each 1° square which contains at least one measurement for the given oceanographic variable.
+
+Here, we use  
+
+- Fields: objectively analyzed mean
+- Decades: all decades
+- Grid: 1 deg resolution
+
+According to the [WOA18 documentation](https://data.nodc.noaa.gov/woa/WOA18/DOC/woa18documentation.pdf){target="_blank"} document:
+
+*What are the units for temperature and salinity in the WOA18?*
+
+*In situ temperatures used for WOA18 are not converted from their original scale, so there is a mix of IPTS-48, IPTS-68, and ITS-90 (and pre IPTS-48 temperatures). The differences between scales are small (on the order of 0.01°C) and should not have much effect on the climatological means, except, possibly at very deep depths. Values for salinity are on the Practical salinity scale (PSS-78). Pre-1978 salinity values converted from conductivity may have used a different salinity scale. Pre-conductivity salinities use the Knudsen method.* 
+
+
+## Read ncdfs
+
+```{r read_WOA18_salinity_temperature}
+
+# temperature
+
+WOA18_tem <- tidync(here::here("data/input/World_Ocean_Atlas_2018",
+                                 "woa18_decav_t00_01.nc"))
+
+WOA18_tem_tibble <- WOA18_tem %>% hyper_tibble()
+
+WOA18_tem_tibble <- WOA18_tem_tibble  %>% 
+  select(tem = t_an, lon, lat, depth) %>% 
+  drop_na() %>% 
+  mutate(lon = if_else(lon < 20, lon + 360, lon))
+
+# salinity
+
+WOA18_sal <- tidync(here::here("data/input/World_Ocean_Atlas_2018",
+                                 "woa18_decav_s00_01.nc"))
+
+WOA18_sal_tibble <- WOA18_sal %>% hyper_tibble()
+
+WOA18_sal_tibble <- WOA18_sal_tibble  %>% 
+  select(sal = s_an, lon, lat, depth) %>% 
+  drop_na() %>% 
+  mutate(lon = if_else(lon < 20, lon + 360, lon))
+
+rm(WOA18_sal, WOA18_tem)
+
+```
+
+## Join predictors
+
+```{r join_predictors}
+
+WOA18_sal_tem <- full_join(WOA18_sal_tibble, WOA18_tem_tibble)
+rm(WOA18_sal_tibble, WOA18_tem_tibble)
+
+```
+
+
+## Apply basin mask
+
+Data outside the WOA18 basin mask were removed for further analysis.
+
+```{r join_basin_mask}
+
+WOA18_sal_tem <- inner_join(WOA18_sal_tem, basinmask_01)
+
+```
+
+
+## Apply spatial boundaries
+
+Following limits were considered but are currently not applied:
+
+- minimum bottom depth:  `r parameters$bottomdepth_min`m
+
+```{r apply_bottomdepth_threshold, eval=FALSE}
+
+WOA18_sal_tem_grid <- WOA18_sal_tem %>% 
+  group_by(lat, lon) %>% 
+  summarise(bottomdepth = max(depth)) %>% 
+  ungroup()
+
+WOA18_sal_tem_grid <- WOA18_sal_tem_grid %>% 
+  filter(bottomdepth >= parameters$bottomdepth_min) %>% 
+  select(-bottomdepth)
+
+WOA18_sal_tem <- left_join(WOA18_sal_tem_grid, WOA18_sal_tem)
+
+```
+
+- maximum depth:  `r parameters$inventory_depth`m
+
+```{r apply_depth_threshold, eval=FALSE}
+
+WOA18_sal_tem <- WOA18_sal_tem %>% 
+  filter(depth <= parameters$inventory_depth)
+
+```
+
+
+## Potential temperature
+
+Potential temperature is calculated as in input variable for the neutral density calculation.
+
+### Calculation
+
+```{r calculate_potential_temperature}
+
+WOA18_sal_tem <- WOA18_sal_tem %>% 
+  mutate(THETA = swTheta(salinity = sal,
+                         temperature = tem,
+                         pressure = depth,
+                         referencePressure = 0,
+                         longitude = lon - 180,
+                         latitude = lat))
+
+```
+
+
+### Profile
+
+Example profile from North Atlantic Ocean.
+
+```{r WOA18_potential_temperature_profile}
+WOA18_sal_tem %>%
+  filter(lat == parameters$lat_Atl_profile,
+         lon == parameters$lon_Atl_section) %>%
+  ggplot() +
+  geom_line(aes(tem, depth, col = "insitu")) +
+  geom_point(aes(tem, depth, col = "insitu")) +
+  geom_line(aes(THETA, depth, col = "theta")) +
+  geom_point(aes(THETA, depth, col = "theta")) +
+  scale_y_reverse() +
+  scale_color_brewer(palette = "Dark2", name = "Scale")
+
+```
+
+### Section
+
+```{r WOA18_pot_temperature_section}
+
+p_section_global(
+  df = WOA18_sal_tem,
+  var = "THETA")
+
+```
+
+
+
+## Neutral density
+
+Neutral density gamma was calculated with a Python script provided by Serazin et al (2011), which performs a polynomial approximation of the original gamma calculation.
+
+### Calculation
+
+```{r calculate_neutral_density}
+
+# calculate pressure from depth
+
+WOA18_sal_tem <- WOA18_sal_tem %>% 
+  mutate(CTDPRS = gsw_p_from_z(-depth,
+                               lat))
+# rename variables according to python script
+
+WOA18_sal_tem_gamma_prep <- WOA18_sal_tem %>% 
+  rename(LATITUDE = lat,
+         LONGITUDE = lon,
+         SALNTY = sal)
+
+# load python scripts
+
+source_python(here::here("code/python_scripts",
+                         "Gamma_GLODAP_python.py"))
+
+# calculate gamma
+
+WOA18_sal_tem_gamma_calc <- calculate_gamma(WOA18_sal_tem_gamma_prep)
+
+# reverse variable naming
+
+WOA18_sal_tem <- WOA18_sal_tem_gamma_calc %>% 
+  select(-c(CTDPRS, THETA)) %>% 
+  rename(lat = LATITUDE,
+         lon = LONGITUDE,
+         sal = SALNTY,
+         gamma  = GAMMA)
+
+WOA18_sal_tem <- as_tibble(WOA18_sal_tem)
+
+rm(WOA18_sal_tem_gamma_calc, WOA18_sal_tem_gamma_prep)
+
+```
+
+### Apply density threshold
+
+The predictor field was split into two parts:
+
+1. Deep water: neutral densities >= `r parameters$gamma_min` and depth >= `r parameters$depth_min`m
+2. Shallow water: rest
+
+```{r apply_density_threshold}
+
+WOA18_sal_tem_surface <- WOA18_sal_tem %>%
+  filter(depth < parameters$depth_min,
+         gamma < parameters$gamma_min)
+
+WOA18_sal_tem <- WOA18_sal_tem %>%
+  filter(depth >= parameters$depth_min | gamma >= parameters$gamma_min)
+
+
+```
+
+### Write/open file
+
+```{r write_WOA18_predictor_file}
+
+WOA18_sal_tem %>% 
+  write_csv(here::here("data/interim",
+                       "WOA18_sal_tem.csv"))
+
+WOA18_sal_tem_surface %>%
+  write_csv(here::here("data/interim",
+                       "WOA18_sal_tem_surface.csv"))
+
+```
+
+## Temperature plots
+
+Below, following subsets of the climatologies are plotted for all relevant parameters:  
+
+- Horizontal planes at `r parameters$depth_levels`m
+- Meridional sections at longitudes: `r parameters$longitude_sections_basin`
+
+Section locations are indicated as white lines in maps.
+
+### Surface map
+
+```{r temperature_surface_WOA18_map, fig.asp=0.6}
+
+p_map_climatology(
+  df = WOA18_sal_tem,
+  var = "tem")
+
+```
+
+### Section
+
+```{r temperature_sections_WOA18}
+
+p_section_global(
+  df = WOA18_sal_tem,
+  var = "tem")
+
+```
+
+
+## Salinity plots
+
+### Surface map
+
+```{r salinity_surface_WOA18_map}
+
+p_map_climatology(
+  df = WOA18_sal_tem,
+  var = "sal")
+
+```
+
+### Section
+
+```{r salinity_sections_WOA18}
+
+p_section_global(
+  df = WOA18_sal_tem,
+  var = "sal")
+
+```
+
+
+
+
+## Neutral density plots
+
+### Surface map
+
+```{r neutral_density_surface_WOA18_map}
+
+p_map_climatology(
+  df = WOA18_sal_tem,
+  var = "gamma")
+
+```
+
+### Section
+
+```{r neutral_density_sections_WOA18}
+
+p_section_global(
+  df = WOA18_sal_tem,
+  var = "gamma")
+
+```
+
+### Surface map shallow
+
+```{r neutral_density_surface_WOA18_map_shallow}
+
+p_map_climatology(
+  df = WOA18_sal_tem_surface,
+  var = "gamma")
+
+```
+
+### Section shallow
+
+```{r neutral_density_sections_WOA18_shallow}
+
+p_section_global(
+  df = WOA18_sal_tem_surface,
+  var = "gamma")
+
+```
+
+
+
+# Climatology Nuts and O2
+
+## Read ncdfs
+
+```{r read_WOA18_nuts_O2_files}
+
+# create file list
+
+file_list <-
+  list.files(path = "data/input/World_Ocean_Atlas_2018",
+             pattern = "woa18_all*")
+
+
+print(file_list)
+
+# Keep grid cells of WOA18 surface and deep data sets, to join with
+
+WOA18_nuts_O2 <-
+  WOA18_sal_tem %>%
+  select(lon, lat, depth, basin, basin_AIP)
+
+WOA18_nuts_O2_surface <-
+  WOA18_sal_tem_surface %>%
+  select(lon, lat, depth, basin, basin_AIP)
+
+rm(WOA18_sal_tem, WOA18_sal_tem_surface)
+
+# file <- file_list[2]
+
+# read, plot and join data sets while looping over file list
+
+for (file in file_list) {
+  
+  # open file
+  WOA18 <- tidync(here::here("data/input/World_Ocean_Atlas_2018",
+                             file))
+  
+  WOA18_tibble <- WOA18 %>% hyper_tibble()
+  
+  # extract parameter name
+  parameter <- str_split(file, pattern = "00", simplify = TRUE)[1]
+  parameter <- str_split(parameter, pattern = "all_", simplify = TRUE)[2]
+  parameter <- paste(parameter, "_an", sep = "")
+  print(parameter)
+  
+  
+  WOA18_tibble <- WOA18_tibble  %>%
+    select(all_of(parameter),
+           lon, lat, depth) %>%
+    mutate(lon = if_else(lon < 20, lon + 360, lon))
+  
+  
+  # join with basin mask and remove data outside basin mask
+  WOA18_tibble <- inner_join(WOA18_tibble, basinmask_01)
+  
+  WOA18_nuts_O2 <- left_join(WOA18_nuts_O2, WOA18_tibble)
+  WOA18_nuts_O2_surface <- left_join(WOA18_nuts_O2_surface, WOA18_tibble)
+  
+
+  # plot maps
+  print(
+    p_map_climatology(
+      df = WOA18_tibble,
+      var = parameter)
+    )
+  
+  # plot sections
+  print(p_section_global(
+    df = WOA18_tibble,
+    var = parameter
+  ))
+  
+}
+
+
+```
+
+
+### Write/open file
+
+```{r write_WOA18_nuts_O2_predictor_file}
+
+WOA18_nuts_O2 %>% 
+  write_csv(here::here("data/interim",
+                       "WOA18_nuts_O2.csv"))
+
+WOA18_nuts_O2_surface %>%
+  write_csv(here::here("data/interim",
+                       "WOA18_nuts_O2_surface.csv"))
+
+```

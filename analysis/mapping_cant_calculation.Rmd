@@ -1,0 +1,403 @@
+---
+title: "Mapping cant"
+author: "Jens Daniel Müller"
+date:  "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  workflowr::wflow_html:
+    number_sections: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+editor_options:
+  chunk_output_type: console
+---
+
+```{r parent, child = here::here("analysis/child/setup.Rmd")}
+```
+
+# Libraries
+
+Loading libraries specific to the the analysis performed in this section.
+
+```{r load_libraries_specific, message=FALSE, warning=FALSE}
+library(seacarb)
+```
+
+# Predictor fields
+
+Currently, we use combined predictor fields:
+
+- WOA18: S, T, and derived variables
+- GLODAP16: Oxygen, PO4, NO3, Silicate, and derived variables
+
+```{r read_predictor_files}
+
+predictors <- 
+    read_csv(here::here("data/mapping",
+                         "W18_st_G16_opsn.csv"))
+
+predictors_surface <- 
+    read_csv(here::here("data/mapping",
+                         "W18_st_G16_opsn_surface.csv"))
+
+```
+
+# Atm. pCO2
+
+```{r read_atm_pCO2}
+
+co2_atm_tref <-
+  read_csv(here::here(
+    "data/interim",
+    "co2_atm_tref.csv"
+  ))
+
+```
+
+
+
+# Load MLR models
+
+```{r load_eMLR_models}
+
+lm_all_wide <-
+  read_csv(here::here("data/eMLR",
+                       "lm_all_wide.csv"))
+```
+
+# Merge MLRs + climatologies
+
+```{r merge_model_coeff_predictor_climatology}
+
+lm_all_wide <- lm_all_wide %>% 
+  mutate(model = str_remove(model, "Cstar ~ "))
+         
+cant <- full_join(predictors, lm_all_wide)
+
+rm(predictors, lm_all_wide)
+
+```
+
+# Map cant
+
+## Deep water
+
+## Apply MLRs to predictor
+
+```{r calculate_cant}
+
+cant <- b_cant(cant)
+
+cant <- cant %>%
+  mutate(cant_pos = if_else(cant < 0, 0, cant))
+
+```
+
+```{r calculate_predictor_contributions_to_cant}
+
+cant <- b_cant_predictor(cant)
+
+```
+
+### Sections by model
+
+Zonal sections plots are produced for every 20° longitude, each era and for all models individually and can be downloaded [here](https://github.com/jens-daniel-mueller/cant_eMLR/tree/master/output/figure/mapping){target="_blank"}.
+
+
+```{r cant_section_by_model_eras_lon, eval=FALSE}
+
+for (i_eras in unique(cant$eras)) {
+  # i_eras <- unique(cant$eras)[2]
+  cant_eras <- cant %>%
+    filter(eras == i_eras)
+  
+  for (i_lon in seq(20.5, 360, 20)) {
+    # i_lon <- seq(20.5, 360, 20)[7]
+    cant_eras_lon <- cant_eras %>%
+      filter(lon == i_lon)
+    
+    limits = max(abs(cant_eras_lon$cant)) * c(-1,1)
+    
+    cant_eras_lon %>%
+      ggplot(aes(lat, depth, col = cant)) +
+      geom_point() +
+      scale_color_scico(
+        name = "cant",
+        palette = "vik",
+        limit = limits
+      ) +
+      scale_y_reverse(limits = c(parameters$inventory_depth, NA)) +
+      scale_x_continuous(limits = c(-75, 65)) +
+      guides(fill = guide_colorsteps(barheight = unit(10, "cm"))) +
+      labs(title = paste("eras:", i_eras,
+                         "| lon:", i_lon,
+                         "|", parameters$Version_ID)) +
+      facet_wrap( ~ model, ncol = 5)
+    
+    ggsave(
+      here::here(
+        "output/figure/mapping",
+        paste(i_eras,
+              "lon",
+              i_lon,
+              "model_cant.png",
+              sep = "_")
+      ),
+      width = 17,
+      height = 9
+    )
+    
+  }
+}
+
+```
+
+
+## Surface water
+
+As outlined in Gruber et al. (2019), a transient equilibrium approach was applied to estimate cant in surface waters, assuming that the CO~2~ system in these waters has followed the increase in atmospheric CO~2~ closely. 
+
+Using eq 10.2.16 from OBD, the change in anthropogenic CO~2~ in the upper ocean was computed as:
+
+\Delta~t~C~ant,eq~(t2,ref − t1,ref) = 1∕γ ⋅ DIC/pCO2 ⋅ (pCO2atm (t2ref)− pCO2atm (t1ref))
+
+, where DIC and pCO~2~ are the in situ values, where γ is the buffer (Revelle) factor and where we evaluated the right-hand side using seacarb employing the Mehrbach constants as refitted by Dickson and Millero using the climatological values for temperature, salinity, DIC and Alk.
+
+### pCO~2~ climatology
+
+```{r calc_pCO2_climatology}
+
+# calculate pCO2 from talk and tco2 climatology
+predictors_surface <- predictors_surface %>% 
+  mutate(pCO2 = carb(flag = 15,
+                     var1 = TAlk*1e-6,
+                     var2 = TCO2*1e-6,
+                     S = sal,
+                     T = tem,
+                     P = depth/10,
+                     Pt = phosphate*1e-6,
+                     Sit = silicate*1e-6,
+                     k1k2 = "l")$pCO2)
+
+```
+
+
+```{r pCO2_climatology_map}
+
+p_map_climatology(
+  df = predictors_surface,
+  var = "pCO2")
+
+```
+
+
+```{r pCO2_climatology_sections}
+
+p_section_climatology_regular(
+  df = predictors_surface,
+  var = "pCO2")
+
+```
+
+
+### Revelle factor
+
+```{r calc_revelle_factor_climatology}
+
+predictors_surface <- predictors_surface %>% 
+  mutate(rev_fac = buffer(flag = 15,
+                     var1 = TAlk*1e-6,
+                     var2 = TCO2*1e-6,
+                     S = sal,
+                     T = tem,
+                     P = depth/10,
+                     Pt = phosphate*1e-6,
+                     Sit = silicate*1e-6,
+                     k1k2 = "l")$BetaD)
+
+```
+
+
+```{r revelle_factor_climatology_map}
+
+p_map_climatology(
+  df = predictors_surface,
+  var = "rev_fac")
+
+```
+
+
+```{r revelle_factor_climatology_sections}
+
+p_section_climatology_regular(
+  df = predictors_surface,
+  var = "rev_fac")
+
+```
+
+
+### C~ant~
+
+```{r cant_surface}
+
+# calculate increase in atm pCO2 between eras
+co2_atm_tref <- co2_atm_tref %>% 
+  arrange(pCO2_tref) %>% 
+  mutate(d_pCO2_tref = pCO2_tref - lag(pCO2_tref)) %>% 
+  drop_na() %>% 
+  mutate(eras = c("JGOFS_GO", "GO_new")) %>% 
+  select(eras, d_pCO2_tref)
+
+cant_surface <- full_join(predictors_surface, co2_atm_tref,
+                          by = character())
+
+# calculate cant
+cant_surface <- cant_surface %>% 
+  mutate(cant = (1 / rev_fac) * (TCO2 / pCO2) * d_pCO2_tref)
+
+# calculate positive cant
+cant_surface <- cant_surface %>%
+  mutate(cant_pos = if_else(cant < 0, 0, cant))
+
+```
+
+
+```{r cant_surface_climatology_map}
+
+p_map_climatology(
+  df = cant_surface,
+  var = "cant")
+
+```
+
+
+```{r cant_surface_climatology_sections}
+
+p_section_climatology_regular(
+  df = cant_surface,
+  var = "cant")
+
+```
+
+
+## Mean cant fields
+
+Mean and sd are calculated for cant in each grid cell (XYZ), basin and era combination. Calculations are performed for all cant values vs positive values only. This averaging step summarizes the information derived from ten best fitting MLRs. 
+
+### Deep water averaging
+
+```{r calculate_cant_predictor_mean}
+
+cant_predictor_average <- m_cant_predictor_model_average(cant)
+cant_predictor_average <- m_cut_gamma(cant_predictor_average, "gamma")
+
+```
+
+```{r calculate_cant_mean}
+
+cant_average <- m_cant_model_average(cant)
+rm(cant)
+
+```
+
+### Surface water averaging
+
+```{r calculate_cant_mean_surface}
+
+cant_surface_average <- m_cant_model_average(cant_surface)
+rm(cant_surface)
+
+```
+
+
+
+### Join surface and deep water
+
+```{r join_surface_deep_cant}
+
+cant_average <- full_join(cant_average, cant_surface_average)
+rm(cant_surface_average)
+
+cant_average <- m_cut_gamma(cant_average, "gamma")
+
+```
+
+
+## Mean cant sections
+
+For each basin and era combination, the zonal mean cant is calculated, again for all vs positive only values. Likewise, sd is calculated for the averaging of the mean basin fields.
+
+```{r calc_cant_zonal_mean_sections}
+
+cant_average <- left_join(cant_average,
+                          basinmask %>% select(-basin))
+
+cant_average_zonal <- m_cant_zonal_mean(cant_average)
+cant_average_zonal <- m_cut_gamma(cant_average_zonal, "gamma_mean")
+
+```
+
+## Mean cant sections by coefficient
+
+For each basin and era combination, the zonal mean cant is calculated by model coefficient.
+
+```{r Calculate_cant_predictor_mean_sections}
+
+cant_predictor_average <- full_join(cant_predictor_average,
+                                basinmask %>% select(-basin))
+
+cant_predictor_average_zonal <-
+  m_cant_predictor_zonal_mean(cant_predictor_average)
+
+cant_predictor_average_zonal <-
+  m_cut_gamma(cant_predictor_average_zonal, "gamma")
+
+```
+
+## Inventory calculation
+
+To calculate cant column inventories, we:  
+
+1. Multiple layer thickness with cant concentration to get a layer inventory
+2. For each horizontal grid cell and era, sum cant layer inventories from 150 - 3000 m
+
+Step 2 is performed again for all cant and positive cant values only
+
+```{r calculate_inventories}
+
+cant_inv <- m_cant_inv(cant_average)
+
+```
+
+
+# Write csv
+
+```{r write_cant_files}
+
+# cant %>%
+#     write_csv(here::here("data/output",
+#                          "cant.csv"))
+
+cant_average %>%
+    write_csv(here::here("data/output",
+                         "cant_3d.csv"))
+
+cant_predictor_average %>%
+    write_csv(here::here("data/output",
+                         "cant_predictor_3d.csv"))
+
+cant_average_zonal %>%
+    write_csv(here::here("data/output",
+                         "cant_zonal.csv"))
+
+cant_predictor_average_zonal %>%
+    write_csv(here::here("data/output",
+                         "cant_predictor_zonal.csv"))
+
+cant_inv %>%
+    write_csv(here::here("data/output",
+                         "cant_inv.csv"))
+
+```
+
+

@@ -1,0 +1,55 @@
+---
+title: "Atmospheric pCO2"
+author: "Jens Daniel Müller"
+date:  "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  workflowr::wflow_html:
+    number_sections: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+editor_options:
+  chunk_output_type: console
+---
+
+```{r parent, child = here::here("analysis/child/setup.Rmd")}
+```
+
+# Read data
+
+- Data source: `Globally averaged marine surface annual mean data` from [ESRL-NOAA](https://www.esrl.noaa.gov/gmd/ccgg/trends/gl_data.html)
+
+```{r read_atm_co2}
+
+co2_atm <- read_table2(here::here("data/input/pCO2_atmosphere",
+                              "co2_annmean_gl.txt"),
+                   col_names = FALSE, comment = "#")
+
+co2_atm <- co2_atm %>% 
+  select(-X3)
+
+names(co2_atm) <- c("year", "pCO2")
+  
+  
+```
+
+# Time series
+
+```{r co2_atm_time_series}
+
+co2_atm %>% 
+  ggplot(aes(year, pCO2)) +
+  geom_path() +
+  geom_point()
+
+```
+
+# Write clean file
+
+```{r write_co2_atm_clean_file}
+
+co2_atm %>% 
+  write_csv(here::here("data/interim",
+                       "co2_atm.csv"))
+
+```

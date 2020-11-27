@@ -1,0 +1,109 @@
+---
+title: "Mapping cstar"
+author: "Jens Daniel Müller"
+date:  "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  workflowr::wflow_html:
+    number_sections: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+editor_options:
+  chunk_output_type: console
+---
+
+```{r parent, child = here::here("analysis/child/setup.Rmd")}
+```
+
+# Predictor fields
+
+Currently, we use combined predictor fields:
+
+- WOA18: S, T, and derived variables
+- GLODAP16: Oxygen, PO4, NO3, Silicate, and derived variables
+
+```{r read_predictor_file}
+
+predictors <- 
+    read_csv(here::here("data/mapping",
+                         "W18_st_G16_opsn.csv"))
+
+```
+
+
+# Load MLR models
+
+```{r load_eMLR_models}
+
+lm_all_wide_cstar <-
+  read_csv(here::here("data/eMLR",
+                       "lm_all_wide_cstar.csv"))
+
+```
+
+# Merge MLRs + climatologies
+
+```{r merge_model_coeff_predictor_climatology}
+
+lm_all_wide_cstar <- lm_all_wide_cstar %>% 
+  mutate(model = str_remove(model, "cstar ~ "))
+         
+cstar <- full_join(predictors, lm_all_wide_cstar)
+
+rm(predictors, lm_all_wide_cstar)
+
+```
+
+
+# Map cstar
+
+## Apply MLRs to predictor
+
+```{r calculate_cstar}
+
+cstar <- b_cstar_model(cstar)
+
+cstar <- cstar %>% 
+  select(lon, lat, depth, era, basin, cstar, gamma)
+
+```
+
+```{r cstar_average}
+
+cstar_average <- m_cstar_model_average(cstar)
+
+rm(cstar)
+
+cstar_average <- m_cut_gamma(cstar_average, "gamma")
+
+```
+
+## Mean cstar sections
+
+For each basin and era combination, the zonal mean cstar is calculated. Likewise, sd is calculated for the averaging of the mean basin fields.
+
+```{r Calculate_cstar_mean_sections}
+
+cstar_average <- left_join(cstar_average,
+                           basinmask %>% select(-basin))
+
+
+cstar_average_zonal <- m_cstar_zonal_mean(cstar_average)
+
+cstar_average_zonal <- m_cut_gamma(cstar_average_zonal, "gamma_mean")
+
+```
+
+# Write csv
+
+```{r write_cstar_files}
+
+cstar_average %>%
+    write_csv(here::here("data/output",
+                         "cstar_3d.csv"))
+
+cstar_average_zonal %>%
+    write_csv(here::here("data/output",
+                         "cstar_zonal.csv"))
+
+```

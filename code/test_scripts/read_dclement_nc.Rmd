@@ -1,0 +1,135 @@
+---
+title: "WOA13 - basin mask and neutral densities"
+author: "Jens Daniel Müller"
+date:  "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  workflowr::wflow_html:
+    number_sections: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include = FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+```{r library, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(lubridate)
+library(tidync)
+library(stars)
+```
+
+
+```{r ggplot_theme, include = FALSE}
+theme_set(theme_bw())
+```
+
+# Data source
+- Data source: nd_mask.nc provided by Dominic Clement
+
+# data
+
+## Read ncdfs
+
+```{r read_WOA18}
+
+# temperature
+
+nd_mask <- tidync(here::here("data/dclement",
+                          "nd_mask.nc"))
+
+nd_mask
+
+nd_mask_tibble <- nd_mask %>% hyper_tibble()
+
+nd_mask_tibble <- nd_mask_tibble %>% 
+  mutate(gamma = if_else(gamma == -999, NaN, gamma))
+
+```
+
+
+```{r set_criteria_horizons_sections}
+
+depth_surface_selection <- c(0)
+Atl_lon <- 335.5 # subtract 360 from value used for GLODAP climatology
+Pac_lon <- 190.5 # subtract 360 from value used for GLODAP climatology
+
+```
+
+Below, following subsets of the climatologies are plotted for all relevant parameters:  
+
+- Horizontal planes at `r depth_surface_selection`m
+- Meridional sections at longitudes:
+  - Atlantic: `r Atl_lon`
+  - Pacific: `r Pac_lon`
+
+Section locations are indicated as white lines in maps.
+
+Please note that longitudes in the climatologies range from -179.5 - 179.5, which is different from GLODAP mapped climatologies.
+
+
+
+## Temperature plots
+
+### Surface map
+
+```{r temperature_surface_nd_mask_map}
+
+nd_mask_tibble %>% 
+  filter(depth == 0,
+         mask != 1) %>% 
+  ggplot(aes(longitude, latitude, fill = as.factor(mask))) +
+  geom_raster() +
+  geom_vline(xintercept = c(Atl_lon, Pac_lon), col = "white") +
+  coord_quickmap(expand = 0) +
+  scale_fill_brewer(palette = "Set1") +
+  theme(legend.position = "top")
+
+
+```
+
+### Section
+
+```{r gamma_section_nd_mask_map}
+
+nd_mask_tibble %>% 
+  filter(longitude == Atl_lon) %>% 
+  ggplot(aes(latitude, depth, z = gamma)) +
+  geom_contour_filled() +
+  scale_y_reverse() +
+  coord_cartesian(expand = 0) +
+  theme(legend.position = "top")
+
+```
+
+
+## Write file
+
+```{r write_WOA_predictor_file, eval=FALSE}
+
+# WOA18_predictors <- full_join(WOA_sal_tibble, WOA_tem_tibble)
+# 
+# WOA18_predictors %>% 
+#   write_csv(here::here("data/World_Ocean_Atlas_2018/_summarized_files",
+#                        "WOA18_predictors.csv"))
+# 
+# rm(WOA18_predictors, WOA_sal, WOA_sal_tibble, WOA_tem, WOA_tem_tibble)
+
+```
+
+
+# Open tasks
+
+- basin mask not yet applied to WOA18 data
+
+# Questions
+
+- Which version of the WOA to be used
+  - Fields (currently: objectively analyzed mean)
+  - Decades (currently: oall decades)
+  - Grid (currently: o1 deg resolution)
+- How to merge with GLODAP climatology (currently interpolated to GLODAP depth)

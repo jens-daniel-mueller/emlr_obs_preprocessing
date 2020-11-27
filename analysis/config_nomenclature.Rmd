@@ -1,0 +1,80 @@
+---
+title: "Nomenclature"
+author: "Jens Daniel Müller"
+date:  "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  workflowr::wflow_html:
+    number_sections: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include = FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+# Variables
+
+Variables from source data files are converted and harmonized to satisfy following naming convention throughout the project:
+
+- coordinates on 1x1 degree grid
+  - lon: longitude (20.5 to 379.5 °E)
+  - lat: latitude (-89.5 to 89.5 °N)
+- depth: water depth (m)
+- bottomdepth: bottomdepth (m)
+
+- sal: salinity (Check scales!)
+- tem: insitu temperature in deg C (Check scales!)
+- theta: potential temperature in deg C (Check scales!)
+- gamma: neutral density
+
+- phosphate
+- nitrate
+- silicate
+- oxygen
+- aou
+
+- tco2
+- talk
+
+- cant: anthropogenic CO~2~ (mol kg^-1^)
+- cstar: C* (mol kg^-1^)
+
+# Variable and data set post fix
+
+- _mean: mean value
+- _sd: standard deviation
+- _inv: column inventory
+- _pos: positive values only (ie negative values set to zero)
+
+# Data sets / objects
+
+# Chunk label naming within .Rmd files
+
+- read_xxx: open new data set
+- clean_xxx: subset rows of a data set
+- calculate_xxx: perform calculations on a data set (add or modify rows)
+- write_xxx: write summarized data file to disk
+- chunks producing plots are named according to the plot content, because the generated plot file will be named after the chunk
+
+# Functions
+
+Functions are stored in separate .R files. This include function for:
+
+- mapping with a prefix "m_"
+- plotting with a prefix "p_"
+- biogeochemical calculations with a prefix "b_"
+
+# Folder structure
+
+- data: contains all data, not synced to Github
+  - subfolder for each data product
+    - _summarized_data_files: data sets created along analysis
+
+
+# Open tasks
+
+- check temperature and salinity scales 

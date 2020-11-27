@@ -1,0 +1,925 @@
+---
+title: "GLODAPv2_2020"
+author: "Jens Daniel Müller"
+date:  "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  workflowr::wflow_html:
+    number_sections: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+editor_options:
+  chunk_output_type: console
+---
+
+```{r parent, child = here::here("analysis/child/setup.Rmd")}
+```
+
+# Libraries
+
+Loading libraries specific to the the analysis performed in this section.
+
+```{r load_libraries_specific, message=FALSE, warning=FALSE}
+library(lubridate)
+```
+
+# Read files
+
+Main data source for this project is `GLODAPv2.2020_Merged_Master_File.csv` downloaded from [glodap.info](https://www.glodap.info/){target="_blank"} in June 2020.
+
+```{r read_GLODAPv2_2020_merged_master_file}
+
+GLODAP <-
+  read_csv(
+    here::here(
+      "data/input/GLODAPv2_2020",
+      "GLODAPv2.2020_Merged_Master_File.csv"
+    ),
+    na = "-9999",
+    col_types = cols(.default = col_double())
+  )
+
+
+```
+
+```{r harmonize_variables}
+
+# select relevant columns
+GLODAP <- GLODAP %>%
+  select(cruise:talkqc)
+
+# create date column
+GLODAP <- GLODAP %>%
+  mutate(date = ymd(paste(year, month, day))) %>%
+  relocate(date)
+
+# harmonize column names
+GLODAP <- GLODAP  %>%
+  rename(sal = salinity,
+         tem = temperature)
+
+# harmonize coordinates
+GLODAP <- GLODAP  %>%
+  rename(lon = longitude,
+         lat = latitude) %>%
+  mutate(lon = if_else(lon < 20, lon + 360, lon))
+
+# remove irrelevant columns
+GLODAP <- GLODAP %>%
+  select(-c(month:minute,
+            maxsampdepth, bottle, sigma0:sigma4,
+            nitrite:nitritef))
+
+```
+
+
+# Data preparation
+
+## Horizontal gridding
+
+For merging with other data sets, all observations were grouped into latitude intervals of:
+
+- 1° x 1°
+
+```{r grid_spatially_1x1}
+
+GLODAP <- m_grid_horizontal(GLODAP)
+
+```
+
+
+## Reference eras
+
+Samples were assigned to following eras:
+
+- JGOFS_WOCE:
+`r parameters$year_JGOFS_start` - `r parameters$year_JGOFS_end`
+
+- GO_SHIP:
+`r parameters$year_JGOFS_end+1` - `r parameters$year_GOSHIP_end`
+
+- new_era:    > `r parameters$year_GOSHIP_end+1`
+
+
+```{r assign_eras}
+
+GLODAP <- GLODAP %>%
+  filter(year >= parameters$year_JGOFS_start) %>% 
+  mutate(era = "JGOFS_WOCE",
+         era = if_else(year > parameters$year_JGOFS_end, "GO_SHIP", era),
+         era = if_else(year > parameters$year_GOSHIP_end, "new_era", era))
+
+GLODAP <- GLODAP %>% 
+  mutate(era = factor(era, c("JGOFS_WOCE", "GO_SHIP", "new_era")))
+
+```
+
+
+## Spatial boundaries
+
+### Depth
+
+Observations collected shallower than:
+
+- minimum sampling depth:  `r parameters$depth_min`m
+
+were excluded from the analysis to avoid seasonal bias.
+
+```{r apply_depth_min}
+
+GLODAP <- GLODAP %>% 
+  filter(depth >= parameters$depth_min)
+
+```
+
+### Bottomdepth
+
+Following restriction was considered, but is currently not implemented:
+
+- minimum bottom depth:  `r parameters$bottomdepth_min`m
+
+
+```{r apply_bottomdepth_min, eval=FALSE}
+
+GLODAP <- GLODAP %>% 
+  filter(bottomdepth >= parameters$bottomdepth_min)
+
+```
+
+
+### Basin mask
+
+The basin mask from the World Ocean Atlas was used. For details consult the data base subsection for [WOA18](https://jens-daniel-mueller.github.io/Cant_eMLR/read_World_Ocean_Atlas_2018.html) data.
+
+Please note that some GLODAP observations were made outside the WOA18 basin mask (i.e. in marginal seas) and will be removed for further analysis.
+
+```{r join_GLODAP_basin_mask}
+
+# use only data inside basinmask
+GLODAP <- inner_join(GLODAP, basinmask)
+
+```
+
+## Flags and missing data
+
+Only rows (samples) for which all relevant parameters are available were selected, ie NA's were removed.
+
+According to Olsen et al (2020), flags within the merged master file identify:
+
+- f:  
+
+  - 2: Acceptable
+  - 0: Interpolated (nutrients/oxygen) or calculated (CO[2] parameters) value
+  - 9: Data not used (so, only NA data should have this flag)
+  
+  
+- qc:  
+
+  - 1: Adjusted or unadjusted data
+  - 0: Data appear of good quality but have not been subjected to full secondary QC
+  - data with poor or uncertain quality are excluded.
+
+Following flagging criteria were taken into account:
+
+- flag_f:     `r parameters$flag_f`
+- flag_qc:    `r parameters$flag_qc`
+
+Summary statistics were calculated during cleaning process.
+
+### tco2
+
+#### NA
+
+The vast majority of rows is removed due to missing tco2 observations.
+
+```{r tco2_na_subset}
+
+GLODAP <- GLODAP %>% 
+  filter(!is.na(tco2))
+
+##
+
+GLODAP_stats <- GLODAP %>% 
+  summarise(tco2_values = n())
+
+##
+
+GLODAP_obs_grid <- GLODAP %>% 
+  count(lat, lon, era) %>% 
+  mutate(cleaning_level = "tco2_values")
+
+```
+
+```{r WOA18_basin_mask_GLODAP_observations_map}
+
+GLODAP_obs <- GLODAP %>% 
+  group_by(lat, lon) %>% 
+  summarise(n = n()) %>% 
+  ungroup()
+
+map +
+  geom_raster(data = basinmask, aes(lon, lat, fill = basin)) +
+  geom_raster(data = GLODAP_obs, aes(lon, lat)) +
+  scale_fill_brewer(palette = "Dark2") +
+  theme(legend.position = "top",
+        legend.title = element_blank())
+
+rm(GLODAP_obs)
+
+```
+
+
+#### f flag
+
+```{r tco2_f_subset, fig.asp=1}
+
+GLODAP_obs_grid_temp <- GLODAP %>%
+  count(lat, lon, era, tco2f)
+
+map +
+  geom_raster(data = GLODAP_obs_grid_temp, aes(lon, lat, fill = n)) +
+  scale_fill_viridis_c(option = "magma",
+                       direction = -1,
+                       trans = "log10") +
+  facet_grid(era ~ tco2f) +
+  theme(legend.position = "top")
+
+rm(GLODAP_obs_grid_temp)
+
+GLODAP <- GLODAP %>%
+  filter(tco2f %in% parameters$flag_f)
+
+
+```
+
+#### qc flag
+
+```{r tco2_qc_subset, fig.asp=1}
+
+GLODAP_obs_grid_temp <- GLODAP %>%
+  count(lat, lon, era, tco2qc)
+
+map +
+  geom_raster(data = GLODAP_obs_grid_temp, aes(lon, lat, fill = n)) +
+  scale_fill_viridis_c(option = "magma",
+                       direction = -1,
+                       trans = "log10") +
+  facet_grid(era ~ tco2qc) +
+  theme(legend.position = "top")
+
+##
+
+GLODAP <- GLODAP %>%
+  filter(tco2qc %in% parameters$flag_qc)
+
+GLODAP_stats_temp <- GLODAP %>%
+  summarise(tco2_flag = n())
+
+GLODAP_stats <- cbind(GLODAP_stats, GLODAP_stats_temp)
+rm(GLODAP_stats_temp)
+
+##
+
+GLODAP_obs_grid_temp <- GLODAP %>%
+  count(lat, lon, era) %>%
+  mutate(cleaning_level = "tco2_flag")
+
+GLODAP_obs_grid <-
+  bind_rows(GLODAP_obs_grid, GLODAP_obs_grid_temp)
+
+rm(GLODAP_obs_grid_temp)
+
+```
+
+
+### talk
+
+#### NA
+
+Quite a few tco2 observations are discarded, due to missing talk data, in particular in the JGOFS/WOCE era. However, there seems to be a high number of observations remaining from the affected cruises, so that the coverage does not seem to be reduced drastically.
+
+```{r talk_na_subset, fig.asp=1}
+
+GLODAP <- GLODAP %>% 
+  mutate(talkna = if_else(is.na(talk), "NA", "Value"))
+
+GLODAP_obs_grid_temp <- GLODAP %>%
+  count(lat, lon, era, talkna)
+
+map +
+  geom_raster(data = GLODAP_obs_grid_temp, aes(lon, lat, fill = n)) +
+  scale_fill_viridis_c(option = "magma",
+                       direction = -1,
+                       trans = "log10") +
+  facet_grid(era ~ talkna) +
+  theme(legend.position = "top")
+
+GLODAP <- GLODAP %>% 
+  select(-talkna) %>% 
+  filter(!is.na(talk))
+
+##
+
+GLODAP_stats_temp <- GLODAP %>% 
+  summarise(talk_values = n())
+
+GLODAP_stats <- cbind(GLODAP_stats, GLODAP_stats_temp)
+rm(GLODAP_stats_temp)
+
+##
+
+GLODAP_obs_grid_temp <- GLODAP %>% 
+  count(lat, lon, era) %>% 
+  mutate(cleaning_level = "talk_values")
+
+GLODAP_obs_grid <-
+  bind_rows(GLODAP_obs_grid, GLODAP_obs_grid_temp)
+
+rm(GLODAP_obs_grid_temp)
+
+
+```
+
+#### f flag
+
+Restricting the f flag to 2 would results in data gaps in the south-east Pacific. Interpolated or calculated data (f flag 0) are therefore included.
+
+```{r talk_f_subset, fig.asp=1}
+
+GLODAP_obs_grid_temp <- GLODAP %>%
+  count(lat, lon, era, talkf)
+
+map +
+  geom_raster(data = GLODAP_obs_grid_temp, aes(lon, lat, fill = n)) +
+  scale_fill_viridis_c(option = "magma",
+                       direction = -1,
+                       trans = "log10") +
+  facet_grid(era ~ talkf) +
+  theme(legend.position = "top",
+        legend.title = element_blank())
+
+
+# ###
+
+GLODAP <- GLODAP %>%
+  filter(talkf %in% parameters$flag_f)
+
+
+```
+
+#### qc flag
+
+```{r talk_qc_subset, fig.asp=1}
+
+GLODAP_obs_grid_temp <- GLODAP %>%
+  count(lat, lon, era, talkqc)
+
+map +
+  geom_raster(data = GLODAP_obs_grid_temp, aes(lon, lat, fill = n)) +
+  scale_fill_viridis_c(option = "magma",
+                       direction = -1,
+                       trans = "log10") +
+  facet_grid(era ~ talkqc) +
+  theme(legend.position = "top",
+        legend.title = element_blank())
+
+###
+
+GLODAP <- GLODAP %>%
+  filter(talkqc %in% parameters$flag_qc)
+##
+
+GLODAP_stats_temp <- GLODAP %>%
+  summarise(talk_flag = n())
+
+GLODAP_stats <- cbind(GLODAP_stats, GLODAP_stats_temp)
+rm(GLODAP_stats_temp)
+
+##
+
+GLODAP_obs_grid_temp <- GLODAP %>%
+  count(lat, lon, era) %>%
+  mutate(cleaning_level = "talk_flag")
+
+GLODAP_obs_grid <-
+  bind_rows(GLODAP_obs_grid, GLODAP_obs_grid_temp)
+
+rm(GLODAP_obs_grid_temp)
+
+```
+
+
+### Phosphate
+
+#### NA
+
+Quite a few tco2/talk observations are discarded, due to missing phosphate data. However, there seems to be a high number of observations remaining from the affected cruises, so that the coverage does not seem to be reduced drastically.
+
+```{r phosphate_na_subset, fig.asp=1}
+
+GLODAP <- GLODAP %>% 
+  mutate(phosphatena = if_else(is.na(phosphate), "NA", "Value"))
+
+GLODAP_obs_grid_temp <- GLODAP %>%
+  count(lat, lon, era, phosphatena)
+
+map +
+  geom_raster(data = GLODAP_obs_grid_temp, aes(lon, lat, fill = n)) +
+  scale_fill_viridis_c(option = "magma",
+                       direction = -1,
+                       trans = "log10") +
+  facet_grid(era ~ phosphatena) +
+  theme(legend.position = "top")
+
+GLODAP <- GLODAP %>% 
+  select(-phosphatena) %>% 
+  filter(!is.na(phosphate))
+
+##
+
+GLODAP_stats_temp <- GLODAP %>% 
+  summarise(phosphate_values = n())
+
+GLODAP_stats <- cbind(GLODAP_stats, GLODAP_stats_temp)
+rm(GLODAP_stats_temp)
+
+##
+
+GLODAP_obs_grid_temp <- GLODAP %>% 
+  count(lat, lon, era) %>% 
+  mutate(cleaning_level = "phosphate_values")
+
+GLODAP_obs_grid <-
+  bind_rows(GLODAP_obs_grid, GLODAP_obs_grid_temp)
+
+rm(GLODAP_obs_grid_temp)
+
+
+```
+
+#### f flag
+
+Restricting the f flag to 2 would not drastically reduce available data. Interpolated or calculated data (f flag 0) are therefore included.
+
+```{r phosphate_f_subset, fig.asp=1}
+
+GLODAP_obs_grid_temp <- GLODAP %>%
+  count(lat, lon, era, phosphatef)
+
+map +
+  geom_raster(data = GLODAP_obs_grid_temp, aes(lon, lat, fill = n)) +
+    scale_fill_viridis_c(option = "magma",
+                       direction = -1,
+                       trans = "log10") +
+  facet_grid(era~phosphatef) +
+  theme(legend.position = "top",
+        legend.title = element_blank())
+
+###
+
+GLODAP <- GLODAP %>%
+  filter(phosphatef %in% parameters$flag_f)
+
+
+```
+
+#### qc flag
+
+Phosphate data for which secondary quality was not applied (qc flag 0) were removed.
+
+```{r phosphate_qc_subset, fig.asp=1}
+
+GLODAP_obs_grid_temp <- GLODAP %>%
+  count(lat, lon, era, phosphateqc)
+
+map +
+  geom_raster(data = GLODAP_obs_grid_temp, aes(lon, lat, fill = n)) +
+    scale_fill_viridis_c(option = "magma",
+                       direction = -1,
+                       trans = "log10") +
+  facet_grid(era~phosphateqc) +
+  theme(legend.position = "top",
+        legend.title = element_blank())
+
+
+###
+
+GLODAP <- GLODAP %>%
+  filter(phosphateqc %in% parameters$flag_qc)
+
+##
+
+GLODAP_stats_temp <- GLODAP %>%
+  summarise(phosphate_flag = n())
+
+GLODAP_stats <- cbind(GLODAP_stats, GLODAP_stats_temp)
+rm(GLODAP_stats_temp)
+
+##
+
+GLODAP_obs_grid_temp <- GLODAP %>%
+  count(lat, lon, era) %>%
+  mutate(cleaning_level = "phosphate_flag")
+
+GLODAP_obs_grid <-
+  bind_rows(GLODAP_obs_grid, GLODAP_obs_grid_temp)
+
+rm(GLODAP_obs_grid_temp)
+
+```
+
+
+
+### eMLR variables
+
+Rows with missing eMLR variables were removed, only the qc flag was considered.
+
+```{r eMLR_subset}
+
+GLODAP <- GLODAP %>% 
+  filter(!is.na(tem))
+
+##
+  
+GLODAP <- GLODAP %>% 
+  filter(!is.na(sal))
+
+GLODAP <- GLODAP %>%
+  filter(salinityf %in% parameters$flag_f)
+
+GLODAP <- GLODAP %>%
+  filter(salinityqc %in% parameters$flag_qc)
+
+##
+  
+GLODAP <- GLODAP %>% 
+  filter(!is.na(silicate))
+
+GLODAP <- GLODAP %>%
+  filter(silicatef %in% parameters$flag_f)
+
+GLODAP <- GLODAP %>%
+  filter(silicateqc %in% parameters$flag_qc)
+##
+  
+GLODAP <- GLODAP %>% 
+  filter(!is.na(oxygen))
+
+GLODAP <- GLODAP %>%
+  filter(oxygenf %in% parameters$flag_f)
+
+GLODAP <- GLODAP %>%
+  filter(oxygenqc %in% parameters$flag_qc)
+##
+
+GLODAP <- GLODAP %>% 
+  filter(!is.na(aou))
+
+GLODAP <- GLODAP %>%
+  filter(aouf %in% parameters$flag_f)
+##
+  
+GLODAP <- GLODAP %>% 
+  filter(!is.na(nitrate))
+
+GLODAP <- GLODAP %>%
+  filter(nitratef %in% parameters$flag_f)
+
+GLODAP <- GLODAP %>%
+  filter(nitrateqc %in% parameters$flag_qc)
+##
+
+GLODAP <- GLODAP %>% 
+  filter(!is.na(depth))
+
+GLODAP <- GLODAP %>% 
+  filter(!is.na(gamma))
+
+##
+
+GLODAP_stats_temp <- GLODAP %>% 
+  summarise(eMLR_variables = n())
+
+GLODAP_stats <- cbind(GLODAP_stats, GLODAP_stats_temp)
+
+rm(GLODAP_stats_temp)
+
+##
+
+GLODAP_obs_grid_temp <- GLODAP %>% 
+  count(lat, lon, era) %>% 
+  mutate(cleaning_level = "eMLR_variables")
+
+GLODAP_obs_grid <-
+  bind_rows(GLODAP_obs_grid, GLODAP_obs_grid_temp)
+
+rm(GLODAP_obs_grid_temp)
+
+
+```
+
+```{r remove_flag_columns}
+
+GLODAP <- GLODAP %>% 
+  select(-ends_with(c("f", "qc")))
+
+```
+
+
+### Manual adjustment A16 cruise
+
+For harmonization with Gruber et al. (2019), cruises 1041 (A16N) and 1042 (A16S) were grouped into the GO_SHIP area despite taking place in 2013/14.
+
+```{r GLODAP_Atl_cruises_2013_2014_map}
+
+GLODAP_cruises <- GLODAP %>% 
+  filter(basin == "Atlantic",
+         year %in% c(2013, 2014)) %>% 
+  count(lat, lon, cruise)
+
+map +
+  geom_raster(data = GLODAP_cruises, aes(lon, lat, fill = as.factor(cruise))) +
+  scale_fill_brewer(palette = "Dark2") +
+  theme(legend.position = "top",
+        legend.title = element_blank())
+
+rm(GLODAP_cruises)
+
+```
+
+
+```{r switch_eras_manually}
+
+GLODAP <- GLODAP %>%
+  mutate(era = as.character(era)) %>% 
+  mutate(era = if_else(cruise %in% c(1041, 1042),
+                      "GO_SHIP", era))
+
+GLODAP <- GLODAP %>% 
+  mutate(era = factor(era, c("JGOFS_WOCE", "GO_SHIP", "new_era")))
+
+```
+
+## Create clean observations grid
+
+```{r create_clean_obs_grid}
+
+GLODAP_obs_grid_clean <- GLODAP %>% 
+  count(lat, lon) %>% 
+  select(-n)
+
+```
+
+
+
+## Write summary file
+ 
+```{r write_clean_data_files}
+
+GLODAP_stats_long <- GLODAP_stats %>%
+  pivot_longer(1:length(GLODAP_stats),
+               names_to = "parameter",
+               values_to = "n")
+
+GLODAP_stats_long  %>%  write_csv(
+  here::here(
+    "data/interim",
+    "GLODAPv2.2020_stats.csv"
+  )
+)
+
+##
+
+GLODAP_obs_grid_clean %>% 
+  write_csv(
+    here::here(
+      "data/interim",
+      "GLODAPv2.2020_clean_obs_grid.csv"
+    )
+  )
+
+##
+
+GLODAP <- GLODAP %>% 
+  select(year, date, era, basin, lat, lon, cruise,
+         bottomdepth, depth, tem, sal, gamma,
+         tco2, talk, phosphate,
+         oxygen, aou, nitrate, silicate)
+
+GLODAP  %>%  write_csv(
+  here::here(
+    "data/interim",
+    "GLODAPv2.2020_clean.csv"
+  )
+)
+
+```
+
+
+# Overview plots
+
+## Cleaning stats
+
+Number of observations at various steps of data cleaning.
+
+```{r GLODAP_cleaning_stats}
+
+GLODAP_stats_long <- GLODAP_stats_long %>%
+  mutate(parameter = fct_reorder(parameter, n))
+
+GLODAP_stats_long %>% 
+  ggplot(aes(parameter, n/1000)) +
+  geom_col() +
+  coord_flip() +
+  labs(y = "n (1000)") +
+  theme(axis.title.y = element_blank())
+
+rm(GLODAP_stats_long)
+
+```
+
+
+## Assign coarse spatial grid
+
+For the following plots, the cleaned data set was re-opened and observations were gridded spatially to intervals of:  
+
+- 5° x 5°
+
+```{r grid_spatially_5x5}
+
+GLODAP <- m_grid_horizontal_coarse(GLODAP)
+
+```
+
+
+## Histogram Zonal coverage
+
+```{r coverage_histogram_zonal}
+
+GLODAP_histogram_lat <- GLODAP %>%
+  group_by(era, lat_grid, basin) %>%
+  tally() %>%
+  ungroup()
+
+GLODAP_histogram_lat %>%
+  ggplot(aes(lat_grid, n, fill = era)) +
+  geom_col() +
+  scale_fill_brewer(palette = "Dark2") +
+  facet_wrap( ~ basin) +
+  coord_flip(expand = 0) +
+  theme(legend.position = "top",
+        legend.title = element_blank())
+
+rm(GLODAP_histogram_lat)
+
+```
+
+## Histogram temporal coverage
+
+```{r coverage_histogram_temporal}
+
+GLODAP_histogram_year <- GLODAP %>%
+  group_by(year, basin) %>%
+  tally() %>%
+  ungroup()
+
+era_median_year <- GLODAP %>%
+  group_by(era) %>%
+  summarise(t_ref = median(year)) %>%
+  ungroup()
+
+era_median_year
+
+GLODAP_histogram_year %>%
+  ggplot() +
+  geom_vline(xintercept = c(
+    parameters$year_JGOFS_end + 0.5,
+    parameters$year_GOSHIP_end + 0.5
+  )) +
+  geom_col(aes(year, n, fill = basin)) +
+  geom_point(
+    data = era_median_year,
+    aes(t_ref, 0, shape = "Median year"),
+    size = 2,
+    fill = "white"
+  ) +
+  scale_fill_brewer(palette = "Dark2") +
+  scale_shape_manual(values = 24, name = "") +
+  scale_y_continuous() +
+  coord_cartesian(expand = 0) +
+  theme(
+    legend.position = "top",
+    legend.direction = "vertical",
+    legend.title = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+rm(GLODAP_histogram_year,
+   era_median_year)
+
+```
+
+## Zonal temporal coverage (Hovmoeller)
+
+```{r coverage_hovmoeller, fig.asp=1}
+
+GLODAP_hovmoeller_year <- GLODAP %>%
+  group_by(year, lat_grid, basin) %>%
+  tally() %>%
+  ungroup()
+
+GLODAP_hovmoeller_year %>%
+  ggplot(aes(year, lat_grid, fill = log10(n))) +
+  geom_tile() +
+  geom_vline(xintercept = c(1999.5, 2012.5)) +
+  scale_fill_viridis_c(option = "magma", direction = -1) +
+  facet_wrap( ~ basin, ncol = 1) +
+  theme(legend.position = "top",
+        axis.title.x = element_blank())
+
+rm(GLODAP_hovmoeller_year)
+
+```
+
+## Coverage maps by era
+
+### Subsetting process
+
+```{r coverage_maps_era_subsetting}
+
+GLODAP_obs_grid <- GLODAP_obs_grid %>%
+  mutate(era = factor(era, c("JGOFS_WOCE", "GO_SHIP", "new_era")),
+         cleaning_level = factor(
+           cleaning_level,
+           unique(GLODAP_obs_grid$cleaning_level)
+         ))
+
+map +
+  geom_raster(data = GLODAP_obs_grid %>%
+                filter(cleaning_level == "tco2_values") %>%
+                select(-cleaning_level),
+              aes(lon, lat, fill = "tco2_values")) +
+  geom_raster(data = GLODAP_obs_grid %>%
+                filter(cleaning_level != "tco2_values"),
+              aes(lon, lat, fill = "subset")) +
+  scale_fill_manual(values = c("red", "grey"), name = "") +
+  theme(legend.position = "top",
+        axis.title = element_blank())
+
+```
+
+```{r coverage_maps_era_subsetting_era_cleaning_level, fig.asp=1.5}
+
+map +
+  geom_raster(data = GLODAP_obs_grid %>%
+                filter(cleaning_level == "tco2_values") %>%
+                select(-cleaning_level),
+              aes(lon, lat, fill = "tco2_values")) +
+  geom_raster(data = GLODAP_obs_grid %>%
+                filter(cleaning_level != "tco2_values"),
+              aes(lon, lat, fill = "subset")) +
+  scale_fill_manual(values = c("red", "grey"), name = "") +
+  facet_grid(cleaning_level ~ era) +
+  theme(legend.position = "top",
+        axis.title = element_blank())
+
+```
+
+### eMLR variables
+
+Grey pixels refer to sampling locations filtered for availability of tco2 data only.
+
+```{r coverage_maps_era_clean, fig.asp=1.5}
+
+GLODAP <- GLODAP %>% 
+  mutate(era = factor(era, c("JGOFS_WOCE", "GO_SHIP", "new_era")))
+
+GLODAP_tco2_grid <- GLODAP %>%
+  count(lat, lon, era)
+
+map +
+  geom_raster(data = GLODAP_tco2_grid, aes(lon, lat), fill = "grey80") +
+  geom_bin2d(data = GLODAP,
+             aes(lon, lat),
+             binwidth = c(1,1)) +
+  scale_fill_viridis_c(option = "magma", direction = -1, trans = "log10",
+                       name = "log10(eMLR_variables)") +
+  facet_wrap(~era, ncol = 1) +
+  theme(legend.position = "top",
+        axis.title = element_blank())
+
+```
+
+# Exploratory data analysis
+
+```{r EDA_GLODAP_clean, eval=FALSE}
+
+source("code/eda.R")
+eda(GLODAP, "GLODAPv2_2020_clean")
+rm(eda)
+
+```
+
+The output of an automated Exploratory Data Analysis (EDA) performed with the package `DataExplorer` can be accessed here:
+
+[Link to EDA report of GLODAPv2_2020 raw data](https://jens-daniel-mueller.github.io/Cant_eMLR/EDA_report_GLODAPv2_2020_clean.html){target="_blank}

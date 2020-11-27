@@ -1,0 +1,171 @@
+---
+title: "Parameterization"
+author: "Jens Daniel Müller"
+date:  "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  workflowr::wflow_html:
+    number_sections: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include = FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+```{r library, message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+# Definition
+
+Following parameterizations were chosen to run analysis and display results:
+
+```{r define_parameters}
+
+depth_levels = c(0, 150, 500, 2000)
+
+depth_levels_33 <- c(
+  0,
+  10,
+  20,
+  30,
+  50,
+  75,
+  100,
+  125,
+  150,
+  200,
+  250,
+  300,
+  400,
+  500,
+  600,
+  700,
+  800,
+  900,
+  1000,
+  1100,
+  1200,
+  1300,
+  1400,
+  1500,
+  1750,
+  2000,
+  2500,
+  3000,
+  3500,
+  4000,
+  4500,
+  5000,
+  5500
+)
+
+slabs_Atl <-
+  c(
+    -Inf,
+    26.00,
+    26.50,
+    26.75,
+    27.00,
+    27.25,
+    27.50,
+    27.75,
+    27.85,
+    27.95,
+    28.05,
+    28.10,
+    28.15,
+    28.20,
+    Inf
+  )
+
+slabs_Ind_Pac <-
+  c(-Inf,
+    26.00,
+    26.50,
+    26.75,
+    27.00,
+    27.25,
+    27.50,
+    27.75,
+    27.85,
+    27.95,
+    28.05,
+    28.10,
+    Inf)
+
+longitude_sections_basin <- c(335.5, 190.5, 70.5)
+longitude_sections_regular <- seq(30.5, 380.5, 20)
+
+MLR_full_model <- "cstar ~ 
+                sal  + 
+                tem  + 
+                aou  + 
+                oxygen  + 
+                silicate  + 
+                phosphate  + 
+                phosphate_star"
+
+parameters <-
+  lst(
+    Version_ID = "V_101",
+    flag_f = c(2, 0),
+    flag_qc = 1,
+    depth_min = 150,
+    depth_shallow_max = 500,
+    bottomdepth_min = 500,
+    lat_max = 65,
+    lat_min = -85,
+    gamma_min = 26,
+    year_JGOFS_start = 1981,
+    year_JGOFS_end = 1999,
+    year_GOSHIP_end = 2012,
+    lon_Atl_section = 335.5,
+    lon_Pac_section = 190.5,
+    lon_Ind_section = 70.5,
+    lat_Atl_profile = 40.5,
+    lat_section_N = 59.5,
+    lat_section_S = -59.5,
+    longitude_sections_basin = longitude_sections_basin,
+    longitude_sections_regular = longitude_sections_regular,
+    inventory_depth = 3000,
+    plotting_depth = 4500,
+    cruises_meridional = 1041,
+    MLR_full_model = MLR_full_model,
+    predictors_max = 5,
+    predictors_min = 2,
+    MLR_number = 10,
+    depth_levels = depth_levels,
+    depth_levels_33 = depth_levels_33,
+    slabs_Atl = slabs_Atl,
+    slabs_Ind_Pac = slabs_Ind_Pac,
+    breaks_cant_pos_inv = c(seq(0,16,2),Inf),
+    breaks_cant_inv = c(-Inf,seq(-16,16,2),Inf),
+    breaks_cant_inv_offset = c(-Inf, seq(-15, 15, 3), Inf),
+    breaks_cant_pos = c(seq(0, 18, 1), Inf),
+    breaks_cant = c(-Inf,seq(-16,16,2),Inf),
+    breaks_cant_offset = c(-Inf,seq(-8,8,),Inf),
+    rCP = 117,
+    rNP = 16,
+    rPO = 170,
+    rPO_offset = 1.95,
+    preind_atm_pCO2 = 280
+  )
+
+parameters
+
+```
+
+# Write file
+
+```{r write_parameters}
+
+parameters %>%
+  write_rds(here::here("data/auxillary",
+                       "parameters.rds"))
+
+```

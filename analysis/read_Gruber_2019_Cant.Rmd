@@ -1,0 +1,288 @@
+---
+title: "Anthropogenic CO2 from 1994 to 2007"
+author: "Jens Daniel Müller"
+date:  "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  workflowr::wflow_html:
+    number_sections: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r parent, child = here::here("analysis/child/setup.Rmd")}
+```
+
+# Libraries
+
+Loading libraries specific to the the analysis performed in this section.
+
+```{r load_libraries_specific, message=FALSE, warning=FALSE}
+library(tidync)
+```
+
+
+# Data source
+
+- Anthropogenic CO2 estimates (1994-2007) by Gruber et al. (2019) downloaded in August 2020 from [NOAA/NCEI Ocean Carbon Data System (OCADS)](https://www.nodc.noaa.gov/ocads/oceans/ndp_100/ndp100.html){target="_blank"}
+
+# Read ncdfs
+
+## Public data sets
+
+The publicly available data sets contain only positive Cant estimates.
+
+```{r read_Gruber_dcant}
+
+dcant <- tidync(here::here("data/input/Gruber_2019",
+                               "dcant_emlr_cstar_gruber_94-07_vs1.nc"))
+
+dcant <- dcant %>%  activate(DCANT_01)
+dcant <- dcant %>% hyper_tibble()
+
+# harmonize column names and coordinates
+dcant <- dcant %>% 
+  rename(lon = LONGITUDE,
+         lat = LATITUDE,
+         depth = DEPTH,
+         cant_pos = DCANT_01) %>% 
+  mutate(lon = if_else(lon < 20, lon + 360, lon))
+
+```
+
+```{r read_Gruber_dcant_inv}
+
+dcant_inv <- tidync(here::here("data/input/Gruber_2019",
+                               "inv_dcant_emlr_cstar_gruber_94-07_vs1.nc"))
+
+dcant_inv <- dcant_inv %>%  activate(DCANT_INV01)
+dcant_inv <- dcant_inv %>% hyper_tibble()
+
+# harmonize column names and coordinates
+dcant_inv <- dcant_inv %>% 
+  rename(lon = LONGITUDE,
+         lat = LATITUDE,
+         cant_pos_inv = DCANT_INV01) %>% 
+  mutate(lon = if_else(lon < 20, lon + 360, lon)) %>% 
+  mutate(eras = "JGOFS_GO")
+
+```
+
+## Raw data
+
+Internally available data sets also contain negative Cant estimates, as they are contained in the "raw" output of the eMLR mapping step.
+
+```{r read_Gruber_V101}
+
+V101 <- tidync(here::here("data/input/Gruber_2019",
+                               "Cant_V101new.nc"))
+
+V101 <- V101 %>%  activate(Cant)
+V101 <- V101 %>% hyper_tibble()
+
+# harmonize column names and coordinates
+V101 <- V101 %>% 
+  rename(lon = longitude,
+         lat = latitude,
+         cant = Cant) %>% 
+  filter(cant != -999) %>% 
+  mutate(lon = if_else(lon < 20, lon + 360, lon))
+
+```
+
+
+# Apply basin mask
+
+```{r apply_basin_mask}
+
+# basinmask <- basinmask %>% 
+#   select(-basin)
+
+dcant <- inner_join(dcant, basinmask)
+dcant_inv <- inner_join(dcant_inv, basinmask)
+V101 <- inner_join(V101, basinmask)
+
+```
+
+# Join pos and all Cant
+
+```{r join_V101_and_all}
+
+cant_3d <- inner_join(dcant, V101)
+cant_3d <- cant_3d %>% 
+  mutate(eras = "JGOFS_GO")
+
+rm(dcant, V101)
+
+```
+
+# Zonal mean section
+
+```{r calculate_zonal_mean_section}
+
+cant_zonal <- m_zonal_mean_section(cant_3d %>% select(-basin))
+
+```
+
+# Column inventory 
+
+## From 3d fields
+
+```{r calculate_column_inventory}
+
+cant_inv <- m_cant_inv(cant_3d)
+
+```
+
+### Cant - all
+
+```{r G19_cant_inv_maps}
+
+p_map_cant_inv(
+  df = cant_inv,
+  var = "cant_inv",
+  col = "divergent")
+
+```
+
+### Cant - pos
+
+```{r G19_cant_pos_inventory_maps}
+
+p_map_cant_inv(
+  df = cant_inv,
+  var = "cant_pos_inv")
+
+```
+
+## From pubished inventory data
+
+```{r G19_cant_pos_inventory_maps_published}
+
+p_map_cant_inv(
+  df = dcant_inv,
+  var = "cant_pos_inv")
+
+```
+
+## Published - 3d
+
+```{r G19_cant_offset_inventory}
+
+cant_offset <- inner_join(
+  cant_inv %>% rename(cant_re = cant_pos_inv),
+  dcant_inv %>% rename(cant_pub = cant_pos_inv)
+)
+
+cant_offset <- cant_offset %>% 
+  mutate(delta_cant = cant_re - cant_pub)
+
+p_map_cant_inv_offset(df = cant_offset,
+                      var = "delta_cant",
+                      breaks = seq(-3,3,0.25))
+
+rm(cant_offset, dcant_inv)
+```
+
+
+# Cant plots
+
+Below, following subsets of the climatologies are plotted for all relevant parameters:  
+
+- Horizontal planes at `r parameters$depth_levels`m
+- Meridional sections at longitudes: `r parameters$longitude_sections_basin`
+
+Section locations are indicated as white lines in maps.
+
+
+## Horizontal plane maps
+
+### All values
+
+```{r Cant_maps, fig.asp=0.6}
+
+p_map_climatology(
+  df = cant_3d,
+  var = "cant",
+  col = "divergent")
+
+```
+
+### Positive values
+
+```{r Cant_maps_V101, fig.asp=0.6}
+
+p_map_climatology(
+  df = cant_3d,
+  var = "cant_pos")
+
+```
+
+
+## Sections basin
+
+### All values
+
+```{r Cant_sections_V101, fig.asp=0.8}
+
+p_section_global(
+  df = cant_3d,
+  var = "cant",
+  col = "divergent")
+
+```
+
+### Positive values
+
+```{r Cant_sections, fig.asp=0.8}
+
+p_section_global(
+  df = cant_3d,
+  var = "cant_pos")
+```
+
+
+## Sections at regular longitudes
+
+### All values
+
+```{r Cant_sections_regular, fig.asp=2}
+
+p_section_climatology_regular(
+  df = cant_3d,
+  var = "cant",
+  col = "divergent")
+
+```
+
+### Positive values
+
+```{r Cant_sections_regular_V101, fig.asp=2}
+
+p_section_climatology_regular(
+  df = cant_3d,
+  var = "cant_pos")
+
+```
+
+# Write files
+
+```{r write_Gruber_Cant_file}
+
+cant_3d %>% 
+  write_csv(here::here("data/interim",
+                       "G19_cant_3d.csv"))
+
+cant_inv %>% 
+  write_csv(here::here("data/interim",
+                       "G19_cant_inv.csv"))
+
+cant_zonal %>% 
+  write_csv(here::here("data/interim",
+                       "G19_cant_zonal.csv"))
+
+```
+

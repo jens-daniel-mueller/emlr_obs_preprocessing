@@ -1,0 +1,120 @@
+---
+title: "World Ocean Atlas 2013 - D. Clement"
+author: "Jens Daniel Müller"
+date:  "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  workflowr::wflow_html:
+    number_sections: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+editor_options:
+  chunk_output_type: console
+---
+
+```{r parent, child = here::here("analysis/child/setup.Rmd")}
+```
+
+# Libraries
+
+Loading libraries specific to the the analysis performed in this section.
+
+```{r load_libraries_specific, message=FALSE, warning=FALSE}
+library(tidync)
+```
+
+
+# Data source
+
+Dominic Clement provided a netcdf file with the basin mask and neutral densities used in Clement and Gruber (2018), both derived from the World Ocean Atlas 2013.
+
+# Read ncdfs
+
+```{r read_WOA13_dclement}
+
+
+nd_mask <- tidync(here::here("data/input/World_Ocean_Atlas_2013_Clement",
+                             "nd_mask.nc"))
+
+nd_mask_tibble <- nd_mask %>% hyper_tibble()
+
+nd_mask_tibble <- nd_mask_tibble %>%
+  mutate(gamma = if_else(gamma == -999, NaN, gamma)) %>%
+  drop_na()
+
+nd_mask_tibble <- nd_mask_tibble %>%
+  rename(lat = latitude,
+         lon = longitude) %>%
+  mutate(lon = if_else(lon < 20, lon + 360, lon))
+
+
+
+```
+
+# Apply basin mask
+
+
+# Plots
+
+Below, following subsets of the climatologies are plotted for all relevant parameters:  
+
+- Horizontal planes at `r parameters$depth_levels`m
+- Meridional sections at longitudes: `r parameters$longitude_sections_basin`
+
+Section locations are indicated as white lines in maps.
+
+## Basin map
+
+Follwoing basin mask is not further used in this project.
+
+```{r basin_map_WOA13_dclement, fig.asp=0.6}
+
+nd_mask_tibble %>%
+  filter(depth == 0) %>%
+  ggplot(aes(lon, lat, fill = as.factor(mask))) +
+  geom_raster() +
+  geom_vline(
+    xintercept = c(
+      parameters$lon_Atl_section,
+      parameters$lon_Pac_section,
+      parameters$lon_Ind_section
+    ),
+    col = "white"
+  ) +
+  coord_quickmap(expand = 0) +
+  scale_fill_brewer(palette = "Set1",
+                    name = "basin mask") +
+  theme(legend.position = "top",
+        axis.title = element_blank())
+
+```
+
+## Neutral density
+
+### Maps
+
+```{r neutral_density_surface_WOA18_map}
+
+map_climatology(nd_mask_tibble, "gamma")
+
+```
+
+### Sections
+
+```{r neutral_density_section_WOA18}
+
+section_global(nd_mask_tibble, "gamma", "WOA13")
+
+```
+
+
+
+## Write file
+
+```{r write_WOA13_dclement_file, eval=FALSE}
+
+nd_mask_tibble %>%
+  write_csv(here::here("data/World_Ocean_Atlas_2013_Clement/_summarized_files",
+                       "WOA13_mask_gamma.csv"))
+
+```

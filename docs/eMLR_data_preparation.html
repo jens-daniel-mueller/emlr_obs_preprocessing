@@ -1,0 +1,2455 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Jens Daniel Müller" />
+
+
+<title>eMLR - data preparation</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Cant - eMLR(C*)</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Config
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="config_dependencies.html">Dependencies</a>
+    </li>
+    <li>
+      <a href="config_nomenclature.html">Nomenclature</a>
+    </li>
+    <li>
+      <a href="config_parameterization.html">Parameterization</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Data base
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="read_World_Ocean_Atlas_2018.html">World Ocean Atlas 2018</a>
+    </li>
+    <li>
+      <a href="read_GLODAPv2_2020.html">GLODAPv2_2020</a>
+    </li>
+    <li>
+      <a href="read_GLODAPv2_2016_MappedClimatologies.html">GLODAPv2_2016_MappedClimatologies</a>
+    </li>
+    <li>
+      <a href="read_Gruber_2019_Cant.html">Cant Gruber 2019</a>
+    </li>
+    <li>
+      <a href="read_Sabine_2004_Cant.html">Cant Sabine 2004</a>
+    </li>
+    <li>
+      <a href="read_CO2_atm.html">Atmospheric CO2</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    eMLR
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="eMLR_data_preparation.html">Data preparation</a>
+    </li>
+    <li>
+      <a href="eMLR_assumption_testing.html">Assumption testing</a>
+    </li>
+    <li>
+      <a href="eMLR_model_fitting.html">Model fitting</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Mapping
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="mapping_predictor_preparation.html">Predictor preparation</a>
+    </li>
+    <li>
+      <a href="mapping_cant_calculation.html">Cant calculation</a>
+    </li>
+    <li>
+      <a href="mapping_cstar_calculation.html">Cstar calculation</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="analysis_this_study_vs_Gruber_2019.html">This study vs Gruber 2019</a>
+    </li>
+    <li>
+      <a href="analysis_this_study.html">This study</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/jens-daniel-mueller/Cant_eMLR">
+    <span class="fa fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+<li>
+  <a href="https://jens-daniel-mueller.github.io/">
+    <span class="fa fa-home"></span>
+     
+    Jens' homepage
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">eMLR - data preparation</h1>
+<h4 class="author">Jens Daniel Müller</h4>
+<h4 class="date">27 November, 2020</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-11-27
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>Cant_eMLR/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200707code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200707)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200707code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200707)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuellerCanteMLRtree6a4175fc7e475579432bc349e74b470b67ffd0fftargetblank6a4175fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/Cant_eMLR/tree/6a4175fc7e475579432bc349e74b470b67ffd0ff" target="_blank">6a4175f</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuellerCanteMLRtree6a4175fc7e475579432bc349e74b470b67ffd0fftargetblank6a4175fa" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/Cant_eMLR/tree/6a4175fc7e475579432bc349e74b470b67ffd0ff" target="_blank">6a4175f</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rproj.user/
+    Ignored:    data/
+    Ignored:    dump/
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/eMLR_data_preparation.Rmd</code>) and HTML (<code>docs/eMLR_data_preparation.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/Cant_eMLR/blob/6a4175fc7e475579432bc349e74b470b67ffd0ff/analysis/eMLR_data_preparation.Rmd" target="_blank">6a4175f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+<td>
+repaired plot name
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/2e0f61917be238cfd0c5c97e7cdebb4646467f13/docs/eMLR_data_preparation.html" target="_blank">2e0f619</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/Cant_eMLR/blob/9b95647a7fe12469619fb257df40b603d8c56175/analysis/eMLR_data_preparation.Rmd" target="_blank">9b95647</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+<td>
+change binwidth of control plots
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/75e56a15c325a39a76602b1f7af27bf8a759488e/docs/eMLR_data_preparation.html" target="_blank">75e56a1</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/Cant_eMLR/blob/eb8366004928a2a5e1cb3357b8668fb3d3811cb2/analysis/eMLR_data_preparation.Rmd" target="_blank">eb83660</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+<td>
+change binwidth of control plots
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/bc24e64afc9d73f11e33e5dee96e725533aba834/docs/eMLR_data_preparation.html" target="_blank">bc24e64</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/Cant_eMLR/blob/cd6669ced1a271c0147a5e5f84d884a0a0dd73fb/analysis/eMLR_data_preparation.Rmd" target="_blank">cd6669c</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+<td>
+do not evaluate plot chunks
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/fdd65b60acad368eaf2fb356cf3d3807b00bc3a5/docs/eMLR_data_preparation.html" target="_blank">fdd65b6</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-26
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/Cant_eMLR/blob/bbffe704ecbae837ac3135507e7cfb4e9292d15b/analysis/eMLR_data_preparation.Rmd" target="_blank">bbffe70</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-26
+</td>
+<td>
+rebuild with plot output
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/fc04cae7e638b95c40ac4990824782ef1cfca493/docs/eMLR_data_preparation.html" target="_blank">fc04cae</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-26
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/cf8184b3ad8566821432efa82e49ef83c024509f/docs/eMLR_data_preparation.html" target="_blank">cf8184b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-25
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/Cant_eMLR/blob/e0f50cf4071b6d265c8ac7415b293183312a84be/analysis/eMLR_data_preparation.Rmd" target="_blank">e0f50cf</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-25
+</td>
+<td>
+added count plot for tref adjustment
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/47487dc90e1e36f859754bb1e16d7e6f61b47d81/docs/eMLR_data_preparation.html" target="_blank">47487dc</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-25
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/Cant_eMLR/blob/1d0fbe4a1ab1c34680d1610707e46fe25a1b8f8d/analysis/eMLR_data_preparation.Rmd" target="_blank">1d0fbe4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-25
+</td>
+<td>
+republish after creating functions
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/b9cbd4f61051355da415d4896d9834976c27388e/docs/eMLR_data_preparation.html" target="_blank">b9cbd4f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-20
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/e563eef2139352038ace21915c009aba899ce920/docs/eMLR_data_preparation.html" target="_blank">e563eef</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-20
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/be1188043050134ec7f1bf9e6aee92f33c8944b1/docs/eMLR_data_preparation.html" target="_blank">be11880</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-20
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/Cant_eMLR/blob/15852690398a5b2fd88a5e21c94324fd9c1e5f68/analysis/eMLR_data_preparation.Rmd" target="_blank">1585269</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-20
+</td>
+<td>
+use setup child Rmd file
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/eb5dc10bfc47b5b2da7dac2c306e7196fe5bec59/docs/eMLR_data_preparation.html" target="_blank">eb5dc10</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-18
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/Cant_eMLR/blob/d6968a0c26963000bc7e17d880d322eeeb9cf90d/analysis/eMLR_data_preparation.Rmd" target="_blank">d6968a0</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-18
+</td>
+<td>
+rebuild model runs
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/fc70a342c0fe463f27bf167eed0ad56cf609e9df/docs/eMLR_data_preparation.html" target="_blank">fc70a34</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-10
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/b170b793e0658f1be77d06fc486ead384c2e674e/docs/eMLR_data_preparation.html" target="_blank">b170b79</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-03
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/411a35b2bd8e3dc1f2bc7c62b23d0e8063ab2d8a/docs/eMLR_data_preparation.html" target="_blank">411a35b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-10-02
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/0d3897988730af4271782382faa58957f7ab112c/docs/eMLR_data_preparation.html" target="_blank">0d38979</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-10-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/4578cfa182c1bbb8213dbf19452d48ed498849e3/docs/eMLR_data_preparation.html" target="_blank">4578cfa</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-19
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/d59f7168f67504f1c0cad8079d097a1c941c17a0/docs/eMLR_data_preparation.html" target="_blank">d59f716</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-18
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/f5a20ac37fec6f493801e53ba6e8a2cd0f03f23d/docs/eMLR_data_preparation.html" target="_blank">f5a20ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-17
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/cf6446009521bdcb5b3863b2b991b3d64a6ba371/docs/eMLR_data_preparation.html" target="_blank">cf64460</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-17
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/d43d9e2d67d7e1edc8a3a0964f97701e68a24c7c/docs/eMLR_data_preparation.html" target="_blank">d43d9e2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/1f3319ac3f70e28415e86121202fc96595b149bd/docs/eMLR_data_preparation.html" target="_blank">1f3319a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/Cant_eMLR/blob/ae561aa5df3e9d04713b27d9ed07ee1a0cb8fc04/analysis/eMLR_data_preparation.Rmd" target="_blank">ae561aa</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-16
+</td>
+<td>
+rebuild all after merging in surface estimates
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/ebadd9628c6b77e626b77d5103055666dc60d54d/docs/eMLR_data_preparation.html" target="_blank">ebadd96</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/Cant_eMLR/blob/1835acad887a61d6b3aa81770770e4499d2524d8/analysis/eMLR_data_preparation.Rmd" target="_blank">1835aca</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-16
+</td>
+<td>
+Cant surface water calculated
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/da91d9870f2a212d93247c8d40de7de2a38ac57c/docs/eMLR_data_preparation.html" target="_blank">da91d98</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-10
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/a34a239e46e7f6079fd0a3e4e04c07490eacc6f5/docs/eMLR_data_preparation.html" target="_blank">a34a239</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-10
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/Cant_eMLR/blob/143fbd78441f801f79ffaa813a0c30d3f61e5269/analysis/eMLR_data_preparation.Rmd" target="_blank">143fbd7</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-10
+</td>
+<td>
+global section plot added
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/c3ffdfdbc66ce7e4e4c0190b9b4b8d77bba12a74/docs/eMLR_data_preparation.html" target="_blank">c3ffdfd</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-08
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/5ccd96a60c4f880ea19bd063b167d99d20a03ab8/docs/eMLR_data_preparation.html" target="_blank">5ccd96a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-08
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/Cant_eMLR/blob/dd12155c530fac3398663d0f43be1b24854b761f/analysis/eMLR_data_preparation.Rmd" target="_blank">dd12155</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-08
+</td>
+<td>
+cleaned and Cstar naming corrected
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/a50f0535ce9e3bb4546a9cab5ab8eae419268ab9/docs/eMLR_data_preparation.html" target="_blank">a50f053</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-07
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/da445a61ad4f824af611bb8857833f569993de80/docs/eMLR_data_preparation.html" target="_blank">da445a6</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-04
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/Cant_eMLR/blob/6a302ca5eeaccb3f8bb03c6737ca9c0138bbb7bc/analysis/eMLR_data_preparation.Rmd" target="_blank">6a302ca</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-04
+</td>
+<td>
+rebuild after new data cleaning and mapping Cant to surface
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/fa11a74029c1a146184bb61b7b8575fcc6ed829e/docs/eMLR_data_preparation.html" target="_blank">fa11a74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-02
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/Cant_eMLR/blob/da4907d485323959305ee335376969b72111b498/analysis/eMLR_data_preparation.Rmd" target="_blank">da4907d</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-02
+</td>
+<td>
+all flagged variables
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/429aab335e86a60b945fcf06df15b62c687daa44/docs/eMLR_data_preparation.html" target="_blank">429aab3</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/Cant_eMLR/blob/b7a8f922d897625f03b7a05fdc8d8e50d8196a74/analysis/eMLR_data_preparation.Rmd" target="_blank">b7a8f92</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-01
+</td>
+<td>
+fitted MLR models with oxygen based PO4*
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/f4216dd4759d312bad87b6827c1b95f93b969e7c/docs/eMLR_data_preparation.html" target="_blank">f4216dd</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/Cant_eMLR/blob/8f3ce456b06832051edec29fdc427f829ae59e40/analysis/eMLR_data_preparation.Rmd" target="_blank">8f3ce45</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-09-01
+</td>
+<td>
+rebuild without PO4 star selection, oxygen only
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/13a76d582fcb611e27db82b5f1e46569d4e1f386/docs/eMLR_data_preparation.html" target="_blank">13a76d5</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-08-28
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/27404deadf5c9fca13ea6f7287ec10eda4dddda5/docs/eMLR_data_preparation.html" target="_blank">27404de</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-08-27
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/b610bf7955bbf5f8b732110b163353d4aed21125/docs/eMLR_data_preparation.html" target="_blank">b610bf7</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-08-27
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/Cant_eMLR/blob/96ab537051679521925db581ef216143e54a6446/analysis/eMLR_data_preparation.Rmd" target="_blank">96ab537</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-08-27
+</td>
+<td>
+revised
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/b6d0e6aa0f980124014771cd82b4be772c34ac88/docs/eMLR_data_preparation.html" target="_blank">b6d0e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-08-27
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/f40e48b21f6572196c79961211d94b65d702a617/docs/eMLR_data_preparation.html" target="_blank">f40e48b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-08-26
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/ec20f409cd2298439c58475545a735399e7396d9/docs/eMLR_data_preparation.html" target="_blank">ec20f40</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-08-24
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/Cant_eMLR/blob/a804955d96b133ceebc0dbfb184e66819e028ae2/analysis/eMLR_data_preparation.Rmd" target="_blank">a804955</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-08-24
+</td>
+<td>
+split mapping into 2 rmds, po4star selection in parameters, use po4star nitrate
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/0772e7933eb03ae39dbe35366debb1391a3445a0/docs/eMLR_data_preparation.html" target="_blank">0772e79</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-08-21
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/Cant_eMLR/blob/e04b03dbb48475a645aaedccec350d24754d1cbc/analysis/eMLR_data_preparation.Rmd" target="_blank">e04b03d</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-08-21
+</td>
+<td>
+Individual cruise plots with all relevant parameters and histograms in eMLR
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/5ffe18772a4b057c7265d46056f17e3e02363f52/docs/eMLR_data_preparation.html" target="_blank">5ffe187</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-08-20
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/1064ef8822e12a6de8ec985076559c60f70ffe3b/docs/eMLR_data_preparation.html" target="_blank">1064ef8</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-08-19
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/Cant_eMLR/blob/94f93753ce24e77bf43079d632ae6de3bacc0dd2/analysis/eMLR_data_preparation.Rmd" target="_blank">94f9375</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-08-19
+</td>
+<td>
+split emlr into data preparation, assumption testing, and model fitting
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/Cant_eMLR/828f44e471c66e1f751ad97ad04849e91823b3f7/docs/eMLR_data_preparation.html" target="_blank">828f44e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-08-19
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/Cant_eMLR/blob/77b2dc12e2a08b59c5250bc97b7131626277e085/analysis/eMLR_data_preparation.Rmd" target="_blank">77b2dc1</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-08-19
+</td>
+<td>
+split emlr into data preparation, assumption testing, and model fitting
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="libraries" class="section level1">
+<h1><span class="header-section-number">1</span> Libraries</h1>
+<p>Loading libraries specific to the the analysis performed in this section.</p>
+<pre class="r"><code>library(marelac)
+library(lubridate)</code></pre>
+</div>
+<div id="required-data" class="section level1">
+<h1><span class="header-section-number">2</span> Required data</h1>
+<p>Required are:</p>
+<ul>
+<li>GLODAPv2.2020
+<ul>
+<li>cleaned data file</li>
+<li>horizontal grid of sampling coordinates</li>
+</ul></li>
+<li>Cant from GLODAPv2_2016b_MappedClimatologies</li>
+<li>annual mean atmospheric pCO<sub>2</sub></li>
+</ul>
+<pre class="r"><code>GLODAP &lt;-
+  read_csv(
+    here::here(
+      &quot;data/interim&quot;,
+      &quot;GLODAPv2.2020_clean.csv&quot;
+    )
+  )
+
+GLODAP_obs_grid &lt;-
+  read_csv(
+    here::here(
+      &quot;data/interim&quot;,
+      &quot;GLODAPv2.2020_clean_obs_grid.csv&quot;
+    )
+  )
+
+S04_cant_3d &lt;-
+  read_csv(
+    here::here(
+      &quot;data/interim&quot;,
+      &quot;S04_cant_3d.csv&quot;
+    )
+  )
+
+# G19_cant_3d &lt;-
+#   read_csv(
+#     here::here(
+#       &quot;data/interim&quot;,
+#       &quot;G19_cant_3d.csv&quot;
+#     )
+#   )
+
+co2_atm &lt;-
+  read_csv(here::here(
+    &quot;data/interim&quot;,
+    &quot;co2_atm.csv&quot;
+  ))</code></pre>
+</div>
+<div id="c" class="section level1">
+<h1><span class="header-section-number">3</span> C*</h1>
+<p>C* serves as a conservative tracer of anthropogenic CO<sub>2</sub> uptake. It is derived from measured DIC by removing the impact of</p>
+<ul>
+<li>organic matter formation and respiration</li>
+<li>calcification and calcium carbonate dissolution</li>
+</ul>
+<p>Contributions of those processes are estimated from phosphate and alkalinity concentrations.</p>
+<div id="stoichiometric-ratios" class="section level2">
+<h2><span class="header-section-number">3.1</span> Stoichiometric ratios</h2>
+<p>The stoichiometric nutrient ratios for the production and mineralization of organic matter were set to:</p>
+<ul>
+<li>C/P: 117</li>
+<li>N/P: 16</li>
+</ul>
+</div>
+<div id="calculation" class="section level2">
+<h2><span class="header-section-number">3.2</span> Calculation</h2>
+<p>C* is calculated as:</p>
+<pre class="r"><code>print(b_cstar)</code></pre>
+<pre><code>function (tco2, phosphate, talk) 
+{
+    cstar = tco2 - (parameters$rCP * phosphate) - 0.5 * (talk - 
+        (parameters$rNP * phosphate))
+    return(cstar)
+}</code></pre>
+<pre class="r"><code>GLODAP &lt;- GLODAP %&gt;% 
+  mutate(rCP_phosphate = -parameters$rCP * phosphate,
+         talk_05 = -0.5 * talk,
+         rNP_phosphate_05 = -0.5 * parameters$rNP * phosphate,
+         cstar = b_cstar(tco2, phosphate, talk))</code></pre>
+</div>
+</div>
+<div id="po4-calculation" class="section level1">
+<h1><span class="header-section-number">4</span> PO<sub>4</sub>* calculation</h1>
+<p>The predictor PO<sub>4</sub>* was be calculated according to Clement and Gruber (2018), ie based on oxygen. Please note that an errornous equations for PO4* calculation is given in the supplement of Gruber et al (2019), based on nitrate.</p>
+<pre class="r"><code>GLODAP &lt;- GLODAP %&gt;% 
+  mutate(phosphate_star = b_phosphate_star(phosphate, oxygen))</code></pre>
+</div>
+<div id="reference-year-adjustment" class="section level1">
+<h1><span class="header-section-number">5</span> Reference year adjustment</h1>
+<p>The reference year adjustment relies on an apriori estimate of Cant at a given location and depth, which is used as a scaling factor for the concurrent change in atmospheric CO<sub>2</sub>. The underlying assumption is a transient steady state for the oceanic Cant uptake. Here, Cant from the GLODAP mapped Climatology was used.</p>
+<p>Note that eq. 6 in Clement and Gruber (2018) misses pCO<sub>2</sub> pre-industrial in the denominator. Here we use the equation published in Gruber et al. (2019).</p>
+<div id="merge-data-sets" class="section level2">
+<h2><span class="header-section-number">5.1</span> Merge data sets</h2>
+<div id="glodap-cant" class="section level3">
+<h3><span class="header-section-number">5.1.1</span> GLODAP + Cant</h3>
+<pre class="r"><code>S04_cant_3d_obs &lt;- left_join(
+  GLODAP_obs_grid,
+  S04_cant_3d %&gt;% select(-c(cant, eras))
+  )
+
+# calculate number of cant data points per grid cell
+S04_cant_3d_obs &lt;- S04_cant_3d_obs %&gt;%
+  group_by(lon, lat) %&gt;% 
+  mutate(n = n()) %&gt;% 
+  ungroup()
+
+# S04_cant_3d_obs %&gt;%
+#   filter(n &lt;= 1) %&gt;%
+#   ggplot(aes(lon,lat)) +
+#   geom_point(data = GLODAP_obs_grid, aes(lon, lat)) +
+#   geom_point(col = &quot;red&quot;)
+
+rm(S04_cant_3d, GLODAP_obs_grid)
+
+GLODAP_cant_obs &lt;- full_join(GLODAP, S04_cant_3d_obs)
+
+rm(GLODAP, S04_cant_3d_obs)
+
+# fill number of cant data points per grid cell to all observations
+GLODAP_cant_obs &lt;- GLODAP_cant_obs %&gt;%
+  group_by(lon, lat) %&gt;% 
+  fill(n, .direction = &quot;updown&quot;) %&gt;% 
+  ungroup()</code></pre>
+<p>The mapped Cant product was merged with GLODAP observation by:</p>
+<ul>
+<li>using an identical 1x1° horizontal grid</li>
+<li>linear interpolation of C<sub>ant</sub> from standard to sampling depth</li>
+</ul>
+<pre class="r"><code># interpolate cant to observation depth
+GLODAP_cant_obs_int &lt;- GLODAP_cant_obs %&gt;%
+  filter(n &gt; 1) %&gt;% 
+  group_by(lat, lon) %&gt;%
+  arrange(depth) %&gt;%
+  mutate(cant_pos_int = approxfun(depth, cant_pos, rule = 2)(depth)) %&gt;%
+  ungroup()
+
+# set cant for observation depth if only one cant available
+GLODAP_cant_obs_set &lt;- GLODAP_cant_obs %&gt;%
+  filter(n == 1) %&gt;%
+  group_by(lat, lon) %&gt;%
+  mutate(cant_pos_int = mean(cant_pos, na.rm = TRUE)) %&gt;%
+  ungroup()
+
+# bin data sets with interpolated and set cant
+GLODAP_cant_obs &lt;- bind_rows(GLODAP_cant_obs_int, GLODAP_cant_obs_set)
+rm(GLODAP_cant_obs_int, GLODAP_cant_obs_set)
+
+
+ggplot() +
+  geom_path(
+    data = GLODAP_cant_obs %&gt;%
+      filter(lat == 48.5, lon == 165.5,!is.na(cant_pos)) %&gt;%
+      arrange(depth),
+    aes(cant_pos, depth, col = &quot;mapped&quot;)
+  ) +
+  geom_point(
+    data = GLODAP_cant_obs %&gt;%
+      filter(lat == 48.5, lon == 165.5,!is.na(cant_pos)) %&gt;%
+      arrange(depth),
+    aes(cant_pos, depth, col = &quot;mapped&quot;)
+  ) +
+  geom_point(
+    data = GLODAP_cant_obs %&gt;%
+      filter(lat == 48.5, lon == 165.5, date == ymd(&quot;2018-06-27&quot;)),
+    aes(cant_pos_int, depth, col = &quot;interpolated&quot;)
+  ) +
+  scale_y_reverse() +
+  scale_color_brewer(palette = &quot;Dark2&quot;, name = &quot;&quot;) +
+  labs(title = &quot;Cant interpolation to sampling depth - example profile&quot;)</code></pre>
+<p><img src="figure/eMLR_data_preparation.Rmd/cant_interpolation_to_observations-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># remove cant data at grid cells without observations
+GLODAP &lt;- GLODAP_cant_obs %&gt;%
+  filter(!is.na(cstar)) %&gt;%
+  mutate(cant_pos = cant_pos_int) %&gt;%
+  select(-cant_pos_int, n)
+
+rm(GLODAP_cant_obs)</code></pre>
+</div>
+<div id="glodap-atm.-pco2" class="section level3">
+<h3><span class="header-section-number">5.1.2</span> GLODAP + atm. pCO<sub>2</sub></h3>
+<p>GLODAP observations were merged with mean annual atmospheric pCO<sub>2</sub> levels by year.</p>
+<pre class="r"><code>GLODAP &lt;- left_join(GLODAP, co2_atm)</code></pre>
+</div>
+</div>
+<div id="calculate-adjustment" class="section level2">
+<h2><span class="header-section-number">5.2</span> Calculate adjustment</h2>
+<p>C<sub>ant</sub> for tref = 2007 was calculated by applying alpha = 0.28 to the estimate of Sabine et al. (2004).</p>
+<p>For tref = 2015 we scaled alpha as 0.28/13 * dt.</p>
+<pre class="r"><code># assign reference year
+GLODAP &lt;- GLODAP %&gt;% 
+  group_by(era) %&gt;% 
+  mutate(tref = median(year)) %&gt;% 
+  ungroup()
+
+# calculate reference year
+tref &lt;- GLODAP %&gt;% 
+  group_by(era) %&gt;% 
+  summarise(year = median(year)) %&gt;% 
+  ungroup()
+
+# extract atm pCO2 at reference year
+co2_atm_tref &lt;- right_join(co2_atm, tref) %&gt;% 
+  select(-year) %&gt;% 
+  rename(pCO2_tref = pCO2)
+
+# merge atm pCO2 at tref with GLODAP
+GLODAP &lt;- full_join(GLODAP, co2_atm_tref)
+rm(co2_atm, tref)
+
+# scale cant to reference year
+GLODAP &lt;- GLODAP %&gt;%
+  mutate(alpha = (tref - min(tref)) * (0.28 / 13),
+         cant_pos = cant_pos * (1 + alpha))
+
+# calculate cstar for reference year
+GLODAP &lt;- GLODAP %&gt;%
+  mutate(
+    cstar_tref_delta =
+      ((pCO2 - pCO2_tref) / (pCO2_tref - parameters$preind_atm_pCO2)) * cant_pos,
+    cstar_tref = cstar - cstar_tref_delta)</code></pre>
+</div>
+<div id="control-plots" class="section level2">
+<h2><span class="header-section-number">5.3</span> Control plots</h2>
+<pre class="r"><code>GLODAP %&gt;% 
+  ggplot(aes(cstar_tref_delta)) +
+  geom_histogram(binwidth = 1) +
+  labs(title = &quot;Histogramm with binwidth = 1&quot;)</code></pre>
+<p><img src="figure/eMLR_data_preparation.Rmd/cstar_reference_year_adjustment_histogram-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>GLODAP %&gt;% 
+  sample_n(1e4) %&gt;% 
+  ggplot(aes(year, cstar_tref_delta, col = cant_pos)) +
+  geom_point() +
+  scale_color_viridis_c() +
+  labs(title = &quot;Time series of random subsample 1e4&quot;)</code></pre>
+<p><img src="figure/eMLR_data_preparation.Rmd/cstar_reference_year_adjustment_vs_time_cant-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>GLODAP %&gt;% 
+  ggplot(aes(year, cstar_tref_delta)) +
+  geom_bin2d(binwidth = 1) +
+  scale_fill_viridis_c(trans = &quot;log&quot;) +
+  labs(title = &quot;Heatmap with binwidth = 1&quot;)</code></pre>
+<p><img src="figure/eMLR_data_preparation.Rmd/cstar_reference_year_adjustment_vs_time_counts-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="selected-section-plots" class="section level1">
+<h1><span class="header-section-number">6</span> Selected section plots</h1>
+<p>A selected section is plotted to demonstrate the magnitude of various parameters and corrections relevant to C*.</p>
+<pre class="r"><code>GLODAP_cruise &lt;- GLODAP %&gt;% 
+  filter(cruise %in% parameters$cruises_meridional)</code></pre>
+<pre class="r"><code>map +
+  geom_path(data = GLODAP_cruise %&gt;%
+              arrange(date),
+            aes(lon, lat)) +
+  geom_point(data = GLODAP_cruise %&gt;%
+              arrange(date),
+             aes(lon, lat, col = date)) +
+  scale_color_viridis_c(trans = &quot;date&quot;) +
+  labs(title = paste(&quot;Cruise year:&quot;, mean(GLODAP_cruise$year)))</code></pre>
+<p><img src="figure/eMLR_data_preparation.Rmd/meridional_sections-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>lat_section &lt;- 
+GLODAP_cruise %&gt;%
+  ggplot(aes(lat, depth)) +
+  scale_y_reverse() +
+  scale_color_viridis_c() +
+  theme(axis.title.x = element_blank())
+
+lat_section +
+  geom_point(aes(col = tco2))</code></pre>
+<p><img src="figure/eMLR_data_preparation.Rmd/meridional_sections-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>lat_section +
+  geom_point(aes(col = rCP_phosphate))</code></pre>
+<p><img src="figure/eMLR_data_preparation.Rmd/meridional_sections-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>lat_section +
+  geom_point(aes(col = talk_05))</code></pre>
+<p><img src="figure/eMLR_data_preparation.Rmd/meridional_sections-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>lat_section +
+  geom_point(aes(col = rNP_phosphate_05))</code></pre>
+<p><img src="figure/eMLR_data_preparation.Rmd/meridional_sections-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>lat_section +
+  geom_point(aes(col = cstar))</code></pre>
+<p><img src="figure/eMLR_data_preparation.Rmd/meridional_sections-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>lat_section +
+  geom_point(aes(col = cstar_tref))</code></pre>
+<p><img src="figure/eMLR_data_preparation.Rmd/meridional_sections-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>rm(lat_section, GLODAP_cruise)
+
+# remove columns not required for further analysis
+GLODAP &lt;- GLODAP %&gt;% 
+  select(-c(rCP_phosphate:cstar, cant_pos:cstar_tref_delta))</code></pre>
+</div>
+<div id="isoneutral-slabs" class="section level1">
+<h1><span class="header-section-number">7</span> Isoneutral slabs</h1>
+<p>The following boundaries for isoneutral slabs were defined:</p>
+<ul>
+<li>Atlantic: -, 26, 26.5, 26.75, 27, 27.25, 27.5, 27.75, 27.85, 27.95, 28.05, 28.1, 28.15, 28.2, </li>
+<li>Indo-Pacific: -, 26, 26.5, 26.75, 27, 27.25, 27.5, 27.75, 27.85, 27.95, 28.05, 28.1, </li>
+</ul>
+<p>Continuous neutral densities (gamma) values from GLODAP are grouped into isoneutral slabs.</p>
+<pre class="r"><code>GLODAP &lt;- m_cut_gamma(GLODAP, &quot;gamma&quot;)</code></pre>
+<pre class="r"><code>GLODAP_cruise &lt;- GLODAP %&gt;% 
+  filter(cruise %in% parameters$cruises_meridional)
+
+lat_section &lt;- 
+GLODAP_cruise %&gt;%
+  ggplot(aes(lat, depth)) +
+  scale_y_reverse() +
+  theme(legend.position = &quot;bottom&quot;)
+
+lat_section +
+  geom_point(aes(col = gamma_slab)) +
+  scale_color_viridis_d()</code></pre>
+<p><img src="figure/eMLR_data_preparation.Rmd/meridional_sections_isoneutral_slabs-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>rm(lat_section, GLODAP_cruise)</code></pre>
+<pre class="r"><code>GLODAP_cruise &lt;- GLODAP %&gt;% 
+  filter(cruise %in% parameters$cruises_meridional)
+
+library(oce)
+library(gsw)
+# calculate pressure from depth
+
+GLODAP_cruise &lt;- GLODAP_cruise %&gt;% 
+  mutate(CTDPRS = gsw_p_from_z(-depth,
+                               lat))
+
+GLODAP_cruise &lt;- GLODAP_cruise %&gt;% 
+  mutate(THETA = swTheta(salinity = sal,
+                         temperature = tem,
+                         pressure = CTDPRS,
+                         referencePressure = 0,
+                         longitude = lon-180,
+                         latitude = lat))
+
+GLODAP_cruise &lt;- GLODAP_cruise %&gt;% 
+  rename(LATITUDE = lat,
+         LONGITUDE = lon,
+         SALNTY = sal,
+         gamma_provided = gamma)
+
+library(reticulate)
+source_python(here::here(&quot;code/python_scripts&quot;,
+                         &quot;Gamma_GLODAP_python.py&quot;))
+
+GLODAP_cruise &lt;- calculate_gamma(GLODAP_cruise)
+
+GLODAP_cruise &lt;- GLODAP_cruise %&gt;% 
+  mutate(gamma_delta = gamma_provided - GAMMA)
+
+lat_section &lt;- 
+GLODAP_cruise %&gt;%
+  ggplot(aes(LATITUDE, CTDPRS)) +
+  scale_y_reverse() +
+  theme(legend.position = &quot;bottom&quot;)
+
+lat_section +
+  geom_point(aes(col = gamma_delta)) +
+  scale_color_viridis_c()
+
+GLODAP_cruise %&gt;% 
+  ggplot(aes(gamma_delta))+
+  geom_histogram()
+
+rm(lat_section, GLODAP_cruise, cruises_meridional)</code></pre>
+</div>
+<div id="observations-coverage" class="section level1">
+<h1><span class="header-section-number">8</span> Observations coverage</h1>
+<pre class="r"><code>GLODAP &lt;- GLODAP %&gt;% 
+  mutate(era = factor(era, c(&quot;JGOFS_WOCE&quot;, &quot;GO_SHIP&quot;, &quot;new_era&quot;))) %&gt;%
+  mutate(gamma_slab = factor(gamma_slab), 
+         gamma_slab = factor(gamma_slab, levels = rev(levels(gamma_slab))))
+
+GLODAP %&gt;% 
+  filter(basin == &quot;Atlantic&quot;) %&gt;% 
+  ggplot(aes(lat, gamma_slab)) +
+  geom_bin2d(binwidth = 5) +
+  scale_fill_viridis_c(option = &quot;magma&quot;, direction = -1, trans = &quot;log10&quot;) +
+  scale_x_continuous(breaks = seq(-100,100,20)) +
+  facet_grid(era~basin)</code></pre>
+<p><img src="figure/eMLR_data_preparation.Rmd/obs_gamma_slab_Atl-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>GLODAP %&gt;% 
+  filter(basin == &quot;Indo-Pacific&quot;) %&gt;% 
+  ggplot(aes(lat, gamma_slab)) +
+  geom_bin2d(binwidth = 5) +
+  scale_fill_viridis_c(option = &quot;magma&quot;, direction = -1, trans = &quot;log10&quot;) +
+  scale_x_continuous(breaks = seq(-100,100,20)) +
+  facet_grid(era~basin)</code></pre>
+<p><img src="figure/eMLR_data_preparation.Rmd/obs_gamma_slab_Pac-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="individual-cruise-sections" class="section level1">
+<h1><span class="header-section-number">9</span> Individual cruise sections</h1>
+<p>Zonal and meridional section plots are produce for each cruise individually and can be downloaded <a href="https://github.com/jens-daniel-mueller/Cant_eMLR/tree/master/output/figure/eMLR/data_preparation/all_cruises_clean" target="_blank">here</a>.</p>
+<pre class="r"><code>cruises &lt;- GLODAP %&gt;% 
+  group_by(cruise) %&gt;% 
+  summarise(date_mean = mean(date, na.rm = TRUE),
+            n = n()) %&gt;% 
+  ungroup() %&gt;% 
+  arrange(date_mean)
+
+GLODAP &lt;- full_join(GLODAP, cruises)
+
+n &lt;- 0
+for (i_cruise in unique(cruises$cruise)) {
+
+# i_cruise &lt;- unique(cruises$cruise)[1]
+n &lt;- n + 1
+print(n)  
+  
+GLODAP_cruise &lt;- GLODAP %&gt;%
+  filter(cruise == i_cruise) %&gt;% 
+  arrange(date)
+
+cruises_cruise &lt;- cruises %&gt;%
+  filter(cruise == i_cruise)
+  
+map_plot &lt;- 
+  map +
+  geom_point(data = GLODAP_cruise,
+             aes(lon, lat, col = date)) +
+  scale_color_viridis_c(trans = &quot;date&quot;) +
+  labs(title = paste(&quot;Mean date:&quot;, cruises_cruise$date_mean,
+                     &quot;| cruise:&quot;, cruises_cruise$cruise,
+                     &quot;| n(samples):&quot;, cruises_cruise$n))
+
+
+lon_section &lt;- GLODAP_cruise %&gt;%
+  ggplot(aes(lon, depth)) +
+  scale_y_reverse() +
+  scale_color_viridis_c()
+
+lon_tco2 &lt;- lon_section+
+  geom_point(aes(col=tco2))
+
+lon_talk &lt;- lon_section+
+  geom_point(aes(col=talk))
+
+lon_phosphate &lt;- lon_section+
+  geom_point(aes(col=phosphate))
+
+lon_oxygen &lt;- lon_section+
+  geom_point(aes(col=oxygen))
+
+lon_aou &lt;- lon_section+
+  geom_point(aes(col=aou))
+
+lon_phosphate_star &lt;- lon_section+
+  geom_point(aes(col=phosphate_star))
+
+lon_nitrate &lt;- lon_section+
+  geom_point(aes(col=nitrate))
+
+lon_cstar &lt;- lon_section+
+  geom_point(aes(col=cstar_tref))
+
+
+lat_section &lt;- GLODAP_cruise %&gt;%
+  ggplot(aes(lat, depth)) +
+  scale_y_reverse() +
+  scale_color_viridis_c()
+
+lat_tco2 &lt;- lat_section+
+  geom_point(aes(col=tco2))
+
+lat_talk &lt;- lat_section+
+  geom_point(aes(col=talk))
+
+lat_phosphate &lt;- lat_section+
+  geom_point(aes(col=phosphate))
+
+lat_oxygen &lt;- lat_section+
+  geom_point(aes(col=oxygen))
+
+lat_aou &lt;- lat_section+
+  geom_point(aes(col=aou))
+
+lat_phosphate_star &lt;- lat_section+
+  geom_point(aes(col=phosphate_star))
+
+lat_nitrate &lt;- lat_section+
+  geom_point(aes(col=nitrate))
+
+lat_cstar &lt;- lat_section+
+  geom_point(aes(col=cstar_tref))
+
+hist_tco2 &lt;- GLODAP_cruise %&gt;%
+  ggplot(aes(tco2)) +
+  geom_histogram()
+
+hist_talk &lt;- GLODAP_cruise %&gt;%
+  ggplot(aes(talk)) +
+  geom_histogram()
+
+hist_phosphate &lt;- GLODAP_cruise %&gt;%
+  ggplot(aes(phosphate)) +
+  geom_histogram()
+
+hist_oxygen &lt;- GLODAP_cruise %&gt;%
+  ggplot(aes(oxygen)) +
+  geom_histogram()
+
+hist_aou &lt;- GLODAP_cruise %&gt;%
+  ggplot(aes(aou)) +
+  geom_histogram()
+
+hist_phosphate_star &lt;- GLODAP_cruise %&gt;%
+  ggplot(aes(phosphate_star)) +
+  geom_histogram()
+
+hist_nitrate &lt;- GLODAP_cruise %&gt;%
+  ggplot(aes(nitrate)) +
+  geom_histogram()
+
+hist_cstar &lt;- GLODAP_cruise %&gt;%
+  ggplot(aes(cstar_tref)) +
+  geom_histogram()
+
+(map_plot /
+    ((hist_tco2 / hist_talk / hist_phosphate / hist_cstar) |
+       (hist_oxygen / hist_phosphate_star / hist_nitrate / hist_aou)
+    )) |
+  ((lat_tco2 / lat_talk / lat_phosphate / lat_oxygen / lat_aou / lat_phosphate_star / lat_nitrate / lat_cstar) |
+     (lon_tco2 / lon_talk / lon_phosphate / lon_oxygen /  lon_aou /lon_phosphate_star / lon_nitrate / lon_cstar))    
+
+ggsave(here::here(&quot;output/figure/eMLR/data_preparation/all_cruises_clean&quot;,
+                  paste(&quot;GLODAP_cruise_date&quot;,
+                        cruises_cruise$date_mean,
+                        &quot;n&quot;,
+                        cruises_cruise$n,
+                        &quot;cruise&quot;,
+                        cruises_cruise$cruise,
+                        &quot;.png&quot;,
+                        sep = &quot;_&quot;)),
+                  width = 20, height = 12)
+
+rm(map_plot,
+   lon_section, lat_section,
+   lat_tco2, lat_talk, lat_phosphate, lon_tco2, lon_talk, lon_phosphate,
+   GLODAP_cruise, cruises_cruise)
+
+}</code></pre>
+</div>
+<div id="write-files" class="section level1">
+<h1><span class="header-section-number">10</span> Write files</h1>
+<pre class="r"><code>GLODAP &lt;- GLODAP %&gt;% 
+  rename(cstar = cstar_tref)
+
+GLODAP %&gt;% write_csv(here::here(&quot;data/interim&quot;,
+                                &quot;GLODAPv2.2020_MLR_fitting_ready.csv&quot;))
+
+co2_atm_tref  %&gt;%
+  write_csv(here::here(
+    &quot;data/interim&quot;,
+    &quot;co2_atm_tref.csv&quot;
+  ))</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.0.2 (2020-06-22)
+Platform: x86_64-w64-mingw32/x64 (64-bit)
+Running under: Windows 10 x64 (build 18363)
+
+Matrix products: default
+
+locale:
+[1] LC_COLLATE=English_Germany.1252  LC_CTYPE=English_Germany.1252   
+[3] LC_MONETARY=English_Germany.1252 LC_NUMERIC=C                    
+[5] LC_TIME=English_Germany.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] lubridate_1.7.9 marelac_2.1.10  shape_1.4.4     metR_0.7.0     
+ [5] scico_1.2.0     patchwork_1.0.1 collapse_1.3.2  forcats_0.5.0  
+ [9] stringr_1.4.0   dplyr_1.0.0     purrr_0.3.4     readr_1.3.1    
+[13] tidyr_1.1.0     tibble_3.0.3    ggplot2_3.3.2   tidyverse_1.3.0
+[17] workflowr_1.6.2
+
+loaded via a namespace (and not attached):
+ [1] httr_1.4.2         viridisLite_0.3.0  jsonlite_1.7.0     here_0.1          
+ [5] modelr_0.1.8       Formula_1.2-3      assertthat_0.2.1   blob_1.2.1        
+ [9] cellranger_1.1.0   yaml_2.2.1         pillar_1.4.6       backports_1.1.8   
+[13] lattice_0.20-41    glue_1.4.1         digest_0.6.25      RColorBrewer_1.1-2
+[17] promises_1.1.1     checkmate_2.0.0    rvest_0.3.6        colorspace_1.4-1  
+[21] sandwich_2.5-1     htmltools_0.5.0    httpuv_1.5.4       Matrix_1.2-18     
+[25] pkgconfig_2.0.3    broom_0.7.0        seacarb_3.2.13     haven_2.3.1       
+[29] xtable_1.8-4       scales_1.1.1       whisker_0.4        later_1.1.0.1     
+[33] git2r_0.27.1       farver_2.0.3       generics_0.0.2     ellipsis_0.3.1    
+[37] withr_2.2.0        cli_2.0.2          magrittr_1.5       crayon_1.3.4      
+[41] readxl_1.3.1       evaluate_0.14      fs_1.4.2           fansi_0.4.1       
+[45] xml2_1.3.2         oce_1.2-0          tools_4.0.2        data.table_1.13.0 
+[49] hms_0.5.3          lifecycle_0.2.0    munsell_0.5.0      reprex_0.3.0      
+[53] gsw_1.0-5          compiler_4.0.2     lfe_2.8-5.1        rlang_0.4.7       
+[57] grid_4.0.2         rstudioapi_0.11    labeling_0.3       rmarkdown_2.3     
+[61] testthat_2.3.2     gtable_0.3.0       DBI_1.1.0          R6_2.4.1          
+[65] zoo_1.8-8          knitr_1.30         rprojroot_1.3-2    stringi_1.4.6     
+[69] parallel_4.0.2     Rcpp_1.0.5         vctrs_0.3.2        dbplyr_1.4.4      
+[73] tidyselect_1.1.0   xfun_0.16         </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

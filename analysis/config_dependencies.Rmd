@@ -1,0 +1,60 @@
+---
+title: "Dependencies"
+author: "Jens Daniel Müller"
+date:  "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  workflowr::wflow_html:
+    number_sections: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+editor_options:
+  chunk_output_type: console
+---
+
+```{r global_options, include = FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+
+```
+
+```{r library, message=FALSE, warning=FALSE}
+library(reticulate)
+```
+
+
+# Required packages
+
+Packages available on CRAN are not listed here.
+
+Following packages need to be installed but are not available on CRAN:
+
+- [cutr](https://github.com/moodymudskipper/cutr/){target="_blank"}
+
+Run the code below for installation from Github repositories.
+
+```{r install_r_packages_not_available_on_CRAN, eval=FALSE}
+
+remotes::install_github("moodymudskipper/cutr")
+
+```
+
+# Python
+
+## Code
+
+Python code used in this project is stored in /code/python_scripts and sourced from there, when required in .Rmd files.
+
+## Required packages
+
+To install required python packages from within R-Studio, run the code below.
+
+```{r install_required_python_packages_from_r, eval=FALSE}
+
+# the commands below must only be run once, when you first run the python code and need to install required packages
+
+py_install("pandas")
+py_install("numpy")
+py_install("shapely")
+py_install("math")
+
+```

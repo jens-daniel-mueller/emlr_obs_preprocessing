@@ -1,0 +1,20 @@
+---
+title: "Home"
+author: "Jens Daniel Müller"
+date:  "`r format(Sys.time(), '%d %B, %Y')`"
+site: workflowr::wflow_site
+output:
+  workflowr::wflow_html:
+    toc: false
+editor_options:
+  chunk_output_type: console
+---
+
+# WELCOME!
+
+On this website we present our ongoing ambition to quantify anthropogenic CO~2~ in the ocean based on observations.
+
+Navigate trough the navbar on top to take a look at the various chapters of this project.
+The links in the upper right corner bring you to the source code of this project and to Jens' homepage.  
+
+
