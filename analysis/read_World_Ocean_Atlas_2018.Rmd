@@ -34,23 +34,18 @@ parameters <-
 
 ```{r define_updata_paths}
 
-path_functions <- "/nfs/kryo/work/updata/emlr_cant/functions/"
-
-path_woa2018 <- "/nfs/kryo/work/updata/woa2018/"
-
-path_preprocessing <- "/nfs/kryo/work/updata/emlr_cant/observations/preprocessing/"
+path_functions      <- "/nfs/kryo/work/updata/emlr_cant/utilities/functions/"
+path_files          <- "/nfs/kryo/work/updata/emlr_cant/utilities/files/"
+path_woa2018        <- "/nfs/kryo/work/updata/woa2018/"
+path_preprocessing  <- "/nfs/kryo/work/updata/emlr_cant/observations/preprocessing/"
 
 ```
 
 
 ```{r read_functions, include = FALSE}
-source(
-  paste(
-    path_functions,
-    "plotting_functions.R",
-    sep = ""
-  )
-)
+source(paste(path_functions,
+             "plotting_functions.R",
+             sep = ""))
 ```
 
 ```{r ggplot_theme, include = FALSE}
@@ -164,9 +159,9 @@ For eMLR model fitting and mapping, Indian and Pacific Ocean were combined as In
 
 ```{r assign_basin_labels}
 
+# assign basin labels
 basinmask_01 <- basinmask_01 %>%
-  filter(Basin_0m %in% c("1", "2", "3", "10", "11", "12", "56"),
-         lat <= parameters$lat_max) %>%
+  filter(Basin_0m %in% c("1", "2", "3", "10", "11", "12", "56")) %>%
   mutate(
     basin_AIP = "none",
     basin_AIP = case_when(
@@ -185,7 +180,14 @@ basinmask_01 <- basinmask_01 %>%
   mutate(basin = if_else(basin_AIP == "Atlantic",
                          "Atlantic",
                          "Indo-Pacific")) %>%
-  select(-Basin_0m) %>%
+  select(-Basin_0m)
+
+# apply northern latitude boundary
+basinmask_01 <- basinmask_01 %>%
+  filter(lat <= parameters$lat_max)
+
+# harmonize lon scale
+basinmask_01 <- basinmask_01  %>%
   mutate(lon = if_else(lon < 20, lon + 360, lon))
 
 ```
@@ -215,7 +217,7 @@ map +
 map %>%  
   write_rds(
     paste(
-      path_preprocessing,
+      path_files,
       "map_landmask_WOA18.rds",
       sep = ""
     )
@@ -296,12 +298,12 @@ map +
 ```{r write_files}
 
 basinmask_01 %>%
-  write_csv(paste(path_preprocessing,
+  write_csv(paste(path_files,
                   "basin_mask_WOA18.csv",
                   sep = ""))
 
 section_global_coordinates %>%
-  write_csv(paste(path_preprocessing,
+  write_csv(paste(path_files,
                   "section_global_coordinates.csv",
                   sep = ""))
 
@@ -391,6 +393,16 @@ rm(WOA18_sal_tibble, WOA18_tem_tibble)
 
 ```
 
+## Apply basin mask
+
+Data outside the WOA18 basin mask were removed for further analysis.
+
+```{r join_basin_mask}
+
+WOA18_sal_tem <- inner_join(WOA18_sal_tem, basinmask_01)
+
+```
+
 
 ## Potential temperature
 
@@ -447,7 +459,7 @@ Neutral density gamma was calculated with a Python script provided by Serazin et
 
 ### Calculation
 
-```{r calculate_neutral_density, eval=FALSE}
+```{r calculate_neutral_density}
 
 # calculate pressure from depth
 
@@ -463,8 +475,11 @@ WOA18_sal_tem_gamma_prep <- WOA18_sal_tem %>%
 
 # load python scripts
 
-source_python(here::here("code/python_scripts",
-                         "Gamma_GLODAP_python.py"))
+source_python(paste(
+  path_functions,
+  "python_scripts/Gamma_GLODAP_python.py",
+  sep = ""
+))
 
 # calculate gamma
 
@@ -485,37 +500,14 @@ rm(WOA18_sal_tem_gamma_calc, WOA18_sal_tem_gamma_prep)
 
 ```
 
-### Apply density threshold
-
-The predictor field was split into two parts:
-
-1. Deep water: neutral densities >= `r parameters$gamma_min` and depth >= `r parameters$depth_min`m
-2. Shallow water: rest
-
-```{r apply_density_threshold, eval=FALSE}
-
-WOA18_sal_tem_surface <- WOA18_sal_tem %>%
-  filter(depth < parameters$depth_min,
-         gamma < parameters$gamma_min)
-
-WOA18_sal_tem <- WOA18_sal_tem %>%
-  filter(depth >= parameters$depth_min | gamma >= parameters$gamma_min)
-
-
-```
 
 ### Write file
 
-```{r write_WOA18_predictor_file, eval=FALSE}
+```{r write_WOA18_predictor_file}
 
 WOA18_sal_tem %>%
   write_csv(paste(path_preprocessing,
                   "WOA18_sal_tem.csv",
-                  sep = ""))
-
-WOA18_sal_tem_surface %>%
-  write_csv(paste(path_preprocessing,
-                  "WOA18_sal_tem_surface.csv",
                   sep = ""))
 
 ```
@@ -597,27 +589,6 @@ p_section_global(
 
 ```
 
-### Surface map shallow
-
-```{r neutral_density_surface_WOA18_map_shallow, eval=FALSE}
-
-p_map_climatology(
-  df = WOA18_sal_tem_surface,
-  var = "gamma")
-
-```
-
-### Section shallow
-
-```{r neutral_density_sections_WOA18_shallow, eval=FALSE}
-
-p_section_global(
-  df = WOA18_sal_tem_surface,
-  var = "gamma")
-
-```
-
-
 
 # Climatology Nuts and O2
 
@@ -625,8 +596,13 @@ p_section_global(
 
 ```{r read_WOA18_nuts_O2_files}
 
-# create file list
+# Keep grid cells of WOA18 sal/tem data set, to join with
+WOA18_nuts_O2 <-
+  WOA18_sal_tem %>%
+  select(lon, lat, depth, basin, basin_AIP)
+rm(WOA18_sal_tem)
 
+# create file list
 file_list <- c(
   paste(path_woa2018, "phosphate/all/1.00/woa18_all_p00_01.nc", sep = ""),
   paste(path_woa2018, "nitrate/all/1.00/woa18_all_n00_01.nc", sep = ""),
@@ -635,36 +611,14 @@ file_list <- c(
   paste(path_woa2018, "AOU/all/1.00/woa18_all_A00_01.nc", sep = "")
 )
 
-
-# file_list <-
-#   list.files(path = "data/input/World_Ocean_Atlas_2018",
-#              pattern = "woa18_all*")
-
-
-print(file_list)
-
-# Keep grid cells of WOA18 surface and deep data sets, to join with
-
-WOA18_nuts_O2 <-
-  WOA18_sal_tem %>%
-  select(lon, lat, depth)
-
-# WOA18_nuts_O2_surface <-
-#   WOA18_sal_tem_surface %>%
-#   select(lon, lat, depth)
-# 
-# rm(WOA18_sal_tem_surface)
-rm(WOA18_sal_tem)
-
+# print(file_list)
 # file <- file_list[1]
 
 # read, plot and join data sets while looping over file list
-
 for (file in file_list) {
-  
+
   # open file
   WOA18 <- tidync(file)
-  
   WOA18_tibble <- WOA18 %>% hyper_tibble()
   
   # extract parameter name
@@ -673,19 +627,16 @@ for (file in file_list) {
   parameter <- paste(parameter, "_an", sep = "")
   print(parameter)
   
-  
   WOA18_tibble <- WOA18_tibble  %>%
     select(all_of(parameter),
            lon, lat, depth) %>%
     mutate(lon = if_else(lon < 20, lon + 360, lon))
   
-  
-  # join with basin mask and remove data outside basin mask
-  WOA18_tibble <- inner_join(WOA18_tibble, basinmask_01)
-  
-  WOA18_nuts_O2 <- left_join(WOA18_nuts_O2, WOA18_tibble)
-  # WOA18_nuts_O2_surface <- left_join(WOA18_nuts_O2_surface, WOA18_tibble)
-  
+  # join with previous WOA data and keep only rows in existing data frame
+  # this is equal to applying the basinmask
+  WOA18_nuts_O2 <- left_join(
+    x = WOA18_nuts_O2,
+    y = WOA18_tibble)
 
   # plot maps
   print(
@@ -706,18 +657,13 @@ for (file in file_list) {
 ```
 
 
-### Write/open file
+## Write file
 
 ```{r write_WOA18_nuts_O2_predictor_file, eval=FALSE}
 
 WOA18_nuts_O2 %>%
   write_csv(paste(path_preprocessing,
                   "WOA18_nuts_O2.csv",
-                  sep = ""))
-
-WOA18_nuts_O2_surface %>%
-  write_csv(paste(path_preprocessing,
-                  "WOA18_nuts_O2_surface.csv",
                   sep = ""))
 
 ```

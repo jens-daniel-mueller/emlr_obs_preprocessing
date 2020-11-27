@@ -12,7 +12,24 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r parent, child = here::here("analysis/child/setup.Rmd")}
+
+```{r parent, child = "/nfs/kryo/work/updata/emlr_cant/utilities/setup.Rmd"}
+# this chunk runs the code stored in setup.Rmd
+# if required, please refer to instructions given here:
+# https://jdblischak.github.io/workflowr/articles/wflow-07-common-code.html
+```
+
+```{r read_parameters, include = FALSE}
+parameters <-
+  read_rds(here::here("data/auxillary",
+                       "parameters.rds"))
+
+```
+
+
+```{r define_updata_paths}
+path_atm_pCO2    <- "/nfs/kryo/work/updata/atm_pco2_noaa/"
+path_preprocessing  <- "/nfs/kryo/work/updata/emlr_cant/observations/preprocessing/"
 ```
 
 # Read data
@@ -21,9 +38,13 @@ editor_options:
 
 ```{r read_atm_co2}
 
-co2_atm <- read_table2(here::here("data/input/pCO2_atmosphere",
-                              "co2_annmean_gl.txt"),
-                   col_names = FALSE, comment = "#")
+co2_atm <- read_table2(
+  paste(path_atm_pCO2,
+        "co2_annmean_gl.txt",
+        sep = ""),
+  col_names = FALSE,
+  comment = "#"
+)
 
 co2_atm <- co2_atm %>% 
   select(-X3)
@@ -48,8 +69,9 @@ co2_atm %>%
 
 ```{r write_co2_atm_clean_file}
 
-co2_atm %>% 
-  write_csv(here::here("data/interim",
-                       "co2_atm.csv"))
+co2_atm %>%
+  write_csv(paste(path_preprocessing,
+                  "co2_atm.csv",
+                  sep = ""))
 
 ```

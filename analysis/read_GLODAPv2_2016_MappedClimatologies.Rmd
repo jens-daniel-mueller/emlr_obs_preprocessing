@@ -13,8 +13,20 @@ editor_options:
 ---
 
 
-```{r parent, child = here::here("analysis/child/setup.Rmd")}
+```{r parent, child = "/nfs/kryo/work/updata/emlr_cant/utilities/setup.Rmd"}
+# this chunk runs the code stored in setup.Rmd
+# if required, please refer to instructions given here:
+# https://jdblischak.github.io/workflowr/articles/wflow-07-common-code.html
 ```
+
+
+```{r read_parameters, include = FALSE}
+parameters <-
+  read_rds(here::here("data/auxillary",
+                       "parameters.rds"))
+
+```
+
 
 # Libraries
 
@@ -30,9 +42,27 @@ Data source: Globally mapped climatologies from Lauvset et al. (2016) downloaded
 
 Following files were used: 
 
+
+```{r define_updata_paths}
+path_glodapv2_2016b  <- "/nfs/kryo/work/updata/glodapv2.2016b/"
+path_preprocessing  <- "/nfs/kryo/work/updata/emlr_cant/observations/preprocessing/"
+```
+
+
 ```{r GLODAPv2_2016_Mappedclimatologies_file_list}
 
-file_list <- list.files(path = "data/input/GLODAPv2_2016b_Mappedclimatologies", pattern = "*.nc")
+file_list <- c(
+  paste(path_glodapv2_2016b, "GLODAPv2.2016b.Cant.nc", sep = ""),
+  paste(path_glodapv2_2016b, "GLODAPv2.2016b.NO3.nc", sep = ""),
+  paste(path_glodapv2_2016b, "GLODAPv2.2016b.oxygen.nc", sep = ""),
+  paste(path_glodapv2_2016b, "GLODAPv2.2016b.PO4.nc", sep = ""),
+  paste(path_glodapv2_2016b, "GLODAPv2.2016b.salinity.nc", sep = ""),
+  paste(path_glodapv2_2016b, "GLODAPv2.2016b.silicate.nc", sep = ""),
+  paste(path_glodapv2_2016b, "GLODAPv2.2016b.TAlk.nc", sep = ""),
+  paste(path_glodapv2_2016b, "GLODAPv2.2016b.TCO2.nc", sep = ""),
+  paste(path_glodapv2_2016b, "GLODAPv2.2016b.temperature.nc", sep = "")
+)
+
 print(file_list)
 
 ```
@@ -54,13 +84,12 @@ Please note that NA values in the climatologies were filled with neighbouring va
 
 for (file in file_list) {
  
-clim <- read_stars(here::here("data/input/GLODAPv2_2016b_Mappedclimatologies",
-                          file),
+clim <- read_stars(file,
                    quiet = TRUE)
 
 # extract parameter name
 
-parameter <- str_split(file, pattern = "6b.", simplify = TRUE)[2]
+parameter <- str_split(file, pattern = "16b/GLODAPv2.2016b.", simplify = TRUE)[2]
 parameter <- str_split(parameter, pattern = ".nc", simplify = TRUE)[1]
 print(parameter)
 
@@ -166,15 +195,16 @@ print(
 
 # write csv file
 
-clim_tibble %>% 
-  write_csv(here::here(
-    "data/interim",
-    paste("GLODAPv2_2016_MappedClimatology",
+clim_tibble %>%
+  write_csv(paste(
+    path_preprocessing,
+    paste("GLODAPv2_2016_MappedClimatology_",
           parameter,
           ".csv",
-          sep = "")))
+          sep = ""),
+    sep = ""
+  ))
 
 }
-
 
 ```

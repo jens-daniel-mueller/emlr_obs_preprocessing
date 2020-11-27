@@ -12,8 +12,26 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r parent, child = here::here("analysis/child/setup.Rmd")}
+```{r parent, child = "/nfs/kryo/work/updata/emlr_cant/utilities/setup.Rmd"}
+# this chunk runs the code stored in setup.Rmd
+# if required, please refer to instructions given here:
+# https://jdblischak.github.io/workflowr/articles/wflow-07-common-code.html
 ```
+
+
+```{r read_parameters, include = FALSE}
+parameters <-
+  read_rds(here::here("data/auxillary",
+                       "parameters.rds"))
+
+```
+
+
+```{r define_updata_paths}
+path_sabine_2004    <- "/nfs/kryo/work/updata/glodapv1_1/GLODAP_gridded.data/"
+path_preprocessing  <- "/nfs/kryo/work/updata/emlr_cant/observations/preprocessing/"
+```
+
 
 # Data source
 
@@ -25,28 +43,34 @@ editor_options:
 
 AnthCO2_data <-
   read_csv(
-    "data/input/GLODAPv1_1/GLODAP_gridded.data/AnthCO2.data/AnthCO2.data.txt",
+    paste(path_sabine_2004,
+          "AnthCO2.data/AnthCO2.data.txt",
+          sep = ""),
     col_names = FALSE,
     na = "-999",
     col_types = list(.default = "d")
   )
 
 Depth_centers <-
-  read_file("data/input/GLODAPv1_1/GLODAP_gridded.data/Depth.centers.txt")
+  read_file(paste(path_sabine_2004,
+                  "Depth.centers.txt",
+                  sep = ""))
 
 Depth_centers <- Depth_centers %>%
   str_split(",") %>%
   as_vector()
 
 Lat_centers <-
-  read_file("data/input/GLODAPv1_1/GLODAP_gridded.data/Lat.centers.txt")
+  read_file(paste(path_sabine_2004, "Lat.centers.txt",
+                  sep = ""))
 
 Lat_centers <- Lat_centers %>%
   str_split(",") %>%
   as_vector()
 
 Long_centers <-
-  read_file("data/input/GLODAPv1_1/GLODAP_gridded.data/Long.centers.txt")
+  read_file(paste(path_sabine_2004, "Long.centers.txt",
+                  sep = ""))
 
 Long_centers <- Long_centers %>%
   str_split(",") %>%
@@ -97,13 +121,6 @@ cant_3d <- cant_3d %>%
          eras = "1800-1994")
 
 cant_inv <- m_cant_inv(cant_3d) 
-
-# cant_inv <- cant_3d %>% 
-#   filter(depth <= parameters$inventory_depth) %>% 
-#   group_by(lon, lat, basin, basin_AIP) %>% 
-#   summarise(cant_inv = sum(layer_inv_pos, na.rm = TRUE) / 1000,
-#             cant_inv_incl_neg = sum(layer_inv, na.rm = TRUE) / 1000) %>% 
-#   ungroup()
 
 ```
 
@@ -174,17 +191,17 @@ p_map_cant_inv(
 
 ```{r write_Sabine_2004_cant_file}
 
-cant_3d %>% 
-  write_csv(here::here("data/interim",
-                       "S04_cant_3d.csv"))
+cant_3d %>%
+  write_csv(paste(path_preprocessing,
+                  "S04_cant_3d.csv", sep = ""))
 
-cant_inv %>% 
-  write_csv(here::here("data/interim",
-                       "S04_cant_inv.csv"))
+cant_inv %>%
+  write_csv(paste(path_preprocessing,
+                  "S04_cant_inv.csv", sep = ""))
 
-cant_zonal %>% 
-  write_csv(here::here("data/interim",
-                       "S04_cant_zonal.csv"))
+cant_zonal %>%
+  write_csv(paste(path_preprocessing,
+                  "S04_cant_zonal.csv", sep = ""))
 
 
 ```

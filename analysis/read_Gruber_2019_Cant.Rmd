@@ -13,8 +13,25 @@ editor_options:
 ---
 
 
-```{r parent, child = here::here("analysis/child/setup.Rmd")}
+```{r parent, child = "/nfs/kryo/work/updata/emlr_cant/utilities/setup.Rmd"}
+# this chunk runs the code stored in setup.Rmd
+# if required, please refer to instructions given here:
+# https://jdblischak.github.io/workflowr/articles/wflow-07-common-code.html
 ```
+
+```{r read_parameters, include = FALSE}
+parameters <-
+  read_rds(here::here("data/auxillary",
+                       "parameters.rds"))
+
+```
+
+
+```{r define_updata_paths}
+path_gruber_2019    <- "/nfs/kryo/work/updata/cant_gruber_2019/"
+path_preprocessing  <- "/nfs/kryo/work/updata/emlr_cant/observations/preprocessing/"
+```
+
 
 # Libraries
 
@@ -37,8 +54,11 @@ The publicly available data sets contain only positive Cant estimates.
 
 ```{r read_Gruber_dcant}
 
-dcant <- tidync(here::here("data/input/Gruber_2019",
-                               "dcant_emlr_cstar_gruber_94-07_vs1.nc"))
+dcant <- tidync(paste(
+  path_gruber_2019,
+  "dcant_emlr_cstar_gruber_94-07_vs1.nc",
+  sep = ""
+))
 
 dcant <- dcant %>%  activate(DCANT_01)
 dcant <- dcant %>% hyper_tibble()
@@ -55,8 +75,11 @@ dcant <- dcant %>%
 
 ```{r read_Gruber_dcant_inv}
 
-dcant_inv <- tidync(here::here("data/input/Gruber_2019",
-                               "inv_dcant_emlr_cstar_gruber_94-07_vs1.nc"))
+dcant_inv <- tidync(paste(
+  path_gruber_2019,
+  "inv_dcant_emlr_cstar_gruber_94-07_vs1.nc",
+  sep = ""
+))
 
 dcant_inv <- dcant_inv %>%  activate(DCANT_INV01)
 dcant_inv <- dcant_inv %>% hyper_tibble()
@@ -77,8 +100,9 @@ Internally available data sets also contain negative Cant estimates, as they are
 
 ```{r read_Gruber_V101}
 
-V101 <- tidync(here::here("data/input/Gruber_2019",
-                               "Cant_V101new.nc"))
+V101 <- tidync(paste(path_gruber_2019,
+                     "Cant_V101new.nc",
+                     sep = ""))
 
 V101 <- V101 %>%  activate(Cant)
 V101 <- V101 %>% hyper_tibble()
@@ -97,9 +121,6 @@ V101 <- V101 %>%
 # Apply basin mask
 
 ```{r apply_basin_mask}
-
-# basinmask <- basinmask %>% 
-#   select(-basin)
 
 dcant <- inner_join(dcant, basinmask)
 dcant_inv <- inner_join(dcant_inv, basinmask)
@@ -272,17 +293,20 @@ p_section_climatology_regular(
 
 ```{r write_Gruber_Cant_file}
 
-cant_3d %>% 
-  write_csv(here::here("data/interim",
-                       "G19_cant_3d.csv"))
+cant_3d %>%
+  write_csv(paste(path_preprocessing,
+                  "G19_cant_3d.csv",
+                  sep = ""))
 
-cant_inv %>% 
-  write_csv(here::here("data/interim",
-                       "G19_cant_inv.csv"))
+cant_inv %>%
+  write_csv(paste(path_preprocessing,
+                  "G19_cant_inv.csv",
+                  sep = ""))
 
-cant_zonal %>% 
-  write_csv(here::here("data/interim",
-                       "G19_cant_zonal.csv"))
+cant_zonal %>%
+  write_csv(paste(path_preprocessing,
+                  "G19_cant_zonal.csv",
+                  sep = ""))
 
 ```
 

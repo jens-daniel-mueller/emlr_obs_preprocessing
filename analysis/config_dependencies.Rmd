@@ -52,9 +52,11 @@ To install required python packages from within R-Studio, run the code below.
 
 # the commands below must only be run once, when you first run the python code and need to install required packages
 
-py_install("pandas")
-py_install("numpy")
-py_install("shapely")
-py_install("math")
+# not required on eth server, because packages are already installed
+
+# py_install("pandas")
+# py_install("numpy")
+# py_install("shapely")
+# py_install("math")
 
 ```
