@@ -641,13 +641,13 @@ for (file in file_list) {
   # plot maps
   print(
     p_map_climatology(
-      df = WOA18_tibble,
+      df = WOA18_nuts_O2,
       var = parameter)
     )
   
   # plot sections
   print(p_section_global(
-    df = WOA18_tibble,
+    df = WOA18_nuts_O2,
     var = parameter
   ))
   
