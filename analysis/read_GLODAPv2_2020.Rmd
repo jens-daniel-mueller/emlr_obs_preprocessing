@@ -135,7 +135,7 @@ GLODAP_obs_grid <- GLODAP %>%
 ```{r write_clean_data_files}
 
 GLODAP  %>%  write_csv(paste(path_preprocessing,
-                             "GLODAPv2.2020_clean.csv",
+                             "GLODAPv2.2020_preprocessed.csv",
                              sep = ""))
 
 ```
