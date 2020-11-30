@@ -133,18 +133,10 @@ wflow_publish(here::here(
     "read_GLODAPv2_2016_MappedClimatologies.Rmd",
     "read_Gruber_2019_Cant.Rmd",
     "read_Sabine_2004_Cant.Rmd",
-    "read_CO2_atm.Rmd",
-    "eMLR_data_preparation.Rmd",
-    "eMLR_assumption_testing.Rmd",
-    "eMLR_model_fitting.Rmd",
-    "mapping_predictor_preparation.Rmd",
-    "mapping_cant_calculation.Rmd",
-    "mapping_cstar_calculation.Rmd",
-    "analysis_this_study_vs_Gruber_2019.Rmd",
-    "analysis_this_study.Rmd"
+    "read_CO2_atm.Rmd"
   )
 ),
-message = "XXX",
+message = "correct source link, basinmask and plotting function",
 republish = TRUE)
 
 
