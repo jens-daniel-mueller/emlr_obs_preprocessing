@@ -136,8 +136,9 @@ wflow_publish(here::here(
     "read_CO2_atm.Rmd"
   )
 ),
-message = "correct source link, basinmask and plotting function",
+message = "created global parameterization file params_global.rds",
 republish = TRUE)
+
 
 
 
