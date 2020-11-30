@@ -24,15 +24,6 @@ path_preprocessing  <- "/nfs/kryo/work/updata/emlr_cant/observations/preprocessi
 # https://jdblischak.github.io/workflowr/articles/wflow-07-common-code.html
 ```
 
-
-```{r read_parameters, include = FALSE}
-parameters <-
-  read_rds(here::here("data/auxillary",
-                       "parameters.rds"))
-
-```
-
-
 # Libraries
 
 Loading libraries specific to the the analysis performed in this section.

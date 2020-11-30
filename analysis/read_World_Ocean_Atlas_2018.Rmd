@@ -26,12 +26,6 @@ library(geosphere)
 library(patchwork)
 ```
 
-```{r read_parameters, include = FALSE}
-parameters <-
-  read_rds(here::here("data/auxillary",
-                       "parameters.rds"))
-```
-
 ```{r define_updata_paths}
 
 path_functions      <- "/nfs/kryo/work/updata/emlr_cant/utilities/functions/"
@@ -41,6 +35,12 @@ path_preprocessing  <- "/nfs/kryo/work/updata/emlr_cant/observations/preprocessi
 
 ```
 
+```{r read_params_global, include = FALSE}
+params_global <-
+  read_rds(paste(path_files,
+                 "params_global.rds",
+                 sep = ""))
+```
 
 ```{r read_functions, include = FALSE}
 source(paste(path_functions,
@@ -101,8 +101,8 @@ landmask <- landmask %>%
 
 landmask <- landmask %>%
   filter(region == "land",
-         lat >= parameters$lat_min,
-         lat <= parameters$lat_max) %>%
+         lat >= params_global$lat_min,
+         lat <= params_global$lat_max) %>%
   select(-region)
 
 rm(landsea_01)
@@ -141,7 +141,7 @@ Atlantic Ocean:
 
 - 1: Atlantic Ocean
 - 10: Southern Ocean between 63°W and 20°E
-- 11: Arctic Ocean (restricted by northern latitude limit `r parameters$lat_max`N)
+- 11: Arctic Ocean (restricted by northern latitude limit `r params_global$lat_max`N)
 
 Indian Ocean:  
 
@@ -184,7 +184,7 @@ basinmask_01 <- basinmask_01 %>%
 
 # apply northern latitude boundary
 basinmask_01 <- basinmask_01 %>%
-  filter(lat <= parameters$lat_max)
+  filter(lat <= params_global$lat_max)
 
 # harmonize lon scale
 basinmask_01 <- basinmask_01  %>%
@@ -237,27 +237,27 @@ section <- basinmask_01 %>%
 
 Atl_NS <- section %>%
   filter(
-    lon == parameters$lon_Atl_section,
-    lat <= parameters$lat_section_N,
-    lat >= parameters$lat_section_S
+    lon == params_global$lon_Atl_section,
+    lat <= params_global$lat_section_N,
+    lat >= params_global$lat_section_S
   ) %>%
   arrange(-lat)
 
 Atl_SO <- section %>%
-  filter(lon > parameters$lon_Atl_section,
-         lat == parameters$lat_section_S) %>%
+  filter(lon > params_global$lon_Atl_section,
+         lat == params_global$lat_section_S) %>%
   arrange(lon)
 
 Pac_SO <- section %>%
-  filter(lon < parameters$lon_Pac_section,
-         lat == parameters$lat_section_S) %>%
+  filter(lon < params_global$lon_Pac_section,
+         lat == params_global$lat_section_S) %>%
   arrange(lon)
 
 Pac_SN <- section %>%
   filter(
-    lon == parameters$lon_Pac_section,
-    lat <= parameters$lat_section_N,
-    lat >= parameters$lat_section_S
+    lon == params_global$lon_Pac_section,
+    lat <= params_global$lat_section_N,
+    lat >= params_global$lat_section_S
   ) %>%
   arrange(lat)
 
@@ -429,8 +429,8 @@ Example profile from North Atlantic Ocean.
 
 ```{r WOA18_potential_temperature_profile}
 WOA18_sal_tem %>%
-  filter(lat == parameters$lat_Atl_profile,
-         lon == parameters$lon_Atl_section) %>%
+  filter(lat == params_global$lat_Atl_profile,
+         lon == params_global$lon_Atl_section) %>%
   ggplot() +
   geom_line(aes(tem, depth, col = "insitu")) +
   geom_point(aes(tem, depth, col = "insitu")) +
@@ -516,8 +516,8 @@ WOA18_sal_tem %>%
 
 Below, following subsets of the climatologies are plotted for all relevant parameters:  
 
-- Horizontal planes at `r parameters$depth_levels`m
-- Meridional sections at longitudes: `r parameters$longitude_sections_basin`
+- Horizontal planes at `r params_global$depth_levels`m
+- Meridional sections at longitudes: `r params_global$longitude_sections_basin`
 
 Section locations are indicated as white lines in maps.
 

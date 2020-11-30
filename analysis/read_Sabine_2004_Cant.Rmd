@@ -19,14 +19,6 @@ editor_options:
 ```
 
 
-```{r read_parameters, include = FALSE}
-parameters <-
-  read_rds(here::here("data/auxillary",
-                       "parameters.rds"))
-
-```
-
-
 ```{r define_updata_paths}
 path_sabine_2004    <- "/nfs/kryo/work/updata/glodapv1_1/GLODAP_gridded.data/"
 path_preprocessing  <- "/nfs/kryo/work/updata/emlr_cant/observations/preprocessing/"
@@ -128,8 +120,8 @@ cant_inv <- m_cant_inv(cant_3d)
 
 Below, following subsets of the climatologies are plotted for all relevant parameters:  
 
-- Horizontal planes at `r parameters$depth_levels`m
-- Meridional sections at longitudes: `r parameters$longitude_sections_basin`
+- Horizontal planes at `r params_global$depth_levels`m
+- Meridional sections at longitudes: `r params_global$longitude_sections_basin`
 
 Section locations are indicated as white lines in maps.
 

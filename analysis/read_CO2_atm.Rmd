@@ -19,14 +19,6 @@ editor_options:
 # https://jdblischak.github.io/workflowr/articles/wflow-07-common-code.html
 ```
 
-```{r read_parameters, include = FALSE}
-parameters <-
-  read_rds(here::here("data/auxillary",
-                       "parameters.rds"))
-
-```
-
-
 ```{r define_updata_paths}
 path_atm_pCO2    <- "/nfs/kryo/work/updata/atm_pco2_noaa/"
 path_preprocessing  <- "/nfs/kryo/work/updata/emlr_cant/observations/preprocessing/"
