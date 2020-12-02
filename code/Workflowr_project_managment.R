@@ -126,7 +126,6 @@ wflow_publish(here::here(
   c(
     "index.Rmd",
     "config_dependencies.Rmd",
-    "config_nomenclature.Rmd",
     "config_parameterization.Rmd",
     "read_World_Ocean_Atlas_2018.Rmd",
     "read_GLODAPv2_2020.Rmd",
@@ -136,7 +135,7 @@ wflow_publish(here::here(
     "read_CO2_atm.Rmd"
   )
 ),
-message = "created global parameterization file params_global.rds",
+message = "moved nomenclature to readme, updated inventory calculation",
 republish = TRUE)
 
 

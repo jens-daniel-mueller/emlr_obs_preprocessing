@@ -7,8 +7,6 @@ navbar:
     menu:
     - text: Dependencies
       href: config_dependencies.html
-    - text: Nomenclature
-      href: config_nomenclature.html
     - text: Parameterization
       href: config_parameterization.html
   - text: Data base
