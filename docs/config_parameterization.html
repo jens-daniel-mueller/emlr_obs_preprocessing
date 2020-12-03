@@ -456,7 +456,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Parameterization</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">02 December, 2020</h4>
+<h4 class="date">03 December, 2020</h4>
 
 </div>
 
@@ -481,7 +481,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-12-02
+<strong>Last updated:</strong> 2020-12-03
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -572,16 +572,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree649cb290d6234b213af3d5f0f892c5f8c24f90e0targetblank649cb29a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/649cb290d6234b213af3d5f0f892c5f8c24f90e0" target="_blank">649cb29</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeac9d74753253c22b68e157fc1794c19c5ed9b261targetblankac9d747a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/ac9d74753253c22b68e157fc1794c19c5ed9b261" target="_blank">ac9d747</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree649cb290d6234b213af3d5f0f892c5f8c24f90e0targetblank649cb29a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeac9d74753253c22b68e157fc1794c19c5ed9b261targetblankac9d747a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/649cb290d6234b213af3d5f0f892c5f8c24f90e0" target="_blank">649cb29</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/ac9d74753253c22b68e157fc1794c19c5ed9b261" target="_blank">ac9d747</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -591,12 +591,6 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/
-
-Unstaged changes:
-    Modified:   README.md
-    Modified:   analysis/_site.yml
-    Deleted:    analysis/config_nomenclature.Rmd
-    Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
 <p>
@@ -635,6 +629,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ac9d74753253c22b68e157fc1794c19c5ed9b261/analysis/config_parameterization.Rmd" target="_blank">ac9d747</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-03
+</td>
+<td>
+defined standard and sequence of inventory depth thresholds
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/999cd9d0f1c35bc52979df1a413c2b6a9871e2dc/docs/config_parameterization.html" target="_blank">999cd9d</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-02
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -801,7 +829,8 @@ params_global &lt;-
     lat_section_S = -59.5,
     longitude_sections_basin = longitude_sections_basin,
     longitude_sections_regular = longitude_sections_regular,
-    inventory_depth = 3000,
+    inventory_depth_standard = 3000,
+    inventory_depths = c(100, 500, 1000, 3000, 10000),
     plotting_depth = 4500,
     cruises_meridional = 1041,
     depth_levels = depth_levels,
@@ -846,8 +875,11 @@ $longitude_sections_regular
  [1]  30.5  50.5  70.5  90.5 110.5 130.5 150.5 170.5 190.5 210.5 230.5 250.5
 [13] 270.5 290.5 310.5 330.5 350.5 370.5
 
-$inventory_depth
+$inventory_depth_standard
 [1] 3000
+
+$inventory_depths
+[1]   100   500  1000  3000 10000
 
 $plotting_depth
 [1] 4500
