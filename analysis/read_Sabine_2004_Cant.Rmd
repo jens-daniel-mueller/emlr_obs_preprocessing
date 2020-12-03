@@ -112,7 +112,10 @@ cant_3d <- cant_3d %>%
   mutate(cant_pos = if_else(cant <= 0, 0, cant),
          eras = "1800-1994")
 
-cant_inv <- m_cant_inv(cant_3d) 
+cant_inv_layers <- m_cant_inv(cant_3d)
+
+cant_inv <- cant_inv_layers %>% 
+  filter(inv_depth == params_global$inventory_depth_standard)
 
 ```
 

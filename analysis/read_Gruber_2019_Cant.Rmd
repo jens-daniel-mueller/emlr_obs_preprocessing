@@ -147,7 +147,10 @@ cant_zonal <- m_zonal_mean_section(cant_3d %>% select(-basin))
 
 ```{r calculate_column_inventory}
 
-cant_inv <- m_cant_inv(cant_3d)
+cant_inv_layers <- m_cant_inv(cant_3d)
+
+cant_inv <- cant_inv_layers %>% 
+  filter(inv_depth == params_global$inventory_depth_standard)
 
 ```
 
