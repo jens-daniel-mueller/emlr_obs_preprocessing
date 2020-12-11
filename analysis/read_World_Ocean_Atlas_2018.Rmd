@@ -348,7 +348,7 @@ According to the [WOA18 documentation](https://data.nodc.noaa.gov/woa/WOA18/DOC/
 
 # temperature
 
-WOA18_tem <- tidync(
+WOA18_temp <- tidync(
   paste(
     path_woa2018,
     "temperature/decav/1.00/woa18_decav_t00_01.nc",
@@ -356,10 +356,10 @@ WOA18_tem <- tidync(
   )
 )
 
-WOA18_tem_tibble <- WOA18_tem %>% hyper_tibble()
+WOA18_temp_tibble <- WOA18_temp %>% hyper_tibble()
 
-WOA18_tem_tibble <- WOA18_tem_tibble  %>% 
-  select(tem = t_an, lon, lat, depth) %>% 
+WOA18_temp_tibble <- WOA18_temp_tibble  %>% 
+  select(temp = t_an, lon, lat, depth) %>% 
   drop_na() %>% 
   mutate(lon = if_else(lon < 20, lon + 360, lon))
 
@@ -380,7 +380,7 @@ WOA18_sal_tibble <- WOA18_sal_tibble  %>%
   drop_na() %>% 
   mutate(lon = if_else(lon < 20, lon + 360, lon))
 
-rm(WOA18_sal, WOA18_tem)
+rm(WOA18_sal, WOA18_temp)
 
 ```
 
@@ -388,8 +388,8 @@ rm(WOA18_sal, WOA18_tem)
 
 ```{r join_predictors}
 
-WOA18_sal_tem <- full_join(WOA18_sal_tibble, WOA18_tem_tibble)
-rm(WOA18_sal_tibble, WOA18_tem_tibble)
+WOA18_sal_temp <- full_join(WOA18_sal_tibble, WOA18_temp_tibble)
+rm(WOA18_sal_tibble, WOA18_temp_tibble)
 
 ```
 
@@ -399,7 +399,7 @@ Data outside the WOA18 basin mask were removed for further analysis.
 
 ```{r join_basin_mask}
 
-WOA18_sal_tem <- inner_join(WOA18_sal_tem, basinmask_01)
+WOA18_sal_temp <- inner_join(WOA18_sal_temp, basinmask_01)
 
 ```
 
@@ -412,9 +412,9 @@ Potential temperature is calculated as in input variable for the neutral density
 
 ```{r calculate_potential_temperature}
 
-WOA18_sal_tem <- WOA18_sal_tem %>% 
+WOA18_sal_temp <- WOA18_sal_temp %>% 
   mutate(THETA = swTheta(salinity = sal,
-                         temperature = tem,
+                         temperature = temp,
                          pressure = depth,
                          referencePressure = 0,
                          longitude = lon - 180,
@@ -428,12 +428,12 @@ WOA18_sal_tem <- WOA18_sal_tem %>%
 Example profile from North Atlantic Ocean.
 
 ```{r WOA18_potential_temperature_profile}
-WOA18_sal_tem %>%
+WOA18_sal_temp %>%
   filter(lat == params_global$lat_Atl_profile,
          lon == params_global$lon_Atl_section) %>%
   ggplot() +
-  geom_line(aes(tem, depth, col = "insitu")) +
-  geom_point(aes(tem, depth, col = "insitu")) +
+  geom_line(aes(temp, depth, col = "insitu")) +
+  geom_point(aes(temp, depth, col = "insitu")) +
   geom_line(aes(THETA, depth, col = "theta")) +
   geom_point(aes(THETA, depth, col = "theta")) +
   scale_y_reverse() +
@@ -446,7 +446,7 @@ WOA18_sal_tem %>%
 ```{r WOA18_pot_temperature_section}
 
 p_section_global(
-  df = WOA18_sal_tem,
+  df = WOA18_sal_temp,
   var = "THETA")
 
 ```
@@ -463,12 +463,12 @@ Neutral density gamma was calculated with a Python script provided by Serazin et
 
 # calculate pressure from depth
 
-WOA18_sal_tem <- WOA18_sal_tem %>% 
+WOA18_sal_temp <- WOA18_sal_temp %>% 
   mutate(CTDPRS = gsw_p_from_z(-depth,
                                lat))
 # rename variables according to python script
 
-WOA18_sal_tem_gamma_prep <- WOA18_sal_tem %>% 
+WOA18_sal_temp_gamma_prep <- WOA18_sal_temp %>% 
   rename(LATITUDE = lat,
          LONGITUDE = lon,
          SALNTY = sal)
@@ -483,20 +483,20 @@ source_python(paste(
 
 # calculate gamma
 
-WOA18_sal_tem_gamma_calc <- calculate_gamma(WOA18_sal_tem_gamma_prep)
+WOA18_sal_temp_gamma_calc <- calculate_gamma(WOA18_sal_temp_gamma_prep)
 
 # reverse variable naming
 
-WOA18_sal_tem <- WOA18_sal_tem_gamma_calc %>% 
+WOA18_sal_temp <- WOA18_sal_temp_gamma_calc %>% 
   select(-c(CTDPRS, THETA)) %>% 
   rename(lat = LATITUDE,
          lon = LONGITUDE,
          sal = SALNTY,
          gamma  = GAMMA)
 
-WOA18_sal_tem <- as_tibble(WOA18_sal_tem)
+WOA18_sal_temp <- as_tibble(WOA18_sal_temp)
 
-rm(WOA18_sal_tem_gamma_calc, WOA18_sal_tem_gamma_prep)
+rm(WOA18_sal_temp_gamma_calc, WOA18_sal_temp_gamma_prep)
 
 ```
 
@@ -505,9 +505,9 @@ rm(WOA18_sal_tem_gamma_calc, WOA18_sal_tem_gamma_prep)
 
 ```{r write_WOA18_predictor_file}
 
-WOA18_sal_tem %>%
+WOA18_sal_temp %>%
   write_csv(paste(path_preprocessing,
-                  "WOA18_sal_tem.csv",
+                  "WOA18_sal_temp.csv",
                   sep = ""))
 
 ```
@@ -526,8 +526,8 @@ Section locations are indicated as white lines in maps.
 ```{r temperature_surface_WOA18_map, fig.asp=0.6}
 
 p_map_climatology(
-  df = WOA18_sal_tem,
-  var = "tem")
+  df = WOA18_sal_temp,
+  var = "temp")
 
 ```
 
@@ -536,8 +536,8 @@ p_map_climatology(
 ```{r temperature_sections_WOA18}
 
 p_section_global(
-  df = WOA18_sal_tem,
-  var = "tem")
+  df = WOA18_sal_temp,
+  var = "temp")
 
 ```
 
@@ -549,7 +549,7 @@ p_section_global(
 ```{r salinity_surface_WOA18_map}
 
 p_map_climatology(
-  df = WOA18_sal_tem,
+  df = WOA18_sal_temp,
   var = "sal")
 
 ```
@@ -559,7 +559,7 @@ p_map_climatology(
 ```{r salinity_sections_WOA18}
 
 p_section_global(
-  df = WOA18_sal_tem,
+  df = WOA18_sal_temp,
   var = "sal")
 
 ```
@@ -574,7 +574,7 @@ p_section_global(
 ```{r neutral_density_surface_WOA18_map, eval=FALSE}
 
 p_map_climatology(
-  df = WOA18_sal_tem,
+  df = WOA18_sal_temp,
   var = "gamma")
 
 ```
@@ -584,7 +584,7 @@ p_map_climatology(
 ```{r neutral_density_sections_WOA18, eval=FALSE}
 
 p_section_global(
-  df = WOA18_sal_tem,
+  df = WOA18_sal_temp,
   var = "gamma")
 
 ```
@@ -596,11 +596,11 @@ p_section_global(
 
 ```{r read_WOA18_nuts_O2_files}
 
-# Keep grid cells of WOA18 sal/tem data set, to join with
+# Keep grid cells of WOA18 sal/temp data set, to join with
 WOA18_nuts_O2 <-
-  WOA18_sal_tem %>%
+  WOA18_sal_temp %>%
   select(lon, lat, depth, basin, basin_AIP)
-rm(WOA18_sal_tem)
+rm(WOA18_sal_temp)
 
 # create file list
 file_list <- c(

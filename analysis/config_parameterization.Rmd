@@ -76,6 +76,8 @@ params_global <-
   lst(
     lat_max = 65,
     lat_min = -85,
+    lat_min_SO = -35,
+    lat_equator = 0,
     lon_Atl_section = 335.5,
     lon_Pac_section = 190.5,
     lon_Ind_section = 70.5,

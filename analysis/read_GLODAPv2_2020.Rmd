@@ -66,7 +66,7 @@ GLODAP <- GLODAP %>%
 # harmonize column names
 GLODAP <- GLODAP  %>%
   rename(sal = salinity,
-         tem = temperature)
+         temp = temperature)
 
 # harmonize coordinates
 GLODAP <- GLODAP  %>%
@@ -244,6 +244,3 @@ rm(eda)
 
 ```
 
-The output of an automated Exploratory Data Analysis (EDA) performed with the package `DataExplorer` can be accessed here:
-
-[Link to EDA report of GLODAPv2_2020 raw data](https://jens-daniel-mueller.github.io/Cant_eMLR/EDA_report_GLODAPv2_2020_preprocessed.html){target="_blank}

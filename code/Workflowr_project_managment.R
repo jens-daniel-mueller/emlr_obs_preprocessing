@@ -115,7 +115,7 @@ wflow_publish(here::here(
 message = "use setup child Rmd file")
 
 # commit regular changes (locally) and rebuild site
-wflow_publish(all = TRUE, message = "renamed preprocessed GLODAP file")
+wflow_publish(all = TRUE, message = "renamed tem to temp")
 
 # commit changes including _site.yml (locally) and rebuild site
 wflow_publish(c("analysis/*Rmd"), message = "XXX", republish = TRUE)
@@ -137,7 +137,6 @@ wflow_publish(here::here(
 ),
 message = "moved nomenclature to readme, updated inventory calculation",
 republish = TRUE)
-
 
 
 
