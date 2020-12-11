@@ -572,16 +572,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree30eb59a78d9586d3bef0cbd6945e63b016499fbftargetblank30eb59aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/30eb59a78d9586d3bef0cbd6945e63b016499fbf" target="_blank">30eb59a</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeec6f8035d636eeffb78fade9f82779ee113c627ftargetblankec6f803a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/ec6f8035d636eeffb78fade9f82779ee113c627f" target="_blank">ec6f803</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree30eb59a78d9586d3bef0cbd6945e63b016499fbftargetblank30eb59aa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeec6f8035d636eeffb78fade9f82779ee113c627ftargetblankec6f803a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/30eb59a78d9586d3bef0cbd6945e63b016499fbf" target="_blank">30eb59a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/ec6f8035d636eeffb78fade9f82779ee113c627f" target="_blank">ec6f803</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -629,6 +629,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ec6f8035d636eeffb78fade9f82779ee113c627f/analysis/read_GLODAPv2_2020.Rmd" target="_blank">ec6f803</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+<td>
+apply only lat max but not basinmak
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/914159f632cef8539b161c49272d663f47c8e690/docs/read_GLODAPv2_2020.html" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -919,12 +953,10 @@ GLODAP &lt;- GLODAP %&gt;%
 </ul>
 <pre class="r"><code>GLODAP &lt;- m_grid_horizontal(GLODAP)</code></pre>
 </div>
-<div id="basin-mask" class="section level2">
-<h2><span class="header-section-number">3.3</span> Basin mask</h2>
-<p>The basin mask from the World Ocean Atlas was used. For details consult the data base subsection for <a href="https://jens-daniel-mueller.github.io/Cant_eMLR/read_World_Ocean_Atlas_2018.html">WOA18</a> data.</p>
-<p>Please note that some GLODAP observations were made outside the WOA18 basin mask (i.e. in marginal seas) and will be removed for further analysis.</p>
-<pre class="r"><code># use only data inside basinmask
-GLODAP &lt;- inner_join(GLODAP, basinmask)</code></pre>
+<div id="northern-latitude-threshold" class="section level2">
+<h2><span class="header-section-number">3.3</span> Northern latitude threshold</h2>
+<pre class="r"><code>GLODAP &lt;- GLODAP %&gt;%
+  filter(lat &lt;= params_global$lat_max)</code></pre>
 </div>
 <div id="create-clean-observations-grid" class="section level2">
 <h2><span class="header-section-number">3.4</span> Create clean observations grid</h2>
@@ -951,7 +983,7 @@ GLODAP &lt;- inner_join(GLODAP, basinmask)</code></pre>
 <div id="histogram-zonal-coverage" class="section level2">
 <h2><span class="header-section-number">4.2</span> Histogram Zonal coverage</h2>
 <pre class="r"><code>GLODAP_histogram_lat &lt;- GLODAP %&gt;%
-  group_by(lat_grid, basin) %&gt;%
+  group_by(lat_grid) %&gt;%
   tally() %&gt;%
   ungroup()
 
@@ -959,7 +991,6 @@ GLODAP_histogram_lat %&gt;%
   ggplot(aes(lat_grid, n)) +
   geom_col() +
   coord_flip() +
-  facet_wrap(~ basin) +
   theme(legend.title = element_blank())</code></pre>
 <p><img src="figure/read_GLODAPv2_2020.Rmd/coverage_histogram_zonal-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -1015,14 +1046,13 @@ Jens Müller
 <div id="histogram-temporal-coverage" class="section level2">
 <h2><span class="header-section-number">4.3</span> Histogram temporal coverage</h2>
 <pre class="r"><code>GLODAP_histogram_year &lt;- GLODAP %&gt;%
-  group_by(year, basin) %&gt;%
+  group_by(year) %&gt;%
   tally() %&gt;%
   ungroup()
 
 GLODAP_histogram_year %&gt;%
   ggplot() +
   geom_col(aes(year, n)) +
-  facet_wrap(~ basin, ncol = 1) +
   theme(
     axis.title.x = element_blank()
   )</code></pre>
@@ -1080,7 +1110,7 @@ Jens Müller
 <div id="zonal-temporal-coverage-hovmoeller" class="section level2">
 <h2><span class="header-section-number">4.4</span> Zonal temporal coverage (Hovmoeller)</h2>
 <pre class="r"><code>GLODAP_hovmoeller_year &lt;- GLODAP %&gt;%
-  group_by(year, lat_grid, basin) %&gt;%
+  group_by(year, lat_grid) %&gt;%
   tally() %&gt;%
   ungroup()
 
@@ -1089,7 +1119,6 @@ GLODAP_hovmoeller_year %&gt;%
   geom_tile() +
   geom_vline(xintercept = c(1999.5, 2012.5)) +
   scale_fill_viridis_c(option = &quot;magma&quot;, direction = -1) +
-  facet_wrap( ~ basin, ncol = 1) +
   theme(legend.position = &quot;top&quot;,
         axis.title.x = element_blank())</code></pre>
 <p><img src="figure/read_GLODAPv2_2020.Rmd/coverage_hovmoeller-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -1150,55 +1179,7 @@ Jens Müller
               aes(lon, lat, fill = log10(n))) +
   scale_fill_viridis_c(option = &quot;magma&quot;,
                        direction = -1)</code></pre>
-<p><img src="figure/read_GLODAPv2_2020.Rmd/coverage_maps_era_subsetting-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-coverage_maps_era_subsetting-1">
-Past versions of coverage_maps_era_subsetting-1.png
-</button>
-</p>
-<div id="fig-coverage_maps_era_subsetting-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_GLODAPv2_2020.Rmd/coverage_maps_era_subsetting-1.png" target="_blank">58359ac</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2020-11-27
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/figure/read_GLODAPv2_2020.Rmd/coverage_maps_era_subsetting-1.png" target="_blank">92e10aa</a>
-</td>
-<td>
-Jens Müller
-</td>
-<td>
-2020-11-27
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/read_GLODAPv2_2020.Rmd/coverage_map-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">

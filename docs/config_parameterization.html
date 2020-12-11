@@ -572,16 +572,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree30eb59a78d9586d3bef0cbd6945e63b016499fbftargetblank30eb59aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/30eb59a78d9586d3bef0cbd6945e63b016499fbf" target="_blank">30eb59a</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeec6f8035d636eeffb78fade9f82779ee113c627ftargetblankec6f803a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/ec6f8035d636eeffb78fade9f82779ee113c627f" target="_blank">ec6f803</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree30eb59a78d9586d3bef0cbd6945e63b016499fbftargetblank30eb59aa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeec6f8035d636eeffb78fade9f82779ee113c627ftargetblankec6f803a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/30eb59a78d9586d3bef0cbd6945e63b016499fbf" target="_blank">30eb59a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/ec6f8035d636eeffb78fade9f82779ee113c627f" target="_blank">ec6f803</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -590,6 +590,7 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
     Ignored:    data/
 
 </code></pre>
@@ -629,6 +630,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ec6f8035d636eeffb78fade9f82779ee113c627f/analysis/config_parameterization.Rmd" target="_blank">ec6f803</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+<td>
+apply only lat max but not basinmak
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/914159f632cef8539b161c49272d663f47c8e690/docs/config_parameterization.html" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -910,8 +945,7 @@ params_global &lt;-
     breaks_cant_inv_offset = c(-Inf, seq(-15, 15, 3), Inf),
     breaks_cant_pos = c(seq(0, 18, 1), Inf),
     breaks_cant = c(-Inf,seq(-16,16,2),Inf),
-    breaks_cant_offset = c(-Inf,seq(-8,8,),Inf),
-    MLR_basins = &quot;2&quot;
+    breaks_cant_offset = c(-Inf,seq(-8,8,),Inf)
   )
 
 params_global</code></pre>
@@ -992,10 +1026,7 @@ $breaks_cant
 
 $breaks_cant_offset
  [1] -Inf   -8   -7   -6   -5   -4   -3   -2   -1    0    1    2    3    4    5
-[16]    6    7    8  Inf
-
-$MLR_basins
-[1] &quot;2&quot;</code></pre>
+[16]    6    7    8  Inf</code></pre>
 </div>
 <div id="write-file" class="section level1">
 <h1><span class="header-section-number">2</span> Write file</h1>
