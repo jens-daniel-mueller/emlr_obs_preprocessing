@@ -155,7 +155,7 @@ rm(dcant, V101)
 
 ```{r calculate_zonal_mean_section}
 
-cant_zonal <- m_zonal_mean_section(cant_3d %>%  select(-basin))
+cant_zonal <- m_zonal_mean_section(cant_3d)
 
 ```
 
