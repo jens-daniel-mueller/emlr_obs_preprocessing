@@ -53,16 +53,30 @@ dcant <- tidync(paste(
   sep = ""
 ))
 
+#dcant$grid$variables
+
+# read gamma field
+dcant <- dcant %>%  activate(GAMMA_DENS)
+dcant_gamma <- dcant %>% hyper_tibble()
+
+# read delta cant field
 dcant <- dcant %>%  activate(DCANT_01)
 dcant <- dcant %>% hyper_tibble()
+
+# join fields
+
+dcant <- left_join(dcant, dcant_gamma)
 
 # harmonize column names and coordinates
 dcant <- dcant %>% 
   rename(lon = LONGITUDE,
          lat = LATITUDE,
          depth = DEPTH,
+         gamma = GAMMA_DENS,
          cant_pos = DCANT_01) %>% 
   mutate(lon = if_else(lon < 20, lon + 360, lon))
+
+rm(dcant_gamma)
 
 ```
 
@@ -115,6 +129,10 @@ V101 <- V101 %>%
 
 ```{r apply_basin_mask}
 
+basinmask <- basinmask %>% 
+  filter(MLR_basins == "2") %>% 
+  select(-c(MLR_basins))
+
 dcant <- inner_join(dcant, basinmask)
 dcant_inv <- inner_join(dcant_inv, basinmask)
 V101 <- inner_join(V101, basinmask)
@@ -137,7 +155,7 @@ rm(dcant, V101)
 
 ```{r calculate_zonal_mean_section}
 
-cant_zonal <- m_zonal_mean_section(cant_3d %>% select(-basin))
+cant_zonal <- m_zonal_mean_section(cant_3d %>%  select(-basin))
 
 ```
 
@@ -238,6 +256,16 @@ p_map_climatology(
 
 ```
 
+### Neutral density
+
+```{r Gamma_maps_V101, fig.asp=0.6}
+
+p_map_climatology(
+  df = cant_3d,
+  var = "gamma")
+
+```
+
 
 ## Sections basin
 
@@ -282,6 +310,16 @@ p_section_climatology_regular(
 p_section_climatology_regular(
   df = cant_3d,
   var = "cant_pos")
+
+```
+
+### Neutral density
+
+```{r Gamma_sections_regular_V101, fig.asp=2}
+
+p_section_climatology_regular(
+  df = cant_3d,
+  var = "gamma")
 
 ```
 
