@@ -157,7 +157,7 @@ Pacific Ocean:
 
 For eMLR model fitting and mapping, Indian and Pacific Ocean were combined as Indo-Pacific.
 
-```{r assign_basin_labels}
+```{r assign_standard_basin_labels}
 
 # assign basin labels
 basinmask_01 <- basinmask_01 %>%
@@ -179,7 +179,8 @@ basinmask_01 <- basinmask_01 %>%
   ) %>%
   mutate(basin = if_else(basin_AIP == "Atlantic",
                          "Atlantic",
-                         "Indo-Pacific")) %>%
+                         "Indo-Pacific"),
+         MLR_basins = "2") %>%
   select(-Basin_0m)
 
 # apply northern latitude boundary
@@ -192,9 +193,46 @@ basinmask_01 <- basinmask_01  %>%
 
 ```
 
-### Map
 
-```{r basin_masks_WOA18_map, fig.asp=0.6}
+
+```{r assign_alternative_basin_labels}
+
+# 5 basins
+basinmask_5 <- basinmask_01 %>%
+  mutate(
+    basin = case_when(
+      basin_AIP ==  "Atlantic" & lat > params_global$lat_equator ~ "N_Atlantic",
+      basin_AIP ==  "Atlantic" & lat < params_global$lat_equator ~ "S_Atlantic",
+      basin_AIP ==  "Pacific" & lat > params_global$lat_equator ~ "N_Pacific",
+      basin_AIP ==  "Pacific" & lat < params_global$lat_equator ~ "S_Pacific",
+      basin_AIP ==  "Indian" ~ "Indian"
+    )
+  ) %>%
+  mutate(MLR_basins = "5")
+
+
+# SO basin separate
+basinmask_SO <- basinmask_01 %>%
+  mutate(
+    basin = if_else(
+      lat < params_global$lat_min_SO, "SO", basin)
+  ) %>%
+  mutate(MLR_basins = "SO")
+
+# 3 basins
+basinmask_AIP <- basinmask_01 %>%
+  mutate(
+    basin = basin_AIP) %>%
+  mutate(MLR_basins = "AIP")
+
+
+basinmask_01 <- bind_rows(basinmask_01, basinmask_5, basinmask_SO, basinmask_AIP)
+
+```
+
+### Maps
+
+```{r basin_AIP_masks_WOA18_map, fig.asp=0.6}
 
 map <- 
   ggplot() +
@@ -206,11 +244,34 @@ map <-
 map +
   geom_raster(data = basinmask_01,
               aes(lon, lat, fill = basin_AIP)) +
-  scale_fill_brewer(palette = "Dark2") +
-  theme(legend.position = "top",
-        legend.title = element_blank())
+  scale_fill_brewer(palette = "Dark2")
 
 ```
+
+
+### Map
+
+```{r basin_masks_WOA18_map, fig.asp=0.6}
+
+for (i_MLR_basins in unique(basinmask_01$MLR_basins)) {
+  
+  print(
+    map +
+      geom_raster(
+        data = basinmask_01 %>% filter(MLR_basins == i_MLR_basins),
+        aes(lon, lat, fill = basin)
+      ) +
+      scale_fill_brewer(palette = "Dark2") +
+      labs(title = paste("MLR basin label:", i_MLR_basins))
+  )
+  
+}
+
+
+```
+
+
+
 
 ```{r write_base_map_as_rds_file}
 

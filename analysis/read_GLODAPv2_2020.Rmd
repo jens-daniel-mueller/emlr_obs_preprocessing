@@ -231,16 +231,3 @@ map +
 
 ```
 
-# Exploratory data analysis
-
-```{r EDA_GLODAP_clean, eval=FALSE}
-
-source(paste(path_functions,
-             "eda.R",
-             sep = ""))
-
-eda(GLODAP, "GLODAPv2_2020_preprocessed")
-rm(eda)
-
-```
-
