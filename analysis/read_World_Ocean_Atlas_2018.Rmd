@@ -102,7 +102,8 @@ landmask <- landmask %>%
 landmask <- landmask %>%
   filter(region == "land",
          lat >= params_global$lat_min,
-         lat <= params_global$lat_max) %>%
+         lat <= params_global$lat_max
+         ) %>%
   select(-region)
 
 rm(landsea_01)
@@ -232,6 +233,8 @@ basinmask_01 <- bind_rows(basinmask_01, basinmask_5, basinmask_SO, basinmask_AIP
 
 ### Maps
 
+#### Basins for budgets
+
 ```{r basin_AIP_masks_WOA18_map, fig.asp=0.6}
 
 map <- 
@@ -248,8 +251,7 @@ map +
 
 ```
 
-
-### Map
+#### Basins for MLR fitting
 
 ```{r basin_masks_WOA18_map, fig.asp=0.6}
 
@@ -269,8 +271,6 @@ for (i_MLR_basins in unique(basinmask_01$MLR_basins)) {
 
 
 ```
-
-
 
 
 ```{r write_base_map_as_rds_file}
@@ -422,7 +422,8 @@ WOA18_temp_tibble <- WOA18_temp %>% hyper_tibble()
 WOA18_temp_tibble <- WOA18_temp_tibble  %>% 
   select(temp = t_an, lon, lat, depth) %>% 
   drop_na() %>% 
-  mutate(lon = if_else(lon < 20, lon + 360, lon))
+  mutate(lon = if_else(lon < 20, lon + 360, lon)) %>%
+  filter(lat <= params_global$lat_max)
 
 # salinity
 
@@ -439,7 +440,8 @@ WOA18_sal_tibble <- WOA18_sal %>% hyper_tibble()
 WOA18_sal_tibble <- WOA18_sal_tibble  %>% 
   select(sal = s_an, lon, lat, depth) %>% 
   drop_na() %>% 
-  mutate(lon = if_else(lon < 20, lon + 360, lon))
+  mutate(lon = if_else(lon < 20, lon + 360, lon)) %>%
+  filter(lat <= params_global$lat_max)
 
 rm(WOA18_sal, WOA18_temp)
 
@@ -451,16 +453,6 @@ rm(WOA18_sal, WOA18_temp)
 
 WOA18_sal_temp <- full_join(WOA18_sal_tibble, WOA18_temp_tibble)
 rm(WOA18_sal_tibble, WOA18_temp_tibble)
-
-```
-
-## Apply basin mask
-
-Data outside the WOA18 basin mask were removed for further analysis.
-
-```{r join_basin_mask}
-
-WOA18_sal_temp <- inner_join(WOA18_sal_temp, basinmask_01)
 
 ```
 
@@ -489,6 +481,7 @@ WOA18_sal_temp <- WOA18_sal_temp %>%
 Example profile from North Atlantic Ocean.
 
 ```{r WOA18_potential_temperature_profile}
+
 WOA18_sal_temp %>%
   filter(lat == params_global$lat_Atl_profile,
          lon == params_global$lon_Atl_section) %>%
@@ -660,7 +653,7 @@ p_section_global(
 # Keep grid cells of WOA18 sal/temp data set, to join with
 WOA18_nuts_O2 <-
   WOA18_sal_temp %>%
-  select(lon, lat, depth, basin, basin_AIP)
+  select(lon, lat, depth)
 rm(WOA18_sal_temp)
 
 # create file list
@@ -691,7 +684,8 @@ for (file in file_list) {
   WOA18_tibble <- WOA18_tibble  %>%
     select(all_of(parameter),
            lon, lat, depth) %>%
-    mutate(lon = if_else(lon < 20, lon + 360, lon))
+    mutate(lon = if_else(lon < 20, lon + 360, lon)) %>%
+    filter(lat <= params_global$lat_max)
   
   # join with previous WOA data and keep only rows in existing data frame
   # this is equal to applying the basinmask

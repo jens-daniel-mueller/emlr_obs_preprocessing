@@ -97,8 +97,7 @@ params_global <-
     breaks_cant_inv_offset = c(-Inf, seq(-15, 15, 3), Inf),
     breaks_cant_pos = c(seq(0, 18, 1), Inf),
     breaks_cant = c(-Inf,seq(-16,16,2),Inf),
-    breaks_cant_offset = c(-Inf,seq(-8,8,),Inf),
-    MLR_basins = "2"
+    breaks_cant_offset = c(-Inf,seq(-8,8,),Inf)
   )
 
 params_global

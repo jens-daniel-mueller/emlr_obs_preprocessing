@@ -115,7 +115,7 @@ wflow_publish(here::here(
 message = "use setup child Rmd file")
 
 # commit regular changes (locally) and rebuild site
-wflow_publish(all = TRUE, message = "created basin masks for analysis")
+wflow_publish(all = TRUE, message = "apply only lat max but not basinmak")
 
 # commit changes including _site.yml (locally) and rebuild site
 wflow_publish(c("analysis/*Rmd"), message = "XXX", republish = TRUE)

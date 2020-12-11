@@ -107,17 +107,13 @@ GLODAP <- m_grid_horizontal(GLODAP)
 
 ```
 
+## Northern latitude threshold
 
-## Basin mask
+```{r apply_northern_lat_max}
 
-The basin mask from the World Ocean Atlas was used. For details consult the data base subsection for [WOA18](https://jens-daniel-mueller.github.io/Cant_eMLR/read_World_Ocean_Atlas_2018.html) data.
+GLODAP <- GLODAP %>%
+  filter(lat <= params_global$lat_max)
 
-Please note that some GLODAP observations were made outside the WOA18 basin mask (i.e. in marginal seas) and will be removed for further analysis.
-
-```{r join_GLODAP_basin_mask}
-
-# use only data inside basinmask
-GLODAP <- inner_join(GLODAP, basinmask)
 
 ```
 
@@ -161,7 +157,7 @@ GLODAP <- m_grid_horizontal_coarse(GLODAP)
 ```{r coverage_histogram_zonal}
 
 GLODAP_histogram_lat <- GLODAP %>%
-  group_by(lat_grid, basin) %>%
+  group_by(lat_grid) %>%
   tally() %>%
   ungroup()
 
@@ -169,7 +165,6 @@ GLODAP_histogram_lat %>%
   ggplot(aes(lat_grid, n)) +
   geom_col() +
   coord_flip() +
-  facet_wrap(~ basin) +
   theme(legend.title = element_blank())
 
 rm(GLODAP_histogram_lat)
@@ -181,14 +176,13 @@ rm(GLODAP_histogram_lat)
 ```{r coverage_histogram_temporal}
 
 GLODAP_histogram_year <- GLODAP %>%
-  group_by(year, basin) %>%
+  group_by(year) %>%
   tally() %>%
   ungroup()
 
 GLODAP_histogram_year %>%
   ggplot() +
   geom_col(aes(year, n)) +
-  facet_wrap(~ basin, ncol = 1) +
   theme(
     axis.title.x = element_blank()
   )
@@ -199,10 +193,10 @@ rm(GLODAP_histogram_year)
 
 ## Zonal temporal coverage (Hovmoeller)
 
-```{r coverage_hovmoeller, fig.asp=1}
+```{r coverage_hovmoeller}
 
 GLODAP_hovmoeller_year <- GLODAP %>%
-  group_by(year, lat_grid, basin) %>%
+  group_by(year, lat_grid) %>%
   tally() %>%
   ungroup()
 
@@ -211,7 +205,6 @@ GLODAP_hovmoeller_year %>%
   geom_tile() +
   geom_vline(xintercept = c(1999.5, 2012.5)) +
   scale_fill_viridis_c(option = "magma", direction = -1) +
-  facet_wrap( ~ basin, ncol = 1) +
   theme(legend.position = "top",
         axis.title.x = element_blank())
 
@@ -221,7 +214,7 @@ rm(GLODAP_hovmoeller_year)
 
 ## Coverage map
 
-```{r coverage_maps_era_subsetting}
+```{r coverage_map}
 
 map +
   geom_raster(data = GLODAP_obs_grid,
