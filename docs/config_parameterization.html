@@ -456,7 +456,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Parameterization</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">03 December, 2020</h4>
+<h4 class="date">11 December, 2020</h4>
 
 </div>
 
@@ -481,7 +481,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-12-03
+<strong>Last updated:</strong> 2020-12-11
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -572,16 +572,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeac9d74753253c22b68e157fc1794c19c5ed9b261targetblankac9d747a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/ac9d74753253c22b68e157fc1794c19c5ed9b261" target="_blank">ac9d747</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree8a8db38c766ad442f7af11d42054ac354a88a69etargetblank8a8db38a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/8a8db38c766ad442f7af11d42054ac354a88a69e" target="_blank">8a8db38</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeac9d74753253c22b68e157fc1794c19c5ed9b261targetblankac9d747a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree8a8db38c766ad442f7af11d42054ac354a88a69etargetblank8a8db38a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/ac9d74753253c22b68e157fc1794c19c5ed9b261" target="_blank">ac9d747</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/8a8db38c766ad442f7af11d42054ac354a88a69e" target="_blank">8a8db38</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -629,6 +629,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8a8db38c766ad442f7af11d42054ac354a88a69e/analysis/config_parameterization.Rmd" target="_blank">8a8db38</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+<td>
+renamed tem to temp
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/5b02360f13ae81aee9961ecd2bf4321cbd51f244/docs/config_parameterization.html" target="_blank">5b02360</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-03
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -821,6 +855,8 @@ params_global &lt;-
   lst(
     lat_max = 65,
     lat_min = -85,
+    lat_min_SO = -35,
+    lat_equator = 0,
     lon_Atl_section = 335.5,
     lon_Pac_section = 190.5,
     lon_Ind_section = 70.5,
@@ -849,6 +885,12 @@ params_global</code></pre>
 
 $lat_min
 [1] -85
+
+$lat_min_SO
+[1] -35
+
+$lat_equator
+[1] 0
 
 $lon_Atl_section
 [1] 335.5

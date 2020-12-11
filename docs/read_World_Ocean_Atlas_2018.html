@@ -456,7 +456,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">World Ocean Atlas 2018</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">02 December, 2020</h4>
+<h4 class="date">11 December, 2020</h4>
 
 </div>
 
@@ -481,7 +481,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-12-02
+<strong>Last updated:</strong> 2020-12-11
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -572,16 +572,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree649cb290d6234b213af3d5f0f892c5f8c24f90e0targetblank649cb29a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/649cb290d6234b213af3d5f0f892c5f8c24f90e0" target="_blank">649cb29</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree8a8db38c766ad442f7af11d42054ac354a88a69etargetblank8a8db38a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/8a8db38c766ad442f7af11d42054ac354a88a69e" target="_blank">8a8db38</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree649cb290d6234b213af3d5f0f892c5f8c24f90e0targetblank649cb29a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree8a8db38c766ad442f7af11d42054ac354a88a69etargetblank8a8db38a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/649cb290d6234b213af3d5f0f892c5f8c24f90e0" target="_blank">649cb29</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/8a8db38c766ad442f7af11d42054ac354a88a69e" target="_blank">8a8db38</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -591,12 +591,6 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/
-
-Unstaged changes:
-    Modified:   README.md
-    Modified:   analysis/_site.yml
-    Deleted:    analysis/config_nomenclature.Rmd
-    Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
 <p>
@@ -635,6 +629,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8a8db38c766ad442f7af11d42054ac354a88a69e/analysis/read_World_Ocean_Atlas_2018.Rmd" target="_blank">8a8db38</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+<td>
+renamed tem to temp
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/999cd9d0f1c35bc52979df1a413c2b6a9871e2dc/docs/read_World_Ocean_Atlas_2018.html" target="_blank">999cd9d</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-02
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1146,7 +1174,7 @@ section_global_coordinates %&gt;%
 <h2><span class="header-section-number">3.1</span> Read ncdfs</h2>
 <pre class="r"><code># temperature
 
-WOA18_tem &lt;- tidync(
+WOA18_temp &lt;- tidync(
   paste(
     path_woa2018,
     &quot;temperature/decav/1.00/woa18_decav_t00_01.nc&quot;,
@@ -1154,10 +1182,10 @@ WOA18_tem &lt;- tidync(
   )
 )
 
-WOA18_tem_tibble &lt;- WOA18_tem %&gt;% hyper_tibble()
+WOA18_temp_tibble &lt;- WOA18_temp %&gt;% hyper_tibble()
 
-WOA18_tem_tibble &lt;- WOA18_tem_tibble  %&gt;% 
-  select(tem = t_an, lon, lat, depth) %&gt;% 
+WOA18_temp_tibble &lt;- WOA18_temp_tibble  %&gt;% 
+  select(temp = t_an, lon, lat, depth) %&gt;% 
   drop_na() %&gt;% 
   mutate(lon = if_else(lon &lt; 20, lon + 360, lon))
 
@@ -1178,26 +1206,26 @@ WOA18_sal_tibble &lt;- WOA18_sal_tibble  %&gt;%
   drop_na() %&gt;% 
   mutate(lon = if_else(lon &lt; 20, lon + 360, lon))
 
-rm(WOA18_sal, WOA18_tem)</code></pre>
+rm(WOA18_sal, WOA18_temp)</code></pre>
 </div>
 <div id="join-predictors" class="section level2">
 <h2><span class="header-section-number">3.2</span> Join predictors</h2>
-<pre class="r"><code>WOA18_sal_tem &lt;- full_join(WOA18_sal_tibble, WOA18_tem_tibble)
-rm(WOA18_sal_tibble, WOA18_tem_tibble)</code></pre>
+<pre class="r"><code>WOA18_sal_temp &lt;- full_join(WOA18_sal_tibble, WOA18_temp_tibble)
+rm(WOA18_sal_tibble, WOA18_temp_tibble)</code></pre>
 </div>
 <div id="apply-basin-mask" class="section level2">
 <h2><span class="header-section-number">3.3</span> Apply basin mask</h2>
 <p>Data outside the WOA18 basin mask were removed for further analysis.</p>
-<pre class="r"><code>WOA18_sal_tem &lt;- inner_join(WOA18_sal_tem, basinmask_01)</code></pre>
+<pre class="r"><code>WOA18_sal_temp &lt;- inner_join(WOA18_sal_temp, basinmask_01)</code></pre>
 </div>
 <div id="potential-temperature" class="section level2">
 <h2><span class="header-section-number">3.4</span> Potential temperature</h2>
 <p>Potential temperature is calculated as in input variable for the neutral density calculation.</p>
 <div id="calculation" class="section level3">
 <h3><span class="header-section-number">3.4.1</span> Calculation</h3>
-<pre class="r"><code>WOA18_sal_tem &lt;- WOA18_sal_tem %&gt;% 
+<pre class="r"><code>WOA18_sal_temp &lt;- WOA18_sal_temp %&gt;% 
   mutate(THETA = swTheta(salinity = sal,
-                         temperature = tem,
+                         temperature = temp,
                          pressure = depth,
                          referencePressure = 0,
                          longitude = lon - 180,
@@ -1206,12 +1234,12 @@ rm(WOA18_sal_tibble, WOA18_tem_tibble)</code></pre>
 <div id="profile" class="section level3">
 <h3><span class="header-section-number">3.4.2</span> Profile</h3>
 <p>Example profile from North Atlantic Ocean.</p>
-<pre class="r"><code>WOA18_sal_tem %&gt;%
+<pre class="r"><code>WOA18_sal_temp %&gt;%
   filter(lat == params_global$lat_Atl_profile,
          lon == params_global$lon_Atl_section) %&gt;%
   ggplot() +
-  geom_line(aes(tem, depth, col = &quot;insitu&quot;)) +
-  geom_point(aes(tem, depth, col = &quot;insitu&quot;)) +
+  geom_line(aes(temp, depth, col = &quot;insitu&quot;)) +
+  geom_point(aes(temp, depth, col = &quot;insitu&quot;)) +
   geom_line(aes(THETA, depth, col = &quot;theta&quot;)) +
   geom_point(aes(THETA, depth, col = &quot;theta&quot;)) +
   scale_y_reverse() +
@@ -1269,7 +1297,7 @@ Jens Müller
 <div id="section" class="section level3">
 <h3><span class="header-section-number">3.4.3</span> Section</h3>
 <pre class="r"><code>p_section_global(
-  df = WOA18_sal_tem,
+  df = WOA18_sal_temp,
   var = &quot;THETA&quot;)</code></pre>
 <p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/WOA18_pot_temperature_section-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -1329,12 +1357,12 @@ Jens Müller
 <h3><span class="header-section-number">3.5.1</span> Calculation</h3>
 <pre class="r"><code># calculate pressure from depth
 
-WOA18_sal_tem &lt;- WOA18_sal_tem %&gt;% 
+WOA18_sal_temp &lt;- WOA18_sal_temp %&gt;% 
   mutate(CTDPRS = gsw_p_from_z(-depth,
                                lat))
 # rename variables according to python script
 
-WOA18_sal_tem_gamma_prep &lt;- WOA18_sal_tem %&gt;% 
+WOA18_sal_temp_gamma_prep &lt;- WOA18_sal_temp %&gt;% 
   rename(LATITUDE = lat,
          LONGITUDE = lon,
          SALNTY = sal)
@@ -1349,26 +1377,26 @@ source_python(paste(
 
 # calculate gamma
 
-WOA18_sal_tem_gamma_calc &lt;- calculate_gamma(WOA18_sal_tem_gamma_prep)
+WOA18_sal_temp_gamma_calc &lt;- calculate_gamma(WOA18_sal_temp_gamma_prep)
 
 # reverse variable naming
 
-WOA18_sal_tem &lt;- WOA18_sal_tem_gamma_calc %&gt;% 
+WOA18_sal_temp &lt;- WOA18_sal_temp_gamma_calc %&gt;% 
   select(-c(CTDPRS, THETA)) %&gt;% 
   rename(lat = LATITUDE,
          lon = LONGITUDE,
          sal = SALNTY,
          gamma  = GAMMA)
 
-WOA18_sal_tem &lt;- as_tibble(WOA18_sal_tem)
+WOA18_sal_temp &lt;- as_tibble(WOA18_sal_temp)
 
-rm(WOA18_sal_tem_gamma_calc, WOA18_sal_tem_gamma_prep)</code></pre>
+rm(WOA18_sal_temp_gamma_calc, WOA18_sal_temp_gamma_prep)</code></pre>
 </div>
 <div id="write-file" class="section level3">
 <h3><span class="header-section-number">3.5.2</span> Write file</h3>
-<pre class="r"><code>WOA18_sal_tem %&gt;%
+<pre class="r"><code>WOA18_sal_temp %&gt;%
   write_csv(paste(path_preprocessing,
-                  &quot;WOA18_sal_tem.csv&quot;,
+                  &quot;WOA18_sal_temp.csv&quot;,
                   sep = &quot;&quot;))</code></pre>
 </div>
 </div>
@@ -1383,8 +1411,8 @@ rm(WOA18_sal_tem_gamma_calc, WOA18_sal_tem_gamma_prep)</code></pre>
 <div id="surface-map" class="section level3">
 <h3><span class="header-section-number">3.6.1</span> Surface map</h3>
 <pre class="r"><code>p_map_climatology(
-  df = WOA18_sal_tem,
-  var = &quot;tem&quot;)</code></pre>
+  df = WOA18_sal_temp,
+  var = &quot;temp&quot;)</code></pre>
 <p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/temperature_surface_WOA18_map-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-temperature_surface_WOA18_map-1">
@@ -1438,8 +1466,8 @@ Jens Müller
 <div id="section-1" class="section level3">
 <h3><span class="header-section-number">3.6.2</span> Section</h3>
 <pre class="r"><code>p_section_global(
-  df = WOA18_sal_tem,
-  var = &quot;tem&quot;)</code></pre>
+  df = WOA18_sal_temp,
+  var = &quot;temp&quot;)</code></pre>
 <p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/temperature_sections_WOA18-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-temperature_sections_WOA18-1">
@@ -1496,7 +1524,7 @@ Jens Müller
 <div id="surface-map-1" class="section level3">
 <h3><span class="header-section-number">3.7.1</span> Surface map</h3>
 <pre class="r"><code>p_map_climatology(
-  df = WOA18_sal_tem,
+  df = WOA18_sal_temp,
   var = &quot;sal&quot;)</code></pre>
 <p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/salinity_surface_WOA18_map-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -1551,7 +1579,7 @@ Jens Müller
 <div id="section-2" class="section level3">
 <h3><span class="header-section-number">3.7.2</span> Section</h3>
 <pre class="r"><code>p_section_global(
-  df = WOA18_sal_tem,
+  df = WOA18_sal_temp,
   var = &quot;sal&quot;)</code></pre>
 <p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/salinity_sections_WOA18-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -1609,13 +1637,13 @@ Jens Müller
 <div id="surface-map-2" class="section level3">
 <h3><span class="header-section-number">3.8.1</span> Surface map</h3>
 <pre class="r"><code>p_map_climatology(
-  df = WOA18_sal_tem,
+  df = WOA18_sal_temp,
   var = &quot;gamma&quot;)</code></pre>
 </div>
 <div id="section-3" class="section level3">
 <h3><span class="header-section-number">3.8.2</span> Section</h3>
 <pre class="r"><code>p_section_global(
-  df = WOA18_sal_tem,
+  df = WOA18_sal_temp,
   var = &quot;gamma&quot;)</code></pre>
 </div>
 </div>
@@ -1624,11 +1652,11 @@ Jens Müller
 <h1><span class="header-section-number">4</span> Climatology Nuts and O2</h1>
 <div id="read-ncdfs-1" class="section level2">
 <h2><span class="header-section-number">4.1</span> Read ncdfs</h2>
-<pre class="r"><code># Keep grid cells of WOA18 sal/tem data set, to join with
+<pre class="r"><code># Keep grid cells of WOA18 sal/temp data set, to join with
 WOA18_nuts_O2 &lt;-
-  WOA18_sal_tem %&gt;%
+  WOA18_sal_temp %&gt;%
   select(lon, lat, depth, basin, basin_AIP)
-rm(WOA18_sal_tem)
+rm(WOA18_sal_temp)
 
 # create file list
 file_list &lt;- c(
