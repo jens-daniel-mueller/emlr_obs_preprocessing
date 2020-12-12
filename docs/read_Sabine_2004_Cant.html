@@ -456,7 +456,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Anthropogenic CO2 from 1994 to 2007</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">11 December, 2020</h4>
+<h4 class="date">12 December, 2020</h4>
 
 </div>
 
@@ -481,7 +481,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-12-11
+<strong>Last updated:</strong> 2020-12-12
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -572,16 +572,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree7aaabdf2c3f841c05c92a22a45d11c1960eb38f3targetblank7aaabdfa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/7aaabdf2c3f841c05c92a22a45d11c1960eb38f3" target="_blank">7aaabdf</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree53d8356c1c2f5bbd2a24c9e3c3825f7b0d2fdd53targetblank53d8356a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/53d8356c1c2f5bbd2a24c9e3c3825f7b0d2fdd53" target="_blank">53d8356</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree7aaabdf2c3f841c05c92a22a45d11c1960eb38f3targetblank7aaabdfa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree53d8356c1c2f5bbd2a24c9e3c3825f7b0d2fdd53targetblank53d8356a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/7aaabdf2c3f841c05c92a22a45d11c1960eb38f3" target="_blank">7aaabdf</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/53d8356c1c2f5bbd2a24c9e3c3825f7b0d2fdd53" target="_blank">53d8356</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -632,6 +632,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/53d8356c1c2f5bbd2a24c9e3c3825f7b0d2fdd53/analysis/read_Sabine_2004_Cant.Rmd" target="_blank">53d8356</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-12
+</td>
+<td>
+removed basinmask issues
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/5c773fa395dd64aa0d30513ae057297038b1e36b/docs/read_Sabine_2004_Cant.html" target="_blank">5c773fa</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -881,7 +915,11 @@ rm(AnthCO2_data,
 </div>
 <div id="apply-basin-mask" class="section level1">
 <h1><span class="header-section-number">3</span> Apply basin mask</h1>
-<pre class="r"><code>cant_3d &lt;- inner_join(cant_3d, basinmask)</code></pre>
+<pre class="r"><code>basinmask &lt;- basinmask %&gt;% 
+  filter(MLR_basins == &quot;2&quot;) %&gt;% 
+  select(-c(MLR_basins, basin))
+
+cant_3d &lt;- inner_join(cant_3d, basinmask)</code></pre>
 </div>
 <div id="inventory-calculation" class="section level1">
 <h1><span class="header-section-number">4</span> Inventory calculation</h1>
@@ -933,6 +971,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5c773fa395dd64aa0d30513ae057297038b1e36b/docs/figure/read_Sabine_2004_Cant.Rmd/cant_maps-1.png" target="_blank">5c773fa</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_Sabine_2004_Cant.Rmd/cant_maps-1.png" target="_blank">58359ac</a>
 </td>
 <td>
@@ -976,6 +1025,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5c773fa395dd64aa0d30513ae057297038b1e36b/docs/figure/read_Sabine_2004_Cant.Rmd/cant_sections-1.png" target="_blank">5c773fa</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/825309ecba6f9e1ee01dda2f1fc6269c5a3bb71b/docs/figure/read_Sabine_2004_Cant.Rmd/cant_sections-1.png" target="_blank">825309e</a>
@@ -1061,7 +1121,7 @@ jens-daniel-mueller
 </div>
 <div id="zonal-mean-section" class="section level2">
 <h2><span class="header-section-number">5.4</span> Zonal mean section</h2>
-<pre class="r"><code>cant_zonal &lt;- m_zonal_mean_section(cant_3d %&gt;% select(-basin))</code></pre>
+<pre class="r"><code>cant_zonal &lt;- m_zonal_mean_section(cant_3d)</code></pre>
 </div>
 <div id="inventory-maps" class="section level2">
 <h2><span class="header-section-number">5.5</span> Inventory maps</h2>
@@ -1092,6 +1152,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5c773fa395dd64aa0d30513ae057297038b1e36b/docs/figure/read_Sabine_2004_Cant.Rmd/cant_inv_pos_maps-1.png" target="_blank">5c773fa</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/999cd9d0f1c35bc52979df1a413c2b6a9871e2dc/docs/figure/read_Sabine_2004_Cant.Rmd/cant_inv_pos_maps-1.png" target="_blank">999cd9d</a>
