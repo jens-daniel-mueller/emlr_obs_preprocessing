@@ -99,6 +99,10 @@ rm(AnthCO2_data,
 
 ```{r apply_basin_mask}
 
+basinmask <- basinmask %>% 
+  filter(MLR_basins == "2") %>% 
+  select(-c(MLR_basins, basin))
+
 cant_3d <- inner_join(cant_3d, basinmask)
 
 ```
@@ -166,7 +170,7 @@ p_section_climatology_regular(
 
 ```{r calculate_zonal_mean_section}
 
-cant_zonal <- m_zonal_mean_section(cant_3d %>% select(-basin))
+cant_zonal <- m_zonal_mean_section(cant_3d)
 
 ```
 

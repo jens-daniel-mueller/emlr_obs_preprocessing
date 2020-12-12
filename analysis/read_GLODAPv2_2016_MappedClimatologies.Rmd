@@ -58,6 +58,15 @@ print(file_list)
 
 ```
 
+```{r prepare_basin_mask}
+
+basinmask <- basinmask %>% 
+  filter(MLR_basins == "2") %>% 
+  select(-c(MLR_basins, basin))
+
+```
+
+
 # Plot data and write csv
 
 Below, subsets of the climatologies are plotted, which display for all relevant parameters:
@@ -123,7 +132,7 @@ clim_tibble <- clim_tibble %>%
 # fill NAs with closest value along longitude
 
 clim_tibble <- clim_tibble %>%
-  group_by(lat, depth, basin, basin_AIP) %>%
+  group_by(lat, depth, basin_AIP) %>%
   arrange(lon) %>%
   fill(!!sym(parameter), .direction = "downup") %>%
   ungroup()

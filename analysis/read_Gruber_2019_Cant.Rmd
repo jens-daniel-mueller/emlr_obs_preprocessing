@@ -131,7 +131,7 @@ V101 <- V101 %>%
 
 basinmask <- basinmask %>% 
   filter(MLR_basins == "2") %>% 
-  select(-c(MLR_basins))
+  select(-c(MLR_basins, basin))
 
 dcant <- inner_join(dcant, basinmask)
 dcant_inv <- inner_join(dcant_inv, basinmask)

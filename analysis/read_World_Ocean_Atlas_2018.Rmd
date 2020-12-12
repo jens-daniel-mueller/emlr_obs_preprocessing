@@ -422,8 +422,7 @@ WOA18_temp_tibble <- WOA18_temp %>% hyper_tibble()
 WOA18_temp_tibble <- WOA18_temp_tibble  %>% 
   select(temp = t_an, lon, lat, depth) %>% 
   drop_na() %>% 
-  mutate(lon = if_else(lon < 20, lon + 360, lon)) %>%
-  filter(lat <= params_global$lat_max)
+  mutate(lon = if_else(lon < 20, lon + 360, lon))
 
 # salinity
 
@@ -440,8 +439,7 @@ WOA18_sal_tibble <- WOA18_sal %>% hyper_tibble()
 WOA18_sal_tibble <- WOA18_sal_tibble  %>% 
   select(sal = s_an, lon, lat, depth) %>% 
   drop_na() %>% 
-  mutate(lon = if_else(lon < 20, lon + 360, lon)) %>%
-  filter(lat <= params_global$lat_max)
+  mutate(lon = if_else(lon < 20, lon + 360, lon))
 
 rm(WOA18_sal, WOA18_temp)
 
@@ -453,6 +451,15 @@ rm(WOA18_sal, WOA18_temp)
 
 WOA18_sal_temp <- full_join(WOA18_sal_tibble, WOA18_temp_tibble)
 rm(WOA18_sal_tibble, WOA18_temp_tibble)
+
+```
+
+## Apply latitude threshold
+
+```{r apply_lat_max}
+
+WOA18_sal_temp <- WOA18_sal_temp  %>%
+  filter(lat <= params_global$lat_max)
 
 ```
 
@@ -555,7 +562,7 @@ rm(WOA18_sal_temp_gamma_calc, WOA18_sal_temp_gamma_prep)
 ```
 
 
-### Write file
+## Write file
 
 ```{r write_WOA18_predictor_file}
 
