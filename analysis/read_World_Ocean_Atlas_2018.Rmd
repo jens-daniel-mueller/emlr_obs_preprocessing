@@ -456,12 +456,18 @@ rm(WOA18_sal_tibble, WOA18_temp_tibble)
 
 ```
 
-## Apply latitude threshold
+## Apply basin mask
 
-```{r apply_lat_max}
+```{r apply_basin_mask}
 
-WOA18_sal_temp <- WOA18_sal_temp  %>%
-  filter(lat <= params_global$lat_max)
+# use only three basin to assign general basin mask
+# ie this is not specific to the MLR fitting
+basinmask_01 <- basinmask_01 %>% 
+  filter(MLR_basins == "2") %>% 
+  select(lat, lon, basin_AIP)
+
+# restrict predictor fields to basin mask grid
+WOA18_sal_temp <- inner_join(WOA18_sal_temp, basinmask_01)
 
 ```
 
@@ -634,7 +640,7 @@ p_section_global(
 
 ### Surface map
 
-```{r neutral_density_surface_WOA18_map, eval=FALSE}
+```{r neutral_density_surface_WOA18_map}
 
 p_map_climatology(
   df = WOA18_sal_temp,
@@ -644,7 +650,7 @@ p_map_climatology(
 
 ### Section
 
-```{r neutral_density_sections_WOA18, eval=FALSE}
+```{r neutral_density_sections_WOA18}
 
 p_section_global(
   df = WOA18_sal_temp,
@@ -693,8 +699,10 @@ for (file in file_list) {
   WOA18_tibble <- WOA18_tibble  %>%
     select(all_of(parameter),
            lon, lat, depth) %>%
-    mutate(lon = if_else(lon < 20, lon + 360, lon)) %>%
-    filter(lat <= params_global$lat_max)
+    mutate(lon = if_else(lon < 20, lon + 360, lon))
+  
+  # apply general basin mask
+  WOA18_tibble <- inner_join(WOA18_tibble, basinmask_01)
   
   # join with previous WOA data and keep only rows in existing data frame
   # this is equal to applying the basinmask
@@ -723,7 +731,7 @@ for (file in file_list) {
 
 ## Write file
 
-```{r write_WOA18_nuts_O2_predictor_file, eval=FALSE}
+```{r write_WOA18_nuts_O2_predictor_file}
 
 WOA18_nuts_O2 %>%
   write_csv(paste(path_preprocessing,
