@@ -394,9 +394,6 @@ div.tocify {
     </li>
   </ul>
 </li>
-<li>
-  <a href="read_GLODAPv2_2020.html">GLODAPv2_2020</a>
-</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Predictors
@@ -411,6 +408,9 @@ div.tocify {
       <a href="read_GLODAPv2_2016_MappedClimatologies.html">GLODAPv2_2016_MappedClimatologies</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="read_GLODAPv2_2020.html">GLODAPv2_2020</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -581,16 +581,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreea09b95f642a23131a74303025190b7d686fd86b0targetblanka09b95fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/a09b95f642a23131a74303025190b7d686fd86b0" target="_blank">a09b95f</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree325e1faf5581bcc351f9451584d31d83882f2364targetblank325e1faa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/325e1faf5581bcc351f9451584d31d83882f2364" target="_blank">325e1fa</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreea09b95f642a23131a74303025190b7d686fd86b0targetblanka09b95fa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree325e1faf5581bcc351f9451584d31d83882f2364targetblank325e1faa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/a09b95f642a23131a74303025190b7d686fd86b0" target="_blank">a09b95f</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/325e1faf5581bcc351f9451584d31d83882f2364" target="_blank">325e1fa</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -647,6 +647,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/325e1faf5581bcc351f9451584d31d83882f2364/analysis/read_World_Ocean_Atlas_2018.Rmd" target="_blank">325e1fa</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-14
+</td>
+<td>
+rebuild with new root folder
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/4ded3cd8e5f382d15ab4a4048454d8bb9f89b962/docs/read_World_Ocean_Atlas_2018.html" target="_blank">4ded3cd</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-14
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1596,10 +1630,16 @@ rm(WOA18_sal, WOA18_temp)</code></pre>
 <pre class="r"><code>WOA18_sal_temp &lt;- full_join(WOA18_sal_tibble, WOA18_temp_tibble)
 rm(WOA18_sal_tibble, WOA18_temp_tibble)</code></pre>
 </div>
-<div id="apply-latitude-threshold" class="section level2">
-<h2><span class="header-section-number">3.3</span> Apply latitude threshold</h2>
-<pre class="r"><code>WOA18_sal_temp &lt;- WOA18_sal_temp  %&gt;%
-  filter(lat &lt;= params_global$lat_max)</code></pre>
+<div id="apply-basin-mask" class="section level2">
+<h2><span class="header-section-number">3.3</span> Apply basin mask</h2>
+<pre class="r"><code># use only three basin to assign general basin mask
+# ie this is not specific to the MLR fitting
+basinmask_01 &lt;- basinmask_01 %&gt;% 
+  filter(MLR_basins == &quot;2&quot;) %&gt;% 
+  select(lat, lon, basin_AIP)
+
+# restrict predictor fields to basin mask grid
+WOA18_sal_temp &lt;- inner_join(WOA18_sal_temp, basinmask_01)</code></pre>
 </div>
 <div id="potential-temperature" class="section level2">
 <h2><span class="header-section-number">3.4</span> Potential temperature</h2>
@@ -2154,12 +2194,110 @@ Jens Müller
 <pre class="r"><code>p_map_climatology(
   df = WOA18_sal_temp,
   var = &quot;gamma&quot;)</code></pre>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/neutral_density_surface_WOA18_map-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-neutral_density_surface_WOA18_map-1">
+Past versions of neutral_density_surface_WOA18_map-1.png
+</button>
+</p>
+<div id="fig-neutral_density_surface_WOA18_map-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/neutral_density_surface_WOA18_map-1.png" target="_blank">58359ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/figure/read_World_Ocean_Atlas_2018.Rmd/neutral_density_surface_WOA18_map-1.png" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="section-3" class="section level3">
 <h3><span class="header-section-number">3.9.2</span> Section</h3>
 <pre class="r"><code>p_section_global(
   df = WOA18_sal_temp,
   var = &quot;gamma&quot;)</code></pre>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/neutral_density_sections_WOA18-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-neutral_density_sections_WOA18-1">
+Past versions of neutral_density_sections_WOA18-1.png
+</button>
+</p>
+<div id="fig-neutral_density_sections_WOA18-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/neutral_density_sections_WOA18-1.png" target="_blank">58359ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/figure/read_World_Ocean_Atlas_2018.Rmd/neutral_density_sections_WOA18-1.png" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -2201,8 +2339,10 @@ for (file in file_list) {
   WOA18_tibble &lt;- WOA18_tibble  %&gt;%
     select(all_of(parameter),
            lon, lat, depth) %&gt;%
-    mutate(lon = if_else(lon &lt; 20, lon + 360, lon)) %&gt;%
-    filter(lat &lt;= params_global$lat_max)
+    mutate(lon = if_else(lon &lt; 20, lon + 360, lon))
+  
+  # apply general basin mask
+  WOA18_tibble &lt;- inner_join(WOA18_tibble, basinmask_01)
   
   # join with previous WOA data and keep only rows in existing data frame
   # this is equal to applying the basinmask
