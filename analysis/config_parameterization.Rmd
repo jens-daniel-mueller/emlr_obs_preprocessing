@@ -20,9 +20,8 @@ knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 library(tidyverse)
 ```
 
-
-```{r define_updata_paths}
-path_utilities  <- "/nfs/kryo/work/updata/emlr_cant/utilities/"
+```{r define_paths}
+path_utilities  <- "/nfs/kryo/work/jenmueller/emlr_cant/utilities/"
 ```
 
 
