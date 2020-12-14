@@ -12,16 +12,15 @@ editor_options:
   chunk_output_type: console
 ---
 
-
-```{r parent, child = "/nfs/kryo/work/updata/emlr_cant/utilities/setup.Rmd"}
+```{r parent, child = "/nfs/kryo/work/jenmueller/emlr_cant/utilities/setup.Rmd"}
 # this chunk runs the code stored in setup.Rmd
 # if required, please refer to instructions given here:
 # https://jdblischak.github.io/workflowr/articles/wflow-07-common-code.html
 ```
 
-```{r define_updata_paths}
+```{r define_paths, include=FALSE}
 path_atm_pCO2    <- "/nfs/kryo/work/updata/atm_pco2_noaa/"
-path_preprocessing  <- "/nfs/kryo/work/updata/emlr_cant/observations/preprocessing/"
+path_preprocessing  <- paste(path_root, "/observations/preprocessing/", sep = "")
 ```
 
 # Read data

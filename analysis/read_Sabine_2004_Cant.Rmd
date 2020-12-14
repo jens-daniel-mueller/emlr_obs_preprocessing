@@ -12,16 +12,15 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r parent, child = "/nfs/kryo/work/updata/emlr_cant/utilities/setup.Rmd"}
+```{r parent, child = "/nfs/kryo/work/jenmueller/emlr_cant/utilities/setup.Rmd"}
 # this chunk runs the code stored in setup.Rmd
 # if required, please refer to instructions given here:
 # https://jdblischak.github.io/workflowr/articles/wflow-07-common-code.html
 ```
 
-
-```{r define_updata_paths}
+```{r define_paths}
 path_sabine_2004    <- "/nfs/kryo/work/updata/glodapv1_1/GLODAP_gridded.data/"
-path_preprocessing  <- "/nfs/kryo/work/updata/emlr_cant/observations/preprocessing/"
+path_preprocessing  <- paste(path_root, "/observations/preprocessing/", sep = "")
 ```
 
 
@@ -99,9 +98,11 @@ rm(AnthCO2_data,
 
 ```{r apply_basin_mask}
 
+# use only three basin to assign general basin mask
+# ie this is not specific to the MLR fitting
 basinmask <- basinmask %>% 
   filter(MLR_basins == "2") %>% 
-  select(-c(MLR_basins, basin))
+  select(lat, lon, basin_AIP)
 
 cant_3d <- inner_join(cant_3d, basinmask)
 

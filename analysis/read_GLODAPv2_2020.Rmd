@@ -12,16 +12,15 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r define_updata_paths}
-path_glodapv2_2020  <- "/nfs/kryo/work/updata/glodapv2_2020/"
-path_preprocessing  <- "/nfs/kryo/work/updata/emlr_cant/observations/preprocessing/"
-```
-
-
-```{r parent, child = "/nfs/kryo/work/updata/emlr_cant/utilities/setup.Rmd"}
+```{r parent, child = "/nfs/kryo/work/jenmueller/emlr_cant/utilities/setup.Rmd"}
 # this chunk runs the code stored in setup.Rmd
 # if required, please refer to instructions given here:
 # https://jdblischak.github.io/workflowr/articles/wflow-07-common-code.html
+```
+
+```{r define_updata_paths}
+path_glodapv2_2020  <- "/nfs/kryo/work/updata/glodapv2_2020/"
+path_preprocessing  <- paste(path_root, "/observations/preprocessing/", sep = "")
 ```
 
 # Libraries
@@ -107,13 +106,17 @@ GLODAP <- m_grid_horizontal(GLODAP)
 
 ```
 
-## Northern latitude threshold
+## Apply basin mask
 
-```{r apply_northern_lat_max}
+```{r apply_basin_mask}
 
-GLODAP <- GLODAP %>%
-  filter(lat <= params_global$lat_max)
+# use only three basin to assign general basin mask
+# ie this is not specific to the MLR fitting
+basinmask <- basinmask %>% 
+  filter(MLR_basins == "2") %>% 
+  select(lat, lon, basin_AIP)
 
+GLODAP <- inner_join(GLODAP, basinmask)
 
 ```
 

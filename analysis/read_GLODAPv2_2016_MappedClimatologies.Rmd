@@ -13,17 +13,18 @@ editor_options:
 ---
 
 
-```{r parent, child = "/nfs/kryo/work/updata/emlr_cant/utilities/setup.Rmd"}
+```{r parent, child = "/nfs/kryo/work/jenmueller/emlr_cant/utilities/setup.Rmd"}
 # this chunk runs the code stored in setup.Rmd
 # if required, please refer to instructions given here:
 # https://jdblischak.github.io/workflowr/articles/wflow-07-common-code.html
 ```
 
-# Libraries
+```{r define_paths, include=FALSE}
+path_glodapv2_2016b   <- "/nfs/kryo/work/updata/glodapv2.2016b/"
+path_preprocessing    <- paste(path_root, "/observations/preprocessing/", sep = "")
+```
 
-Loading libraries specific to the the analysis performed in this section.
-
-```{r load_libraries_specific, message=FALSE, warning=FALSE}
+```{r load_libraries_specific, include=FALSE}
 library(stars)
 ```
 
@@ -32,13 +33,6 @@ library(stars)
 Data source: Globally mapped climatologies from Lauvset et al. (2016) downloaded in June 2020 from [glodap.info](https://www.glodap.info/).
 
 Following files were used: 
-
-
-```{r define_updata_paths}
-path_glodapv2_2016b  <- "/nfs/kryo/work/updata/glodapv2.2016b/"
-path_preprocessing  <- "/nfs/kryo/work/updata/emlr_cant/observations/preprocessing/"
-```
-
 
 ```{r GLODAPv2_2016_Mappedclimatologies_file_list}
 
@@ -60,11 +54,14 @@ print(file_list)
 
 ```{r prepare_basin_mask}
 
+# use only three basin to assign general basin mask
+# ie this is not specific to the MLR fitting
 basinmask <- basinmask %>% 
   filter(MLR_basins == "2") %>% 
-  select(-c(MLR_basins, basin))
+  select(lat, lon, basin_AIP)
 
 ```
+
 
 
 # Plot data and write csv
@@ -113,7 +110,7 @@ clim_tibble <- clim_tibble %>%
 
 clim_tibble <- inner_join(clim_tibble, basinmask)
 
-# determine bottomdepth
+# determine bottom depth
 
 bottom_depth <- clim_tibble %>% 
   filter(!is.na(!!sym(parameter))) %>% 

@@ -12,25 +12,20 @@ editor_options:
   chunk_output_type: console
 ---
 
-
-```{r parent, child = "/nfs/kryo/work/updata/emlr_cant/utilities/setup.Rmd"}
+```{r parent, child = "/nfs/kryo/work/jenmueller/emlr_cant/utilities/setup.Rmd"}
 # this chunk runs the code stored in setup.Rmd
 # if required, please refer to instructions given here:
 # https://jdblischak.github.io/workflowr/articles/wflow-07-common-code.html
 ```
 
+```{r define_paths, include=FALSE}
 
-```{r define_updata_paths}
 path_gruber_2019    <- "/nfs/kryo/work/updata/cant_gruber_2019/"
-path_preprocessing  <- "/nfs/kryo/work/updata/emlr_cant/observations/preprocessing/"
+path_preprocessing  <- paste(path_root, "/observations/preprocessing/", sep = "")
+
 ```
 
-
-# Libraries
-
-Loading libraries specific to the the analysis performed in this section.
-
-```{r load_libraries_specific, message=FALSE, warning=FALSE}
+```{r load_libraries_specific, include=FALSE}
 library(tidync)
 ```
 
@@ -129,9 +124,11 @@ V101 <- V101 %>%
 
 ```{r apply_basin_mask}
 
+# use only three basin to assign general basin mask
+# ie this is not specific to the MLR fitting
 basinmask <- basinmask %>% 
   filter(MLR_basins == "2") %>% 
-  select(-c(MLR_basins, basin))
+  select(lat, lon, basin_AIP)
 
 dcant <- inner_join(dcant, basinmask)
 dcant_inv <- inner_join(dcant_inv, basinmask)
