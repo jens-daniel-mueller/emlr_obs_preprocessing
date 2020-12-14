@@ -29,7 +29,7 @@ path_utilities  <- "/nfs/kryo/work/jenmueller/emlr_cant/utilities/"
 
 Following global parameterizations were chosen to run all analysis and display results:
 
-```{r define_global_params_global}
+```{r define_global_params_global, class.source = 'fold-show'}
 
 depth_levels = c(0, 150, 500, 2000)
 
@@ -98,8 +98,6 @@ params_global <-
     breaks_cant = c(-Inf,seq(-16,16,2),Inf),
     breaks_cant_offset = c(-Inf,seq(-8,8,),Inf)
   )
-
-params_global
 
 ```
 

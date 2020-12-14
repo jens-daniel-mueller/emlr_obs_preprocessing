@@ -16,7 +16,7 @@ editor_options:
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 ```
 
-```{r library, message=FALSE, warning=FALSE}
+```{r library, include=FALSE}
 library(tidyverse)
 library(tidync)
 library(reticulate)
@@ -26,12 +26,14 @@ library(geosphere)
 library(patchwork)
 ```
 
-```{r define_updata_paths}
+```{r define_paths, include=FALSE}
 
-path_functions      <- "/nfs/kryo/work/updata/emlr_cant/utilities/functions/"
-path_files          <- "/nfs/kryo/work/updata/emlr_cant/utilities/files/"
 path_woa2018        <- "/nfs/kryo/work/updata/woa2018/"
-path_preprocessing  <- "/nfs/kryo/work/updata/emlr_cant/observations/preprocessing/"
+
+path_root           <- "/nfs/kryo/work/jenmueller/emlr_cant"
+path_functions      <- paste(path_root, "/utilities/functions/", sep = "")
+path_files          <- paste(path_root, "/utilities/files/", sep = "")
+path_preprocessing  <- paste(path_root, "/observations/preprocessing/", sep = "")
 
 ```
 
