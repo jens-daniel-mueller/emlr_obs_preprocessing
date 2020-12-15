@@ -23,11 +23,7 @@ path_glodapv2_2020  <- "/nfs/kryo/work/updata/glodapv2_2020/"
 path_preprocessing  <- paste(path_root, "/observations/preprocessing/", sep = "")
 ```
 
-# Libraries
-
-Loading libraries specific to the the analysis performed in this section.
-
-```{r load_libraries_specific, message=FALSE, warning=FALSE}
+```{r load_libraries_specific, include=FALSE}
 library(lubridate)
 ```
 
@@ -47,7 +43,7 @@ GLODAP <-
     ),
     na = "-9999",
     col_types = cols(.default = col_double())
-    )
+  )
 
 ```
 
@@ -85,7 +81,7 @@ GLODAP <- GLODAP %>%
 
 ## Subset tco2 data
 
-The vast majority of rows is removed due to missing tco2 observations.
+The vast majority of rows is removed due to missing `tco2` observations.
 
 ```{r tco2_na_subset}
 
@@ -129,7 +125,7 @@ GLODAP_obs_grid <- GLODAP %>%
 
 ```
 
-## Write summary file
+## Write file
  
 ```{r write_clean_data_files}
 
@@ -217,7 +213,7 @@ rm(GLODAP_hovmoeller_year)
 
 ## Coverage map
 
-```{r coverage_map}
+```{r coverage_map, fig.asp=0.5}
 
 map +
   geom_raster(data = GLODAP_obs_grid,
