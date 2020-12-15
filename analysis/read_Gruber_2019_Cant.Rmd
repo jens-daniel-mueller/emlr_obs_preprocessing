@@ -19,10 +19,8 @@ editor_options:
 ```
 
 ```{r define_paths, include=FALSE}
-
 path_gruber_2019    <- "/nfs/kryo/work/updata/cant_gruber_2019/"
 path_preprocessing  <- paste(path_root, "/observations/preprocessing/", sep = "")
-
 ```
 
 ```{r load_libraries_specific, include=FALSE}
@@ -34,23 +32,26 @@ library(tidync)
 
 - Anthropogenic CO2 estimates (1994-2007) by Gruber et al. (2019) downloaded in August 2020 from [NOAA/NCEI Ocean Carbon Data System (OCADS)](https://www.nodc.noaa.gov/ocads/oceans/ndp_100/ndp100.html){target="_blank"}
 
-# Read ncdfs
+# Read nc files
+
+Here, we use the standard case V101 for public and raw data sets.
 
 ## Public data sets
 
 The publicly available data sets contain only positive Cant estimates.
 
+### 3d fields
+
 ```{r read_Gruber_dcant}
 
+# open file
 dcant <- tidync(paste(
   path_gruber_2019,
   "dcant_emlr_cstar_gruber_94-07_vs1.nc",
   sep = ""
 ))
 
-#dcant$grid$variables
-
-# read gamma field
+# read gamma field as tibble
 dcant <- dcant %>%  activate(GAMMA_DENS)
 dcant_gamma <- dcant %>% hyper_tibble()
 
@@ -58,8 +59,7 @@ dcant_gamma <- dcant %>% hyper_tibble()
 dcant <- dcant %>%  activate(DCANT_01)
 dcant <- dcant %>% hyper_tibble()
 
-# join fields
-
+# join cant and gamma fields
 dcant <- left_join(dcant, dcant_gamma)
 
 # harmonize column names and coordinates
@@ -74,6 +74,8 @@ dcant <- dcant %>%
 rm(dcant_gamma)
 
 ```
+
+### Column inventories
 
 ```{r read_Gruber_dcant_inv}
 
@@ -98,14 +100,16 @@ dcant_inv <- dcant_inv %>%
 
 ## Raw data
 
-Internally available data sets also contain negative Cant estimates, as they are contained in the "raw" output of the eMLR mapping step.
+Internally available data sets also contain negative Cant estimates, as they are generated in the "raw" output of the eMLR mapping step.
 
 ```{r read_Gruber_V101}
 
+# open v 101 file
 V101 <- tidync(paste(path_gruber_2019,
                      "Cant_V101new.nc",
                      sep = ""))
 
+# create tibble
 V101 <- V101 %>%  activate(Cant)
 V101 <- V101 %>% hyper_tibble()
 
@@ -140,7 +144,10 @@ V101 <- inner_join(V101, basinmask)
 
 ```{r join_V101_and_all}
 
+# join files
 cant_3d <- inner_join(dcant, V101)
+
+# assign era label
 cant_3d <- cant_3d %>% 
   mutate(eras = "JGOFS_GO")
 
@@ -158,7 +165,7 @@ cant_zonal <- m_zonal_mean_section(cant_3d)
 
 # Column inventory 
 
-## From 3d fields
+## Calculation
 
 ```{r calculate_column_inventory}
 
@@ -169,7 +176,9 @@ cant_inv <- cant_inv_layers %>%
 
 ```
 
-### Cant - all
+## Plots
+
+### All Cant
 
 ```{r G19_cant_inv_maps}
 
@@ -180,7 +189,7 @@ p_map_cant_inv(
 
 ```
 
-### Cant - pos
+### Pos Cant
 
 ```{r G19_cant_pos_inventory_maps}
 
@@ -190,7 +199,7 @@ p_map_cant_inv(
 
 ```
 
-## From pubished inventory data
+### Published inventories
 
 ```{r G19_cant_pos_inventory_maps_published}
 
@@ -200,15 +209,17 @@ p_map_cant_inv(
 
 ```
 
-## Published - 3d
+### Published vs calculated
 
 ```{r G19_cant_offset_inventory}
 
+# join published and calculated data sets
 cant_offset <- inner_join(
   cant_inv %>% rename(cant_re = cant_pos_inv),
   dcant_inv %>% rename(cant_pub = cant_pos_inv)
 )
 
+# calculate offset
 cant_offset <- cant_offset %>% 
   mutate(delta_cant = cant_re - cant_pub)
 
@@ -220,19 +231,9 @@ rm(cant_offset, dcant_inv)
 ```
 
 
-# Cant plots
+# Horizontal plane maps
 
-Below, following subsets of the climatologies are plotted for all relevant parameters:  
-
-- Horizontal planes at `r params_global$depth_levels`m
-- Meridional sections at longitudes: `r params_global$longitude_sections_basin`
-
-Section locations are indicated as white lines in maps.
-
-
-## Horizontal plane maps
-
-### All values
+## All Cant
 
 ```{r Cant_maps, fig.asp=0.6}
 
@@ -243,7 +244,7 @@ p_map_climatology(
 
 ```
 
-### Positive values
+## Positive Cant
 
 ```{r Cant_maps_V101, fig.asp=0.6}
 
@@ -253,7 +254,7 @@ p_map_climatology(
 
 ```
 
-### Neutral density
+## Neutral density
 
 ```{r Gamma_maps_V101, fig.asp=0.6}
 
@@ -264,9 +265,9 @@ p_map_climatology(
 ```
 
 
-## Sections basin
+# Global sections plot
 
-### All values
+## All Cant
 
 ```{r Cant_sections_V101, fig.asp=0.8}
 
@@ -277,7 +278,7 @@ p_section_global(
 
 ```
 
-### Positive values
+## Positive Cant
 
 ```{r Cant_sections, fig.asp=0.8}
 
@@ -287,9 +288,9 @@ p_section_global(
 ```
 
 
-## Sections at regular longitudes
+# Sections at regular longitudes
 
-### All values
+## All Cant
 
 ```{r Cant_sections_regular, fig.asp=2}
 
@@ -300,7 +301,7 @@ p_section_climatology_regular(
 
 ```
 
-### Positive values
+## Positive Cant
 
 ```{r Cant_sections_regular_V101, fig.asp=2}
 
@@ -310,7 +311,7 @@ p_section_climatology_regular(
 
 ```
 
-### Neutral density
+## Neutral density
 
 ```{r Gamma_sections_regular_V101, fig.asp=2}
 
