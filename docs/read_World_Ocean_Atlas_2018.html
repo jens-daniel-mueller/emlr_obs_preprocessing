@@ -375,7 +375,7 @@ div.tocify {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">eMLR(C*) preprocessing</a>
+      <a class="navbar-brand" href="index.html">eMLR obs preprocessing</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -465,7 +465,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">World Ocean Atlas 2018</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">14 December, 2020</h4>
+<h4 class="date">15 December, 2020</h4>
 
 </div>
 
@@ -490,7 +490,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-12-14
+<strong>Last updated:</strong> 2020-12-15
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -581,16 +581,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree0a3cc0512c733e7aeced7534f46ce871776070b9targetblank0a3cc05a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/0a3cc0512c733e7aeced7534f46ce871776070b9" target="_blank">0a3cc05</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree6f2a6695cd47533b8ad90cc6339e77a409d8f61ctargetblank6f2a669a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/6f2a6695cd47533b8ad90cc6339e77a409d8f61c" target="_blank">6f2a669</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree0a3cc0512c733e7aeced7534f46ce871776070b9targetblank0a3cc05a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree6f2a6695cd47533b8ad90cc6339e77a409d8f61ctargetblank6f2a669a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/0a3cc0512c733e7aeced7534f46ce871776070b9" target="_blank">0a3cc05</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/6f2a6695cd47533b8ad90cc6339e77a409d8f61c" target="_blank">6f2a669</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -600,10 +600,6 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/
-
-Unstaged changes:
-    Modified:   analysis/_site.yml
-    Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
 <p>
@@ -642,6 +638,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6f2a6695cd47533b8ad90cc6339e77a409d8f61c/analysis/read_World_Ocean_Atlas_2018.Rmd" target="_blank">6f2a669</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+<td>
+code and output cleaning
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/2fdd2a741b71d291d6fec27c302c62f86da463b9/docs/read_World_Ocean_Atlas_2018.html" target="_blank">2fdd2a7</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-14
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1040,7 +1070,6 @@ Initial commit
 </div>
 </div>
 </div>
-<p><em>CAVEAT:</em> Please note that neutral density should be calculated in this script, but is currently not, because the required Python code is not yet running on the IAC server. Therefore, the desired output file was manually replaced with a locally generated version.</p>
 <div id="data-source" class="section level1">
 <h1><span class="header-section-number">1</span> Data source</h1>
 <ul>
@@ -1105,8 +1134,8 @@ basinmask_01 &lt;- basinmask_01 %&gt;%
   mutate(Basin_0m = as.factor(Basin_0m)) %&gt;% 
   rename(lat = Latitude, lon = Longitude)</code></pre>
 </div>
-<div id="labels" class="section level3">
-<h3><span class="header-section-number">2.2.2</span> Labels</h3>
+<div id="basins-for-budgets" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Basins for budgets</h3>
 <p>According to <a href="https://www.nodc.noaa.gov/OC5/WOD/wod-woa-faqs.html" target="_blank">WOA FAQ</a> website and <a href="https://data.nodc.noaa.gov/woa/WOA18/DOC/woa18documentation.pdf" target="_blank">WOA18 documentation</a>, number codes in the mask files were used to assign ocean basins as follows:</p>
 <p>Atlantic Ocean:</p>
 <ul>
@@ -1126,7 +1155,6 @@ basinmask_01 &lt;- basinmask_01 %&gt;%
 <li>10: Southern Ocean between 147°E and 63°W</li>
 <li>12: Sea of Japan</li>
 </ul>
-<p>For eMLR model fitting and mapping, Indian and Pacific Ocean were combined as Indo-Pacific.</p>
 <pre class="r"><code># assign basin labels
 basinmask_01 &lt;- basinmask_01 %&gt;%
   filter(Basin_0m %in% c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;10&quot;, &quot;11&quot;, &quot;12&quot;, &quot;56&quot;)) %&gt;%
@@ -1145,10 +1173,6 @@ basinmask_01 &lt;- basinmask_01 %&gt;%
         lon &gt;= 147 | lon &lt; -63 ~ &quot;Pacific&quot;
     )
   ) %&gt;%
-  mutate(basin = if_else(basin_AIP == &quot;Atlantic&quot;,
-                         &quot;Atlantic&quot;,
-                         &quot;Indo-Pacific&quot;),
-         MLR_basins = &quot;2&quot;) %&gt;%
   select(-Basin_0m)
 
 # apply northern latitude boundary
@@ -1158,48 +1182,15 @@ basinmask_01 &lt;- basinmask_01 %&gt;%
 # harmonize lon scale
 basinmask_01 &lt;- basinmask_01  %&gt;%
   mutate(lon = if_else(lon &lt; 20, lon + 360, lon))</code></pre>
-<pre class="r"><code># 5 basins
-basinmask_5 &lt;- basinmask_01 %&gt;%
-  mutate(
-    basin = case_when(
-      basin_AIP ==  &quot;Atlantic&quot; &amp; lat &gt; params_global$lat_equator ~ &quot;N_Atlantic&quot;,
-      basin_AIP ==  &quot;Atlantic&quot; &amp; lat &lt; params_global$lat_equator ~ &quot;S_Atlantic&quot;,
-      basin_AIP ==  &quot;Pacific&quot; &amp; lat &gt; params_global$lat_equator ~ &quot;N_Pacific&quot;,
-      basin_AIP ==  &quot;Pacific&quot; &amp; lat &lt; params_global$lat_equator ~ &quot;S_Pacific&quot;,
-      basin_AIP ==  &quot;Indian&quot; ~ &quot;Indian&quot;
-    )
-  ) %&gt;%
-  mutate(MLR_basins = &quot;5&quot;)
-
-
-# SO basin separate
-basinmask_SO &lt;- basinmask_01 %&gt;%
-  mutate(
-    basin = if_else(
-      lat &lt; params_global$lat_min_SO, &quot;SO&quot;, basin)
-  ) %&gt;%
-  mutate(MLR_basins = &quot;SO&quot;)
-
-# 3 basins
-basinmask_AIP &lt;- basinmask_01 %&gt;%
-  mutate(
-    basin = basin_AIP) %&gt;%
-  mutate(MLR_basins = &quot;AIP&quot;)
-
-
-basinmask_01 &lt;- bind_rows(basinmask_01, basinmask_5, basinmask_SO, basinmask_AIP)</code></pre>
-</div>
-<div id="maps" class="section level3">
-<h3><span class="header-section-number">2.2.3</span> Maps</h3>
-<div id="basins-for-budgets" class="section level4">
-<h4><span class="header-section-number">2.2.3.1</span> Basins for budgets</h4>
-<pre class="r"><code>map &lt;- 
+<pre class="r"><code># generate base map, which is further used throughout the project
+map &lt;- 
   ggplot() +
   geom_raster(data = landmask,
               aes(lon, lat), fill = &quot;grey80&quot;) +
   coord_quickmap(expand = 0) +
   theme(axis.title = element_blank())
 
+# plot basin_AIP map
 map +
   geom_raster(data = basinmask_01,
               aes(lon, lat, fill = basin_AIP)) +
@@ -1243,8 +1234,46 @@ jens-daniel-mueller
 </div>
 </div>
 </div>
-<div id="basins-for-mlr-fitting" class="section level4">
-<h4><span class="header-section-number">2.2.3.2</span> Basins for MLR fitting</h4>
+<div id="basins-for-mlr-fitting" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Basins for MLR fitting</h3>
+<p>For the MLR fitting, ocean basins are further split up, as plotted below.</p>
+<pre class="r"><code># 2 basins
+basinmask_01 &lt;- basinmask_01 %&gt;%
+  mutate(basin = if_else(basin_AIP == &quot;Atlantic&quot;,
+                         &quot;Atlantic&quot;,
+                         &quot;Indo-Pacific&quot;),
+         MLR_basins = &quot;2&quot;)
+
+# 5 basins
+basinmask_5 &lt;- basinmask_01 %&gt;%
+  mutate(
+    basin = case_when(
+      basin_AIP ==  &quot;Atlantic&quot; &amp; lat &gt; params_global$lat_equator ~ &quot;N_Atlantic&quot;,
+      basin_AIP ==  &quot;Atlantic&quot; &amp; lat &lt; params_global$lat_equator ~ &quot;S_Atlantic&quot;,
+      basin_AIP ==  &quot;Pacific&quot; &amp; lat &gt; params_global$lat_equator ~ &quot;N_Pacific&quot;,
+      basin_AIP ==  &quot;Pacific&quot; &amp; lat &lt; params_global$lat_equator ~ &quot;S_Pacific&quot;,
+      basin_AIP ==  &quot;Indian&quot; ~ &quot;Indian&quot;
+    )
+  ) %&gt;%
+  mutate(MLR_basins = &quot;5&quot;)
+
+
+# SO basin separate
+basinmask_SO &lt;- basinmask_01 %&gt;%
+  mutate(
+    basin = if_else(
+      lat &lt; params_global$lat_min_SO, &quot;SO&quot;, basin)
+  ) %&gt;%
+  mutate(MLR_basins = &quot;SO&quot;)
+
+# 3 basins
+basinmask_AIP &lt;- basinmask_01 %&gt;%
+  mutate(
+    basin = basin_AIP) %&gt;%
+  mutate(MLR_basins = &quot;AIP&quot;)
+
+# join basin masks into one file
+basinmask_01 &lt;- bind_rows(basinmask_01, basinmask_5, basinmask_SO, basinmask_AIP)</code></pre>
 <pre class="r"><code>for (i_MLR_basins in unique(basinmask_01$MLR_basins)) {
   
   print(
@@ -1432,23 +1461,15 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>map %&gt;%  
-  write_rds(
-    paste(
-      path_files,
-      &quot;map_landmask_WOA18.rds&quot;,
-      sep = &quot;&quot;
-    )
-  )</code></pre>
-</div>
 </div>
 </div>
 <div id="global-section" class="section level2">
 <h2><span class="header-section-number">2.3</span> Global section</h2>
-<p>To plot sections from the North Atlantic south to the Southern Ocean, around Antartica and back North across the Pacific Ocean, corresponding coordinates were subsetted from the basin mask and distances between coordinate grid points calculated.</p>
+<p>To plot sections from the North Atlantic south to the Southern Ocean, around Antarctica and back North across the Pacific Ocean, corresponding coordinates were subsetted from the basin mask and distances between coordinate grid points calculated.</p>
 <pre class="r"><code>section &lt;- basinmask_01 %&gt;%
   select(lon, lat)
 
+# subset individual section parts
 Atl_NS &lt;- section %&gt;%
   filter(
     lon == params_global$lon_Atl_section,
@@ -1475,18 +1496,20 @@ Pac_SN &lt;- section %&gt;%
   ) %&gt;%
   arrange(lat)
 
+# join individual section parts
 section_global_coordinates &lt;- bind_rows(Atl_NS,
                      Atl_SO,
                      Pac_SO,
                      Pac_SN)
 
+# convert to regular lon coordinates for distance calculation
 section_global_coordinates &lt;- section_global_coordinates %&gt;%
   mutate(lon_180 = if_else(lon &gt; 180, lon - 360, lon))
 
+# calculate distance along section
 section_global_coordinates &lt;- section_global_coordinates %&gt;%
   mutate(dist_int = distGeo(cbind(lon_180, lat)) / 1e6) %&gt;%
   mutate(dist = cumsum(dist_int))
-
 
 section_global_coordinates &lt;- section_global_coordinates %&gt;%
   select(lon, lat, dist) %&gt;% 
@@ -1496,8 +1519,7 @@ rm(Atl_NS, Atl_SO, Pac_SN, Pac_SO, section)</code></pre>
 <pre class="r"><code>map +
   geom_point(data = section_global_coordinates,
              aes(lon, lat, col = dist)) +
-  scale_colour_viridis_b(name = &quot;Distance (Mm)&quot;) +
-  theme(legend.position = &quot;top&quot;)</code></pre>
+  scale_colour_viridis_b(name = &quot;Distance (Mm)&quot;)</code></pre>
 <p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/section_global_map-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-section_global_map-1">
@@ -1561,14 +1583,21 @@ Jens Müller
 </div>
 <div id="write-files" class="section level2">
 <h2><span class="header-section-number">2.4</span> Write files</h2>
-<pre class="r"><code>basinmask_01 %&gt;%
+<pre class="r"><code># basin mask
+basinmask_01 %&gt;%
   write_csv(paste(path_files,
                   &quot;basin_mask_WOA18.csv&quot;,
                   sep = &quot;&quot;))
-
+# global section
 section_global_coordinates %&gt;%
   write_csv(paste(path_files,
                   &quot;section_global_coordinates.csv&quot;,
+                  sep = &quot;&quot;))
+
+# base map ggplot
+map %&gt;%
+  write_rds(paste(path_files,
+                  &quot;map_landmask_WOA18.rds&quot;,
                   sep = &quot;&quot;))</code></pre>
 </div>
 </div>
@@ -1599,40 +1628,36 @@ section_global_coordinates %&gt;%
 <p>According to the <a href="https://data.nodc.noaa.gov/woa/WOA18/DOC/woa18documentation.pdf" target="_blank">WOA18 documentation</a> document:</p>
 <p><em>What are the units for temperature and salinity in the WOA18?</em></p>
 <p><em>In situ temperatures used for WOA18 are not converted from their original scale, so there is a mix of IPTS-48, IPTS-68, and ITS-90 (and pre IPTS-48 temperatures). The differences between scales are small (on the order of 0.01°C) and should not have much effect on the climatological means, except, possibly at very deep depths. Values for salinity are on the Practical salinity scale (PSS-78). Pre-1978 salinity values converted from conductivity may have used a different salinity scale. Pre-conductivity salinities use the Knudsen method.</em></p>
-<div id="read-ncdfs" class="section level2">
-<h2><span class="header-section-number">3.1</span> Read ncdfs</h2>
+<div id="read-nc-files" class="section level2">
+<h2><span class="header-section-number">3.1</span> Read nc files</h2>
 <pre class="r"><code># temperature
 
-WOA18_temp &lt;- tidync(
-  paste(
-    path_woa2018,
-    &quot;temperature/decav/1.00/woa18_decav_t00_01.nc&quot;,
-    sep = &quot;&quot;
-  )
-)
+WOA18_temp &lt;- tidync(paste(
+  path_woa2018,
+  &quot;temperature/decav/1.00/woa18_decav_t00_01.nc&quot;,
+  sep = &quot;&quot;
+))
 
 WOA18_temp_tibble &lt;- WOA18_temp %&gt;% hyper_tibble()
 
-WOA18_temp_tibble &lt;- WOA18_temp_tibble  %&gt;% 
-  select(temp = t_an, lon, lat, depth) %&gt;% 
-  drop_na() %&gt;% 
+WOA18_temp_tibble &lt;- WOA18_temp_tibble  %&gt;%
+  select(temp = t_an, lon, lat, depth) %&gt;%
+  drop_na() %&gt;%
   mutate(lon = if_else(lon &lt; 20, lon + 360, lon))
 
 # salinity
 
-WOA18_sal &lt;- tidync(
-  paste(
-    path_woa2018,
-    &quot;salinity/decav/1.00/woa18_decav_s00_01.nc&quot;,
-    sep = &quot;&quot;
-  )
-)
+WOA18_sal &lt;- tidync(paste(
+  path_woa2018,
+  &quot;salinity/decav/1.00/woa18_decav_s00_01.nc&quot;,
+  sep = &quot;&quot;
+))
 
 WOA18_sal_tibble &lt;- WOA18_sal %&gt;% hyper_tibble()
 
-WOA18_sal_tibble &lt;- WOA18_sal_tibble  %&gt;% 
-  select(sal = s_an, lon, lat, depth) %&gt;% 
-  drop_na() %&gt;% 
+WOA18_sal_tibble &lt;- WOA18_sal_tibble  %&gt;%
+  select(sal = s_an, lon, lat, depth) %&gt;%
+  drop_na() %&gt;%
   mutate(lon = if_else(lon &lt; 20, lon + 360, lon))
 
 rm(WOA18_sal, WOA18_temp)</code></pre>
@@ -1646,11 +1671,13 @@ rm(WOA18_sal_tibble, WOA18_temp_tibble)</code></pre>
 <h2><span class="header-section-number">3.3</span> Apply basin mask</h2>
 <pre class="r"><code># use only three basin to assign general basin mask
 # ie this is not specific to the MLR fitting
+
 basinmask_01 &lt;- basinmask_01 %&gt;% 
   filter(MLR_basins == &quot;2&quot;) %&gt;% 
   select(lat, lon, basin_AIP)
 
 # restrict predictor fields to basin mask grid
+
 WOA18_sal_temp &lt;- inner_join(WOA18_sal_temp, basinmask_01)</code></pre>
 </div>
 <div id="potential-temperature" class="section level2">
@@ -1836,12 +1863,12 @@ Jens Müller
 <h3><span class="header-section-number">3.5.1</span> Calculation</h3>
 <pre class="r"><code># calculate pressure from depth
 
-WOA18_sal_temp &lt;- WOA18_sal_temp %&gt;% 
+WOA18_sal_temp &lt;- WOA18_sal_temp %&gt;%
   mutate(CTDPRS = gsw_p_from_z(-depth,
                                lat))
 # rename variables according to python script
 
-WOA18_sal_temp_gamma_prep &lt;- WOA18_sal_temp %&gt;% 
+WOA18_sal_temp_gamma_prep &lt;- WOA18_sal_temp %&gt;%
   rename(LATITUDE = lat,
          LONGITUDE = lon,
          SALNTY = sal)
@@ -1856,16 +1883,19 @@ source_python(paste(
 
 # calculate gamma
 
-WOA18_sal_temp_gamma_calc &lt;- calculate_gamma(WOA18_sal_temp_gamma_prep)
+WOA18_sal_temp_gamma_calc &lt;-
+  calculate_gamma(WOA18_sal_temp_gamma_prep)
 
 # reverse variable naming
 
-WOA18_sal_temp &lt;- WOA18_sal_temp_gamma_calc %&gt;% 
-  select(-c(CTDPRS, THETA)) %&gt;% 
-  rename(lat = LATITUDE,
-         lon = LONGITUDE,
-         sal = SALNTY,
-         gamma  = GAMMA)
+WOA18_sal_temp &lt;- WOA18_sal_temp_gamma_calc %&gt;%
+  select(-c(CTDPRS, THETA)) %&gt;%
+  rename(
+    lat = LATITUDE,
+    lon = LONGITUDE,
+    sal = SALNTY,
+    gamma  = GAMMA
+  )
 
 WOA18_sal_temp &lt;- as_tibble(WOA18_sal_temp)
 
@@ -1884,9 +1914,8 @@ rm(WOA18_sal_temp_gamma_calc, WOA18_sal_temp_gamma_prep)</code></pre>
 <p>Below, following subsets of the climatologies are plotted for all relevant parameters:</p>
 <ul>
 <li>Horizontal planes at 0, 150, 500, 2000m</li>
-<li>Meridional sections at longitudes: 335.5, 190.5, 70.5</li>
+<li>Global section as defined above and indicated as white lines in maps.</li>
 </ul>
-<p>Section locations are indicated as white lines in maps.</p>
 <div id="surface-map" class="section level3">
 <h3><span class="header-section-number">3.7.1</span> Surface map</h3>
 <pre class="r"><code>p_map_climatology(
@@ -2359,9 +2388,9 @@ Jens Müller
 </div>
 <div id="climatology-nuts-and-o2" class="section level1">
 <h1><span class="header-section-number">4</span> Climatology Nuts and O2</h1>
-<div id="read-ncdfs-1" class="section level2">
-<h2><span class="header-section-number">4.1</span> Read ncdfs</h2>
-<pre class="r"><code># Keep grid cells of WOA18 sal/temp data set, to join with
+<div id="read-nc-files-1" class="section level2">
+<h2><span class="header-section-number">4.1</span> Read nc files</h2>
+<pre class="r"><code># Keep grid cells of WOA18 sal temp data set, to join with
 WOA18_nuts_O2 &lt;-
   WOA18_sal_temp %&gt;%
   select(lon, lat, depth)
@@ -2376,7 +2405,6 @@ file_list &lt;- c(
   paste(path_woa2018, &quot;AOU/all/1.00/woa18_all_A00_01.nc&quot;, sep = &quot;&quot;)
 )
 
-# print(file_list)
 # file &lt;- file_list[1]
 
 # read, plot and join data sets while looping over file list
@@ -2390,7 +2418,7 @@ for (file in file_list) {
   parameter &lt;- str_split(file, pattern = &quot;00_&quot;, simplify = TRUE)[1]
   parameter &lt;- str_split(parameter, pattern = &quot;all_&quot;, simplify = TRUE)[2]
   parameter &lt;- paste(parameter, &quot;_an&quot;, sep = &quot;&quot;)
-  print(parameter)
+  print(file)
   
   WOA18_tibble &lt;- WOA18_tibble  %&gt;%
     select(all_of(parameter),
@@ -2420,7 +2448,7 @@ for (file in file_list) {
   ))
   
 }</code></pre>
-<pre><code>[1] &quot;p_an&quot;</code></pre>
+<pre><code>[1] &quot;/nfs/kryo/work/updata/woa2018/phosphate/all/1.00/woa18_all_p00_01.nc&quot;</code></pre>
 <p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_WOA18_nuts_O2_files-1">
@@ -2574,7 +2602,7 @@ Jens Müller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;n_an&quot;</code></pre>
+<pre><code>[1] &quot;/nfs/kryo/work/updata/woa2018/nitrate/all/1.00/woa18_all_n00_01.nc&quot;</code></pre>
 <p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_WOA18_nuts_O2_files-3">
@@ -2728,7 +2756,7 @@ Jens Müller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;i_an&quot;</code></pre>
+<pre><code>[1] &quot;/nfs/kryo/work/updata/woa2018/silicate/all/1.00/woa18_all_i00_01.nc&quot;</code></pre>
 <p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-5.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_WOA18_nuts_O2_files-5">
@@ -2882,7 +2910,7 @@ Jens Müller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;o_an&quot;</code></pre>
+<pre><code>[1] &quot;/nfs/kryo/work/updata/woa2018/oxygen/all/1.00/woa18_all_o00_01.nc&quot;</code></pre>
 <p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-7.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_WOA18_nuts_O2_files-7">
@@ -3036,7 +3064,7 @@ Jens Müller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;A_an&quot;</code></pre>
+<pre><code>[1] &quot;/nfs/kryo/work/updata/woa2018/AOU/all/1.00/woa18_all_A00_01.nc&quot;</code></pre>
 <p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-9.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_WOA18_nuts_O2_files-9">
