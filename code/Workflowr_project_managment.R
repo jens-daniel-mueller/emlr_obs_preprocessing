@@ -115,7 +115,7 @@ wflow_publish(here::here(
 message = "use setup child Rmd file")
 
 # commit regular changes (locally) and rebuild site
-wflow_publish(all = TRUE, message = "including gamma in section")
+wflow_publish(all = TRUE, message = "code and output cleaning")
 
 # commit changes including _site.yml (locally) and rebuild site
 wflow_publish(c("analysis/*Rmd"), message = "XXX", republish = TRUE)
@@ -128,33 +128,15 @@ wflow_publish(here::here(
     "config_dependencies.Rmd",
     "config_parameterization.Rmd",
     "read_World_Ocean_Atlas_2018.Rmd",
-    "read_GLODAPv2_2020.Rmd",
     "read_GLODAPv2_2016_MappedClimatologies.Rmd",
+    "read_GLODAPv2_2020.Rmd",
     "read_Gruber_2019_Cant.Rmd",
     "read_Sabine_2004_Cant.Rmd",
     "read_CO2_atm.Rmd"
   )
 ),
-message = "include gamma with G19, rebuild all",
+message = "rebuild with new root folder and basinmask",
 republish = TRUE)
-
-wflow_publish(here::here(
-  "analysis",
-  c(
-    "index.Rmd",
-    "config_dependencies.Rmd",
-    "config_parameterization.Rmd",
-    "read_World_Ocean_Atlas_2018.Rmd",
-    "read_GLODAPv2_2020.Rmd",
-    "read_GLODAPv2_2016_MappedClimatologies.Rmd",
-    "read_Gruber_2019_Cant.Rmd",
-    "read_Sabine_2004_Cant.Rmd",
-    "read_CO2_atm.Rmd"
-  )
-),
-message = "include gamma with G19, rebuild all")
-
-
 
 # Push latest version to GitHub
 wflow_git_push()

@@ -18,7 +18,7 @@ editor_options:
 # https://jdblischak.github.io/workflowr/articles/wflow-07-common-code.html
 ```
 
-```{r define_updata_paths}
+```{r define_paths}
 path_glodapv2_2020  <- "/nfs/kryo/work/updata/glodapv2_2020/"
 path_preprocessing  <- paste(path_root, "/observations/preprocessing/", sep = "")
 ```

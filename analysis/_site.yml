@@ -1,7 +1,7 @@
 name: eMLR_obs_preprocessing
 output_dir: ../docs
 navbar:
-  title: Preprocessing for eMLR(C*)
+  title: eMLR obs preprocessing
   left:
   - text: Config
     menu:
@@ -9,20 +9,22 @@ navbar:
       href: config_dependencies.html
     - text: Parameterization
       href: config_parameterization.html
-  - text: Data base
+  - text: Predictors
     menu:
     - text: World Ocean Atlas 2018
       href: read_World_Ocean_Atlas_2018.html
-    - text: GLODAPv2_2020
-      href: read_GLODAPv2_2020.html
     - text: GLODAPv2_2016_MappedClimatologies
       href: read_GLODAPv2_2016_MappedClimatologies.html
-    - text: Cant Gruber 2019
+  - text: GLODAPv2_2020
+    href: read_GLODAPv2_2020.html
+  - text: Cant
+    menu:
+    - text: Gruber 2019
       href: read_Gruber_2019_Cant.html
-    - text: Cant Sabine 2004
+    - text: Sabine 2004
       href: read_Sabine_2004_Cant.html
-    - text: Atmospheric CO2
-      href: read_CO2_atm.html
+  - text: Atmospheric CO2
+    href: read_CO2_atm.html
   right:
   - icon: fa-github
     text: Source code
