@@ -48,15 +48,15 @@ Variables from source data files are converted and harmonized to satisfy followi
 | temp | insitu temperature | &deg;C |
 | theta | potential temperature | &deg;C |
 | gamma | neutral density | kg m^-3^ |
-| phosphate | phosphate | $\mu$mol kg^-1^ |
-| nitrate | nitrate | $\mu$mol kg^-1^ |
-| silicate | silicate | $\mu$mol kg^-1^ |
-| oxygen | oxygen | $\mu$mol kg^-1^ |
-| aou | aparent oxygen utilization | $\mu$mol kg^-1^ |
-| tco2 | dissolved inorganic carbon | $\mu$mol kg^-1^ |
-| talk | total alkalinity | $\mu$mol kg^-1^ |
-| cant | change in anthropogenic CO~2~ concentration | $\mu$mol kg^-1^ |
-| cstar | C* | $\mu$mol kg^-1^ |
+| phosphate | phosphate | &mu;mol kg^-1^ |
+| nitrate | nitrate | &mu;mol kg^-1^ |
+| silicate | silicate | &mu;mol kg^-1^ |
+| oxygen | oxygen | &mu;mol kg^-1^ |
+| aou | aparent oxygen utilization | &mu;mol kg^-1^ |
+| tco2 | dissolved inorganic carbon | &mu;mol kg^-1^ |
+| talk | total alkalinity | &mu;mol kg^-1^ |
+| cant | change in anthropogenic CO~2~ concentration | &mu;mol kg^-1^ |
+| cstar | C* | &mu;mol kg^-1^ |
 
 ### postfix for variables and objects
 
