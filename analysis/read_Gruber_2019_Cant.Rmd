@@ -273,11 +273,11 @@ p_map_climatology(
 
 ```{r Cant_pos_zonal_mean_sections}
 
-for (i_basin_AIP in unique(cant_3d$basin_AIP)) {
+for (i_basin_AIP in unique(cant_zonal$basin_AIP)) {
   print(
     p_section_zonal(
-      df = cant_3d %>% filter(basin_AIP == i_basin_AIP),
-      var = "cant_pos",
+      df = cant_zonal %>% filter(basin_AIP == i_basin_AIP),
+      var = "cant_pos_mean",
       plot_slabs = "n",
       subtitle_text = paste("Basin:", i_basin_AIP)
     )
