@@ -180,7 +180,7 @@ cant_inv <- cant_inv_layers %>%
 
 ### All Cant
 
-```{r G19_cant_inv_maps}
+```{r G19_cant_inv_maps, fig.asp=0.6}
 
 p_map_cant_inv(
   df = cant_inv,
@@ -191,7 +191,7 @@ p_map_cant_inv(
 
 ### Pos Cant
 
-```{r G19_cant_pos_inventory_maps}
+```{r G19_cant_pos_inventory_maps, fig.asp=0.6}
 
 p_map_cant_inv(
   df = cant_inv,
@@ -201,7 +201,7 @@ p_map_cant_inv(
 
 ### Published inventories
 
-```{r G19_cant_pos_inventory_maps_published}
+```{r G19_cant_pos_inventory_maps_published, fig.asp=0.6}
 
 p_map_cant_inv(
   df = dcant_inv,
@@ -211,7 +211,7 @@ p_map_cant_inv(
 
 ### Published vs calculated
 
-```{r G19_cant_offset_inventory}
+```{r G19_cant_offset_inventory, fig.asp=0.6}
 
 # join published and calculated data sets
 cant_offset <- inner_join(
@@ -223,11 +223,13 @@ cant_offset <- inner_join(
 cant_offset <- cant_offset %>% 
   mutate(delta_cant = cant_re - cant_pub)
 
+# plot map
 p_map_cant_inv_offset(df = cant_offset,
                       var = "delta_cant",
                       breaks = seq(-3,3,0.25))
 
 rm(cant_offset, dcant_inv)
+
 ```
 
 
@@ -265,11 +267,30 @@ p_map_climatology(
 ```
 
 
+# Zonal mean section plot
+
+## Positive Cant
+
+```{r Cant_pos_zonal_mean_sections}
+
+for (i_basin_AIP in unique(cant_3d$basin_AIP)) {
+  print(
+    p_section_zonal(
+      df = cant_3d %>% filter(basin_AIP == i_basin_AIP),
+      var = "cant_pos",
+      plot_slabs = "n",
+      subtitle_text = paste("Basin:", i_basin_AIP)
+    )
+  )
+}
+
+```
+
 # Global sections plot
 
 ## All Cant
 
-```{r Cant_sections_V101, fig.asp=0.8}
+```{r Cant_sections_V101}
 
 p_section_global(
   df = cant_3d,
@@ -280,7 +301,7 @@ p_section_global(
 
 ## Positive Cant
 
-```{r Cant_sections, fig.asp=0.8}
+```{r Cant_sections}
 
 p_section_global(
   df = cant_3d,
@@ -292,7 +313,7 @@ p_section_global(
 
 ## All Cant
 
-```{r Cant_sections_regular, fig.asp=2}
+```{r Cant_sections_regular, fig.asp=1.7}
 
 p_section_climatology_regular(
   df = cant_3d,
@@ -303,7 +324,7 @@ p_section_climatology_regular(
 
 ## Positive Cant
 
-```{r Cant_sections_regular_V101, fig.asp=2}
+```{r Cant_sections_regular_V101, fig.asp=1.7}
 
 p_section_climatology_regular(
   df = cant_3d,
@@ -313,7 +334,7 @@ p_section_climatology_regular(
 
 ## Neutral density
 
-```{r Gamma_sections_regular_V101, fig.asp=2}
+```{r Gamma_sections_regular_V101, fig.asp=1.7}
 
 p_section_climatology_regular(
   df = cant_3d,

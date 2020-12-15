@@ -32,23 +32,19 @@ library(stars)
 
 Data source: Globally mapped climatologies from Lauvset et al. (2016) downloaded in June 2020 from [glodap.info](https://www.glodap.info/).
 
-Following files were used: 
-
 ```{r GLODAPv2_2016_Mappedclimatologies_file_list}
 
 file_list <- c(
-  paste(path_glodapv2_2016b, "GLODAPv2.2016b.Cant.nc", sep = ""),
-  paste(path_glodapv2_2016b, "GLODAPv2.2016b.NO3.nc", sep = ""),
-  paste(path_glodapv2_2016b, "GLODAPv2.2016b.oxygen.nc", sep = ""),
-  paste(path_glodapv2_2016b, "GLODAPv2.2016b.PO4.nc", sep = ""),
-  paste(path_glodapv2_2016b, "GLODAPv2.2016b.salinity.nc", sep = ""),
-  paste(path_glodapv2_2016b, "GLODAPv2.2016b.silicate.nc", sep = ""),
-  paste(path_glodapv2_2016b, "GLODAPv2.2016b.TAlk.nc", sep = ""),
-  paste(path_glodapv2_2016b, "GLODAPv2.2016b.TCO2.nc", sep = ""),
-  paste(path_glodapv2_2016b, "GLODAPv2.2016b.temperature.nc", sep = "")
+  "GLODAPv2.2016b.Cant.nc",
+  "GLODAPv2.2016b.NO3.nc",
+  "GLODAPv2.2016b.oxygen.nc",
+  "GLODAPv2.2016b.PO4.nc",
+  "GLODAPv2.2016b.salinity.nc",
+  "GLODAPv2.2016b.silicate.nc",
+  "GLODAPv2.2016b.TAlk.nc",
+  "GLODAPv2.2016b.TCO2.nc",
+  "GLODAPv2.2016b.temperature.nc"
 )
-
-print(file_list)
 
 ```
 
@@ -77,132 +73,134 @@ Please note that NA values in the climatologies were filled with neighbouring va
 
 ```{r GLODAPv2_2016_Mappedclimatologies}
 
+
 # file <- file_list[2]
 for (file in file_list) {
-
-# open file
-
-  clim <- read_stars(file,
-                   quiet = TRUE)
-
-# extract parameter name
-
-parameter <- str_split(file, pattern = "16b/GLODAPv2.2016b.", simplify = TRUE)[2]
-parameter <- str_split(parameter, pattern = ".nc", simplify = TRUE)[1]
-print(parameter)
-
-# extract parameter
-
-clim <- clim %>% select(all_of(parameter))
-
-#convert to table
-
-clim_tibble <- clim %>% 
-  as_tibble()
-
-# harmonize column names
-
-clim_tibble <- clim_tibble %>% 
-  rename(lat = y,
-         lon = x,
-         depth = depth_surface)
-
-# join with basin mask and remove data outside basin mask
-
-clim_tibble <- inner_join(clim_tibble, basinmask)
-
-# determine bottom depth
-
-bottom_depth <- clim_tibble %>% 
-  filter(!is.na(!!sym(parameter))) %>% 
-  group_by(lon, lat) %>% 
-  summarise(bottom_depth = max(depth)) %>%
-  ungroup()
-
-# remove data below bottom depth
-clim_tibble <- left_join(clim_tibble, bottom_depth)
-rm(bottom_depth)
-
-clim_tibble <- clim_tibble %>% 
-  filter(depth <= bottom_depth) %>% 
-  select(-bottom_depth)
-
-# fill NAs with closest value along longitude
-
-clim_tibble <- clim_tibble %>%
-  group_by(lat, depth, basin_AIP) %>%
-  arrange(lon) %>%
-  fill(!!sym(parameter), .direction = "downup") %>%
-  ungroup()
-
-# # plot column NA inventory
-# 
-# clim_tibble_grid <- clim_tibble %>%
-#   filter(!is.na(!!sym(parameter))) %>%
-#   group_by(lat, lon) %>%
-#   summarise(depth_max = max(depth)) %>%
-#   ungroup()
-# 
-# clim_tibble_grid <- full_join(clim_tibble, clim_tibble_grid)
-# 
-# clim_tibble_grid <- clim_tibble_grid %>%
-#   filter(depth <= depth_max) %>%
-#   select(-depth_max)
-# 
-# clim_tibble_grid <- clim_tibble_grid %>%
-#   filter(is.na(!!sym(parameter)),
-#          depth <= params_global$inventory_depth) %>%
-#   count(lat, lon)
-# 
-# # plot NA map
-# print(
-# 
-#   map +
-#     geom_raster(data = clim_tibble_grid,
-#                 aes(lon, lat, fill = n)) +
-#     scale_fill_viridis_c() +
-#     theme(axis.title = element_blank()) +
-#     labs(title = paste(parameter, "colum NA"))
-# 
-# )
-# 
-# rm(clim_tibble_grid)
-
-# remove NAs
-
-clim_tibble <- clim_tibble %>% 
-  drop_na()
-
-# plot maps
-
-print(
-  p_map_climatology(
-    df = clim_tibble,
-    var = parameter)
+  
+  print(file)
+  # open file
+  
+  clim <-
+    read_stars(paste(path_glodapv2_2016b, file, sep = ""),
+               quiet = TRUE)
+  
+  # extract parameter name
+  
+  parameter <-
+    str_split(file, pattern = "GLODAPv2.2016b.", simplify = TRUE)[2]
+  parameter <-
+    str_split(parameter, pattern = ".nc", simplify = TRUE)[1]
+  
+  # extract parameter
+  
+  clim <- clim %>% select(all_of(parameter))
+  
+  #convert to table
+  
+  clim_tibble <- clim %>%
+    as_tibble()
+  
+  # harmonize column names
+  
+  clim_tibble <- clim_tibble %>%
+    rename(lat = y,
+           lon = x,
+           depth = depth_surface)
+  
+  # join with basin mask and remove data outside basin mask
+  
+  clim_tibble <- inner_join(clim_tibble, basinmask)
+  
+  # determine bottom depth
+  
+  bottom_depth <- clim_tibble %>%
+    filter(!is.na(!!sym(parameter))) %>%
+    group_by(lon, lat) %>%
+    summarise(bottom_depth = max(depth)) %>%
+    ungroup()
+  
+  # remove data below bottom depth
+  clim_tibble <- left_join(clim_tibble, bottom_depth)
+  rm(bottom_depth)
+  
+  clim_tibble <- clim_tibble %>%
+    filter(depth <= bottom_depth) %>%
+    select(-bottom_depth)
+  
+  # fill NAs with closest value along longitude
+  
+  clim_tibble <- clim_tibble %>%
+    group_by(lat, depth, basin_AIP) %>%
+    arrange(lon) %>%
+    fill(!!sym(parameter), .direction = "downup") %>%
+    ungroup()
+  
+  # # plot column NA inventory
+  #
+  # clim_tibble_grid <- clim_tibble %>%
+  #   filter(!is.na(!!sym(parameter))) %>%
+  #   group_by(lat, lon) %>%
+  #   summarise(depth_max = max(depth)) %>%
+  #   ungroup()
+  #
+  # clim_tibble_grid <- full_join(clim_tibble, clim_tibble_grid)
+  #
+  # clim_tibble_grid <- clim_tibble_grid %>%
+  #   filter(depth <= depth_max) %>%
+  #   select(-depth_max)
+  #
+  # clim_tibble_grid <- clim_tibble_grid %>%
+  #   filter(is.na(!!sym(parameter)),
+  #          depth <= params_global$inventory_depth) %>%
+  #   count(lat, lon)
+  #
+  # # plot NA map
+  # print(
+  #
+  #   map +
+  #     geom_raster(data = clim_tibble_grid,
+  #                 aes(lon, lat, fill = n)) +
+  #     scale_fill_viridis_c() +
+  #     theme(axis.title = element_blank()) +
+  #     labs(title = paste(parameter, "colum NA"))
+  #
+  # )
+  #
+  # rm(clim_tibble_grid)
+  
+  # remove NAs
+  
+  clim_tibble <- clim_tibble %>%
+    drop_na()
+  
+  # plot maps
+  
+  print(p_map_climatology(df = clim_tibble,
+                          var = parameter))
+  
+  # plot sections
+  
+  print(
+    p_section_global(
+      df = clim_tibble,
+      var = parameter,
+      title_text = "GLODAPv2_2016_Mapped_Climatology"
+    )
   )
-
-# plot sections
-
-print(
-  p_section_global(
-    df = clim_tibble,
-    var = parameter,
-    title_text = "GLODAPv2_2016_Mapped_Climatology")
-)
-
-
-# write csv file
-
-clim_tibble %>%
-  write_csv(paste(
-    path_preprocessing,
-    paste("GLODAPv2_2016_MappedClimatology_",
-          parameter,
-          ".csv",
-          sep = ""),
-    sep = ""
-  ))
-
+  
+  
+  # write csv file
+  
+  clim_tibble %>%
+    write_csv(paste(
+      path_preprocessing,
+      paste("GLODAPv2_2016_MappedClimatology_",
+            parameter,
+            ".csv",
+            sep = ""),
+      sep = ""
+    ))
+  
 }
 
 ```
