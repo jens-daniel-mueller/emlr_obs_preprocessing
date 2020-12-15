@@ -8,7 +8,7 @@ The code in this repository is intended to prepare data sets (either observation
 
 ## Sharing code across analysis
 
-Background information about several ways for sharing code across analysis in this repository, can be found [here](https://jdblischak.github.io/workflowr/articles/wflow-07-common-code.html){target="_blank"} on the workflowr homepage. Here, we apply the use of child documents and functions.
+Background information about several ways for sharing code across analysis in this repository, can be found [here](https://jdblischak.github.io/workflowr/articles/wflow-07-common-code.html) on the workflowr homepage. Here, we apply the use of child documents and functions.
 
 ### Using child documents
 
