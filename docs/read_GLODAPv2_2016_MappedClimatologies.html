@@ -581,16 +581,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree53a6197be9e0af71d245eaf2b1517529235b0818targetblank53a6197a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/53a6197be9e0af71d245eaf2b1517529235b0818" target="_blank">53a6197</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreec737bf43bba2a80b0afe4c9d5b58fe61446fdc4atargetblankc737bf4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/c737bf43bba2a80b0afe4c9d5b58fe61446fdc4a" target="_blank">c737bf4</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree53a6197be9e0af71d245eaf2b1517529235b0818targetblank53a6197a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreec737bf43bba2a80b0afe4c9d5b58fe61446fdc4atargetblankc737bf4a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/53a6197be9e0af71d245eaf2b1517529235b0818" target="_blank">53a6197</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/c737bf43bba2a80b0afe4c9d5b58fe61446fdc4a" target="_blank">c737bf4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -599,10 +599,8 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
     Ignored:    data/
-
-Unstaged changes:
-    Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
 <p>
@@ -641,6 +639,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/c737bf43bba2a80b0afe4c9d5b58fe61446fdc4a/analysis/read_GLODAPv2_2016_MappedClimatologies.Rmd" target="_blank">c737bf4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+<td>
+final cleaning and added zonal mean section
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/ed3e64c3915773619c068b0b35ba5a0b13438da8/docs/read_GLODAPv2_2016_MappedClimatologies.html" target="_blank">ed3e64c</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -906,29 +938,17 @@ Initial commit
 <div id="read-source-files" class="section level1">
 <h1><span class="header-section-number">1</span> Read source files</h1>
 <p>Data source: Globally mapped climatologies from Lauvset et al. (2016) downloaded in June 2020 from <a href="https://www.glodap.info/">glodap.info</a>.</p>
-<p>Following files were used:</p>
 <pre class="r"><code>file_list &lt;- c(
-  paste(path_glodapv2_2016b, &quot;GLODAPv2.2016b.Cant.nc&quot;, sep = &quot;&quot;),
-  paste(path_glodapv2_2016b, &quot;GLODAPv2.2016b.NO3.nc&quot;, sep = &quot;&quot;),
-  paste(path_glodapv2_2016b, &quot;GLODAPv2.2016b.oxygen.nc&quot;, sep = &quot;&quot;),
-  paste(path_glodapv2_2016b, &quot;GLODAPv2.2016b.PO4.nc&quot;, sep = &quot;&quot;),
-  paste(path_glodapv2_2016b, &quot;GLODAPv2.2016b.salinity.nc&quot;, sep = &quot;&quot;),
-  paste(path_glodapv2_2016b, &quot;GLODAPv2.2016b.silicate.nc&quot;, sep = &quot;&quot;),
-  paste(path_glodapv2_2016b, &quot;GLODAPv2.2016b.TAlk.nc&quot;, sep = &quot;&quot;),
-  paste(path_glodapv2_2016b, &quot;GLODAPv2.2016b.TCO2.nc&quot;, sep = &quot;&quot;),
-  paste(path_glodapv2_2016b, &quot;GLODAPv2.2016b.temperature.nc&quot;, sep = &quot;&quot;)
-)
-
-print(file_list)</code></pre>
-<pre><code>[1] &quot;/nfs/kryo/work/updata/glodapv2.2016b/GLODAPv2.2016b.Cant.nc&quot;       
-[2] &quot;/nfs/kryo/work/updata/glodapv2.2016b/GLODAPv2.2016b.NO3.nc&quot;        
-[3] &quot;/nfs/kryo/work/updata/glodapv2.2016b/GLODAPv2.2016b.oxygen.nc&quot;     
-[4] &quot;/nfs/kryo/work/updata/glodapv2.2016b/GLODAPv2.2016b.PO4.nc&quot;        
-[5] &quot;/nfs/kryo/work/updata/glodapv2.2016b/GLODAPv2.2016b.salinity.nc&quot;   
-[6] &quot;/nfs/kryo/work/updata/glodapv2.2016b/GLODAPv2.2016b.silicate.nc&quot;   
-[7] &quot;/nfs/kryo/work/updata/glodapv2.2016b/GLODAPv2.2016b.TAlk.nc&quot;       
-[8] &quot;/nfs/kryo/work/updata/glodapv2.2016b/GLODAPv2.2016b.TCO2.nc&quot;       
-[9] &quot;/nfs/kryo/work/updata/glodapv2.2016b/GLODAPv2.2016b.temperature.nc&quot;</code></pre>
+  &quot;GLODAPv2.2016b.Cant.nc&quot;,
+  &quot;GLODAPv2.2016b.NO3.nc&quot;,
+  &quot;GLODAPv2.2016b.oxygen.nc&quot;,
+  &quot;GLODAPv2.2016b.PO4.nc&quot;,
+  &quot;GLODAPv2.2016b.salinity.nc&quot;,
+  &quot;GLODAPv2.2016b.silicate.nc&quot;,
+  &quot;GLODAPv2.2016b.TAlk.nc&quot;,
+  &quot;GLODAPv2.2016b.TCO2.nc&quot;,
+  &quot;GLODAPv2.2016b.temperature.nc&quot;
+)</code></pre>
 <pre class="r"><code># use only three basin to assign general basin mask
 # ie this is not specific to the MLR fitting
 basinmask &lt;- basinmask %&gt;% 
@@ -946,132 +966,133 @@ basinmask &lt;- basinmask %&gt;%
 <p>Please note that NA values in the climatologies were filled with neighbouring values on the longitudinal axis.</p>
 <pre class="r"><code># file &lt;- file_list[2]
 for (file in file_list) {
-
-# open file
-
-  clim &lt;- read_stars(file,
-                   quiet = TRUE)
-
-# extract parameter name
-
-parameter &lt;- str_split(file, pattern = &quot;16b/GLODAPv2.2016b.&quot;, simplify = TRUE)[2]
-parameter &lt;- str_split(parameter, pattern = &quot;.nc&quot;, simplify = TRUE)[1]
-print(parameter)
-
-# extract parameter
-
-clim &lt;- clim %&gt;% select(all_of(parameter))
-
-#convert to table
-
-clim_tibble &lt;- clim %&gt;% 
-  as_tibble()
-
-# harmonize column names
-
-clim_tibble &lt;- clim_tibble %&gt;% 
-  rename(lat = y,
-         lon = x,
-         depth = depth_surface)
-
-# join with basin mask and remove data outside basin mask
-
-clim_tibble &lt;- inner_join(clim_tibble, basinmask)
-
-# determine bottom depth
-
-bottom_depth &lt;- clim_tibble %&gt;% 
-  filter(!is.na(!!sym(parameter))) %&gt;% 
-  group_by(lon, lat) %&gt;% 
-  summarise(bottom_depth = max(depth)) %&gt;%
-  ungroup()
-
-# remove data below bottom depth
-clim_tibble &lt;- left_join(clim_tibble, bottom_depth)
-rm(bottom_depth)
-
-clim_tibble &lt;- clim_tibble %&gt;% 
-  filter(depth &lt;= bottom_depth) %&gt;% 
-  select(-bottom_depth)
-
-# fill NAs with closest value along longitude
-
-clim_tibble &lt;- clim_tibble %&gt;%
-  group_by(lat, depth, basin_AIP) %&gt;%
-  arrange(lon) %&gt;%
-  fill(!!sym(parameter), .direction = &quot;downup&quot;) %&gt;%
-  ungroup()
-
-# # plot column NA inventory
-# 
-# clim_tibble_grid &lt;- clim_tibble %&gt;%
-#   filter(!is.na(!!sym(parameter))) %&gt;%
-#   group_by(lat, lon) %&gt;%
-#   summarise(depth_max = max(depth)) %&gt;%
-#   ungroup()
-# 
-# clim_tibble_grid &lt;- full_join(clim_tibble, clim_tibble_grid)
-# 
-# clim_tibble_grid &lt;- clim_tibble_grid %&gt;%
-#   filter(depth &lt;= depth_max) %&gt;%
-#   select(-depth_max)
-# 
-# clim_tibble_grid &lt;- clim_tibble_grid %&gt;%
-#   filter(is.na(!!sym(parameter)),
-#          depth &lt;= params_global$inventory_depth) %&gt;%
-#   count(lat, lon)
-# 
-# # plot NA map
-# print(
-# 
-#   map +
-#     geom_raster(data = clim_tibble_grid,
-#                 aes(lon, lat, fill = n)) +
-#     scale_fill_viridis_c() +
-#     theme(axis.title = element_blank()) +
-#     labs(title = paste(parameter, &quot;colum NA&quot;))
-# 
-# )
-# 
-# rm(clim_tibble_grid)
-
-# remove NAs
-
-clim_tibble &lt;- clim_tibble %&gt;% 
-  drop_na()
-
-# plot maps
-
-print(
-  p_map_climatology(
-    df = clim_tibble,
-    var = parameter)
+  
+  print(file)
+  # open file
+  
+  clim &lt;-
+    read_stars(paste(path_glodapv2_2016b, file, sep = &quot;&quot;),
+               quiet = TRUE)
+  
+  # extract parameter name
+  
+  parameter &lt;-
+    str_split(file, pattern = &quot;GLODAPv2.2016b.&quot;, simplify = TRUE)[2]
+  parameter &lt;-
+    str_split(parameter, pattern = &quot;.nc&quot;, simplify = TRUE)[1]
+  
+  # extract parameter
+  
+  clim &lt;- clim %&gt;% select(all_of(parameter))
+  
+  #convert to table
+  
+  clim_tibble &lt;- clim %&gt;%
+    as_tibble()
+  
+  # harmonize column names
+  
+  clim_tibble &lt;- clim_tibble %&gt;%
+    rename(lat = y,
+           lon = x,
+           depth = depth_surface)
+  
+  # join with basin mask and remove data outside basin mask
+  
+  clim_tibble &lt;- inner_join(clim_tibble, basinmask)
+  
+  # determine bottom depth
+  
+  bottom_depth &lt;- clim_tibble %&gt;%
+    filter(!is.na(!!sym(parameter))) %&gt;%
+    group_by(lon, lat) %&gt;%
+    summarise(bottom_depth = max(depth)) %&gt;%
+    ungroup()
+  
+  # remove data below bottom depth
+  clim_tibble &lt;- left_join(clim_tibble, bottom_depth)
+  rm(bottom_depth)
+  
+  clim_tibble &lt;- clim_tibble %&gt;%
+    filter(depth &lt;= bottom_depth) %&gt;%
+    select(-bottom_depth)
+  
+  # fill NAs with closest value along longitude
+  
+  clim_tibble &lt;- clim_tibble %&gt;%
+    group_by(lat, depth, basin_AIP) %&gt;%
+    arrange(lon) %&gt;%
+    fill(!!sym(parameter), .direction = &quot;downup&quot;) %&gt;%
+    ungroup()
+  
+  # # plot column NA inventory
+  #
+  # clim_tibble_grid &lt;- clim_tibble %&gt;%
+  #   filter(!is.na(!!sym(parameter))) %&gt;%
+  #   group_by(lat, lon) %&gt;%
+  #   summarise(depth_max = max(depth)) %&gt;%
+  #   ungroup()
+  #
+  # clim_tibble_grid &lt;- full_join(clim_tibble, clim_tibble_grid)
+  #
+  # clim_tibble_grid &lt;- clim_tibble_grid %&gt;%
+  #   filter(depth &lt;= depth_max) %&gt;%
+  #   select(-depth_max)
+  #
+  # clim_tibble_grid &lt;- clim_tibble_grid %&gt;%
+  #   filter(is.na(!!sym(parameter)),
+  #          depth &lt;= params_global$inventory_depth) %&gt;%
+  #   count(lat, lon)
+  #
+  # # plot NA map
+  # print(
+  #
+  #   map +
+  #     geom_raster(data = clim_tibble_grid,
+  #                 aes(lon, lat, fill = n)) +
+  #     scale_fill_viridis_c() +
+  #     theme(axis.title = element_blank()) +
+  #     labs(title = paste(parameter, &quot;colum NA&quot;))
+  #
+  # )
+  #
+  # rm(clim_tibble_grid)
+  
+  # remove NAs
+  
+  clim_tibble &lt;- clim_tibble %&gt;%
+    drop_na()
+  
+  # plot maps
+  
+  print(p_map_climatology(df = clim_tibble,
+                          var = parameter))
+  
+  # plot sections
+  
+  print(
+    p_section_global(
+      df = clim_tibble,
+      var = parameter,
+      title_text = &quot;GLODAPv2_2016_Mapped_Climatology&quot;
+    )
   )
-
-# plot sections
-
-print(
-  p_section_global(
-    df = clim_tibble,
-    var = parameter,
-    title_text = &quot;GLODAPv2_2016_Mapped_Climatology&quot;)
-)
-
-
-# write csv file
-
-clim_tibble %&gt;%
-  write_csv(paste(
-    path_preprocessing,
-    paste(&quot;GLODAPv2_2016_MappedClimatology_&quot;,
-          parameter,
-          &quot;.csv&quot;,
-          sep = &quot;&quot;),
-    sep = &quot;&quot;
-  ))
-
+  
+  
+  # write csv file
+  
+  clim_tibble %&gt;%
+    write_csv(paste(
+      path_preprocessing,
+      paste(&quot;GLODAPv2_2016_MappedClimatology_&quot;,
+            parameter,
+            &quot;.csv&quot;,
+            sep = &quot;&quot;),
+      sep = &quot;&quot;
+    ))
+  
 }</code></pre>
-<pre><code>[1] &quot;Cant&quot;</code></pre>
+<pre><code>[1] &quot;GLODAPv2.2016b.Cant.nc&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-GLODAPv2_2016_Mappedclimatologies-1">
@@ -1192,7 +1213,7 @@ Jens Müller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;NO3&quot;</code></pre>
+<pre><code>[1] &quot;GLODAPv2.2016b.NO3.nc&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-GLODAPv2_2016_Mappedclimatologies-3">
@@ -1313,7 +1334,7 @@ Jens Müller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;oxygen&quot;</code></pre>
+<pre><code>[1] &quot;GLODAPv2.2016b.oxygen.nc&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-5.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-GLODAPv2_2016_Mappedclimatologies-5">
@@ -1434,7 +1455,7 @@ Jens Müller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;PO4&quot;</code></pre>
+<pre><code>[1] &quot;GLODAPv2.2016b.PO4.nc&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-7.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-GLODAPv2_2016_Mappedclimatologies-7">
@@ -1555,7 +1576,7 @@ Jens Müller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;salinity&quot;</code></pre>
+<pre><code>[1] &quot;GLODAPv2.2016b.salinity.nc&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-9.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-GLODAPv2_2016_Mappedclimatologies-9">
@@ -1676,7 +1697,7 @@ Jens Müller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;silicate&quot;</code></pre>
+<pre><code>[1] &quot;GLODAPv2.2016b.silicate.nc&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-11.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-GLODAPv2_2016_Mappedclimatologies-11">
@@ -1797,7 +1818,7 @@ Jens Müller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;TAlk&quot;</code></pre>
+<pre><code>[1] &quot;GLODAPv2.2016b.TAlk.nc&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-13.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-GLODAPv2_2016_Mappedclimatologies-13">
@@ -1918,7 +1939,7 @@ Jens Müller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;TCO2&quot;</code></pre>
+<pre><code>[1] &quot;GLODAPv2.2016b.TCO2.nc&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-15.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-GLODAPv2_2016_Mappedclimatologies-15">
@@ -2039,7 +2060,7 @@ Jens Müller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;temperature&quot;</code></pre>
+<pre><code>[1] &quot;GLODAPv2.2016b.temperature.nc&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-17.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-GLODAPv2_2016_Mappedclimatologies-17">
