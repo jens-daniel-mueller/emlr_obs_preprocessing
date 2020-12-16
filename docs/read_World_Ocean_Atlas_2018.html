@@ -1,0 +1,3759 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Jens Daniel Müller" />
+
+
+<title>World Ocean Atlas 2018</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">eMLR obs preprocessing</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Config
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="config_dependencies.html">Dependencies</a>
+    </li>
+    <li>
+      <a href="config_parameterization.html">Parameterization</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Predictors
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="read_World_Ocean_Atlas_2018.html">World Ocean Atlas 2018</a>
+    </li>
+    <li>
+      <a href="read_GLODAPv2_2016_MappedClimatologies.html">GLODAPv2_2016_MappedClimatologies</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="read_GLODAPv2_2020.html">GLODAPv2_2020</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Cant
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="read_Gruber_2019_Cant.html">Gruber 2019</a>
+    </li>
+    <li>
+      <a href="read_Sabine_2004_Cant.html">Sabine 2004</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="read_CO2_atm.html">Atmospheric CO2</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing">
+    <span class="fa fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+<li>
+  <a href="https://jens-daniel-mueller.github.io/">
+    <span class="fa fa-home"></span>
+     
+    Jens' homepage
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">World Ocean Atlas 2018</h1>
+<h4 class="author">Jens Daniel Müller</h4>
+<h4 class="date">16 December, 2020</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-12-16
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>emlr_obs_preprocessing/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200707code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200707)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200707code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200707)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree80d1488a4a0aa4bef0443231629c3080698462abtargetblank80d1488a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/80d1488a4a0aa4bef0443231629c3080698462ab" target="_blank">80d1488</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree80d1488a4a0aa4bef0443231629c3080698462abtargetblank80d1488a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/80d1488a4a0aa4bef0443231629c3080698462ab" target="_blank">80d1488</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    data/
+
+Unstaged changes:
+    Modified:   code/Workflowr_project_managment.R
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/read_World_Ocean_Atlas_2018.Rmd</code>) and HTML (<code>docs/read_World_Ocean_Atlas_2018.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/read_World_Ocean_Atlas_2018.html" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+<td>
+cleaned for copying
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/ed3e64c3915773619c068b0b35ba5a0b13438da8/docs/read_World_Ocean_Atlas_2018.html" target="_blank">ed3e64c</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/64cfdd63fad86d46d969b022e347123d4816da7e/docs/read_World_Ocean_Atlas_2018.html" target="_blank">64cfdd6</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6f2a6695cd47533b8ad90cc6339e77a409d8f61c/analysis/read_World_Ocean_Atlas_2018.Rmd" target="_blank">6f2a669</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+<td>
+code and output cleaning
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/2fdd2a741b71d291d6fec27c302c62f86da463b9/docs/read_World_Ocean_Atlas_2018.html" target="_blank">2fdd2a7</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-14
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/cc07d29f6212a86a55d2cd758aeda634558ad930/docs/read_World_Ocean_Atlas_2018.html" target="_blank">cc07d29</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-14
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/325e1faf5581bcc351f9451584d31d83882f2364/analysis/read_World_Ocean_Atlas_2018.Rmd" target="_blank">325e1fa</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-14
+</td>
+<td>
+rebuild with new root folder
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/4ded3cd8e5f382d15ab4a4048454d8bb9f89b962/docs/read_World_Ocean_Atlas_2018.html" target="_blank">4ded3cd</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-14
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a09b95f642a23131a74303025190b7d686fd86b0/analysis/read_World_Ocean_Atlas_2018.Rmd" target="_blank">a09b95f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-14
+</td>
+<td>
+rebuild with new root folder
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/474daac630ef617c412602ca0fedd1f36feb51da/docs/read_World_Ocean_Atlas_2018.html" target="_blank">474daac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-12
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/53d8356c1c2f5bbd2a24c9e3c3825f7b0d2fdd53/analysis/read_World_Ocean_Atlas_2018.Rmd" target="_blank">53d8356</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-12
+</td>
+<td>
+removed basinmask issues
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/5c773fa395dd64aa0d30513ae057297038b1e36b/docs/read_World_Ocean_Atlas_2018.html" target="_blank">5c773fa</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/ae7aa2e6911d029b57891f4c76ec174ba41dc157/docs/read_World_Ocean_Atlas_2018.html" target="_blank">ae7aa2e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ec6f8035d636eeffb78fade9f82779ee113c627f/analysis/read_World_Ocean_Atlas_2018.Rmd" target="_blank">ec6f803</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+<td>
+apply only lat max but not basinmak
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/914159f632cef8539b161c49272d663f47c8e690/docs/read_World_Ocean_Atlas_2018.html" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/30eb59a78d9586d3bef0cbd6945e63b016499fbf/analysis/read_World_Ocean_Atlas_2018.Rmd" target="_blank">30eb59a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+<td>
+created basin masks for analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/9c5d86d8ac2c4ec9fc9690d9fb31e9c95d90d138/docs/read_World_Ocean_Atlas_2018.html" target="_blank">9c5d86d</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8a8db38c766ad442f7af11d42054ac354a88a69e/analysis/read_World_Ocean_Atlas_2018.Rmd" target="_blank">8a8db38</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+<td>
+renamed tem to temp
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/999cd9d0f1c35bc52979df1a413c2b6a9871e2dc/docs/read_World_Ocean_Atlas_2018.html" target="_blank">999cd9d</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-02
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/e28cc901bfe1c4b8646c6a42f4c1e8afb93f2989/docs/read_World_Ocean_Atlas_2018.html" target="_blank">e28cc90</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-30
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/cd676e88e0886219ce332ca0f393a45570609bc1/analysis/read_World_Ocean_Atlas_2018.Rmd" target="_blank">cd676e8</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-30
+</td>
+<td>
+created global parameterization file params_global.rds
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/825309ecba6f9e1ee01dda2f1fc6269c5a3bb71b/docs/read_World_Ocean_Atlas_2018.html" target="_blank">825309e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4dd5bdadae8567e66c0425a5675d7f5d99b296b8/analysis/read_World_Ocean_Atlas_2018.Rmd" target="_blank">4dd5bda</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+<td>
+correct source link, basinmask and plotting function
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/read_World_Ocean_Atlas_2018.html" target="_blank">58359ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2f37595005a29b70fcfcd7c2b74e444b28876886/analysis/read_World_Ocean_Atlas_2018.Rmd" target="_blank">2f37595</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+<td>
+first rebuild after splitting the preprocessing part
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/cb7a9caf384e0e3e0bae1948957ad9c218725b01/analysis/read_World_Ocean_Atlas_2018.Rmd" target="_blank">cb7a9ca</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+<td>
+linked to local paths on server
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/analysis/read_World_Ocean_Atlas_2018.Rmd" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+<td>
+Initial commit
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/read_World_Ocean_Atlas_2018.html" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+<td>
+Initial commit
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="data-source" class="section level1">
+<h1><span class="header-section-number">1</span> Data source</h1>
+<ul>
+<li>Data source: <a href="https://www.nodc.noaa.gov/OC5/woa18/woa18data.html" target="_blank">World Ocean Atlas 2018</a></li>
+</ul>
+</div>
+<div id="masks" class="section level1">
+<h1><span class="header-section-number">2</span> Masks</h1>
+<div id="land" class="section level2">
+<h2><span class="header-section-number">2.1</span> Land</h2>
+<div id="read-mask" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> Read mask</h3>
+<p>The land sea mask with 1x1° resolution from the file <code>landsea_01.msk</code> was used.</p>
+<pre class="r"><code>landsea_01 &lt;- read_csv(
+  paste(
+    path_woa2018,
+    &quot;masks/landsea_01.msk&quot;,
+    sep = &quot;&quot;),
+  skip = 1,
+  col_types = list(.default = &quot;d&quot;))</code></pre>
+</div>
+<div id="label" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> Label</h3>
+<p>According to the <a href="https://data.nodc.noaa.gov/woa/WOA18/DOC/woa18documentation.pdf" target="_blank">WOA18 documentation</a> document:</p>
+<p><em>“The landsea_XX.msk contains the standard depth level number at which the bottom of the ocean is first encountered at each quarter-degree or one-degree square for the entire world. Land will have a value of 1, corresponding to the surface.”</em></p>
+<p>The landmask was derived as coordinates with value 1.</p>
+<pre class="r"><code>landmask &lt;- landsea_01 %&gt;%
+  mutate(region = if_else(Bottom_Standard_Level == &quot;1&quot;,
+                          &quot;land&quot;, &quot;ocean&quot;)) %&gt;%
+  select(-Bottom_Standard_Level)
+
+landmask &lt;- landmask %&gt;%
+  rename(lat = Latitude,
+         lon = Longitude) %&gt;%
+  mutate(lon = if_else(lon &lt; 20, lon + 360, lon))
+
+landmask &lt;- landmask %&gt;%
+  filter(region == &quot;land&quot;,
+         lat &gt;= params_global$lat_min,
+         lat &lt;= params_global$lat_max
+         ) %&gt;%
+  select(-region)
+
+rm(landsea_01)</code></pre>
+</div>
+</div>
+<div id="basins" class="section level2">
+<h2><span class="header-section-number">2.2</span> Basins</h2>
+<div id="read-mask-1" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Read mask</h3>
+<p>The surface mask (0m) with 1x1° resolution from the file <code>basinmask_01.msk</code> was used.</p>
+<pre class="r"><code>basinmask_01 &lt;- read_csv(
+  paste(
+    path_woa2018,
+    &quot;masks/basinmask_01.msk&quot;,
+    sep = &quot;&quot;),
+  skip = 1,
+  col_types = list(.default = &quot;d&quot;))
+
+basinmask_01 &lt;- basinmask_01 %&gt;% 
+  select(Latitude:Basin_0m) %&gt;% 
+  mutate(Basin_0m = as.factor(Basin_0m)) %&gt;% 
+  rename(lat = Latitude, lon = Longitude)</code></pre>
+</div>
+<div id="basins-for-budgets" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Basins for budgets</h3>
+<p>According to <a href="https://www.nodc.noaa.gov/OC5/WOD/wod-woa-faqs.html" target="_blank">WOA FAQ</a> website and <a href="https://data.nodc.noaa.gov/woa/WOA18/DOC/woa18documentation.pdf" target="_blank">WOA18 documentation</a>, number codes in the mask files were used to assign ocean basins as follows:</p>
+<p>Atlantic Ocean:</p>
+<ul>
+<li>1: Atlantic Ocean</li>
+<li>10: Southern Ocean between 63°W and 20°E</li>
+<li>11: Arctic Ocean (restricted by northern latitude limit 65N)</li>
+</ul>
+<p>Indian Ocean:</p>
+<ul>
+<li>3: Indian Ocean</li>
+<li>10: Southern Ocean between 20°E and 147°E</li>
+<li>56: Bay of Bengal</li>
+</ul>
+<p>Pacific Ocean:</p>
+<ul>
+<li>2: Pacific Ocean</li>
+<li>10: Southern Ocean between 147°E and 63°W</li>
+<li>12: Sea of Japan</li>
+</ul>
+<pre class="r"><code># assign basin labels
+basinmask_01 &lt;- basinmask_01 %&gt;%
+  filter(Basin_0m %in% c(&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;10&quot;, &quot;11&quot;, &quot;12&quot;, &quot;56&quot;)) %&gt;%
+  mutate(
+    basin_AIP = &quot;none&quot;,
+    basin_AIP = case_when(
+      Basin_0m == &quot;1&quot; ~ &quot;Atlantic&quot;,
+      Basin_0m == &quot;10&quot; &amp; lon &gt;= -63 &amp; lon &lt; 20 ~ &quot;Atlantic&quot;,
+      Basin_0m == &quot;11&quot; ~ &quot;Atlantic&quot;,
+      Basin_0m == &quot;3&quot; ~ &quot;Indian&quot;,
+      Basin_0m == &quot;56&quot; ~ &quot;Indian&quot;,
+      Basin_0m == &quot;10&quot; &amp; lon &gt;= 20 &amp; lon &lt; 147 ~ &quot;Indian&quot;,
+      Basin_0m == &quot;2&quot; ~ &quot;Pacific&quot;,
+      Basin_0m == &quot;12&quot; ~ &quot;Pacific&quot;,
+      Basin_0m == &quot;10&quot; &amp;
+        lon &gt;= 147 | lon &lt; -63 ~ &quot;Pacific&quot;
+    )
+  ) %&gt;%
+  select(-Basin_0m)
+
+# apply northern latitude boundary
+basinmask_01 &lt;- basinmask_01 %&gt;%
+  filter(lat &lt;= params_global$lat_max)
+
+# harmonize lon scale
+basinmask_01 &lt;- basinmask_01  %&gt;%
+  mutate(lon = if_else(lon &lt; 20, lon + 360, lon))</code></pre>
+<pre class="r"><code># generate base map, which is further used throughout the project
+map &lt;- 
+  ggplot() +
+  geom_raster(data = landmask,
+              aes(lon, lat), fill = &quot;grey80&quot;) +
+  coord_quickmap(expand = 0) +
+  theme(axis.title = element_blank())
+
+# plot basin_AIP map
+map +
+  geom_raster(data = basinmask_01,
+              aes(lon, lat, fill = basin_AIP)) +
+  scale_fill_brewer(palette = &quot;Dark2&quot;)</code></pre>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/basin_AIP_masks_WOA18_map-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-basin_AIP_masks_WOA18_map-1">
+Past versions of basin_AIP_masks_WOA18_map-1.png
+</button>
+</p>
+<div id="fig-basin_AIP_masks_WOA18_map-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/basin_AIP_masks_WOA18_map-1.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/64cfdd63fad86d46d969b022e347123d4816da7e/docs/figure/read_World_Ocean_Atlas_2018.Rmd/basin_AIP_masks_WOA18_map-1.png" target="_blank">64cfdd6</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/914159f632cef8539b161c49272d663f47c8e690/docs/figure/read_World_Ocean_Atlas_2018.Rmd/basin_AIP_masks_WOA18_map-1.png" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="basins-for-mlr-fitting" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Basins for MLR fitting</h3>
+<p>For the MLR fitting, ocean basins are further split up, as plotted below.</p>
+<pre class="r"><code># 2 basins
+basinmask_01 &lt;- basinmask_01 %&gt;%
+  mutate(basin = if_else(basin_AIP == &quot;Atlantic&quot;,
+                         &quot;Atlantic&quot;,
+                         &quot;Indo-Pacific&quot;),
+         MLR_basins = &quot;2&quot;)
+
+# 5 basins
+basinmask_5 &lt;- basinmask_01 %&gt;%
+  mutate(
+    basin = case_when(
+      basin_AIP ==  &quot;Atlantic&quot; &amp; lat &gt; params_global$lat_equator ~ &quot;N_Atlantic&quot;,
+      basin_AIP ==  &quot;Atlantic&quot; &amp; lat &lt; params_global$lat_equator ~ &quot;S_Atlantic&quot;,
+      basin_AIP ==  &quot;Pacific&quot; &amp; lat &gt; params_global$lat_equator ~ &quot;N_Pacific&quot;,
+      basin_AIP ==  &quot;Pacific&quot; &amp; lat &lt; params_global$lat_equator ~ &quot;S_Pacific&quot;,
+      basin_AIP ==  &quot;Indian&quot; ~ &quot;Indian&quot;
+    )
+  ) %&gt;%
+  mutate(MLR_basins = &quot;5&quot;)
+
+
+# SO basin separate
+basinmask_SO &lt;- basinmask_01 %&gt;%
+  mutate(
+    basin = if_else(
+      lat &lt; params_global$lat_min_SO, &quot;SO&quot;, basin)
+  ) %&gt;%
+  mutate(MLR_basins = &quot;SO&quot;)
+
+# 3 basins
+basinmask_AIP &lt;- basinmask_01 %&gt;%
+  mutate(
+    basin = basin_AIP) %&gt;%
+  mutate(MLR_basins = &quot;AIP&quot;)
+
+# join basin masks into one file
+basinmask_01 &lt;- bind_rows(basinmask_01, basinmask_5, basinmask_SO, basinmask_AIP)</code></pre>
+<pre class="r"><code>for (i_MLR_basins in unique(basinmask_01$MLR_basins)) {
+  
+  print(
+    map +
+      geom_raster(
+        data = basinmask_01 %&gt;% filter(MLR_basins == i_MLR_basins),
+        aes(lon, lat, fill = basin)
+      ) +
+      scale_fill_brewer(palette = &quot;Dark2&quot;) +
+      labs(title = paste(&quot;MLR basin label:&quot;, i_MLR_basins))
+  )
+  
+}</code></pre>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/basin_masks_WOA18_map-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-basin_masks_WOA18_map-1">
+Past versions of basin_masks_WOA18_map-1.png
+</button>
+</p>
+<div id="fig-basin_masks_WOA18_map-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/basin_masks_WOA18_map-1.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/64cfdd63fad86d46d969b022e347123d4816da7e/docs/figure/read_World_Ocean_Atlas_2018.Rmd/basin_masks_WOA18_map-1.png" target="_blank">64cfdd6</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/914159f632cef8539b161c49272d663f47c8e690/docs/figure/read_World_Ocean_Atlas_2018.Rmd/basin_masks_WOA18_map-1.png" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/basin_masks_WOA18_map-1.png" target="_blank">58359ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/figure/read_World_Ocean_Atlas_2018.Rmd/basin_masks_WOA18_map-1.png" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/basin_masks_WOA18_map-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-basin_masks_WOA18_map-2">
+Past versions of basin_masks_WOA18_map-2.png
+</button>
+</p>
+<div id="fig-basin_masks_WOA18_map-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/basin_masks_WOA18_map-2.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/64cfdd63fad86d46d969b022e347123d4816da7e/docs/figure/read_World_Ocean_Atlas_2018.Rmd/basin_masks_WOA18_map-2.png" target="_blank">64cfdd6</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/914159f632cef8539b161c49272d663f47c8e690/docs/figure/read_World_Ocean_Atlas_2018.Rmd/basin_masks_WOA18_map-2.png" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/basin_masks_WOA18_map-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-basin_masks_WOA18_map-3">
+Past versions of basin_masks_WOA18_map-3.png
+</button>
+</p>
+<div id="fig-basin_masks_WOA18_map-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/basin_masks_WOA18_map-3.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/64cfdd63fad86d46d969b022e347123d4816da7e/docs/figure/read_World_Ocean_Atlas_2018.Rmd/basin_masks_WOA18_map-3.png" target="_blank">64cfdd6</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/914159f632cef8539b161c49272d663f47c8e690/docs/figure/read_World_Ocean_Atlas_2018.Rmd/basin_masks_WOA18_map-3.png" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/basin_masks_WOA18_map-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-basin_masks_WOA18_map-4">
+Past versions of basin_masks_WOA18_map-4.png
+</button>
+</p>
+<div id="fig-basin_masks_WOA18_map-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/basin_masks_WOA18_map-4.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/64cfdd63fad86d46d969b022e347123d4816da7e/docs/figure/read_World_Ocean_Atlas_2018.Rmd/basin_masks_WOA18_map-4.png" target="_blank">64cfdd6</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/914159f632cef8539b161c49272d663f47c8e690/docs/figure/read_World_Ocean_Atlas_2018.Rmd/basin_masks_WOA18_map-4.png" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="global-section" class="section level2">
+<h2><span class="header-section-number">2.3</span> Global section</h2>
+<p>To plot sections from the North Atlantic south to the Southern Ocean, around Antarctica and back North across the Pacific Ocean, corresponding coordinates were subsetted from the basin mask and distances between coordinate grid points calculated.</p>
+<pre class="r"><code>section &lt;- basinmask_01 %&gt;%
+  select(lon, lat)
+
+# subset individual section parts
+Atl_NS &lt;- section %&gt;%
+  filter(
+    lon == params_global$lon_Atl_section,
+    lat &lt;= params_global$lat_section_N,
+    lat &gt;= params_global$lat_section_S
+  ) %&gt;%
+  arrange(-lat)
+
+Atl_SO &lt;- section %&gt;%
+  filter(lon &gt; params_global$lon_Atl_section,
+         lat == params_global$lat_section_S) %&gt;%
+  arrange(lon)
+
+Pac_SO &lt;- section %&gt;%
+  filter(lon &lt; params_global$lon_Pac_section,
+         lat == params_global$lat_section_S) %&gt;%
+  arrange(lon)
+
+Pac_SN &lt;- section %&gt;%
+  filter(
+    lon == params_global$lon_Pac_section,
+    lat &lt;= params_global$lat_section_N,
+    lat &gt;= params_global$lat_section_S
+  ) %&gt;%
+  arrange(lat)
+
+# join individual section parts
+section_global_coordinates &lt;- bind_rows(Atl_NS,
+                     Atl_SO,
+                     Pac_SO,
+                     Pac_SN)
+
+# convert to regular lon coordinates for distance calculation
+section_global_coordinates &lt;- section_global_coordinates %&gt;%
+  mutate(lon_180 = if_else(lon &gt; 180, lon - 360, lon))
+
+# calculate distance along section
+section_global_coordinates &lt;- section_global_coordinates %&gt;%
+  mutate(dist_int = distGeo(cbind(lon_180, lat)) / 1e6) %&gt;%
+  mutate(dist = cumsum(dist_int))
+
+section_global_coordinates &lt;- section_global_coordinates %&gt;%
+  select(lon, lat, dist) %&gt;% 
+  drop_na()
+
+rm(Atl_NS, Atl_SO, Pac_SN, Pac_SO, section)</code></pre>
+<pre class="r"><code>map +
+  geom_point(data = section_global_coordinates,
+             aes(lon, lat, col = dist)) +
+  scale_colour_viridis_b(name = &quot;Distance (Mm)&quot;)</code></pre>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/section_global_map-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-section_global_map-1">
+Past versions of section_global_map-1.png
+</button>
+</p>
+<div id="fig-section_global_map-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/section_global_map-1.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/64cfdd63fad86d46d969b022e347123d4816da7e/docs/figure/read_World_Ocean_Atlas_2018.Rmd/section_global_map-1.png" target="_blank">64cfdd6</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/914159f632cef8539b161c49272d663f47c8e690/docs/figure/read_World_Ocean_Atlas_2018.Rmd/section_global_map-1.png" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/section_global_map-1.png" target="_blank">58359ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/figure/read_World_Ocean_Atlas_2018.Rmd/section_global_map-1.png" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="write-files" class="section level2">
+<h2><span class="header-section-number">2.4</span> Write files</h2>
+<pre class="r"><code># basin mask
+basinmask_01 %&gt;%
+  write_csv(paste(path_files,
+                  &quot;basin_mask_WOA18.csv&quot;,
+                  sep = &quot;&quot;))
+# global section
+section_global_coordinates %&gt;%
+  write_csv(paste(path_files,
+                  &quot;section_global_coordinates.csv&quot;,
+                  sep = &quot;&quot;))
+
+# base map ggplot
+map %&gt;%
+  write_rds(paste(path_files,
+                  &quot;map_landmask_WOA18.rds&quot;,
+                  sep = &quot;&quot;))</code></pre>
+</div>
+</div>
+<div id="climatology-s-and-t" class="section level1">
+<h1><span class="header-section-number">3</span> Climatology S and T</h1>
+<p>Copied from the WOA FAQ website, the file naming conventions is:</p>
+<p>PREF_DDDD_VTTFFGG.EXT, where:</p>
+<ul>
+<li>PREF: prefix</li>
+<li>DDDD: decade</li>
+<li>V: variable</li>
+<li>TT: time period</li>
+<li>FF: field type</li>
+<li>GG: grid (5deg- 5°, 01- 1°, 04 - 1/4°)</li>
+<li>EXT: file extention</li>
+</ul>
+<p>Short description of two statistical fields in WOA</p>
+<ul>
+<li>Objectively analyzed climatologies are the objectively interpolated mean fields for oceanographic variables at standard - depth levels for the World Ocean.</li>
+<li>The statistical mean is the average of all unflagged interpolated values at each standard depth level for each variable - in each 1° square which contains at least one measurement for the given oceanographic variable.</li>
+</ul>
+<p>Here, we use</p>
+<ul>
+<li>Fields: objectively analyzed mean</li>
+<li>Decades: all decades</li>
+<li>Grid: 1 deg resolution</li>
+</ul>
+<p>According to the <a href="https://data.nodc.noaa.gov/woa/WOA18/DOC/woa18documentation.pdf" target="_blank">WOA18 documentation</a> document:</p>
+<p><em>What are the units for temperature and salinity in the WOA18?</em></p>
+<p><em>In situ temperatures used for WOA18 are not converted from their original scale, so there is a mix of IPTS-48, IPTS-68, and ITS-90 (and pre IPTS-48 temperatures). The differences between scales are small (on the order of 0.01°C) and should not have much effect on the climatological means, except, possibly at very deep depths. Values for salinity are on the Practical salinity scale (PSS-78). Pre-1978 salinity values converted from conductivity may have used a different salinity scale. Pre-conductivity salinities use the Knudsen method.</em></p>
+<div id="read-nc-files" class="section level2">
+<h2><span class="header-section-number">3.1</span> Read nc files</h2>
+<pre class="r"><code># temperature
+
+WOA18_temp &lt;- tidync(paste(
+  path_woa2018,
+  &quot;temperature/decav/1.00/woa18_decav_t00_01.nc&quot;,
+  sep = &quot;&quot;
+))
+
+WOA18_temp_tibble &lt;- WOA18_temp %&gt;% hyper_tibble()
+
+WOA18_temp_tibble &lt;- WOA18_temp_tibble  %&gt;%
+  select(temp = t_an, lon, lat, depth) %&gt;%
+  drop_na() %&gt;%
+  mutate(lon = if_else(lon &lt; 20, lon + 360, lon))
+
+# salinity
+
+WOA18_sal &lt;- tidync(paste(
+  path_woa2018,
+  &quot;salinity/decav/1.00/woa18_decav_s00_01.nc&quot;,
+  sep = &quot;&quot;
+))
+
+WOA18_sal_tibble &lt;- WOA18_sal %&gt;% hyper_tibble()
+
+WOA18_sal_tibble &lt;- WOA18_sal_tibble  %&gt;%
+  select(sal = s_an, lon, lat, depth) %&gt;%
+  drop_na() %&gt;%
+  mutate(lon = if_else(lon &lt; 20, lon + 360, lon))
+
+rm(WOA18_sal, WOA18_temp)</code></pre>
+</div>
+<div id="join-predictors" class="section level2">
+<h2><span class="header-section-number">3.2</span> Join predictors</h2>
+<pre class="r"><code>WOA18_sal_temp &lt;- full_join(WOA18_sal_tibble, WOA18_temp_tibble)
+rm(WOA18_sal_tibble, WOA18_temp_tibble)</code></pre>
+</div>
+<div id="apply-basin-mask" class="section level2">
+<h2><span class="header-section-number">3.3</span> Apply basin mask</h2>
+<pre class="r"><code># use only three basin to assign general basin mask
+# ie this is not specific to the MLR fitting
+
+basinmask_01 &lt;- basinmask_01 %&gt;% 
+  filter(MLR_basins == &quot;2&quot;) %&gt;% 
+  select(lat, lon, basin_AIP)
+
+# restrict predictor fields to basin mask grid
+
+WOA18_sal_temp &lt;- inner_join(WOA18_sal_temp, basinmask_01)</code></pre>
+</div>
+<div id="potential-temperature" class="section level2">
+<h2><span class="header-section-number">3.4</span> Potential temperature</h2>
+<p>Potential temperature is calculated as in input variable for the neutral density calculation.</p>
+<div id="calculation" class="section level3">
+<h3><span class="header-section-number">3.4.1</span> Calculation</h3>
+<pre class="r"><code>WOA18_sal_temp &lt;- WOA18_sal_temp %&gt;% 
+  mutate(THETA = swTheta(salinity = sal,
+                         temperature = temp,
+                         pressure = depth,
+                         referencePressure = 0,
+                         longitude = lon - 180,
+                         latitude = lat))</code></pre>
+</div>
+<div id="profile" class="section level3">
+<h3><span class="header-section-number">3.4.2</span> Profile</h3>
+<p>Example profile from North Atlantic Ocean.</p>
+<pre class="r"><code>WOA18_sal_temp %&gt;%
+  filter(lat == params_global$lat_Atl_profile,
+         lon == params_global$lon_Atl_section) %&gt;%
+  ggplot() +
+  geom_line(aes(temp, depth, col = &quot;insitu&quot;)) +
+  geom_point(aes(temp, depth, col = &quot;insitu&quot;)) +
+  geom_line(aes(THETA, depth, col = &quot;theta&quot;)) +
+  geom_point(aes(THETA, depth, col = &quot;theta&quot;)) +
+  scale_y_reverse() +
+  scale_color_brewer(palette = &quot;Dark2&quot;, name = &quot;Scale&quot;)</code></pre>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/WOA18_potential_temperature_profile-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-WOA18_potential_temperature_profile-1">
+Past versions of WOA18_potential_temperature_profile-1.png
+</button>
+</p>
+<div id="fig-WOA18_potential_temperature_profile-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/WOA18_potential_temperature_profile-1.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ae7aa2e6911d029b57891f4c76ec174ba41dc157/docs/figure/read_World_Ocean_Atlas_2018.Rmd/WOA18_potential_temperature_profile-1.png" target="_blank">ae7aa2e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/914159f632cef8539b161c49272d663f47c8e690/docs/figure/read_World_Ocean_Atlas_2018.Rmd/WOA18_potential_temperature_profile-1.png" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9c5d86d8ac2c4ec9fc9690d9fb31e9c95d90d138/docs/figure/read_World_Ocean_Atlas_2018.Rmd/WOA18_potential_temperature_profile-1.png" target="_blank">9c5d86d</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/WOA18_potential_temperature_profile-1.png" target="_blank">58359ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/figure/read_World_Ocean_Atlas_2018.Rmd/WOA18_potential_temperature_profile-1.png" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="section" class="section level3">
+<h3><span class="header-section-number">3.4.3</span> Section</h3>
+<pre class="r"><code>p_section_global(
+  df = WOA18_sal_temp,
+  var = &quot;THETA&quot;)</code></pre>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/WOA18_pot_temperature_section-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-WOA18_pot_temperature_section-1">
+Past versions of WOA18_pot_temperature_section-1.png
+</button>
+</p>
+<div id="fig-WOA18_pot_temperature_section-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/WOA18_pot_temperature_section-1.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/914159f632cef8539b161c49272d663f47c8e690/docs/figure/read_World_Ocean_Atlas_2018.Rmd/WOA18_pot_temperature_section-1.png" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/WOA18_pot_temperature_section-1.png" target="_blank">58359ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/figure/read_World_Ocean_Atlas_2018.Rmd/WOA18_pot_temperature_section-1.png" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="neutral-density" class="section level2">
+<h2><span class="header-section-number">3.5</span> Neutral density</h2>
+<p>Neutral density gamma was calculated with a Python script provided by Serazin et al (2011), which performs a polynomial approximation of the original gamma calculation.</p>
+<div id="calculation-1" class="section level3">
+<h3><span class="header-section-number">3.5.1</span> Calculation</h3>
+<pre class="r"><code># calculate pressure from depth
+
+WOA18_sal_temp &lt;- WOA18_sal_temp %&gt;%
+  mutate(CTDPRS = gsw_p_from_z(-depth,
+                               lat))
+# rename variables according to python script
+
+WOA18_sal_temp_gamma_prep &lt;- WOA18_sal_temp %&gt;%
+  rename(LATITUDE = lat,
+         LONGITUDE = lon,
+         SALNTY = sal)
+
+# load python scripts
+
+source_python(paste(
+  path_functions,
+  &quot;python_scripts/Gamma_GLODAP_python.py&quot;,
+  sep = &quot;&quot;
+))
+
+# calculate gamma
+
+WOA18_sal_temp_gamma_calc &lt;-
+  calculate_gamma(WOA18_sal_temp_gamma_prep)
+
+# reverse variable naming
+
+WOA18_sal_temp &lt;- WOA18_sal_temp_gamma_calc %&gt;%
+  select(-c(CTDPRS, THETA)) %&gt;%
+  rename(
+    lat = LATITUDE,
+    lon = LONGITUDE,
+    sal = SALNTY,
+    gamma  = GAMMA
+  )
+
+WOA18_sal_temp &lt;- as_tibble(WOA18_sal_temp)
+
+rm(WOA18_sal_temp_gamma_calc, WOA18_sal_temp_gamma_prep)</code></pre>
+</div>
+</div>
+<div id="write-file" class="section level2">
+<h2><span class="header-section-number">3.6</span> Write file</h2>
+<pre class="r"><code>WOA18_sal_temp %&gt;%
+  write_csv(paste(path_preprocessing,
+                  &quot;WOA18_sal_temp.csv&quot;,
+                  sep = &quot;&quot;))</code></pre>
+</div>
+<div id="temperature-plots" class="section level2">
+<h2><span class="header-section-number">3.7</span> Temperature plots</h2>
+<p>Below, following subsets of the climatologies are plotted for all relevant parameters:</p>
+<ul>
+<li>Horizontal planes at 0, 150, 500, 2000m</li>
+<li>Global section as defined above and indicated as white lines in maps.</li>
+</ul>
+<div id="surface-map" class="section level3">
+<h3><span class="header-section-number">3.7.1</span> Surface map</h3>
+<pre class="r"><code>p_map_climatology(
+  df = WOA18_sal_temp,
+  var = &quot;temp&quot;)</code></pre>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/temperature_surface_WOA18_map-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-temperature_surface_WOA18_map-1">
+Past versions of temperature_surface_WOA18_map-1.png
+</button>
+</p>
+<div id="fig-temperature_surface_WOA18_map-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/temperature_surface_WOA18_map-1.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/cc07d29f6212a86a55d2cd758aeda634558ad930/docs/figure/read_World_Ocean_Atlas_2018.Rmd/temperature_surface_WOA18_map-1.png" target="_blank">cc07d29</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ae7aa2e6911d029b57891f4c76ec174ba41dc157/docs/figure/read_World_Ocean_Atlas_2018.Rmd/temperature_surface_WOA18_map-1.png" target="_blank">ae7aa2e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/914159f632cef8539b161c49272d663f47c8e690/docs/figure/read_World_Ocean_Atlas_2018.Rmd/temperature_surface_WOA18_map-1.png" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9c5d86d8ac2c4ec9fc9690d9fb31e9c95d90d138/docs/figure/read_World_Ocean_Atlas_2018.Rmd/temperature_surface_WOA18_map-1.png" target="_blank">9c5d86d</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/temperature_surface_WOA18_map-1.png" target="_blank">58359ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/figure/read_World_Ocean_Atlas_2018.Rmd/temperature_surface_WOA18_map-1.png" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="section-1" class="section level3">
+<h3><span class="header-section-number">3.7.2</span> Section</h3>
+<pre class="r"><code>p_section_global(
+  df = WOA18_sal_temp,
+  var = &quot;temp&quot;)</code></pre>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/temperature_sections_WOA18-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-temperature_sections_WOA18-1">
+Past versions of temperature_sections_WOA18-1.png
+</button>
+</p>
+<div id="fig-temperature_sections_WOA18-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/temperature_sections_WOA18-1.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/914159f632cef8539b161c49272d663f47c8e690/docs/figure/read_World_Ocean_Atlas_2018.Rmd/temperature_sections_WOA18-1.png" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9c5d86d8ac2c4ec9fc9690d9fb31e9c95d90d138/docs/figure/read_World_Ocean_Atlas_2018.Rmd/temperature_sections_WOA18-1.png" target="_blank">9c5d86d</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/temperature_sections_WOA18-1.png" target="_blank">58359ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/figure/read_World_Ocean_Atlas_2018.Rmd/temperature_sections_WOA18-1.png" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="salinity-plots" class="section level2">
+<h2><span class="header-section-number">3.8</span> Salinity plots</h2>
+<div id="surface-map-1" class="section level3">
+<h3><span class="header-section-number">3.8.1</span> Surface map</h3>
+<pre class="r"><code>p_map_climatology(
+  df = WOA18_sal_temp,
+  var = &quot;sal&quot;)</code></pre>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/salinity_surface_WOA18_map-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-salinity_surface_WOA18_map-1">
+Past versions of salinity_surface_WOA18_map-1.png
+</button>
+</p>
+<div id="fig-salinity_surface_WOA18_map-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/salinity_surface_WOA18_map-1.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/cc07d29f6212a86a55d2cd758aeda634558ad930/docs/figure/read_World_Ocean_Atlas_2018.Rmd/salinity_surface_WOA18_map-1.png" target="_blank">cc07d29</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ae7aa2e6911d029b57891f4c76ec174ba41dc157/docs/figure/read_World_Ocean_Atlas_2018.Rmd/salinity_surface_WOA18_map-1.png" target="_blank">ae7aa2e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/914159f632cef8539b161c49272d663f47c8e690/docs/figure/read_World_Ocean_Atlas_2018.Rmd/salinity_surface_WOA18_map-1.png" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/salinity_surface_WOA18_map-1.png" target="_blank">58359ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/figure/read_World_Ocean_Atlas_2018.Rmd/salinity_surface_WOA18_map-1.png" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="section-2" class="section level3">
+<h3><span class="header-section-number">3.8.2</span> Section</h3>
+<pre class="r"><code>p_section_global(
+  df = WOA18_sal_temp,
+  var = &quot;sal&quot;)</code></pre>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/salinity_sections_WOA18-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-salinity_sections_WOA18-1">
+Past versions of salinity_sections_WOA18-1.png
+</button>
+</p>
+<div id="fig-salinity_sections_WOA18-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/salinity_sections_WOA18-1.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/914159f632cef8539b161c49272d663f47c8e690/docs/figure/read_World_Ocean_Atlas_2018.Rmd/salinity_sections_WOA18-1.png" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/salinity_sections_WOA18-1.png" target="_blank">58359ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/figure/read_World_Ocean_Atlas_2018.Rmd/salinity_sections_WOA18-1.png" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div id="neutral-density-plots" class="section level2">
+<h2><span class="header-section-number">3.9</span> Neutral density plots</h2>
+<div id="surface-map-2" class="section level3">
+<h3><span class="header-section-number">3.9.1</span> Surface map</h3>
+<pre class="r"><code>p_map_climatology(
+  df = WOA18_sal_temp,
+  var = &quot;gamma&quot;)</code></pre>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/neutral_density_surface_WOA18_map-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-neutral_density_surface_WOA18_map-1">
+Past versions of neutral_density_surface_WOA18_map-1.png
+</button>
+</p>
+<div id="fig-neutral_density_surface_WOA18_map-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/neutral_density_surface_WOA18_map-1.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/cc07d29f6212a86a55d2cd758aeda634558ad930/docs/figure/read_World_Ocean_Atlas_2018.Rmd/neutral_density_surface_WOA18_map-1.png" target="_blank">cc07d29</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/neutral_density_surface_WOA18_map-1.png" target="_blank">58359ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/figure/read_World_Ocean_Atlas_2018.Rmd/neutral_density_surface_WOA18_map-1.png" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="section-3" class="section level3">
+<h3><span class="header-section-number">3.9.2</span> Section</h3>
+<pre class="r"><code>p_section_global(
+  df = WOA18_sal_temp,
+  var = &quot;gamma&quot;)</code></pre>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/neutral_density_sections_WOA18-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-neutral_density_sections_WOA18-1">
+Past versions of neutral_density_sections_WOA18-1.png
+</button>
+</p>
+<div id="fig-neutral_density_sections_WOA18-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/neutral_density_sections_WOA18-1.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/cc07d29f6212a86a55d2cd758aeda634558ad930/docs/figure/read_World_Ocean_Atlas_2018.Rmd/neutral_density_sections_WOA18-1.png" target="_blank">cc07d29</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/neutral_density_sections_WOA18-1.png" target="_blank">58359ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/figure/read_World_Ocean_Atlas_2018.Rmd/neutral_density_sections_WOA18-1.png" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="climatology-nuts-and-o2" class="section level1">
+<h1><span class="header-section-number">4</span> Climatology Nuts and O2</h1>
+<div id="read-nc-files-1" class="section level2">
+<h2><span class="header-section-number">4.1</span> Read nc files</h2>
+<pre class="r"><code># Keep grid cells of WOA18 sal temp data set, to join with
+WOA18_nuts_O2 &lt;-
+  WOA18_sal_temp %&gt;%
+  select(lon, lat, depth)
+rm(WOA18_sal_temp)
+
+# create file list
+file_list &lt;- c(
+  paste(path_woa2018, &quot;phosphate/all/1.00/woa18_all_p00_01.nc&quot;, sep = &quot;&quot;),
+  paste(path_woa2018, &quot;nitrate/all/1.00/woa18_all_n00_01.nc&quot;, sep = &quot;&quot;),
+  paste(path_woa2018, &quot;silicate/all/1.00/woa18_all_i00_01.nc&quot;, sep = &quot;&quot;),
+  paste(path_woa2018, &quot;oxygen/all/1.00/woa18_all_o00_01.nc&quot;, sep = &quot;&quot;),
+  paste(path_woa2018, &quot;AOU/all/1.00/woa18_all_A00_01.nc&quot;, sep = &quot;&quot;)
+)
+
+# file &lt;- file_list[1]
+
+# read, plot and join data sets while looping over file list
+for (file in file_list) {
+
+  # open file
+  WOA18 &lt;- tidync(file)
+  WOA18_tibble &lt;- WOA18 %&gt;% hyper_tibble()
+  
+  # extract parameter name
+  parameter &lt;- str_split(file, pattern = &quot;00_&quot;, simplify = TRUE)[1]
+  parameter &lt;- str_split(parameter, pattern = &quot;all_&quot;, simplify = TRUE)[2]
+  parameter &lt;- paste(parameter, &quot;_an&quot;, sep = &quot;&quot;)
+  print(file)
+  
+  WOA18_tibble &lt;- WOA18_tibble  %&gt;%
+    select(all_of(parameter),
+           lon, lat, depth) %&gt;%
+    mutate(lon = if_else(lon &lt; 20, lon + 360, lon))
+  
+  # apply general basin mask
+  WOA18_tibble &lt;- inner_join(WOA18_tibble, basinmask_01)
+  
+  # join with previous WOA data and keep only rows in existing data frame
+  # this is equal to applying the basinmask
+  WOA18_nuts_O2 &lt;- left_join(
+    x = WOA18_nuts_O2,
+    y = WOA18_tibble)
+
+  # plot maps
+  print(
+    p_map_climatology(
+      df = WOA18_nuts_O2,
+      var = parameter)
+    )
+  
+  # plot sections
+  print(p_section_global(
+    df = WOA18_nuts_O2,
+    var = parameter
+  ))
+  
+}</code></pre>
+<pre><code>[1] &quot;/nfs/kryo/work/updata/woa2018/phosphate/all/1.00/woa18_all_p00_01.nc&quot;</code></pre>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_WOA18_nuts_O2_files-1">
+Past versions of read_WOA18_nuts_O2_files-1.png
+</button>
+</p>
+<div id="fig-read_WOA18_nuts_O2_files-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-1.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/cc07d29f6212a86a55d2cd758aeda634558ad930/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-1.png" target="_blank">cc07d29</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ae7aa2e6911d029b57891f4c76ec174ba41dc157/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-1.png" target="_blank">ae7aa2e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/914159f632cef8539b161c49272d663f47c8e690/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-1.png" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/825309ecba6f9e1ee01dda2f1fc6269c5a3bb71b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-1.png" target="_blank">825309e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-1.png" target="_blank">58359ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-1.png" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_WOA18_nuts_O2_files-2">
+Past versions of read_WOA18_nuts_O2_files-2.png
+</button>
+</p>
+<div id="fig-read_WOA18_nuts_O2_files-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-2.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/914159f632cef8539b161c49272d663f47c8e690/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-2.png" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-2.png" target="_blank">58359ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-2.png" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;/nfs/kryo/work/updata/woa2018/nitrate/all/1.00/woa18_all_n00_01.nc&quot;</code></pre>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_WOA18_nuts_O2_files-3">
+Past versions of read_WOA18_nuts_O2_files-3.png
+</button>
+</p>
+<div id="fig-read_WOA18_nuts_O2_files-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-3.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/cc07d29f6212a86a55d2cd758aeda634558ad930/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-3.png" target="_blank">cc07d29</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ae7aa2e6911d029b57891f4c76ec174ba41dc157/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-3.png" target="_blank">ae7aa2e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/914159f632cef8539b161c49272d663f47c8e690/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-3.png" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/825309ecba6f9e1ee01dda2f1fc6269c5a3bb71b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-3.png" target="_blank">825309e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-3.png" target="_blank">58359ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-3.png" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_WOA18_nuts_O2_files-4">
+Past versions of read_WOA18_nuts_O2_files-4.png
+</button>
+</p>
+<div id="fig-read_WOA18_nuts_O2_files-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-4.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/914159f632cef8539b161c49272d663f47c8e690/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-4.png" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-4.png" target="_blank">58359ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-4.png" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;/nfs/kryo/work/updata/woa2018/silicate/all/1.00/woa18_all_i00_01.nc&quot;</code></pre>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_WOA18_nuts_O2_files-5">
+Past versions of read_WOA18_nuts_O2_files-5.png
+</button>
+</p>
+<div id="fig-read_WOA18_nuts_O2_files-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-5.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/cc07d29f6212a86a55d2cd758aeda634558ad930/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-5.png" target="_blank">cc07d29</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ae7aa2e6911d029b57891f4c76ec174ba41dc157/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-5.png" target="_blank">ae7aa2e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/914159f632cef8539b161c49272d663f47c8e690/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-5.png" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/825309ecba6f9e1ee01dda2f1fc6269c5a3bb71b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-5.png" target="_blank">825309e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-5.png" target="_blank">58359ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-5.png" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_WOA18_nuts_O2_files-6">
+Past versions of read_WOA18_nuts_O2_files-6.png
+</button>
+</p>
+<div id="fig-read_WOA18_nuts_O2_files-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-6.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/914159f632cef8539b161c49272d663f47c8e690/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-6.png" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-6.png" target="_blank">58359ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-6.png" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;/nfs/kryo/work/updata/woa2018/oxygen/all/1.00/woa18_all_o00_01.nc&quot;</code></pre>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_WOA18_nuts_O2_files-7">
+Past versions of read_WOA18_nuts_O2_files-7.png
+</button>
+</p>
+<div id="fig-read_WOA18_nuts_O2_files-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-7.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/cc07d29f6212a86a55d2cd758aeda634558ad930/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-7.png" target="_blank">cc07d29</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ae7aa2e6911d029b57891f4c76ec174ba41dc157/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-7.png" target="_blank">ae7aa2e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/914159f632cef8539b161c49272d663f47c8e690/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-7.png" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/825309ecba6f9e1ee01dda2f1fc6269c5a3bb71b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-7.png" target="_blank">825309e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-7.png" target="_blank">58359ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-7.png" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_WOA18_nuts_O2_files-8">
+Past versions of read_WOA18_nuts_O2_files-8.png
+</button>
+</p>
+<div id="fig-read_WOA18_nuts_O2_files-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-8.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/914159f632cef8539b161c49272d663f47c8e690/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-8.png" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-8.png" target="_blank">58359ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-8.png" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[1] &quot;/nfs/kryo/work/updata/woa2018/AOU/all/1.00/woa18_all_A00_01.nc&quot;</code></pre>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_WOA18_nuts_O2_files-9">
+Past versions of read_WOA18_nuts_O2_files-9.png
+</button>
+</p>
+<div id="fig-read_WOA18_nuts_O2_files-9" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-9.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/cc07d29f6212a86a55d2cd758aeda634558ad930/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-9.png" target="_blank">cc07d29</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ae7aa2e6911d029b57891f4c76ec174ba41dc157/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-9.png" target="_blank">ae7aa2e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/914159f632cef8539b161c49272d663f47c8e690/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-9.png" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/825309ecba6f9e1ee01dda2f1fc6269c5a3bb71b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-9.png" target="_blank">825309e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-9.png" target="_blank">58359ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-9.png" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-10.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_WOA18_nuts_O2_files-10">
+Past versions of read_WOA18_nuts_O2_files-10.png
+</button>
+</p>
+<div id="fig-read_WOA18_nuts_O2_files-10" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fd1a2c9a64a501eea64172e3fcf8c0d7a3207c4c/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-10.png" target="_blank">fd1a2c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/914159f632cef8539b161c49272d663f47c8e690/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-10.png" target="_blank">914159f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58359accf6d8109f21ea93a79926ecd1e9a8ae7b/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-10.png" target="_blank">58359ac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/92e10aa5a9b68bb8ea5702eff7dc92d0040a7fbd/docs/figure/read_World_Ocean_Atlas_2018.Rmd/read_WOA18_nuts_O2_files-10.png" target="_blank">92e10aa</a>
+</td>
+<td>
+Jens Müller
+</td>
+<td>
+2020-11-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="write-file-1" class="section level2">
+<h2><span class="header-section-number">4.2</span> Write file</h2>
+<pre class="r"><code>WOA18_nuts_O2 %&gt;%
+  write_csv(paste(path_preprocessing,
+                  &quot;WOA18_nuts_O2.csv&quot;,
+                  sep = &quot;&quot;))</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.0.3 (2020-10-10)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: openSUSE Leap 15.1
+
+Matrix products: default
+BLAS:   /usr/local/R-4.0.3/lib64/R/lib/libRblas.so
+LAPACK: /usr/local/R-4.0.3/lib64/R/lib/libRlapack.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] patchwork_1.1.0  geosphere_1.5-10 oce_1.2-0        gsw_1.0-5       
+ [5] testthat_3.0.0   reticulate_1.18  tidync_0.2.4     forcats_0.5.0   
+ [9] stringr_1.4.0    dplyr_1.0.2      purrr_0.3.4      readr_1.4.0     
+[13] tidyr_1.1.2      tibble_3.0.4     ggplot2_3.3.2    tidyverse_1.3.0 
+[17] workflowr_1.6.2 
+
+loaded via a namespace (and not attached):
+ [1] httr_1.4.2         viridisLite_0.3.0  jsonlite_1.7.1     modelr_0.1.8      
+ [5] assertthat_0.2.1   sp_1.4-4           blob_1.2.1         cellranger_1.1.0  
+ [9] yaml_2.2.1         pillar_1.4.7       backports_1.1.10   lattice_0.20-41   
+[13] glue_1.4.2         digest_0.6.27      RColorBrewer_1.1-2 promises_1.1.1    
+[17] rvest_0.3.6        colorspace_2.0-0   htmltools_0.5.0    httpuv_1.5.4      
+[21] Matrix_1.2-18      pkgconfig_2.0.3    broom_0.7.2        haven_2.3.1       
+[25] scales_1.1.1       whisker_0.4        later_1.1.0.1      git2r_0.27.1      
+[29] generics_0.0.2     farver_2.0.3       ellipsis_0.3.1     withr_2.3.0       
+[33] cli_2.2.0          magrittr_2.0.1     crayon_1.3.4       readxl_1.3.1      
+[37] evaluate_0.14      fs_1.5.0           ncdf4_1.17         fansi_0.4.1       
+[41] xml2_1.3.2         tools_4.0.3        hms_0.5.3          lifecycle_0.2.0   
+[45] munsell_0.5.0      reprex_0.3.0       isoband_0.2.2      compiler_4.0.3    
+[49] RNetCDF_2.4-2      rlang_0.4.9        grid_4.0.3         rstudioapi_0.13   
+[53] rappdirs_0.3.1     labeling_0.4.2     rmarkdown_2.5      gtable_0.3.0      
+[57] DBI_1.1.0          R6_2.5.0           ncmeta_0.3.0       lubridate_1.7.9   
+[61] knitr_1.30         rprojroot_2.0.2    stringi_1.5.3      Rcpp_1.0.5        
+[65] vctrs_0.3.5        dbplyr_1.4.4       tidyselect_1.1.0   xfun_0.18         </code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
