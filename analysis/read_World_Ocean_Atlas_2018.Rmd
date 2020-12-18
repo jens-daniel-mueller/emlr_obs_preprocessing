@@ -459,6 +459,15 @@ WOA18_sal_temp <- inner_join(WOA18_sal_temp, basinmask_01)
 
 ```
 
+## Subset depth levels
+
+```{r subset_depth_levels}
+
+WOA18_sal_temp <- WOA18_sal_temp %>% 
+  filter(depth %in% params_global$depth_levels_33)
+
+```
+
 
 ## Potential temperature
 
@@ -648,6 +657,8 @@ p_section_global(
 
 ## Read nc files
 
+Data are read-in looping over all relevant files, thereby reproducing the same subsetting steps as applied above to the salintity and temperature fields.
+
 ```{r read_WOA18_nuts_O2_files}
 
 # Keep grid cells of WOA18 sal temp data set, to join with
@@ -687,6 +698,11 @@ for (file in file_list) {
   
   # apply general basin mask
   WOA18_tibble <- inner_join(WOA18_tibble, basinmask_01)
+  
+  # subset depth levels
+  WOA18_tibble <- WOA18_tibble %>%
+    filter(depth %in% params_global$depth_levels_33)
+  
   
   # join with previous WOA data and keep only rows in existing data frame
   # this is equal to applying the basinmask
