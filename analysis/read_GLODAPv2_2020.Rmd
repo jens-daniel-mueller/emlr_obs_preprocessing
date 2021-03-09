@@ -246,7 +246,7 @@ source("/UP_home/jenmueller/Projects/emlr_cant/observations/emlr_obs_v_XXX/code/
 GLODAP_Can_B <- GLODAP %>%
   mutate(lon = if_else(lon > 180, lon - 360, lon)) %>%
   arrange(year) %>% 
-  select(row_number, date, lat, lon, depth, basin_AIP,
+  select(row_number, year, date, lat, lon, depth, basin_AIP,
          temp, sal, oxygen,
          talk, tco2, nitrate, phosphate, silicate)
 
