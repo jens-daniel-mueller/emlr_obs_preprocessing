@@ -12,13 +12,13 @@ Background information about several ways for sharing code across analysis in th
 
 ### Using child documents
 
-Code chunks that are used across several .Rmd files are located in `/nfs/kryo/work/updata/emlr_cant/utilities`. Following child documents are available:
+Code chunks that are used across several .Rmd files are located in `/nfs/kryo/work/jenmueller/emlr_cant/utilities`. Following child documents are available:
 
 - `setup.Rmd`: Defines global options, loads libraries, functions and auxillary files. To run .Rmd files manually, the code in this child document must be executed first (Click "Run all", or Strg+Alt+R). This refers only to documents downstream of read_World_Ocean_Atlas_2018.Rmd, because this is where most auxillary files are created.
 
 ### Using functions
 
-Functions are stored in .R files located under `/nfs/kryo/work/updata/emlr_cant/utilities/functions`. Here, it is distinguished between:
+Functions are stored in .R files located under `/nfs/kryo/work/jenmueller/emlr_cant/utilities/functions`. Here, it is distinguished between:
 
 `biogeochemical_functions.R` named with prefix b_  
 

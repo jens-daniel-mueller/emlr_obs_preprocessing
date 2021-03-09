@@ -125,11 +125,22 @@ GLODAP_obs_grid <- GLODAP %>%
 
 ```
 
-## Write file
+## Add row number
+
+```{r add_row_number}
+
+GLODAP <- GLODAP  %>%  
+  mutate(row_number = row_number()) %>% 
+  relocate(row_number)
+
+```
+
+## Write GLODAP file
  
 ```{r write_clean_data_files}
 
-GLODAP  %>%  write_csv(paste(path_preprocessing,
+GLODAP  %>%  
+  write_csv(paste(path_preprocessing,
                              "GLODAPv2.2020_preprocessed.csv",
                              sep = ""))
 
@@ -222,4 +233,133 @@ map +
                        direction = -1)
 
 ```
+
+
+# CANYON-B comparison
+
+## Comparison
+
+```{r CANYON-B, fig.asp=0.4}
+
+source("/UP_home/jenmueller/Projects/emlr_cant/observations/emlr_obs_v_XXX/code/CANYON-B-master/CANYONB.R")
+
+GLODAP_Can_B <- GLODAP %>%
+  mutate(lon = if_else(lon > 180, lon - 360, lon)) %>%
+  arrange(year) %>% 
+  select(row_number, date, lat, lon, depth, basin_AIP,
+         temp, sal, oxygen,
+         talk, tco2, nitrate, phosphate, silicate)
+
+# filter rows with essential variables for Canyon-B
+GLODAP_Can_B <- GLODAP_Can_B %>%
+  filter(across(c(lat, lon, depth,
+                  temp, sal, oxygen), ~ !is.na(.x)))
+
+GLODAP_Can_B <- GLODAP_Can_B %>%
+  mutate(as_tibble(
+    CANYONB(
+      date = paste0(as.character(date), " 12:00"),
+      lat = lat,
+      lon = lon,
+      pres = depth,
+      temp = temp,
+      psal = sal,
+      doxy = oxygen,
+      param = c("AT", "CT", "NO3", "PO4", "SiOH4")
+    )
+  ))
+
+GLODAP_Can_B <- GLODAP_Can_B %>%
+  select(-ends_with(c("_ci", "_cim", "_cin", "_cii")))
+
+
+GLODAP_Can_B <- GLODAP_Can_B %>%
+  rename(
+    "talk_CANYONB" = "AT",
+    "tco2_CANYONB" = "CT",
+    "nitrate_CANYONB" = "NO3",
+    "phosphate_CANYONB" = "PO4",
+    "silicate_CANYONB" = "SiOH4"
+  )
+
+
+variables <- c("talk", "tco2", "nitrate", "phosphate", "silicate")
+
+for (i_variable in variables) {
+  # i_variable <- variables[1]
+  
+  # calculate equal axis limits and binwidth
+  axis_lims <- GLODAP_Can_B %>%
+    summarise(max_value = max(c(max(
+      !!sym(i_variable)
+    ),
+    max(!!sym(
+      paste0(i_variable, "_CANYONB")
+    )))),
+    min_value = min(c(min(
+      !!sym(i_variable)
+    ),
+    min(!!sym(
+      paste0(i_variable, "_CANYONB")
+    )))))
+  
+  binwidth_value <- (axis_lims$max_value - axis_lims$min_value) / 40
+  axis_lims <- c(axis_lims$min_value, axis_lims$max_value)
+  
+  print(
+    ggplot(GLODAP_Can_B, aes(
+      x = !!sym(i_variable),
+      y = !!sym(paste0(i_variable, "_CANYONB"))
+    )) +
+      geom_bin2d(binwidth = binwidth_value) +
+      scale_fill_viridis_c(trans = "log10") +
+      geom_abline(slope = 1, col = 'red') +
+      coord_equal(xlim = axis_lims,
+                  ylim = axis_lims) +
+      facet_wrap( ~ basin_AIP) +
+      labs(title = "All years")
+  ) 
+  
+  
+  for (i_year in unique(GLODAP_Can_B$year)) {
+    # i_year <- 2017
+    
+    print(
+      ggplot(
+        GLODAP_Can_B %>% filter(year == i_year),
+        aes(x = !!sym(i_variable),
+            y = !!sym(paste0(
+              i_variable, "_CANYONB"
+            )))
+      ) +
+        geom_bin2d(binwidth = binwidth_value) +
+        scale_fill_viridis_c(trans = "log10") +
+        geom_abline(slope = 1, col = 'red') +
+        coord_equal(xlim = axis_lims,
+                    ylim = axis_lims) +
+        facet_wrap( ~ basin_AIP) +
+        labs(title = paste("Year:", i_year))
+    )
+  }
+  
+}
+
+
+
+```
+
+## Write Canyon-B file
+ 
+```{r write_Canyon-B_data_file}
+
+GLODAP_Can_B %>% 
+  select(row_number,
+         talk_CANYONB, tco2_CANYONB,
+         nitrate_CANYONB, phosphate_CANYONB, silicate_CANYONB) %>% 
+  write_csv(paste(path_preprocessing,
+                             "GLODAPv2.2020_Canyon-B.csv",
+                             sep = ""))
+
+```
+
 

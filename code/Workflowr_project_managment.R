@@ -5,7 +5,7 @@
 
 # commit regular changes (locally) and rebuild site
 # this takes only changed files into account
-wflow_publish(all = TRUE, message = "final cleaning and added zonal mean section")
+wflow_publish(all = TRUE, message = "created Canyon-B data set")
 
 # commit changes including _site.yml (locally) and rebuild site in the specified order
 # you can also run this code with only some of the files. In this case remove the rebuild=TRUE command
@@ -23,7 +23,7 @@ wflow_publish(here::here(
     "read_CO2_atm.Rmd"
   )
 ),
-message = "rebuild final cleaned version",
+message = "subsetted WOA depth levels to 33 standard depths",
 republish = TRUE)
 
 # Push latest version to GitHub
