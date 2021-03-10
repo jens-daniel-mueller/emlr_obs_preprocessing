@@ -248,7 +248,8 @@ GLODAP_Can_B <- GLODAP %>%
   arrange(year) %>% 
   select(row_number, year, date, lat, lon, depth, basin_AIP,
          temp, sal, oxygen,
-         talk, tco2, nitrate, phosphate, silicate)
+         talk, tco2, nitrate, phosphate, silicate) %>% 
+  filter(year == 2015)
 
 # filter rows with essential variables for Canyon-B
 GLODAP_Can_B <- GLODAP_Can_B %>%
@@ -290,6 +291,7 @@ for (i_variable in variables) {
   
   # calculate equal axis limits and binwidth
   axis_lims <- GLODAP_Can_B %>%
+    drop_na() %>% 
     summarise(max_value = max(c(max(
       !!sym(i_variable)
     ),
@@ -303,7 +305,7 @@ for (i_variable in variables) {
       paste0(i_variable, "_CANYONB")
     )))))
   
-  binwidth_value <- (axis_lims$max_value - axis_lims$min_value) / 40
+  binwidth_value <- (axis_lims$max_value - axis_lims$min_value) / 60
   axis_lims <- c(axis_lims$min_value, axis_lims$max_value)
   
   print(
@@ -332,7 +334,7 @@ for (i_variable in variables) {
               i_variable, "_CANYONB"
             )))
       ) +
-        geom_bin2d(binwidth = binwidth_value) +
+        geom_bin2d(inwidth = binwidth_value) +
         scale_fill_viridis_c(trans = "log10") +
         geom_abline(slope = 1, col = 'red') +
         coord_equal(xlim = axis_lims,
