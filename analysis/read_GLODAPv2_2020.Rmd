@@ -248,8 +248,7 @@ GLODAP_Can_B <- GLODAP %>%
   arrange(year) %>% 
   select(row_number, year, date, lat, lon, depth, basin_AIP,
          temp, sal, oxygen,
-         talk, tco2, nitrate, phosphate, silicate) %>% 
-  filter(year == 2015)
+         talk, tco2, nitrate, phosphate, silicate)
 
 # filter rows with essential variables for Canyon-B
 GLODAP_Can_B <- GLODAP_Can_B %>%
@@ -334,7 +333,7 @@ for (i_variable in variables) {
               i_variable, "_CANYONB"
             )))
       ) +
-        geom_bin2d(inwidth = binwidth_value) +
+        geom_bin2d(binwidth = binwidth_value) +
         scale_fill_viridis_c(trans = "log10") +
         geom_abline(slope = 1, col = 'red') +
         coord_equal(xlim = axis_lims,
