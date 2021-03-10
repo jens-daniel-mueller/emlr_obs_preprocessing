@@ -235,13 +235,13 @@ map +
 ```
 
 
-# CANYON-B comparison
+# CANYON-B
 
-## Comparison
+## Comparison to GLODAP
 
 ```{r CANYON-B, fig.asp=0.4}
 
-source("/UP_home/jenmueller/Projects/emlr_cant/observations/emlr_obs_v_XXX/code/CANYON-B-master/CANYONB.R")
+source("/net/kryo/work/uptools/co2_calculation/CANYON-B/CANYONB.R")
 
 GLODAP_Can_B <- GLODAP %>%
   mutate(lon = if_else(lon > 180, lon - 360, lon)) %>%
