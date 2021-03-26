@@ -364,3 +364,129 @@ GLODAP_Can_B %>%
 ```
 
 
+
+# CONTENT
+
+## Comparison to GLODAP
+
+```{r CONTENT, fig.asp=0.4, eval=FALSE}
+
+source("/net/kryo/work/uptools/co2_calculation/CONTENT/CO2CONTENT.R")
+
+GLODAP_Cont <- GLODAP %>%
+  mutate(lon = if_else(lon > 180, lon - 360, lon)) %>%
+  arrange(year) %>% 
+  select(row_number, year, date, lat, lon, depth, basin_AIP,
+         temp, sal, oxygen,
+         talk, tco2) %>% 
+  filter(year == 2015)
+
+# filter rows with essential variables for Canyon-B
+GLODAP_Cont <- GLODAP_Cont %>%
+  filter(across(c(lat, lon, depth,
+                  temp, sal, oxygen), ~ !is.na(.x)))
+
+GLODAP_Cont <- GLODAP_Cont %>%
+  mutate(as_tibble(
+    CO2CONTENT(
+      date = paste0(as.character(date), " 12:00"),
+      lat = lat,
+      lon = lon,
+      pres = depth,
+      temp = temp,
+      psal = sal,
+      doxy = oxygen,
+      param = c("AT", "CT")
+    )
+  ))
+
+GLODAP_Cont <- GLODAP_Cont %>%
+  select(-ends_with(c("_ci", "_cim", "_cin", "_cii")))
+
+
+GLODAP_Cont <- GLODAP_Cont %>%
+  rename(
+    "talk_CANYONB" = "AT",
+    "tco2_CANYONB" = "CT"
+  )
+
+
+variables <- c("talk", "tco2")
+
+for (i_variable in variables) {
+  # i_variable <- variables[1]
+  
+  # calculate equal axis limits and binwidth
+  axis_lims <- GLODAP_Cont %>%
+    drop_na() %>% 
+    summarise(max_value = max(c(max(
+      !!sym(i_variable)
+    ),
+    max(!!sym(
+      paste0(i_variable, "_CANYONB")
+    )))),
+    min_value = min(c(min(
+      !!sym(i_variable)
+    ),
+    min(!!sym(
+      paste0(i_variable, "_CANYONB")
+    )))))
+  
+  binwidth_value <- (axis_lims$max_value - axis_lims$min_value) / 60
+  axis_lims <- c(axis_lims$min_value, axis_lims$max_value)
+  
+  print(
+    ggplot(GLODAP_Cont, aes(
+      x = !!sym(i_variable),
+      y = !!sym(paste0(i_variable, "_CANYONB"))
+    )) +
+      geom_bin2d(binwidth = binwidth_value) +
+      scale_fill_viridis_c(trans = "log10") +
+      geom_abline(slope = 1, col = 'red') +
+      coord_equal(xlim = axis_lims,
+                  ylim = axis_lims) +
+      facet_wrap( ~ basin_AIP) +
+      labs(title = "All years")
+  ) 
+  
+  
+  for (i_year in unique(GLODAP_Cont$year)) {
+    # i_year <- 2017
+    
+    print(
+      ggplot(
+        GLODAP_Cont %>% filter(year == i_year),
+        aes(x = !!sym(i_variable),
+            y = !!sym(paste0(
+              i_variable, "_CANYONB"
+            )))
+      ) +
+        geom_bin2d(binwidth = binwidth_value) +
+        scale_fill_viridis_c(trans = "log10") +
+        geom_abline(slope = 1, col = 'red') +
+        coord_equal(xlim = axis_lims,
+                    ylim = axis_lims) +
+        facet_wrap( ~ basin_AIP) +
+        labs(title = paste("Year:", i_year))
+    )
+  }
+  
+}
+
+
+
+```
+
+## Write Canyon-B file
+ 
+```{r write_CONTENT_data_file, eval=FALSE}
+
+GLODAP_Cont %>% 
+  select(row_number,
+         talk_CANYONB, tco2_CANYONB) %>% 
+  write_csv(paste(path_preprocessing,
+                             "GLODAPv2.2020_Canyon-B.csv",
+                             sep = ""))
+
+```
+

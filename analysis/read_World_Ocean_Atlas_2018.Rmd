@@ -193,7 +193,7 @@ basinmask_01 <- basinmask_01  %>%
 map <- 
   ggplot() +
   geom_raster(data = landmask,
-              aes(lon, lat), fill = "grey80") +
+              aes(lon, lat), fill = "grey60") +
   coord_quickmap(expand = 0) +
   theme(axis.title = element_blank())
 
