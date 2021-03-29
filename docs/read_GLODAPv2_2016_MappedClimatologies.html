@@ -14,6 +14,7 @@
 
 <title>GLODAPv2_2016: Mapped Climatologies</title>
 
+<script src="site_libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -39,6 +40,8 @@ div.section {
   padding-top: 12px;
 }
 </style>
+
+
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -430,6 +433,9 @@ div.tocify {
 <li>
   <a href="read_CO2_atm.html">Atmospheric CO2</a>
 </li>
+<li>
+  <a href="analysis_regional_clusters.html">Clustering</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -465,7 +471,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">GLODAPv2_2016: Mapped Climatologies</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">18 December, 2020</h4>
+<h4 class="date">30 March, 2021</h4>
 
 </div>
 
@@ -490,7 +496,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-12-18
+<strong>Last updated:</strong> 2021-03-30
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -581,16 +587,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree55384665f326661b055e872d3ca9c4e2349c4468targetblank5538466a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/55384665f326661b055e872d3ca9c4e2349c4468" target="_blank">5538466</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreed31eb45aa1db2d5fc31b36d47a314c7476934817targetblankd31eb45a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/d31eb45aa1db2d5fc31b36d47a314c7476934817" target="_blank">d31eb45</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree55384665f326661b055e872d3ca9c4e2349c4468targetblank5538466a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreed31eb45aa1db2d5fc31b36d47a314c7476934817targetblankd31eb45a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/55384665f326661b055e872d3ca9c4e2349c4468" target="_blank">5538466</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/d31eb45aa1db2d5fc31b36d47a314c7476934817" target="_blank">d31eb45</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -602,7 +608,7 @@ Ignored files:
     Ignored:    data/
 
 Unstaged changes:
-    Modified:   README.md
+    Modified:   analysis/_site.yml
     Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
@@ -642,6 +648,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/a5846c5166efdef7a46aae2c13a7caa0a8244eed/docs/read_GLODAPv2_2016_MappedClimatologies.html" target="_blank">a5846c5</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2020-12-18
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -989,8 +1012,8 @@ Initial commit
 </div>
 </div>
 </div>
-<div id="read-source-files" class="section level1">
-<h1><span class="header-section-number">1</span> Read source files</h1>
+<div id="read-source-files" class="section level1" number="1">
+<h1 number="1"><span class="header-section-number">1</span> Read source files</h1>
 <p>Data source: Globally mapped climatologies from Lauvset et al. (2016) downloaded in June 2020 from <a href="https://www.glodap.info/">glodap.info</a>.</p>
 <pre class="r"><code>file_list &lt;- c(
   &quot;GLODAPv2.2016b.Cant.nc&quot;,
@@ -1009,8 +1032,8 @@ basinmask &lt;- basinmask %&gt;%
   filter(MLR_basins == &quot;2&quot;) %&gt;% 
   select(lat, lon, basin_AIP)</code></pre>
 </div>
-<div id="plot-data-and-write-csv" class="section level1">
-<h1><span class="header-section-number">2</span> Plot data and write csv</h1>
+<div id="plot-data-and-write-csv" class="section level1" number="2">
+<h1 number="2"><span class="header-section-number">2</span> Plot data and write csv</h1>
 <p>Below, subsets of the climatologies are plotted. For all relevant parameters, the plots show:</p>
 <ul>
 <li>maps at depth levels</li>
@@ -2641,7 +2664,7 @@ Jens Müller
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.0.3 (2020-10-10)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: openSUSE Leap 15.1
+Running under: openSUSE Leap 15.2
 
 Matrix products: default
 BLAS:   /usr/local/R-4.0.3/lib64/R/lib/libRblas.so
@@ -2659,10 +2682,10 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] stars_0.4-3     sf_0.9-6        abind_1.4-5     metR_0.9.0     
- [5] scico_1.2.0     patchwork_1.1.0 collapse_1.4.2  forcats_0.5.0  
- [9] stringr_1.4.0   dplyr_1.0.2     purrr_0.3.4     readr_1.4.0    
-[13] tidyr_1.1.2     tibble_3.0.4    ggplot2_3.3.2   tidyverse_1.3.0
+ [1] stars_0.5-2     sf_0.9-8        abind_1.4-5     metR_0.9.0     
+ [5] scico_1.2.0     patchwork_1.1.1 collapse_1.5.0  forcats_0.5.0  
+ [9] stringr_1.4.0   dplyr_1.0.5     purrr_0.3.4     readr_1.4.0    
+[13] tidyr_1.1.2     tibble_3.0.4    ggplot2_3.3.3   tidyverse_1.3.0
 [17] workflowr_1.6.2
 
 loaded via a namespace (and not attached):
@@ -2671,23 +2694,23 @@ loaded via a namespace (and not attached):
  [7] cellranger_1.1.0         yaml_2.2.1               pillar_1.4.7            
 [10] backports_1.1.10         lattice_0.20-41          glue_1.4.2              
 [13] RcppEigen_0.3.3.7.0      digest_0.6.27            promises_1.1.1          
-[16] checkmate_2.0.0          rvest_0.3.6              colorspace_2.0-0        
+[16] checkmate_2.0.0          rvest_0.3.6              colorspace_1.4-1        
 [19] htmltools_0.5.0          httpuv_1.5.4             Matrix_1.2-18           
-[22] pkgconfig_2.0.3          broom_0.7.2              haven_2.3.1             
+[22] pkgconfig_2.0.3          broom_0.7.5              haven_2.3.1             
 [25] scales_1.1.1             whisker_0.4              later_1.1.0.1           
 [28] git2r_0.27.1             farver_2.0.3             generics_0.0.2          
-[31] ellipsis_0.3.1           withr_2.3.0              cli_2.2.0               
-[34] magrittr_2.0.1           crayon_1.3.4             readxl_1.3.1            
+[31] ellipsis_0.3.1           withr_2.3.0              cli_2.1.0               
+[34] magrittr_1.5             crayon_1.3.4             readxl_1.3.1            
 [37] evaluate_0.14            fs_1.5.0                 fansi_0.4.1             
 [40] lwgeom_0.2-5             xml2_1.3.2               RcppArmadillo_0.10.1.2.0
 [43] class_7.3-17             tools_4.0.3              data.table_1.13.2       
-[46] hms_0.5.3                lifecycle_0.2.0          munsell_0.5.0           
+[46] hms_0.5.3                lifecycle_1.0.0          munsell_0.5.0           
 [49] reprex_0.3.0             isoband_0.2.2            compiler_4.0.3          
-[52] e1071_1.7-4              rlang_0.4.9              units_0.6-7             
+[52] e1071_1.7-4              rlang_0.4.10             units_0.6-7             
 [55] classInt_0.4-3           grid_4.0.3               rstudioapi_0.13         
 [58] labeling_0.4.2           rmarkdown_2.5            gtable_0.3.0            
 [61] DBI_1.1.0                R6_2.5.0                 lubridate_1.7.9         
-[64] knitr_1.30               rprojroot_2.0.2          KernSmooth_2.23-18      
+[64] knitr_1.30               rprojroot_2.0.2          KernSmooth_2.23-17      
 [67] stringi_1.5.3            parallel_4.0.3           Rcpp_1.0.5              
 [70] vctrs_0.3.5              dbplyr_1.4.4             tidyselect_1.1.0        
 [73] xfun_0.18               </code></pre>
@@ -2706,6 +2729,8 @@ footer is added to webpages before the MathJax javascript. -->
     "HTML-CSS": { availableFonts: ["TeX"] }
   });
 </script>
+
+
 
 
 </div>
