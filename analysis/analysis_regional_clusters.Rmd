@@ -44,11 +44,11 @@ library(NbClust)
 
 ```
 
-# Required data
+# Data source
 
-Currently, following data sets are used for clustering:
+Currently, following data sets and predictor variables are used for clustering:
 
-- GLODAPv2_2016b_MappedClimatologies, with variables  
+- GLODAPv2_2016b_MappedClimatologies
   - Phosphate
   - Oxygen 
   - Cant
@@ -90,7 +90,7 @@ GLODAP_predictors <- GLODAP_predictors %>%
 
 ```
 
-# Cluster predictors
+# Scaling predictors
 
 ```{r cluster_predictors}
 
@@ -112,6 +112,8 @@ cluster_predictors %>%
 
 # Number of clusters
 
+Based on a random subset of 1000 data points, the optimum number of clusters was inspected as elbow plot.
+
 ```{r determine_number_of_cluster}
 
 cluster_predictors_sub <- cluster_predictors %>% 
@@ -121,18 +123,20 @@ cluster_predictors_sub <- cluster_predictors %>%
 # https://rpubs.com/pg2000in/OptimumClusters
 
 fviz_nbclust(cluster_predictors_sub, kmeans, method = "wss")
+fviz_nbclust(cluster_predictors_sub, kmeans, method = "silhouette")
+fviz_nbclust(cluster_predictors_sub, kmeans, method = "gap_stat")
 
 # http://www.sthda.com/english/articles/29-cluster-validation-essentials/96-determiningthe-optimal-number-of-clusters-3-must-know-methods/
 
-nb <- NbClust(cluster_predictors_sub, distance = "euclidean", min.nc = 2,
-        max.nc = 10, method = "kmeans")
-
-fviz_nbclust(nb)
+# nb <- NbClust(cluster_predictors_sub, distance = "euclidean", min.nc = 2,
+#         max.nc = 10, method = "kmeans")
+# 
+# fviz_nbclust(nb)
 
 
 ```
 
-
+# Clustering
 
 ```{r kmeans_clustering}
 
@@ -143,6 +147,13 @@ clusters <- kmeans(cluster_predictors,
 GLODAP_predictors <- GLODAP_predictors %>% 
   mutate(cluster = as.factor(clusters$cluster))
 
+
+```
+
+## Maps
+
+```{r cluster_maps}
+
 map +
   geom_raster(data = GLODAP_predictors %>%
                 filter(depth %in% c(0,100,500,1000, 2000, 5000)),
@@ -150,6 +161,13 @@ map +
   # scale_fill_brewer(palette = "Set1") +
   scale_fill_viridis_d() +
   facet_wrap(~ depth, ncol = 2)
+
+
+```
+
+## Zonal sections
+
+```{r cluster_sections, fig.asp=1}
 
 ggplot(
   data = GLODAP_predictors %>%
@@ -161,7 +179,7 @@ ggplot(
   scale_fill_viridis_d() +
   scale_y_reverse() +
   coord_cartesian(expand = 0) +
-  facet_wrap(~ lon)
+  facet_wrap(~ lon, ncol = 1)
 
 
 ```

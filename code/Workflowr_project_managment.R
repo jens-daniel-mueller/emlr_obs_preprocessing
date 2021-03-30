@@ -5,7 +5,7 @@
 
 # commit regular changes (locally) and rebuild site
 # this takes only changed files into account
-wflow_publish(all = TRUE, message = "darker grey for landmask")
+wflow_publish(all = TRUE, message = "revised k-means clustering")
 
 # commit changes including _site.yml (locally) and rebuild site in the specified order
 # you can also run this code with only some of the files. In this case remove the rebuild=TRUE command
@@ -20,11 +20,14 @@ wflow_publish(here::here(
     "read_GLODAPv2_2020.Rmd",
     "read_Gruber_2019_Cant.Rmd",
     "read_Sabine_2004_Cant.Rmd",
-    "read_CO2_atm.Rmd"
+    "read_CO2_atm.Rmd",
+    "analysis_regional_clusters.Rmd"
+
   )
 ),
-message = "subsetted WOA depth levels to 33 standard depths",
+message = "implemented k-means clustering",
 republish = TRUE)
+
 
 # Push latest version to GitHub
 wflow_git_push()

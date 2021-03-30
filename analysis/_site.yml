@@ -25,6 +25,8 @@ navbar:
       href: read_Sabine_2004_Cant.html
   - text: Atmospheric CO2
     href: read_CO2_atm.html
+  - text: Clustering
+    href: analysis_regional_clusters.html
   right:
   - icon: fa-github
     text: Source code
