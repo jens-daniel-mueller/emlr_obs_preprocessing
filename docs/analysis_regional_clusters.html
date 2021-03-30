@@ -587,16 +587,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreed31eb45aa1db2d5fc31b36d47a314c7476934817targetblankd31eb45a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/d31eb45aa1db2d5fc31b36d47a314c7476934817" target="_blank">d31eb45</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree3f048b0ccc6a628d0008d7dd900e4adce2a56f48targetblank3f048b0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/3f048b0ccc6a628d0008d7dd900e4adce2a56f48" target="_blank">3f048b0</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreed31eb45aa1db2d5fc31b36d47a314c7476934817targetblankd31eb45a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree3f048b0ccc6a628d0008d7dd900e4adce2a56f48targetblank3f048b0a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/d31eb45aa1db2d5fc31b36d47a314c7476934817" target="_blank">d31eb45</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/3f048b0ccc6a628d0008d7dd900e4adce2a56f48" target="_blank">3f048b0</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -606,10 +606,6 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/
-
-Unstaged changes:
-    Modified:   analysis/_site.yml
-    Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
 <p>
@@ -648,6 +644,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/3f048b0ccc6a628d0008d7dd900e4adce2a56f48/analysis/analysis_regional_clusters.Rmd" target="_blank">3f048b0</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-03-30
+</td>
+<td>
+revised k-means clustering
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/6ff516e4d0494f1e4e0a41b156bc8e02a6fc7507/docs/analysis_regional_clusters.html" target="_blank">6ff516e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-03-30
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -689,11 +719,11 @@ implemented k-means clustering
 </div>
 </div>
 </div>
-<div id="required-data" class="section level1" number="1">
-<h1 number="1"><span class="header-section-number">1</span> Required data</h1>
-<p>Currently, following data sets are used for clustering:</p>
+<div id="data-source" class="section level1" number="1">
+<h1 number="1"><span class="header-section-number">1</span> Data source</h1>
+<p>Currently, following data sets and predictor variables are used for clustering:</p>
 <ul>
-<li>GLODAPv2_2016b_MappedClimatologies, with variables
+<li>GLODAPv2_2016b_MappedClimatologies
 <ul>
 <li>Phosphate</li>
 <li>Oxygen</li>
@@ -733,8 +763,8 @@ GLODAP_predictors &lt;- GLODAP_predictors %&gt;%
 GLODAP_predictors &lt;- GLODAP_predictors %&gt;%
   drop_na()</code></pre>
 </div>
-<div id="cluster-predictors" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> Cluster predictors</h1>
+<div id="scaling-predictors" class="section level1" number="2">
+<h1 number="2"><span class="header-section-number">2</span> Scaling predictors</h1>
 <pre class="r"><code>cluster_predictors &lt;- GLODAP_predictors %&gt;% 
   select(oxygen, phosphate, Cant, temp)
 
@@ -788,6 +818,7 @@ jens-daniel-mueller
 </div>
 <div id="number-of-clusters" class="section level1" number="3">
 <h1 number="3"><span class="header-section-number">3</span> Number of clusters</h1>
+<p>Based on a random subset of 1000 data points, the optimum number of clusters was inspected as elbow plot.</p>
 <pre class="r"><code>cluster_predictors_sub &lt;- cluster_predictors %&gt;% 
   sample_n(1e3)
 
@@ -833,10 +864,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code># http://www.sthda.com/english/articles/29-cluster-validation-essentials/96-determiningthe-optimal-number-of-clusters-3-must-know-methods/
-
-nb &lt;- NbClust(cluster_predictors_sub, distance = &quot;euclidean&quot;, min.nc = 2,
-        max.nc = 10, method = &quot;kmeans&quot;)</code></pre>
+<pre class="r"><code>fviz_nbclust(cluster_predictors_sub, kmeans, method = &quot;silhouette&quot;)</code></pre>
 <p><img src="figure/analysis_regional_clusters.Rmd/determine_number_of_cluster-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-determine_number_of_cluster-2">
@@ -875,11 +903,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>*** : The Hubert index is a graphical method of determining the number of clusters.
-                In the plot of Hubert index, we seek a significant knee that corresponds to a 
-                significant increase of the value of the measure i.e the significant peak in Hubert
-                index second differences plot. 
- </code></pre>
+<pre class="r"><code>fviz_nbclust(cluster_predictors_sub, kmeans, method = &quot;gap_stat&quot;)</code></pre>
 <p><img src="figure/analysis_regional_clusters.Rmd/determine_number_of_cluster-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-determine_number_of_cluster-3">
@@ -918,130 +942,34 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>*** : The D index is a graphical method of determining the number of clusters. 
-                In the plot of D index, we seek a significant knee (the significant peak in Dindex
-                second differences plot) that corresponds to a significant increase of the value of
-                the measure. 
- 
-******************************************************************* 
-* Among all indices:                                                
-* 8 proposed 2 as the best number of clusters 
-* 2 proposed 3 as the best number of clusters 
-* 7 proposed 4 as the best number of clusters 
-* 3 proposed 7 as the best number of clusters 
-* 2 proposed 9 as the best number of clusters 
-* 2 proposed 10 as the best number of clusters 
+<pre class="r"><code># http://www.sthda.com/english/articles/29-cluster-validation-essentials/96-determiningthe-optimal-number-of-clusters-3-must-know-methods/
 
-                   ***** Conclusion *****                            
- 
-* According to the majority rule, the best number of clusters is  2 
- 
- 
-******************************************************************* </code></pre>
-<pre class="r"><code>fviz_nbclust(nb)</code></pre>
-<pre><code>Among all indices: 
-===================
-* 2 proposed  0 as the best number of clusters
-* 8 proposed  2 as the best number of clusters
-* 2 proposed  3 as the best number of clusters
-* 7 proposed  4 as the best number of clusters
-* 3 proposed  7 as the best number of clusters
-* 2 proposed  9 as the best number of clusters
-* 2 proposed  10 as the best number of clusters
-
-Conclusion
-=========================
-* According to the majority rule, the best number of clusters is  2 .</code></pre>
-<p><img src="figure/analysis_regional_clusters.Rmd/determine_number_of_cluster-4.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-determine_number_of_cluster-4">
-Past versions of determine_number_of_cluster-4.png
-</button>
-</p>
-<div id="fig-determine_number_of_cluster-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d31eb45aa1db2d5fc31b36d47a314c7476934817/docs/figure/analysis_regional_clusters.Rmd/determine_number_of_cluster-4.png" target="_blank">d31eb45</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-03-30
-</td>
-</tr>
-</tbody>
-</table>
+# nb &lt;- NbClust(cluster_predictors_sub, distance = &quot;euclidean&quot;, min.nc = 2,
+#         max.nc = 10, method = &quot;kmeans&quot;)
+# 
+# fviz_nbclust(nb)</code></pre>
 </div>
-</div>
+<div id="clustering" class="section level1" number="4">
+<h1 number="4"><span class="header-section-number">4</span> Clustering</h1>
 <pre class="r"><code>clusters &lt;- kmeans(cluster_predictors,
        centers = 6,
        iter.max = 10)
 
 GLODAP_predictors &lt;- GLODAP_predictors %&gt;% 
-  mutate(cluster = as.factor(clusters$cluster))
-
-map +
+  mutate(cluster = as.factor(clusters$cluster))</code></pre>
+<div id="maps" class="section level2" number="4.1">
+<h2 number="4.1"><span class="header-section-number">4.1</span> Maps</h2>
+<pre class="r"><code>map +
   geom_raster(data = GLODAP_predictors %&gt;%
                 filter(depth %in% c(0,100,500,1000, 2000, 5000)),
               aes(lon, lat, fill = cluster)) +
   # scale_fill_brewer(palette = &quot;Set1&quot;) +
   scale_fill_viridis_d() +
   facet_wrap(~ depth, ncol = 2)</code></pre>
-<p><img src="figure/analysis_regional_clusters.Rmd/kmeans_clustering-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-kmeans_clustering-1">
-Past versions of kmeans_clustering-1.png
-</button>
-</p>
-<div id="fig-kmeans_clustering-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d31eb45aa1db2d5fc31b36d47a314c7476934817/docs/figure/analysis_regional_clusters.Rmd/kmeans_clustering-1.png" target="_blank">d31eb45</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-03-30
-</td>
-</tr>
-</tbody>
-</table>
+<p><img src="figure/analysis_regional_clusters.Rmd/cluster_maps-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-</div>
+<div id="zonal-sections" class="section level2" number="4.2">
+<h2 number="4.2"><span class="header-section-number">4.2</span> Zonal sections</h2>
 <pre class="r"><code>ggplot(
   data = GLODAP_predictors %&gt;%
     filter(lon %in% params_global$longitude_sections_basin,
@@ -1052,45 +980,8 @@ jens-daniel-mueller
   scale_fill_viridis_d() +
   scale_y_reverse() +
   coord_cartesian(expand = 0) +
-  facet_wrap(~ lon)</code></pre>
-<p><img src="figure/analysis_regional_clusters.Rmd/kmeans_clustering-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-kmeans_clustering-2">
-Past versions of kmeans_clustering-2.png
-</button>
-</p>
-<div id="fig-kmeans_clustering-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d31eb45aa1db2d5fc31b36d47a314c7476934817/docs/figure/analysis_regional_clusters.Rmd/kmeans_clustering-2.png" target="_blank">d31eb45</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-03-30
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+  facet_wrap(~ lon, ncol = 1)</code></pre>
+<p><img src="figure/analysis_regional_clusters.Rmd/cluster_sections-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1150,7 +1041,9 @@ loaded via a namespace (and not attached):
 [67] httpuv_1.5.4             cellranger_1.1.0         gtable_0.3.0            
 [70] assertthat_0.2.1         xfun_0.18                openxlsx_4.2.3          
 [73] broom_0.7.5              RcppEigen_0.3.3.7.0      rstatix_0.7.0           
-[76] later_1.1.0.1            viridisLite_0.3.0        ellipsis_0.3.1          </code></pre>
+[76] later_1.1.0.1            viridisLite_0.3.0        cluster_2.1.0           
+[79] ellipsis_0.3.1          </code></pre>
+</div>
 </div>
 </div>
 
