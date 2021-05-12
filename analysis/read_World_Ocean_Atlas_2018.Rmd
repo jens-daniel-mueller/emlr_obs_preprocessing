@@ -159,7 +159,7 @@ Pacific Ocean:
 
 # assign basin labels
 basinmask_01 <- basinmask_01 %>%
-  filter(Basin_0m %in% c("1", "2", "3", "10", "11", "12", "56")) %>%
+  filter(Basin_0m %in% c("1", "2", "3", "10", "11", "56")) %>%
   mutate(
     basin_AIP = "none",
     basin_AIP = case_when(
