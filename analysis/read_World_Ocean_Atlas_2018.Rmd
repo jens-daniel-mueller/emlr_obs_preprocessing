@@ -170,7 +170,7 @@ basinmask_01 <- basinmask_01 %>%
       Basin_0m == "56" ~ "Indian",
       Basin_0m == "10" & lon >= 20 & lon < 147 ~ "Indian",
       Basin_0m == "2" ~ "Pacific",
-      Basin_0m == "12" ~ "Pacific",
+      # Basin_0m == "12" ~ "Pacific",
       Basin_0m == "10" &
         lon >= 147 | lon < -63 ~ "Pacific"
     )
@@ -193,7 +193,7 @@ basinmask_01 <- basinmask_01  %>%
 map <- 
   ggplot() +
   geom_raster(data = landmask,
-              aes(lon, lat), fill = "grey60") +
+              aes(lon, lat), fill = "grey80") +
   coord_quickmap(expand = 0) +
   theme(axis.title = element_blank())
 
