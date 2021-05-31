@@ -471,7 +471,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Anthropogenic CO2 from 1994 to 2007</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">12 May, 2021</h4>
+<h4 class="date">31 May, 2021</h4>
 
 </div>
 
@@ -496,7 +496,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-05-12
+<strong>Last updated:</strong> 2021-05-31
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -587,16 +587,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreef091aa5beefd1da4283912e83fe7edff6a070725targetblankf091aa5a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/f091aa5beefd1da4283912e83fe7edff6a070725" target="_blank">f091aa5</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree8bd94f4b08fbaff3467f1d8c59caca47df7350e0targetblank8bd94f4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/8bd94f4b08fbaff3467f1d8c59caca47df7350e0" target="_blank">8bd94f4</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreef091aa5beefd1da4283912e83fe7edff6a070725targetblankf091aa5a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree8bd94f4b08fbaff3467f1d8c59caca47df7350e0targetblank8bd94f4a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/f091aa5beefd1da4283912e83fe7edff6a070725" target="_blank">f091aa5</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/8bd94f4b08fbaff3467f1d8c59caca47df7350e0" target="_blank">8bd94f4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -606,9 +606,6 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/
-
-Unstaged changes:
-    Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
 <p>
@@ -647,6 +644,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8bd94f4b08fbaff3467f1d8c59caca47df7350e0/analysis/read_Sabine_2004_Cant.Rmd" target="_blank">8bd94f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-05-31
+</td>
+<td>
+included G19 S04 comparison
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/0ef91d5e574c3d61170d6a93d5ea48beb3f2e3ca/docs/read_Sabine_2004_Cant.html" target="_blank">0ef91d5</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-05-12
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1543,6 +1574,111 @@ cant_inv %&gt;%
 cant_zonal %&gt;%
   write_csv(paste(path_preprocessing,
                   &quot;S04_cant_zonal.csv&quot;, sep = &quot;&quot;))</code></pre>
+</div>
+</div>
+<div id="anomalous-changes" class="section level1" number="6">
+<h1 number="6"><span class="header-section-number">6</span> Anomalous changes</h1>
+<pre class="r"><code>cant_inv_S04 &lt;- cant_inv
+
+cant_inv_G19 &lt;- read_csv(paste(path_preprocessing,
+                               &quot;G19_cant_inv.csv&quot;, sep = &quot;&quot;))</code></pre>
+</div>
+<div id="comparison-of-previous-estimates" class="section level1" number="7">
+<h1 number="7"><span class="header-section-number">7</span> Comparison of previous estimates</h1>
+<p>Cant inventory estimates of S04 (Sabine et al, 2004) and G19 (Gruber et al, 2019) were compared.</p>
+<div id="merge-data-sets" class="section level2" number="7.1">
+<h2 number="7.1"><span class="header-section-number">7.1</span> Merge data sets</h2>
+<pre class="r"><code>cant_inv &lt;- full_join(cant_inv_G19 %&gt;% mutate(estimate = &quot;G19&quot;),
+                      cant_inv_S04 %&gt;% mutate(estimate = &quot;S04&quot;)) %&gt;% 
+  select(-c(cant_inv, eras))
+
+rm(cant_inv_G19, cant_inv_S04)</code></pre>
+</div>
+<div id="inventory-maps" class="section level2" number="7.2">
+<h2 number="7.2"><span class="header-section-number">7.2</span> Inventory maps</h2>
+<p>Spanning different time periods, the Cant inventories differ in magnitude.</p>
+<pre class="r"><code>map +
+  geom_raster(data = cant_inv,
+              aes(lon, lat, fill = cant_pos_inv)) +
+  scale_fill_viridis_c() +
+  facet_wrap( ~ estimate, ncol = 1) +
+  theme(
+    axis.title = element_blank(),
+    axis.text = element_blank(),
+    axis.ticks = element_blank()
+  )</code></pre>
+<p><img src="figure/read_Sabine_2004_Cant.Rmd/cant_inv_comparison-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="cant-budgets" class="section level2" number="7.3">
+<h2 number="7.3"><span class="header-section-number">7.3</span> C<sub>ant</sub> budgets</h2>
+<p>Global Cant inventories were estimated in Pg-C. Please note that here we only added positive Cant values in the upper m and do not apply additional corrections for areas not covered.</p>
+<pre class="r"><code>library(marelac)</code></pre>
+<pre><code>Error in get(genname, envir = envir) : object &#39;testthat_print&#39; not found</code></pre>
+<pre class="r"><code>cant_inv &lt;- cant_inv %&gt;% 
+  mutate(surface_area = earth_surf(lat, lon),
+         cant_pos_inv_grid = cant_pos_inv*surface_area)
+
+cant_inv_budget &lt;- cant_inv %&gt;% 
+  group_by(estimate, basin_AIP) %&gt;% 
+  summarise(cant_pos_total = sum(cant_pos_inv_grid)*12*1e-15,
+            cant_pos_total = round(cant_pos_total,1)) %&gt;% 
+  ungroup() %&gt;% 
+  pivot_wider(values_from = cant_pos_total, names_from = basin_AIP) %&gt;% 
+  mutate(total = Atlantic + Indian + Pacific)
+
+cant_inv_budget</code></pre>
+<pre><code># A tibble: 2 x 5
+  estimate Atlantic Indian Pacific total
+  &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+1 G19          11      7.1    13.4  31.5
+2 S04          39.6   23.4    41.4 104. </code></pre>
+</div>
+<div id="relative-inventories" class="section level2" number="7.4">
+<h2 number="7.4"><span class="header-section-number">7.4</span> Relative inventories</h2>
+<pre class="r"><code>cant_inv_wide &lt;- cant_inv %&gt;%
+  pivot_wider(values_from = c(cant_pos_inv, cant_pos_inv_grid),
+              names_from = estimate)
+
+cant_inv_wide &lt;- cant_inv_wide %&gt;% 
+  drop_na() %&gt;% 
+  mutate(G19_rel = cant_pos_inv_grid_G19 / sum(cant_pos_inv_grid_G19),
+         S04_rel = cant_pos_inv_grid_S04 / sum(cant_pos_inv_grid_S04),
+         cant_ratio_rel = G19_rel / S04_rel)
+
+cant_inv_rel &lt;- cant_inv_wide %&gt;% 
+  pivot_longer(cols = c(G19_rel, S04_rel),
+                        names_to = &quot;estimate&quot;,
+                        values_to = &quot;cant_inv_rel&quot;)</code></pre>
+<pre class="r"><code>map +
+  geom_raster(data = cant_inv_rel,
+              aes(lon, lat, fill = cant_inv_rel*100)) +
+  scale_fill_viridis_c() +
+  facet_wrap( ~ estimate, ncol = 1) +
+  theme(
+    axis.title = element_blank(),
+    axis.text = element_blank(),
+    axis.ticks = element_blank()
+  )</code></pre>
+<p><img src="figure/read_Sabine_2004_Cant.Rmd/cant_inv_rel_maps-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="relative-inventory-ratios" class="section level2" number="7.5">
+<h2 number="7.5"><span class="header-section-number">7.5</span> Relative inventory ratios</h2>
+<pre class="r"><code>map +
+  geom_contour_filled(data = cant_inv_wide %&gt;%
+  filter(cant_ratio_rel &lt; 10,
+         cant_ratio_rel &gt; 0.1),
+                      aes(lon, lat, z = log10(cant_ratio_rel))) +
+  coord_quickmap(expand = 0) +
+  scale_fill_brewer(palette = &quot;RdBu&quot;, direction = -1) +
+  labs(title = &quot;Cant inventory distribution | 1994-2007 vs preind-1994&quot;,
+       subtitle = &quot;Log ratio of relative contributions to total inventory&quot;) +
+  theme(
+    axis.title = element_blank(),
+    axis.text = element_blank(),
+    axis.ticks = element_blank(),
+    legend.title = element_blank()
+  )</code></pre>
+<p><img src="figure/read_Sabine_2004_Cant.Rmd/cant_inv_ratio_map-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1571,34 +1707,37 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] metR_0.9.0      scico_1.2.0     patchwork_1.1.1 collapse_1.5.0 
- [5] forcats_0.5.0   stringr_1.4.0   dplyr_1.0.5     purrr_0.3.4    
- [9] readr_1.4.0     tidyr_1.1.2     tibble_3.0.4    ggplot2_3.3.3  
-[13] tidyverse_1.3.0 workflowr_1.6.2
+ [1] marelac_2.1.10  shape_1.4.5     metR_0.9.0      scico_1.2.0    
+ [5] patchwork_1.1.1 collapse_1.5.0  forcats_0.5.0   stringr_1.4.0  
+ [9] dplyr_1.0.5     purrr_0.3.4     readr_1.4.0     tidyr_1.1.2    
+[13] tibble_3.0.4    ggplot2_3.3.3   tidyverse_1.3.0 workflowr_1.6.2
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.5               lattice_0.20-41          lubridate_1.7.9         
- [4] assertthat_0.2.1         rprojroot_2.0.2          digest_0.6.27           
- [7] R6_2.5.0                 cellranger_1.1.0         backports_1.1.10        
-[10] reprex_0.3.0             evaluate_0.14            httr_1.4.2              
-[13] pillar_1.4.7             rlang_0.4.10             readxl_1.3.1            
-[16] data.table_1.13.2        rstudioapi_0.13          whisker_0.4             
-[19] blob_1.2.1               Matrix_1.2-18            checkmate_2.0.0         
-[22] rmarkdown_2.5            labeling_0.4.2           RcppEigen_0.3.3.7.0     
-[25] munsell_0.5.0            broom_0.7.5              compiler_4.0.3          
-[28] httpuv_1.5.4             modelr_0.1.8             xfun_0.18               
-[31] pkgconfig_2.0.3          htmltools_0.5.0          tidyselect_1.1.0        
-[34] fansi_0.4.1              crayon_1.3.4             dbplyr_1.4.4            
-[37] withr_2.3.0              later_1.1.0.1            grid_4.0.3              
-[40] jsonlite_1.7.1           gtable_0.3.0             lifecycle_1.0.0         
-[43] DBI_1.1.0                git2r_0.27.1             magrittr_1.5            
-[46] scales_1.1.1             cli_2.1.0                stringi_1.5.3           
-[49] farver_2.0.3             fs_1.5.0                 promises_1.1.1          
-[52] RcppArmadillo_0.10.1.2.0 xml2_1.3.2               ellipsis_0.3.1          
-[55] generics_0.0.2           vctrs_0.3.5              tools_4.0.3             
-[58] glue_1.4.2               hms_0.5.3                parallel_4.0.3          
-[61] yaml_2.2.1               colorspace_1.4-1         isoband_0.2.2           
-[64] rvest_0.3.6              knitr_1.30               haven_2.3.1             </code></pre>
+ [1] httr_1.4.2               jsonlite_1.7.1           viridisLite_0.3.0       
+ [4] modelr_0.1.8             assertthat_0.2.1         blob_1.2.1              
+ [7] cellranger_1.1.0         yaml_2.2.1               pillar_1.4.7            
+[10] backports_1.1.10         lattice_0.20-41          glue_1.4.2              
+[13] RcppEigen_0.3.3.7.0      digest_0.6.27            RColorBrewer_1.1-2      
+[16] promises_1.1.1           checkmate_2.0.0          rvest_0.3.6             
+[19] colorspace_1.4-1         htmltools_0.5.0          httpuv_1.5.4            
+[22] Matrix_1.2-18            pkgconfig_2.0.3          broom_0.7.5             
+[25] seacarb_3.2.14           haven_2.3.1              scales_1.1.1            
+[28] whisker_0.4              later_1.1.0.1            git2r_0.27.1            
+[31] generics_0.0.2           farver_2.0.3             ellipsis_0.3.1          
+[34] withr_2.3.0              cli_2.1.0                magrittr_1.5            
+[37] crayon_1.3.4             readxl_1.3.1             evaluate_0.14           
+[40] fs_1.5.0                 fansi_0.4.1              xml2_1.3.2              
+[43] RcppArmadillo_0.10.1.2.0 oce_1.2-0                tools_4.0.3             
+[46] data.table_1.13.2        hms_0.5.3                lifecycle_1.0.0         
+[49] munsell_0.5.0            reprex_0.3.0             gsw_1.0-5               
+[52] isoband_0.2.2            compiler_4.0.3           rlang_0.4.10            
+[55] grid_4.0.3               rstudioapi_0.11          labeling_0.4.2          
+[58] rmarkdown_2.5            testthat_2.3.2           gtable_0.3.0            
+[61] DBI_1.1.0                R6_2.5.0                 lubridate_1.7.9         
+[64] knitr_1.30               utf8_1.1.4               rprojroot_2.0.2         
+[67] stringi_1.5.3            parallel_4.0.3           Rcpp_1.0.5              
+[70] vctrs_0.3.5              dbplyr_1.4.4             tidyselect_1.1.0        
+[73] xfun_0.18               </code></pre>
 </div>
 </div>
 </div>
