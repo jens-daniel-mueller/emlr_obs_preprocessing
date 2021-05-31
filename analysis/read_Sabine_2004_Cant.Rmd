@@ -206,3 +206,137 @@ cant_zonal %>%
 
 
 ```
+
+
+# Anomalous changes
+
+```{r read_G19_cant_file}
+
+cant_inv_S04 <- cant_inv
+
+cant_inv_G19 <- read_csv(paste(path_preprocessing,
+                               "G19_cant_inv.csv", sep = ""))
+
+```
+
+# Comparison of previous estimates
+
+Cant inventory estimates of S04 (Sabine et al, 2004) and G19 (Gruber et al, 2019) were compared.
+
+## Merge data sets
+
+```{r merge_cant_data_sets}
+
+cant_inv <- full_join(cant_inv_G19 %>% mutate(estimate = "G19"),
+                      cant_inv_S04 %>% mutate(estimate = "S04")) %>% 
+  select(-c(cant_inv, eras))
+
+rm(cant_inv_G19, cant_inv_S04)
+
+```
+
+## Inventory maps
+
+Spanning different time periods, the Cant inventories differ in magnitude.
+
+```{r cant_inv_comparison, fig.asp=1}
+ 
+map +
+  geom_raster(data = cant_inv,
+              aes(lon, lat, fill = cant_pos_inv)) +
+  scale_fill_viridis_c() +
+  facet_wrap( ~ estimate, ncol = 1) +
+  theme(
+    axis.title = element_blank(),
+    axis.text = element_blank(),
+    axis.ticks = element_blank()
+  )
+
+```
+
+## C~ant~ budgets
+
+Global Cant inventories were estimated in Pg-C. Please note that here we only added positive Cant values in the upper `r params_global$inventory_depth`m and do not apply additional corrections for areas not covered.
+
+```{r calculate_global_inventory}
+
+library(marelac)
+
+cant_inv <- cant_inv %>% 
+  mutate(surface_area = earth_surf(lat, lon),
+         cant_pos_inv_grid = cant_pos_inv*surface_area)
+
+cant_inv_budget <- cant_inv %>% 
+  group_by(estimate, basin_AIP) %>% 
+  summarise(cant_pos_total = sum(cant_pos_inv_grid)*12*1e-15,
+            cant_pos_total = round(cant_pos_total,1)) %>% 
+  ungroup() %>% 
+  pivot_wider(values_from = cant_pos_total, names_from = basin_AIP) %>% 
+  mutate(total = Atlantic + Indian + Pacific)
+
+cant_inv_budget
+
+```
+
+
+## Relative inventories
+
+```{r calculate_cant_inv_ratio}
+
+cant_inv_wide <- cant_inv %>%
+  pivot_wider(values_from = c(cant_pos_inv, cant_pos_inv_grid),
+              names_from = estimate)
+
+cant_inv_wide <- cant_inv_wide %>% 
+  drop_na() %>% 
+  mutate(G19_rel = cant_pos_inv_grid_G19 / sum(cant_pos_inv_grid_G19),
+         S04_rel = cant_pos_inv_grid_S04 / sum(cant_pos_inv_grid_S04),
+         cant_ratio_rel = G19_rel / S04_rel)
+
+cant_inv_rel <- cant_inv_wide %>% 
+  pivot_longer(cols = c(G19_rel, S04_rel),
+                        names_to = "estimate",
+                        values_to = "cant_inv_rel")
+
+```
+
+
+
+```{r cant_inv_rel_maps, fig.asp=1}
+
+map +
+  geom_raster(data = cant_inv_rel,
+              aes(lon, lat, fill = cant_inv_rel*100)) +
+  scale_fill_viridis_c() +
+  facet_wrap( ~ estimate, ncol = 1) +
+  theme(
+    axis.title = element_blank(),
+    axis.text = element_blank(),
+    axis.ticks = element_blank()
+  )
+
+```
+
+## Relative inventory ratios
+
+```{r cant_inv_ratio_map, fig.asp=0.6}
+
+map +
+  geom_contour_filled(data = cant_inv_wide %>%
+  filter(cant_ratio_rel < 10,
+         cant_ratio_rel > 0.1),
+                      aes(lon, lat, z = log10(cant_ratio_rel))) +
+  coord_quickmap(expand = 0) +
+  scale_fill_brewer(palette = "RdBu", direction = -1) +
+  labs(title = "Cant inventory distribution | 1994-2007 vs preind-1994",
+       subtitle = "Log ratio of relative contributions to total inventory") +
+  theme(
+    axis.title = element_blank(),
+    axis.text = element_blank(),
+    axis.ticks = element_blank(),
+    legend.title = element_blank()
+  )
+
+```
+
+

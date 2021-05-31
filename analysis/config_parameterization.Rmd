@@ -93,7 +93,7 @@ params_global <-
     depth_levels_33 = depth_levels_33,
     breaks_cant_pos_inv = c(seq(0,16,2),Inf),
     breaks_cant_inv = c(-Inf,seq(-16,16,2),Inf),
-    breaks_cant_inv_offset = c(-Inf, seq(-15, 15, 3), Inf),
+    breaks_cant_inv_offset = c(-Inf, seq(-12, 12, 2), Inf),
     breaks_cant_pos = c(seq(0, 18, 1), Inf),
     breaks_cant = c(-Inf,seq(-16,16,2),Inf),
     breaks_cant_offset = c(-Inf,seq(-8,8,),Inf)

@@ -5,7 +5,7 @@
 
 # commit regular changes (locally) and rebuild site
 # this takes only changed files into account
-wflow_publish(all = TRUE, message = "revised k-means clustering")
+wflow_publish(all = TRUE, message = "included G19 S04 comparison")
 
 # commit changes including _site.yml (locally) and rebuild site in the specified order
 # you can also run this code with only some of the files. In this case remove the rebuild=TRUE command
@@ -25,7 +25,7 @@ wflow_publish(here::here(
 
   )
 ),
-message = "implemented k-means clustering",
+message = "removed Sea of Japan from basin mask",
 republish = TRUE)
 
 
