@@ -204,3 +204,80 @@ for (file in file_list) {
 }
 
 ```
+
+# Revelle factor
+
+```{r calculate_revelle_factor}
+
+variables <-
+  c("salinity", "temperature", "PO4", "silicate", "TAlk", "TCO2")
+
+# i_variable <- variables[1]
+
+for (i_variable in variables) {
+  temp <- read_csv(paste(
+    path_preprocessing,
+    paste("GLODAPv2_2016_MappedClimatology_", i_variable, ".csv", sep = ""),
+    sep = ""
+  ))
+  
+  if (exists("GLODAP_predictors")) {
+    GLODAP_predictors <- full_join(GLODAP_predictors, temp)
+  }
+  
+  if (!exists("GLODAP_predictors")) {
+    GLODAP_predictors <- temp
+  }
+}
+
+rm(temp, i_variable, variables)
+
+GLODAP_predictors <- GLODAP_predictors %>%
+  rename(phosphate = PO4,
+         temp = temperature,
+         sal = salinity)
+
+# removed na's attributable to slightly different coverage of predictor fields
+GLODAP_predictors <- GLODAP_predictors %>%
+  drop_na()
+
+library(seacarb)
+
+GLODAP_predictors <- GLODAP_predictors %>%
+  mutate(
+    rev_fac = buffer(
+      flag = 15,
+      var1 = TAlk * 1e-6,
+      var2 = TCO2 * 1e-6,
+      S = sal,
+      T = temp,
+      P = depth / 10,
+      Pt = phosphate * 1e-6,
+      Sit = silicate * 1e-6,
+      k1k2 = "l"
+    )$BetaD
+  )
+
+p_map_climatology(df = GLODAP_predictors,
+                  var = "rev_fac")
+
+p_section_global(df = GLODAP_predictors,
+                 var = "rev_fac",
+                 title_text = "GLODAPv2_2016_Mapped_Climatology")
+
+
+GLODAP_predictors %>%
+  select(lon, lat, depth, basin_AIP, rev_fac) %>%
+  write_csv(paste(
+    path_preprocessing,
+    paste("GLODAPv2_2016_MappedClimatology_",
+          "rev_fac",
+          ".csv",
+          sep = ""),
+    sep = ""
+  ))
+
+```
+
+
+
