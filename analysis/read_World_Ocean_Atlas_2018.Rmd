@@ -50,7 +50,7 @@ source(paste(path_functions,
              sep = ""))
 ```
 
-```{r ggplot_theme, include = FALSE}
+```{r set_ggplot_theme_global, include = FALSE}
 theme_set(theme_bw())
 ```
 

@@ -1,0 +1,128 @@
+---
+title: "GLODAPv2_2016: Mapped Climatologies"
+author: "Jens Daniel Müller"
+date:  "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  workflowr::wflow_html:
+    number_sections: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r parent, child = "/nfs/kryo/work/jenmueller/emlr_cant/utilities/setup.Rmd"}
+# this chunk runs the code stored in setup.Rmd
+# if required, please refer to instructions given here:
+# https://jdblischak.github.io/workflowr/articles/wflow-07-common-code.html
+```
+
+```{r define_paths, include=FALSE}
+path_OceanSODA   <- "/nfs/kryo/work/updata/pco2_OceanSODA-ETHZ/"
+path_preprocessing    <- paste(path_root, "/observations/preprocessing/", sep = "")
+```
+
+```{r load_libraries_specific, include=FALSE}
+library(tidync)
+library(lubridate)
+```
+
+# Read source files
+
+
+```{r prepare_basin_mask}
+
+# use only three basin to assign general basin mask
+# ie this is not specific to the MLR fitting
+basinmask <- basinmask %>% 
+  filter(MLR_basins == "2") %>% 
+  select(lat, lon, basin_AIP)
+
+
+```
+
+
+
+```{r read_OceanSODA}
+
+OceanSODA <-
+  tidync(paste(
+    path_OceanSODA,
+    "OceanSODA-ETHZ_1985-2019_v2020b.nc",
+    sep = ""
+  ))
+
+OceanSODA <- OceanSODA %>% hyper_tibble()
+
+OceanSODA <- OceanSODA %>%
+  mutate(date = as.Date(time, origin = '1985-01-01'),
+         year = year(date))
+
+OceanSODA <- OceanSODA %>%
+  select(year, date, lat, lon, salinity, temperature, DIC, TA, revelle_factor, pCO2)
+
+OceanSODA <- OceanSODA %>%
+  mutate(lon = if_else(lon < 20, lon + 360, lon))
+
+OceanSODA <- inner_join(OceanSODA, basinmask)
+
+```
+
+# Revelle factor
+
+```{r rev_fac}
+
+rev_fac <- OceanSODA %>% 
+  select(year, lat, lon, rev_fac = revelle_factor) %>% 
+  group_by(year, lat, lon) %>% 
+  summarise(rev_fac = mean(rev_fac, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  drop_na()
+
+map +
+  geom_raster(data = rev_fac %>%
+                filter(year == 2010), aes(lon, lat, fill = rev_fac)) +
+  scale_fill_viridis_c() +
+  labs(title = "Year: 2010")
+
+library(marelac)
+
+rev_fac_ave_lat <- rev_fac %>% 
+  mutate(grid_area = earth_surf(lat = lat),
+         rev_fac_area = rev_fac*grid_area,
+         lat_bands = cut(lat, seq(-85, 85, 10))) %>% 
+  group_by(year, lat_bands) %>% 
+  summarise(area_total = sum(grid_area),
+            rev_fac_area_total = sum(rev_fac_area),
+            rev_fac = rev_fac_area_total / area_total) %>% 
+  ungroup()
+
+rev_fac_ave_lat %>% 
+  ggplot(aes(year, rev_fac, col = lat_bands)) +
+  scale_color_scico_d(palette = "berlin") +
+  geom_path()
+
+rev_fac_ave <- rev_fac %>% 
+  mutate(grid_area = earth_surf(lat = lat),
+         rev_fac_area = rev_fac*grid_area) %>% 
+  group_by(year) %>% 
+  summarise(area_total = sum(grid_area),
+            rev_fac_area_total = sum(rev_fac_area),
+            rev_fac = rev_fac_area_total / area_total) %>% 
+  ungroup()
+
+rev_fac_ave %>% 
+  ggplot(aes(year, rev_fac)) +
+  scale_color_scico_d(palette = "berlin") +
+  geom_path() +
+  geom_smooth(method = "lm")
+
+
+```
+
+
+
+
+
