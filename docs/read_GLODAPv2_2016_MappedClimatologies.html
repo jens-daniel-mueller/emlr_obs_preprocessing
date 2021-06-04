@@ -410,6 +410,9 @@ div.tocify {
     <li>
       <a href="read_GLODAPv2_2016_MappedClimatologies.html">GLODAPv2_2016_MappedClimatologies</a>
     </li>
+    <li>
+      <a href="read_OceanSODA.html">OceanSODA</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -483,7 +486,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">GLODAPv2_2016: Mapped Climatologies</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">03 June, 2021</h4>
+<h4 class="date">04 June, 2021</h4>
 
 </div>
 
@@ -508,7 +511,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-06-03
+<strong>Last updated:</strong> 2021-06-04
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -599,16 +602,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree1b9b1af8c1e06ecf6c634cb574a97f6d33d65e34targetblank1b9b1afa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/1b9b1af8c1e06ecf6c634cb574a97f6d33d65e34" target="_blank">1b9b1af</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree00065c8d3db5c3a1332561f53c149348dd27a6fbtargetblank00065c8a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/00065c8d3db5c3a1332561f53c149348dd27a6fb" target="_blank">00065c8</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree1b9b1af8c1e06ecf6c634cb574a97f6d33d65e34targetblank1b9b1afa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree00065c8d3db5c3a1332561f53c149348dd27a6fbtargetblank00065c8a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/1b9b1af8c1e06ecf6c634cb574a97f6d33d65e34" target="_blank">1b9b1af</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/00065c8d3db5c3a1332561f53c149348dd27a6fb" target="_blank">00065c8</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -618,6 +621,10 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/
+
+Unstaged changes:
+    Modified:   analysis/_site.yml
+    Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
 <p>
@@ -656,6 +663,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/028b5f92f994f76b16232253076e36a755de9d26/docs/read_GLODAPv2_2016_MappedClimatologies.html" target="_blank">028b5f9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-03
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -3099,10 +3123,84 @@ library(seacarb)</code></pre>
 p_map_climatology(df = GLODAP_predictors,
                   var = &quot;rev_fac&quot;)</code></pre>
 <p><img src="figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/calculate_revelle_factor-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-calculate_revelle_factor-1">
+Past versions of calculate_revelle_factor-1.png
+</button>
+</p>
+<div id="fig-calculate_revelle_factor-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/028b5f92f994f76b16232253076e36a755de9d26/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/calculate_revelle_factor-1.png" target="_blank">028b5f9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>p_section_global(df = GLODAP_predictors,
                  var = &quot;rev_fac&quot;,
                  title_text = &quot;GLODAPv2_2016_Mapped_Climatology&quot;)</code></pre>
 <p><img src="figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/calculate_revelle_factor-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-calculate_revelle_factor-2">
+Past versions of calculate_revelle_factor-2.png
+</button>
+</p>
+<div id="fig-calculate_revelle_factor-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/028b5f92f994f76b16232253076e36a755de9d26/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/calculate_revelle_factor-2.png" target="_blank">028b5f9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-03
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>GLODAP_predictors %&gt;%
   select(lon, lat, depth, basin_AIP, rev_fac) %&gt;%
   write_csv(paste(
