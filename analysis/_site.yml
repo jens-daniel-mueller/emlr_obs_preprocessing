@@ -15,6 +15,8 @@ navbar:
       href: read_World_Ocean_Atlas_2018.html
     - text: GLODAPv2_2016_MappedClimatologies
       href: read_GLODAPv2_2016_MappedClimatologies.html
+    - text: OceanSODA
+      href: read_OceanSODA.html
   - text: GLODAPv2
     menu:
     - text: GLODAPv2_2020

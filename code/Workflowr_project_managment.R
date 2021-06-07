@@ -5,7 +5,7 @@
 
 # commit regular changes (locally) and rebuild site
 # this takes only changed files into account
-wflow_publish(all = TRUE, message = "included revelle factor calculation")
+wflow_publish(all = TRUE, message = "improved revelle factor analysis")
 
 # commit changes including _site.yml (locally) and rebuild site in the specified order
 # you can also run this code with only some of the files. In this case remove the rebuild=TRUE command
@@ -17,6 +17,7 @@ wflow_publish(here::here(
     "config_parameterization.Rmd",
     "read_World_Ocean_Atlas_2018.Rmd",
     "read_GLODAPv2_2016_MappedClimatologies.Rmd",
+    "read_OceanSODA.Rmd",
     "read_GLODAPv2_2020.Rmd",
     "read_GLODAPv2_2021.Rmd",
     "read_Gruber_2019_Cant.Rmd",
@@ -26,7 +27,7 @@ wflow_publish(here::here(
 
   )
 ),
-message = "included GLODAP 2021 prerelease",
+message = "included OceanSODA",
 republish = TRUE)
 
 

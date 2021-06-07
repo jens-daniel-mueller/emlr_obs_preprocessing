@@ -27,6 +27,8 @@ path_preprocessing    <- paste(path_root, "/observations/preprocessing/", sep = 
 ```{r load_libraries_specific, include=FALSE}
 library(tidync)
 library(lubridate)
+library(marelac)
+
 ```
 
 # Read source files
@@ -74,11 +76,21 @@ OceanSODA <- inner_join(OceanSODA, basinmask)
 
 ```{r rev_fac}
 
-rev_fac <- OceanSODA %>% 
-  select(year, lat, lon, rev_fac = revelle_factor) %>% 
-  group_by(year, lat, lon) %>% 
-  summarise(rev_fac = mean(rev_fac, na.rm = TRUE)) %>% 
-  ungroup() %>% 
+rev_fac <- OceanSODA %>%
+  select(year, lat, lon, rev_fac = revelle_factor) %>%
+  group_by(year, lat, lon) %>%
+  summarise(rev_fac = mean(rev_fac, na.rm = TRUE)) %>%
+  ungroup() %>%
+  drop_na() %>%
+  mutate(
+    grid_area = earth_surf(lat = lat),
+    rev_fac_area = rev_fac * grid_area,
+    lat_bands = cut(lat, seq(-80, 80, 20)),
+    decade = cut(year,
+                 seq(1990, 2020, 10),
+                 right = FALSE,
+                 labels = c("1990-1999", "2000-2009", "2010-2019"))
+  ) %>%
   drop_na()
 
 map +
@@ -87,13 +99,15 @@ map +
   scale_fill_viridis_c() +
   labs(title = "Year: 2010")
 
-library(marelac)
+map +
+  geom_raster(data = rev_fac %>%
+                filter(year == 2010), aes(lon, lat, fill = grid_area)) +
+  scale_fill_viridis_c() +
+  labs(title = "Year: 2010")
+
 
 rev_fac_ave_lat <- rev_fac %>% 
-  mutate(grid_area = earth_surf(lat = lat),
-         rev_fac_area = rev_fac*grid_area,
-         lat_bands = cut(lat, seq(-85, 85, 10))) %>% 
-  group_by(year, lat_bands) %>% 
+  group_by(year, lat_bands, decade) %>% 
   summarise(area_total = sum(grid_area),
             rev_fac_area_total = sum(rev_fac_area),
             rev_fac = rev_fac_area_total / area_total) %>% 
@@ -101,12 +115,34 @@ rev_fac_ave_lat <- rev_fac %>%
 
 rev_fac_ave_lat %>% 
   ggplot(aes(year, rev_fac, col = lat_bands)) +
-  scale_color_scico_d(palette = "berlin") +
+  scale_color_brewer(palette = "Spectral") +
+  geom_path() +
+  geom_point()
+
+rev_fac_ave_lat %>% 
+  ggplot(aes(year, rev_fac, col = decade)) +
+  scale_color_brewer(palette = "Set1") +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  facet_wrap(~lat_bands)
+
+# decadal trends per latitude band
+
+rev_fac_ave_lat_trend <- rev_fac_ave_lat %>% 
+  nest(data = -c(decade, lat_bands)) %>% 
+  mutate(tidy = map(data, ~broom::tidy(lm(rev_fac ~ year, data = .x)))) %>% 
+  select(-data) %>% 
+  unnest(tidy)
+
+
+rev_fac_ave_lat_trend %>% 
+  filter(term == "year") %>% 
+  ggplot(aes(decade, estimate, fill = lat_bands)) +
+  scale_fill_brewer(palette = "Spectral") +
+  geom_point(shape=21) +
   geom_path()
 
 rev_fac_ave <- rev_fac %>% 
-  mutate(grid_area = earth_surf(lat = lat),
-         rev_fac_area = rev_fac*grid_area) %>% 
   group_by(year) %>% 
   summarise(area_total = sum(grid_area),
             rev_fac_area_total = sum(rev_fac_area),
