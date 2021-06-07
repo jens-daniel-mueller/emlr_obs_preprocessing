@@ -602,16 +602,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree0f4222264ec425dd6196d851145dabfb11f50a33targetblank0f42222a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/0f4222264ec425dd6196d851145dabfb11f50a33" target="_blank">0f42222</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree663eb4d9d058d476f1b3e978b967f84b9e5c1cabtargetblank663eb4da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/663eb4d9d058d476f1b3e978b967f84b9e5c1cab" target="_blank">663eb4d</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree0f4222264ec425dd6196d851145dabfb11f50a33targetblank0f42222a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree663eb4d9d058d476f1b3e978b967f84b9e5c1cabtargetblank663eb4da" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/0f4222264ec425dd6196d851145dabfb11f50a33" target="_blank">0f42222</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/663eb4d9d058d476f1b3e978b967f84b9e5c1cab" target="_blank">663eb4d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -659,6 +659,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/663eb4d9d058d476f1b3e978b967f84b9e5c1cab/analysis/read_OceanSODA.Rmd" target="_blank">663eb4d</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-07
+</td>
+<td>
+added multi parameter analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/efc80ab789d17dd030bf099201c60c2c8ff0d87c/docs/read_OceanSODA.html" target="_blank">efc80ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-07
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -738,24 +772,27 @@ OceanSODA &lt;- OceanSODA %&gt;%
          year = year(date))
 
 OceanSODA &lt;- OceanSODA %&gt;%
-  select(year, date, lat, lon, salinity, temperature, DIC, TA, revelle_factor, pCO2)
+  select(year, lat, lon,
+         sal = salinity, temp = temperature,
+         tco2 = DIC, talk = TA, 
+         rev_fac = revelle_factor,
+         pCO2)
 
 OceanSODA &lt;- OceanSODA %&gt;%
   mutate(lon = if_else(lon &lt; 20, lon + 360, lon))
 
 OceanSODA &lt;- inner_join(OceanSODA, basinmask)</code></pre>
-</div>
-<div id="revelle-factor" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> Revelle factor</h1>
-<pre class="r"><code>rev_fac &lt;- OceanSODA %&gt;%
-  select(year, lat, lon, rev_fac = revelle_factor) %&gt;%
+<pre class="r"><code># calculate annual averaged fields
+OceanSODA_annual &lt;- OceanSODA %&gt;%
+  mutate(tco2_over_pCO2 = tco2/pCO2) %&gt;% 
   group_by(year, lat, lon) %&gt;%
-  summarise(rev_fac = mean(rev_fac, na.rm = TRUE)) %&gt;%
-  ungroup() %&gt;%
-  drop_na() %&gt;%
+  summarise_if(is.numeric, mean, na.rm = TRUE) %&gt;% 
+  ungroup()
+
+# grid data in space and time, remove data outside grid
+OceanSODA_annual &lt;- OceanSODA_annual %&gt;%
   mutate(
     grid_area = earth_surf(lat = lat),
-    rev_fac_area = rev_fac * grid_area,
     lat_bands = cut(lat, seq(-80, 80, 20)),
     decade = cut(year,
                  seq(1990, 2020, 10),
@@ -764,178 +801,186 @@ OceanSODA &lt;- inner_join(OceanSODA, basinmask)</code></pre>
   ) %&gt;%
   drop_na()
 
-map +
-  geom_raster(data = rev_fac %&gt;%
-                filter(year == 2010), aes(lon, lat, fill = rev_fac)) +
-  scale_fill_viridis_c() +
-  labs(title = &quot;Year: 2010&quot;)</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/rev_fac-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-rev_fac-1">
-Past versions of rev_fac-1.png
-</button>
-</p>
-<div id="fig-rev_fac-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/265c4ef4b6e0f587db7894674970029c6e38e231/docs/figure/read_OceanSODA.Rmd/rev_fac-1.png" target="_blank">265c4ef</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-04
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+
+# calculate climatological fields
+OceanSODA_clim &lt;- OceanSODA_annual %&gt;%
+  select(-c(year, grid_area)) %&gt;% 
+  group_by(lat, lon) %&gt;%
+  summarise_if(is.numeric, mean, na.rm = TRUE) %&gt;% 
+  ungroup()
+
+
+# calculate area-weighted annual mean within latitude band 
+OceanSODA_annual_lat &lt;- OceanSODA_annual %&gt;%
+  pivot_longer(sal:tco2_over_pCO2,
+               names_to = &quot;parameter&quot;,
+               values_to = &quot;value&quot;) %&gt;%
+  mutate(value_area = value * grid_area) %&gt;% 
+  group_by(year, lat_bands, decade, parameter) %&gt;%
+  summarise(
+    area_total = sum(grid_area),
+    value_area_total = sum(value_area),
+    value_area_ave = value_area_total / area_total
+  ) %&gt;%
+  ungroup() %&gt;% 
+  select(-c(area_total,value_area_total))
+
+
+# fit decadel linear trends per latitude band
+OceanSODA_annual_lat_trend &lt;- OceanSODA_annual_lat %&gt;% 
+  nest(data = -c(decade, lat_bands, parameter)) %&gt;% 
+  mutate(tidy = map(data,
+                    ~tidy(lm(value_area_ave ~ year, data = .x)))) %&gt;% 
+  select(-data) %&gt;% 
+  unnest(tidy)</code></pre>
 <pre class="r"><code>map +
-  geom_raster(data = rev_fac %&gt;%
+  geom_raster(data = OceanSODA_annual %&gt;%
+                filter(year == 2010), aes(lon, lat, fill = lat_bands)) +
+  scale_fill_brewer(palette = &quot;Spectral&quot;) +
+  labs(title = &quot;Year: 2010&quot;)</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/OceanSODA_control_plots-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>map +
+  geom_raster(data = OceanSODA_annual %&gt;%
                 filter(year == 2010), aes(lon, lat, fill = grid_area)) +
   scale_fill_viridis_c() +
   labs(title = &quot;Year: 2010&quot;)</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/rev_fac-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-rev_fac-2">
-Past versions of rev_fac-2.png
-</button>
-</p>
-<div id="fig-rev_fac-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/265c4ef4b6e0f587db7894674970029c6e38e231/docs/figure/read_OceanSODA.Rmd/rev_fac-2.png" target="_blank">265c4ef</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-04
-</td>
-</tr>
-</tbody>
-</table>
+<p><img src="figure/read_OceanSODA.Rmd/OceanSODA_control_plots-2.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
+<div id="climatology-map" class="section level1" number="2">
+<h1 number="2"><span class="header-section-number">2</span> Climatology map</h1>
+<pre class="r"><code>OceanSODA_clim %&gt;%
+  pivot_longer(sal:tco2_over_pCO2,
+               names_to = &quot;parameter&quot;,
+               values_to = &quot;value&quot;) %&gt;%
+  group_split(parameter) %&gt;%
+  # head(1) %&gt;% 
+  map( ~ map +
+         geom_raster(data = .x,
+                     aes(lon, lat, fill = value)) +
+         scale_fill_viridis_c(name = .x$parameter))</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[4]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[5]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[6]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[7]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-7.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<pre class="r"><code>rev_fac_ave_lat &lt;- rev_fac %&gt;% 
-  group_by(year, lat_bands, decade) %&gt;% 
-  summarise(area_total = sum(grid_area),
-            rev_fac_area_total = sum(rev_fac_area),
-            rev_fac = rev_fac_area_total / area_total) %&gt;% 
-  ungroup()
-
-rev_fac_ave_lat %&gt;% 
-  ggplot(aes(year, rev_fac, col = lat_bands)) +
-  scale_color_brewer(palette = &quot;Spectral&quot;) +
-  geom_path() +
-  geom_point()</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/rev_fac-3.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-rev_fac-3">
-Past versions of rev_fac-3.png
-</button>
-</p>
-<div id="fig-rev_fac-3" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/265c4ef4b6e0f587db7894674970029c6e38e231/docs/figure/read_OceanSODA.Rmd/rev_fac-3.png" target="_blank">265c4ef</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-04
-</td>
-</tr>
-</tbody>
-</table>
+<div id="time-series" class="section level1" number="3">
+<h1 number="3"><span class="header-section-number">3</span> Time series</h1>
+<pre class="r"><code>OceanSODA_annual_lat %&gt;%
+  group_split(parameter) %&gt;%
+  # head(1) %&gt;% 
+  map(
+    ~ ggplot(data = .x,
+             aes(year, value_area_ave, col = lat_bands)) +
+      scale_color_brewer(palette = &quot;Spectral&quot;) +
+      geom_path() +
+      geom_point() +
+      labs(y = .x$parameter)
+  )</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/time_series-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/time_series-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/time_series-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[4]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/time_series-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[5]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/time_series-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[6]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/time_series-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[7]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/time_series-7.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-</div>
-<pre class="r"><code>rev_fac_ave_lat %&gt;% 
-  ggplot(aes(year, rev_fac, col = decade)) +
-  scale_color_brewer(palette = &quot;Set1&quot;) +
-  geom_point() +
-  geom_smooth(method = &quot;lm&quot;, se = FALSE) +
-  facet_wrap(~lat_bands)</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/rev_fac-4.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code># decadal trends per latitude band
-
-rev_fac_ave_lat_trend &lt;- rev_fac_ave_lat %&gt;% 
-  nest(data = -c(decade, lat_bands)) %&gt;% 
-  mutate(tidy = map(data, ~broom::tidy(lm(rev_fac ~ year, data = .x)))) %&gt;% 
-  select(-data) %&gt;% 
-  unnest(tidy)
-
-
-rev_fac_ave_lat_trend %&gt;% 
-  filter(term == &quot;year&quot;) %&gt;% 
-  ggplot(aes(decade, estimate, fill = lat_bands)) +
-  scale_fill_brewer(palette = &quot;Spectral&quot;) +
-  geom_point(shape=21) +
-  geom_path()</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/rev_fac-5.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>rev_fac_ave &lt;- rev_fac %&gt;% 
-  group_by(year) %&gt;% 
-  summarise(area_total = sum(grid_area),
-            rev_fac_area_total = sum(rev_fac_area),
-            rev_fac = rev_fac_area_total / area_total) %&gt;% 
-  ungroup()
-
-rev_fac_ave %&gt;% 
-  ggplot(aes(year, rev_fac)) +
-  scale_color_scico_d(palette = &quot;berlin&quot;) +
-  geom_path() +
-  geom_smooth(method = &quot;lm&quot;)</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/rev_fac-6.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="decadel-trends" class="section level1" number="4">
+<h1 number="4"><span class="header-section-number">4</span> Decadel trends</h1>
+<div id="lat-bands" class="section level2" number="4.1">
+<h2 number="4.1"><span class="header-section-number">4.1</span> Lat bands</h2>
+<pre class="r"><code>OceanSODA_annual_lat %&gt;%
+  group_split(parameter) %&gt;%
+  # head(1) %&gt;%
+  map(
+    ~ ggplot(data = .x,
+             aes(year, value_area_ave, col = decade)) +
+      scale_color_brewer(palette = &quot;Set1&quot;) +
+      geom_point() +
+      labs(y = .x$parameter) +
+      geom_smooth(method = &quot;lm&quot;, se = FALSE) +
+      facet_wrap( ~ lat_bands)
+  )</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[4]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[5]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[6]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[7]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>OceanSODA_annual_lat_trend %&gt;%
+  filter(term == &quot;year&quot;) %&gt;%
+  group_split(parameter) %&gt;%
+  # head(1) %&gt;%
+  map(
+    ~ ggplot(data = .x,
+             aes(decade, estimate, fill = lat_bands)) +
+      scale_fill_brewer(palette = &quot;Spectral&quot;) +
+      geom_point(shape = 21) +
+      geom_path() +
+      labs(y = paste(.x$parameter, &quot;annual change&quot;))
+  )</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-9.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-10.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[4]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-11.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[5]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-12.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[6]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-13.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[7]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-14.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -964,11 +1009,11 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] marelac_2.1.10  shape_1.4.5     lubridate_1.7.9 tidync_0.2.4   
- [5] metR_0.9.0      scico_1.2.0     patchwork_1.1.1 collapse_1.5.0 
- [9] forcats_0.5.0   stringr_1.4.0   dplyr_1.0.5     purrr_0.3.4    
-[13] readr_1.4.0     tidyr_1.1.2     tibble_3.0.4    ggplot2_3.3.3  
-[17] tidyverse_1.3.0 workflowr_1.6.2
+ [1] broom_0.7.5     marelac_2.1.10  shape_1.4.5     lubridate_1.7.9
+ [5] tidync_0.2.4    metR_0.9.0      scico_1.2.0     patchwork_1.1.1
+ [9] collapse_1.5.0  forcats_0.5.0   stringr_1.4.0   dplyr_1.0.5    
+[13] purrr_0.3.4     readr_1.4.0     tidyr_1.1.2     tibble_3.0.4   
+[17] ggplot2_3.3.3   tidyverse_1.3.0 workflowr_1.6.2
 
 loaded via a namespace (and not attached):
  [1] nlme_3.1-149             fs_1.5.0                 gsw_1.0-5               
@@ -994,9 +1039,9 @@ loaded via a namespace (and not attached):
 [61] RcppArmadillo_0.10.1.2.0 data.table_1.13.2        modelr_0.1.8            
 [64] vctrs_0.3.5              httpuv_1.5.4             testthat_2.3.2          
 [67] cellranger_1.1.0         gtable_0.3.0             assertthat_0.2.1        
-[70] xfun_0.18                broom_0.7.5              RcppEigen_0.3.3.7.0     
-[73] later_1.1.0.1            ncdf4_1.17               viridisLite_0.3.0       
-[76] ellipsis_0.3.1          </code></pre>
+[70] xfun_0.18                RcppEigen_0.3.3.7.0      later_1.1.0.1           
+[73] ncdf4_1.17               viridisLite_0.3.0        ellipsis_0.3.1          </code></pre>
+</div>
 </div>
 </div>
 
