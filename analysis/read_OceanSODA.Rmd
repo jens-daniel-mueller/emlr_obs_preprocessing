@@ -28,7 +28,7 @@ path_preprocessing    <- paste(path_root, "/observations/preprocessing/", sep = 
 library(tidync)
 library(lubridate)
 library(marelac)
-
+library(broom)
 ```
 
 # Read source files
@@ -63,7 +63,11 @@ OceanSODA <- OceanSODA %>%
          year = year(date))
 
 OceanSODA <- OceanSODA %>%
-  select(year, date, lat, lon, salinity, temperature, DIC, TA, revelle_factor, pCO2)
+  select(year, lat, lon,
+         sal = salinity, temp = temperature,
+         tco2 = DIC, talk = TA, 
+         rev_fac = revelle_factor,
+         pCO2)
 
 OceanSODA <- OceanSODA %>%
   mutate(lon = if_else(lon < 20, lon + 360, lon))
@@ -72,19 +76,19 @@ OceanSODA <- inner_join(OceanSODA, basinmask)
 
 ```
 
-# Revelle factor
+```{r prep_OceanSODA}
 
-```{r rev_fac}
-
-rev_fac <- OceanSODA %>%
-  select(year, lat, lon, rev_fac = revelle_factor) %>%
+# calculate annual averaged fields
+OceanSODA_annual <- OceanSODA %>%
+  mutate(tco2_over_pCO2 = tco2/pCO2) %>% 
   group_by(year, lat, lon) %>%
-  summarise(rev_fac = mean(rev_fac, na.rm = TRUE)) %>%
-  ungroup() %>%
-  drop_na() %>%
+  summarise_if(is.numeric, mean, na.rm = TRUE) %>% 
+  ungroup()
+
+# grid data in space and time, remove data outside grid
+OceanSODA_annual <- OceanSODA_annual %>%
   mutate(
     grid_area = earth_surf(lat = lat),
-    rev_fac_area = rev_fac * grid_area,
     lat_bands = cut(lat, seq(-80, 80, 20)),
     decade = cut(year,
                  seq(1990, 2020, 10),
@@ -93,72 +97,129 @@ rev_fac <- OceanSODA %>%
   ) %>%
   drop_na()
 
+
+# calculate climatological fields
+OceanSODA_clim <- OceanSODA_annual %>%
+  select(-c(year, grid_area)) %>% 
+  group_by(lat, lon) %>%
+  summarise_if(is.numeric, mean, na.rm = TRUE) %>% 
+  ungroup()
+
+
+# calculate area-weighted annual mean within latitude band 
+OceanSODA_annual_lat <- OceanSODA_annual %>%
+  pivot_longer(sal:tco2_over_pCO2,
+               names_to = "parameter",
+               values_to = "value") %>%
+  mutate(value_area = value * grid_area) %>% 
+  group_by(year, lat_bands, decade, parameter) %>%
+  summarise(
+    area_total = sum(grid_area),
+    value_area_total = sum(value_area),
+    value_area_ave = value_area_total / area_total
+  ) %>%
+  ungroup() %>% 
+  select(-c(area_total,value_area_total))
+
+
+# fit decadel linear trends per latitude band
+OceanSODA_annual_lat_trend <- OceanSODA_annual_lat %>% 
+  nest(data = -c(decade, lat_bands, parameter)) %>% 
+  mutate(tidy = map(data,
+                    ~tidy(lm(value_area_ave ~ year, data = .x)))) %>% 
+  select(-data) %>% 
+  unnest(tidy)
+
+
+```
+
+```{r OceanSODA_control_plots}
+
 map +
-  geom_raster(data = rev_fac %>%
-                filter(year == 2010), aes(lon, lat, fill = rev_fac)) +
-  scale_fill_viridis_c() +
+  geom_raster(data = OceanSODA_annual %>%
+                filter(year == 2010), aes(lon, lat, fill = lat_bands)) +
+  scale_fill_brewer(palette = "Spectral") +
   labs(title = "Year: 2010")
 
 map +
-  geom_raster(data = rev_fac %>%
+  geom_raster(data = OceanSODA_annual %>%
                 filter(year == 2010), aes(lon, lat, fill = grid_area)) +
   scale_fill_viridis_c() +
   labs(title = "Year: 2010")
 
 
-rev_fac_ave_lat <- rev_fac %>% 
-  group_by(year, lat_bands, decade) %>% 
-  summarise(area_total = sum(grid_area),
-            rev_fac_area_total = sum(rev_fac_area),
-            rev_fac = rev_fac_area_total / area_total) %>% 
-  ungroup()
-
-rev_fac_ave_lat %>% 
-  ggplot(aes(year, rev_fac, col = lat_bands)) +
-  scale_color_brewer(palette = "Spectral") +
-  geom_path() +
-  geom_point()
-
-rev_fac_ave_lat %>% 
-  ggplot(aes(year, rev_fac, col = decade)) +
-  scale_color_brewer(palette = "Set1") +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE) +
-  facet_wrap(~lat_bands)
-
-# decadal trends per latitude band
-
-rev_fac_ave_lat_trend <- rev_fac_ave_lat %>% 
-  nest(data = -c(decade, lat_bands)) %>% 
-  mutate(tidy = map(data, ~broom::tidy(lm(rev_fac ~ year, data = .x)))) %>% 
-  select(-data) %>% 
-  unnest(tidy)
+```
 
 
-rev_fac_ave_lat_trend %>% 
-  filter(term == "year") %>% 
-  ggplot(aes(decade, estimate, fill = lat_bands)) +
-  scale_fill_brewer(palette = "Spectral") +
-  geom_point(shape=21) +
-  geom_path()
+# Climatology map
 
-rev_fac_ave <- rev_fac %>% 
-  group_by(year) %>% 
-  summarise(area_total = sum(grid_area),
-            rev_fac_area_total = sum(rev_fac_area),
-            rev_fac = rev_fac_area_total / area_total) %>% 
-  ungroup()
+```{r rev_fac_climatology_maps}
 
-rev_fac_ave %>% 
-  ggplot(aes(year, rev_fac)) +
-  scale_color_scico_d(palette = "berlin") +
-  geom_path() +
-  geom_smooth(method = "lm")
+OceanSODA_clim %>%
+  pivot_longer(sal:tco2_over_pCO2,
+               names_to = "parameter",
+               values_to = "value") %>%
+  group_split(parameter) %>%
+  # head(1) %>% 
+  map( ~ map +
+         geom_raster(data = .x,
+                     aes(lon, lat, fill = value)) +
+         scale_fill_viridis_c(name = .x$parameter))
 
 
 ```
 
+# Time series
+
+```{r time_series}
+
+OceanSODA_annual_lat %>%
+  group_split(parameter) %>%
+  # head(1) %>% 
+  map(
+    ~ ggplot(data = .x,
+             aes(year, value_area_ave, col = lat_bands)) +
+      scale_color_brewer(palette = "Spectral") +
+      geom_path() +
+      geom_point() +
+      labs(y = .x$parameter)
+  )
+
+```
+
+# Decadel trends
+
+## Lat bands
+
+```{r decadel_trends}
+
+OceanSODA_annual_lat %>%
+  group_split(parameter) %>%
+  # head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(year, value_area_ave, col = decade)) +
+      scale_color_brewer(palette = "Set1") +
+      geom_point() +
+      labs(y = .x$parameter) +
+      geom_smooth(method = "lm", se = FALSE) +
+      facet_wrap( ~ lat_bands)
+  )
 
 
+OceanSODA_annual_lat_trend %>%
+  filter(term == "year") %>%
+  group_split(parameter) %>%
+  # head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(decade, estimate, fill = lat_bands)) +
+      scale_fill_brewer(palette = "Spectral") +
+      geom_point(shape = 21) +
+      geom_path() +
+      labs(y = paste(.x$parameter, "annual change"))
+  )
+
+```
 
 
