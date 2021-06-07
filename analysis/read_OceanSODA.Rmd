@@ -79,14 +79,15 @@ OceanSODA <- inner_join(OceanSODA, basinmask)
 ```{r prep_OceanSODA}
 
 # calculate annual averaged fields
-OceanSODA_annual <- OceanSODA %>%
-  mutate(tco2_over_pCO2 = tco2/pCO2) %>% 
+OceanSODA_annual_all <- OceanSODA %>%
+  mutate(tco2_over_pCO2 = tco2 / pCO2) %>%
   group_by(year, lat, lon) %>%
-  summarise_if(is.numeric, mean, na.rm = TRUE) %>% 
-  ungroup()
+  summarise_if(is.numeric, mean, na.rm = TRUE) %>%
+  ungroup() %>%
+  mutate(grid_area = earth_surf(lat = lat))
 
 # grid data in space and time, remove data outside grid
-OceanSODA_annual <- OceanSODA_annual %>%
+OceanSODA_annual <- OceanSODA_annual_all %>%
   mutate(
     grid_area = earth_surf(lat = lat),
     lat_bands = cut(lat, seq(-80, 80, 20)),
@@ -155,8 +156,27 @@ OceanSODA_annual_glob_trend <- OceanSODA_annual_glob %>%
   select(-data) %>% 
   unnest(tidy)
 
+```
+
+```{r test_revelle_factor_calculation, eval=FALSE}
+
+OceanSODA_annual_all_test <- OceanSODA_annual_all
 
 ```
+
+
+
+## Write file
+
+```{r write_WOA18_nuts_O2_predictor_file}
+
+OceanSODA_annual_all %>%
+  write_csv(paste0(path_preprocessing,
+                   "OceanSODA.csv"))
+
+```
+
+
 
 ## Control plots
 
