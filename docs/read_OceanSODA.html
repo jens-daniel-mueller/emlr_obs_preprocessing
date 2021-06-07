@@ -486,7 +486,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">GLODAPv2_2016: Mapped Climatologies</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">04 June, 2021</h4>
+<h4 class="date">07 June, 2021</h4>
 
 </div>
 
@@ -511,7 +511,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-06-04
+<strong>Last updated:</strong> 2021-06-07
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -602,16 +602,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree00065c8d3db5c3a1332561f53c149348dd27a6fbtargetblank00065c8a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/00065c8d3db5c3a1332561f53c149348dd27a6fb" target="_blank">00065c8</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree0f4222264ec425dd6196d851145dabfb11f50a33targetblank0f42222a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/0f4222264ec425dd6196d851145dabfb11f50a33" target="_blank">0f42222</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree00065c8d3db5c3a1332561f53c149348dd27a6fbtargetblank00065c8a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree0f4222264ec425dd6196d851145dabfb11f50a33targetblank0f42222a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/00065c8d3db5c3a1332561f53c149348dd27a6fb" target="_blank">00065c8</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/0f4222264ec425dd6196d851145dabfb11f50a33" target="_blank">0f42222</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -621,10 +621,6 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/
-
-Unstaged changes:
-    Modified:   analysis/_site.yml
-    Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
 <p>
@@ -663,6 +659,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0f4222264ec425dd6196d851145dabfb11f50a33/analysis/read_OceanSODA.Rmd" target="_blank">0f42222</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-07
+</td>
+<td>
+improved revelle factor analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/265c4ef4b6e0f587db7894674970029c6e38e231/docs/read_OceanSODA.html" target="_blank">265c4ef</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-04
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -717,11 +747,21 @@ OceanSODA &lt;- inner_join(OceanSODA, basinmask)</code></pre>
 </div>
 <div id="revelle-factor" class="section level1" number="2">
 <h1 number="2"><span class="header-section-number">2</span> Revelle factor</h1>
-<pre class="r"><code>rev_fac &lt;- OceanSODA %&gt;% 
-  select(year, lat, lon, rev_fac = revelle_factor) %&gt;% 
-  group_by(year, lat, lon) %&gt;% 
-  summarise(rev_fac = mean(rev_fac, na.rm = TRUE)) %&gt;% 
-  ungroup() %&gt;% 
+<pre class="r"><code>rev_fac &lt;- OceanSODA %&gt;%
+  select(year, lat, lon, rev_fac = revelle_factor) %&gt;%
+  group_by(year, lat, lon) %&gt;%
+  summarise(rev_fac = mean(rev_fac, na.rm = TRUE)) %&gt;%
+  ungroup() %&gt;%
+  drop_na() %&gt;%
+  mutate(
+    grid_area = earth_surf(lat = lat),
+    rev_fac_area = rev_fac * grid_area,
+    lat_bands = cut(lat, seq(-80, 80, 20)),
+    decade = cut(year,
+                 seq(1990, 2020, 10),
+                 right = FALSE,
+                 labels = c(&quot;1990-1999&quot;, &quot;2000-2009&quot;, &quot;2010-2019&quot;))
+  ) %&gt;%
   drop_na()
 
 map +
@@ -730,13 +770,88 @@ map +
   scale_fill_viridis_c() +
   labs(title = &quot;Year: 2010&quot;)</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/rev_fac-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>library(marelac)</code></pre>
-<pre><code>Error in get(genname, envir = envir) : object &#39;testthat_print&#39; not found</code></pre>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-rev_fac-1">
+Past versions of rev_fac-1.png
+</button>
+</p>
+<div id="fig-rev_fac-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/265c4ef4b6e0f587db7894674970029c6e38e231/docs/figure/read_OceanSODA.Rmd/rev_fac-1.png" target="_blank">265c4ef</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>map +
+  geom_raster(data = rev_fac %&gt;%
+                filter(year == 2010), aes(lon, lat, fill = grid_area)) +
+  scale_fill_viridis_c() +
+  labs(title = &quot;Year: 2010&quot;)</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/rev_fac-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-rev_fac-2">
+Past versions of rev_fac-2.png
+</button>
+</p>
+<div id="fig-rev_fac-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/265c4ef4b6e0f587db7894674970029c6e38e231/docs/figure/read_OceanSODA.Rmd/rev_fac-2.png" target="_blank">265c4ef</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>rev_fac_ave_lat &lt;- rev_fac %&gt;% 
-  mutate(grid_area = earth_surf(lat = lat),
-         rev_fac_area = rev_fac*grid_area,
-         lat_bands = cut(lat, seq(-85, 85, 10))) %&gt;% 
-  group_by(year, lat_bands) %&gt;% 
+  group_by(year, lat_bands, decade) %&gt;% 
   summarise(area_total = sum(grid_area),
             rev_fac_area_total = sum(rev_fac_area),
             rev_fac = rev_fac_area_total / area_total) %&gt;% 
@@ -744,12 +859,71 @@ map +
 
 rev_fac_ave_lat %&gt;% 
   ggplot(aes(year, rev_fac, col = lat_bands)) +
-  scale_color_scico_d(palette = &quot;berlin&quot;) +
+  scale_color_brewer(palette = &quot;Spectral&quot;) +
+  geom_path() +
+  geom_point()</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/rev_fac-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-rev_fac-3">
+Past versions of rev_fac-3.png
+</button>
+</p>
+<div id="fig-rev_fac-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/265c4ef4b6e0f587db7894674970029c6e38e231/docs/figure/read_OceanSODA.Rmd/rev_fac-3.png" target="_blank">265c4ef</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>rev_fac_ave_lat %&gt;% 
+  ggplot(aes(year, rev_fac, col = decade)) +
+  scale_color_brewer(palette = &quot;Set1&quot;) +
+  geom_point() +
+  geom_smooth(method = &quot;lm&quot;, se = FALSE) +
+  facet_wrap(~lat_bands)</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/rev_fac-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># decadal trends per latitude band
+
+rev_fac_ave_lat_trend &lt;- rev_fac_ave_lat %&gt;% 
+  nest(data = -c(decade, lat_bands)) %&gt;% 
+  mutate(tidy = map(data, ~broom::tidy(lm(rev_fac ~ year, data = .x)))) %&gt;% 
+  select(-data) %&gt;% 
+  unnest(tidy)
+
+
+rev_fac_ave_lat_trend %&gt;% 
+  filter(term == &quot;year&quot;) %&gt;% 
+  ggplot(aes(decade, estimate, fill = lat_bands)) +
+  scale_fill_brewer(palette = &quot;Spectral&quot;) +
+  geom_point(shape=21) +
   geom_path()</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/rev_fac-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_OceanSODA.Rmd/rev_fac-5.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>rev_fac_ave &lt;- rev_fac %&gt;% 
-  mutate(grid_area = earth_surf(lat = lat),
-         rev_fac_area = rev_fac*grid_area) %&gt;% 
   group_by(year) %&gt;% 
   summarise(area_total = sum(grid_area),
             rev_fac_area_total = sum(rev_fac_area),
@@ -761,7 +935,7 @@ rev_fac_ave %&gt;%
   scale_color_scico_d(palette = &quot;berlin&quot;) +
   geom_path() +
   geom_smooth(method = &quot;lm&quot;)</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/rev_fac-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_OceanSODA.Rmd/rev_fac-6.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -798,30 +972,31 @@ other attached packages:
 
 loaded via a namespace (and not attached):
  [1] nlme_3.1-149             fs_1.5.0                 gsw_1.0-5               
- [4] httr_1.4.2               rprojroot_2.0.2          tools_4.0.3             
- [7] backports_1.1.10         R6_2.5.0                 DBI_1.1.0               
-[10] mgcv_1.8-33              colorspace_1.4-1         withr_2.3.0             
-[13] tidyselect_1.1.0         compiler_4.0.3           git2r_0.27.1            
-[16] cli_2.1.0                rvest_0.3.6              RNetCDF_2.4-2           
-[19] xml2_1.3.2               labeling_0.4.2           scales_1.1.1            
-[22] checkmate_2.0.0          digest_0.6.27            rmarkdown_2.5           
-[25] oce_1.2-0                pkgconfig_2.0.3          htmltools_0.5.0         
-[28] dbplyr_1.4.4             rlang_0.4.10             readxl_1.3.1            
-[31] rstudioapi_0.11          generics_0.0.2           farver_2.0.3            
-[34] jsonlite_1.7.1           magrittr_1.5             ncmeta_0.3.0            
-[37] Matrix_1.2-18            Rcpp_1.0.5               munsell_0.5.0           
-[40] fansi_0.4.1              lifecycle_1.0.0          stringi_1.5.3           
-[43] whisker_0.4              yaml_2.2.1               grid_4.0.3              
-[46] blob_1.2.1               parallel_4.0.3           promises_1.1.1          
-[49] crayon_1.3.4             lattice_0.20-41          splines_4.0.3           
-[52] haven_2.3.1              hms_0.5.3                seacarb_3.2.14          
-[55] knitr_1.30               pillar_1.4.7             reprex_0.3.0            
-[58] glue_1.4.2               evaluate_0.14            RcppArmadillo_0.10.1.2.0
-[61] data.table_1.13.2        modelr_0.1.8             vctrs_0.3.5             
-[64] httpuv_1.5.4             testthat_2.3.2           cellranger_1.1.0        
-[67] gtable_0.3.0             assertthat_0.2.1         xfun_0.18               
-[70] broom_0.7.5              RcppEigen_0.3.3.7.0      later_1.1.0.1           
-[73] ncdf4_1.17               viridisLite_0.3.0        ellipsis_0.3.1          </code></pre>
+ [4] RColorBrewer_1.1-2       httr_1.4.2               rprojroot_2.0.2         
+ [7] tools_4.0.3              backports_1.1.10         R6_2.5.0                
+[10] mgcv_1.8-33              DBI_1.1.0                colorspace_1.4-1        
+[13] withr_2.3.0              tidyselect_1.1.0         compiler_4.0.3          
+[16] git2r_0.27.1             cli_2.1.0                rvest_0.3.6             
+[19] RNetCDF_2.4-2            xml2_1.3.2               labeling_0.4.2          
+[22] scales_1.1.1             checkmate_2.0.0          digest_0.6.27           
+[25] rmarkdown_2.5            oce_1.2-0                pkgconfig_2.0.3         
+[28] htmltools_0.5.0          dbplyr_1.4.4             rlang_0.4.10            
+[31] readxl_1.3.1             rstudioapi_0.11          generics_0.0.2          
+[34] farver_2.0.3             jsonlite_1.7.1           magrittr_1.5            
+[37] ncmeta_0.3.0             Matrix_1.2-18            Rcpp_1.0.5              
+[40] munsell_0.5.0            fansi_0.4.1              lifecycle_1.0.0         
+[43] stringi_1.5.3            whisker_0.4              yaml_2.2.1              
+[46] grid_4.0.3               blob_1.2.1               parallel_4.0.3          
+[49] promises_1.1.1           crayon_1.3.4             lattice_0.20-41         
+[52] splines_4.0.3            haven_2.3.1              hms_0.5.3               
+[55] seacarb_3.2.14           knitr_1.30               pillar_1.4.7            
+[58] reprex_0.3.0             glue_1.4.2               evaluate_0.14           
+[61] RcppArmadillo_0.10.1.2.0 data.table_1.13.2        modelr_0.1.8            
+[64] vctrs_0.3.5              httpuv_1.5.4             testthat_2.3.2          
+[67] cellranger_1.1.0         gtable_0.3.0             assertthat_0.2.1        
+[70] xfun_0.18                broom_0.7.5              RcppEigen_0.3.3.7.0     
+[73] later_1.1.0.1            ncdf4_1.17               viridisLite_0.3.0       
+[76] ellipsis_0.3.1          </code></pre>
 </div>
 </div>
 
