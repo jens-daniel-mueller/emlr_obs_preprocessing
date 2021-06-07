@@ -131,9 +131,36 @@ OceanSODA_annual_lat_trend <- OceanSODA_annual_lat %>%
   unnest(tidy)
 
 
+# calculate area-weighted annual mean globally
+OceanSODA_annual_glob <- OceanSODA_annual %>%
+  pivot_longer(sal:tco2_over_pCO2,
+               names_to = "parameter",
+               values_to = "value") %>%
+  mutate(value_area = value * grid_area) %>% 
+  group_by(year, decade, parameter) %>%
+  summarise(
+    area_total = sum(grid_area),
+    value_area_total = sum(value_area),
+    value_area_ave = value_area_total / area_total
+  ) %>%
+  ungroup() %>% 
+  select(-c(area_total,value_area_total))
+
+
+# fit decadel linear trends globally
+OceanSODA_annual_glob_trend <- OceanSODA_annual_glob %>% 
+  nest(data = -c(decade, parameter)) %>% 
+  mutate(tidy = map(data,
+                    ~tidy(lm(value_area_ave ~ year, data = .x)))) %>% 
+  select(-data) %>% 
+  unnest(tidy)
+
+
 ```
 
-```{r OceanSODA_control_plots}
+## Control plots
+
+```{r OceanSODA_control_plots, fig.asp=0.5}
 
 map +
   geom_raster(data = OceanSODA_annual %>%
@@ -153,7 +180,7 @@ map +
 
 # Climatology map
 
-```{r rev_fac_climatology_maps}
+```{r rev_fac_climatology_maps, fig.asp=0.5}
 
 OceanSODA_clim %>%
   pivot_longer(sal:tco2_over_pCO2,
@@ -189,9 +216,42 @@ OceanSODA_annual_lat %>%
 
 # Decadel trends
 
-## Lat bands
+## Global
 
-```{r decadel_trends}
+```{r decadel_trends_glob, fig.asp=0.5}
+
+OceanSODA_annual_glob %>%
+  group_split(parameter) %>%
+  # head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(year, value_area_ave, col = decade)) +
+      scale_color_brewer(palette = "Set1") +
+      geom_point() +
+      labs(y = .x$parameter) +
+      geom_smooth(method = "lm", se = FALSE)
+  )
+
+
+OceanSODA_annual_glob_trend %>%
+  filter(term == "year") %>%
+  group_split(parameter) %>%
+  # head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(decade, estimate)) +
+      scale_fill_brewer(palette = "Spectral") +
+      geom_point(shape = 21) +
+      geom_path() +
+      labs(y = paste(.x$parameter, "annual change"))
+  )
+
+```
+
+
+## Latitude bands
+
+```{r decadel_trends_lat, fig.asp=0.5}
 
 OceanSODA_annual_lat %>%
   group_split(parameter) %>%
