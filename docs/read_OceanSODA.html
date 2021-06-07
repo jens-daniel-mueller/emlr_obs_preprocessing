@@ -602,16 +602,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree663eb4d9d058d476f1b3e978b967f84b9e5c1cabtargetblank663eb4da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/663eb4d9d058d476f1b3e978b967f84b9e5c1cab" target="_blank">663eb4d</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreef16f7188d56ef11af9901d7dd117871125f412c8targetblankf16f718a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/f16f7188d56ef11af9901d7dd117871125f412c8" target="_blank">f16f718</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree663eb4d9d058d476f1b3e978b967f84b9e5c1cabtargetblank663eb4da" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreef16f7188d56ef11af9901d7dd117871125f412c8targetblankf16f718a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/663eb4d9d058d476f1b3e978b967f84b9e5c1cab" target="_blank">663eb4d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/f16f7188d56ef11af9901d7dd117871125f412c8" target="_blank">f16f718</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -659,6 +659,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f16f7188d56ef11af9901d7dd117871125f412c8/analysis/read_OceanSODA.Rmd" target="_blank">f16f718</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-07
+</td>
+<td>
+added multi parameter analysis global trends
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/read_OceanSODA.html" target="_blank">8186273</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-07
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -832,19 +866,121 @@ OceanSODA_annual_lat_trend &lt;- OceanSODA_annual_lat %&gt;%
   mutate(tidy = map(data,
                     ~tidy(lm(value_area_ave ~ year, data = .x)))) %&gt;% 
   select(-data) %&gt;% 
+  unnest(tidy)
+
+
+# calculate area-weighted annual mean globally
+OceanSODA_annual_glob &lt;- OceanSODA_annual %&gt;%
+  pivot_longer(sal:tco2_over_pCO2,
+               names_to = &quot;parameter&quot;,
+               values_to = &quot;value&quot;) %&gt;%
+  mutate(value_area = value * grid_area) %&gt;% 
+  group_by(year, decade, parameter) %&gt;%
+  summarise(
+    area_total = sum(grid_area),
+    value_area_total = sum(value_area),
+    value_area_ave = value_area_total / area_total
+  ) %&gt;%
+  ungroup() %&gt;% 
+  select(-c(area_total,value_area_total))
+
+
+# fit decadel linear trends globally
+OceanSODA_annual_glob_trend &lt;- OceanSODA_annual_glob %&gt;% 
+  nest(data = -c(decade, parameter)) %&gt;% 
+  mutate(tidy = map(data,
+                    ~tidy(lm(value_area_ave ~ year, data = .x)))) %&gt;% 
+  select(-data) %&gt;% 
   unnest(tidy)</code></pre>
+<div id="control-plots" class="section level2" number="1.1">
+<h2 number="1.1"><span class="header-section-number">1.1</span> Control plots</h2>
 <pre class="r"><code>map +
   geom_raster(data = OceanSODA_annual %&gt;%
                 filter(year == 2010), aes(lon, lat, fill = lat_bands)) +
   scale_fill_brewer(palette = &quot;Spectral&quot;) +
   labs(title = &quot;Year: 2010&quot;)</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/OceanSODA_control_plots-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-OceanSODA_control_plots-1">
+Past versions of OceanSODA_control_plots-1.png
+</button>
+</p>
+<div id="fig-OceanSODA_control_plots-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/figure/read_OceanSODA.Rmd/OceanSODA_control_plots-1.png" target="_blank">8186273</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>map +
   geom_raster(data = OceanSODA_annual %&gt;%
                 filter(year == 2010), aes(lon, lat, fill = grid_area)) +
   scale_fill_viridis_c() +
   labs(title = &quot;Year: 2010&quot;)</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/OceanSODA_control_plots-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-OceanSODA_control_plots-2">
+Past versions of OceanSODA_control_plots-2.png
+</button>
+</p>
+<div id="fig-OceanSODA_control_plots-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/figure/read_OceanSODA.Rmd/OceanSODA_control_plots-2.png" target="_blank">8186273</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 </div>
 <div id="climatology-map" class="section level1" number="2">
 <h1 number="2"><span class="header-section-number">2</span> Climatology map</h1>
@@ -860,24 +996,283 @@ OceanSODA_annual_lat_trend &lt;- OceanSODA_annual_lat %&gt;%
          scale_fill_viridis_c(name = .x$parameter))</code></pre>
 <pre><code>[[1]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-rev_fac_climatology_maps-1">
+Past versions of rev_fac_climatology_maps-1.png
+</button>
+</p>
+<div id="fig-rev_fac_climatology_maps-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-1.png" target="_blank">8186273</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[2]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-rev_fac_climatology_maps-2">
+Past versions of rev_fac_climatology_maps-2.png
+</button>
+</p>
+<div id="fig-rev_fac_climatology_maps-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-2.png" target="_blank">8186273</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[3]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-rev_fac_climatology_maps-3">
+Past versions of rev_fac_climatology_maps-3.png
+</button>
+</p>
+<div id="fig-rev_fac_climatology_maps-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-3.png" target="_blank">8186273</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[4]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-rev_fac_climatology_maps-4">
+Past versions of rev_fac_climatology_maps-4.png
+</button>
+</p>
+<div id="fig-rev_fac_climatology_maps-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-4.png" target="_blank">8186273</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[5]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-rev_fac_climatology_maps-5">
+Past versions of rev_fac_climatology_maps-5.png
+</button>
+</p>
+<div id="fig-rev_fac_climatology_maps-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-5.png" target="_blank">8186273</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[6]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-rev_fac_climatology_maps-6">
+Past versions of rev_fac_climatology_maps-6.png
+</button>
+</p>
+<div id="fig-rev_fac_climatology_maps-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-6.png" target="_blank">8186273</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[7]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-rev_fac_climatology_maps-7">
+Past versions of rev_fac_climatology_maps-7.png
+</button>
+</p>
+<div id="fig-rev_fac_climatology_maps-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-7.png" target="_blank">8186273</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="time-series" class="section level1" number="3">
 <h1 number="3"><span class="header-section-number">3</span> Time series</h1>
@@ -894,29 +1289,354 @@ OceanSODA_annual_lat_trend &lt;- OceanSODA_annual_lat %&gt;%
   )</code></pre>
 <pre><code>[[1]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/time_series-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-time_series-1">
+Past versions of time_series-1.png
+</button>
+</p>
+<div id="fig-time_series-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/figure/read_OceanSODA.Rmd/time_series-1.png" target="_blank">8186273</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[2]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/time_series-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-time_series-2">
+Past versions of time_series-2.png
+</button>
+</p>
+<div id="fig-time_series-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/figure/read_OceanSODA.Rmd/time_series-2.png" target="_blank">8186273</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[3]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/time_series-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-time_series-3">
+Past versions of time_series-3.png
+</button>
+</p>
+<div id="fig-time_series-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/figure/read_OceanSODA.Rmd/time_series-3.png" target="_blank">8186273</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[4]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/time_series-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-time_series-4">
+Past versions of time_series-4.png
+</button>
+</p>
+<div id="fig-time_series-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/figure/read_OceanSODA.Rmd/time_series-4.png" target="_blank">8186273</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[5]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/time_series-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-time_series-5">
+Past versions of time_series-5.png
+</button>
+</p>
+<div id="fig-time_series-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/figure/read_OceanSODA.Rmd/time_series-5.png" target="_blank">8186273</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[6]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/time_series-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-time_series-6">
+Past versions of time_series-6.png
+</button>
+</p>
+<div id="fig-time_series-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/figure/read_OceanSODA.Rmd/time_series-6.png" target="_blank">8186273</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[7]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/time_series-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-time_series-7">
+Past versions of time_series-7.png
+</button>
+</p>
+<div id="fig-time_series-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/figure/read_OceanSODA.Rmd/time_series-7.png" target="_blank">8186273</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-07
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="decadel-trends" class="section level1" number="4">
 <h1 number="4"><span class="header-section-number">4</span> Decadel trends</h1>
-<div id="lat-bands" class="section level2" number="4.1">
-<h2 number="4.1"><span class="header-section-number">4.1</span> Lat bands</h2>
+<div id="global" class="section level2" number="4.1">
+<h2 number="4.1"><span class="header-section-number">4.1</span> Global</h2>
+<pre class="r"><code>OceanSODA_annual_glob %&gt;%
+  group_split(parameter) %&gt;%
+  # head(1) %&gt;%
+  map(
+    ~ ggplot(data = .x,
+             aes(year, value_area_ave, col = decade)) +
+      scale_color_brewer(palette = &quot;Set1&quot;) +
+      geom_point() +
+      labs(y = .x$parameter) +
+      geom_smooth(method = &quot;lm&quot;, se = FALSE)
+  )</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_glob-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_glob-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_glob-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[4]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_glob-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[5]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_glob-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[6]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_glob-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[7]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_glob-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>OceanSODA_annual_glob_trend %&gt;%
+  filter(term == &quot;year&quot;) %&gt;%
+  group_split(parameter) %&gt;%
+  # head(1) %&gt;%
+  map(
+    ~ ggplot(data = .x,
+             aes(decade, estimate)) +
+      scale_fill_brewer(palette = &quot;Spectral&quot;) +
+      geom_point(shape = 21) +
+      geom_path() +
+      labs(y = paste(.x$parameter, &quot;annual change&quot;))
+  )</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_glob-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_glob-9.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_glob-10.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[4]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_glob-11.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[5]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_glob-12.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[6]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_glob-13.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[7]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_glob-14.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="latitude-bands" class="section level2" number="4.2">
+<h2 number="4.2"><span class="header-section-number">4.2</span> Latitude bands</h2>
 <pre class="r"><code>OceanSODA_annual_lat %&gt;%
   group_split(parameter) %&gt;%
   # head(1) %&gt;%
@@ -930,25 +1650,25 @@ OceanSODA_annual_lat_trend &lt;- OceanSODA_annual_lat %&gt;%
       facet_wrap( ~ lat_bands)
   )</code></pre>
 <pre><code>[[1]]</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_lat-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>
 [[2]]</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_lat-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>
 [[3]]</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_lat-3.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>
 [[4]]</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_lat-4.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>
 [[5]]</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_lat-5.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>
 [[6]]</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_lat-6.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>
 [[7]]</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_lat-7.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>OceanSODA_annual_lat_trend %&gt;%
   filter(term == &quot;year&quot;) %&gt;%
   group_split(parameter) %&gt;%
@@ -962,25 +1682,25 @@ OceanSODA_annual_lat_trend &lt;- OceanSODA_annual_lat %&gt;%
       labs(y = paste(.x$parameter, &quot;annual change&quot;))
   )</code></pre>
 <pre><code>[[1]]</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_lat-8.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>
 [[2]]</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_lat-9.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>
 [[3]]</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-10.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_lat-10.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>
 [[4]]</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-11.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_lat-11.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>
 [[5]]</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-12.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_lat-12.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>
 [[6]]</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-13.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_lat-13.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>
 [[7]]</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/decadel_trends-14.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_lat-14.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
