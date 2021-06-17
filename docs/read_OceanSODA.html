@@ -486,7 +486,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">GLODAPv2_2016: Mapped Climatologies</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">07 June, 2021</h4>
+<h4 class="date">17 June, 2021</h4>
 
 </div>
 
@@ -511,7 +511,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-06-07
+<strong>Last updated:</strong> 2021-06-17
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -602,16 +602,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree27300674ec435f073a92e67a8a3e16440366aa78targetblank2730067a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/27300674ec435f073a92e67a8a3e16440366aa78" target="_blank">2730067</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree3bc04be475138b7508e40c2cbd2653b309fcab0btargetblank3bc04bea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/3bc04be475138b7508e40c2cbd2653b309fcab0b" target="_blank">3bc04be</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree27300674ec435f073a92e67a8a3e16440366aa78targetblank2730067a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree3bc04be475138b7508e40c2cbd2653b309fcab0btargetblank3bc04bea" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/27300674ec435f073a92e67a8a3e16440366aa78" target="_blank">2730067</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/3bc04be475138b7508e40c2cbd2653b309fcab0b" target="_blank">3bc04be</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -621,6 +621,9 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/
+
+Untracked files:
+    Untracked:  emlr_obs_preprocessing.Rproj
 
 </code></pre>
 <p>
@@ -659,6 +662,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/3bc04be475138b7508e40c2cbd2653b309fcab0b/analysis/read_OceanSODA.Rmd" target="_blank">3bc04be</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-17
+</td>
+<td>
+derive air sea disequilibrium
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/240c1f436c2596f1887de896e969571bde27bdcf/docs/read_OceanSODA.html" target="_blank">240c1f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-06-07
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -828,19 +865,20 @@ basinmask &lt;- basinmask %&gt;%
   select(lat, lon, basin_AIP)</code></pre>
 <pre class="r"><code>OceanSODA &lt;-
   tidync(paste(
-    path_OceanSODA,
-    &quot;OceanSODA-ETHZ_1985-2019_v2020b.nc&quot;,
+    path_updata,
+    &quot;pco2_OceanSODA-ETHZ/OceanSODA-ETHZ_1985-2019_v2020b.nc&quot;,
     sep = &quot;&quot;
   ))
 
-OceanSODA &lt;- OceanSODA %&gt;% hyper_tibble()
+OceanSODA &lt;- OceanSODA %&gt;%
+  hyper_tibble()
 
 OceanSODA &lt;- OceanSODA %&gt;%
   mutate(date = as.Date(time, origin = &#39;1985-01-01&#39;),
          year = year(date))
 
 OceanSODA &lt;- OceanSODA %&gt;%
-  select(year, lat, lon,
+  select(year, date, lat, lon,
          sal = salinity, temp = temperature,
          tco2 = DIC, talk = TA, 
          rev_fac = revelle_factor,
@@ -850,6 +888,155 @@ OceanSODA &lt;- OceanSODA %&gt;%
   mutate(lon = if_else(lon &lt; 20, lon + 360, lon))
 
 OceanSODA &lt;- inner_join(OceanSODA, basinmask)</code></pre>
+<pre class="r"><code>path_SeaFlux &lt;- 
+paste0(path_updata,&quot;pco2_SeaFlux/&quot;)
+
+icefrac &lt;-
+  tidync(paste0(path_SeaFlux,
+                &quot;SeaFluxV2021.01_icefrac_1988-2018.nc&quot;)) %&gt;% 
+  hyper_tibble()
+
+icefrac &lt;- icefrac %&gt;% 
+  mutate(date = as.Date(time, origin = &#39;1988-01-01&#39;),
+         year = year(date))
+
+kw &lt;-
+  tidync(paste0(path_SeaFlux,
+                &quot;SeaFluxV2021.01_kwScaled16.5cmhr_1988-2018.nc&quot;))
+
+kw &lt;- kw %&gt;% 
+  hyper_filter(wind = wind == &quot;ERA5&quot;) %&gt;% 
+  hyper_tibble() %&gt;% 
+  select(-wind)
+
+
+pCO2atm &lt;-
+  tidync(paste0(path_SeaFlux,
+                &quot;SeaFluxV2021.01_pCO2atm_NOAAmbl_ERA5mslp_1988-2018.nc&quot;)) %&gt;% 
+  hyper_tibble()
+
+sol &lt;-
+  tidync(paste0(path_SeaFlux,
+                &quot;SeaFluxV2021.01_solWeis74.nc&quot;)) %&gt;% 
+  hyper_tibble()
+
+
+all_variables &lt;- full_join(icefrac, kw)
+all_variables &lt;- full_join(all_variables, pCO2atm)
+all_variables &lt;- full_join(all_variables, sol)
+
+all_variables &lt;- all_variables %&gt;%
+  mutate(lon = if_else(lon &lt; 20, lon + 360, lon))
+
+OceanSODA &lt;- inner_join(all_variables %&gt;% select(-c(time)),
+                        OceanSODA)</code></pre>
+<pre class="r"><code>all_variables &lt;- OceanSODA %&gt;%
+  select(
+    time_mon = date,
+    lon,
+    lat,
+    spco2 = pCO2,
+    pco2atm = pCO2atm,
+    fice = ice,
+    alpha = sol_Weiss74,
+    Kw = kw_scaled
+  ) %&gt;%
+  drop_na()
+
+all_variables &lt;- all_variables %&gt;%
+  mutate(area = earth_surf(lat = lat))
+
+mol_to_g &lt;- 12
+P &lt;- 1e-15
+cm_to_m &lt;- 100
+hr_to_yr &lt;- 24 * 365
+
+unit_conversion_to_PgCyr &lt;- mol_to_g * P * hr_to_yr / cm_to_m
+
+all_variables &lt;- all_variables %&gt;%
+  mutate(
+    delta_pco2 = spco2 - pco2atm,
+    scale = area * Kw * alpha * (1 - fice),
+    fgco2 = delta_pco2 * scale
+  )
+
+delta_pco2_monthly &lt;- all_variables %&gt;%
+  group_by(time_mon) %&gt;%
+  summarise(
+    scaling_glob = sum(scale),
+    fgco2_glob = sum(fgco2),
+    delta_pco2_glob = fgco2_glob / scaling_glob
+  ) %&gt;%
+  ungroup() %&gt;%
+  mutate(fgco2_glob = fgco2_glob * unit_conversion_to_PgCyr)
+
+delta_pco2_annual &lt;- delta_pco2_monthly %&gt;%
+  mutate(year = year(time_mon)) %&gt;%
+  group_by(year) %&gt;%
+  summarise(
+    scaling_glob = mean(scaling_glob),
+    fgco2_glob = mean(fgco2_glob),
+    delta_pco2_glob = mean(delta_pco2_glob)
+  ) %&gt;%
+  ungroup()
+
+print(
+  ggplot() +
+    geom_path(data = delta_pco2_monthly,
+              aes(
+                decimal_date(time_mon), delta_pco2_glob, col = &quot;monthly&quot;
+              )) +
+    geom_path(data = delta_pco2_annual,
+              aes(year, delta_pco2_glob, col = &quot;annual&quot;)) +
+    scale_color_brewer(palette = &quot;Set1&quot;, name = &quot;Average&quot;) +
+    labs(x = &quot;year&quot;)
+)</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/air_sea_disequilibrium-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>print(
+  ggplot() +
+    geom_path(data = delta_pco2_monthly,
+              aes(decimal_date(time_mon), fgco2_glob, col = &quot;monthly&quot;)) +
+    geom_path(data = delta_pco2_annual,
+              aes(year, fgco2_glob, col = &quot;annual&quot;)) +
+    scale_color_brewer(palette = &quot;Set1&quot;, name = &quot;Average&quot;) +
+    labs(x = &quot;year&quot;)
+)</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/air_sea_disequilibrium-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>print(ggplot() +
+        geom_path(data = delta_pco2_annual,
+                  aes(
+                    year,
+                    scaling_glob * unit_conversion_to_PgCyr
+                  )))</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/air_sea_disequilibrium-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>print(
+  ggplot() +
+    geom_path(
+      data = delta_pco2_annual,
+      aes(
+        year,
+        scaling_glob * delta_pco2_glob * unit_conversion_to_PgCyr,
+        col = &quot;scaled&quot;
+      )
+    ) +
+    geom_path(data = delta_pco2_annual,
+              aes(year, fgco2_glob, col = &quot;integrated&quot;)) +
+    scale_color_brewer(palette = &quot;Set1&quot;, name = &quot;Estimate&quot;) +
+    scale_y_continuous(name = &quot;Air-sea flux [PgC yr-1]&quot;) +
+    labs(x = &quot;year&quot;)
+)</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/air_sea_disequilibrium-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># write raw data file for GLODAP-based subsetting model variables
+delta_pco2_annual %&gt;%
+  select(-c(scaling_glob, fgco2_glob)) %&gt;%
+  write_csv(file = paste(
+    path_preprocessing,
+    &quot;OceanSODA_disequilibrium_annual.csv&quot;,
+    sep = &quot;&quot;
+  ))
+
+rm(delta_pco2_annual,
+   delta_pco2_monthly)</code></pre>
 <pre class="r"><code># calculate annual averaged fields
 OceanSODA_annual_all &lt;- OceanSODA %&gt;%
   mutate(tco2_over_pCO2 = tco2 / pCO2) %&gt;%
@@ -1419,7 +1606,7 @@ jens-daniel-mueller
 <h1 number="3"><span class="header-section-number">3</span> Time series</h1>
 <pre class="r"><code>OceanSODA_annual_lat %&gt;%
   group_split(parameter) %&gt;%
-  # head(1) %&gt;% 
+  # head(1) %&gt;%
   map(
     ~ ggplot(data = .x,
              aes(year, value_area_ave, col = lat_bands)) +
