@@ -20,7 +20,7 @@ editor_options:
 ```
 
 ```{r define_paths, include=FALSE}
-path_OceanSODA   <- "/nfs/kryo/work/updata/pco2_OceanSODA-ETHZ/"
+path_updata   <- "/nfs/kryo/work/updata/"
 path_preprocessing    <- paste(path_root, "/observations/preprocessing/", sep = "")
 ```
 
@@ -51,19 +51,20 @@ basinmask <- basinmask %>%
 
 OceanSODA <-
   tidync(paste(
-    path_OceanSODA,
-    "OceanSODA-ETHZ_1985-2019_v2020b.nc",
+    path_updata,
+    "pco2_OceanSODA-ETHZ/OceanSODA-ETHZ_1985-2019_v2020b.nc",
     sep = ""
   ))
 
-OceanSODA <- OceanSODA %>% hyper_tibble()
+OceanSODA <- OceanSODA %>%
+  hyper_tibble()
 
 OceanSODA <- OceanSODA %>%
   mutate(date = as.Date(time, origin = '1985-01-01'),
          year = year(date))
 
 OceanSODA <- OceanSODA %>%
-  select(year, lat, lon,
+  select(year, date, lat, lon,
          sal = salinity, temp = temperature,
          tco2 = DIC, talk = TA, 
          rev_fac = revelle_factor,
@@ -75,6 +76,171 @@ OceanSODA <- OceanSODA %>%
 OceanSODA <- inner_join(OceanSODA, basinmask)
 
 ```
+
+
+```{r read_SeaFlux}
+
+path_SeaFlux <- 
+paste0(path_updata,"pco2_SeaFlux/")
+
+icefrac <-
+  tidync(paste0(path_SeaFlux,
+                "SeaFluxV2021.01_icefrac_1988-2018.nc")) %>% 
+  hyper_tibble()
+
+icefrac <- icefrac %>% 
+  mutate(date = as.Date(time, origin = '1988-01-01'),
+         year = year(date))
+
+kw <-
+  tidync(paste0(path_SeaFlux,
+                "SeaFluxV2021.01_kwScaled16.5cmhr_1988-2018.nc"))
+
+kw <- kw %>% 
+  hyper_filter(wind = wind == "ERA5") %>% 
+  hyper_tibble() %>% 
+  select(-wind)
+
+
+pCO2atm <-
+  tidync(paste0(path_SeaFlux,
+                "SeaFluxV2021.01_pCO2atm_NOAAmbl_ERA5mslp_1988-2018.nc")) %>% 
+  hyper_tibble()
+
+sol <-
+  tidync(paste0(path_SeaFlux,
+                "SeaFluxV2021.01_solWeis74.nc")) %>% 
+  hyper_tibble()
+
+
+all_variables <- full_join(icefrac, kw)
+all_variables <- full_join(all_variables, pCO2atm)
+all_variables <- full_join(all_variables, sol)
+
+all_variables <- all_variables %>%
+  mutate(lon = if_else(lon < 20, lon + 360, lon))
+
+OceanSODA <- inner_join(all_variables %>% select(-c(time)),
+                        OceanSODA)
+
+```
+
+
+```{r air_sea_disequilibrium}
+
+all_variables <- OceanSODA %>%
+  select(
+    time_mon = date,
+    lon,
+    lat,
+    spco2 = pCO2,
+    pco2atm = pCO2atm,
+    fice = ice,
+    alpha = sol_Weiss74,
+    Kw = kw_scaled
+  ) %>%
+  drop_na()
+
+all_variables <- all_variables %>%
+  mutate(area = earth_surf(lat = lat))
+
+mol_to_g <- 12
+P <- 1e-15
+cm_to_m <- 100
+hr_to_yr <- 24 * 365
+
+unit_conversion_to_PgCyr <- mol_to_g * P * hr_to_yr / cm_to_m
+
+all_variables <- all_variables %>%
+  mutate(
+    delta_pco2 = spco2 - pco2atm,
+    scale = area * Kw * alpha * (1 - fice),
+    fgco2 = delta_pco2 * scale
+  )
+
+delta_pco2_monthly <- all_variables %>%
+  group_by(time_mon) %>%
+  summarise(
+    scaling_glob = sum(scale),
+    fgco2_glob = sum(fgco2),
+    delta_pco2_glob = fgco2_glob / scaling_glob
+  ) %>%
+  ungroup() %>%
+  mutate(fgco2_glob = fgco2_glob * unit_conversion_to_PgCyr)
+
+delta_pco2_annual <- delta_pco2_monthly %>%
+  mutate(year = year(time_mon)) %>%
+  group_by(year) %>%
+  summarise(
+    scaling_glob = mean(scaling_glob),
+    fgco2_glob = mean(fgco2_glob),
+    delta_pco2_glob = mean(delta_pco2_glob)
+  ) %>%
+  ungroup()
+
+print(
+  ggplot() +
+    geom_path(data = delta_pco2_monthly,
+              aes(
+                decimal_date(time_mon), delta_pco2_glob, col = "monthly"
+              )) +
+    geom_path(data = delta_pco2_annual,
+              aes(year, delta_pco2_glob, col = "annual")) +
+    scale_color_brewer(palette = "Set1", name = "Average") +
+    labs(x = "year")
+)
+
+print(
+  ggplot() +
+    geom_path(data = delta_pco2_monthly,
+              aes(decimal_date(time_mon), fgco2_glob, col = "monthly")) +
+    geom_path(data = delta_pco2_annual,
+              aes(year, fgco2_glob, col = "annual")) +
+    scale_color_brewer(palette = "Set1", name = "Average") +
+    labs(x = "year")
+)
+
+print(ggplot() +
+        geom_path(data = delta_pco2_annual,
+                  aes(
+                    year,
+                    scaling_glob * unit_conversion_to_PgCyr
+                  )))
+
+print(
+  ggplot() +
+    geom_path(
+      data = delta_pco2_annual,
+      aes(
+        year,
+        scaling_glob * delta_pco2_glob * unit_conversion_to_PgCyr,
+        col = "scaled"
+      )
+    ) +
+    geom_path(data = delta_pco2_annual,
+              aes(year, fgco2_glob, col = "integrated")) +
+    scale_color_brewer(palette = "Set1", name = "Estimate") +
+    scale_y_continuous(name = "Air-sea flux [PgC yr-1]") +
+    labs(x = "year")
+)
+
+# write raw data file for GLODAP-based subsetting model variables
+delta_pco2_annual %>%
+  select(-c(scaling_glob, fgco2_glob)) %>%
+  write_csv(file = paste(
+    path_preprocessing,
+    "OceanSODA_disequilibrium_annual.csv",
+    sep = ""
+  ))
+
+rm(delta_pco2_annual,
+   delta_pco2_monthly)
+
+
+```
+
+
+
 
 ```{r prep_OceanSODA}
 
@@ -222,7 +388,7 @@ OceanSODA_clim %>%
 
 OceanSODA_annual_lat %>%
   group_split(parameter) %>%
-  # head(1) %>% 
+  # head(1) %>%
   map(
     ~ ggplot(data = .x,
              aes(year, value_area_ave, col = lat_bands)) +
