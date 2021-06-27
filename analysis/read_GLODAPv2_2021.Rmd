@@ -38,7 +38,7 @@ GLODAP <-
   read_csv(
     paste(
       path_glodapv2_2021,
-      "GLODAPv2.2021_Merged_Master_File_beta_20210530.csv",
+      "GLODAPv2.2021_Merged_Master_File_beta_20210624.csv",
       sep = ""
     ),
     na = "-9999",
@@ -481,7 +481,7 @@ for (i_variable in variables) {
 
 ```
 
-## Write Canyon-B file
+## Write CONTENT file
  
 ```{r write_CONTENT_data_file, eval=FALSE}
 
