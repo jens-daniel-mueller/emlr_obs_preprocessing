@@ -438,10 +438,10 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="read_Gruber_2019_Cant.html">Gruber 2019</a>
+      <a href="read_Gruber_2019.html">Gruber 2019</a>
     </li>
     <li>
-      <a href="read_Sabine_2004_Cant.html">Sabine 2004</a>
+      <a href="read_Sabine_2004.html">Sabine 2004</a>
     </li>
   </ul>
 </li>
@@ -486,7 +486,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">GLODAPv2_2020</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">02 July, 2021</h4>
+<h4 class="date">06 July, 2021</h4>
 
 </div>
 
@@ -511,7 +511,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-07-02
+<strong>Last updated:</strong> 2021-07-06
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -602,16 +602,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeba6b773febefdb4db5e0d958838dce42d09588c9targetblankba6b773a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/ba6b773febefdb4db5e0d958838dce42d09588c9" target="_blank">ba6b773</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree0db89e13a77bb2d38bc960d97f8545a59b998942targetblank0db89e1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/0db89e13a77bb2d38bc960d97f8545a59b998942" target="_blank">0db89e1</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeba6b773febefdb4db5e0d958838dce42d09588c9targetblankba6b773a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree0db89e13a77bb2d38bc960d97f8545a59b998942targetblank0db89e1a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/ba6b773febefdb4db5e0d958838dce42d09588c9" target="_blank">ba6b773</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/0db89e13a77bb2d38bc960d97f8545a59b998942" target="_blank">0db89e1</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -623,6 +623,10 @@ Ignored files:
     Ignored:    data/
 
 Unstaged changes:
+    Modified:   README.md
+    Modified:   analysis/_site.yml
+    Deleted:    analysis/read_Gruber_2019_Cant.Rmd
+    Deleted:    analysis/read_Sabine_2004_Cant.Rmd
     Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
@@ -662,6 +666,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0db89e13a77bb2d38bc960d97f8545a59b998942/analysis/read_GLODAPv2_2021.Rmd" target="_blank">0db89e1</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-07-06
+</td>
+<td>
+rerun with revised variable names
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/f600971a0a2a3e941a24a4d443fb83c1abff35ea/docs/read_GLODAPv2_2021.html" target="_blank">f600971</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-07-02
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -775,7 +813,7 @@ ingest GLODAPv2_2021 beta data
 path_preprocessing  &lt;- paste(path_root, &quot;/observations/preprocessing/&quot;, sep = &quot;&quot;)</code></pre>
 <div id="read-files" class="section level1" number="1">
 <h1 number="1"><span class="header-section-number">1</span> Read files</h1>
-<p>Main data source for this project is <code>GLODAPv2.2020_Merged_Master_File.csv</code> downloaded from <a href="https://www.glodap.info/" target="_blank">glodap.info</a> in June 2020.</p>
+<p>Main data source for this project is a pre-release version of <code>GLODAPv2.2021_Merged_Master_File.csv</code> received from Nico Lange in June 2021.</p>
 <pre class="r"><code>GLODAP &lt;-
   read_csv(
     paste(
@@ -812,7 +850,8 @@ GLODAP &lt;- GLODAP  %&gt;%
 
 # remove irrelevant columns
 GLODAP &lt;- GLODAP %&gt;%
-  select(-c(month:minute,
+  select(-c(region,
+            month:minute,
             maxsampdepth, bottle, sigma0:sigma4,
             nitrite:nitritef))</code></pre>
 </div>
@@ -1119,6 +1158,140 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre class="r"><code>GLODAP_obs_grid_all_vars &lt;- GLODAP %&gt;% 
+  select(year, lat, lon, cruise, sal, temp, oxygen,
+         phosphate, nitrate, silicate, tco2, talk) %&gt;% 
+  pivot_longer(cols = sal:talk,
+               names_to = &quot;parameter&quot;,
+               values_to = &quot;value&quot;) %&gt;% 
+  mutate(presence = if_else(is.na(value), &quot;missing&quot;, &quot;available&quot;)) %&gt;% 
+  count(year, lat, lon, parameter, presence)
+
+GLODAP_obs_grid_all_vars_wide &lt;- GLODAP_obs_grid_all_vars %&gt;% 
+  pivot_wider(names_from = &quot;presence&quot;,
+              values_from = n,
+              values_fill = 0) %&gt;% 
+  mutate(ratio_available = available/(available+missing))
+
+all_plots &lt;- GLODAP_obs_grid_all_vars_wide %&gt;%
+  # mutate(cruise = as.factor(cruise)) %&gt;%
+  group_split(year) %&gt;%
+  # tail(3) %&gt;%
+  map(
+    ~ map +
+      geom_tile(
+        data = .x,
+        aes(
+          x = lon,
+          y = lat,
+          width = 1,
+          height = 1,
+          fill = ratio_available
+        )
+      ) +
+      scale_fill_scico(palette = &quot;berlin&quot;,
+                       limits = c(0,1)) +
+      labs(title = unique(.x$year)) +
+      facet_wrap(~ parameter)
+  )
+
+
+pdf(file = paste0(path_preprocessing, &quot;GLODAPv2.2021_preprocessed_coverage_maps.pdf&quot;),
+    width = 10, 
+    height = 5)
+all_plots</code></pre>
+<pre><code>[[1]]</code></pre>
+<pre><code>
+[[2]]</code></pre>
+<pre><code>
+[[3]]</code></pre>
+<pre><code>
+[[4]]</code></pre>
+<pre><code>
+[[5]]</code></pre>
+<pre><code>
+[[6]]</code></pre>
+<pre><code>
+[[7]]</code></pre>
+<pre><code>
+[[8]]</code></pre>
+<pre><code>
+[[9]]</code></pre>
+<pre><code>
+[[10]]</code></pre>
+<pre><code>
+[[11]]</code></pre>
+<pre><code>
+[[12]]</code></pre>
+<pre><code>
+[[13]]</code></pre>
+<pre><code>
+[[14]]</code></pre>
+<pre><code>
+[[15]]</code></pre>
+<pre><code>
+[[16]]</code></pre>
+<pre><code>
+[[17]]</code></pre>
+<pre><code>
+[[18]]</code></pre>
+<pre><code>
+[[19]]</code></pre>
+<pre><code>
+[[20]]</code></pre>
+<pre><code>
+[[21]]</code></pre>
+<pre><code>
+[[22]]</code></pre>
+<pre><code>
+[[23]]</code></pre>
+<pre><code>
+[[24]]</code></pre>
+<pre><code>
+[[25]]</code></pre>
+<pre><code>
+[[26]]</code></pre>
+<pre><code>
+[[27]]</code></pre>
+<pre><code>
+[[28]]</code></pre>
+<pre><code>
+[[29]]</code></pre>
+<pre><code>
+[[30]]</code></pre>
+<pre><code>
+[[31]]</code></pre>
+<pre><code>
+[[32]]</code></pre>
+<pre><code>
+[[33]]</code></pre>
+<pre><code>
+[[34]]</code></pre>
+<pre><code>
+[[35]]</code></pre>
+<pre><code>
+[[36]]</code></pre>
+<pre><code>
+[[37]]</code></pre>
+<pre><code>
+[[38]]</code></pre>
+<pre><code>
+[[39]]</code></pre>
+<pre><code>
+[[40]]</code></pre>
+<pre><code>
+[[41]]</code></pre>
+<pre><code>
+[[42]]</code></pre>
+<pre><code>
+[[43]]</code></pre>
+<pre><code>
+[[44]]</code></pre>
+<pre><code>
+[[45]]</code></pre>
+<pre class="r"><code>dev.off()</code></pre>
+<pre><code>png 
+  2 </code></pre>
 </div>
 </div>
 <div id="canyon-b" class="section level1" number="4">
@@ -1154,7 +1327,7 @@ GLODAP_Can_B &lt;- GLODAP_Can_B %&gt;%
   ))
 
 GLODAP_Can_B &lt;- GLODAP_Can_B %&gt;%
-  select(-ends_with(c(&quot;_ci&quot;, &quot;_cim&quot;, &quot;_cin&quot;, &quot;_cii&quot;)))
+  select(-ends_with(c(&quot;_cim&quot;, &quot;_cin&quot;, &quot;_cii&quot;)))
 
 
 GLODAP_Can_B &lt;- GLODAP_Can_B %&gt;%
@@ -10055,122 +10228,6 @@ jens-daniel-mueller
   write_csv(paste(path_preprocessing,
                              &quot;GLODAPv2.2021_Canyon-B.csv&quot;,
                              sep = &quot;&quot;))</code></pre>
-</div>
-</div>
-<div id="content" class="section level1" number="5">
-<h1 number="5"><span class="header-section-number">5</span> CONTENT</h1>
-<div id="comparison-to-glodap-1" class="section level2" number="5.1">
-<h2 number="5.1"><span class="header-section-number">5.1</span> Comparison to GLODAP</h2>
-<pre class="r"><code>source(&quot;/net/kryo/work/uptools/co2_calculation/CONTENT/CO2CONTENT.R&quot;)
-
-GLODAP_Cont &lt;- GLODAP %&gt;%
-  mutate(lon = if_else(lon &gt; 180, lon - 360, lon)) %&gt;%
-  arrange(year) %&gt;% 
-  select(row_number, year, date, lat, lon, depth, basin_AIP,
-         temp, sal, oxygen,
-         talk, tco2) %&gt;% 
-  filter(year == 2015)
-
-# filter rows with essential variables for Canyon-B
-GLODAP_Cont &lt;- GLODAP_Cont %&gt;%
-  filter(across(c(lat, lon, depth,
-                  temp, sal, oxygen), ~ !is.na(.x)))
-
-GLODAP_Cont &lt;- GLODAP_Cont %&gt;%
-  mutate(as_tibble(
-    CO2CONTENT(
-      date = paste0(as.character(date), &quot; 12:00&quot;),
-      lat = lat,
-      lon = lon,
-      pres = depth,
-      temp = temp,
-      psal = sal,
-      doxy = oxygen,
-      param = c(&quot;AT&quot;, &quot;CT&quot;)
-    )
-  ))
-
-GLODAP_Cont &lt;- GLODAP_Cont %&gt;%
-  select(-ends_with(c(&quot;_ci&quot;, &quot;_cim&quot;, &quot;_cin&quot;, &quot;_cii&quot;)))
-
-
-GLODAP_Cont &lt;- GLODAP_Cont %&gt;%
-  rename(
-    &quot;talk_CANYONB&quot; = &quot;AT&quot;,
-    &quot;tco2_CANYONB&quot; = &quot;CT&quot;
-  )
-
-
-variables &lt;- c(&quot;talk&quot;, &quot;tco2&quot;)
-
-for (i_variable in variables) {
-  # i_variable &lt;- variables[1]
-  
-  # calculate equal axis limits and binwidth
-  axis_lims &lt;- GLODAP_Cont %&gt;%
-    drop_na() %&gt;% 
-    summarise(max_value = max(c(max(
-      !!sym(i_variable)
-    ),
-    max(!!sym(
-      paste0(i_variable, &quot;_CANYONB&quot;)
-    )))),
-    min_value = min(c(min(
-      !!sym(i_variable)
-    ),
-    min(!!sym(
-      paste0(i_variable, &quot;_CANYONB&quot;)
-    )))))
-  
-  binwidth_value &lt;- (axis_lims$max_value - axis_lims$min_value) / 60
-  axis_lims &lt;- c(axis_lims$min_value, axis_lims$max_value)
-  
-  print(
-    ggplot(GLODAP_Cont, aes(
-      x = !!sym(i_variable),
-      y = !!sym(paste0(i_variable, &quot;_CANYONB&quot;))
-    )) +
-      geom_bin2d(binwidth = binwidth_value) +
-      scale_fill_viridis_c(trans = &quot;log10&quot;) +
-      geom_abline(slope = 1, col = &#39;red&#39;) +
-      coord_equal(xlim = axis_lims,
-                  ylim = axis_lims) +
-      facet_wrap( ~ basin_AIP) +
-      labs(title = &quot;All years&quot;)
-  ) 
-  
-  
-  for (i_year in unique(GLODAP_Cont$year)) {
-    # i_year &lt;- 2017
-    
-    print(
-      ggplot(
-        GLODAP_Cont %&gt;% filter(year == i_year),
-        aes(x = !!sym(i_variable),
-            y = !!sym(paste0(
-              i_variable, &quot;_CANYONB&quot;
-            )))
-      ) +
-        geom_bin2d(binwidth = binwidth_value) +
-        scale_fill_viridis_c(trans = &quot;log10&quot;) +
-        geom_abline(slope = 1, col = &#39;red&#39;) +
-        coord_equal(xlim = axis_lims,
-                    ylim = axis_lims) +
-        facet_wrap( ~ basin_AIP) +
-        labs(title = paste(&quot;Year:&quot;, i_year))
-    )
-  }
-  
-}</code></pre>
-</div>
-<div id="write-content-file" class="section level2" number="5.2">
-<h2 number="5.2"><span class="header-section-number">5.2</span> Write CONTENT file</h2>
-<pre class="r"><code>GLODAP_Cont %&gt;% 
-  select(row_number,
-         talk_CANYONB, tco2_CANYONB) %&gt;% 
-  write_csv(paste(path_preprocessing,
-                             &quot;GLODAPv2.2021_Canyon-B.csv&quot;,
-                             sep = &quot;&quot;))</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -10199,35 +10256,36 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] mgcv_1.8-33     nlme_3.1-149    lubridate_1.7.9 metR_0.9.0     
- [5] scico_1.2.0     patchwork_1.1.1 collapse_1.5.0  forcats_0.5.0  
- [9] stringr_1.4.0   dplyr_1.0.5     purrr_0.3.4     readr_1.4.0    
-[13] tidyr_1.1.2     tibble_3.0.4    ggplot2_3.3.3   tidyverse_1.3.0
-[17] workflowr_1.6.2
+ [1] mgcv_1.8-33     nlme_3.1-149    lubridate_1.7.9 ggforce_0.3.3  
+ [5] metR_0.9.0      scico_1.2.0     patchwork_1.1.1 collapse_1.5.0 
+ [9] forcats_0.5.0   stringr_1.4.0   dplyr_1.0.5     purrr_0.3.4    
+[13] readr_1.4.0     tidyr_1.1.2     tibble_3.0.4    ggplot2_3.3.3  
+[17] tidyverse_1.3.0 workflowr_1.6.2
 
 loaded via a namespace (and not attached):
- [1] httr_1.4.2               splines_4.0.3            jsonlite_1.7.1          
- [4] viridisLite_0.3.0        modelr_0.1.8             assertthat_0.2.1        
+ [1] httr_1.4.2               splines_4.0.3            viridisLite_0.3.0       
+ [4] jsonlite_1.7.1           modelr_0.1.8             assertthat_0.2.1        
  [7] blob_1.2.1               cellranger_1.1.0         yaml_2.2.1              
 [10] pillar_1.4.7             backports_1.1.10         lattice_0.20-41         
 [13] glue_1.4.2               RcppEigen_0.3.3.7.0      digest_0.6.27           
-[16] promises_1.1.1           checkmate_2.0.0          rvest_0.3.6             
-[19] colorspace_1.4-1         htmltools_0.5.0          httpuv_1.5.4            
-[22] Matrix_1.2-18            pkgconfig_2.0.3          broom_0.7.5             
-[25] haven_2.3.1              scales_1.1.1             whisker_0.4             
-[28] later_1.1.0.1            git2r_0.27.1             generics_0.0.2          
-[31] farver_2.0.3             ellipsis_0.3.1           withr_2.3.0             
-[34] cli_2.1.0                magrittr_1.5             crayon_1.3.4            
-[37] readxl_1.3.1             evaluate_0.14            fs_1.5.0                
-[40] fansi_0.4.1              xml2_1.3.2               RcppArmadillo_0.10.1.2.0
-[43] tools_4.0.3              data.table_1.13.2        hms_0.5.3               
-[46] lifecycle_1.0.0          munsell_0.5.0            reprex_0.3.0            
-[49] compiler_4.0.3           rlang_0.4.10             grid_4.0.3              
-[52] rstudioapi_0.11          labeling_0.4.2           rmarkdown_2.5           
-[55] gtable_0.3.0             DBI_1.1.0                R6_2.5.0                
-[58] knitr_1.30               rprojroot_2.0.2          stringi_1.5.3           
-[61] parallel_4.0.3           Rcpp_1.0.5               vctrs_0.3.5             
-[64] dbplyr_1.4.4             tidyselect_1.1.0         xfun_0.18               </code></pre>
+[16] promises_1.1.1           polyclip_1.10-0          checkmate_2.0.0         
+[19] rvest_0.3.6              colorspace_1.4-1         htmltools_0.5.0         
+[22] httpuv_1.5.4             Matrix_1.2-18            pkgconfig_2.0.3         
+[25] broom_0.7.5              haven_2.3.1              scales_1.1.1            
+[28] tweenr_1.0.2             whisker_0.4              later_1.1.0.1           
+[31] git2r_0.27.1             generics_0.0.2           farver_2.0.3            
+[34] ellipsis_0.3.1           withr_2.3.0              cli_2.1.0               
+[37] magrittr_1.5             crayon_1.3.4             readxl_1.3.1            
+[40] evaluate_0.14            fs_1.5.0                 fansi_0.4.1             
+[43] MASS_7.3-53              xml2_1.3.2               RcppArmadillo_0.10.1.2.0
+[46] tools_4.0.3              data.table_1.13.2        hms_0.5.3               
+[49] lifecycle_1.0.0          munsell_0.5.0            reprex_0.3.0            
+[52] compiler_4.0.3           rlang_0.4.10             grid_4.0.3              
+[55] rstudioapi_0.11          labeling_0.4.2           rmarkdown_2.5           
+[58] gtable_0.3.0             DBI_1.1.0                R6_2.5.0                
+[61] knitr_1.30               rprojroot_2.0.2          stringi_1.5.3           
+[64] parallel_4.0.3           Rcpp_1.0.5               vctrs_0.3.5             
+[67] dbplyr_1.4.4             tidyselect_1.1.0         xfun_0.18               </code></pre>
 </div>
 </div>
 </div>
