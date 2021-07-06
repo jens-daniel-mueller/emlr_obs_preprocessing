@@ -26,6 +26,8 @@ path_preprocessing    <- paste(path_root, "/observations/preprocessing/", sep = 
 
 ```{r load_libraries_specific, include=FALSE}
 library(stars)
+library(seacarb)
+
 ```
 
 # Read source files
@@ -73,9 +75,8 @@ Please note that NA values in the climatologies were filled with neighbouring va
 
 ```{r GLODAPv2_2016_Mappedclimatologies}
 
-
-# file <- file_list[2]
 for (file in file_list) {
+  # file <- file_list[2]
   
   print(file)
   # open file
@@ -134,39 +135,6 @@ for (file in file_list) {
     arrange(lon) %>%
     fill(!!sym(parameter), .direction = "downup") %>%
     ungroup()
-  
-  # # plot column NA inventory
-  #
-  # clim_tibble_grid <- clim_tibble %>%
-  #   filter(!is.na(!!sym(parameter))) %>%
-  #   group_by(lat, lon) %>%
-  #   summarise(depth_max = max(depth)) %>%
-  #   ungroup()
-  #
-  # clim_tibble_grid <- full_join(clim_tibble, clim_tibble_grid)
-  #
-  # clim_tibble_grid <- clim_tibble_grid %>%
-  #   filter(depth <= depth_max) %>%
-  #   select(-depth_max)
-  #
-  # clim_tibble_grid <- clim_tibble_grid %>%
-  #   filter(is.na(!!sym(parameter)),
-  #          depth <= params_global$inventory_depth) %>%
-  #   count(lat, lon)
-  #
-  # # plot NA map
-  # print(
-  #
-  #   map +
-  #     geom_raster(data = clim_tibble_grid,
-  #                 aes(lon, lat, fill = n)) +
-  #     scale_fill_viridis_c() +
-  #     theme(axis.title = element_blank()) +
-  #     labs(title = paste(parameter, "colum NA"))
-  #
-  # )
-  #
-  # rm(clim_tibble_grid)
   
   # remove NAs
   
@@ -232,16 +200,9 @@ for (i_variable in variables) {
 
 rm(temp, i_variable, variables)
 
-GLODAP_predictors <- GLODAP_predictors %>%
-  rename(phosphate = PO4,
-         temp = temperature,
-         sal = salinity)
-
 # removed na's attributable to slightly different coverage of predictor fields
 GLODAP_predictors <- GLODAP_predictors %>%
   drop_na()
-
-library(seacarb)
 
 GLODAP_predictors <- GLODAP_predictors %>%
   mutate(
@@ -249,10 +210,10 @@ GLODAP_predictors <- GLODAP_predictors %>%
       flag = 15,
       var1 = TAlk * 1e-6,
       var2 = TCO2 * 1e-6,
-      S = sal,
-      T = temp,
+      S = salinity,
+      T = temperature,
       P = depth / 10,
-      Pt = phosphate * 1e-6,
+      Pt = PO4 * 1e-6,
       Sit = silicate * 1e-6,
       k1k2 = "l"
     )$BetaD

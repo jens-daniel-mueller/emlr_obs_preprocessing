@@ -30,7 +30,7 @@ library(lubridate)
 
 # Read files
 
-Main data source for this project is `GLODAPv2.2020_Merged_Master_File.csv` downloaded from [glodap.info](https://www.glodap.info/){target="_blank"} in June 2020.
+Main data source for this project is a pre-release version of `GLODAPv2.2021_Merged_Master_File.csv` received from Nico Lange in June 2021.
 
 ```{r read_GLODAPv2_2020_merged_master_file}
 
@@ -75,7 +75,8 @@ GLODAP <- GLODAP  %>%
 
 # remove irrelevant columns
 GLODAP <- GLODAP %>%
-  select(-c(month:minute,
+  select(-c(region,
+            month:minute,
             maxsampdepth, bottle, sigma0:sigma4,
             nitrite:nitritef))
 
@@ -239,6 +240,55 @@ map +
 ```
 
 
+```{r coverage_map_variable_year, fig.asp=0.5}
+
+GLODAP_obs_grid_all_vars <- GLODAP %>% 
+  select(year, lat, lon, cruise, sal, temp, oxygen,
+         phosphate, nitrate, silicate, tco2, talk) %>% 
+  pivot_longer(cols = sal:talk,
+               names_to = "parameter",
+               values_to = "value") %>% 
+  mutate(presence = if_else(is.na(value), "missing", "available")) %>% 
+  count(year, lat, lon, parameter, presence)
+
+GLODAP_obs_grid_all_vars_wide <- GLODAP_obs_grid_all_vars %>% 
+  pivot_wider(names_from = "presence",
+              values_from = n,
+              values_fill = 0) %>% 
+  mutate(ratio_available = available/(available+missing))
+
+all_plots <- GLODAP_obs_grid_all_vars_wide %>%
+  # mutate(cruise = as.factor(cruise)) %>%
+  group_split(year) %>%
+  # tail(3) %>%
+  map(
+    ~ map +
+      geom_tile(
+        data = .x,
+        aes(
+          x = lon,
+          y = lat,
+          width = 1,
+          height = 1,
+          fill = ratio_available
+        )
+      ) +
+      scale_fill_scico(palette = "berlin",
+                       limits = c(0,1)) +
+      labs(title = unique(.x$year)) +
+      facet_wrap(~ parameter)
+  )
+
+
+pdf(file = paste0(path_preprocessing, "GLODAPv2.2021_preprocessed_coverage_maps.pdf"),
+    width = 10, 
+    height = 5)
+all_plots
+dev.off()
+
+```
+
+
 # CANYON-B
 
 ## Comparison to GLODAP
@@ -274,7 +324,7 @@ GLODAP_Can_B <- GLODAP_Can_B %>%
   ))
 
 GLODAP_Can_B <- GLODAP_Can_B %>%
-  select(-ends_with(c("_ci", "_cim", "_cin", "_cii")))
+  select(-ends_with(c("_cim", "_cin", "_cii")))
 
 
 GLODAP_Can_B <- GLODAP_Can_B %>%
@@ -361,133 +411,6 @@ GLODAP_Can_B %>%
   select(row_number,
          talk_CANYONB, tco2_CANYONB,
          nitrate_CANYONB, phosphate_CANYONB, silicate_CANYONB) %>% 
-  write_csv(paste(path_preprocessing,
-                             "GLODAPv2.2021_Canyon-B.csv",
-                             sep = ""))
-
-```
-
-
-
-# CONTENT
-
-## Comparison to GLODAP
-
-```{r CONTENT, fig.asp=0.4, eval=FALSE}
-
-source("/net/kryo/work/uptools/co2_calculation/CONTENT/CO2CONTENT.R")
-
-GLODAP_Cont <- GLODAP %>%
-  mutate(lon = if_else(lon > 180, lon - 360, lon)) %>%
-  arrange(year) %>% 
-  select(row_number, year, date, lat, lon, depth, basin_AIP,
-         temp, sal, oxygen,
-         talk, tco2) %>% 
-  filter(year == 2015)
-
-# filter rows with essential variables for Canyon-B
-GLODAP_Cont <- GLODAP_Cont %>%
-  filter(across(c(lat, lon, depth,
-                  temp, sal, oxygen), ~ !is.na(.x)))
-
-GLODAP_Cont <- GLODAP_Cont %>%
-  mutate(as_tibble(
-    CO2CONTENT(
-      date = paste0(as.character(date), " 12:00"),
-      lat = lat,
-      lon = lon,
-      pres = depth,
-      temp = temp,
-      psal = sal,
-      doxy = oxygen,
-      param = c("AT", "CT")
-    )
-  ))
-
-GLODAP_Cont <- GLODAP_Cont %>%
-  select(-ends_with(c("_ci", "_cim", "_cin", "_cii")))
-
-
-GLODAP_Cont <- GLODAP_Cont %>%
-  rename(
-    "talk_CANYONB" = "AT",
-    "tco2_CANYONB" = "CT"
-  )
-
-
-variables <- c("talk", "tco2")
-
-for (i_variable in variables) {
-  # i_variable <- variables[1]
-  
-  # calculate equal axis limits and binwidth
-  axis_lims <- GLODAP_Cont %>%
-    drop_na() %>% 
-    summarise(max_value = max(c(max(
-      !!sym(i_variable)
-    ),
-    max(!!sym(
-      paste0(i_variable, "_CANYONB")
-    )))),
-    min_value = min(c(min(
-      !!sym(i_variable)
-    ),
-    min(!!sym(
-      paste0(i_variable, "_CANYONB")
-    )))))
-  
-  binwidth_value <- (axis_lims$max_value - axis_lims$min_value) / 60
-  axis_lims <- c(axis_lims$min_value, axis_lims$max_value)
-  
-  print(
-    ggplot(GLODAP_Cont, aes(
-      x = !!sym(i_variable),
-      y = !!sym(paste0(i_variable, "_CANYONB"))
-    )) +
-      geom_bin2d(binwidth = binwidth_value) +
-      scale_fill_viridis_c(trans = "log10") +
-      geom_abline(slope = 1, col = 'red') +
-      coord_equal(xlim = axis_lims,
-                  ylim = axis_lims) +
-      facet_wrap( ~ basin_AIP) +
-      labs(title = "All years")
-  ) 
-  
-  
-  for (i_year in unique(GLODAP_Cont$year)) {
-    # i_year <- 2017
-    
-    print(
-      ggplot(
-        GLODAP_Cont %>% filter(year == i_year),
-        aes(x = !!sym(i_variable),
-            y = !!sym(paste0(
-              i_variable, "_CANYONB"
-            )))
-      ) +
-        geom_bin2d(binwidth = binwidth_value) +
-        scale_fill_viridis_c(trans = "log10") +
-        geom_abline(slope = 1, col = 'red') +
-        coord_equal(xlim = axis_lims,
-                    ylim = axis_lims) +
-        facet_wrap( ~ basin_AIP) +
-        labs(title = paste("Year:", i_year))
-    )
-  }
-  
-}
-
-
-
-```
-
-## Write CONTENT file
- 
-```{r write_CONTENT_data_file, eval=FALSE}
-
-GLODAP_Cont %>% 
-  select(row_number,
-         talk_CANYONB, tco2_CANYONB) %>% 
   write_csv(paste(path_preprocessing,
                              "GLODAPv2.2021_Canyon-B.csv",
                              sep = ""))

@@ -46,7 +46,7 @@ params_global <-
 
 ```{r read_functions, include = FALSE}
 source(paste(path_functions,
-             "plotting_functions.R",
+             "plotting_functions_obs.R",
              sep = ""))
 ```
 
@@ -153,7 +153,7 @@ Pacific Ocean:
 
 - 2: Pacific Ocean
 - 10: Southern Ocean between 147°E and 63°W
-- 12: Sea of Japan
+- (12: Sea of Japan; currently not included)
 
 ```{r assign_standard_basin_labels}
 
@@ -231,7 +231,6 @@ basinmask_5 <- basinmask_01 %>%
   ) %>%
   mutate(MLR_basins = "5")
 
-
 # SO basin separate
 basinmask_SO <- basinmask_01 %>%
   mutate(
@@ -240,6 +239,14 @@ basinmask_SO <- basinmask_01 %>%
   ) %>%
   mutate(MLR_basins = "SO")
 
+# SO basin separate, with others being AIP
+basinmask_SO_AIP <- basinmask_01 %>%
+  mutate(
+    basin = if_else(
+      lat < params_global$lat_min_SO, "SO", basin_AIP)
+  ) %>%
+  mutate(MLR_basins = "SO_AIP")
+
 # 3 basins
 basinmask_AIP <- basinmask_01 %>%
   mutate(
@@ -247,7 +254,7 @@ basinmask_AIP <- basinmask_01 %>%
   mutate(MLR_basins = "AIP")
 
 # join basin masks into one file
-basinmask_01 <- bind_rows(basinmask_01, basinmask_5, basinmask_SO, basinmask_AIP)
+basinmask_01 <- bind_rows(basinmask_01, basinmask_5, basinmask_SO, basinmask_SO_AIP, basinmask_AIP)
 
 ```
 
@@ -407,7 +414,8 @@ WOA18_temp <- tidync(paste(
   sep = ""
 ))
 
-WOA18_temp_tibble <- WOA18_temp %>% hyper_tibble()
+WOA18_temp_tibble <- WOA18_temp %>%
+  hyper_tibble()
 
 WOA18_temp_tibble <- WOA18_temp_tibble  %>%
   select(temp = t_an, lon, lat, depth) %>%
@@ -676,10 +684,9 @@ file_list <- c(
   paste(path_woa2018, "AOU/all/1.00/woa18_all_A00_01.nc", sep = "")
 )
 
-# file <- file_list[1]
-
 # read, plot and join data sets while looping over file list
 for (file in file_list) {
+  # file <- file_list[1]
 
   # open file
   WOA18 <- tidync(file)
@@ -734,6 +741,11 @@ for (file in file_list) {
 ```{r write_WOA18_nuts_O2_predictor_file}
 
 WOA18_nuts_O2 %>%
+  rename(phosphate = p_an,
+         nitrate = n_an,
+         silicate = i_an,
+         oxygen = o_an,
+         aou = A_an) %>% 
   write_csv(paste(path_preprocessing,
                   "WOA18_nuts_O2.csv",
                   sep = ""))
