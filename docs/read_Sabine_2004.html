@@ -486,7 +486,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Anthropogenic CO2 from 1994 to 2007</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">06 July, 2021</h4>
+<h4 class="date">07 July, 2021</h4>
 
 </div>
 
@@ -511,7 +511,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-07-06
+<strong>Last updated:</strong> 2021-07-07
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -602,16 +602,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree0db89e13a77bb2d38bc960d97f8545a59b998942targetblank0db89e1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/0db89e13a77bb2d38bc960d97f8545a59b998942" target="_blank">0db89e1</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree49054096aff869603ae846eab327ba0aa0f53c84targetblank4905409a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/49054096aff869603ae846eab327ba0aa0f53c84" target="_blank">4905409</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree0db89e13a77bb2d38bc960d97f8545a59b998942targetblank0db89e1a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree49054096aff869603ae846eab327ba0aa0f53c84targetblank4905409a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/0db89e13a77bb2d38bc960d97f8545a59b998942" target="_blank">0db89e1</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/49054096aff869603ae846eab327ba0aa0f53c84" target="_blank">4905409</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -671,6 +671,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/49054096aff869603ae846eab327ba0aa0f53c84/analysis/read_Sabine_2004.Rmd" target="_blank">4905409</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-07-07
+</td>
+<td>
+rerun with new setup_obs.Rmd file
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/58bc706c9584aa60bf178a4c18bd0ffae50c372d/docs/read_Sabine_2004.html" target="_blank">58bc706</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-07-06
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0db89e13a77bb2d38bc960d97f8545a59b998942/analysis/read_Sabine_2004.Rmd" target="_blank">0db89e1</a>
 </td>
 <td>
@@ -692,6 +726,8 @@ rerun with revised variable names
 </div>
 <pre class="r"><code>path_sabine_2004    &lt;- &quot;/nfs/kryo/work/updata/glodapv1_1/GLODAP_gridded.data/&quot;
 path_preprocessing  &lt;- paste(path_root, &quot;/observations/preprocessing/&quot;, sep = &quot;&quot;)</code></pre>
+<pre class="r"><code>library(marelac)</code></pre>
+<pre><code>Error in get(genname, envir = envir) : object &#39;testthat_print&#39; not found</code></pre>
 <div id="data-source" class="section level1" number="1">
 <h1 number="1"><span class="header-section-number">1</span> Data source</h1>
 <ul>
@@ -803,6 +839,43 @@ tcant_inv &lt;- tcant_inv_layers %&gt;%
   var = &quot;tcant_pos&quot;,
   breaks = seq(0,max(tcant_inv$tcant_pos),5))</code></pre>
 <p><img src="figure/read_Sabine_2004.Rmd/cant_pos_inventory_maps-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cant_pos_inventory_maps-1">
+Past versions of cant_pos_inventory_maps-1.png
+</button>
+</p>
+<div id="fig-cant_pos_inventory_maps-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58bc706c9584aa60bf178a4c18bd0ffae50c372d/docs/figure/read_Sabine_2004.Rmd/cant_pos_inventory_maps-1.png" target="_blank">58bc706</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-07-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="horizontal-plane-maps" class="section level2" number="5.2">
 <h2 number="5.2"><span class="header-section-number">5.2</span> Horizontal plane maps</h2>
@@ -811,6 +884,43 @@ tcant_inv &lt;- tcant_inv_layers %&gt;%
   var = &quot;tcant&quot;,
   col = &quot;divergent&quot;)</code></pre>
 <p><img src="figure/read_Sabine_2004.Rmd/cant_maps-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cant_maps-1">
+Past versions of cant_maps-1.png
+</button>
+</p>
+<div id="fig-cant_maps-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58bc706c9584aa60bf178a4c18bd0ffae50c372d/docs/figure/read_Sabine_2004.Rmd/cant_maps-1.png" target="_blank">58bc706</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-07-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="global-section" class="section level2" number="5.3">
 <h2 number="5.3"><span class="header-section-number">5.3</span> Global section</h2>
@@ -819,6 +929,43 @@ tcant_inv &lt;- tcant_inv_layers %&gt;%
   var = &quot;tcant&quot;,
   col = &quot;divergent&quot;)</code></pre>
 <p><img src="figure/read_Sabine_2004.Rmd/cant_sections-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cant_sections-1">
+Past versions of cant_sections-1.png
+</button>
+</p>
+<div id="fig-cant_sections-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58bc706c9584aa60bf178a4c18bd0ffae50c372d/docs/figure/read_Sabine_2004.Rmd/cant_sections-1.png" target="_blank">58bc706</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-07-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="sections-at-regular-longitudes" class="section level2" number="5.4">
 <h2 number="5.4"><span class="header-section-number">5.4</span> Sections at regular longitudes</h2>
@@ -827,6 +974,43 @@ tcant_inv &lt;- tcant_inv_layers %&gt;%
   var = &quot;tcant&quot;,
   col = &quot;divergent&quot;)</code></pre>
 <p><img src="figure/read_Sabine_2004.Rmd/cant_sections_regular-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cant_sections_regular-1">
+Past versions of cant_sections_regular-1.png
+</button>
+</p>
+<div id="fig-cant_sections_regular-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/58bc706c9584aa60bf178a4c18bd0ffae50c372d/docs/figure/read_Sabine_2004.Rmd/cant_sections_regular-1.png" target="_blank">58bc706</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-07-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="write-files" class="section level2" number="5.5">
 <h2 number="5.5"><span class="header-section-number">5.5</span> Write files</h2>
@@ -855,18 +1039,23 @@ dcant_inv_G19 &lt;- read_csv(paste(path_preprocessing,
 <p>Cant inventory estimates of S04 (Sabine et al, 2004) and G19 (Gruber et al, 2019) were compared.</p>
 <div id="merge-data-sets" class="section level2" number="7.1">
 <h2 number="7.1"><span class="header-section-number">7.1</span> Merge data sets</h2>
-<pre class="r"><code>tcant_inv &lt;- full_join(tcant_inv_G19 %&gt;% mutate(estimate = &quot;G19&quot;),
-                      tcant_inv_S04 %&gt;% mutate(estimate = &quot;S04&quot;)) %&gt;% 
-  select(-c(tcant_inv, eras))
+<pre class="r"><code>cant_inv &lt;- full_join(dcant_inv_G19 %&gt;%
+                        mutate(estimate = &quot;G19&quot;) %&gt;% 
+                        rename(cant_pos = dcant_pos) %&gt;% 
+                        select(-dcant),
+                      tcant_inv_S04 %&gt;% 
+                        mutate(estimate = &quot;S04&quot;) %&gt;% 
+                        rename(cant_pos = tcant_pos) %&gt;% 
+                        select(-tcant))
 
-rm(tcant_inv_G19, tcant_inv_S04)</code></pre>
+rm(dcant_inv_G19, tcant_inv_S04)</code></pre>
 </div>
 <div id="inventory-maps" class="section level2" number="7.2">
 <h2 number="7.2"><span class="header-section-number">7.2</span> Inventory maps</h2>
-<p>Spanning different time periods, the Cant inventories differ in magnitude.</p>
+<p>Spanning different time periods, the Cant inventories differ in magnitude. Please note, that we refer to cant_pos here, but strictly speaking we compare dcant and tcant.</p>
 <pre class="r"><code>map +
-  geom_raster(data = tcant_inv,
-              aes(lon, lat, fill = cant_pos_inv)) +
+  geom_raster(data = cant_inv,
+              aes(lon, lat, fill = cant_pos)) +
   scale_fill_viridis_c() +
   facet_wrap( ~ estimate, ncol = 1) +
   theme(
@@ -874,45 +1063,51 @@ rm(tcant_inv_G19, tcant_inv_S04)</code></pre>
     axis.text = element_blank(),
     axis.ticks = element_blank()
   )</code></pre>
+<p><img src="figure/read_Sabine_2004.Rmd/tcant_inv_comparison-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="cant-budgets" class="section level2" number="7.3">
 <h2 number="7.3"><span class="header-section-number">7.3</span> C<sub>ant</sub> budgets</h2>
 <p>Global Cant inventories were estimated in Pg-C. Please note that here we only added positive Cant values in the upper m and do not apply additional corrections for areas not covered.</p>
-<pre class="r"><code>library(marelac)
-
-tcant_inv &lt;- tcant_inv %&gt;% 
+<pre class="r"><code>cant_inv &lt;- cant_inv %&gt;% 
   mutate(surface_area = earth_surf(lat, lon),
-         cant_pos_inv_grid = cant_pos_inv*surface_area)
+         cant_pos_grid = cant_pos*surface_area)
 
-tcant_inv_budget &lt;- tcant_inv %&gt;% 
+cant_inv_budget &lt;- cant_inv %&gt;% 
   group_by(estimate, basin_AIP) %&gt;% 
-  summarise(cant_pos_total = sum(cant_pos_inv_grid)*12*1e-15,
+  summarise(cant_pos_total = sum(cant_pos_grid)*12*1e-15,
             cant_pos_total = round(cant_pos_total,1)) %&gt;% 
   ungroup() %&gt;% 
   pivot_wider(values_from = cant_pos_total, names_from = basin_AIP) %&gt;% 
   mutate(total = Atlantic + Indian + Pacific)
 
-tcant_inv_budget</code></pre>
+cant_inv_budget</code></pre>
+<pre><code># A tibble: 2 x 5
+  estimate Atlantic Indian Pacific total
+  &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+1 G19          11      7.1    13.4  31.5
+2 S04          39.6   23.4    41.4 104. </code></pre>
 </div>
 <div id="relative-inventories" class="section level2" number="7.4">
 <h2 number="7.4"><span class="header-section-number">7.4</span> Relative inventories</h2>
-<pre class="r"><code>tcant_inv_wide &lt;- tcant_inv %&gt;%
-  pivot_wider(values_from = c(cant_pos_inv, cant_pos_inv_grid),
+<pre class="r"><code>cant_inv_wide &lt;- cant_inv %&gt;%
+  pivot_wider(values_from = c(cant_pos, cant_pos_grid),
               names_from = estimate)
 
-tcant_inv_wide &lt;- tcant_inv_wide %&gt;% 
+cant_inv_wide &lt;- cant_inv_wide %&gt;% 
   drop_na() %&gt;% 
-  mutate(G19_rel = cant_pos_inv_grid_G19 / sum(cant_pos_inv_grid_G19),
-         S04_rel = cant_pos_inv_grid_S04 / sum(cant_pos_inv_grid_S04),
+  mutate(G19_rel = cant_pos_grid_G19 / sum(cant_pos_grid_G19),
+         S04_rel = cant_pos_grid_S04 / sum(cant_pos_grid_S04),
          cant_ratio_rel = G19_rel / S04_rel)
 
-tcant_inv_rel &lt;- tcant_inv_wide %&gt;% 
-  pivot_longer(cols = c(G19_rel, S04_rel),
-                        names_to = &quot;estimate&quot;,
-                        values_to = &quot;tcant_inv_rel&quot;)</code></pre>
+cant_inv_rel &lt;- cant_inv_wide %&gt;%
+  pivot_longer(
+    cols = c(G19_rel, S04_rel),
+    names_to = &quot;estimate&quot;,
+    values_to = &quot;cant_pos_rel&quot;
+  )</code></pre>
 <pre class="r"><code>map +
-  geom_raster(data = tcant_inv_rel,
-              aes(lon, lat, fill = tcant_inv_rel*100)) +
+  geom_raster(data = cant_inv_rel,
+              aes(lon, lat, fill = cant_pos_rel*100)) +
   scale_fill_viridis_c() +
   facet_wrap( ~ estimate, ncol = 1) +
   theme(
@@ -920,11 +1115,12 @@ tcant_inv_rel &lt;- tcant_inv_wide %&gt;%
     axis.text = element_blank(),
     axis.ticks = element_blank()
   )</code></pre>
+<p><img src="figure/read_Sabine_2004.Rmd/tcant_inv_rel_maps-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="relative-inventory-ratios" class="section level2" number="7.5">
 <h2 number="7.5"><span class="header-section-number">7.5</span> Relative inventory ratios</h2>
 <pre class="r"><code>map +
-  geom_contour_filled(data = tcant_inv_wide %&gt;%
+  geom_contour_filled(data = cant_inv_wide %&gt;%
   filter(cant_ratio_rel &lt; 10,
          cant_ratio_rel &gt; 0.1),
                       aes(lon, lat, z = log10(cant_ratio_rel))) +
@@ -938,6 +1134,7 @@ tcant_inv_rel &lt;- tcant_inv_wide %&gt;%
     axis.ticks = element_blank(),
     legend.title = element_blank()
   )</code></pre>
+<p><img src="figure/read_Sabine_2004.Rmd/tcant_inv_ratio_map-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -966,35 +1163,39 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] ggforce_0.3.3   metR_0.9.0      scico_1.2.0     patchwork_1.1.1
- [5] collapse_1.5.0  forcats_0.5.0   stringr_1.4.0   dplyr_1.0.5    
- [9] purrr_0.3.4     readr_1.4.0     tidyr_1.1.2     tibble_3.0.4   
-[13] ggplot2_3.3.3   tidyverse_1.3.0 workflowr_1.6.2
+ [1] marelac_2.1.10  shape_1.4.5     ggforce_0.3.3   metR_0.9.0     
+ [5] scico_1.2.0     patchwork_1.1.1 collapse_1.5.0  forcats_0.5.0  
+ [9] stringr_1.4.0   dplyr_1.0.5     purrr_0.3.4     readr_1.4.0    
+[13] tidyr_1.1.2     tibble_3.0.4    ggplot2_3.3.3   tidyverse_1.3.0
+[17] workflowr_1.6.2
 
 loaded via a namespace (and not attached):
- [1] httr_1.4.2               jsonlite_1.7.1           modelr_0.1.8            
- [4] assertthat_0.2.1         blob_1.2.1               cellranger_1.1.0        
- [7] yaml_2.2.1               pillar_1.4.7             backports_1.1.10        
-[10] lattice_0.20-41          glue_1.4.2               RcppEigen_0.3.3.7.0     
-[13] digest_0.6.27            promises_1.1.1           polyclip_1.10-0         
-[16] checkmate_2.0.0          rvest_0.3.6              colorspace_1.4-1        
-[19] htmltools_0.5.0          httpuv_1.5.4             Matrix_1.2-18           
-[22] pkgconfig_2.0.3          broom_0.7.5              haven_2.3.1             
-[25] scales_1.1.1             tweenr_1.0.2             whisker_0.4             
-[28] later_1.1.0.1            git2r_0.27.1             generics_0.0.2          
-[31] farver_2.0.3             ellipsis_0.3.1           withr_2.3.0             
-[34] cli_2.1.0                magrittr_1.5             crayon_1.3.4            
-[37] readxl_1.3.1             evaluate_0.14            fs_1.5.0                
-[40] fansi_0.4.1              MASS_7.3-53              xml2_1.3.2              
-[43] RcppArmadillo_0.10.1.2.0 tools_4.0.3              data.table_1.13.2       
-[46] hms_0.5.3                lifecycle_1.0.0          munsell_0.5.0           
-[49] reprex_0.3.0             isoband_0.2.2            compiler_4.0.3          
-[52] rlang_0.4.10             grid_4.0.3               rstudioapi_0.11         
-[55] labeling_0.4.2           rmarkdown_2.5            gtable_0.3.0            
-[58] DBI_1.1.0                R6_2.5.0                 lubridate_1.7.9         
-[61] knitr_1.30               rprojroot_2.0.2          stringi_1.5.3           
-[64] parallel_4.0.3           Rcpp_1.0.5               vctrs_0.3.5             
-[67] dbplyr_1.4.4             tidyselect_1.1.0         xfun_0.18               </code></pre>
+ [1] fs_1.5.0                 lubridate_1.7.9          gsw_1.0-5               
+ [4] RColorBrewer_1.1-2       httr_1.4.2               rprojroot_2.0.2         
+ [7] tools_4.0.3              backports_1.1.10         utf8_1.1.4              
+[10] R6_2.5.0                 DBI_1.1.0                colorspace_1.4-1        
+[13] withr_2.3.0              tidyselect_1.1.0         compiler_4.0.3          
+[16] git2r_0.27.1             cli_2.1.0                rvest_0.3.6             
+[19] xml2_1.3.2               isoband_0.2.2            labeling_0.4.2          
+[22] scales_1.1.1             checkmate_2.0.0          digest_0.6.27           
+[25] rmarkdown_2.5            oce_1.2-0                pkgconfig_2.0.3         
+[28] htmltools_0.5.0          dbplyr_1.4.4             rlang_0.4.10            
+[31] readxl_1.3.1             rstudioapi_0.11          farver_2.0.3            
+[34] generics_0.0.2           jsonlite_1.7.1           magrittr_1.5            
+[37] Matrix_1.2-18            Rcpp_1.0.5               munsell_0.5.0           
+[40] fansi_0.4.1              lifecycle_1.0.0          stringi_1.5.3           
+[43] whisker_0.4              yaml_2.2.1               MASS_7.3-53             
+[46] grid_4.0.3               blob_1.2.1               parallel_4.0.3          
+[49] promises_1.1.1           crayon_1.3.4             lattice_0.20-41         
+[52] haven_2.3.1              hms_0.5.3                seacarb_3.2.14          
+[55] knitr_1.30               pillar_1.4.7             reprex_0.3.0            
+[58] glue_1.4.2               evaluate_0.14            RcppArmadillo_0.10.1.2.0
+[61] data.table_1.13.2        modelr_0.1.8             vctrs_0.3.5             
+[64] tweenr_1.0.2             httpuv_1.5.4             testthat_2.3.2          
+[67] cellranger_1.1.0         gtable_0.3.0             polyclip_1.10-0         
+[70] assertthat_0.2.1         xfun_0.18                broom_0.7.5             
+[73] RcppEigen_0.3.3.7.0      later_1.1.0.1            viridisLite_0.3.0       
+[76] ellipsis_0.3.1          </code></pre>
 </div>
 </div>
 </div>
