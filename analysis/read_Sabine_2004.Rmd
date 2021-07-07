@@ -12,7 +12,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r parent, child = "/nfs/kryo/work/jenmueller/emlr_cant/utilities/setup.Rmd"}
+```{r parent, child = "/nfs/kryo/work/jenmueller/emlr_cant/utilities/setup_obs.Rmd"}
 # this chunk runs the code stored in setup.Rmd
 # if required, please refer to instructions given here:
 # https://jdblischak.github.io/workflowr/articles/wflow-07-common-code.html
@@ -22,6 +22,12 @@ editor_options:
 path_sabine_2004    <- "/nfs/kryo/work/updata/glodapv1_1/GLODAP_gridded.data/"
 path_preprocessing  <- paste(path_root, "/observations/preprocessing/", sep = "")
 ```
+
+```{r load_libraries}
+library(marelac)
+
+```
+
 
 # Data source
 
@@ -209,7 +215,7 @@ tcant_zonal %>%
 
 # Anomalous changes
 
-```{r read_G19_cant_file, eval=FALSE}
+```{r read_G19_cant_file}
 
 tcant_inv_S04 <- tcant_inv
 
@@ -224,25 +230,30 @@ Cant inventory estimates of S04 (Sabine et al, 2004) and G19 (Gruber et al, 2019
 
 ## Merge data sets
 
-```{r merge_cant_data_sets, eval=FALSE}
+```{r merge_cant_data_sets}
 
-tcant_inv <- full_join(tcant_inv_G19 %>% mutate(estimate = "G19"),
-                      tcant_inv_S04 %>% mutate(estimate = "S04")) %>% 
-  select(-c(tcant_inv, eras))
+cant_inv <- full_join(dcant_inv_G19 %>%
+                        mutate(estimate = "G19") %>% 
+                        rename(cant_pos = dcant_pos) %>% 
+                        select(-dcant),
+                      tcant_inv_S04 %>% 
+                        mutate(estimate = "S04") %>% 
+                        rename(cant_pos = tcant_pos) %>% 
+                        select(-tcant))
 
-rm(tcant_inv_G19, tcant_inv_S04)
+rm(dcant_inv_G19, tcant_inv_S04)
 
 ```
 
 ## Inventory maps
 
-Spanning different time periods, the Cant inventories differ in magnitude.
+Spanning different time periods, the Cant inventories differ in magnitude. Please note, that we refer to cant_pos here, but strictly speaking we compare dcant and tcant.
 
-```{r tcant_inv_comparison, fig.asp=1, eval=FALSE}
+```{r tcant_inv_comparison, fig.asp=1}
  
 map +
-  geom_raster(data = tcant_inv,
-              aes(lon, lat, fill = cant_pos_inv)) +
+  geom_raster(data = cant_inv,
+              aes(lon, lat, fill = cant_pos)) +
   scale_fill_viridis_c() +
   facet_wrap( ~ estimate, ncol = 1) +
   theme(
@@ -257,55 +268,55 @@ map +
 
 Global Cant inventories were estimated in Pg-C. Please note that here we only added positive Cant values in the upper `r params_global$inventory_depth`m and do not apply additional corrections for areas not covered.
 
-```{r calculate_global_inventory, eval=FALSE}
+```{r calculate_global_inventory}
 
-library(marelac)
-
-tcant_inv <- tcant_inv %>% 
+cant_inv <- cant_inv %>% 
   mutate(surface_area = earth_surf(lat, lon),
-         cant_pos_inv_grid = cant_pos_inv*surface_area)
+         cant_pos_grid = cant_pos*surface_area)
 
-tcant_inv_budget <- tcant_inv %>% 
+cant_inv_budget <- cant_inv %>% 
   group_by(estimate, basin_AIP) %>% 
-  summarise(cant_pos_total = sum(cant_pos_inv_grid)*12*1e-15,
+  summarise(cant_pos_total = sum(cant_pos_grid)*12*1e-15,
             cant_pos_total = round(cant_pos_total,1)) %>% 
   ungroup() %>% 
   pivot_wider(values_from = cant_pos_total, names_from = basin_AIP) %>% 
   mutate(total = Atlantic + Indian + Pacific)
 
-tcant_inv_budget
+cant_inv_budget
 
 ```
 
 
 ## Relative inventories
 
-```{r calculate_tcant_inv_ratio, eval=FALSE}
+```{r calculate_tcant_inv_ratio}
 
-tcant_inv_wide <- tcant_inv %>%
-  pivot_wider(values_from = c(cant_pos_inv, cant_pos_inv_grid),
+cant_inv_wide <- cant_inv %>%
+  pivot_wider(values_from = c(cant_pos, cant_pos_grid),
               names_from = estimate)
 
-tcant_inv_wide <- tcant_inv_wide %>% 
+cant_inv_wide <- cant_inv_wide %>% 
   drop_na() %>% 
-  mutate(G19_rel = cant_pos_inv_grid_G19 / sum(cant_pos_inv_grid_G19),
-         S04_rel = cant_pos_inv_grid_S04 / sum(cant_pos_inv_grid_S04),
+  mutate(G19_rel = cant_pos_grid_G19 / sum(cant_pos_grid_G19),
+         S04_rel = cant_pos_grid_S04 / sum(cant_pos_grid_S04),
          cant_ratio_rel = G19_rel / S04_rel)
 
-tcant_inv_rel <- tcant_inv_wide %>% 
-  pivot_longer(cols = c(G19_rel, S04_rel),
-                        names_to = "estimate",
-                        values_to = "tcant_inv_rel")
+cant_inv_rel <- cant_inv_wide %>%
+  pivot_longer(
+    cols = c(G19_rel, S04_rel),
+    names_to = "estimate",
+    values_to = "cant_pos_rel"
+  )
 
 ```
 
 
 
-```{r tcant_inv_rel_maps, fig.asp=1, eval=FALSE}
+```{r tcant_inv_rel_maps, fig.asp=1}
 
 map +
-  geom_raster(data = tcant_inv_rel,
-              aes(lon, lat, fill = tcant_inv_rel*100)) +
+  geom_raster(data = cant_inv_rel,
+              aes(lon, lat, fill = cant_pos_rel*100)) +
   scale_fill_viridis_c() +
   facet_wrap( ~ estimate, ncol = 1) +
   theme(
@@ -318,10 +329,10 @@ map +
 
 ## Relative inventory ratios
 
-```{r tcant_inv_ratio_map, fig.asp=0.6, eval=FALSE}
+```{r tcant_inv_ratio_map, fig.asp=0.6}
 
 map +
-  geom_contour_filled(data = tcant_inv_wide %>%
+  geom_contour_filled(data = cant_inv_wide %>%
   filter(cant_ratio_rel < 10,
          cant_ratio_rel > 0.1),
                       aes(lon, lat, z = log10(cant_ratio_rel))) +
