@@ -5,7 +5,7 @@
 
 # commit regular changes (locally) and rebuild site
 # this takes only changed files into account
-wflow_publish(all = TRUE, message = "update to latest GLODAP pre-release")
+wflow_publish(all = TRUE, message = "added SO_5 basin mask")
 
 # commit changes including _site.yml (locally) and rebuild site in the specified order
 # you can also run this code with only some of the files. In this case remove the rebuild=TRUE command
@@ -20,14 +20,14 @@ wflow_publish(here::here(
     "read_OceanSODA.Rmd",
     "read_GLODAPv2_2020.Rmd",
     "read_GLODAPv2_2021.Rmd",
-    "read_Gruber_2019_Cant.Rmd",
-    "read_Sabine_2004_Cant.Rmd",
+    "read_Gruber_2019.Rmd",
+    "read_Sabine_2004.Rmd",
     "read_CO2_atm.Rmd",
     "analysis_regional_clusters.Rmd"
 
   )
 ),
-message = "included OceanSODA",
+message = "rerun with new setup_obs.Rmd file",
 republish = TRUE)
 
 

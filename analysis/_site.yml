@@ -26,9 +26,9 @@ navbar:
   - text: Cant
     menu:
     - text: Gruber 2019
-      href: read_Gruber_2019_Cant.html
+      href: read_Gruber_2019.html
     - text: Sabine 2004
-      href: read_Sabine_2004_Cant.html
+      href: read_Sabine_2004.html
   - text: Atmospheric CO2
     href: read_CO2_atm.html
   - text: Clustering
