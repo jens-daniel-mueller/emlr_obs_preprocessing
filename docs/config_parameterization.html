@@ -486,7 +486,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Parameterization</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">07 July, 2021</h4>
+<h4 class="date">29 July, 2021</h4>
 
 </div>
 
@@ -511,7 +511,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-07-07
+<strong>Last updated:</strong> 2021-07-29
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -602,16 +602,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree6312bd47a8a3ae4b77c1e3359246324f3f7df734targetblank6312bd4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/6312bd47a8a3ae4b77c1e3359246324f3f7df734" target="_blank">6312bd4</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreed2d61c3c58aa660dd762a903f2611d912cc9319atargetblankd2d61c3a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/d2d61c3c58aa660dd762a903f2611d912cc9319a" target="_blank">d2d61c3</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree6312bd47a8a3ae4b77c1e3359246324f3f7df734targetblank6312bd4a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreed2d61c3c58aa660dd762a903f2611d912cc9319atargetblankd2d61c3a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/6312bd47a8a3ae4b77c1e3359246324f3f7df734" target="_blank">6312bd4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/d2d61c3c58aa660dd762a903f2611d912cc9319a" target="_blank">d2d61c3</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -621,13 +621,6 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/
-
-Unstaged changes:
-    Modified:   README.md
-    Modified:   analysis/_site.yml
-    Deleted:    analysis/read_Gruber_2019_Cant.Rmd
-    Deleted:    analysis/read_Sabine_2004_Cant.Rmd
-    Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
 <p>
@@ -666,6 +659,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d2d61c3c58aa660dd762a903f2611d912cc9319a/analysis/config_parameterization.Rmd" target="_blank">d2d61c3</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-07-29
+</td>
+<td>
+added ORCA depth_levels
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/e49875a0d0fbae4d5fa6b2b11ee2a781388457e1/docs/config_parameterization.html" target="_blank">e49875a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-07-07
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1324,7 +1351,9 @@ Initial commit
 <div id="definition" class="section level1" number="1">
 <h1 number="1"><span class="header-section-number">1</span> Definition</h1>
 <p>Following global parameterizations were chosen to run all analysis and display results:</p>
-<pre class="r fold-show"><code>depth_levels = c(0, 5, 150, 155, 483, 500, 2000, 1969)
+<pre class="r fold-show"><code>depth_levels = c(0, 150,  500, 2000, #GLODAP depth levels
+                 5, 155, 483, 1969, # CESM depth levels
+                 3, 160, 534, 2054)
 
 depth_levels_33 &lt;- c(
   0,
