@@ -31,7 +31,9 @@ Following global parameterizations were chosen to run all analysis and display r
 
 ```{r define_global_params_global, class.source = 'fold-show'}
 
-depth_levels = c(0, 5, 150, 155, 483, 500, 2000, 1969)
+depth_levels = c(0, 150,  500, 2000, #GLODAP depth levels
+                 5, 155, 483, 1969, # CESM depth levels
+                 3, 160, 534, 2054)
 
 depth_levels_33 <- c(
   0,
