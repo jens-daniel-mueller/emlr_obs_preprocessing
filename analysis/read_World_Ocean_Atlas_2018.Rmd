@@ -211,8 +211,13 @@ For the MLR fitting, ocean basins are further split up, as plotted below.
 
 ```{r assign_alternative_basin_labels}
 
-# 2 basins
+# 1 basins
 basinmask_01 <- basinmask_01 %>%
+  mutate(basin = "global",
+         MLR_basins = "1")
+
+# 2 basins
+basinmask_2 <- basinmask_01 %>%
   mutate(basin = if_else(basin_AIP == "Atlantic",
                          "Atlantic",
                          "Indo-Pacific"),
@@ -269,7 +274,8 @@ basinmask_AIP <- basinmask_01 %>%
   mutate(MLR_basins = "AIP")
 
 # join basin masks into one file
-basinmask_01 <- bind_rows(basinmask_01, basinmask_5, basinmask_SO, basinmask_SO_5,
+basinmask_01 <- bind_rows(basinmask_01, basinmask_2, basinmask_5,
+                          basinmask_SO, basinmask_SO_5,
                           basinmask_SO_AIP, basinmask_AIP)
 
 ```

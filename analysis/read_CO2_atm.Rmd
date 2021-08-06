@@ -20,6 +20,7 @@ editor_options:
 
 ```{r define_paths, include=FALSE}
 path_atm_pCO2    <- "/nfs/kryo/work/updata/atm_pco2_noaa/"
+path_reccap2    <- "/nfs/kryo/work/updata/reccap2/"
 path_preprocessing  <- paste(path_root, "/observations/preprocessing/", sep = "")
 ```
 
@@ -45,14 +46,53 @@ names(co2_atm) <- c("year", "pCO2")
   
 ```
 
+- Data source:
+
+Global CO2 concentration (ppm)
+Prepared by C Le Quéré and M W Jones for the Global Carbon Project, 1 May 2020
+This dataset is intended to be used as atmospheric forcing for modelling the evolution of carbon sinks
+
+Data from March 1958 are monthly average from MLO and SPO
+provided by NOAA's Earth System Research Laboratory
+http://www.esrl.noaa.gov/gmd/ccgg/trends/
+When no SPO data are available (including prior to 1975), SPO is constructed from the 1976-2014 average 
+MLO-SPO trend and average monthly departure
+The last year of data are still preliminary, pending recalibrations of reference gases and other quality control checks.
+
+Data prior to March 1958 are estimated with a cubic spline fit to ice core data from
+Joos and Spahni 2008 Rates of change in natural and anthropogenic radiative
+forcing over the past 20,000 years PNAS
+
+Annual mean values are calculated for all years.
+
+```{r read_atm_co2_reccap}
+
+co2_atm_reccap2 <- read_table2(
+  paste0(path_reccap2,
+        "global_co2_merged.txt"),
+  col_names = c("year", "pCO2"),
+  skip = 16
+)
+
+co2_atm_reccap2 <- co2_atm_reccap2 %>% 
+  mutate(year = as.integer(round(year))) %>% 
+  group_by(year) %>% 
+  summarise(pCO2 = mean(pCO2, na.rm = TRUE)) %>% 
+  ungroup()
+
+```
+
 # Time series
 
 ```{r co2_atm_time_series}
 
-co2_atm %>% 
-  ggplot(aes(year, pCO2)) +
-  geom_path() +
-  geom_point()
+ggplot() +
+  # geom_path(data = co2_atm_reccap2, aes(year, pCO2, col="reccap2")) +
+  geom_point(data = co2_atm_reccap2, aes(year, pCO2, col="reccap2")) +
+  # geom_path(data = co2_atm, aes(year, pCO2, col="NOAA")) +
+  geom_point(data = co2_atm, aes(year, pCO2, col="NOAA")) +
+  scale_color_brewer(palette = "Set1") +
+  theme(legend.title = element_blank())
 
 ```
 
@@ -63,6 +103,11 @@ co2_atm %>%
 co2_atm %>%
   write_csv(paste(path_preprocessing,
                   "co2_atm.csv",
+                  sep = ""))
+
+co2_atm_reccap2 %>%
+  write_csv(paste(path_preprocessing,
+                  "co2_atm_reccap2.csv",
                   sep = ""))
 
 ```
