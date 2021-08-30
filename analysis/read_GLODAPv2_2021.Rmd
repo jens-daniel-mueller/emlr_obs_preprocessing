@@ -30,7 +30,7 @@ library(lubridate)
 
 # Read files
 
-Main data source for this project is a pre-release version of `GLODAPv2.2021_Merged_Master_File.csv` received from Nico Lange in June 2021.
+Main data source for this project is `GLODAPv2.2021_Merged_Master_File.csv` downloaded from `https://www.ncei.noaa.gov/data/oceans/ncei/ocads/data/0237935/GLODAPv2.2021_Merged_Master_File.csv` on Aug 30, 2021.
 
 ```{r read_GLODAPv2_2020_merged_master_file}
 
@@ -38,7 +38,7 @@ GLODAP <-
   read_csv(
     paste(
       path_glodapv2_2021,
-      "GLODAPv2.2021_Merged_Master_File_beta_20210624.csv",
+      "GLODAPv2.2021_Merged_Master_File_20210830.csv",
       sep = ""
     ),
     na = "-9999",
