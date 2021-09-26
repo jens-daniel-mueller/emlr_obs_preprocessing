@@ -14,13 +14,22 @@
 
 <title>Anthropogenic CO2 from 1994 to 2007</title>
 
-<script src="site_libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
@@ -28,8 +37,6 @@
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -53,11 +60,6 @@ div.section {
     </style>
 
 <style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -70,32 +72,7 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
 
 
 
@@ -105,10 +82,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -125,40 +98,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -186,7 +132,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -198,7 +144,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -209,10 +155,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -224,7 +183,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -359,7 +317,7 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -472,11 +430,11 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 </ul>
@@ -486,7 +444,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Anthropogenic CO2 from 1994 to 2007</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">07 July, 2021</h4>
+<h4 class="date">26 September, 2021</h4>
 
 </div>
 
@@ -511,7 +469,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-07-07
+<strong>Last updated:</strong> 2021-09-26
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -602,16 +560,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree6312bd47a8a3ae4b77c1e3359246324f3f7df734targetblank6312bd4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/6312bd47a8a3ae4b77c1e3359246324f3f7df734" target="_blank">6312bd4</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree984ccac54db2ac6de98968f4dd0e38dbef4daee8targetblank984ccaca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/984ccac54db2ac6de98968f4dd0e38dbef4daee8" target="_blank">984ccac</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree6312bd47a8a3ae4b77c1e3359246324f3f7df734targetblank6312bd4a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree984ccac54db2ac6de98968f4dd0e38dbef4daee8targetblank984ccaca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/6312bd47a8a3ae4b77c1e3359246324f3f7df734" target="_blank">6312bd4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/984ccac54db2ac6de98968f4dd0e38dbef4daee8" target="_blank">984ccac</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -620,14 +578,8 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
     Ignored:    data/
-
-Unstaged changes:
-    Modified:   README.md
-    Modified:   analysis/_site.yml
-    Deleted:    analysis/read_Gruber_2019_Cant.Rmd
-    Deleted:    analysis/read_Sabine_2004_Cant.Rmd
-    Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
 <p>
@@ -666,6 +618,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/984ccac54db2ac6de98968f4dd0e38dbef4daee8/analysis/read_Gruber_2019.Rmd" target="_blank">984ccac</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-09-26
+</td>
+<td>
+read all Gruber 2019 cases
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/e49875a0d0fbae4d5fa6b2b11ee2a781388457e1/docs/read_Gruber_2019.html" target="_blank">e49875a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-07-07
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -801,6 +787,29 @@ dcant_inv &lt;- dcant_inv %&gt;%
          lat = LATITUDE,
          dcant_pos = DCANT_INV01) %&gt;% 
   mutate(lon = if_else(lon &lt; 20, lon + 360, lon))</code></pre>
+<pre class="r"><code>dcant_inv_all &lt;- read_ncdf(
+  paste(
+    path_gruber_2019,
+    &quot;inv_dcant_emlr_cstar_gruber_94-07_vs1.nc&quot;,
+    sep = &quot;&quot;
+  ),
+  var = sprintf(&quot;DCANT_INV%02d&quot;, seq(1, 14, 1)),
+  make_units = FALSE
+)
+
+dcant_inv_all &lt;- dcant_inv_all %&gt;% as_tibble()
+
+dcant_inv_all &lt;- dcant_inv_all %&gt;% 
+  pivot_longer(DCANT_INV01:DCANT_INV14,
+               names_to = &quot;Version_ID&quot;,
+               values_to = &quot;dcant_pos&quot;,
+               names_prefix = &quot;DCANT_INV&quot;)
+
+# harmonize column names and coordinates
+dcant_inv_all &lt;- dcant_inv_all %&gt;%
+  rename(lon = LONGITUDE,
+         lat = LATITUDE) %&gt;%
+  mutate(lon = if_else(lon &lt; 20, lon + 360, lon))</code></pre>
 </div>
 </div>
 <div id="raw-data" class="section level2" number="2.2">
@@ -834,6 +843,7 @@ basinmask &lt;- basinmask %&gt;%
 
 dcant &lt;- inner_join(dcant, basinmask)
 dcant_inv_publ &lt;- inner_join(dcant_inv, basinmask)
+dcant_inv_all &lt;- inner_join(dcant_inv_all, basinmask)
 V101 &lt;- inner_join(V101, basinmask)</code></pre>
 </div>
 <div id="join-pos-and-all-delta-cant" class="section level1" number="4">
@@ -946,6 +956,11 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre class="r"><code>p_map_cant_inv(
+  df = dcant_inv_all %&gt;% mutate(dcant_pos = dcant_pos*(10/13)),
+  var = &quot;dcant_pos&quot;) +
+  facet_wrap(~ Version_ID, ncol = 2)</code></pre>
+<p><img src="figure/read_Gruber_2019.Rmd/G19_cant_pos_inventory_maps_all-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="published-inventories" class="section level3" number="6.2.3">
 <h3 number="6.2.3"><span class="header-section-number">6.2.3</span> Published inventories</h3>
@@ -1004,9 +1019,12 @@ dcant_inv_offset &lt;- dcant_inv_offset %&gt;%
   mutate(dcant_offset = dcant_re - dcant_pub)
 
 # plot map
-p_map_cant_inv_offset(df = dcant_inv_offset,
-                      var = &quot;dcant_offset&quot;,
-                      breaks = seq(-3,3,0.25))</code></pre>
+p_map_cant_inv(
+  df = dcant_inv_offset,
+  var = &quot;dcant_offset&quot;,
+  col = &quot;divergent&quot;,
+  breaks = seq(-3, 3, 0.25)
+)</code></pre>
 <p><img src="figure/read_Gruber_2019.Rmd/G19_cant_offset_inventory-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-G19_cant_offset_inventory-1">
@@ -1481,10 +1499,101 @@ dcant_inv %&gt;%
                   &quot;G19_dcant_inv.csv&quot;,
                   sep = &quot;&quot;))
 
+dcant_inv_all %&gt;%
+  write_csv(paste(path_preprocessing,
+                  &quot;G19_dcant_inv_all.csv&quot;,
+                  sep = &quot;&quot;))
+
 dcant_zonal %&gt;%
   write_csv(paste(path_preprocessing,
                   &quot;G19_dcant_zonal.csv&quot;,
                   sep = &quot;&quot;))</code></pre>
+</div>
+<div id="reccap2-ocean" class="section level1" number="12">
+<h1 number="12"><span class="header-section-number">12</span> RECCAP2-ocean</h1>
+<pre class="r"><code># https://pjbartlein.github.io/REarthSysSci/netCDF.html#create-and-write-a-netcdf-file
+
+# open file
+dcant &lt;- tidync(paste(
+  path_gruber_2019,
+  &quot;dcant_emlr_cstar_gruber_94-07_vs1.nc&quot;,
+  sep = &quot;&quot;
+))
+
+# read delta cant field
+dcant &lt;- dcant %&gt;%  activate(DCANT_01)
+dcant &lt;- dcant %&gt;% hyper_tibble(na.rm = FALSE)
+
+# harmonize column names and coordinates
+dcant &lt;- dcant %&gt;% 
+  rename(lon = LONGITUDE,
+         lat = LATITUDE,
+         depth = DEPTH,
+         dcant = DCANT_01) %&gt;% 
+  arrange(lon, lat, depth) %&gt;% 
+  relocate(dcant, .after = last_col())
+
+dcant %&gt;% 
+  filter(depth == 0,
+         lon &gt; 125,
+         lon &lt; 175,
+         lat &lt; -25) %&gt;% 
+  ggplot(aes(lon, lat, fill=dcant)) +
+  geom_raster() +
+  scale_fill_viridis_c(na.value = &quot;transparent&quot;)
+
+unique(dcant$depth)
+
+dcant %&gt;%
+  filter(lon &gt; 125,
+         lon &lt; 175,
+         lat &lt; -25) %&gt;% 
+  write_csv(paste(path_preprocessing,
+                  &quot;G19_dcant_3d_example.csv&quot;,
+                  sep = &quot;&quot;))</code></pre>
+<pre class="r"><code># https://pjbartlein.github.io/REarthSysSci/netCDF.html#create-and-write-a-netcdf-file
+
+# open file
+dcant &lt;- tidync(paste(
+  path_gruber_2019,
+  &quot;dcant_emlr_cstar_gruber_94-07_vs1.nc&quot;,
+  sep = &quot;&quot;
+))
+
+# read delta cant field
+dcant &lt;- dcant %&gt;%  activate(DCANT_01)
+dcant &lt;- dcant %&gt;% hyper_tibble(na.rm = FALSE)
+
+# harmonize column names and coordinates
+dcant &lt;- dcant %&gt;% 
+  rename(lon = LONGITUDE,
+         lat = LATITUDE,
+         depth = DEPTH,
+         dcant_pos = DCANT_01) %&gt;% 
+  arrange(lon, lat, depth) %&gt;% 
+  relocate(dcant_pos, .after = last_col())
+
+lon &lt;- unique(dcant$lon)
+lat &lt;- unique(dcant$lat)
+depth &lt;- unique(dcant$depth)
+
+nlon &lt;- length(lon)
+nlat &lt;- length(lat)
+ndepth &lt;- length(depth)
+
+dcant_mat &lt;- as.matrix(dcant[4])
+dcant_array &lt;- array(dcant_mat, dim=c(nlon, nlat, ndepth))
+dim(dcant_array)
+
+library(lattice)
+library(RColorBrewer)
+grid &lt;- expand.grid(lon=lon, lat=lat)
+
+levelplot(dcant_array[,,1] ~ lon * lat, data=grid)
+image(lon,lat,dcant_array[,,1], col=rev(brewer.pal(10,&quot;RdBu&quot;)))
+
+levelplot(dcant_array[,,1] ~ lon * lat, data=grid, at=cutpts, cuts=11, pretty=T, 
+  col.regions=(rev(brewer.pal(10,&quot;RdBu&quot;))), main=&quot;Mean July Temperature (C)&quot;)</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1513,37 +1622,41 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] tidync_0.2.4    ggforce_0.3.3   metR_0.9.0      scico_1.2.0    
- [5] patchwork_1.1.1 collapse_1.5.0  forcats_0.5.0   stringr_1.4.0  
- [9] dplyr_1.0.5     purrr_0.3.4     readr_1.4.0     tidyr_1.1.2    
-[13] tibble_3.0.4    ggplot2_3.3.3   tidyverse_1.3.0 workflowr_1.6.2
+ [1] stars_0.5-2     sf_0.9-8        abind_1.4-5     tidync_0.2.4   
+ [5] ggforce_0.3.3   metR_0.9.0      scico_1.2.0     patchwork_1.1.1
+ [9] collapse_1.5.0  forcats_0.5.0   stringr_1.4.0   dplyr_1.0.5    
+[13] purrr_0.3.4     readr_1.4.0     tidyr_1.1.3     tibble_3.1.3   
+[17] ggplot2_3.3.5   tidyverse_1.3.0 workflowr_1.6.2
 
 loaded via a namespace (and not attached):
- [1] httr_1.4.2               viridisLite_0.3.0        jsonlite_1.7.1          
- [4] modelr_0.1.8             assertthat_0.2.1         blob_1.2.1              
- [7] cellranger_1.1.0         yaml_2.2.1               pillar_1.4.7            
-[10] backports_1.1.10         lattice_0.20-41          glue_1.4.2              
-[13] RcppEigen_0.3.3.7.0      digest_0.6.27            promises_1.1.1          
-[16] polyclip_1.10-0          checkmate_2.0.0          rvest_0.3.6             
-[19] colorspace_1.4-1         htmltools_0.5.0          httpuv_1.5.4            
-[22] Matrix_1.2-18            pkgconfig_2.0.3          broom_0.7.5             
-[25] haven_2.3.1              scales_1.1.1             tweenr_1.0.2            
-[28] whisker_0.4              later_1.1.0.1            git2r_0.27.1            
-[31] generics_0.0.2           farver_2.0.3             ellipsis_0.3.1          
-[34] withr_2.3.0              cli_2.1.0                magrittr_1.5            
-[37] crayon_1.3.4             readxl_1.3.1             evaluate_0.14           
-[40] ncdf4_1.17               fs_1.5.0                 fansi_0.4.1             
-[43] MASS_7.3-53              xml2_1.3.2               RcppArmadillo_0.10.1.2.0
-[46] tools_4.0.3              data.table_1.13.2        hms_0.5.3               
-[49] lifecycle_1.0.0          munsell_0.5.0            reprex_0.3.0            
-[52] isoband_0.2.2            compiler_4.0.3           RNetCDF_2.4-2           
-[55] rlang_0.4.10             grid_4.0.3               rstudioapi_0.11         
-[58] labeling_0.4.2           rmarkdown_2.5            gtable_0.3.0            
-[61] DBI_1.1.0                R6_2.5.0                 ncmeta_0.3.0            
-[64] lubridate_1.7.9          knitr_1.30               rprojroot_2.0.2         
-[67] stringi_1.5.3            parallel_4.0.3           Rcpp_1.0.5              
-[70] vctrs_0.3.5              dbplyr_1.4.4             tidyselect_1.1.0        
-[73] xfun_0.18               </code></pre>
+ [1] fs_1.5.0                 lubridate_1.7.9          httr_1.4.2              
+ [4] rprojroot_2.0.2          tools_4.0.3              backports_1.1.10        
+ [7] bslib_0.2.5.1            utf8_1.1.4               R6_2.5.0                
+[10] KernSmooth_2.23-17       DBI_1.1.0                colorspace_2.0-2        
+[13] withr_2.3.0              tidyselect_1.1.0         compiler_4.0.3          
+[16] git2r_0.27.1             cli_3.0.1                rvest_0.3.6             
+[19] RNetCDF_2.4-2            xml2_1.3.2               isoband_0.2.2           
+[22] labeling_0.4.2           sass_0.4.0               scales_1.1.1            
+[25] checkmate_2.0.0          classInt_0.4-3           digest_0.6.27           
+[28] rmarkdown_2.10           pkgconfig_2.0.3          htmltools_0.5.1.1       
+[31] highr_0.8                dbplyr_1.4.4             rlang_0.4.11            
+[34] readxl_1.3.1             rstudioapi_0.13          jquerylib_0.1.4         
+[37] generics_0.1.0           farver_2.0.3             jsonlite_1.7.1          
+[40] magrittr_1.5             ncmeta_0.3.0             Matrix_1.2-18           
+[43] Rcpp_1.0.5               munsell_0.5.0            fansi_0.4.1             
+[46] lifecycle_1.0.0          stringi_1.5.3            whisker_0.4             
+[49] yaml_2.2.1               MASS_7.3-53              grid_4.0.3              
+[52] blob_1.2.1               parallel_4.0.3           promises_1.1.1          
+[55] crayon_1.3.4             lattice_0.20-41          haven_2.3.1             
+[58] hms_0.5.3                knitr_1.33               pillar_1.6.2            
+[61] reprex_0.3.0             glue_1.4.2               evaluate_0.14           
+[64] RcppArmadillo_0.10.1.2.0 data.table_1.14.0        modelr_0.1.8            
+[67] vctrs_0.3.8              tweenr_1.0.2             httpuv_1.5.4            
+[70] cellranger_1.1.0         gtable_0.3.0             polyclip_1.10-0         
+[73] assertthat_0.2.1         xfun_0.25                lwgeom_0.2-5            
+[76] broom_0.7.9              RcppEigen_0.3.3.7.0      e1071_1.7-4             
+[79] later_1.2.0              viridisLite_0.3.0        class_7.3-17            
+[82] ncdf4_1.17               units_0.6-7              ellipsis_0.3.2          </code></pre>
 </div>
 </div>
 
@@ -1590,7 +1703,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
@@ -1604,6 +1717,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')
