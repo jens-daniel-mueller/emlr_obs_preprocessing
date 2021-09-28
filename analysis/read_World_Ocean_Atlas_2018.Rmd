@@ -244,6 +244,17 @@ basinmask_SO <- basinmask_01 %>%
   ) %>%
   mutate(MLR_basins = "SO")
 
+# SO_2 basin separate
+basinmask_SO_2 <- basinmask_01 %>%
+  mutate(
+    basin = if_else(basin_AIP == "Atlantic",
+                         "Atlantic",
+                         "Indo-Pacific"),
+    basin = if_else(
+      lat < params_global$lat_min_SO, "SO", basin)
+  ) %>%
+  mutate(MLR_basins = "SO_2")
+
 
 # SO_5 basin separate
 basinmask_SO_5 <- basinmask_01 %>%
@@ -275,7 +286,7 @@ basinmask_AIP <- basinmask_01 %>%
 
 # join basin masks into one file
 basinmask_01 <- bind_rows(basinmask_01, basinmask_2, basinmask_5,
-                          basinmask_SO, basinmask_SO_5,
+                          basinmask_SO, basinmask_SO_2, basinmask_SO_5,
                           basinmask_SO_AIP, basinmask_AIP)
 
 ```
