@@ -52,7 +52,7 @@ basinmask <- basinmask %>%
 OceanSODA <-
   tidync(paste(
     path_updata,
-    "pco2_OceanSODA-ETHZ/OceanSODA-ETHZ_1985-2019_v2020b.nc",
+    "pco2_oceansoda-ethz/OS-ETHZ-GRaCER-v2021a_1982-2020.nc",
     sep = ""
   ))
 
@@ -60,15 +60,20 @@ OceanSODA <- OceanSODA %>%
   hyper_tibble()
 
 OceanSODA <- OceanSODA %>%
-  mutate(date = as.Date(time, origin = '1985-01-01'),
+  mutate(date = as.Date(time, origin = '1982-01-01'),
          year = year(date))
 
 OceanSODA <- OceanSODA %>%
   select(year, date, lat, lon,
          sal = salinity, temp = temperature,
-         tco2 = DIC, talk = TA, 
+         tco2 = dic, talk, 
          rev_fac = revelle_factor,
-         pCO2)
+         pCO2 = spco2)
+
+# OceanSODA %>% 
+#   filter(date == max(unique(OceanSODA$date))) %>% 
+#   ggplot(aes(lon, lat, fill = pCO2)) +
+#   geom_raster()
 
 OceanSODA <- OceanSODA %>%
   mutate(lon = if_else(lon < 20, lon + 360, lon))
@@ -81,7 +86,7 @@ OceanSODA <- inner_join(OceanSODA, basinmask)
 ```{r read_SeaFlux}
 
 path_SeaFlux <- 
-paste0(path_updata,"pco2_SeaFlux/")
+paste0(path_updata,"pco2_seaflux/")
 
 icefrac <-
   tidync(paste0(path_SeaFlux,
@@ -117,6 +122,11 @@ all_variables <- full_join(icefrac, kw)
 all_variables <- full_join(all_variables, pCO2atm)
 all_variables <- full_join(all_variables, sol)
 
+# all_variables %>%
+#   filter(date == max(unique(all_variables$date))) %>%
+#   ggplot(aes(lon, lat, fill = pCO2atm)) +
+#   geom_raster()
+
 all_variables <- all_variables %>%
   mutate(lon = if_else(lon < 20, lon + 360, lon))
 
@@ -140,6 +150,11 @@ all_variables <- OceanSODA %>%
     Kw = kw_scaled
   ) %>%
   drop_na()
+
+# all_variables %>%
+#   filter(time_mon == max(unique(all_variables$time_mon))) %>%
+#   ggplot(aes(lon, lat, fill = pco2atm)) +
+#   geom_raster()
 
 all_variables <- all_variables %>%
   mutate(area = earth_surf(lat = lat))
@@ -267,7 +282,7 @@ OceanSODA_annual <- OceanSODA_annual_all %>%
 
 # calculate climatological fields
 OceanSODA_clim <- OceanSODA_annual %>%
-  select(-c(year, grid_area)) %>% 
+  select(-c(grid_area)) %>% 
   group_by(lat, lon) %>%
   summarise_if(is.numeric, mean, na.rm = TRUE) %>% 
   ungroup()
@@ -324,13 +339,6 @@ OceanSODA_annual_glob_trend <- OceanSODA_annual_glob %>%
 
 ```
 
-```{r test_revelle_factor_calculation, eval=FALSE}
-
-OceanSODA_annual_all_test <- OceanSODA_annual_all
-
-```
-
-
 
 ## Write file
 
@@ -368,12 +376,14 @@ map +
 
 ```{r rev_fac_climatology_maps, fig.asp=0.5}
 
+unique(OceanSODA_clim$year)
+
 OceanSODA_clim %>%
   pivot_longer(sal:tco2_over_pCO2,
                names_to = "parameter",
                values_to = "value") %>%
   group_split(parameter) %>%
-  # head(1) %>% 
+  # head(1) %>%
   map( ~ map +
          geom_raster(data = .x,
                      aes(lon, lat, fill = value)) +
