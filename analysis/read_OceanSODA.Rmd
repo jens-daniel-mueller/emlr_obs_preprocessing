@@ -52,7 +52,7 @@ basinmask <- basinmask %>%
 OceanSODA <-
   tidync(paste(
     path_updata,
-    "pco2_oceansoda-ethz/OS-ETHZ-GRaCER-v2021a_1982-2020.nc",
+    "pco2_oceansoda-ethz/OS-ETHZ-GRaCER-v2020b_1985-2019.nc",
     sep = ""
   ))
 
@@ -60,15 +60,15 @@ OceanSODA <- OceanSODA %>%
   hyper_tibble()
 
 OceanSODA <- OceanSODA %>%
-  mutate(date = as.Date(time, origin = '1982-01-01'),
+  mutate(date = as.Date(time, origin = '1985-01-01'),
          year = year(date))
 
 OceanSODA <- OceanSODA %>%
   select(year, date, lat, lon,
          sal = salinity, temp = temperature,
-         tco2 = dic, talk, 
+         tco2 = DIC, talk = TA, 
          rev_fac = revelle_factor,
-         pCO2 = spco2)
+         pCO2)
 
 # OceanSODA %>% 
 #   filter(date == max(unique(OceanSODA$date))) %>% 
