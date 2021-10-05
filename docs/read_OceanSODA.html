@@ -560,16 +560,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreecaf8c9a69db524026dae9f4313712d34c459695atargetblankcaf8c9aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/caf8c9a69db524026dae9f4313712d34c459695a" target="_blank">caf8c9a</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreef36c707e4923aec83d017547210eebeeb76fa65etargetblankf36c707a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/f36c707e4923aec83d017547210eebeeb76fa65e" target="_blank">f36c707</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreecaf8c9a69db524026dae9f4313712d34c459695atargetblankcaf8c9aa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreef36c707e4923aec83d017547210eebeeb76fa65etargetblankf36c707a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/caf8c9a69db524026dae9f4313712d34c459695a" target="_blank">caf8c9a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/f36c707e4923aec83d017547210eebeeb76fa65e" target="_blank">f36c707</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -617,6 +617,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f36c707e4923aec83d017547210eebeeb76fa65e/analysis/read_OceanSODA.Rmd" target="_blank">f36c707</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+<td>
+OceanSODA read-in updated
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/read_OceanSODA.html" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -923,7 +957,7 @@ basinmask &lt;- basinmask %&gt;%
 <pre class="r"><code>OceanSODA &lt;-
   tidync(paste(
     path_updata,
-    &quot;pco2_oceansoda-ethz/OS-ETHZ-GRaCER-v2021a_1982-2020.nc&quot;,
+    &quot;pco2_oceansoda-ethz/OS-ETHZ-GRaCER-v2020b_1985-2019.nc&quot;,
     sep = &quot;&quot;
   ))
 
@@ -931,15 +965,15 @@ OceanSODA &lt;- OceanSODA %&gt;%
   hyper_tibble()
 
 OceanSODA &lt;- OceanSODA %&gt;%
-  mutate(date = as.Date(time, origin = &#39;1982-01-01&#39;),
+  mutate(date = as.Date(time, origin = &#39;1985-01-01&#39;),
          year = year(date))
 
 OceanSODA &lt;- OceanSODA %&gt;%
   select(year, date, lat, lon,
          sal = salinity, temp = temperature,
-         tco2 = dic, talk, 
+         tco2 = DIC, talk = TA, 
          rev_fac = revelle_factor,
-         pCO2 = spco2)
+         pCO2)
 
 # OceanSODA %&gt;% 
 #   filter(date == max(unique(OceanSODA$date))) %&gt;% 
@@ -1088,6 +1122,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/air_sea_disequilibrium-1.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/air_sea_disequilibrium-1.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -1135,6 +1180,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/air_sea_disequilibrium-2.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/air_sea_disequilibrium-2.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -1177,6 +1233,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/air_sea_disequilibrium-3.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/air_sea_disequilibrium-3.png" target="_blank">ad81465</a>
@@ -1231,6 +1298,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/air_sea_disequilibrium-4.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/air_sea_disequilibrium-4.png" target="_blank">ad81465</a>
@@ -1372,6 +1450,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/OceanSODA_control_plots-1.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/OceanSODA_control_plots-1.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -1437,6 +1526,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/OceanSODA_control_plots-2.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/OceanSODA_control_plots-2.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -1477,7 +1577,7 @@ jens-daniel-mueller
 <div id="climatology-map" class="section level1" number="2">
 <h1 number="2"><span class="header-section-number">2</span> Climatology map</h1>
 <pre class="r"><code>unique(OceanSODA_clim$year)</code></pre>
-<pre><code>[1] 2004.000 2011.000 2008.500 2004.400 2003.045</code></pre>
+<pre><code>[1] 2004 1993 1996</code></pre>
 <pre class="r"><code>OceanSODA_clim %&gt;%
   pivot_longer(sal:tco2_over_pCO2,
                names_to = &quot;parameter&quot;,
@@ -1512,6 +1612,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-1.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-1.png" target="_blank">ad81465</a>
@@ -1576,6 +1687,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-2.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-2.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -1636,6 +1758,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-3.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-3.png" target="_blank">ad81465</a>
@@ -1700,6 +1833,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-4.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-4.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -1760,6 +1904,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-5.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-5.png" target="_blank">ad81465</a>
@@ -1824,6 +1979,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-6.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-6.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -1884,6 +2050,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-7.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-7.png" target="_blank">ad81465</a>
@@ -1961,6 +2138,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/time_series-1.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/time_series-1.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -2010,6 +2198,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/time_series-2.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/time_series-2.png" target="_blank">ad81465</a>
@@ -2063,6 +2262,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/time_series-3.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/time_series-3.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -2112,6 +2322,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/time_series-4.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/time_series-4.png" target="_blank">ad81465</a>
@@ -2165,6 +2386,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/time_series-5.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/time_series-5.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -2216,6 +2448,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/time_series-6.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/time_series-6.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -2265,6 +2508,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/time_series-7.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/time_series-7.png" target="_blank">ad81465</a>
@@ -2333,6 +2587,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-1.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-1.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -2382,6 +2647,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-2.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-2.png" target="_blank">ad81465</a>
@@ -2435,6 +2711,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-3.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-3.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -2484,6 +2771,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-4.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-4.png" target="_blank">ad81465</a>
@@ -2537,6 +2835,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-5.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-5.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -2588,6 +2897,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-6.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-6.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -2637,6 +2957,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-7.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-7.png" target="_blank">ad81465</a>
@@ -2701,6 +3032,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-8.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-8.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -2750,6 +3092,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-9.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-9.png" target="_blank">ad81465</a>
@@ -2803,6 +3156,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-10.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-10.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -2852,6 +3216,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-11.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-11.png" target="_blank">ad81465</a>
@@ -2905,6 +3280,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-12.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-12.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -2956,6 +3342,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-13.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-13.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -3005,6 +3402,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-14.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_glob-14.png" target="_blank">ad81465</a>
@@ -3072,6 +3480,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-1.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-1.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -3121,6 +3540,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-2.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-2.png" target="_blank">ad81465</a>
@@ -3174,6 +3604,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-3.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-3.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -3223,6 +3664,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-4.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-4.png" target="_blank">ad81465</a>
@@ -3276,6 +3728,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-5.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-5.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -3327,6 +3790,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-6.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-6.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -3376,6 +3850,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-7.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-7.png" target="_blank">ad81465</a>
@@ -3440,6 +3925,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-8.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-8.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -3489,6 +3985,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-9.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-9.png" target="_blank">ad81465</a>
@@ -3542,6 +4049,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-10.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-10.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -3591,6 +4109,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-11.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-11.png" target="_blank">ad81465</a>
@@ -3644,6 +4173,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-12.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-12.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -3695,6 +4235,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-13.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-13.png" target="_blank">ad81465</a>
 </td>
 <td>
@@ -3744,6 +4295,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-14.png" target="_blank">5db29f4</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/decadel_trends_lat-14.png" target="_blank">ad81465</a>
