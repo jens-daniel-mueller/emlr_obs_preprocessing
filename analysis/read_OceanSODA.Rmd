@@ -52,7 +52,7 @@ basinmask <- basinmask %>%
 OceanSODA <-
   tidync(paste(
     path_updata,
-    "pco2_oceansoda-ethz/OS-ETHZ-GRaCER-v2020b_1985-2019.nc",
+    "pco2_oceansoda-ethz/OS-ETHZ-GRaCER-v2021a_1982-2020.nc",
     sep = ""
   ))
 
@@ -66,14 +66,9 @@ OceanSODA <- OceanSODA %>%
 OceanSODA <- OceanSODA %>%
   select(year, date, lat, lon,
          sal = salinity, temp = temperature,
-         tco2 = DIC, talk = TA, 
+         tco2 = dic, talk, 
          rev_fac = revelle_factor,
-         pCO2)
-
-# OceanSODA %>% 
-#   filter(date == max(unique(OceanSODA$date))) %>% 
-#   ggplot(aes(lon, lat, fill = pCO2)) +
-#   geom_raster()
+         pCO2 = spco2)
 
 OceanSODA <- OceanSODA %>%
   mutate(lon = if_else(lon < 20, lon + 360, lon))
@@ -122,11 +117,6 @@ all_variables <- full_join(icefrac, kw)
 all_variables <- full_join(all_variables, pCO2atm)
 all_variables <- full_join(all_variables, sol)
 
-# all_variables %>%
-#   filter(date == max(unique(all_variables$date))) %>%
-#   ggplot(aes(lon, lat, fill = pCO2atm)) +
-#   geom_raster()
-
 all_variables <- all_variables %>%
   mutate(lon = if_else(lon < 20, lon + 360, lon))
 
@@ -150,11 +140,6 @@ all_variables <- OceanSODA %>%
     Kw = kw_scaled
   ) %>%
   drop_na()
-
-# all_variables %>%
-#   filter(time_mon == max(unique(all_variables$time_mon))) %>%
-#   ggplot(aes(lon, lat, fill = pco2atm)) +
-#   geom_raster()
 
 all_variables <- all_variables %>%
   mutate(area = earth_surf(lat = lat))
