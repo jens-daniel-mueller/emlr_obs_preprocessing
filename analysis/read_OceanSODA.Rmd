@@ -60,7 +60,7 @@ OceanSODA <- OceanSODA %>%
   hyper_tibble()
 
 OceanSODA <- OceanSODA %>%
-  mutate(date = as.Date(time, origin = '1985-01-01'),
+  mutate(date = as.Date(time, origin = '1982-01-01'),
          year = year(date))
 
 OceanSODA <- OceanSODA %>%
