@@ -411,98 +411,251 @@ dcant_zonal %>%
 # RECCAP2-ocean
 
 
-```{r write_Gruber_dcant_example_for_Michael_Summer, eval=FALSE}
+```{r format_Gruber_dcant_for_RECCAP2}
 
-# https://pjbartlein.github.io/REarthSysSci/netCDF.html#create-and-write-a-netcdf-file
+# extract coordinate reference system
+G19_raster <- raster::brick(paste0(
+  path_gruber_2019,
+  "dcant_emlr_cstar_gruber_94-07_vs1.nc"))
 
-# open file
-dcant <- tidync(paste(
+coord_ref <- raster::crs(G19_raster)
+rm(G19_raster)
+
+# open nc file for data extraction
+dcant_nc <- tidync(paste(
   path_gruber_2019,
   "dcant_emlr_cstar_gruber_94-07_vs1.nc",
   sep = ""
 ))
 
 # read delta cant field
-dcant <- dcant %>%  activate(DCANT_01)
-dcant <- dcant %>% hyper_tibble(na.rm = FALSE)
+dcant <- dcant_nc %>%
+  activate(DCANT_01) %>%
+  hyper_tibble(na.rm = FALSE)
+
+# read delta cant field
+gamma <- dcant_nc %>%
+  activate(GAMMA_DENS) %>%
+  hyper_tibble(na.rm = FALSE)
+
+# join gamma and dcant
+dcant <- full_join(dcant, gamma)
+rm(gamma)
 
 # harmonize column names and coordinates
 dcant <- dcant %>% 
   rename(lon = LONGITUDE,
          lat = LATITUDE,
          depth = DEPTH,
-         dcant = DCANT_01) %>% 
-  arrange(lon, lat, depth) %>% 
-  relocate(dcant, .after = last_col())
+         dcant = DCANT_01,
+         gamma = GAMMA_DENS) %>% 
+  mutate(gamma = if_else(is.na(dcant), NaN, gamma))
 
+# convert dcant unit from "µmol kg-1" to "mol m-3"
+dcant <- dcant %>% 
+  mutate(dens = (1000 + gamma) / 1000,
+         dcant = dcant * dens * 1e-3)
+
+# create volume grid
+dcant <- dcant %>% 
+  m_layer_thickness() %>% 
+  mutate(surface_area = marelac::earth_surf(lat, lon),
+         volume = layer_thickness * surface_area,
+         volume = if_else(is.na(dcant), NaN, volume))
+
+# check total volume
 dcant %>% 
-  filter(depth == 0,
-         lon > 125,
-         lon < 175,
-         lat < -25) %>% 
-  ggplot(aes(lon, lat, fill=dcant)) +
-  geom_raster() +
-  scale_fill_viridis_c(na.value = "transparent")
+  summarise(total_ocean_volume = sum(volume, na.rm = TRUE))
 
-unique(dcant$depth)
+# check total dcant
+dcant %>% 
+  filter(depth <= 3000) %>% 
+  mutate(dcant_inv = dcant * volume) %>% 
+  summarise(total_dcant = sum(dcant_inv, na.rm = TRUE)*12*1e-15)
 
-dcant %>%
-  filter(lon > 125,
-         lon < 175,
-         lat < -25) %>% 
-  write_csv(paste(path_preprocessing,
-                  "G19_dcant_3d_example.csv",
-                  sep = ""))
-
-```
-
-
-```{r write_Gruber_dcant_netcdf, eval=FALSE}
-
-# https://pjbartlein.github.io/REarthSysSci/netCDF.html#create-and-write-a-netcdf-file
-
-# open file
-dcant <- tidync(paste(
-  path_gruber_2019,
-  "dcant_emlr_cstar_gruber_94-07_vs1.nc",
-  sep = ""
-))
-
-# read delta cant field
-dcant <- dcant %>%  activate(DCANT_01)
-dcant <- dcant %>% hyper_tibble(na.rm = FALSE)
-
-# harmonize column names and coordinates
+# select relevant columns
 dcant <- dcant %>% 
-  rename(lon = LONGITUDE,
-         lat = LATITUDE,
-         depth = DEPTH,
-         dcant_pos = DCANT_01) %>% 
-  arrange(lon, lat, depth) %>% 
-  relocate(dcant_pos, .after = last_col())
+  select(lon, lat, depth, dcant, volume)
 
-lon <- unique(dcant$lon)
-lat <- unique(dcant$lat)
-depth <- unique(dcant$depth)
+# create raster objects
+volume_raster <- dcant %>% 
+  select(lon, lat, volume) %>%
+  base::split(dcant$depth) %>% 
+  lapply(raster::rasterFromXYZ) %>% 
+  raster::brick() %>% 
+  raster::setZ(z = unique(dcant$depth), name = "depth")
 
-nlon <- length(lon)
-nlat <- length(lat)
-ndepth <- length(depth)
+dcant_raster <- dcant %>% 
+  select(lon, lat, dcant) %>%
+  base::split(dcant$depth) %>% 
+  lapply(raster::rasterFromXYZ) %>% 
+  raster::brick() %>% 
+  raster::setZ(z = unique(dcant$depth), name = "depth")
 
-dcant_mat <- as.matrix(dcant[4])
-dcant_array <- array(dcant_mat, dim=c(nlon, nlat, ndepth))
-dim(dcant_array)
+# assign coordinate reference system
+raster::crs(dcant_raster) <- coord_ref
+raster::crs(volume_raster) <- coord_ref
 
-library(lattice)
-library(RColorBrewer)
-grid <- expand.grid(lon=lon, lat=lat)
+# assign NA values
+raster::NAvalue(dcant_raster) <- -9999
+raster::NAvalue(dcant_raster)
+raster::NAvalue(volume_raster) <- -9999
+raster::NAvalue(volume_raster)
 
-levelplot(dcant_array[,,1] ~ lon * lat, data=grid)
-image(lon,lat,dcant_array[,,1], col=rev(brewer.pal(10,"RdBu")))
+# check object
+dim(dcant_raster)
+raster::nbands(dcant_raster)
+raster::nlayers(dcant_raster)
+names(dcant_raster) #get the names of layers
+raster::getZ(dcant_raster)
 
-levelplot(dcant_array[,,1] ~ lon * lat, data=grid, at=cutpts, cuts=11, pretty=T, 
-  col.regions=(rev(brewer.pal(10,"RdBu"))), main="Mean July Temperature (C)")
+
+# write netcdf file
+raster::writeRaster(
+  dcant_raster,
+  filename = paste0(path_preprocessing,
+                    "dcant_Gruber2019_1994-2007_v20211012.nc"),
+  overwrite = T
+)
+
+raster::writeRaster(
+  volume_raster,
+  filename = paste0(path_preprocessing,
+                    "volume_Gruber2019_1994-2007_v20211012.nc"),
+  overwrite = T
+)
+
+
+# modify created netcdf files
+library(ncdf4)
+
+# dcant file
+
+# open file in writing mode
+dcant_reopen <- nc_open(
+  paste0(path_preprocessing,
+         "dcant_Gruber2019_1994-2007_v20211012.nc"),
+  write = TRUE)
+
+dcant_reopen
+print(dcant_reopen)
+names(dcant_reopen$var)
+
+# change variable name
+ncvar_rename(dcant_reopen, "depth", "dcant")
+
+# close and reopen
+nc_close(dcant_reopen)
+dcant_reopen <- nc_open(
+  paste0(path_preprocessing,
+         "dcant_Gruber2019_1994-2007_v20211012.nc"),
+  write = TRUE)
+
+# add units
+ncatt_get(dcant_reopen, varid = "dcant")
+ncatt_put(dcant_reopen, varid = "dcant",
+          attname = "units", attval = "mol m-3")
+
+ncatt_get(dcant_reopen, varid = "z")
+ncatt_put(dcant_reopen, varid = "z",
+          attname = "units", attval = "metres")
+
+nc_close(dcant_reopen)
+
+
+# volume file
+
+# open file in writing mode
+volume_reopen <- nc_open(
+  paste0(path_preprocessing,
+         "volume_Gruber2019_1994-2007_v20211012.nc"),
+  write = TRUE)
+
+volume_reopen
+print(volume_reopen)
+names(volume_reopen$var)
+
+# change variable name
+ncvar_rename(volume_reopen, "depth", "volume")
+
+# close and reopen
+nc_close(volume_reopen)
+volume_reopen <- nc_open(
+  paste0(path_preprocessing,
+         "volume_Gruber2019_1994-2007_v20211012.nc"),
+  write = TRUE)
+
+# add units
+ncatt_get(volume_reopen, varid = "volume")
+ncatt_put(volume_reopen, varid = "volume",
+          attname = "units", attval = "m3")
+
+ncatt_get(volume_reopen, varid = "z")
+ncatt_put(volume_reopen, varid = "z",
+          attname = "units", attval = "metres")
+
+nc_close(volume_reopen)
+
+
+
+# final check dcant
+
+dcant_reopen <- tidync(
+  paste0(path_preprocessing,
+         "dcant_Gruber2019_1994-2007_v20211012.nc")) %>% 
+  hyper_tibble()
+
+dcant_reopen %>% 
+  filter(z == 0) %>% 
+  ggplot(aes(longitude, latitude, fill=dcant)) +
+  geom_raster() +
+  scale_fill_viridis_c()
+
+dcant_reopen %>% 
+  filter(longitude == 200.5) %>% 
+  ggplot(aes(latitude, z, z=dcant)) +
+  scale_y_reverse() +
+  geom_contour_filled() +
+  scale_fill_viridis_d()
+
+
+dcant_reopen <- read_ncdf(
+  paste0(path_preprocessing,
+         "dcant_Gruber2019_1994-2007_v20211012.nc"))
+
+plot(dcant_reopen,
+     axes = TRUE)
+
+
+# final check volume
+
+volume_reopen <- tidync(
+  paste0(path_preprocessing,
+         "volume_Gruber2019_1994-2007_v20211012.nc")) %>% 
+  hyper_tibble()
+
+volume_reopen %>% 
+  filter(z == 0) %>% 
+  ggplot(aes(longitude, latitude, fill=volume)) +
+  geom_raster() +
+  scale_fill_viridis_c()
+
+volume_reopen %>% 
+  filter(longitude == 200.5) %>% 
+  ggplot(aes(latitude, z, z=volume)) +
+  scale_y_reverse() +
+  geom_contour_filled() +
+  scale_fill_viridis_d()
+
+
+volume_reopen <- read_ncdf(
+  paste0(path_preprocessing,
+         "volume_Gruber2019_1994-2007_v20211012.nc"))
+
+plot(volume_reopen,
+     axes = TRUE)
 
 ```
+
 
 
