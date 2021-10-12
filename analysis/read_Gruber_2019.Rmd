@@ -483,14 +483,14 @@ volume_raster <- dcant %>%
   base::split(dcant$depth) %>% 
   lapply(raster::rasterFromXYZ) %>% 
   raster::brick() %>% 
-  raster::setZ(z = unique(dcant$depth), name = "depth")
+  raster::setZ(z = unique(dcant$depth), name = "volume")
 
 dcant_raster <- dcant %>% 
   select(lon, lat, dcant) %>%
   base::split(dcant$depth) %>% 
   lapply(raster::rasterFromXYZ) %>% 
   raster::brick() %>% 
-  raster::setZ(z = unique(dcant$depth), name = "depth")
+  raster::setZ(z = unique(dcant$depth), name = "dcant")
 
 # assign coordinate reference system
 raster::crs(dcant_raster) <- coord_ref
@@ -508,7 +508,6 @@ raster::nbands(dcant_raster)
 raster::nlayers(dcant_raster)
 names(dcant_raster) #get the names of layers
 raster::getZ(dcant_raster)
-
 
 # write netcdf file
 raster::writeRaster(
@@ -541,16 +540,6 @@ dcant_reopen
 print(dcant_reopen)
 names(dcant_reopen$var)
 
-# change variable name
-ncvar_rename(dcant_reopen, "depth", "dcant")
-
-# close and reopen
-nc_close(dcant_reopen)
-dcant_reopen <- nc_open(
-  paste0(path_preprocessing,
-         "dcant_Gruber2019_1994-2007_v20211012.nc"),
-  write = TRUE)
-
 # add units
 ncatt_get(dcant_reopen, varid = "dcant")
 ncatt_put(dcant_reopen, varid = "dcant",
@@ -574,16 +563,6 @@ volume_reopen <- nc_open(
 volume_reopen
 print(volume_reopen)
 names(volume_reopen$var)
-
-# change variable name
-ncvar_rename(volume_reopen, "depth", "volume")
-
-# close and reopen
-nc_close(volume_reopen)
-volume_reopen <- nc_open(
-  paste0(path_preprocessing,
-         "volume_Gruber2019_1994-2007_v20211012.nc"),
-  write = TRUE)
 
 # add units
 ncatt_get(volume_reopen, varid = "volume")
