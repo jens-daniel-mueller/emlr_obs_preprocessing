@@ -444,7 +444,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">GLODAPv2_2020</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">30 August, 2021</h4>
+<h4 class="date">20 October, 2021</h4>
 
 </div>
 
@@ -469,7 +469,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-08-30
+<strong>Last updated:</strong> 2021-10-20
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -560,16 +560,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree42964334c9bcccab73d72e7fbc3628fd395bfb3atargetblank4296433a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/42964334c9bcccab73d72e7fbc3628fd395bfb3a" target="_blank">4296433</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeb2ccc04d5c7838fe4bdaee290c9c5587a835647etargetblankb2ccc04a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/b2ccc04d5c7838fe4bdaee290c9c5587a835647e" target="_blank">b2ccc04</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree42964334c9bcccab73d72e7fbc3628fd395bfb3atargetblank4296433a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeb2ccc04d5c7838fe4bdaee290c9c5587a835647etargetblankb2ccc04a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/42964334c9bcccab73d72e7fbc3628fd395bfb3a" target="_blank">4296433</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/b2ccc04d5c7838fe4bdaee290c9c5587a835647e" target="_blank">b2ccc04</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -617,6 +617,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b2ccc04d5c7838fe4bdaee290c9c5587a835647e/analysis/read_GLODAPv2_2021.Rmd" target="_blank">b2ccc04</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-20
+</td>
+<td>
+corrected qc flag in glodap
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/read_GLODAPv2_2021.html" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -859,12 +893,59 @@ path_preprocessing  &lt;- paste(path_root, &quot;/observations/preprocessing/&qu
     ),
     na = &quot;-9999&quot;,
     col_types = cols(.default = col_double())
-  )</code></pre>
-<pre class="r"><code># select relevant columns
-GLODAP &lt;- GLODAP %&gt;%
-  rename_with(~str_remove(., &#39;G2&#39;))
+  )
 
-# select relevant columns
+
+GLODAP &lt;- GLODAP %&gt;%
+  rename_with(~str_remove(., &#39;G2&#39;))</code></pre>
+</div>
+<div id="data-preparation" class="section level1" number="2">
+<h1 number="2"><span class="header-section-number">2</span> Data preparation</h1>
+<div id="correct-qc-flag" class="section level2" number="2.1">
+<h2 number="2.1"><span class="header-section-number">2.1</span> Correct qc flag</h2>
+<p>From an email conversation with Nico Lange</p>
+<p><em>Yes, we are aware of these faulty(!) calculated TA data (using DIC and fCO2). It is linked to v2.2020 where we’ve added fCO2 to the “missing carbon calculation matrix”. Overall, including fCO2 in these calculations has worked great to fill some missing carbon gaps. However, for this cruise in particular the fCO2 values have most likely been converted wrongly to 20°C and are thus off! The problem of this all is that we haven’t really done a 2nd QC on the fCO2 values neither have we defined the corresponding “G2fCO2qc” variable, hence for the sake of consistency we kept all fCO2 values in. Again and unfortunately, in this particular case it led to the bad calculations of TA data…. We plan to do a full 2nd QC on all (!) fCO2 data for v3.</em></p>
+<p><em>But you have indeed found a flaw in our merging script, as the corresponding calculated TA values should not have received a 2nd QC flag of 1! I missed out on adding a line to our merging script to accommodate for the non-existence of 2nd fCO2 flags in the carbon calculation matrix.</em></p>
+<p><em>So long story short: Thank you very much for finding this flaw and letting me know of it!</em></p>
+<p>and</p>
+<p><em>Yes, the all calculated TA data from cruise 695 should have a talkqc of 0 (as they are based upon un QC’d fCO2 data…).</em></p>
+<p><em>And no (thanks to your hint and questions), I figured that <strong>this wrongly assigned 2nd QC flag is a problem for all calculated carbon data, which used fCO2 for the calculations</strong>. However, luckily this is not really often the case.</em></p>
+<p><em>You can check if thats the case by looking at which other carbon parameters are measured, i.e. by <strong>checking their primary flags (e.g. G2talkf, G2tco2f and G2phts25p0f and G2fco2f). If only two are measured and one of them is fCO2, it means that the other carbon parameters (the ones with a primary flag of 0) are calculated using fCO2. Hence, for these instances no 2nd QC is done and the corresponding qc flag should be 0 and not 1.</strong></em></p>
+<pre class="r"><code>talk_qc_error_cruises &lt;- GLODAP %&gt;%
+  select(cruise, tco2:phtsqc) %&gt;% 
+  mutate(measured_CO2_vars = rowSums(select(., c(
+    tco2f, talkf, fco2f, phts25p0f
+  )) == 2)) %&gt;%
+  filter(measured_CO2_vars == 2,
+         fco2f == 2,
+         talkf == 0) %&gt;% 
+  distinct(cruise, talkf, talkqc, fco2f)
+
+tco2_qc_error_cruises &lt;- GLODAP %&gt;%
+  select(cruise, tco2:phtsqc) %&gt;% 
+  mutate(measured_CO2_vars = rowSums(select(., c(
+    tco2f, talkf, fco2f, phts25p0f
+  )) == 2)) %&gt;%
+  filter(measured_CO2_vars == 2,
+         fco2f == 2,
+         tco2f == 0) %&gt;% 
+  distinct(cruise, tco2f, tco2qc, fco2f)
+
+talk_qc_error_cruises %&gt;% 
+  write_csv(&quot;data/talk_qc_error_cruises_GLODAPv2_2021.csv&quot;)
+
+tco2_qc_error_cruises %&gt;% 
+  write_csv(&quot;data/tco2_qc_error_cruises_GLODAPv2_2021.csv&quot;)
+
+GLODAP &lt;- GLODAP %&gt;% 
+  mutate(talkqc = if_else(cruise %in% talk_qc_error_cruises$cruise, 0, talkqc),
+         tco2qc = if_else(cruise %in% tco2_qc_error_cruises$cruise, 0, tco2qc))
+
+rm(talk_qc_error_cruises, tco2_qc_error_cruises)</code></pre>
+</div>
+<div id="harmonize-nomenclature" class="section level2" number="2.2">
+<h2 number="2.2"><span class="header-section-number">2.2</span> Harmonize nomenclature</h2>
+<pre class="r"><code># select relevant columns
 GLODAP &lt;- GLODAP %&gt;%
   select(cruise:talkqc)
 
@@ -891,24 +972,22 @@ GLODAP &lt;- GLODAP %&gt;%
             maxsampdepth, bottle, sigma0:sigma4,
             nitrite:nitritef))</code></pre>
 </div>
-<div id="data-preparation" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> Data preparation</h1>
-<div id="subset-tco2-data" class="section level2" number="2.1">
-<h2 number="2.1"><span class="header-section-number">2.1</span> Subset tco2 data</h2>
+<div id="subset-tco2-data" class="section level2" number="2.3">
+<h2 number="2.3"><span class="header-section-number">2.3</span> Subset tco2 data</h2>
 <p>The vast majority of rows is removed due to missing <code>tco2</code> observations.</p>
 <pre class="r"><code>GLODAP &lt;- GLODAP %&gt;% 
   filter(!is.na(tco2))</code></pre>
 </div>
-<div id="horizontal-gridding" class="section level2" number="2.2">
-<h2 number="2.2"><span class="header-section-number">2.2</span> Horizontal gridding</h2>
+<div id="horizontal-gridding" class="section level2" number="2.4">
+<h2 number="2.4"><span class="header-section-number">2.4</span> Horizontal gridding</h2>
 <p>For merging with other data sets, all observations were grouped into latitude intervals of:</p>
 <ul>
 <li>1° x 1°</li>
 </ul>
 <pre class="r"><code>GLODAP &lt;- m_grid_horizontal(GLODAP)</code></pre>
 </div>
-<div id="apply-basin-mask" class="section level2" number="2.3">
-<h2 number="2.3"><span class="header-section-number">2.3</span> Apply basin mask</h2>
+<div id="apply-basin-mask" class="section level2" number="2.5">
+<h2 number="2.5"><span class="header-section-number">2.5</span> Apply basin mask</h2>
 <pre class="r"><code># use only three basin to assign general basin mask
 # ie this is not specific to the MLR fitting
 basinmask &lt;- basinmask %&gt;% 
@@ -917,19 +996,27 @@ basinmask &lt;- basinmask %&gt;%
 
 GLODAP &lt;- inner_join(GLODAP, basinmask)</code></pre>
 </div>
-<div id="create-clean-observations-grid" class="section level2" number="2.4">
-<h2 number="2.4"><span class="header-section-number">2.4</span> Create clean observations grid</h2>
+<div id="create-clean-observations-grid" class="section level2" number="2.6">
+<h2 number="2.6"><span class="header-section-number">2.6</span> Create clean observations grid</h2>
 <pre class="r"><code>GLODAP_obs_grid &lt;- GLODAP %&gt;% 
   count(lat, lon)</code></pre>
 </div>
-<div id="add-row-number" class="section level2" number="2.5">
-<h2 number="2.5"><span class="header-section-number">2.5</span> Add row number</h2>
+<div id="add-row-number" class="section level2" number="2.7">
+<h2 number="2.7"><span class="header-section-number">2.7</span> Add row number</h2>
 <pre class="r"><code>GLODAP &lt;- GLODAP  %&gt;%  
   mutate(row_number = row_number()) %&gt;% 
   relocate(row_number)</code></pre>
+<pre class="r"><code>GLODAP_grid_year &lt;- GLODAP %&gt;%
+  count(lat, lon, year)
+
+map +
+  geom_raster(data = GLODAP_grid_year,
+              aes(lon, lat)) +
+  facet_wrap(~ year, ncol=3)</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/grid_by_year-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="write-glodap-file" class="section level2" number="2.6">
-<h2 number="2.6"><span class="header-section-number">2.6</span> Write GLODAP file</h2>
+<div id="write-glodap-file" class="section level2" number="2.8">
+<h2 number="2.8"><span class="header-section-number">2.8</span> Write GLODAP file</h2>
 <pre class="r"><code>GLODAP  %&gt;%  
   write_csv(paste(path_preprocessing,
                              &quot;GLODAPv2.2021_preprocessed.csv&quot;,
@@ -1462,6 +1549,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-1.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-1.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -1498,6 +1596,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-2.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-2.png" target="_blank">9d8353f</a>
@@ -1538,6 +1647,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-3.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-3.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -1574,6 +1694,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-4.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-4.png" target="_blank">9d8353f</a>
@@ -1614,6 +1745,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-5.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-5.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -1650,6 +1792,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-6.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-6.png" target="_blank">9d8353f</a>
@@ -1690,6 +1843,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-7.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-7.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -1726,6 +1890,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-8.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-8.png" target="_blank">9d8353f</a>
@@ -1766,6 +1941,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-9.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-9.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -1802,6 +1988,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-10.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-10.png" target="_blank">9d8353f</a>
@@ -1842,6 +2039,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-11.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-11.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -1878,6 +2086,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-12.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-12.png" target="_blank">9d8353f</a>
@@ -1918,6 +2137,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-13.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-13.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -1954,6 +2184,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-14.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-14.png" target="_blank">9d8353f</a>
@@ -1994,6 +2235,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-15.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-15.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -2030,6 +2282,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-16.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-16.png" target="_blank">9d8353f</a>
@@ -2070,6 +2333,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-17.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-17.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -2106,6 +2380,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-18.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-18.png" target="_blank">9d8353f</a>
@@ -2146,6 +2431,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-19.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-19.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -2182,6 +2478,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-20.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-20.png" target="_blank">9d8353f</a>
@@ -2222,6 +2529,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-21.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-21.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -2258,6 +2576,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-22.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-22.png" target="_blank">9d8353f</a>
@@ -2298,6 +2627,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-23.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-23.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -2334,6 +2674,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-24.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-24.png" target="_blank">9d8353f</a>
@@ -2374,6 +2725,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-25.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-25.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -2410,6 +2772,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-26.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-26.png" target="_blank">9d8353f</a>
@@ -2450,6 +2823,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-27.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-27.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -2486,6 +2870,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-28.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-28.png" target="_blank">9d8353f</a>
@@ -2526,6 +2921,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-29.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-29.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -2562,6 +2968,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-30.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-30.png" target="_blank">9d8353f</a>
@@ -2602,6 +3019,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-31.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-31.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -2638,6 +3066,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-32.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-32.png" target="_blank">9d8353f</a>
@@ -2678,6 +3117,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-33.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-33.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -2714,6 +3164,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-34.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-34.png" target="_blank">9d8353f</a>
@@ -2754,6 +3215,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-35.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-35.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -2790,6 +3262,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-36.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-36.png" target="_blank">9d8353f</a>
@@ -2830,6 +3313,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-37.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-37.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -2866,6 +3360,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-38.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-38.png" target="_blank">9d8353f</a>
@@ -2906,6 +3411,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-39.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-39.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -2942,6 +3458,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-40.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-40.png" target="_blank">9d8353f</a>
@@ -2982,6 +3509,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-41.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-41.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -3018,6 +3556,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-42.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-42.png" target="_blank">9d8353f</a>
@@ -3058,6 +3607,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-43.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-43.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -3094,6 +3654,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-44.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-44.png" target="_blank">9d8353f</a>
@@ -3134,6 +3705,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-45.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-45.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -3172,6 +3754,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-46.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-46.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -3208,6 +3801,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-47.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/98599d8f8adf5d5be7dfce85ffe8c9526d110e27/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-47.png" target="_blank">98599d8</a>
@@ -3259,6 +3863,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-48.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-48.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -3295,6 +3910,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-49.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-49.png" target="_blank">9d8353f</a>
@@ -3335,6 +3961,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-50.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-50.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -3371,6 +4008,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-51.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-51.png" target="_blank">9d8353f</a>
@@ -3411,6 +4059,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-52.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-52.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -3447,6 +4106,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-53.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-53.png" target="_blank">9d8353f</a>
@@ -3487,6 +4157,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-54.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-54.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -3523,6 +4204,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-55.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-55.png" target="_blank">9d8353f</a>
@@ -3563,6 +4255,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-56.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-56.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -3599,6 +4302,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-57.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-57.png" target="_blank">9d8353f</a>
@@ -3639,6 +4353,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-58.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-58.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -3675,6 +4400,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-59.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-59.png" target="_blank">9d8353f</a>
@@ -3715,6 +4451,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-60.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-60.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -3751,6 +4498,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-61.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-61.png" target="_blank">9d8353f</a>
@@ -3791,6 +4549,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-62.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-62.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -3827,6 +4596,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-63.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-63.png" target="_blank">9d8353f</a>
@@ -3867,6 +4647,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-64.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-64.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -3903,6 +4694,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-65.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-65.png" target="_blank">9d8353f</a>
@@ -3943,6 +4745,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-66.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-66.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -3979,6 +4792,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-67.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-67.png" target="_blank">9d8353f</a>
@@ -4019,6 +4843,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-68.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-68.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -4055,6 +4890,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-69.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-69.png" target="_blank">9d8353f</a>
@@ -4095,6 +4941,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-70.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-70.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -4131,6 +4988,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-71.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-71.png" target="_blank">9d8353f</a>
@@ -4171,6 +5039,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-72.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-72.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -4207,6 +5086,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-73.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-73.png" target="_blank">9d8353f</a>
@@ -4247,6 +5137,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-74.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-74.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -4283,6 +5184,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-75.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-75.png" target="_blank">9d8353f</a>
@@ -4323,6 +5235,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-76.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-76.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -4359,6 +5282,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-77.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-77.png" target="_blank">9d8353f</a>
@@ -4399,6 +5333,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-78.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-78.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -4435,6 +5380,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-79.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-79.png" target="_blank">9d8353f</a>
@@ -4475,6 +5431,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-80.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-80.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -4511,6 +5478,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-81.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-81.png" target="_blank">9d8353f</a>
@@ -4551,6 +5529,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-82.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-82.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -4587,6 +5576,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-83.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-83.png" target="_blank">9d8353f</a>
@@ -4627,6 +5627,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-84.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-84.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -4663,6 +5674,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-85.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-85.png" target="_blank">9d8353f</a>
@@ -4703,6 +5725,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-86.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-86.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -4739,6 +5772,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-87.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-87.png" target="_blank">9d8353f</a>
@@ -4779,6 +5823,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-88.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-88.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -4815,6 +5870,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-89.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-89.png" target="_blank">9d8353f</a>
@@ -4855,6 +5921,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-90.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-90.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -4891,6 +5968,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-91.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/98599d8f8adf5d5be7dfce85ffe8c9526d110e27/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-91.png" target="_blank">98599d8</a>
@@ -4942,6 +6030,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-92.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-92.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -4978,6 +6077,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-93.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/98599d8f8adf5d5be7dfce85ffe8c9526d110e27/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-93.png" target="_blank">98599d8</a>
@@ -5029,6 +6139,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-94.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-94.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -5065,6 +6186,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-95.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-95.png" target="_blank">9d8353f</a>
@@ -5105,6 +6237,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-96.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-96.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -5141,6 +6284,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-97.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-97.png" target="_blank">9d8353f</a>
@@ -5181,6 +6335,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-98.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-98.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -5217,6 +6382,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-99.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-99.png" target="_blank">9d8353f</a>
@@ -5257,6 +6433,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-100.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-100.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -5293,6 +6480,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-101.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-101.png" target="_blank">9d8353f</a>
@@ -5333,6 +6531,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-102.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-102.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -5369,6 +6578,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-103.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-103.png" target="_blank">9d8353f</a>
@@ -5409,6 +6629,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-104.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-104.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -5445,6 +6676,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-105.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-105.png" target="_blank">9d8353f</a>
@@ -5485,6 +6727,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-106.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-106.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -5521,6 +6774,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-107.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-107.png" target="_blank">9d8353f</a>
@@ -5561,6 +6825,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-108.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-108.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -5597,6 +6872,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-109.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-109.png" target="_blank">9d8353f</a>
@@ -5637,6 +6923,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-110.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-110.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -5673,6 +6970,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-111.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-111.png" target="_blank">9d8353f</a>
@@ -5713,6 +7021,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-112.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-112.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -5749,6 +7068,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-113.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-113.png" target="_blank">9d8353f</a>
@@ -5789,6 +7119,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-114.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-114.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -5825,6 +7166,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-115.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-115.png" target="_blank">9d8353f</a>
@@ -5865,6 +7217,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-116.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-116.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -5901,6 +7264,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-117.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-117.png" target="_blank">9d8353f</a>
@@ -5941,6 +7315,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-118.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-118.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -5977,6 +7362,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-119.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-119.png" target="_blank">9d8353f</a>
@@ -6017,6 +7413,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-120.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-120.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -6053,6 +7460,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-121.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-121.png" target="_blank">9d8353f</a>
@@ -6093,6 +7511,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-122.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-122.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -6129,6 +7558,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-123.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-123.png" target="_blank">9d8353f</a>
@@ -6169,6 +7609,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-124.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-124.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -6205,6 +7656,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-125.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-125.png" target="_blank">9d8353f</a>
@@ -6245,6 +7707,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-126.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-126.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -6281,6 +7754,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-127.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-127.png" target="_blank">9d8353f</a>
@@ -6321,6 +7805,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-128.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-128.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -6357,6 +7852,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-129.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-129.png" target="_blank">9d8353f</a>
@@ -6397,6 +7903,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-130.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-130.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -6433,6 +7950,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-131.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-131.png" target="_blank">9d8353f</a>
@@ -6473,6 +8001,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-132.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-132.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -6509,6 +8048,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-133.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-133.png" target="_blank">9d8353f</a>
@@ -6549,6 +8099,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-134.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-134.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -6585,6 +8146,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-135.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-135.png" target="_blank">9d8353f</a>
@@ -6625,6 +8197,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-136.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-136.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -6661,6 +8244,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-137.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/98599d8f8adf5d5be7dfce85ffe8c9526d110e27/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-137.png" target="_blank">98599d8</a>
@@ -6712,6 +8306,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-138.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-138.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -6748,6 +8353,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-139.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/98599d8f8adf5d5be7dfce85ffe8c9526d110e27/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-139.png" target="_blank">98599d8</a>
@@ -6799,6 +8415,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-140.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-140.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -6835,6 +8462,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-141.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-141.png" target="_blank">9d8353f</a>
@@ -6875,6 +8513,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-142.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-142.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -6911,6 +8560,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-143.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-143.png" target="_blank">9d8353f</a>
@@ -6951,6 +8611,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-144.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-144.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -6987,6 +8658,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-145.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-145.png" target="_blank">9d8353f</a>
@@ -7027,6 +8709,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-146.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-146.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -7063,6 +8756,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-147.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-147.png" target="_blank">9d8353f</a>
@@ -7103,6 +8807,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-148.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-148.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -7139,6 +8854,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-149.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-149.png" target="_blank">9d8353f</a>
@@ -7179,6 +8905,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-150.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-150.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -7215,6 +8952,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-151.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-151.png" target="_blank">9d8353f</a>
@@ -7255,6 +9003,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-152.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-152.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -7291,6 +9050,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-153.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-153.png" target="_blank">9d8353f</a>
@@ -7331,6 +9101,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-154.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-154.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -7367,6 +9148,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-155.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-155.png" target="_blank">9d8353f</a>
@@ -7407,6 +9199,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-156.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-156.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -7443,6 +9246,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-157.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-157.png" target="_blank">9d8353f</a>
@@ -7483,6 +9297,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-158.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-158.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -7519,6 +9344,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-159.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-159.png" target="_blank">9d8353f</a>
@@ -7559,6 +9395,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-160.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-160.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -7595,6 +9442,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-161.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-161.png" target="_blank">9d8353f</a>
@@ -7635,6 +9493,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-162.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-162.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -7671,6 +9540,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-163.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-163.png" target="_blank">9d8353f</a>
@@ -7711,6 +9591,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-164.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-164.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -7747,6 +9638,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-165.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-165.png" target="_blank">9d8353f</a>
@@ -7787,6 +9689,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-166.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-166.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -7823,6 +9736,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-167.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-167.png" target="_blank">9d8353f</a>
@@ -7863,6 +9787,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-168.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-168.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -7899,6 +9834,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-169.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-169.png" target="_blank">9d8353f</a>
@@ -7939,6 +9885,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-170.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-170.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -7975,6 +9932,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-171.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-171.png" target="_blank">9d8353f</a>
@@ -8015,6 +9983,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-172.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-172.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -8051,6 +10030,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-173.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-173.png" target="_blank">9d8353f</a>
@@ -8091,6 +10081,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-174.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-174.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -8127,6 +10128,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-175.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-175.png" target="_blank">9d8353f</a>
@@ -8167,6 +10179,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-176.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-176.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -8203,6 +10226,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-177.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-177.png" target="_blank">9d8353f</a>
@@ -8243,6 +10277,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-178.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-178.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -8279,6 +10324,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-179.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-179.png" target="_blank">9d8353f</a>
@@ -8319,6 +10375,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-180.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-180.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -8355,6 +10422,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-181.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-181.png" target="_blank">9d8353f</a>
@@ -8395,6 +10473,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-182.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-182.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -8431,6 +10520,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-183.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/98599d8f8adf5d5be7dfce85ffe8c9526d110e27/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-183.png" target="_blank">98599d8</a>
@@ -8482,6 +10582,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-184.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-184.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -8518,6 +10629,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-185.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-185.png" target="_blank">9d8353f</a>
@@ -8558,6 +10680,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-186.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-186.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -8594,6 +10727,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-187.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-187.png" target="_blank">9d8353f</a>
@@ -8634,6 +10778,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-188.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-188.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -8670,6 +10825,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-189.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-189.png" target="_blank">9d8353f</a>
@@ -8710,6 +10876,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-190.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-190.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -8746,6 +10923,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-191.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-191.png" target="_blank">9d8353f</a>
@@ -8786,6 +10974,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-192.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-192.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -8822,6 +11021,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-193.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-193.png" target="_blank">9d8353f</a>
@@ -8862,6 +11072,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-194.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-194.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -8898,6 +11119,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-195.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-195.png" target="_blank">9d8353f</a>
@@ -8938,6 +11170,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-196.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-196.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -8974,6 +11217,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-197.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-197.png" target="_blank">9d8353f</a>
@@ -9014,6 +11268,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-198.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-198.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -9050,6 +11315,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-199.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-199.png" target="_blank">9d8353f</a>
@@ -9090,6 +11366,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-200.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-200.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -9126,6 +11413,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-201.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-201.png" target="_blank">9d8353f</a>
@@ -9166,6 +11464,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-202.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-202.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -9202,6 +11511,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-203.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-203.png" target="_blank">9d8353f</a>
@@ -9242,6 +11562,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-204.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-204.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -9278,6 +11609,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-205.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-205.png" target="_blank">9d8353f</a>
@@ -9318,6 +11660,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-206.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-206.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -9354,6 +11707,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-207.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-207.png" target="_blank">9d8353f</a>
@@ -9394,6 +11758,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-208.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-208.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -9430,6 +11805,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-209.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-209.png" target="_blank">9d8353f</a>
@@ -9470,6 +11856,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-210.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-210.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -9506,6 +11903,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-211.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-211.png" target="_blank">9d8353f</a>
@@ -9546,6 +11954,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-212.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-212.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -9582,6 +12001,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-213.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-213.png" target="_blank">9d8353f</a>
@@ -9622,6 +12052,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-214.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-214.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -9658,6 +12099,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-215.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-215.png" target="_blank">9d8353f</a>
@@ -9698,6 +12150,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-216.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-216.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -9734,6 +12197,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-217.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-217.png" target="_blank">9d8353f</a>
@@ -9774,6 +12248,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-218.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-218.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -9810,6 +12295,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-219.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-219.png" target="_blank">9d8353f</a>
@@ -9850,6 +12346,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-220.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-220.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -9886,6 +12393,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-221.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-221.png" target="_blank">9d8353f</a>
@@ -9926,6 +12444,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-222.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-222.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -9962,6 +12491,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-223.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-223.png" target="_blank">9d8353f</a>
@@ -10002,6 +12542,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-224.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-224.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -10038,6 +12589,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-225.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-225.png" target="_blank">9d8353f</a>
@@ -10078,6 +12640,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-226.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-226.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -10114,6 +12687,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-227.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-227.png" target="_blank">9d8353f</a>
@@ -10154,6 +12738,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-228.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-228.png" target="_blank">9d8353f</a>
 </td>
 <td>
@@ -10190,6 +12785,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-229.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/98599d8f8adf5d5be7dfce85ffe8c9526d110e27/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-229.png" target="_blank">98599d8</a>
@@ -10239,6 +12845,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-230.png" target="_blank">2438c5a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-08-30
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-230.png" target="_blank">9d8353f</a>
