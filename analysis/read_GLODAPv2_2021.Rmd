@@ -27,7 +27,6 @@ path_preprocessing  <- paste(path_root, "/observations/preprocessing/", sep = ""
 library(lubridate)
 ```
 
-
 # Read files
 
 Main data source for this project is `GLODAPv2.2021_Merged_Master_File.csv` downloaded from `https://www.ncei.noaa.gov/data/oceans/ncei/ocads/data/0237935/GLODAPv2.2021_Merged_Master_File.csv` on Aug 30, 2021.
@@ -45,13 +44,73 @@ GLODAP <-
     col_types = cols(.default = col_double())
   )
 
+
+GLODAP <- GLODAP %>%
+  rename_with(~str_remove(., 'G2'))
+
 ```
+
+# Data preparation
+
+## Correct qc flag
+
+From an email conversation with Nico Lange
+
+*Yes, we are aware of these faulty(!) calculated TA data (using DIC and fCO2). It is linked to v2.2020 where we've added fCO2 to the "missing carbon calculation matrix". Overall, including fCO2 in these calculations has worked great to fill some missing carbon gaps. However, for this cruise in particular the fCO2 values have most likely been converted wrongly to 20°C and are thus off! The problem of this all is that we haven't really done a 2nd QC on the fCO2 values neither have we defined the corresponding "G2fCO2qc" variable, hence for the sake of consistency we kept all fCO2 values in. Again and unfortunately, in this particular case it led to the bad calculations of TA data.... We plan to do a full 2nd QC on all (!) fCO2 data for v3.*
+
+*But you have indeed found a flaw in our merging script, as the corresponding calculated TA values should not have received a 2nd QC flag of 1! I missed out on adding a line to our merging script to accommodate for the non-existence of 2nd fCO2 flags in the carbon calculation matrix.*
+
+*So long story short: Thank you very much for finding this flaw and letting me know of it!*
+
+and
+
+*Yes, the all calculated TA data from cruise 695 should have a talkqc of 0 (as they are based upon un QC'd fCO2 data...).*
+
+*And no (thanks to your hint and questions), I figured that **this wrongly assigned 2nd QC flag is a problem for all calculated carbon data, which used fCO2 for the calculations**. However, luckily this is not really often the case.*
+
+*You can check if thats the case by looking at which other carbon parameters are measured, i.e. by **checking their primary flags (e.g. G2talkf, G2tco2f and G2phts25p0f and G2fco2f). If only two are measured and one of them is fCO2, it means that the other carbon parameters (the ones with a primary flag of 0) are calculated using fCO2. Hence, for these instances no 2nd QC is done and the corresponding qc flag should be 0 and not 1.***
+
+```{r correct_qc_flag}
+
+talk_qc_error_cruises <- GLODAP %>%
+  select(cruise, tco2:phtsqc) %>% 
+  mutate(measured_CO2_vars = rowSums(select(., c(
+    tco2f, talkf, fco2f, phts25p0f
+  )) == 2)) %>%
+  filter(measured_CO2_vars == 2,
+         fco2f == 2,
+         talkf == 0) %>% 
+  distinct(cruise, talkf, talkqc, fco2f)
+
+tco2_qc_error_cruises <- GLODAP %>%
+  select(cruise, tco2:phtsqc) %>% 
+  mutate(measured_CO2_vars = rowSums(select(., c(
+    tco2f, talkf, fco2f, phts25p0f
+  )) == 2)) %>%
+  filter(measured_CO2_vars == 2,
+         fco2f == 2,
+         tco2f == 0) %>% 
+  distinct(cruise, tco2f, tco2qc, fco2f)
+
+talk_qc_error_cruises %>% 
+  write_csv("data/talk_qc_error_cruises_GLODAPv2_2021.csv")
+
+tco2_qc_error_cruises %>% 
+  write_csv("data/tco2_qc_error_cruises_GLODAPv2_2021.csv")
+
+GLODAP <- GLODAP %>% 
+  mutate(talkqc = if_else(cruise %in% talk_qc_error_cruises$cruise, 0, talkqc),
+         tco2qc = if_else(cruise %in% tco2_qc_error_cruises$cruise, 0, tco2qc))
+
+rm(talk_qc_error_cruises, tco2_qc_error_cruises)
+
+```
+
+
+## Harmonize nomenclature
 
 ```{r harmonize_variables}
 
-# select relevant columns
-GLODAP <- GLODAP %>%
-  rename_with(~str_remove(., 'G2'))
 
 # select relevant columns
 GLODAP <- GLODAP %>%
@@ -82,7 +141,6 @@ GLODAP <- GLODAP %>%
 
 ```
 
-# Data preparation
 
 ## Subset tco2 data
 
@@ -99,7 +157,7 @@ GLODAP <- GLODAP %>%
 
 For merging with other data sets, all observations were grouped into latitude intervals of:
 
-- 1° x 1°
+-   1° x 1°
 
 ```{r grid_spatially_1x1}
 
@@ -140,8 +198,24 @@ GLODAP <- GLODAP  %>%
 
 ```
 
+
+```{r grid_by_year, fig.asp=3}
+
+GLODAP_grid_year <- GLODAP %>%
+  count(lat, lon, year)
+
+map +
+  geom_raster(data = GLODAP_grid_year,
+              aes(lon, lat)) +
+  facet_wrap(~ year, ncol=3)
+
+```
+
+
+
+
 ## Write GLODAP file
- 
+
 ```{r write_clean_data_files}
 
 GLODAP  %>%  
@@ -151,21 +225,19 @@ GLODAP  %>%
 
 ```
 
-
 # Overview plots
 
 ## Assign coarse spatial grid
 
-For the following plots, the cleaned data set was re-opened and observations were gridded spatially to intervals of:  
+For the following plots, the cleaned data set was re-opened and observations were gridded spatially to intervals of:
 
-- 5° x 5°
+-   5° x 5°
 
 ```{r grid_spatially_5x5}
 
 GLODAP <- m_grid_horizontal_coarse(GLODAP)
 
 ```
-
 
 ## Histogram Zonal coverage
 
@@ -239,7 +311,6 @@ map +
 
 ```
 
-
 ```{r coverage_map_variable_year, fig.asp=0.5}
 
 GLODAP_obs_grid_all_vars <- GLODAP %>% 
@@ -287,7 +358,6 @@ all_plots
 dev.off()
 
 ```
-
 
 # CANYON-B
 
@@ -404,7 +474,7 @@ for (i_variable in variables) {
 ```
 
 ## Write Canyon-B file
- 
+
 ```{r write_Canyon-B_data_file}
 
 GLODAP_Can_B %>% 
@@ -416,4 +486,3 @@ GLODAP_Can_B %>%
                              sep = ""))
 
 ```
-
