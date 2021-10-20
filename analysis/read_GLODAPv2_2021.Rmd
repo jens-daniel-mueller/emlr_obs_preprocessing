@@ -72,21 +72,24 @@ and
 
 ```{r correct_qc_flag}
 
-talk_qc_error_cruises <- GLODAP %>%
-  select(cruise, tco2:phtsqc) %>% 
+# calculate number of measured co2 system variables
+
+GLODAP <- GLODAP %>%
   mutate(measured_CO2_vars = rowSums(select(., c(
     tco2f, talkf, fco2f, phts25p0f
-  )) == 2)) %>%
+  )) == 2))
+
+# identify cruises on which talk/tco2 was calculated
+
+talk_qc_error_cruises <- GLODAP %>%
+  select(cruise, tco2:phtsqc, measured_CO2_vars) %>% 
   filter(measured_CO2_vars == 2,
          fco2f == 2,
          talkf == 0) %>% 
   distinct(cruise, talkf, talkqc, fco2f)
 
 tco2_qc_error_cruises <- GLODAP %>%
-  select(cruise, tco2:phtsqc) %>% 
-  mutate(measured_CO2_vars = rowSums(select(., c(
-    tco2f, talkf, fco2f, phts25p0f
-  )) == 2)) %>%
+  select(cruise, tco2:phtsqc, measured_CO2_vars) %>% 
   filter(measured_CO2_vars == 2,
          fco2f == 2,
          tco2f == 0) %>% 
@@ -98,11 +101,25 @@ talk_qc_error_cruises %>%
 tco2_qc_error_cruises %>% 
   write_csv("data/tco2_qc_error_cruises_GLODAPv2_2021.csv")
 
-GLODAP <- GLODAP %>% 
-  mutate(talkqc = if_else(cruise %in% talk_qc_error_cruises$cruise, 0, talkqc),
-         tco2qc = if_else(cruise %in% tco2_qc_error_cruises$cruise, 0, tco2qc))
-
 rm(talk_qc_error_cruises, tco2_qc_error_cruises)
+
+
+# set qc = 0 for tco2 and talk values calculated from fco2   
+
+GLODAP <- GLODAP %>%
+  mutate(tco2qc = if_else(measured_CO2_vars == 2 &
+                            fco2f == 2 & tco2f == 0,
+                          0,
+                          tco2qc))
+
+GLODAP <- GLODAP %>%
+  mutate(talkqc = if_else(measured_CO2_vars == 2 &
+                            fco2f == 2 & talkf == 0,
+                          0,
+                          talkqc))
+
+GLODAP <- GLODAP %>% 
+  select(-measured_CO2_vars)
 
 ```
 
@@ -212,8 +229,6 @@ map +
 ```
 
 
-
-
 ## Write GLODAP file
 
 ```{r write_clean_data_files}
@@ -311,7 +326,7 @@ map +
 
 ```
 
-```{r coverage_map_variable_year, fig.asp=0.5}
+```{r coverage_map_variable_year, message=FALSE}
 
 GLODAP_obs_grid_all_vars <- GLODAP %>% 
   select(year, lat, lon, cruise, sal, temp, oxygen,
@@ -446,26 +461,26 @@ for (i_variable in variables) {
   ) 
   
   
-  for (i_year in unique(GLODAP_Can_B$year)) {
-    # i_year <- 2017
-    
-    print(
-      ggplot(
-        GLODAP_Can_B %>% filter(year == i_year),
-        aes(x = !!sym(i_variable),
-            y = !!sym(paste0(
-              i_variable, "_CANYONB"
-            )))
-      ) +
-        geom_bin2d(binwidth = binwidth_value) +
-        scale_fill_viridis_c(trans = "log10") +
-        geom_abline(slope = 1, col = 'red') +
-        coord_equal(xlim = axis_lims,
-                    ylim = axis_lims) +
-        facet_wrap( ~ basin_AIP) +
-        labs(title = paste("Year:", i_year))
-    )
-  }
+  # for (i_year in unique(GLODAP_Can_B$year)) {
+  #   # i_year <- 2017
+  #   
+  #   print(
+  #     ggplot(
+  #       GLODAP_Can_B %>% filter(year == i_year),
+  #       aes(x = !!sym(i_variable),
+  #           y = !!sym(paste0(
+  #             i_variable, "_CANYONB"
+  #           )))
+  #     ) +
+  #       geom_bin2d(binwidth = binwidth_value) +
+  #       scale_fill_viridis_c(trans = "log10") +
+  #       geom_abline(slope = 1, col = 'red') +
+  #       coord_equal(xlim = axis_lims,
+  #                   ylim = axis_lims) +
+  #       facet_wrap( ~ basin_AIP) +
+  #       labs(title = paste("Year:", i_year))
+  #   )
+  # }
   
 }
 
