@@ -123,6 +123,28 @@ GLODAP <- GLODAP %>%
 
 ```
 
+```{r identify_talk_tco2_calculated_from_pH_fco2, eval=FALSE}
+
+# calculate number of measured co2 system variables
+
+GLODAP <- GLODAP %>%
+  mutate(measured_CO2_vars = rowSums(select(., c(
+    tco2f, talkf, fco2f, phts25p0f
+  )) == 2))
+
+# identify cruises on which talk/tco2 was calculated
+
+tco2_talk_calc <- GLODAP %>%
+  select(cruise, tco2:phtsqc, measured_CO2_vars) %>% 
+  filter(measured_CO2_vars == 2,
+         fco2f == 2,
+         phts25p0f == 2)
+
+GLODAP <- GLODAP %>% 
+  select(-measured_CO2_vars)
+
+```
+
 
 ## Harmonize nomenclature
 

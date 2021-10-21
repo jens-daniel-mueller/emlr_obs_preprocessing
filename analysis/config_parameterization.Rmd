@@ -89,6 +89,7 @@ params_global <-
     longitude_sections_regular = longitude_sections_regular,
     inventory_depth_standard = 3000,
     inventory_depths = c(100, 500, 1000, 3000, 10000),
+    inventory_depth_layer = seq(0, 1e4, 500),
     plotting_depth = 4500,
     cruises_meridional = 1041,
     depth_levels = depth_levels,
