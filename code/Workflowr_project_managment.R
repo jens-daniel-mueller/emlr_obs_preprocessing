@@ -5,7 +5,7 @@
 
 # commit regular changes (locally) and rebuild site
 # this takes only changed files into account
-wflow_publish(all = TRUE, message = "added inventory layer depth")
+wflow_publish(all = TRUE, message = "added time series plots")
 
 # commit changes including _site.yml (locally) and rebuild site in the specified order
 # you can also run this code with only some of the files. In this case remove the rebuild=TRUE command
@@ -24,7 +24,6 @@ wflow_publish(here::here(
     "read_Sabine_2004.Rmd",
     "read_CO2_atm.Rmd",
     "analysis_regional_clusters.Rmd"
-
   )
 ),
 message = "rerun with new setup_obs.Rmd file",

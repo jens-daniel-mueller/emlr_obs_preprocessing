@@ -396,11 +396,49 @@ dev.off()
 
 ```
 
+```{r timeseries, fig.asp=1}
+
+GLODAP_time_series <- GLODAP %>% 
+  select(year, basin_AIP, depth, sal, temp,
+         oxygen, aou, nitrate, silicate, phosphate,
+         tco2, talk)
+
+GLODAP_time_series <- GLODAP_time_series %>% 
+  mutate(depth_grid = cut(depth, seq(0,1e4,1000)))
+
+GLODAP_time_series <- GLODAP_time_series %>% 
+  pivot_longer(sal:talk,
+               names_to = "parameter",
+               values_to = "value")
+
+GLODAP_time_series %>%
+  group_split(basin_AIP, depth_grid) %>%
+  head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(year, value)) +
+      geom_jitter(alpha = 0.1) +
+      facet_grid(parameter ~ depth_grid,
+                 scales = "free_y") +
+      # geom_smooth() +
+      labs(title = paste(
+        "basin_AIP:",
+        unique(.x$basin_AIP),
+        "| depth_grid:",
+        unique(.x$depth_grid)
+      ))
+  )
+
+
+
+```
+
+
 # CANYON-B
 
 ## Comparison to GLODAP
 
-```{r CANYON-B, fig.asp=0.4}
+```{r CANYON-B, fig.asp=0.4, eval=FALSE}
 
 source("/net/kryo/work/uptools/co2_calculation/CANYON-B/CANYONB.R")
 
@@ -512,7 +550,7 @@ for (i_variable in variables) {
 
 ## Write Canyon-B file
 
-```{r write_Canyon-B_data_file}
+```{r write_Canyon-B_data_file, eval=FALSE}
 
 GLODAP_Can_B %>% 
   select(row_number,
