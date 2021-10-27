@@ -417,7 +417,7 @@ GLODAP_time_series <- GLODAP_time_series %>%
 
 GLODAP_time_series %>%
   group_split(basin_AIP, depth_grid) %>%
-  head(1) %>%
+  # head(1) %>%
   map(
     ~ ggplot(data = .x,
              aes(year, value, col = lat)) +
