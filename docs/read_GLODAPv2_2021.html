@@ -444,7 +444,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">GLODAPv2_2020</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">21 October, 2021</h4>
+<h4 class="date">27 October, 2021</h4>
 
 </div>
 
@@ -469,7 +469,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-10-21
+<strong>Last updated:</strong> 2021-10-27
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -560,16 +560,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeb64c54da7ccddde4e911583c845b78f15fb869d7targetblankb64c54da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/b64c54da7ccddde4e911583c845b78f15fb869d7" target="_blank">b64c54d</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeb4ea199f0a5ede26c58f973283167a663fdfdaa3targetblankb4ea199a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/b4ea199f0a5ede26c58f973283167a663fdfdaa3" target="_blank">b4ea199</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeb64c54da7ccddde4e911583c845b78f15fb869d7targetblankb64c54da" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeb4ea199f0a5ede26c58f973283167a663fdfdaa3targetblankb4ea199a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/b64c54da7ccddde4e911583c845b78f15fb869d7" target="_blank">b64c54d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/b4ea199f0a5ede26c58f973283167a663fdfdaa3" target="_blank">b4ea199</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -617,6 +617,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b4ea199f0a5ede26c58f973283167a663fdfdaa3/analysis/read_GLODAPv2_2021.Rmd" target="_blank">b4ea199</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+<td>
+added time series plots
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/7987bb7fca4d07faaee13f7e7d5bad543c54aa03/docs/read_GLODAPv2_2021.html" target="_blank">7987bb7</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-21
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1554,6 +1588,38 @@ all_plots</code></pre>
 <pre class="r"><code>dev.off()</code></pre>
 <pre><code>png 
   2 </code></pre>
+<pre class="r"><code>GLODAP_time_series &lt;- GLODAP %&gt;% 
+  select(year, basin_AIP, depth, sal, temp,
+         oxygen, aou, nitrate, silicate, phosphate,
+         tco2, talk)
+
+GLODAP_time_series &lt;- GLODAP_time_series %&gt;% 
+  mutate(depth_grid = cut(depth, seq(0,1e4,1000)))
+
+GLODAP_time_series &lt;- GLODAP_time_series %&gt;% 
+  pivot_longer(sal:talk,
+               names_to = &quot;parameter&quot;,
+               values_to = &quot;value&quot;)
+
+GLODAP_time_series %&gt;%
+  group_split(basin_AIP, depth_grid) %&gt;%
+  head(1) %&gt;%
+  map(
+    ~ ggplot(data = .x,
+             aes(year, value)) +
+      geom_jitter(alpha = 0.1) +
+      facet_grid(parameter ~ depth_grid,
+                 scales = &quot;free_y&quot;) +
+      # geom_smooth() +
+      labs(title = paste(
+        &quot;basin_AIP:&quot;,
+        unique(.x$basin_AIP),
+        &quot;| depth_grid:&quot;,
+        unique(.x$depth_grid)
+      ))
+  )</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="canyon-b" class="section level1" number="4">
@@ -1663,295 +1729,6 @@ for (i_variable in variables) {
   # }
   
 }</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-CANYON-B-1">
-Past versions of CANYON-B-1.png
-</button>
-</p>
-<div id="fig-CANYON-B-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-1.png" target="_blank">2438c5a</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-08-30
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-1.png" target="_blank">9d8353f</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-05-31
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-CANYON-B-2">
-Past versions of CANYON-B-2.png
-</button>
-</p>
-<div id="fig-CANYON-B-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8d1aaf8890f507fcc54e4752b9a694fa2b834083/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-2.png" target="_blank">8d1aaf8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-20
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-2.png" target="_blank">2438c5a</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-08-30
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-2.png" target="_blank">9d8353f</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-05-31
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B-3.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-CANYON-B-3">
-Past versions of CANYON-B-3.png
-</button>
-</p>
-<div id="fig-CANYON-B-3" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8d1aaf8890f507fcc54e4752b9a694fa2b834083/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-3.png" target="_blank">8d1aaf8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-20
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-3.png" target="_blank">2438c5a</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-08-30
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-3.png" target="_blank">9d8353f</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-05-31
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B-4.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-CANYON-B-4">
-Past versions of CANYON-B-4.png
-</button>
-</p>
-<div id="fig-CANYON-B-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8d1aaf8890f507fcc54e4752b9a694fa2b834083/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-4.png" target="_blank">8d1aaf8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-20
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-4.png" target="_blank">2438c5a</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-08-30
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-4.png" target="_blank">9d8353f</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-05-31
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B-5.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-CANYON-B-5">
-Past versions of CANYON-B-5.png
-</button>
-</p>
-<div id="fig-CANYON-B-5" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8d1aaf8890f507fcc54e4752b9a694fa2b834083/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-5.png" target="_blank">8d1aaf8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-20
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2438c5a504bd1dc991e21d4c81aa4df094330a0e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-5.png" target="_blank">2438c5a</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-08-30
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9d8353f1c8e170efdc5f2995709cd1a45baa2846/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-5.png" target="_blank">9d8353f</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-05-31
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 </div>
 <div id="write-canyon-b-file" class="section level2" number="4.2">
 <h2 number="4.2"><span class="header-section-number">4.2</span> Write Canyon-B file</h2>
@@ -1990,38 +1767,37 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] mgcv_1.8-33     nlme_3.1-149    lubridate_1.7.9 ggforce_0.3.3  
- [5] metR_0.9.0      scico_1.2.0     patchwork_1.1.1 collapse_1.5.0 
- [9] forcats_0.5.0   stringr_1.4.0   dplyr_1.0.5     purrr_0.3.4    
-[13] readr_1.4.0     tidyr_1.1.3     tibble_3.1.3    ggplot2_3.3.5  
-[17] tidyverse_1.3.0 workflowr_1.6.2
+ [1] lubridate_1.7.9 ggforce_0.3.3   metR_0.9.0      scico_1.2.0    
+ [5] patchwork_1.1.1 collapse_1.5.0  forcats_0.5.0   stringr_1.4.0  
+ [9] dplyr_1.0.5     purrr_0.3.4     readr_1.4.0     tidyr_1.1.3    
+[13] tibble_3.1.3    ggplot2_3.3.5   tidyverse_1.3.0 workflowr_1.6.2
 
 loaded via a namespace (and not attached):
- [1] fs_1.5.0                 httr_1.4.2               rprojroot_2.0.2         
- [4] tools_4.0.3              backports_1.1.10         bslib_0.2.5.1           
- [7] utf8_1.1.4               R6_2.5.0                 DBI_1.1.0               
-[10] colorspace_2.0-2         withr_2.3.0              tidyselect_1.1.0        
-[13] compiler_4.0.3           git2r_0.27.1             cli_3.0.1               
-[16] rvest_0.3.6              xml2_1.3.2               labeling_0.4.2          
-[19] sass_0.4.0               scales_1.1.1             checkmate_2.0.0         
-[22] digest_0.6.27            rmarkdown_2.10           pkgconfig_2.0.3         
-[25] htmltools_0.5.1.1        dbplyr_1.4.4             highr_0.8               
-[28] rlang_0.4.11             readxl_1.3.1             rstudioapi_0.13         
-[31] jquerylib_0.1.4          generics_0.1.0           farver_2.0.3            
-[34] jsonlite_1.7.1           magrittr_1.5             Matrix_1.2-18           
-[37] Rcpp_1.0.5               munsell_0.5.0            fansi_0.4.1             
-[40] lifecycle_1.0.0          stringi_1.5.3            whisker_0.4             
-[43] yaml_2.2.1               MASS_7.3-53              grid_4.0.3              
-[46] blob_1.2.1               parallel_4.0.3           promises_1.1.1          
-[49] crayon_1.3.4             lattice_0.20-41          splines_4.0.3           
-[52] haven_2.3.1              hms_0.5.3                knitr_1.33              
-[55] pillar_1.6.2             reprex_0.3.0             glue_1.4.2              
-[58] evaluate_0.14            RcppArmadillo_0.10.1.2.0 data.table_1.14.0       
-[61] modelr_0.1.8             vctrs_0.3.8              tweenr_1.0.2            
-[64] httpuv_1.5.4             cellranger_1.1.0         gtable_0.3.0            
-[67] polyclip_1.10-0          assertthat_0.2.1         xfun_0.25               
-[70] broom_0.7.9              RcppEigen_0.3.3.7.0      later_1.2.0             
-[73] viridisLite_0.3.0        ellipsis_0.3.2          </code></pre>
+ [1] httr_1.4.2               sass_0.4.0               viridisLite_0.3.0       
+ [4] jsonlite_1.7.1           modelr_0.1.8             bslib_0.2.5.1           
+ [7] assertthat_0.2.1         highr_0.8                blob_1.2.1              
+[10] cellranger_1.1.0         yaml_2.2.1               pillar_1.6.2            
+[13] backports_1.1.10         lattice_0.20-41          glue_1.4.2              
+[16] RcppEigen_0.3.3.7.0      digest_0.6.27            promises_1.1.1          
+[19] polyclip_1.10-0          checkmate_2.0.0          rvest_0.3.6             
+[22] colorspace_2.0-2         htmltools_0.5.1.1        httpuv_1.5.4            
+[25] Matrix_1.2-18            pkgconfig_2.0.3          broom_0.7.9             
+[28] haven_2.3.1              scales_1.1.1             tweenr_1.0.2            
+[31] whisker_0.4              later_1.2.0              git2r_0.27.1            
+[34] farver_2.0.3             generics_0.1.0           ellipsis_0.3.2          
+[37] withr_2.3.0              cli_3.0.1                magrittr_1.5            
+[40] crayon_1.3.4             readxl_1.3.1             evaluate_0.14           
+[43] fs_1.5.0                 fansi_0.4.1              MASS_7.3-53             
+[46] xml2_1.3.2               RcppArmadillo_0.10.1.2.0 tools_4.0.3             
+[49] data.table_1.14.0        hms_0.5.3                lifecycle_1.0.0         
+[52] munsell_0.5.0            reprex_0.3.0             compiler_4.0.3          
+[55] jquerylib_0.1.4          rlang_0.4.11             grid_4.0.3              
+[58] rstudioapi_0.13          labeling_0.4.2           rmarkdown_2.10          
+[61] gtable_0.3.0             DBI_1.1.0                R6_2.5.0                
+[64] knitr_1.33               utf8_1.1.4               rprojroot_2.0.2         
+[67] stringi_1.5.3            parallel_4.0.3           Rcpp_1.0.5              
+[70] vctrs_0.3.8              dbplyr_1.4.4             tidyselect_1.1.0        
+[73] xfun_0.25               </code></pre>
 </div>
 </div>
 </div>
