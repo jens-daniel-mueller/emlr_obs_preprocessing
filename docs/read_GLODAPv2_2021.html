@@ -560,16 +560,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreed6fb0dc090d716d7e80e0d55aed2c8dff0f1df7ctargetblankd6fb0dca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/d6fb0dc090d716d7e80e0d55aed2c8dff0f1df7c" target="_blank">d6fb0dc</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreedb93d9f1f29d8b88c9e471cdbe7b61ccadd80557targetblankdb93d9fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/db93d9f1f29d8b88c9e471cdbe7b61ccadd80557" target="_blank">db93d9f</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreed6fb0dc090d716d7e80e0d55aed2c8dff0f1df7ctargetblankd6fb0dca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreedb93d9f1f29d8b88c9e471cdbe7b61ccadd80557targetblankdb93d9fa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/d6fb0dc090d716d7e80e0d55aed2c8dff0f1df7c" target="_blank">d6fb0dc</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/db93d9f1f29d8b88c9e471cdbe7b61ccadd80557" target="_blank">db93d9f</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -617,6 +617,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/db93d9f1f29d8b88c9e471cdbe7b61ccadd80557/analysis/read_GLODAPv2_2021.Rmd" target="_blank">db93d9f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+<td>
+added time series plots
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/read_GLODAPv2_2021.html" target="_blank">7db7e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1626,7 +1660,7 @@ all_plots</code></pre>
 <div id="time-series" class="section level2" number="3.6">
 <h2 number="3.6"><span class="header-section-number">3.6</span> Time series</h2>
 <pre class="r"><code>GLODAP_time_series &lt;- GLODAP %&gt;% 
-  select(year, basin_AIP, depth, sal, temp,
+  select(year, basin_AIP, lat, depth, sal, temp,
          oxygen, aou, nitrate, silicate, phosphate,
          tco2, talk)
 
@@ -1636,18 +1670,20 @@ GLODAP_time_series &lt;- GLODAP_time_series %&gt;%
 GLODAP_time_series &lt;- GLODAP_time_series %&gt;% 
   pivot_longer(sal:talk,
                names_to = &quot;parameter&quot;,
-               values_to = &quot;value&quot;)
+               values_to = &quot;value&quot;) %&gt;% 
+  filter(!is.na(value),
+         !is.na(depth_grid))
 
 GLODAP_time_series %&gt;%
   group_split(basin_AIP, depth_grid) %&gt;%
-  # head(1) %&gt;%
+  head(1) %&gt;%
   map(
     ~ ggplot(data = .x,
-             aes(year, value)) +
+             aes(year, value, col = lat)) +
       geom_jitter(alpha = 0.1) +
+      scale_color_divergent() +
       facet_grid(parameter ~ depth_grid,
                  scales = &quot;free_y&quot;) +
-      # geom_smooth() +
       labs(title = paste(
         &quot;basin_AIP:&quot;,
         unique(.x$basin_AIP),
@@ -1681,6 +1717,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-1.png" target="_blank">7db7e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68d67e7f64bfb27cff6fcb325e342e36af822b0c/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-1.png" target="_blank">68d67e7</a>
 </td>
 <td>
@@ -1694,81 +1741,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>
-[[2]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-2.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[3]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-3.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[4]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-4.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[5]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-5.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[6]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-6.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[7]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-7.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[8]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-8.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[9]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-9.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[10]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-10.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[11]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-11.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[12]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-12.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[13]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-13.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[14]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-14.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[15]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-15.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[16]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-16.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[17]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-17.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[18]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-18.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[19]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-19.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[20]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-20.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[21]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-21.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[22]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-22.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[23]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-23.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[24]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-24.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[25]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-25.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[26]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-26.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="canyon-b" class="section level1" number="4">
