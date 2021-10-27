@@ -396,7 +396,9 @@ dev.off()
 
 ```
 
-```{r timeseries, fig.asp=1}
+## Time series
+
+```{r timeseries, fig.asp=1.5}
 
 GLODAP_time_series <- GLODAP %>% 
   select(year, basin_AIP, depth, sal, temp,
@@ -413,7 +415,7 @@ GLODAP_time_series <- GLODAP_time_series %>%
 
 GLODAP_time_series %>%
   group_split(basin_AIP, depth_grid) %>%
-  head(1) %>%
+  # head(1) %>%
   map(
     ~ ggplot(data = .x,
              aes(year, value)) +
