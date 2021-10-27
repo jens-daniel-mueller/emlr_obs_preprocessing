@@ -560,16 +560,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreedb93d9f1f29d8b88c9e471cdbe7b61ccadd80557targetblankdb93d9fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/db93d9f1f29d8b88c9e471cdbe7b61ccadd80557" target="_blank">db93d9f</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreed99b131c4e72103b72180897a1f8765aaaa47796targetblankd99b131a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/d99b131c4e72103b72180897a1f8765aaaa47796" target="_blank">d99b131</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreedb93d9f1f29d8b88c9e471cdbe7b61ccadd80557targetblankdb93d9fa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreed99b131c4e72103b72180897a1f8765aaaa47796targetblankd99b131a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/db93d9f1f29d8b88c9e471cdbe7b61ccadd80557" target="_blank">db93d9f</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/d99b131c4e72103b72180897a1f8765aaaa47796" target="_blank">d99b131</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -617,6 +617,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d99b131c4e72103b72180897a1f8765aaaa47796/analysis/read_GLODAPv2_2021.Rmd" target="_blank">d99b131</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+<td>
+added time series plots
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/fde6c325ccb906198720e64077721c108ceb9b3f/docs/read_GLODAPv2_2021.html" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1676,7 +1710,7 @@ GLODAP_time_series &lt;- GLODAP_time_series %&gt;%
 
 GLODAP_time_series %&gt;%
   group_split(basin_AIP, depth_grid) %&gt;%
-  head(1) %&gt;%
+  # head(1) %&gt;%
   map(
     ~ ggplot(data = .x,
              aes(year, value, col = lat)) +
@@ -1717,6 +1751,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-1.png" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-1.png" target="_blank">7db7e6a</a>
 </td>
 <td>
@@ -1729,6 +1774,1128 @@ jens-daniel-mueller
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68d67e7f64bfb27cff6fcb325e342e36af822b0c/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-1.png" target="_blank">68d67e7</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-timeseries-2">
+Past versions of timeseries-2.png
+</button>
+</p>
+<div id="fig-timeseries-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-2.png" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-2.png" target="_blank">7db7e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-timeseries-3">
+Past versions of timeseries-3.png
+</button>
+</p>
+<div id="fig-timeseries-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-3.png" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-3.png" target="_blank">7db7e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[4]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-timeseries-4">
+Past versions of timeseries-4.png
+</button>
+</p>
+<div id="fig-timeseries-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-4.png" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-4.png" target="_blank">7db7e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[5]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-timeseries-5">
+Past versions of timeseries-5.png
+</button>
+</p>
+<div id="fig-timeseries-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-5.png" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-5.png" target="_blank">7db7e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[6]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-timeseries-6">
+Past versions of timeseries-6.png
+</button>
+</p>
+<div id="fig-timeseries-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-6.png" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-6.png" target="_blank">7db7e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[7]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-timeseries-7">
+Past versions of timeseries-7.png
+</button>
+</p>
+<div id="fig-timeseries-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-7.png" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-7.png" target="_blank">7db7e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[8]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-timeseries-8">
+Past versions of timeseries-8.png
+</button>
+</p>
+<div id="fig-timeseries-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-8.png" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-8.png" target="_blank">7db7e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[9]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-timeseries-9">
+Past versions of timeseries-9.png
+</button>
+</p>
+<div id="fig-timeseries-9" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-9.png" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-9.png" target="_blank">7db7e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[10]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-10.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-timeseries-10">
+Past versions of timeseries-10.png
+</button>
+</p>
+<div id="fig-timeseries-10" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-10.png" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-10.png" target="_blank">7db7e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[11]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-11.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-timeseries-11">
+Past versions of timeseries-11.png
+</button>
+</p>
+<div id="fig-timeseries-11" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-11.png" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-11.png" target="_blank">7db7e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[12]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-12.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-timeseries-12">
+Past versions of timeseries-12.png
+</button>
+</p>
+<div id="fig-timeseries-12" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-12.png" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-12.png" target="_blank">7db7e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[13]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-13.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-timeseries-13">
+Past versions of timeseries-13.png
+</button>
+</p>
+<div id="fig-timeseries-13" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-13.png" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-13.png" target="_blank">7db7e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[14]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-14.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-timeseries-14">
+Past versions of timeseries-14.png
+</button>
+</p>
+<div id="fig-timeseries-14" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-14.png" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-14.png" target="_blank">7db7e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[15]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-15.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-timeseries-15">
+Past versions of timeseries-15.png
+</button>
+</p>
+<div id="fig-timeseries-15" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-15.png" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-15.png" target="_blank">7db7e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[16]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-16.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-timeseries-16">
+Past versions of timeseries-16.png
+</button>
+</p>
+<div id="fig-timeseries-16" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-16.png" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-16.png" target="_blank">7db7e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[17]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-17.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-timeseries-17">
+Past versions of timeseries-17.png
+</button>
+</p>
+<div id="fig-timeseries-17" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-17.png" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-17.png" target="_blank">7db7e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[18]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-18.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-timeseries-18">
+Past versions of timeseries-18.png
+</button>
+</p>
+<div id="fig-timeseries-18" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-18.png" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-18.png" target="_blank">7db7e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[19]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-19.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-timeseries-19">
+Past versions of timeseries-19.png
+</button>
+</p>
+<div id="fig-timeseries-19" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-19.png" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-19.png" target="_blank">7db7e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[20]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-20.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-timeseries-20">
+Past versions of timeseries-20.png
+</button>
+</p>
+<div id="fig-timeseries-20" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-20.png" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-20.png" target="_blank">7db7e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[21]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-21.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-timeseries-21">
+Past versions of timeseries-21.png
+</button>
+</p>
+<div id="fig-timeseries-21" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-21.png" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-21.png" target="_blank">7db7e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[22]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-22.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-timeseries-22">
+Past versions of timeseries-22.png
+</button>
+</p>
+<div id="fig-timeseries-22" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-22.png" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-22.png" target="_blank">7db7e6a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[23]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/timeseries-23.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-timeseries-23">
+Past versions of timeseries-23.png
+</button>
+</p>
+<div id="fig-timeseries-23" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-23.png" target="_blank">fde6c32</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-10-27
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7db7e6a8e73905f0990ca5a4bcea85d9e059a6fe/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-23.png" target="_blank">7db7e6a</a>
 </td>
 <td>
 jens-daniel-mueller
