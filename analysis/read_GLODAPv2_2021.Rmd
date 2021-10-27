@@ -401,7 +401,7 @@ dev.off()
 ```{r timeseries, fig.asp=1.5}
 
 GLODAP_time_series <- GLODAP %>% 
-  select(year, basin_AIP, depth, sal, temp,
+  select(year, basin_AIP, lat, depth, sal, temp,
          oxygen, aou, nitrate, silicate, phosphate,
          tco2, talk)
 
@@ -411,18 +411,20 @@ GLODAP_time_series <- GLODAP_time_series %>%
 GLODAP_time_series <- GLODAP_time_series %>% 
   pivot_longer(sal:talk,
                names_to = "parameter",
-               values_to = "value")
+               values_to = "value") %>% 
+  filter(!is.na(value),
+         !is.na(depth_grid))
 
 GLODAP_time_series %>%
   group_split(basin_AIP, depth_grid) %>%
-  # head(1) %>%
+  head(1) %>%
   map(
     ~ ggplot(data = .x,
-             aes(year, value)) +
+             aes(year, value, col = lat)) +
       geom_jitter(alpha = 0.1) +
+      scale_color_divergent() +
       facet_grid(parameter ~ depth_grid,
                  scales = "free_y") +
-      # geom_smooth() +
       labs(title = paste(
         "basin_AIP:",
         unique(.x$basin_AIP),
