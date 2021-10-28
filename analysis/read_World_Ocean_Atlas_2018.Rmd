@@ -284,10 +284,39 @@ basinmask_AIP <- basinmask_01 %>%
     basin = basin_AIP) %>%
   mutate(MLR_basins = "AIP")
 
+# Indian ocean lat bands test
+basinmask_IO_test_lat <- basinmask_01 %>%
+  mutate(
+    basin = case_when(
+      basin_AIP ==  "Indian" & lat > 0 ~ "Indian1",
+      basin_AIP ==  "Indian" & lat <= 0 & lat > -20 ~ "Indian2",
+      basin_AIP ==  "Indian" & lat <= -20 & lat > -40 ~ "Indian3",
+      basin_AIP ==  "Indian" & lat <= -40 & lat > -60 ~ "Indian4",
+      basin_AIP ==  "Indian" & lat <= -60 ~ "Indian5",
+      basin_AIP !=  "Indian" ~ "Atlanto-Pacific"
+    ),
+    MLR_basins = "IO_test_lat"
+  )
+
+# Indian ocean lon bands test
+basinmask_IO_test_lon <- basinmask_01 %>%
+  mutate(
+    basin = case_when(
+      basin_AIP ==  "Indian" & lon <= 50 & lon > 20 ~ "Indian1",
+      basin_AIP ==  "Indian" & lon <= 80 & lon > 50 ~ "Indian2",
+      basin_AIP ==  "Indian" & lon <= 110 & lon > 80 ~ "Indian3",
+      basin_AIP ==  "Indian" & lon > 110 ~ "Indian4",
+      basin_AIP !=  "Indian" ~ "Atlanto-Pacific"
+    ),
+    MLR_basins = "IO_test_lon"
+  )
+
+
 # join basin masks into one file
 basinmask_01 <- bind_rows(basinmask_01, basinmask_2, basinmask_5,
                           basinmask_SO, basinmask_SO_2, basinmask_SO_5,
-                          basinmask_SO_AIP, basinmask_AIP)
+                          basinmask_SO_AIP, basinmask_AIP,
+                          basinmask_IO_test_lat, basinmask_IO_test_lon)
 
 ```
 

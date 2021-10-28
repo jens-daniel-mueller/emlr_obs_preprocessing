@@ -150,11 +150,6 @@ GLODAP <- GLODAP %>%
 
 ```{r harmonize_variables}
 
-
-# select relevant columns
-GLODAP <- GLODAP %>%
-  select(cruise:talkqc)
-
 # create date column
 GLODAP <- GLODAP %>%
   mutate(date = ymd(paste(year, month, day))) %>%
@@ -171,24 +166,6 @@ GLODAP <- GLODAP  %>%
          lat = latitude) %>%
   mutate(lon = if_else(lon < 20, lon + 360, lon))
 
-# remove irrelevant columns
-GLODAP <- GLODAP %>%
-  select(-c(region,
-            month:minute,
-            maxsampdepth, bottle, sigma0:sigma4,
-            nitrite:nitritef))
-
-```
-
-
-## Subset tco2 data
-
-The vast majority of rows is removed due to missing `tco2` observations.
-
-```{r tco2_na_subset}
-
-GLODAP <- GLODAP %>% 
-  filter(!is.na(tco2))
 
 ```
 
@@ -218,15 +195,6 @@ GLODAP <- inner_join(GLODAP, basinmask)
 
 ```
 
-## Create clean observations grid
-
-```{r create_clean_obs_grid}
-
-GLODAP_obs_grid <- GLODAP %>% 
-  count(lat, lon)
-
-```
-
 ## Add row number
 
 ```{r add_row_number}
@@ -234,6 +202,79 @@ GLODAP_obs_grid <- GLODAP %>%
 GLODAP <- GLODAP  %>%  
   mutate(row_number = row_number()) %>% 
   relocate(row_number)
+
+```
+
+## Split CO2 and tracers
+
+```{r split_co2_tracer}
+
+# remove irrelevant columns
+GLODAP <- GLODAP %>%
+  select(-c(region,
+            month:minute,
+            maxsampdepth, bottle, sigma0:sigma4,
+            nitrite:nitritef))
+
+
+GLODAP_tracer <- GLODAP %>% 
+  select(row_number:gamma,
+         cfc11:sf6f,
+         basin_AIP)
+
+# select relevant columns
+GLODAP <- GLODAP %>%
+  select(row_number:talkqc,
+         basin_AIP)
+
+
+```
+
+
+## Subset tco2 data
+
+The vast majority of rows is removed due to missing `tco2` observations.
+
+```{r tco2_na_subset}
+
+GLODAP <- GLODAP %>% 
+  filter(!is.na(tco2))
+
+```
+
+## Subset tracer data
+
+Rows are removed if no tracer observation is available.
+
+```{r tracer_na_subset}
+
+GLODAP_tracer <- GLODAP_tracer %>%
+  filter(if_any(
+    c(
+      cfc11,
+      cfc12,
+      cfc113,
+      ccl4,
+      sf6,
+      pcfc11,
+      pcfc12,
+      pcfc113,
+      pccl4,
+      psf6
+    ),
+    ~ !is.na(.)
+  ))
+
+```
+
+## Create clean observations grid
+
+### CO2
+
+```{r create_clean_obs_grid}
+
+GLODAP_obs_grid <- GLODAP %>% 
+  count(lat, lon)
 
 ```
 
@@ -250,6 +291,28 @@ map +
 
 ```
 
+### Tracer
+
+```{r create_clean_obs_grid_tracer}
+
+GLODAP_obs_grid_tracer <- GLODAP_tracer %>% 
+  count(lat, lon)
+
+```
+
+
+```{r grid_by_year_tracer, fig.asp=3}
+
+GLODAP_grid_year_tracer <- GLODAP_tracer %>%
+  count(lat, lon, year)
+
+map +
+  geom_raster(data = GLODAP_grid_year_tracer,
+              aes(lon, lat)) +
+  facet_wrap(~ year, ncol=3)
+
+```
+
 
 ## Write GLODAP file
 
@@ -258,6 +321,11 @@ map +
 GLODAP  %>%  
   write_csv(paste(path_preprocessing,
                              "GLODAPv2.2021_preprocessed.csv",
+                             sep = ""))
+
+GLODAP_tracer  %>%  
+  write_csv(paste(path_preprocessing,
+                             "GLODAPv2.2021_preprocessed_tracer.csv",
                              sep = ""))
 
 ```
@@ -442,7 +510,7 @@ GLODAP_time_series %>%
 
 ## Comparison to GLODAP
 
-```{r CANYON-B, fig.asp=0.4, eval=FALSE}
+```{r CANYON-B, fig.asp=0.4}
 
 source("/net/kryo/work/uptools/co2_calculation/CANYON-B/CANYONB.R")
 
@@ -554,7 +622,7 @@ for (i_variable in variables) {
 
 ## Write Canyon-B file
 
-```{r write_Canyon-B_data_file, eval=FALSE}
+```{r write_Canyon-B_data_file}
 
 GLODAP_Can_B %>% 
   select(row_number,
