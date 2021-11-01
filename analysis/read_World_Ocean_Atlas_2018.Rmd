@@ -293,7 +293,8 @@ basinmask_IO_test_lat <- basinmask_01 %>%
       basin_AIP ==  "Indian" & lat <= -20 & lat > -40 ~ "Indian3",
       basin_AIP ==  "Indian" & lat <= -40 & lat > -60 ~ "Indian4",
       basin_AIP ==  "Indian" & lat <= -60 ~ "Indian5",
-      basin_AIP !=  "Indian" ~ "Atlanto-Pacific"
+      basin_AIP ==  "Atlantic" ~ "Atlantic",
+      basin_AIP ==  "Pacific" ~ "Pacific"
     ),
     MLR_basins = "IO_test_lat"
   )
@@ -306,7 +307,8 @@ basinmask_IO_test_lon <- basinmask_01 %>%
       basin_AIP ==  "Indian" & lon <= 80 & lon > 50 ~ "Indian2",
       basin_AIP ==  "Indian" & lon <= 110 & lon > 80 ~ "Indian3",
       basin_AIP ==  "Indian" & lon > 110 ~ "Indian4",
-      basin_AIP !=  "Indian" ~ "Atlanto-Pacific"
+      basin_AIP ==  "Atlantic" ~ "Atlantic",
+      basin_AIP ==  "Pacific" ~ "Pacific"
     ),
     MLR_basins = "IO_test_lon"
   )

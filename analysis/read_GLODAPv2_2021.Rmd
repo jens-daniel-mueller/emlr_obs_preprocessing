@@ -31,7 +31,7 @@ library(lubridate)
 
 Main data source for this project is `GLODAPv2.2021_Merged_Master_File.csv` downloaded from `https://www.ncei.noaa.gov/data/oceans/ncei/ocads/data/0237935/GLODAPv2.2021_Merged_Master_File.csv` on Aug 30, 2021.
 
-```{r read_GLODAPv2_2020_merged_master_file}
+```{r read_GLODAPv2_2021_merged_master_file}
 
 GLODAP <-
   read_csv(
@@ -47,6 +47,35 @@ GLODAP <-
 
 GLODAP <- GLODAP %>%
   rename_with(~str_remove(., 'G2'))
+
+```
+
+```{r read_GLODAPv2_2021_adjustment_table}
+
+GLODAP_adjustments <-
+  read_csv(
+    paste(
+      path_glodapv2_2021,
+      "GLODAPv2.2021_adjustments_last_updated_on_2021_05_10.csv",
+      sep = ""
+    ),
+    na = c("-666", "-777", "-888", "-999"),
+    skip = 2
+  )
+
+```
+
+```{r read_GLODAPv2_2021_expocodes_and_doi}
+
+GLODAP_expocodes <-
+  read_tsv(
+    paste(
+      path_glodapv2_2021,
+      "EXPOCODES.txt",
+      sep = ""
+    ),
+    col_names = c("cruise", "cruise_expocode")
+  )
 
 ```
 
@@ -313,20 +342,154 @@ map +
 
 ```
 
+## Adjustments
 
-## Write GLODAP file
+Typically, the reasons for multiple expocode entries of the same cruise in the adjustment table list are:
+
+1) The cruise adjustments are different for different station, i.e. station split (e.g. 316N19821201)
+
+-> How to merge? Based on first and last station? Cruise_ID not in GLODAP merged master file.
+
+2) The cruise adjustments are different for different legs (e.g. 316N19871123.6) but have been merged into one cruise (316N19871123) for the product
+
+-> How to merge? Based on first and last station?
+
+3) The cruise adjustments have been updated/changed through the versions, here always look for the most recent entry (see table below) (e.g. 320620180309)
+
+For the expocodes not listed in the expocode list the reason is that INDIGO has been splitted into three cruises: 35MF1985-1987 and the same holds for SAVE (316N1987 - 6legs). Further 49HH20011208 has been assigned wrongly and corrected to 49HH20011127.
+
+Remove expocode INDIGO and maintain only 35MF19850224.
+Remove expocode SAVE and maintain only 316N1987.
+
+
+```{r prepare_adjustments}
+
+GLODAP_adjustments <- GLODAP_adjustments %>%
+  select(cruise_expocode,
+         first_station, last_station,
+         version,
+         calculated_carbon_parameter,
+         ends_with("_adj")) %>% 
+  rename(talk_adj = alkalinity_adj)
+
+# Remove cruises INDIGO and SAVE
+
+GLODAP_adjustments <- 
+  GLODAP_adjustments %>% 
+  filter(!(cruise_expocode %in% c("INDIGO", "SAVE")))
+
+# correct expocode 49HH20011208 to 49HH20011127
+
+GLODAP_adjustments <- 
+  GLODAP_adjustments %>% 
+  mutate(cruise_expocode = if_else(
+    cruise_expocode == "49HH20011208",
+    "49HH20011127",
+    cruise_expocode
+  ))
+
+
+# select latest adjustment versions
+
+GLODAP_adjustments <- 
+  GLODAP_adjustments %>% 
+  group_by(cruise_expocode, first_station) %>% 
+  mutate(n = n(),
+         version_max = max(version)) %>%
+  ungroup() %>% 
+  filter(version == version_max | is.na(version)) %>% 
+  select(-c(version_max, version, n))
+
+# harmonize multiple cruise expocodes of 316N1987
+
+GLODAP_adjustments <- GLODAP_adjustments %>% 
+  # filter(str_detect(cruise_expocode, "\\.")) %>% 
+  mutate(cruise_expocode = str_split(cruise_expocode,
+                                     "\\.",
+                                     simplify = TRUE)[,1])
+
+# correct one wrong last_cruise label
+
+GLODAP_adjustments <- GLODAP_adjustments %>%
+  mutate(
+    last_station = if_else(
+      cruise_expocode == "318M20091121" &
+        first_station == 1,
+      127,
+      last_station
+    )
+  )
+
+# merge with expocode table
+GLODAP_adjustments <- full_join(GLODAP_adjustments, GLODAP_expocodes) %>% 
+  relocate(cruise)
+
+
+
+GLODAP_adjustments_NA_cruises <- 
+  GLODAP_adjustments %>% 
+  filter(is.na(cruise))
+
+GLODAP_adjustments_duplicated_cruises <- 
+  GLODAP_adjustments %>% 
+  group_by(cruise_expocode, cruise) %>% 
+  mutate(n = n()) %>%
+  ungroup() %>% 
+  filter(n != 1)
+
+
+GLODAP_adjustments %>% 
+  pivot_longer(salinity_adj:c13_adj,
+               names_to = "parameter",
+               values_to = "adjustment") %>% 
+  ggplot(aes(adjustment)) +
+  geom_histogram() +
+  scale_y_log10() +
+  facet_wrap(~ parameter, scales = "free_x")
+
+
+```
+
+
+
+# Write files
 
 ```{r write_clean_data_files}
 
-GLODAP  %>%  
+GLODAP  %>%
   write_csv(paste(path_preprocessing,
-                             "GLODAPv2.2021_preprocessed.csv",
-                             sep = ""))
+                  "GLODAPv2.2021_preprocessed.csv",
+                  sep = ""))
 
-GLODAP_tracer  %>%  
+GLODAP_tracer  %>%
+  write_csv(paste(
+    path_preprocessing,
+    "GLODAPv2.2021_preprocessed_tracer.csv",
+    sep = ""
+  ))
+
+GLODAP_adjustments  %>%
   write_csv(paste(path_preprocessing,
-                             "GLODAPv2.2021_preprocessed_tracer.csv",
-                             sep = ""))
+                  "GLODAPv2.2021_adustments.csv",
+                  sep = ""))
+
+GLODAP_adjustments_NA_cruises  %>%
+  select(cruise_expocode, cruise) %>%
+  write_csv(paste(
+    path_preprocessing,
+    "GLODAPv2.2021_adustments_NA_cruises.csv",
+    sep = ""
+  ))
+
+GLODAP_adjustments_duplicated_cruises  %>%
+  drop_na() %>%
+  write_csv(
+    paste(
+      path_preprocessing,
+      "GLODAPv2.2021_adustments_duplicated_cruises.csv",
+      sep = ""
+    )
+  )
 
 ```
 
