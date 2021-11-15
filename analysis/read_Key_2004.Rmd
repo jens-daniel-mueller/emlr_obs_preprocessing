@@ -1,0 +1,209 @@
+---
+title: "Anthropogenic CO2 from 1994 to 2007"
+author: "Jens Daniel Müller"
+date:  "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  workflowr::wflow_html:
+    number_sections: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+editor_options:
+  chunk_output_type: console
+---
+
+```{r parent, child = "/nfs/kryo/work/jenmueller/emlr_cant/utilities/setup_obs.Rmd"}
+# this chunk runs the code stored in setup.Rmd
+# if required, please refer to instructions given here:
+# https://jdblischak.github.io/workflowr/articles/wflow-07-common-code.html
+```
+
+```{r define_paths}
+path_key_2004    <- "/nfs/kryo/work/updata/glodapv1_1/GLODAP_gridded.data/"
+path_preprocessing  <- paste(path_root, "/observations/preprocessing/", sep = "")
+```
+
+```{r load_libraries}
+library(marelac)
+
+```
+
+
+# Data source
+
+- Gridded ocean interior fields by Key et al. (2004) downloaded in August 2020 from [NOAA/NCEI Ocean Carbon Data System (OCADS)](ftp://ftp.nodc.noaa.gov/pub/data.nodc/ncei/ocads/data/0001644/){target="_blank"}
+
+# Read files
+
+```{r read_key_2004}
+
+# read text files
+pCFC_12_data <-
+  read_csv(
+    paste(path_key_2004,
+          "CFC.data/pCFC-12.data.txt",
+          sep = ""),
+    col_names = FALSE,
+    na = "-999",
+    col_types = list(.default = "d")
+  )
+
+# read respective depth layers and convert to vector
+Depth_centers <-
+  read_file(paste(path_key_2004,
+                  "Depth.centers.txt",
+                  sep = ""))
+
+Depth_centers <- Depth_centers %>%
+  str_split(",") %>%
+  as_vector()
+
+# read respective latitudes and convert to vector
+Lat_centers <-
+  read_file(paste(path_key_2004, "Lat.centers.txt",
+                  sep = ""))
+
+Lat_centers <- Lat_centers %>%
+  str_split(",") %>%
+  as_vector()
+
+# read respective longitudes and convert to vector
+Long_centers <-
+  read_file(paste(path_key_2004, "Long.centers.txt",
+                  sep = ""))
+
+Long_centers <- Long_centers %>%
+  str_split(",") %>%
+  as_vector()
+
+# match lon, lat and depth vectors with Cant value file
+names(pCFC_12_data) <- Lat_centers
+
+Long_Depth <-
+  expand_grid(depth = Depth_centers, lon = Long_centers) %>%
+  mutate(lon = as.numeric(lon),
+         depth = as.numeric(depth))
+
+pCFC_12_3d <- bind_cols(pCFC_12_data, Long_Depth)
+
+# adjust file dimensions
+pCFC_12_3d <- pCFC_12_3d %>%
+  pivot_longer(1:180, names_to = "lat", values_to = "pCFC_12") %>%
+  mutate(lat = as.numeric(lat))
+
+pCFC_12_3d <- pCFC_12_3d %>%
+  drop_na()
+
+# harmonize coordinates
+pCFC_12_3d <- pCFC_12_3d %>%
+  mutate(lon = if_else(lon < 20, lon + 360, lon))
+
+rm(pCFC_12_data,
+   Long_Depth,
+   Depth_centers,
+   Lat_centers,
+   Long_centers)
+
+```
+
+# Apply basin mask
+
+```{r apply_basin_mask}
+
+# use only three basin to assign general basin mask
+# ie this is not specific to the MLR fitting
+basinmask <- basinmask %>% 
+  filter(MLR_basins == "2") %>% 
+  select(lat, lon, basin_AIP)
+
+pCFC_12_3d <- inner_join(pCFC_12_3d, basinmask)
+
+```
+
+
+# Calculation
+
+## Column inventory
+
+```{r calculate_inventory, eval=FALSE}
+
+pCFC_12_inv_layers <- m_pCFC_12_inv(pCFC_12_3d)
+
+pCFC_12_inv <- pCFC_12_inv_layers %>% 
+  filter(inv_depth == params_global$inventory_depth_standard)
+
+```
+
+## Zonal mean section
+
+```{r calculate_zonal_mean_section}
+
+pCFC_12_zonal <- m_zonal_mean_sd(pCFC_12_3d)
+
+```
+
+
+# Plots
+
+
+## Inventory map
+
+```{r cant_pos_inventory_maps, fig.asp=0.6, eval=FALSE}
+
+p_map_cant_inv(
+  df = pCFC_12_inv,
+  var = "pCFC_12_pos",
+  breaks = seq(0,max(pCFC_12_inv$pCFC_12_pos),5))
+
+```
+
+## Horizontal plane maps
+
+```{r cant_maps, fig.asp=0.6}
+
+p_map_climatology(
+  df = pCFC_12_3d,
+  var = "pCFC_12")
+
+```
+
+## Global section
+
+```{r cant_sections}
+
+p_section_global(
+  df = pCFC_12_3d,
+  var = "pCFC_12")
+
+```
+
+## Sections at regular longitudes
+
+```{r cant_sections_regular, fig.asp=2}
+
+p_section_climatology_regular(
+  df = pCFC_12_3d,
+  var = "pCFC_12")
+
+```
+
+## Write files
+
+```{r write_key_2004_cant_file}
+
+pCFC_12_3d %>%
+  write_csv(paste(path_preprocessing,
+                  "K04_pCFC_12_3d.csv", sep = ""))
+
+# pCFC_12_inv %>%
+#   write_csv(paste(path_preprocessing,
+#                   "K04_pCFC_12_inv.csv", sep = ""))
+
+pCFC_12_zonal %>%
+  write_csv(paste(path_preprocessing,
+                  "K04_pCFC_12_zonal.csv", sep = ""))
+
+
+```
+
+
