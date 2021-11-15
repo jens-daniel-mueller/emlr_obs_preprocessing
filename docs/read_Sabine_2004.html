@@ -14,13 +14,22 @@
 
 <title>Anthropogenic CO2 from 1994 to 2007</title>
 
-<script src="site_libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
@@ -28,8 +37,6 @@
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -53,11 +60,6 @@ div.section {
     </style>
 
 <style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -70,32 +72,7 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
 
 
 
@@ -105,10 +82,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -125,40 +98,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -186,7 +132,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -198,7 +144,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -209,10 +155,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -224,7 +183,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -359,7 +317,7 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -423,10 +381,10 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="read_GLODAPv2_2020.html">GLODAPv2_2020</a>
+      <a href="read_GLODAPv2_2021.html">GLODAPv2_2021</a>
     </li>
     <li>
-      <a href="read_GLODAPv2_2021.html">GLODAPv2_2021</a>
+      <a href="read_Key_2004.html">GLODAPv1_1_gridded</a>
     </li>
   </ul>
 </li>
@@ -472,11 +430,11 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 </ul>
@@ -486,7 +444,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Anthropogenic CO2 from 1994 to 2007</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">07 July, 2021</h4>
+<h4 class="date">15 November, 2021</h4>
 
 </div>
 
@@ -511,7 +469,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-07-07
+<strong>Last updated:</strong> 2021-11-15
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -602,16 +560,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree6312bd47a8a3ae4b77c1e3359246324f3f7df734targetblank6312bd4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/6312bd47a8a3ae4b77c1e3359246324f3f7df734" target="_blank">6312bd4</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree651fc9a71be54016821094dc6bd7c5eaa831f65etargetblank651fc9aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/651fc9a71be54016821094dc6bd7c5eaa831f65e" target="_blank">651fc9a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree6312bd47a8a3ae4b77c1e3359246324f3f7df734targetblank6312bd4a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree651fc9a71be54016821094dc6bd7c5eaa831f65etargetblank651fc9aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/6312bd47a8a3ae4b77c1e3359246324f3f7df734" target="_blank">6312bd4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/651fc9a71be54016821094dc6bd7c5eaa831f65e" target="_blank">651fc9a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -622,11 +580,12 @@ Ignored files:
     Ignored:    .Rproj.user/
     Ignored:    data/
 
+Untracked files:
+    Untracked:  code/read_GLODAPv2_2020.Rmd
+
 Unstaged changes:
-    Modified:   README.md
     Modified:   analysis/_site.yml
-    Deleted:    analysis/read_Gruber_2019_Cant.Rmd
-    Deleted:    analysis/read_Sabine_2004_Cant.Rmd
+    Deleted:    analysis/read_GLODAPv2_2020.Rmd
     Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
@@ -666,6 +625,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/e49875a0d0fbae4d5fa6b2b11ee2a781388457e1/docs/read_Sabine_2004.html" target="_blank">e49875a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-07-07
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1135,11 +1111,11 @@ cant_inv_budget &lt;- cant_inv %&gt;%
   mutate(total = Atlantic + Indian + Pacific)
 
 cant_inv_budget</code></pre>
-<pre><code># A tibble: 2 x 5
+<pre><code>[38;5;246m# A tibble: 2 × 5[39m
   estimate Atlantic Indian Pacific total
-  &lt;chr&gt;       &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
-1 G19          11      7.1    13.4  31.5
-2 S04          39.6   23.4    41.4 104. </code></pre>
+  [3m[38;5;246m&lt;chr&gt;[39m[23m       [3m[38;5;246m&lt;dbl&gt;[39m[23m  [3m[38;5;246m&lt;dbl&gt;[39m[23m   [3m[38;5;246m&lt;dbl&gt;[39m[23m [3m[38;5;246m&lt;dbl&gt;[39m[23m
+[38;5;250m1[39m G19          11      7.1    13.4  31.5
+[38;5;250m2[39m S04          39.6   23.4    41.4 104. </code></pre>
 </div>
 <div id="relative-inventories" class="section level2" number="7.4">
 <h2 number="7.4"><span class="header-section-number">7.4</span> Relative inventories</h2>
@@ -1294,36 +1270,37 @@ other attached packages:
  [1] marelac_2.1.10  shape_1.4.5     ggforce_0.3.3   metR_0.9.0     
  [5] scico_1.2.0     patchwork_1.1.1 collapse_1.5.0  forcats_0.5.0  
  [9] stringr_1.4.0   dplyr_1.0.5     purrr_0.3.4     readr_1.4.0    
-[13] tidyr_1.1.2     tibble_3.0.4    ggplot2_3.3.3   tidyverse_1.3.0
+[13] tidyr_1.1.3     tibble_3.1.3    ggplot2_3.3.5   tidyverse_1.3.0
 [17] workflowr_1.6.2
 
 loaded via a namespace (and not attached):
  [1] fs_1.5.0                 lubridate_1.7.9          gsw_1.0-5               
  [4] RColorBrewer_1.1-2       httr_1.4.2               rprojroot_2.0.2         
- [7] tools_4.0.3              backports_1.1.10         utf8_1.1.4              
-[10] R6_2.5.0                 DBI_1.1.0                colorspace_1.4-1        
-[13] withr_2.3.0              tidyselect_1.1.0         compiler_4.0.3          
-[16] git2r_0.27.1             cli_2.1.0                rvest_0.3.6             
-[19] xml2_1.3.2               isoband_0.2.2            labeling_0.4.2          
-[22] scales_1.1.1             checkmate_2.0.0          digest_0.6.27           
-[25] rmarkdown_2.5            oce_1.2-0                pkgconfig_2.0.3         
-[28] htmltools_0.5.0          dbplyr_1.4.4             rlang_0.4.10            
-[31] readxl_1.3.1             rstudioapi_0.11          farver_2.0.3            
-[34] generics_0.0.2           jsonlite_1.7.1           magrittr_1.5            
-[37] Matrix_1.2-18            Rcpp_1.0.5               munsell_0.5.0           
-[40] fansi_0.4.1              lifecycle_1.0.0          stringi_1.5.3           
-[43] whisker_0.4              yaml_2.2.1               MASS_7.3-53             
-[46] grid_4.0.3               blob_1.2.1               parallel_4.0.3          
-[49] promises_1.1.1           crayon_1.3.4             lattice_0.20-41         
-[52] haven_2.3.1              hms_0.5.3                seacarb_3.2.14          
-[55] knitr_1.30               pillar_1.4.7             reprex_0.3.0            
-[58] glue_1.4.2               evaluate_0.14            RcppArmadillo_0.10.1.2.0
-[61] data.table_1.13.2        modelr_0.1.8             vctrs_0.3.5             
-[64] tweenr_1.0.2             httpuv_1.5.4             testthat_2.3.2          
-[67] cellranger_1.1.0         gtable_0.3.0             polyclip_1.10-0         
-[70] assertthat_0.2.1         xfun_0.18                broom_0.7.5             
-[73] RcppEigen_0.3.3.7.0      later_1.1.0.1            viridisLite_0.3.0       
-[76] ellipsis_0.3.1          </code></pre>
+ [7] tools_4.0.3              backports_1.1.10         bslib_0.2.5.1           
+[10] utf8_1.1.4               R6_2.5.0                 DBI_1.1.0               
+[13] colorspace_2.0-2         withr_2.3.0              tidyselect_1.1.0        
+[16] compiler_4.0.3           git2r_0.27.1             cli_3.0.1               
+[19] rvest_0.3.6              xml2_1.3.2               isoband_0.2.2           
+[22] labeling_0.4.2           sass_0.4.0               scales_1.1.1            
+[25] checkmate_2.0.0          digest_0.6.27            rmarkdown_2.10          
+[28] oce_1.2-0                pkgconfig_2.0.3          htmltools_0.5.1.1       
+[31] highr_0.8                dbplyr_1.4.4             rlang_0.4.11            
+[34] readxl_1.3.1             rstudioapi_0.13          jquerylib_0.1.4         
+[37] generics_0.1.0           farver_2.0.3             jsonlite_1.7.1          
+[40] magrittr_1.5             Matrix_1.2-18            Rcpp_1.0.5              
+[43] munsell_0.5.0            fansi_0.4.1              lifecycle_1.0.0         
+[46] stringi_1.5.3            whisker_0.4              yaml_2.2.1              
+[49] MASS_7.3-53              grid_4.0.3               blob_1.2.1              
+[52] parallel_4.0.3           promises_1.1.1           crayon_1.3.4            
+[55] lattice_0.20-41          haven_2.3.1              hms_0.5.3               
+[58] seacarb_3.2.14           knitr_1.33               pillar_1.6.2            
+[61] reprex_0.3.0             glue_1.4.2               evaluate_0.14           
+[64] RcppArmadillo_0.10.1.2.0 data.table_1.14.0        modelr_0.1.8            
+[67] vctrs_0.3.8              tweenr_1.0.2             httpuv_1.5.4            
+[70] testthat_2.3.2           cellranger_1.1.0         gtable_0.3.0            
+[73] polyclip_1.10-0          assertthat_0.2.1         xfun_0.25               
+[76] broom_0.7.9              RcppEigen_0.3.3.7.0      later_1.2.0             
+[79] viridisLite_0.3.0        ellipsis_0.3.2          </code></pre>
 </div>
 </div>
 </div>
@@ -1371,7 +1348,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
@@ -1385,6 +1362,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')
