@@ -560,16 +560,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree7acd48c0d206dc02a1461df8e7ab9c3b0e96df0atargetblank7acd48ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/7acd48c0d206dc02a1461df8e7ab9c3b0e96df0a" target="_blank">7acd48c</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree1839007067a1ee758aa422fe9b9d162de2abeae2targetblank1839007a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/1839007067a1ee758aa422fe9b9d162de2abeae2" target="_blank">1839007</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree7acd48c0d206dc02a1461df8e7ab9c3b0e96df0atargetblank7acd48ca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree1839007067a1ee758aa422fe9b9d162de2abeae2targetblank1839007a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/7acd48c0d206dc02a1461df8e7ab9c3b0e96df0a" target="_blank">7acd48c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/1839007067a1ee758aa422fe9b9d162de2abeae2" target="_blank">1839007</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -620,6 +620,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/1839007067a1ee758aa422fe9b9d162de2abeae2/analysis/read_GLODAPv2_2021.Rmd" target="_blank">1839007</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+<td>
+delta EW crossover values determined
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/f30883cc9219ab229a5da6f159a6173e233800f4/docs/read_GLODAPv2_2021.html" target="_blank">f30883c</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1791,27 +1825,27 @@ jens-daniel-mueller
 <h1 number="3"><span class="header-section-number">3</span> Crossover checks</h1>
 <div id="indian-n-s" class="section level2" number="3.1">
 <h2 number="3.1"><span class="header-section-number">3.1</span> Indian N-S</h2>
-<pre class="r"><code>Indian_cruises_NS &lt;- c(249, 250,
+<pre class="r"><code>IO_NS_cruises &lt;- c(249, 250,
                        352, 353,
                        1046,
                        3035)
 
-GLODAP_grid_Indian &lt;- GLODAP %&gt;% 
+IO_NS_GLODAP_grid &lt;- GLODAP %&gt;% 
   filter(basin_AIP == &quot;Indian&quot;,
          lon &gt; 70,
          lon &lt; 100,
-         cruise %in% Indian_cruises_NS
+         cruise %in% IO_NS_cruises
          ) %&gt;%
   mutate(cruise = as.factor(cruise)) %&gt;% 
   distinct(lon, lat, cruise, year = as.factor(year(date)))
 
 map +
-  geom_tile(data = GLODAP_grid_Indian,
+  geom_tile(data = IO_NS_GLODAP_grid,
             aes(lon, lat, fill = year)) +
   facet_wrap(~ year)</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/Indian_NS_data-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_data-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>IO_NS &lt;- GLODAP %&gt;% 
-  filter(cruise %in% Indian_cruises_NS)
+  filter(cruise %in% IO_NS_cruises)
 
 IO_NS &lt;- IO_NS %&gt;%
   mutate(
@@ -1849,7 +1883,7 @@ map +
               distinct(lon, lat, year),
             aes(lon, lat, fill = year)) +
   facet_wrap(~ year, ncol = 2)</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/Indian_NS_data-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_data-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>IO_NS &lt;- IO_NS %&gt;% 
   pivot_longer(temp:cstar_phosphate,
                names_to = &quot;parameter&quot;,
@@ -2627,24 +2661,283 @@ IO_NS_grid_offset %&gt;%
   )</code></pre>
 <pre><code>[[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles_gridded_offset-1">
+Past versions of IO_NS_profiles_gridded_offset-1.png
+</button>
+</p>
+<div id="fig-IO_NS_profiles_gridded_offset-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f30883cc9219ab229a5da6f159a6173e233800f4/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-1.png" target="_blank">f30883c</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[2]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles_gridded_offset-2">
+Past versions of IO_NS_profiles_gridded_offset-2.png
+</button>
+</p>
+<div id="fig-IO_NS_profiles_gridded_offset-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f30883cc9219ab229a5da6f159a6173e233800f4/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-2.png" target="_blank">f30883c</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[3]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles_gridded_offset-3">
+Past versions of IO_NS_profiles_gridded_offset-3.png
+</button>
+</p>
+<div id="fig-IO_NS_profiles_gridded_offset-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f30883cc9219ab229a5da6f159a6173e233800f4/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-3.png" target="_blank">f30883c</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[4]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles_gridded_offset-4">
+Past versions of IO_NS_profiles_gridded_offset-4.png
+</button>
+</p>
+<div id="fig-IO_NS_profiles_gridded_offset-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f30883cc9219ab229a5da6f159a6173e233800f4/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-4.png" target="_blank">f30883c</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[5]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles_gridded_offset-5">
+Past versions of IO_NS_profiles_gridded_offset-5.png
+</button>
+</p>
+<div id="fig-IO_NS_profiles_gridded_offset-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f30883cc9219ab229a5da6f159a6173e233800f4/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-5.png" target="_blank">f30883c</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[6]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles_gridded_offset-6">
+Past versions of IO_NS_profiles_gridded_offset-6.png
+</button>
+</p>
+<div id="fig-IO_NS_profiles_gridded_offset-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f30883cc9219ab229a5da6f159a6173e233800f4/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-6.png" target="_blank">f30883c</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[7]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles_gridded_offset-7">
+Past versions of IO_NS_profiles_gridded_offset-7.png
+</button>
+</p>
+<div id="fig-IO_NS_profiles_gridded_offset-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f30883cc9219ab229a5da6f159a6173e233800f4/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-7.png" target="_blank">f30883c</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="mean-offset" class="section level3" number="3.1.4">
 <h3 number="3.1.4"><span class="header-section-number">3.1.4</span> Mean offset</h3>
@@ -2656,6 +2949,7 @@ IO_NS_grid_offset %&gt;%
   ungroup()
 
 IO_NS_grid_offset_mean %&gt;% 
+  filter(str_detect(parameter, &quot;cstar&quot;)) %&gt;% 
   ggplot(aes(delta_year, mean_delta_value,
              ymin = mean_delta_value - sd_delta_value,
              ymax = mean_delta_value + sd_delta_value)) +
@@ -2663,6 +2957,283 @@ IO_NS_grid_offset_mean %&gt;%
   geom_pointrange() +
   facet_wrap(~ parameter)</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_mean_offset-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_mean_offset-1">
+Past versions of IO_NS_mean_offset-1.png
+</button>
+</p>
+<div id="fig-IO_NS_mean_offset-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f30883cc9219ab229a5da6f159a6173e233800f4/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_mean_offset-1.png" target="_blank">f30883c</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>IO_NS_grid_offset_mean %&gt;% 
+  filter(!(str_detect(parameter, &quot;cstar&quot;))) %&gt;% 
+  ggplot(aes(delta_year, mean_delta_value,
+             ymin = mean_delta_value - sd_delta_value,
+             ymax = mean_delta_value + sd_delta_value)) +
+  geom_hline(yintercept = 0) +
+  geom_pointrange() +
+  facet_wrap(~ parameter, scales = &quot;free_y&quot;)</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_mean_offset-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="indian-e-w" class="section level2" number="3.2">
+<h2 number="3.2"><span class="header-section-number">3.2</span> Indian E-W</h2>
+<pre class="r"><code>IO_EW_cruises &lt;- c(252, 488)
+
+IO_EW_GLODAP_grid &lt;- GLODAP %&gt;% 
+  filter(basin_AIP == &quot;Indian&quot;,
+         lat &gt; -25,
+         lat &lt; -15,
+         cruise %in% IO_EW_cruises
+         ) %&gt;%
+  mutate(cruise = as.factor(cruise)) %&gt;% 
+  distinct(lon, lat, cruise, year = as.factor(year(date)))
+
+map +
+  geom_tile(data = IO_EW_GLODAP_grid,
+            aes(lon, lat, fill = year)) +
+  facet_wrap(~ year)</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_data-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>IO_EW &lt;- GLODAP %&gt;% 
+  filter(cruise %in% IO_EW_cruises)
+
+IO_EW &lt;- IO_EW %&gt;%
+  mutate(
+    cstar = tco2  - (117 * phosphate)  - 0.5 * (talk - (16 * phosphate)),
+    cstar_tco2 = tco2,
+    cstar_talk = -0.5 * talk,
+    cstar_phosphate = -117 * phosphate + 16 * 0.5 * phosphate
+  )
+
+
+IO_EW &lt;- IO_EW %&gt;%
+  select(year,
+         lon, lat, depth,
+         cruise, station, cast,
+         temp, sal, gamma,
+         starts_with(&quot;cstar&quot;))
+
+
+IO_EW &lt;- IO_EW %&gt;% 
+  mutate(year = if_else(year == 2003, 2004, year),
+         year = as.factor(as.character(year)))
+
+IO_EW &lt;- IO_EW %&gt;% 
+  filter(lon &gt; 48)
+
+IO_EW &lt;- IO_EW %&gt;% 
+  filter(depth &gt; 1500,
+         depth &lt; 4000)
+
+map +
+  geom_tile(data = IO_EW %&gt;% 
+              distinct(lon, lat, year),
+            aes(lon, lat, fill = year)) +
+  # geom_vline(xintercept = 48) +
+  facet_wrap(~ year, ncol = 2)</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_data-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>IO_EW &lt;- IO_EW %&gt;% 
+  pivot_longer(temp:cstar_phosphate,
+               names_to = &quot;parameter&quot;,
+               values_to = &quot;value&quot;)</code></pre>
+<div id="section-1" class="section level3" number="3.2.1">
+<h3 number="3.2.1"><span class="header-section-number">3.2.1</span> Section</h3>
+<pre class="r"><code>IO_EW %&gt;% 
+  group_split(parameter) %&gt;% 
+  # head(1) %&gt;%
+  map(
+    ~ ggplot(data = .x,
+             aes(lon , depth, col = value)) +
+  geom_point() +
+  scale_color_viridis_c() +
+  scale_y_reverse() +
+  facet_grid(year ~ parameter)
+  )</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[4]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[5]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[6]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[7]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-7.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="profiles-absolute-1" class="section level3" number="3.2.2">
+<h3 number="3.2.2"><span class="header-section-number">3.2.2</span> Profiles, absolute</h3>
+<pre class="r"><code>IO_EW %&gt;%
+  arrange(depth) %&gt;% 
+  group_split(parameter) %&gt;%
+  # head(1) %&gt;%
+  map(
+    ~ ggplot(data = .x,
+             aes(
+               value , depth, fill = year,
+             )) +
+      geom_point(shape = 21) +
+      scale_fill_scico_d(direction = -1) +
+      scale_y_reverse() +
+      labs(x = unique(.x$parameter)) +
+      facet_wrap( ~ lon, ncol = 3)
+  )</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[4]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[5]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[6]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[7]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>IO_EW_grid &lt;- IO_EW %&gt;% 
+  select(lon, lat, depth, year, parameter, value) %&gt;% 
+  mutate(depth = as.numeric(as.character(cut(depth,
+                     seq(0,1e4, 500), 
+                     seq(250,1e4,500))))) %&gt;% 
+  group_by(lon, depth, year, parameter) %&gt;% 
+  summarise(value = mean(value, na.rm=TRUE)) %&gt;% 
+  ungroup()
+
+
+# IO_EW_grid %&gt;%
+#   group_split(parameter) %&gt;%
+#   # head(1) %&gt;%
+#   map(
+#     ~ ggplot(data = .x,
+#              aes(
+#                value , depth, fill = year,
+#              )) +
+#       geom_point(shape = 21) +
+#       scale_fill_scico_d(direction = -1) +
+#       scale_y_reverse() +
+#       labs(x = unique(.x$parameter)) +
+#       facet_wrap( ~ lon, ncol = 3)
+#   )</code></pre>
+</div>
+<div id="profiles-offset-1" class="section level3" number="3.2.3">
+<h3 number="3.2.3"><span class="header-section-number">3.2.3</span> Profiles, offset</h3>
+<pre class="r"><code>IO_EW_grid_offset &lt;- IO_EW_grid %&gt;% 
+  arrange(year) %&gt;% 
+  group_by(lon, depth, parameter) %&gt;% 
+  mutate(delta_value = value - lag(value),
+         delta_year = paste(lag(year), year, sep = &quot;-&quot;)) %&gt;% 
+  ungroup() %&gt;% 
+  drop_na()
+
+IO_EW_grid_offset %&gt;%
+  group_split(parameter) %&gt;%
+  # head(1) %&gt;%
+  map(
+    ~ ggplot(data = .x,
+             aes(
+               delta_value , depth, fill = delta_year,
+             )) +
+      geom_vline(xintercept = 0) +
+      geom_point(shape = 21) +
+      scale_fill_scico_d(direction = -1) +
+      scale_y_reverse() +
+      labs(x = unique(.x$parameter)) +
+      facet_wrap( ~ lon, ncol = 3)
+  )</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[4]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[5]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[6]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[7]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-7.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="mean-offset-1" class="section level3" number="3.2.4">
+<h3 number="3.2.4"><span class="header-section-number">3.2.4</span> Mean offset</h3>
+<pre class="r"><code>IO_EW_grid_offset_mean &lt;-
+  IO_EW_grid_offset %&gt;%
+  group_by(parameter, delta_year) %&gt;%
+  summarise(mean_delta_value = mean(delta_value),
+            sd_delta_value = sd(delta_value)) %&gt;%
+  ungroup()
+
+IO_EW_grid_offset_mean %&gt;% 
+  filter(str_detect(parameter, &quot;cstar&quot;)) %&gt;% 
+  ggplot(aes(delta_year, mean_delta_value,
+             ymin = mean_delta_value - sd_delta_value,
+             ymax = mean_delta_value + sd_delta_value)) +
+  geom_hline(yintercept = 0) +
+  geom_pointrange() +
+  facet_wrap(~ parameter)</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_mean_offset-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>IO_EW_grid_offset_mean %&gt;% 
+  filter(!(str_detect(parameter, &quot;cstar&quot;))) %&gt;% 
+  ggplot(aes(delta_year, mean_delta_value,
+             ymin = mean_delta_value - sd_delta_value,
+             ymax = mean_delta_value + sd_delta_value)) +
+  geom_hline(yintercept = 0) +
+  geom_pointrange() +
+  facet_wrap(~ parameter, scales = &quot;free_y&quot;)</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_mean_offset-2.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 </div>
