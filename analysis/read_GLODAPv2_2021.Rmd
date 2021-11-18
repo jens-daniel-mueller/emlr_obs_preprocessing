@@ -455,30 +455,30 @@ GLODAP_adjustments %>%
 
 ## Indian N-S
 
-```{r Indian_NS_data}
+```{r IO_NS_data}
 
-Indian_cruises_NS <- c(249, 250,
+IO_NS_cruises <- c(249, 250,
                        352, 353,
                        1046,
                        3035)
 
-GLODAP_grid_Indian <- GLODAP %>% 
+IO_NS_GLODAP_grid <- GLODAP %>% 
   filter(basin_AIP == "Indian",
          lon > 70,
          lon < 100,
-         cruise %in% Indian_cruises_NS
+         cruise %in% IO_NS_cruises
          ) %>%
   mutate(cruise = as.factor(cruise)) %>% 
   distinct(lon, lat, cruise, year = as.factor(year(date)))
 
 map +
-  geom_tile(data = GLODAP_grid_Indian,
+  geom_tile(data = IO_NS_GLODAP_grid,
             aes(lon, lat, fill = year)) +
   facet_wrap(~ year)
 
 
 IO_NS <- GLODAP %>% 
-  filter(cruise %in% Indian_cruises_NS)
+  filter(cruise %in% IO_NS_cruises)
 
 IO_NS <- IO_NS %>%
   mutate(
@@ -639,12 +639,224 @@ IO_NS_grid_offset_mean <-
   ungroup()
 
 IO_NS_grid_offset_mean %>% 
+  filter(str_detect(parameter, "cstar")) %>% 
   ggplot(aes(delta_year, mean_delta_value,
              ymin = mean_delta_value - sd_delta_value,
              ymax = mean_delta_value + sd_delta_value)) +
   geom_hline(yintercept = 0) +
   geom_pointrange() +
   facet_wrap(~ parameter)
+
+IO_NS_grid_offset_mean %>% 
+  filter(!(str_detect(parameter, "cstar"))) %>% 
+  ggplot(aes(delta_year, mean_delta_value,
+             ymin = mean_delta_value - sd_delta_value,
+             ymax = mean_delta_value + sd_delta_value)) +
+  geom_hline(yintercept = 0) +
+  geom_pointrange() +
+  facet_wrap(~ parameter, scales = "free_y")
+
+
+```
+
+
+## Indian E-W
+
+```{r IO_EW_data}
+
+IO_EW_cruises <- c(252, 488)
+
+IO_EW_GLODAP_grid <- GLODAP %>% 
+  filter(basin_AIP == "Indian",
+         lat > -25,
+         lat < -15,
+         cruise %in% IO_EW_cruises
+         ) %>%
+  mutate(cruise = as.factor(cruise)) %>% 
+  distinct(lon, lat, cruise, year = as.factor(year(date)))
+
+map +
+  geom_tile(data = IO_EW_GLODAP_grid,
+            aes(lon, lat, fill = year)) +
+  facet_wrap(~ year)
+
+
+IO_EW <- GLODAP %>% 
+  filter(cruise %in% IO_EW_cruises)
+
+IO_EW <- IO_EW %>%
+  mutate(
+    cstar = tco2  - (117 * phosphate)  - 0.5 * (talk - (16 * phosphate)),
+    cstar_tco2 = tco2,
+    cstar_talk = -0.5 * talk,
+    cstar_phosphate = -117 * phosphate + 16 * 0.5 * phosphate
+  )
+
+
+IO_EW <- IO_EW %>%
+  select(year,
+         lon, lat, depth,
+         cruise, station, cast,
+         temp, sal, gamma,
+         starts_with("cstar"))
+
+
+IO_EW <- IO_EW %>% 
+  mutate(year = if_else(year == 2003, 2004, year),
+         year = as.factor(as.character(year)))
+
+IO_EW <- IO_EW %>% 
+  filter(lon > 48)
+
+IO_EW <- IO_EW %>% 
+  filter(depth > 1500,
+         depth < 4000)
+
+map +
+  geom_tile(data = IO_EW %>% 
+              distinct(lon, lat, year),
+            aes(lon, lat, fill = year)) +
+  # geom_vline(xintercept = 48) +
+  facet_wrap(~ year, ncol = 2)
+
+
+IO_EW <- IO_EW %>% 
+  pivot_longer(temp:cstar_phosphate,
+               names_to = "parameter",
+               values_to = "value")
+
+```
+
+### Section
+
+```{r IO_EW_sections, fig.asp=1}
+
+
+IO_EW %>% 
+  group_split(parameter) %>% 
+  # head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(lon , depth, col = value)) +
+  geom_point() +
+  scale_color_viridis_c() +
+  scale_y_reverse() +
+  facet_grid(year ~ parameter)
+  )
+
+
+```
+
+### Profiles, absolute
+
+```{r IO_EW_profiles, fig.asp=3}
+
+IO_EW %>%
+  arrange(depth) %>% 
+  group_split(parameter) %>%
+  # head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(
+               value , depth, fill = year,
+             )) +
+      geom_point(shape = 21) +
+      scale_fill_scico_d(direction = -1) +
+      scale_y_reverse() +
+      labs(x = unique(.x$parameter)) +
+      facet_wrap( ~ lon, ncol = 3)
+  )
+
+```
+
+```{r IO_EW_profiles_gridded, fig.asp=2}
+
+IO_EW_grid <- IO_EW %>% 
+  select(lon, lat, depth, year, parameter, value) %>% 
+  mutate(depth = as.numeric(as.character(cut(depth,
+                     seq(0,1e4, 500), 
+                     seq(250,1e4,500))))) %>% 
+  group_by(lon, depth, year, parameter) %>% 
+  summarise(value = mean(value, na.rm=TRUE)) %>% 
+  ungroup()
+
+
+# IO_EW_grid %>%
+#   group_split(parameter) %>%
+#   # head(1) %>%
+#   map(
+#     ~ ggplot(data = .x,
+#              aes(
+#                value , depth, fill = year,
+#              )) +
+#       geom_point(shape = 21) +
+#       scale_fill_scico_d(direction = -1) +
+#       scale_y_reverse() +
+#       labs(x = unique(.x$parameter)) +
+#       facet_wrap( ~ lon, ncol = 3)
+#   )
+
+
+```
+
+### Profiles, offset
+
+```{r IO_EW_profiles_gridded_offset, fig.asp=3}
+
+IO_EW_grid_offset <- IO_EW_grid %>% 
+  arrange(year) %>% 
+  group_by(lon, depth, parameter) %>% 
+  mutate(delta_value = value - lag(value),
+         delta_year = paste(lag(year), year, sep = "-")) %>% 
+  ungroup() %>% 
+  drop_na()
+
+IO_EW_grid_offset %>%
+  group_split(parameter) %>%
+  # head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(
+               delta_value , depth, fill = delta_year,
+             )) +
+      geom_vline(xintercept = 0) +
+      geom_point(shape = 21) +
+      scale_fill_scico_d(direction = -1) +
+      scale_y_reverse() +
+      labs(x = unique(.x$parameter)) +
+      facet_wrap( ~ lon, ncol = 3)
+  )
+
+```
+
+### Mean offset
+
+```{r IO_EW_mean_offset}
+
+IO_EW_grid_offset_mean <-
+  IO_EW_grid_offset %>%
+  group_by(parameter, delta_year) %>%
+  summarise(mean_delta_value = mean(delta_value),
+            sd_delta_value = sd(delta_value)) %>%
+  ungroup()
+
+IO_EW_grid_offset_mean %>% 
+  filter(str_detect(parameter, "cstar")) %>% 
+  ggplot(aes(delta_year, mean_delta_value,
+             ymin = mean_delta_value - sd_delta_value,
+             ymax = mean_delta_value + sd_delta_value)) +
+  geom_hline(yintercept = 0) +
+  geom_pointrange() +
+  facet_wrap(~ parameter)
+
+IO_EW_grid_offset_mean %>% 
+  filter(!(str_detect(parameter, "cstar"))) %>% 
+  ggplot(aes(delta_year, mean_delta_value,
+             ymin = mean_delta_value - sd_delta_value,
+             ymax = mean_delta_value + sd_delta_value)) +
+  geom_hline(yintercept = 0) +
+  geom_pointrange() +
+  facet_wrap(~ parameter, scales = "free_y")
 
 
 ```
