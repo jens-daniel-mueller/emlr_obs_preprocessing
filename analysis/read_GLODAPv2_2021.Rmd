@@ -536,7 +536,7 @@ IO_NS %>%
 
 ```
 
-```{r IO_NS_profils, fig.asp=2}
+```{r IO_NS_profiles, fig.asp=2}
 
 
 IO_NS %>%
@@ -557,35 +557,69 @@ IO_NS %>%
 
 ```
 
-```{r gridded_section, fig.asp=1}
+```{r gridded_profile_offset, fig.asp=2}
 
 IO_NS_grid <- IO_NS %>% 
   select(lat, lon, depth, year, parameter, value) %>% 
-  mutate(basin_AIP = "Indian") %>% 
-  group_by(year, parameter) %>%
-  nest() %>%
-  mutate(zonal = map(.x = data, ~m_zonal_mean_sd_bottle(.x))) %>%
-  select(-data) %>%
-  unnest(zonal)
+  mutate(depth = as.numeric(as.character(cut(depth,
+                     seq(0,1e4, 500), 
+                     seq(250,1e4,500))))) %>% 
+  group_by(lat, depth, year, parameter) %>% 
+  summarise(value = mean(value, na.rm=TRUE)) %>% 
+  ungroup()
 
 
 IO_NS_grid %>%
-  group_by(parameter) %>%
-  group_split() %>%
-  head(1) %>%
+  group_split(parameter) %>%
+  # head(1) %>%
   map(
     ~ ggplot(data = .x,
-             aes(lat , depth, fill = value_mean)) +
-      geom_raster() +
-      scale_fill_viridis_c(name = unique(.x$parameter)) +
+             aes(
+               value , depth, fill = year,
+             )) +
+      geom_point(shape = 21) +
+      scale_fill_scico_d(direction = -1) +
       scale_y_reverse() +
-      coord_cartesian(expand = 0) +
-      facet_grid(year ~ .)
+      labs(x = unique(.x$parameter)) +
+      facet_wrap( ~ lat, ncol = 3)
   )
 
 
 ```
 
+```{r gridded_section_offset}
+
+IO_NS_grid_offset <- IO_NS_grid %>% 
+  arrange(year) %>% 
+  group_by(lat, depth, parameter) %>% 
+  mutate(delta_value = value - lag(value),
+         delta_year = paste(lag(year), year, sep = "-")) %>% 
+  ungroup() %>% 
+  drop_na()
+
+IO_NS_grid_offset %>%
+  group_split(parameter) %>%
+  head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(
+               delta_value , depth, fill = delta_year,
+             )) +
+      geom_vline(xintercept = 0) +
+      geom_point(shape = 21) +
+      scale_fill_scico_d(direction = -1) +
+      scale_y_reverse() +
+      labs(x = unique(.x$parameter)) +
+      facet_wrap( ~ lat, ncol = 3)
+  )
+
+IO_NS_grid_offset %>% 
+  group_by(parameter,delta_year) %>% 
+  summarise(mean_delta_value = mean(delta_value)) %>% 
+  ungroup() %>% 
+  kableExtra::kbl()
+
+```
 
 
 ### Change
