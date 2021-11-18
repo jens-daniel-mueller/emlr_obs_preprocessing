@@ -450,11 +450,258 @@ GLODAP_adjustments %>%
 
 ```
 
+# Crossover checks
+
+## Indian
+
+## NS cruise
+
+### Absolute
+
+```{r cfc12_Indian_NS}
+
+Indian_cruises_NS <- c(#82,
+  249, 250,
+  352, 353,
+  1046,
+  3035)
+
+GLODAP_grid_Indian <- GLODAP %>% 
+  filter(basin_AIP == "Indian",
+         lon > 70,
+         lon < 100,
+         cruise %in% Indian_cruises_NS
+         ) %>%
+  mutate(cruise = as.factor(cruise)) %>% 
+  distinct(lon, lat, cruise, year = as.factor(year(date)))
+
+map +
+  geom_tile(data = GLODAP_grid_Indian,
+            aes(lon, lat, fill = year)) +
+  facet_wrap(~ year)
+
+
+IO_NS <- GLODAP %>% 
+  filter(cruise %in% Indian_cruises_NS) %>% 
+  select(year,
+         lon, lat, depth,
+         cruise, station, cast,
+         temp, sal, gamma,
+         phosphate, tco2, talk)
+
+
+IO_NS <- IO_NS %>% 
+  mutate(year = if_else(year == 1994, 1995, year),
+         year = as.factor(as.character(year)))
+
+IO_NS <- IO_NS %>% 
+  filter(lon < 98)
+
+IO_NS <- IO_NS %>% 
+  filter(lat > -25,
+         lat < 0,
+         depth > 2000,
+         depth < 4000,
+         !(lat %in% c(-18.5,-5.5)))
+
+map +
+  geom_tile(data = IO_NS %>% 
+              distinct(lon, lat, year),
+            aes(lon, lat, fill = year)) +
+  facet_wrap(~ year)
+
+
+IO_NS <- IO_NS %>% 
+  pivot_longer(temp:talk,
+               names_to = "parameter",
+               values_to = "value")
+
+```
+
+```{r IO_NS_sections, fig.asp=1}
+
+
+IO_NS %>% 
+  group_split(parameter) %>% 
+  # head(1) %>% 
+  map(
+    ~ ggplot(data = .x,
+             aes(lat , depth, col = value)) +
+  geom_point() +
+  scale_color_viridis_c() +
+  scale_y_reverse() +
+  facet_grid(year ~ parameter)
+  )
+
+
+```
+
+```{r IO_NS_profils, fig.asp=2}
+
+
+IO_NS %>%
+  arrange(depth) %>% 
+  group_split(parameter) %>%
+  # head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(
+               value , depth, fill = year,
+             )) +
+      geom_point(shape = 21) +
+      scale_fill_scico_d(direction = -1) +
+      scale_y_reverse() +
+      labs(x = unique(.x$parameter)) +
+      facet_wrap( ~ lat, ncol = 3)
+  )
+
+```
+
+
+### Change
+
+```{r pcfc12_Indian_NS_offset, fig.asp=0.4, eval=FALSE}
+
+IO_NS_grid_offset <- IO_NS_grid %>% 
+  select(-pcfc12_sd) %>% 
+  pivot_wider(names_from = era,
+              values_from = pcfc12_mean) %>% 
+  mutate(delta_pcfc12_mean = `2000-2009` - `1989-1999`)
+
+IO_NS_grid_offset %>%
+  ggplot(aes(lat , depth, fill = delta_pcfc12_mean)) +
+  geom_raster() +
+  scale_fill_divergent(
+    mid = "grey80",
+    na.value = "black",
+    trans = "pseudo_log",
+    breaks = c(-100, -10, 0, 10, 100)
+  ) +
+  scale_y_reverse() +
+  coord_cartesian(expand = 0)
+
+IO_NS_grid_offset %>% 
+  mutate(delta_pcfc12_mean = cut(delta_pcfc12_mean, c(-Inf, 2, 5, 20, Inf))) %>% 
+  ggplot(aes(lat , depth, fill = delta_pcfc12_mean)) +
+  geom_raster() +
+  scale_fill_viridis_d(na.value = "grey") +
+  scale_y_reverse() +
+  coord_cartesian(expand = 0)
+
+rm(IO_NS, IO_NS_grid, IO_NS_grid_offset)
+
+
+```
+
+## EW cruise
+
+### Absolute
+
+```{r pcfc12_Indian_EW, eval=FALSE}
+
+GLODAP_grid_Indian <- GLODAP %>% 
+  filter(basin_AIP == "Indian",
+         lat > -25,
+         lat < -15,
+         cruise %in% c(252, 488)
+         ) %>%
+  mutate(cruise = as.factor(cruise)) %>% 
+  distinct(era, lon, lat, cruise, year = as.factor(year(date)))
+
+map +
+  geom_tile(data = GLODAP_grid_Indian,
+            aes(lon, lat, fill = year)) +
+  facet_grid(era ~ .)
+
+
+IO_EW <- GLODAP %>% 
+  filter(cruise %in% c(252, 488),
+         !is.na(pcfc12)) 
+
+IO_EW %>% 
+  ggplot(aes(pcfc12)) +
+  geom_histogram() +
+  facet_grid(era ~ .)
+
+IO_EW %>% 
+  filter(pcfc12 < 2) %>% 
+  ggplot(aes(pcfc12)) +
+  geom_histogram() +
+  facet_grid(era ~ .)
+
+IO_EW %>% 
+  ggplot(aes(lon , depth, col = pcfc12)) +
+  geom_point() +
+  scale_fill_viridis_c(trans = "pseudo_log",
+                        breaks = c(0,10,100)) +
+  scale_y_reverse() +
+  facet_grid(era ~ .)
+
+IO_EW_grid <- IO_EW %>% 
+  mutate(depth = cut(depth,
+                          seq(0,1e4,200),
+                          seq(100,1e4,200)),
+         depth = as.numeric(as.character(depth)),
+         lon_grid = cut(lon,
+                          seq(-100,200,2),
+                          seq(-99,200,2)),
+         lon_grid = as.numeric(as.character(lon_grid))) %>% 
+  group_by(lon_grid, depth, era) %>% 
+  summarise(pcfc12 = mean(pcfc12, na.rm = TRUE)) %>% 
+  ungroup()
+
+
+IO_EW_grid %>% 
+  ggplot(aes(lon_grid , depth, fill = pcfc12)) +
+  geom_tile() +
+  scale_fill_viridis_c(trans = "pseudo_log",
+                        breaks = c(0,10,100)) +
+  scale_y_reverse() +
+  coord_cartesian(expand = 0) +
+  facet_grid(era ~ .)
+
+
+```
+
+### Change
+
+```{r pcfc12_Indian_EW_offset, fig.asp=0.4, eval=FALSE}
+
+IO_EW_grid_offset <- IO_EW_grid %>% 
+  pivot_wider(names_from = era,
+              values_from = pcfc12) %>% 
+  mutate(delta_pcfc12_mean = `2000-2009` - `1989-1999`)
+
+
+IO_EW_grid_offset %>% 
+  ggplot(aes(lon_grid , depth, fill = delta_pcfc12_mean)) +
+  geom_raster() +
+  scale_fill_divergent(
+    mid = "grey80",
+    na.value = "black",
+    trans = "pseudo_log",
+    breaks = c(-100, -10, 0, 10, 100)
+  ) +
+  scale_y_reverse() +
+  coord_cartesian(expand = 0)
+
+IO_EW_grid_offset %>% 
+  mutate(delta_pcfc12_mean = cut(delta_pcfc12_mean, c(-Inf, 2, 5, 20, Inf))) %>% 
+  ggplot(aes(lon_grid , depth, fill = delta_pcfc12_mean)) +
+  geom_raster() +
+  scale_fill_viridis_d(na.value = "grey") +
+  scale_y_reverse() +
+  coord_cartesian(expand = 0)
+
+rm(IO_EW, IO_EW_grid, IO_EW_grid_offset, GLODAP_grid_Indian)
+
+```
+
 
 
 # Write files
 
-```{r write_clean_data_files}
+```{r write_clean_data_files, eval=FALSE}
 
 GLODAP  %>%
   write_csv(paste(path_preprocessing,
@@ -673,7 +920,7 @@ GLODAP_time_series %>%
 
 ## Comparison to GLODAP
 
-```{r CANYON-B, fig.asp=0.4}
+```{r CANYON-B, fig.asp=0.4, eval=FALSE}
 
 source("/net/kryo/work/uptools/co2_calculation/CANYON-B/CANYONB.R")
 
@@ -785,7 +1032,7 @@ for (i_variable in variables) {
 
 ## Write Canyon-B file
 
-```{r write_Canyon-B_data_file}
+```{r write_Canyon-B_data_file, eval=FALSE}
 
 GLODAP_Can_B %>% 
   select(row_number,
