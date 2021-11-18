@@ -37,8 +37,6 @@
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -562,16 +560,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree620b6f4d6efd73d27ba8d9dd06938859bb14ece4targetblank620b6f4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/620b6f4d6efd73d27ba8d9dd06938859bb14ece4" target="_blank">620b6f4</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree49ca05c6e3e5a8dc325cd563ce6c144df80606aatargetblank49ca05ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/49ca05c6e3e5a8dc325cd563ce6c144df80606aa" target="_blank">49ca05c</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree620b6f4d6efd73d27ba8d9dd06938859bb14ece4targetblank620b6f4a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree49ca05c6e3e5a8dc325cd563ce6c144df80606aatargetblank49ca05ca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/620b6f4d6efd73d27ba8d9dd06938859bb14ece4" target="_blank">620b6f4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/49ca05c6e3e5a8dc325cd563ce6c144df80606aa" target="_blank">49ca05c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -622,6 +620,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/49ca05c6e3e5a8dc325cd563ce6c144df80606aa/analysis/read_GLODAPv2_2021.Rmd" target="_blank">49ca05c</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+<td>
+delta crossover values determined
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/16dab594d05d72882094ef1029bea2f020ede938/docs/read_GLODAPv2_2021.html" target="_blank">16dab59</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1730,11 +1762,10 @@ jens-daniel-mueller
 <h2 number="3.2"><span class="header-section-number">3.2</span> NS cruise</h2>
 <div id="absolute" class="section level3" number="3.2.1">
 <h3 number="3.2.1"><span class="header-section-number">3.2.1</span> Absolute</h3>
-<pre class="r"><code>Indian_cruises_NS &lt;- c(#82,
-  249, 250,
-  352, 353,
-  1046,
-  3035)
+<pre class="r"><code>Indian_cruises_NS &lt;- c(249, 250,
+                       352, 353,
+                       1046,
+                       3035)
 
 GLODAP_grid_Indian &lt;- GLODAP %&gt;% 
   filter(basin_AIP == &quot;Indian&quot;,
@@ -1788,12 +1819,23 @@ jens-daniel-mueller
 </div>
 </div>
 <pre class="r"><code>IO_NS &lt;- GLODAP %&gt;% 
-  filter(cruise %in% Indian_cruises_NS) %&gt;% 
+  filter(cruise %in% Indian_cruises_NS)
+
+IO_NS &lt;- IO_NS %&gt;%
+  mutate(
+    cstar = tco2  - (117 * phosphate)  - 0.5 * (talk - (16 * phosphate)),
+    cstar_tco2 = tco2,
+    cstar_talk = -0.5 * talk,
+    cstar_phosphate = -117 * phosphate + 16 * 0.5 * phosphate
+  )
+
+
+IO_NS &lt;- IO_NS %&gt;%
   select(year,
          lon, lat, depth,
          cruise, station, cast,
          temp, sal, gamma,
-         phosphate, tco2, talk)
+         starts_with(&quot;cstar&quot;))
 
 
 IO_NS &lt;- IO_NS %&gt;% 
@@ -1854,12 +1896,12 @@ jens-daniel-mueller
 </div>
 </div>
 <pre class="r"><code>IO_NS &lt;- IO_NS %&gt;% 
-  pivot_longer(temp:talk,
+  pivot_longer(temp:cstar_phosphate,
                names_to = &quot;parameter&quot;,
                values_to = &quot;value&quot;)</code></pre>
 <pre class="r"><code>IO_NS %&gt;% 
   group_split(parameter) %&gt;% 
-  # head(1) %&gt;% 
+  # head(1) %&gt;%
   map(
     ~ ggplot(data = .x,
              aes(lat , depth, col = value)) +
@@ -2107,6 +2149,9 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[7]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-7.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>IO_NS %&gt;%
   arrange(depth) %&gt;% 
   group_split(parameter) %&gt;%
@@ -2124,21 +2169,246 @@ jens-daniel-mueller
   )</code></pre>
 <pre><code>[[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles-1">
+Past versions of IO_NS_profiles-1.png
+</button>
+</p>
+<div id="fig-IO_NS_profiles-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/16dab594d05d72882094ef1029bea2f020ede938/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-1.png" target="_blank">16dab59</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[2]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles-2">
+Past versions of IO_NS_profiles-2.png
+</button>
+</p>
+<div id="fig-IO_NS_profiles-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/16dab594d05d72882094ef1029bea2f020ede938/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-2.png" target="_blank">16dab59</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[3]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles-3">
+Past versions of IO_NS_profiles-3.png
+</button>
+</p>
+<div id="fig-IO_NS_profiles-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/16dab594d05d72882094ef1029bea2f020ede938/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-3.png" target="_blank">16dab59</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[4]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles-4">
+Past versions of IO_NS_profiles-4.png
+</button>
+</p>
+<div id="fig-IO_NS_profiles-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/16dab594d05d72882094ef1029bea2f020ede938/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-4.png" target="_blank">16dab59</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[5]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles-5">
+Past versions of IO_NS_profiles-5.png
+</button>
+</p>
+<div id="fig-IO_NS_profiles-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/16dab594d05d72882094ef1029bea2f020ede938/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-5.png" target="_blank">16dab59</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[6]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles-6">
+Past versions of IO_NS_profiles-6.png
+</button>
+</p>
+<div id="fig-IO_NS_profiles-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/16dab594d05d72882094ef1029bea2f020ede938/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-6.png" target="_blank">16dab59</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[7]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-7.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>IO_NS_grid &lt;- IO_NS %&gt;% 
   select(lat, lon, depth, year, parameter, value) %&gt;% 
   mutate(depth = as.numeric(as.character(cut(depth,
@@ -2165,21 +2435,246 @@ IO_NS_grid %&gt;%
   )</code></pre>
 <pre><code>[[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/gridded_profile_offset-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-gridded_profile_offset-1">
+Past versions of gridded_profile_offset-1.png
+</button>
+</p>
+<div id="fig-gridded_profile_offset-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/16dab594d05d72882094ef1029bea2f020ede938/docs/figure/read_GLODAPv2_2021.Rmd/gridded_profile_offset-1.png" target="_blank">16dab59</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[2]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/gridded_profile_offset-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-gridded_profile_offset-2">
+Past versions of gridded_profile_offset-2.png
+</button>
+</p>
+<div id="fig-gridded_profile_offset-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/16dab594d05d72882094ef1029bea2f020ede938/docs/figure/read_GLODAPv2_2021.Rmd/gridded_profile_offset-2.png" target="_blank">16dab59</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[3]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/gridded_profile_offset-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-gridded_profile_offset-3">
+Past versions of gridded_profile_offset-3.png
+</button>
+</p>
+<div id="fig-gridded_profile_offset-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/16dab594d05d72882094ef1029bea2f020ede938/docs/figure/read_GLODAPv2_2021.Rmd/gridded_profile_offset-3.png" target="_blank">16dab59</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[4]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/gridded_profile_offset-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-gridded_profile_offset-4">
+Past versions of gridded_profile_offset-4.png
+</button>
+</p>
+<div id="fig-gridded_profile_offset-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/16dab594d05d72882094ef1029bea2f020ede938/docs/figure/read_GLODAPv2_2021.Rmd/gridded_profile_offset-4.png" target="_blank">16dab59</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[5]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/gridded_profile_offset-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-gridded_profile_offset-5">
+Past versions of gridded_profile_offset-5.png
+</button>
+</p>
+<div id="fig-gridded_profile_offset-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/16dab594d05d72882094ef1029bea2f020ede938/docs/figure/read_GLODAPv2_2021.Rmd/gridded_profile_offset-5.png" target="_blank">16dab59</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[6]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/gridded_profile_offset-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-gridded_profile_offset-6">
+Past versions of gridded_profile_offset-6.png
+</button>
+</p>
+<div id="fig-gridded_profile_offset-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/16dab594d05d72882094ef1029bea2f020ede938/docs/figure/read_GLODAPv2_2021.Rmd/gridded_profile_offset-6.png" target="_blank">16dab59</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-18
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[7]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/gridded_profile_offset-7.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>IO_NS_grid_offset &lt;- IO_NS_grid %&gt;% 
   arrange(year) %&gt;% 
   group_by(lat, depth, parameter) %&gt;% 
@@ -2190,7 +2685,7 @@ IO_NS_grid %&gt;%
 
 IO_NS_grid_offset %&gt;%
   group_split(parameter) %&gt;%
-  head(1) %&gt;%
+  # head(1) %&gt;%
   map(
     ~ ggplot(data = .x,
              aes(
@@ -2205,160 +2700,76 @@ IO_NS_grid_offset %&gt;%
   )</code></pre>
 <pre><code>[[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/gridded_section_offset-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>IO_NS_grid_offset %&gt;% 
-  group_by(parameter,delta_year) %&gt;% 
-  summarise(mean_delta_value = mean(delta_value)) %&gt;% 
-  ungroup() %&gt;% 
-  kableExtra::kbl()</code></pre>
-<table>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-gridded_section_offset-1">
+Past versions of gridded_section_offset-1.png
+</button>
+</p>
+<div id="fig-gridded_section_offset-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
 <thead>
 <tr>
-<th style="text-align:left;">
-parameter
+<th>
+Version
 </th>
-<th style="text-align:left;">
-delta_year
+<th>
+Author
 </th>
-<th style="text-align:right;">
-mean_delta_value
+<th>
+Date
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left;">
-gamma
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/16dab594d05d72882094ef1029bea2f020ede938/docs/figure/read_GLODAPv2_2021.Rmd/gridded_section_offset-1.png" target="_blank">16dab59</a>
 </td>
-<td style="text-align:left;">
-1995-2007
+<td>
+jens-daniel-mueller
 </td>
-<td style="text-align:right;">
-0.0034608
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-gamma
-</td>
-<td style="text-align:left;">
-2007-2016
-</td>
-<td style="text-align:right;">
--0.0070034
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-phosphate
-</td>
-<td style="text-align:left;">
-1995-2007
-</td>
-<td style="text-align:right;">
--0.0209436
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-phosphate
-</td>
-<td style="text-align:left;">
-2007-2016
-</td>
-<td style="text-align:right;">
--0.0081866
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-sal
-</td>
-<td style="text-align:left;">
-1995-2007
-</td>
-<td style="text-align:right;">
-0.0013687
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-sal
-</td>
-<td style="text-align:left;">
-2007-2016
-</td>
-<td style="text-align:right;">
--0.0000279
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-talk
-</td>
-<td style="text-align:left;">
-1995-2007
-</td>
-<td style="text-align:right;">
--4.1268774
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-talk
-</td>
-<td style="text-align:left;">
-2007-2016
-</td>
-<td style="text-align:right;">
--1.2598624
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-tco2
-</td>
-<td style="text-align:left;">
-1995-2007
-</td>
-<td style="text-align:right;">
-1.3873295
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-tco2
-</td>
-<td style="text-align:left;">
-2007-2016
-</td>
-<td style="text-align:right;">
-1.9866255
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-temp
-</td>
-<td style="text-align:left;">
-1995-2007
-</td>
-<td style="text-align:right;">
--0.0136266
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-temp
-</td>
-<td style="text-align:left;">
-2007-2016
-</td>
-<td style="text-align:right;">
-0.0419932
+<td>
+2021-11-18
 </td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/gridded_section_offset-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/gridded_section_offset-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[4]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/gridded_section_offset-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[5]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/gridded_section_offset-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[6]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/gridded_section_offset-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[7]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/gridded_section_offset-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>IO_NS_grid_offset_mean &lt;-
+  IO_NS_grid_offset %&gt;%
+  group_by(parameter, delta_year) %&gt;%
+  summarise(mean_delta_value = mean(delta_value),
+            sd_delta_value = sd(delta_value)) %&gt;%
+  ungroup()
+
+IO_NS_grid_offset_mean %&gt;% 
+  ggplot(aes(delta_year, mean_delta_value,
+             ymin = mean_delta_value - sd_delta_value,
+             ymax = mean_delta_value + sd_delta_value)) +
+  geom_hline(yintercept = 0) +
+  geom_pointrange() +
+  facet_wrap(~ parameter)</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/gridded_section_offset-8.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="change" class="section level3" number="3.2.2">
 <h3 number="3.2.2"><span class="header-section-number">3.2.2</span> Change</h3>
@@ -4530,31 +4941,31 @@ other attached packages:
 [13] tibble_3.1.3    ggplot2_3.3.5   tidyverse_1.3.0 workflowr_1.6.2
 
 loaded via a namespace (and not attached):
- [1] fs_1.5.0                 webshot_0.5.2            httr_1.4.2              
- [4] rprojroot_2.0.2          tools_4.0.3              backports_1.1.10        
- [7] bslib_0.2.5.1            utf8_1.1.4               R6_2.5.0                
-[10] DBI_1.1.0                colorspace_2.0-2         withr_2.3.0             
-[13] tidyselect_1.1.0         compiler_4.0.3           git2r_0.27.1            
-[16] cli_3.0.1                rvest_0.3.6              xml2_1.3.2              
-[19] labeling_0.4.2           sass_0.4.0               scales_1.1.1            
-[22] checkmate_2.0.0          digest_0.6.27            rmarkdown_2.10          
-[25] pkgconfig_2.0.3          htmltools_0.5.1.1        dbplyr_1.4.4            
-[28] highr_0.8                rlang_0.4.11             readxl_1.3.1            
-[31] rstudioapi_0.13          jquerylib_0.1.4          generics_0.1.0          
-[34] farver_2.0.3             jsonlite_1.7.1           magrittr_1.5            
-[37] kableExtra_1.3.1         Matrix_1.2-18            Rcpp_1.0.5              
-[40] munsell_0.5.0            fansi_0.4.1              lifecycle_1.0.0         
-[43] stringi_1.5.3            whisker_0.4              yaml_2.2.1              
-[46] MASS_7.3-53              grid_4.0.3               blob_1.2.1              
-[49] parallel_4.0.3           promises_1.1.1           crayon_1.3.4            
-[52] lattice_0.20-41          haven_2.3.1              hms_0.5.3               
-[55] knitr_1.33               pillar_1.6.2             reprex_0.3.0            
-[58] glue_1.4.2               evaluate_0.14            RcppArmadillo_0.10.1.2.0
-[61] data.table_1.14.0        modelr_0.1.8             vctrs_0.3.8             
-[64] tweenr_1.0.2             httpuv_1.5.4             cellranger_1.1.0        
-[67] gtable_0.3.0             polyclip_1.10-0          assertthat_0.2.1        
-[70] xfun_0.25                broom_0.7.9              RcppEigen_0.3.3.7.0     
-[73] later_1.2.0              viridisLite_0.3.0        ellipsis_0.3.2          </code></pre>
+ [1] httr_1.4.2               sass_0.4.0               viridisLite_0.3.0       
+ [4] jsonlite_1.7.1           modelr_0.1.8             bslib_0.2.5.1           
+ [7] assertthat_0.2.1         highr_0.8                blob_1.2.1              
+[10] cellranger_1.1.0         yaml_2.2.1               pillar_1.6.2            
+[13] backports_1.1.10         lattice_0.20-41          glue_1.4.2              
+[16] RcppEigen_0.3.3.7.0      digest_0.6.27            promises_1.1.1          
+[19] polyclip_1.10-0          checkmate_2.0.0          rvest_0.3.6             
+[22] colorspace_2.0-2         htmltools_0.5.1.1        httpuv_1.5.4            
+[25] Matrix_1.2-18            pkgconfig_2.0.3          broom_0.7.9             
+[28] haven_2.3.1              scales_1.1.1             tweenr_1.0.2            
+[31] whisker_0.4              later_1.2.0              git2r_0.27.1            
+[34] farver_2.0.3             generics_0.1.0           ellipsis_0.3.2          
+[37] withr_2.3.0              cli_3.0.1                magrittr_1.5            
+[40] crayon_1.3.4             readxl_1.3.1             evaluate_0.14           
+[43] fs_1.5.0                 fansi_0.4.1              MASS_7.3-53             
+[46] xml2_1.3.2               RcppArmadillo_0.10.1.2.0 tools_4.0.3             
+[49] data.table_1.14.0        hms_0.5.3                lifecycle_1.0.0         
+[52] munsell_0.5.0            reprex_0.3.0             compiler_4.0.3          
+[55] jquerylib_0.1.4          rlang_0.4.11             grid_4.0.3              
+[58] rstudioapi_0.13          labeling_0.4.2           rmarkdown_2.10          
+[61] gtable_0.3.0             DBI_1.1.0                R6_2.5.0                
+[64] knitr_1.33               utf8_1.1.4               rprojroot_2.0.2         
+[67] stringi_1.5.3            parallel_4.0.3           Rcpp_1.0.5              
+[70] vctrs_0.3.8              dbplyr_1.4.4             tidyselect_1.1.0        
+[73] xfun_0.25               </code></pre>
 </div>
 </div>
 </div>
