@@ -557,6 +557,36 @@ IO_NS %>%
 
 ```
 
+```{r gridded_section, fig.asp=1}
+
+IO_NS_grid <- IO_NS %>% 
+  select(lat, lon, depth, year, parameter, value) %>% 
+  mutate(basin_AIP = "Indian") %>% 
+  group_by(year, parameter) %>%
+  nest() %>%
+  mutate(zonal = map(.x = data, ~m_zonal_mean_sd_bottle(.x))) %>%
+  select(-data) %>%
+  unnest(zonal)
+
+
+IO_NS_grid %>%
+  group_by(parameter) %>%
+  group_split() %>%
+  head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(lat , depth, fill = value_mean)) +
+      geom_raster() +
+      scale_fill_viridis_c(name = unique(.x$parameter)) +
+      scale_y_reverse() +
+      coord_cartesian(expand = 0) +
+      facet_grid(year ~ .)
+  )
+
+
+```
+
+
 
 ### Change
 
