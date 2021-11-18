@@ -460,11 +460,10 @@ GLODAP_adjustments %>%
 
 ```{r cfc12_Indian_NS}
 
-Indian_cruises_NS <- c(#82,
-  249, 250,
-  352, 353,
-  1046,
-  3035)
+Indian_cruises_NS <- c(249, 250,
+                       352, 353,
+                       1046,
+                       3035)
 
 GLODAP_grid_Indian <- GLODAP %>% 
   filter(basin_AIP == "Indian",
@@ -482,12 +481,23 @@ map +
 
 
 IO_NS <- GLODAP %>% 
-  filter(cruise %in% Indian_cruises_NS) %>% 
+  filter(cruise %in% Indian_cruises_NS)
+
+IO_NS <- IO_NS %>%
+  mutate(
+    cstar = tco2  - (117 * phosphate)  - 0.5 * (talk - (16 * phosphate)),
+    cstar_tco2 = tco2,
+    cstar_talk = -0.5 * talk,
+    cstar_phosphate = -117 * phosphate + 16 * 0.5 * phosphate
+  )
+
+
+IO_NS <- IO_NS %>%
   select(year,
          lon, lat, depth,
          cruise, station, cast,
          temp, sal, gamma,
-         phosphate, tco2, talk)
+         starts_with("cstar"))
 
 
 IO_NS <- IO_NS %>% 
@@ -512,7 +522,7 @@ map +
 
 
 IO_NS <- IO_NS %>% 
-  pivot_longer(temp:talk,
+  pivot_longer(temp:cstar_phosphate,
                names_to = "parameter",
                values_to = "value")
 
@@ -523,7 +533,7 @@ IO_NS <- IO_NS %>%
 
 IO_NS %>% 
   group_split(parameter) %>% 
-  # head(1) %>% 
+  # head(1) %>%
   map(
     ~ ggplot(data = .x,
              aes(lat , depth, col = value)) +
@@ -587,7 +597,7 @@ IO_NS_grid %>%
 
 ```
 
-```{r gridded_section_offset}
+```{r gridded_section_offset, fig.asp=2}
 
 IO_NS_grid_offset <- IO_NS_grid %>% 
   arrange(year) %>% 
@@ -599,7 +609,7 @@ IO_NS_grid_offset <- IO_NS_grid %>%
 
 IO_NS_grid_offset %>%
   group_split(parameter) %>%
-  head(1) %>%
+  # head(1) %>%
   map(
     ~ ggplot(data = .x,
              aes(
@@ -613,11 +623,21 @@ IO_NS_grid_offset %>%
       facet_wrap( ~ lat, ncol = 3)
   )
 
-IO_NS_grid_offset %>% 
-  group_by(parameter,delta_year) %>% 
-  summarise(mean_delta_value = mean(delta_value)) %>% 
-  ungroup() %>% 
-  kableExtra::kbl()
+IO_NS_grid_offset_mean <-
+  IO_NS_grid_offset %>%
+  group_by(parameter, delta_year) %>%
+  summarise(mean_delta_value = mean(delta_value),
+            sd_delta_value = sd(delta_value)) %>%
+  ungroup()
+
+IO_NS_grid_offset_mean %>% 
+  ggplot(aes(delta_year, mean_delta_value,
+             ymin = mean_delta_value - sd_delta_value,
+             ymax = mean_delta_value + sd_delta_value)) +
+  geom_hline(yintercept = 0) +
+  geom_pointrange() +
+  facet_wrap(~ parameter)
+
 
 ```
 
