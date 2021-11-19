@@ -579,20 +579,6 @@ IO_NS_grid <- IO_NS %>%
   ungroup()
 
 
-# IO_NS_grid %>%
-#   group_split(parameter) %>%
-#   # head(1) %>%
-#   map(
-#     ~ ggplot(data = .x,
-#              aes(
-#                value , depth, fill = year,
-#              )) +
-#       geom_point(shape = 21) +
-#       scale_fill_scico_d(direction = -1) +
-#       scale_y_reverse() +
-#       labs(x = unique(.x$parameter)) +
-#       facet_wrap( ~ lat, ncol = 3)
-#   )
 
 
 ```
@@ -781,22 +767,6 @@ IO_EW_grid <- IO_EW %>%
   ungroup()
 
 
-# IO_EW_grid %>%
-#   group_split(parameter) %>%
-#   # head(1) %>%
-#   map(
-#     ~ ggplot(data = .x,
-#              aes(
-#                value , depth, fill = year,
-#              )) +
-#       geom_point(shape = 21) +
-#       scale_fill_scico_d(direction = -1) +
-#       scale_y_reverse() +
-#       labs(x = unique(.x$parameter)) +
-#       facet_wrap( ~ lon, ncol = 3)
-#   )
-
-
 ```
 
 ### Profiles, offset
@@ -866,7 +836,7 @@ IO_EW_grid_offset_mean %>%
 
 # Write files
 
-```{r write_clean_data_files, eval=FALSE}
+```{r write_clean_data_files}
 
 GLODAP  %>%
   write_csv(paste(path_preprocessing,
@@ -885,23 +855,23 @@ GLODAP_adjustments  %>%
                   "GLODAPv2.2021_adustments.csv",
                   sep = ""))
 
-GLODAP_adjustments_NA_cruises  %>%
-  select(cruise_expocode, cruise) %>%
-  write_csv(paste(
-    path_preprocessing,
-    "GLODAPv2.2021_adustments_NA_cruises.csv",
-    sep = ""
-  ))
-
-GLODAP_adjustments_duplicated_cruises  %>%
-  drop_na() %>%
-  write_csv(
-    paste(
-      path_preprocessing,
-      "GLODAPv2.2021_adustments_duplicated_cruises.csv",
-      sep = ""
-    )
-  )
+# GLODAP_adjustments_NA_cruises  %>%
+#   select(cruise_expocode, cruise) %>%
+#   write_csv(paste(
+#     path_preprocessing,
+#     "GLODAPv2.2021_adustments_NA_cruises.csv",
+#     sep = ""
+#   ))
+# 
+# GLODAP_adjustments_duplicated_cruises  %>%
+#   drop_na() %>%
+#   write_csv(
+#     paste(
+#       path_preprocessing,
+#       "GLODAPv2.2021_adustments_duplicated_cruises.csv",
+#       sep = ""
+#     )
+#   )
 
 ```
 
@@ -1085,7 +1055,7 @@ GLODAP_time_series %>%
 
 ## Comparison to GLODAP
 
-```{r CANYON-B, fig.asp=0.4, eval=FALSE}
+```{r CANYON-B, fig.asp=0.4}
 
 source("/net/kryo/work/uptools/co2_calculation/CANYON-B/CANYONB.R")
 
@@ -1197,7 +1167,7 @@ for (i_variable in variables) {
 
 ## Write Canyon-B file
 
-```{r write_Canyon-B_data_file, eval=FALSE}
+```{r write_Canyon-B_data_file}
 
 GLODAP_Can_B %>% 
   select(row_number,
