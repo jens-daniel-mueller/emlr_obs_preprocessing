@@ -444,7 +444,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">GLODAPv2_2016: Mapped Climatologies</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">19 November, 2021</h4>
+<h4 class="date">22 November, 2021</h4>
 
 </div>
 
@@ -469,7 +469,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-11-19
+<strong>Last updated:</strong> 2021-11-22
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -560,16 +560,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree46c1246cafdf70c7dbb7681b04e429e202c7a969targetblank46c1246a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/46c1246cafdf70c7dbb7681b04e429e202c7a969" target="_blank">46c1246</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree5d9ebb223d1b7f6da4bbd5a3d2bbb11b2afe3ebatargetblank5d9ebb2a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/5d9ebb223d1b7f6da4bbd5a3d2bbb11b2afe3eba" target="_blank">5d9ebb2</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree46c1246cafdf70c7dbb7681b04e429e202c7a969targetblank46c1246a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree5d9ebb223d1b7f6da4bbd5a3d2bbb11b2afe3ebatargetblank5d9ebb2a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/46c1246cafdf70c7dbb7681b04e429e202c7a969" target="_blank">46c1246</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/5d9ebb223d1b7f6da4bbd5a3d2bbb11b2afe3eba" target="_blank">5d9ebb2</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -582,9 +582,6 @@ Ignored files:
 
 Untracked files:
     Untracked:  code/read_GLODAPv2_2020.Rmd
-
-Unstaged changes:
-    Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
 <p>
@@ -623,6 +620,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5d9ebb223d1b7f6da4bbd5a3d2bbb11b2afe3eba/analysis/read_OceanSODA.Rmd" target="_blank">5d9ebb2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-22
+</td>
+<td>
+calculate revelle factor historical
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/f2871b9bcfdcde95f53736bba2625b148e6f1bbb/docs/read_OceanSODA.html" target="_blank">f2871b9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-20
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1062,6 +1093,8 @@ included OceanSODA
 basinmask &lt;- basinmask %&gt;% 
   filter(MLR_basins == &quot;2&quot;) %&gt;% 
   select(lat, lon, basin_AIP)</code></pre>
+<div id="oceansoda" class="section level2" number="1.1">
+<h2 number="1.1"><span class="header-section-number">1.1</span> OceanSODA</h2>
 <pre class="r"><code>OceanSODA &lt;-
   tidync(paste(
     path_updata,
@@ -1073,7 +1106,7 @@ OceanSODA &lt;- OceanSODA %&gt;%
   hyper_tibble()
 
 OceanSODA &lt;- OceanSODA %&gt;%
-  mutate(date = as.Date(time, origin = &#39;1982-01-01&#39;),
+  mutate(date = as.Date(time, origin = &#39;1982-01-15&#39;),
          year = year(date))
 
 OceanSODA &lt;- OceanSODA %&gt;%
@@ -1081,12 +1114,10 @@ OceanSODA &lt;- OceanSODA %&gt;%
          sal = salinity, temp = temperature,
          tco2 = dic, talk, 
          rev_fac = revelle_factor,
-         pCO2 = spco2)
-
-OceanSODA &lt;- OceanSODA %&gt;%
-  mutate(lon = if_else(lon &lt; 20, lon + 360, lon))
-
-OceanSODA &lt;- inner_join(OceanSODA, basinmask)</code></pre>
+         pCO2 = spco2)</code></pre>
+</div>
+<div id="seaflux" class="section level2" number="1.2">
+<h2 number="1.2"><span class="header-section-number">1.2</span> SeaFlux</h2>
 <pre class="r"><code>path_SeaFlux &lt;- 
 paste0(path_updata,&quot;pco2_seaflux/&quot;)
 
@@ -1095,8 +1126,8 @@ icefrac &lt;-
                 &quot;SeaFluxV2021.01_icefrac_1988-2018.nc&quot;)) %&gt;% 
   hyper_tibble()
 
-icefrac &lt;- icefrac %&gt;% 
-  mutate(date = as.Date(time, origin = &#39;1988-01-01&#39;),
+icefrac &lt;- icefrac %&gt;%
+  mutate(date = as.Date(time, origin = &#39;1988-01-15&#39;),
          year = year(date))
 
 kw &lt;-
@@ -1117,18 +1148,36 @@ pCO2atm &lt;-
 sol &lt;-
   tidync(paste0(path_SeaFlux,
                 &quot;SeaFluxV2021.01_solWeis74.nc&quot;)) %&gt;% 
-  hyper_tibble()
-
-
-all_variables &lt;- full_join(icefrac, kw)
+  hyper_tibble()</code></pre>
+</div>
+<div id="join-data" class="section level2" number="1.3">
+<h2 number="1.3"><span class="header-section-number">1.3</span> Join data</h2>
+<pre class="r"><code>all_variables &lt;- full_join(icefrac, kw)
 all_variables &lt;- full_join(all_variables, pCO2atm)
 all_variables &lt;- full_join(all_variables, sol)
 
-all_variables &lt;- all_variables %&gt;%
+OceanSODA &lt;- inner_join(all_variables,
+                        OceanSODA)
+
+OceanSODA &lt;- OceanSODA %&gt;%
   mutate(lon = if_else(lon &lt; 20, lon + 360, lon))
 
-OceanSODA &lt;- inner_join(all_variables %&gt;% select(-c(time)),
-                        OceanSODA)</code></pre>
+OceanSODA &lt;- inner_join(OceanSODA, basinmask)
+
+OceanSODA &lt;- OceanSODA %&gt;% 
+  select(-time)</code></pre>
+</div>
+<div id="atm-pco2" class="section level2" number="1.4">
+<h2 number="1.4"><span class="header-section-number">1.4</span> Atm pCO2</h2>
+<pre class="r"><code># Note: this file is only created downstream in read_CO2_atm.Rmd
+co2_atm_reccap2 &lt;-
+  read_csv(paste(path_preprocessing,
+                 &quot;co2_atm_reccap2.csv&quot;,
+                 sep = &quot;&quot;))</code></pre>
+</div>
+</div>
+<div id="air-sea-disequilibrium" class="section level1" number="2">
+<h1 number="2"><span class="header-section-number">2</span> Air-sea disequilibrium</h1>
 <pre class="r"><code>all_variables &lt;- OceanSODA %&gt;%
   select(
     time_mon = date,
@@ -1145,7 +1194,7 @@ OceanSODA &lt;- inner_join(all_variables %&gt;% select(-c(time)),
 all_variables &lt;- all_variables %&gt;%
   mutate(area = earth_surf(lat = lat))
 
-mol_to_g &lt;- 12
+mol_to_g &lt;- 12.011
 P &lt;- 1e-15
 cm_to_m &lt;- 100
 hr_to_yr &lt;- 24 * 365
@@ -1179,17 +1228,13 @@ delta_pco2_annual &lt;- delta_pco2_monthly %&gt;%
   ) %&gt;%
   ungroup()
 
-print(
-  ggplot() +
-    geom_path(data = delta_pco2_monthly,
-              aes(
-                decimal_date(time_mon), delta_pco2_glob, col = &quot;monthly&quot;
-              )) +
-    geom_path(data = delta_pco2_annual,
-              aes(year, delta_pco2_glob, col = &quot;annual&quot;)) +
-    scale_color_brewer(palette = &quot;Set1&quot;, name = &quot;Average&quot;) +
-    labs(x = &quot;year&quot;)
-)</code></pre>
+ggplot() +
+  geom_path(data = delta_pco2_monthly,
+            aes(decimal_date(time_mon), delta_pco2_glob, col = &quot;monthly&quot;)) +
+  geom_path(data = delta_pco2_annual,
+            aes(year, delta_pco2_glob, col = &quot;annual&quot;)) +
+  scale_color_brewer(palette = &quot;Set1&quot;, name = &quot;Average&quot;) +
+  labs(x = &quot;year&quot;)</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/air_sea_disequilibrium-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-air_sea_disequilibrium-1">
@@ -1549,17 +1594,9 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code># write raw data file for GLODAP-based subsetting model variables
-delta_pco2_annual %&gt;%
-  select(-c(scaling_glob, fgco2_glob)) %&gt;%
-  write_csv(file = paste(
-    path_preprocessing,
-    &quot;OceanSODA_disequilibrium_annual.csv&quot;,
-    sep = &quot;&quot;
-  ))
-
-rm(delta_pco2_annual,
-   delta_pco2_monthly)</code></pre>
+</div>
+<div id="compute-climatologies" class="section level1" number="3">
+<h1 number="3"><span class="header-section-number">3</span> Compute climatologies</h1>
 <pre class="r"><code># calculate annual averaged fields
 OceanSODA_annual_all &lt;- OceanSODA %&gt;%
   mutate(tco2_over_pCO2 = tco2 / pCO2) %&gt;%
@@ -1637,14 +1674,97 @@ OceanSODA_annual_glob_trend &lt;- OceanSODA_annual_glob %&gt;%
                     ~tidy(lm(value_area_ave ~ year, data = .x)))) %&gt;% 
   select(-data) %&gt;% 
   unnest(tidy)</code></pre>
-<div id="write-file" class="section level2" number="1.1">
-<h2 number="1.1"><span class="header-section-number">1.1</span> Write file</h2>
+<pre class="r"><code>map + 
+  geom_tile(data = OceanSODA_clim,
+            aes(lon, lat, fill = as.factor(year)))</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/revelle_factor_time_series-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>pco2_atm_2004 &lt;- co2_atm_reccap2 %&gt;% 
+  filter(year == 2004) %&gt;% 
+  pull(pCO2)
+
+co2_atm_reccap2 &lt;- co2_atm_reccap2 %&gt;% 
+  mutate(delta_pCO2_hist = pCO2 - pco2_atm_2004)
+
+co2_atm_reccap2_decade &lt;- co2_atm_reccap2 %&gt;% 
+  filter(year &gt; 1900) %&gt;% 
+  mutate(year = ymd(paste(year, &quot;-06-01&quot;))) %&gt;% 
+  mutate(decade = floor_date(year, years(10))) %&gt;% 
+  group_by(decade) %&gt;% 
+  summarise(delta_pCO2_hist = mean(delta_pCO2_hist)) %&gt;% 
+  ungroup()
+
+co2_atm_reccap2_decade %&gt;% 
+  ggplot(aes(decade, delta_pCO2_hist)) +
+  geom_point() +
+  geom_path()</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/revelle_factor_time_series-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>OceanSODA_revelle_hist &lt;- expand_grid(
+  co2_atm_reccap2_decade,
+  OceanSODA_clim
+)
+
+OceanSODA_revelle_hist &lt;- OceanSODA_revelle_hist %&gt;% 
+  mutate(pCO2 = pCO2 + delta_pCO2_hist)
+
+map + 
+  geom_tile(data = OceanSODA_revelle_hist,
+            aes(lon, lat, fill = pCO2)) +
+  facet_wrap(~ decade) +
+  scale_fill_viridis_c()</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/revelle_factor_time_series-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>OceanSODA_revelle_hist &lt;- OceanSODA_revelle_hist %&gt;% 
+  mutate(
+    rev_fac = buffer(
+      flag = 24,
+      var1 = pCO2,
+      var2 = talk * 1e-6,
+      S = sal,
+      T = temp,
+      P = 0,
+      k1k2 = &quot;l&quot;
+    )$BetaD
+  )
+
+map + 
+  geom_tile(data = OceanSODA_revelle_hist,
+            aes(lon, lat, fill = rev_fac)) +
+  facet_wrap(~ decade) +
+  scale_fill_viridis_c()</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/revelle_factor_time_series-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>OceanSODA_revelle_hist_time_series &lt;- OceanSODA_revelle_hist %&gt;% 
+  mutate(area = earth_surf(lat, lon),
+         rev_fac_scaled = rev_fac * area) %&gt;% 
+  group_by(decade) %&gt;% 
+  summarise(rev_fac = sum(rev_fac_scaled) / sum(area)) %&gt;% 
+  ungroup()
+
+OceanSODA_revelle_hist_time_series %&gt;% 
+  ggplot(aes(decade, rev_fac))+
+  geom_point() + 
+  geom_path()</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/revelle_factor_time_series-5.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="write-files" class="section level1" number="4">
+<h1 number="4"><span class="header-section-number">4</span> Write files</h1>
 <pre class="r"><code>OceanSODA_annual_all %&gt;%
   write_csv(paste0(path_preprocessing,
-                   &quot;OceanSODA.csv&quot;))</code></pre>
+                   &quot;OceanSODA.csv&quot;))
+
+OceanSODA_clim %&gt;%
+  write_csv(paste0(path_preprocessing,
+                   &quot;OceanSODA_climatology.csv&quot;))
+
+OceanSODA_revelle_hist_time_series %&gt;%
+  write_csv(paste0(path_preprocessing,
+                   &quot;OceanSODA_revelle_hist_time_series.csv&quot;))
+
+delta_pco2_annual %&gt;%
+  select(-c(scaling_glob, fgco2_glob)) %&gt;%
+  write_csv(paste0(path_preprocessing,
+                   &quot;OceanSODA_disequilibrium_annual.csv&quot;))</code></pre>
 </div>
-<div id="control-plots" class="section level2" number="1.2">
-<h2 number="1.2"><span class="header-section-number">1.2</span> Control plots</h2>
+<div id="control-plots" class="section level1" number="5">
+<h1 number="5"><span class="header-section-number">5</span> Control plots</h1>
 <pre class="r"><code>map +
   geom_raster(data = OceanSODA_annual %&gt;%
                 filter(year == 2010), aes(lon, lat, fill = lat_bands)) +
@@ -1864,9 +1984,8 @@ jens-daniel-mueller
 </div>
 </div>
 </div>
-</div>
-<div id="climatology-map" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> Climatology map</h1>
+<div id="climatology-map" class="section level1" number="6">
+<h1 number="6"><span class="header-section-number">6</span> Climatology map</h1>
 <pre class="r"><code>unique(OceanSODA_clim$year)</code></pre>
 <pre><code>[1] 2004.000 2011.000 2008.500 2004.400 2003.045</code></pre>
 <pre class="r"><code>OceanSODA_clim %&gt;%
@@ -1878,7 +1997,7 @@ jens-daniel-mueller
   map( ~ map +
          geom_raster(data = .x,
                      aes(lon, lat, fill = value)) +
-         scale_fill_viridis_c(name = .x$parameter))</code></pre>
+         scale_fill_viridis_c(name = unique(.x$parameter)))</code></pre>
 <pre><code>[[1]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -2621,8 +2740,8 @@ jens-daniel-mueller
 </div>
 </div>
 </div>
-<div id="time-series" class="section level1" number="3">
-<h1 number="3"><span class="header-section-number">3</span> Time series</h1>
+<div id="time-series" class="section level1" number="7">
+<h1 number="7"><span class="header-section-number">7</span> Time series</h1>
 <pre class="r"><code>OceanSODA_annual_lat %&gt;%
   group_split(parameter) %&gt;%
   # head(1) %&gt;%
@@ -3299,10 +3418,10 @@ jens-daniel-mueller
 </div>
 </div>
 </div>
-<div id="decadel-trends" class="section level1" number="4">
-<h1 number="4"><span class="header-section-number">4</span> Decadel trends</h1>
-<div id="global" class="section level2" number="4.1">
-<h2 number="4.1"><span class="header-section-number">4.1</span> Global</h2>
+<div id="decadel-trends" class="section level1" number="8">
+<h1 number="8"><span class="header-section-number">8</span> Decadel trends</h1>
+<div id="global" class="section level2" number="8.1">
+<h2 number="8.1"><span class="header-section-number">8.1</span> Global</h2>
 <pre class="r"><code>OceanSODA_annual_glob %&gt;%
   group_split(parameter) %&gt;%
   # head(1) %&gt;%
@@ -4655,8 +4774,8 @@ jens-daniel-mueller
 </div>
 </div>
 </div>
-<div id="latitude-bands" class="section level2" number="4.2">
-<h2 number="4.2"><span class="header-section-number">4.2</span> Latitude bands</h2>
+<div id="latitude-bands" class="section level2" number="8.2">
+<h2 number="8.2"><span class="header-section-number">8.2</span> Latitude bands</h2>
 <pre class="r"><code>OceanSODA_annual_lat %&gt;%
   group_split(parameter) %&gt;%
   # head(1) %&gt;%
@@ -6037,41 +6156,41 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] broom_0.7.9     marelac_2.1.10  shape_1.4.5     lubridate_1.7.9
- [5] tidync_0.2.4    ggforce_0.3.3   metR_0.9.0      scico_1.2.0    
- [9] patchwork_1.1.1 collapse_1.5.0  forcats_0.5.0   stringr_1.4.0  
-[13] dplyr_1.0.5     purrr_0.3.4     readr_1.4.0     tidyr_1.1.3    
-[17] tibble_3.1.3    ggplot2_3.3.5   tidyverse_1.3.0 workflowr_1.6.2
+ [1] seacarb_3.2.14  oce_1.2-0       gsw_1.0-5       testthat_2.3.2 
+ [5] broom_0.7.9     marelac_2.1.10  shape_1.4.5     lubridate_1.7.9
+ [9] tidync_0.2.4    ggforce_0.3.3   metR_0.9.0      scico_1.2.0    
+[13] patchwork_1.1.1 collapse_1.5.0  forcats_0.5.0   stringr_1.4.0  
+[17] dplyr_1.0.5     purrr_0.3.4     readr_1.4.0     tidyr_1.1.3    
+[21] tibble_3.1.3    ggplot2_3.3.5   tidyverse_1.3.0 workflowr_1.6.2
 
 loaded via a namespace (and not attached):
- [1] nlme_3.1-149             fs_1.5.0                 gsw_1.0-5               
- [4] RColorBrewer_1.1-2       httr_1.4.2               rprojroot_2.0.2         
- [7] tools_4.0.3              backports_1.1.10         bslib_0.2.5.1           
-[10] utf8_1.1.4               R6_2.5.0                 mgcv_1.8-33             
-[13] DBI_1.1.0                colorspace_2.0-2         withr_2.3.0             
-[16] tidyselect_1.1.0         compiler_4.0.3           git2r_0.27.1            
-[19] cli_3.0.1                rvest_0.3.6              RNetCDF_2.4-2           
-[22] xml2_1.3.2               labeling_0.4.2           sass_0.4.0              
-[25] scales_1.1.1             checkmate_2.0.0          digest_0.6.27           
-[28] oce_1.2-0                rmarkdown_2.10           pkgconfig_2.0.3         
-[31] htmltools_0.5.1.1        highr_0.8                dbplyr_1.4.4            
-[34] rlang_0.4.11             readxl_1.3.1             rstudioapi_0.13         
-[37] jquerylib_0.1.4          generics_0.1.0           farver_2.0.3            
-[40] jsonlite_1.7.1           magrittr_1.5             ncmeta_0.3.0            
-[43] Matrix_1.2-18            Rcpp_1.0.5               munsell_0.5.0           
-[46] fansi_0.4.1              lifecycle_1.0.0          stringi_1.5.3           
-[49] whisker_0.4              yaml_2.2.1               MASS_7.3-53             
-[52] grid_4.0.3               blob_1.2.1               parallel_4.0.3          
-[55] promises_1.1.1           crayon_1.3.4             lattice_0.20-41         
-[58] splines_4.0.3            haven_2.3.1              seacarb_3.2.14          
-[61] hms_0.5.3                knitr_1.33               pillar_1.6.2            
-[64] reprex_0.3.0             glue_1.4.2               evaluate_0.14           
-[67] RcppArmadillo_0.10.1.2.0 data.table_1.14.0        modelr_0.1.8            
-[70] vctrs_0.3.8              tweenr_1.0.2             httpuv_1.5.4            
-[73] testthat_2.3.2           cellranger_1.1.0         gtable_0.3.0            
-[76] polyclip_1.10-0          assertthat_0.2.1         xfun_0.25               
-[79] RcppEigen_0.3.3.7.0      later_1.2.0              viridisLite_0.3.0       
-[82] ncdf4_1.17               ellipsis_0.3.2          </code></pre>
+ [1] nlme_3.1-149             fs_1.5.0                 RColorBrewer_1.1-2      
+ [4] httr_1.4.2               rprojroot_2.0.2          tools_4.0.3             
+ [7] backports_1.1.10         bslib_0.2.5.1            utf8_1.1.4              
+[10] R6_2.5.0                 mgcv_1.8-33              DBI_1.1.0               
+[13] colorspace_2.0-2         withr_2.3.0              tidyselect_1.1.0        
+[16] compiler_4.0.3           git2r_0.27.1             cli_3.0.1               
+[19] rvest_0.3.6              RNetCDF_2.4-2            xml2_1.3.2              
+[22] labeling_0.4.2           sass_0.4.0               scales_1.1.1            
+[25] checkmate_2.0.0          digest_0.6.27            rmarkdown_2.10          
+[28] pkgconfig_2.0.3          htmltools_0.5.1.1        highr_0.8               
+[31] dbplyr_1.4.4             rlang_0.4.11             readxl_1.3.1            
+[34] rstudioapi_0.13          jquerylib_0.1.4          generics_0.1.0          
+[37] farver_2.0.3             jsonlite_1.7.1           magrittr_1.5            
+[40] ncmeta_0.3.0             Matrix_1.2-18            Rcpp_1.0.5              
+[43] munsell_0.5.0            fansi_0.4.1              lifecycle_1.0.0         
+[46] stringi_1.5.3            whisker_0.4              yaml_2.2.1              
+[49] MASS_7.3-53              grid_4.0.3               blob_1.2.1              
+[52] parallel_4.0.3           promises_1.1.1           crayon_1.3.4            
+[55] lattice_0.20-41          splines_4.0.3            haven_2.3.1             
+[58] hms_0.5.3                knitr_1.33               pillar_1.6.2            
+[61] reprex_0.3.0             glue_1.4.2               evaluate_0.14           
+[64] RcppArmadillo_0.10.1.2.0 data.table_1.14.0        modelr_0.1.8            
+[67] vctrs_0.3.8              tweenr_1.0.2             httpuv_1.5.4            
+[70] cellranger_1.1.0         gtable_0.3.0             polyclip_1.10-0         
+[73] assertthat_0.2.1         xfun_0.25                RcppEigen_0.3.3.7.0     
+[76] later_1.2.0              viridisLite_0.3.0        ncdf4_1.17              
+[79] ellipsis_0.3.2          </code></pre>
 </div>
 </div>
 </div>
