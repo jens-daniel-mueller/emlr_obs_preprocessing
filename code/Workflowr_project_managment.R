@@ -5,7 +5,7 @@
 
 # commit regular changes (locally) and rebuild site
 # this takes only changed files into account
-wflow_publish(all = TRUE, message = "delta EW crossover values determined")
+wflow_publish(all = TRUE, message = "calculate revelle factor historical")
 
 # commit changes including _site.yml (locally) and rebuild site in the specified order
 # you can also run this code with only some of the files. In this case remove the rebuild=TRUE command
@@ -26,7 +26,7 @@ wflow_publish(here::here(
     "analysis_regional_clusters.Rmd"
   )
 ),
-message = "rerun with Key 2004",
+message = "rerun with GLODAP cast column",
 republish = TRUE)
 
 

@@ -29,6 +29,7 @@ library(tidync)
 library(lubridate)
 library(marelac)
 library(broom)
+library(seacarb)
 ```
 
 # Read source files
@@ -45,7 +46,7 @@ basinmask <- basinmask %>%
 
 ```
 
-
+## OceanSODA
 
 ```{r read_OceanSODA}
 
@@ -60,7 +61,7 @@ OceanSODA <- OceanSODA %>%
   hyper_tibble()
 
 OceanSODA <- OceanSODA %>%
-  mutate(date = as.Date(time, origin = '1982-01-01'),
+  mutate(date = as.Date(time, origin = '1982-01-15'),
          year = year(date))
 
 OceanSODA <- OceanSODA %>%
@@ -70,13 +71,10 @@ OceanSODA <- OceanSODA %>%
          rev_fac = revelle_factor,
          pCO2 = spco2)
 
-OceanSODA <- OceanSODA %>%
-  mutate(lon = if_else(lon < 20, lon + 360, lon))
-
-OceanSODA <- inner_join(OceanSODA, basinmask)
 
 ```
 
+## SeaFlux
 
 ```{r read_SeaFlux}
 
@@ -88,8 +86,8 @@ icefrac <-
                 "SeaFluxV2021.01_icefrac_1988-2018.nc")) %>% 
   hyper_tibble()
 
-icefrac <- icefrac %>% 
-  mutate(date = as.Date(time, origin = '1988-01-01'),
+icefrac <- icefrac %>%
+  mutate(date = as.Date(time, origin = '1988-01-15'),
          year = year(date))
 
 kw <-
@@ -113,18 +111,43 @@ sol <-
   hyper_tibble()
 
 
+```
+
+## Join data
+
+```{r join_data}
+
 all_variables <- full_join(icefrac, kw)
 all_variables <- full_join(all_variables, pCO2atm)
 all_variables <- full_join(all_variables, sol)
 
-all_variables <- all_variables %>%
+OceanSODA <- inner_join(all_variables,
+                        OceanSODA)
+
+OceanSODA <- OceanSODA %>%
   mutate(lon = if_else(lon < 20, lon + 360, lon))
 
-OceanSODA <- inner_join(all_variables %>% select(-c(time)),
-                        OceanSODA)
+OceanSODA <- inner_join(OceanSODA, basinmask)
+
+OceanSODA <- OceanSODA %>% 
+  select(-time)
 
 ```
 
+## Atm pCO2
+
+```{r read_atm_pco2}
+
+# Note: this file is only created downstream in read_CO2_atm.Rmd
+co2_atm_reccap2 <-
+  read_csv(paste(path_preprocessing,
+                 "co2_atm_reccap2.csv",
+                 sep = ""))
+
+```
+
+
+# Air-sea disequilibrium
 
 ```{r air_sea_disequilibrium}
 
@@ -144,7 +167,7 @@ all_variables <- OceanSODA %>%
 all_variables <- all_variables %>%
   mutate(area = earth_surf(lat = lat))
 
-mol_to_g <- 12
+mol_to_g <- 12.011
 P <- 1e-15
 cm_to_m <- 100
 hr_to_yr <- 24 * 365
@@ -178,17 +201,13 @@ delta_pco2_annual <- delta_pco2_monthly %>%
   ) %>%
   ungroup()
 
-print(
-  ggplot() +
-    geom_path(data = delta_pco2_monthly,
-              aes(
-                decimal_date(time_mon), delta_pco2_glob, col = "monthly"
-              )) +
-    geom_path(data = delta_pco2_annual,
-              aes(year, delta_pco2_glob, col = "annual")) +
-    scale_color_brewer(palette = "Set1", name = "Average") +
-    labs(x = "year")
-)
+ggplot() +
+  geom_path(data = delta_pco2_monthly,
+            aes(decimal_date(time_mon), delta_pco2_glob, col = "monthly")) +
+  geom_path(data = delta_pco2_annual,
+            aes(year, delta_pco2_glob, col = "annual")) +
+  scale_color_brewer(palette = "Set1", name = "Average") +
+  labs(x = "year")
 
 print(
   ggplot() +
@@ -224,25 +243,13 @@ print(
     labs(x = "year")
 )
 
-# write raw data file for GLODAP-based subsetting model variables
-delta_pco2_annual %>%
-  select(-c(scaling_glob, fgco2_glob)) %>%
-  write_csv(file = paste(
-    path_preprocessing,
-    "OceanSODA_disequilibrium_annual.csv",
-    sep = ""
-  ))
-
-rm(delta_pco2_annual,
-   delta_pco2_monthly)
-
 
 ```
 
+# Compute climatologies
 
 
-
-```{r prep_OceanSODA}
+```{r prepare_OceanSODA_climatologies}
 
 # calculate annual averaged fields
 OceanSODA_annual_all <- OceanSODA %>%
@@ -324,8 +331,85 @@ OceanSODA_annual_glob_trend <- OceanSODA_annual_glob %>%
 
 ```
 
+```{r revelle_factor_time_series}
 
-## Write file
+map + 
+  geom_tile(data = OceanSODA_clim,
+            aes(lon, lat, fill = as.factor(year)))
+
+pco2_atm_2004 <- co2_atm_reccap2 %>% 
+  filter(year == 2004) %>% 
+  pull(pCO2)
+
+co2_atm_reccap2 <- co2_atm_reccap2 %>% 
+  mutate(delta_pCO2_hist = pCO2 - pco2_atm_2004)
+
+co2_atm_reccap2_decade <- co2_atm_reccap2 %>% 
+  filter(year > 1900) %>% 
+  mutate(year = ymd(paste(year, "-06-01"))) %>% 
+  mutate(decade = floor_date(year, years(10))) %>% 
+  group_by(decade) %>% 
+  summarise(delta_pCO2_hist = mean(delta_pCO2_hist)) %>% 
+  ungroup()
+
+co2_atm_reccap2_decade %>% 
+  ggplot(aes(decade, delta_pCO2_hist)) +
+  geom_point() +
+  geom_path()
+
+OceanSODA_revelle_hist <- expand_grid(
+  co2_atm_reccap2_decade,
+  OceanSODA_clim
+)
+
+OceanSODA_revelle_hist <- OceanSODA_revelle_hist %>% 
+  mutate(pCO2 = pCO2 + delta_pCO2_hist)
+
+map + 
+  geom_tile(data = OceanSODA_revelle_hist,
+            aes(lon, lat, fill = pCO2)) +
+  facet_wrap(~ decade) +
+  scale_fill_viridis_c()
+
+
+OceanSODA_revelle_hist <- OceanSODA_revelle_hist %>% 
+  mutate(
+    rev_fac = buffer(
+      flag = 24,
+      var1 = pCO2,
+      var2 = talk * 1e-6,
+      S = sal,
+      T = temp,
+      P = 0,
+      k1k2 = "l"
+    )$BetaD
+  )
+
+map + 
+  geom_tile(data = OceanSODA_revelle_hist,
+            aes(lon, lat, fill = rev_fac)) +
+  facet_wrap(~ decade) +
+  scale_fill_viridis_c()
+
+OceanSODA_revelle_hist_time_series <- OceanSODA_revelle_hist %>% 
+  mutate(area = earth_surf(lat, lon),
+         rev_fac_scaled = rev_fac * area) %>% 
+  group_by(decade) %>% 
+  summarise(rev_fac = sum(rev_fac_scaled) / sum(area)) %>% 
+  ungroup()
+
+OceanSODA_revelle_hist_time_series %>% 
+  ggplot(aes(decade, rev_fac))+
+  geom_point() + 
+  geom_path()
+
+
+```
+
+
+
+
+# Write files
 
 ```{r write_WOA18_nuts_O2_predictor_file}
 
@@ -333,11 +417,25 @@ OceanSODA_annual_all %>%
   write_csv(paste0(path_preprocessing,
                    "OceanSODA.csv"))
 
+OceanSODA_clim %>%
+  write_csv(paste0(path_preprocessing,
+                   "OceanSODA_climatology.csv"))
+
+OceanSODA_revelle_hist_time_series %>%
+  write_csv(paste0(path_preprocessing,
+                   "OceanSODA_revelle_hist_time_series.csv"))
+
+delta_pco2_annual %>%
+  select(-c(scaling_glob, fgco2_glob)) %>%
+  write_csv(paste0(path_preprocessing,
+                   "OceanSODA_disequilibrium_annual.csv"))
+
+
 ```
 
 
 
-## Control plots
+# Control plots
 
 ```{r OceanSODA_control_plots, fig.asp=0.5}
 
@@ -372,7 +470,7 @@ OceanSODA_clim %>%
   map( ~ map +
          geom_raster(data = .x,
                      aes(lon, lat, fill = value)) +
-         scale_fill_viridis_c(name = .x$parameter))
+         scale_fill_viridis_c(name = unique(.x$parameter)))
 
 
 ```
