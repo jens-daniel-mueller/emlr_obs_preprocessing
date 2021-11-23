@@ -494,6 +494,7 @@ IO_NS <- IO_NS %>%
          lon, lat, depth,
          cruise, station, cast,
          temp, sal, gamma,
+         tco2, talk, phosphate,
          starts_with("cstar"))
 
 
@@ -527,7 +528,7 @@ IO_NS <- IO_NS %>%
 
 ### Section
 
-```{r IO_NS_sections, fig.asp=1}
+```{r IO_NS_sections}
 
 
 IO_NS %>% 
@@ -537,9 +538,9 @@ IO_NS %>%
     ~ ggplot(data = .x,
              aes(lat , depth, col = value)) +
   geom_point() +
-  scale_color_viridis_c() +
+  scale_color_viridis_c(name = unique(.x$parameter)) +
   scale_y_reverse() +
-  facet_grid(year ~ parameter)
+  facet_grid(year ~ .)
   )
 
 
@@ -567,7 +568,8 @@ IO_NS %>%
 
 ```
 
-```{r IO_NS_profiles_gridded, fig.asp=2}
+
+```{r IO_NS_profiles_gridded, fig.asp=1.5}
 
 IO_NS_grid <- IO_NS %>% 
   select(lat, lon, depth, year, parameter, value) %>% 
@@ -579,8 +581,16 @@ IO_NS_grid <- IO_NS %>%
   ungroup()
 
 
-
-
+IO_NS_grid %>%
+  group_by(depth, year, parameter) %>%
+  summarise(value = mean(value, na.rm = TRUE)) %>%
+  ungroup() %>%
+  ggplot(aes(value , depth, fill = year)) +
+  geom_point(shape = 21) +
+  scale_fill_scico_d(direction = -1) +
+  scale_y_reverse() +
+  facet_wrap(~ parameter, scales = "free_x", ncol = 3)
+  
 ```
 
 ### Profiles, offset
@@ -684,6 +694,7 @@ IO_EW <- IO_EW %>%
          lon, lat, depth,
          cruise, station, cast,
          temp, sal, gamma,
+         tco2, talk, phosphate,
          starts_with("cstar"))
 
 
@@ -767,6 +778,16 @@ IO_EW_grid <- IO_EW %>%
   ungroup()
 
 
+IO_EW_grid %>%
+  group_by(depth, year, parameter) %>%
+  summarise(value = mean(value, na.rm = TRUE)) %>%
+  ungroup() %>%
+  ggplot(aes(value , depth, fill = year)) +
+  geom_point(shape = 21) +
+  scale_fill_scico_d(direction = -1) +
+  scale_y_reverse() +
+  facet_wrap(~ parameter, scales = "free_x", ncol = 3)
+
 ```
 
 ### Profiles, offset
@@ -831,7 +852,74 @@ IO_EW_grid_offset_mean %>%
 
 ```
 
+## Indian N-S + E-W
 
+
+```{r IO_NS_EW_profiles_gridded, fig.asp=2}
+
+IO_NS_EW_grid <- 
+  bind_rows(
+    IO_NS_grid %>%
+      filter(year %in% c("1995", "2007")) %>% 
+      mutate(year = recode(year, "2007" = "2004"),
+             lon = 999),
+    IO_EW_grid %>% 
+      mutate(lat = 999)
+  )
+
+
+IO_NS_EW_grid %>%
+  group_by(depth, year, parameter) %>%
+  summarise(value = mean(value, na.rm = TRUE)) %>%
+  ungroup() %>%
+  ggplot(aes(value , depth, fill = year)) +
+  geom_point(shape = 21) +
+  scale_fill_scico_d(direction = -1) +
+  scale_y_reverse() +
+  facet_wrap(~ parameter, scales = "free_x", ncol = 3)
+
+IO_NS_EW_grid_offset <- IO_NS_EW_grid %>% 
+  arrange(year) %>% 
+  group_by(lat, lon, depth, parameter) %>% 
+  mutate(delta_value = value - lag(value),
+         delta_year = paste(lag(year), year, sep = "-")) %>% 
+  ungroup() %>% 
+  drop_na()
+
+```
+
+
+### Mean offset
+
+```{r IO_NS_EW_mean_offset}
+
+IO_NS_EW_grid_offset_mean <-
+  IO_NS_EW_grid_offset %>%
+  group_by(parameter, delta_year) %>%
+  summarise(mean_delta_value = mean(delta_value),
+            sd_delta_value = sd(delta_value)) %>%
+  ungroup()
+
+IO_NS_EW_grid_offset_mean %>% 
+  filter(str_detect(parameter, "cstar")) %>% 
+  ggplot(aes(delta_year, mean_delta_value,
+             ymin = mean_delta_value - sd_delta_value,
+             ymax = mean_delta_value + sd_delta_value)) +
+  geom_hline(yintercept = 0) +
+  geom_pointrange() +
+  facet_wrap(~ parameter)
+
+IO_NS_EW_grid_offset_mean %>% 
+  filter(!(str_detect(parameter, "cstar"))) %>% 
+  ggplot(aes(delta_year, mean_delta_value,
+             ymin = mean_delta_value - sd_delta_value,
+             ymax = mean_delta_value + sd_delta_value)) +
+  geom_hline(yintercept = 0) +
+  geom_pointrange() +
+  facet_wrap(~ parameter, scales = "free_y")
+
+
+```
 
 
 # Write files
