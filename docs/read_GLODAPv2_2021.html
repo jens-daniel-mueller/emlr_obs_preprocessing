@@ -444,7 +444,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">GLODAPv2_2020</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">19 November, 2021</h4>
+<h4 class="date">23 November, 2021</h4>
 
 </div>
 
@@ -469,7 +469,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-11-19
+<strong>Last updated:</strong> 2021-11-23
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -560,16 +560,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree46c1246cafdf70c7dbb7681b04e429e202c7a969targetblank46c1246a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/46c1246cafdf70c7dbb7681b04e429e202c7a969" target="_blank">46c1246</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree7fb15cf1461f015364aea7eef625732809512493targetblank7fb15cfa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/7fb15cf1461f015364aea7eef625732809512493" target="_blank">7fb15cf</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree46c1246cafdf70c7dbb7681b04e429e202c7a969targetblank46c1246a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree7fb15cf1461f015364aea7eef625732809512493targetblank7fb15cfa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/46c1246cafdf70c7dbb7681b04e429e202c7a969" target="_blank">46c1246</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/7fb15cf1461f015364aea7eef625732809512493" target="_blank">7fb15cf</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -582,9 +582,6 @@ Ignored files:
 
 Untracked files:
     Untracked:  code/read_GLODAPv2_2020.Rmd
-
-Unstaged changes:
-    Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
 <p>
@@ -623,6 +620,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7fb15cf1461f015364aea7eef625732809512493/analysis/read_GLODAPv2_2021.Rmd" target="_blank">7fb15cf</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-23
+</td>
+<td>
+combined IO NS and EW analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/f2871b9bcfdcde95f53736bba2625b148e6f1bbb/docs/read_GLODAPv2_2021.html" target="_blank">f2871b9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-20
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1935,6 +1966,7 @@ IO_NS &lt;- IO_NS %&gt;%
          lon, lat, depth,
          cruise, station, cast,
          temp, sal, gamma,
+         tco2, talk, phosphate,
          starts_with(&quot;cstar&quot;))
 
 
@@ -2008,9 +2040,9 @@ jens-daniel-mueller
     ~ ggplot(data = .x,
              aes(lat , depth, col = value)) +
   geom_point() +
-  scale_color_viridis_c() +
+  scale_color_viridis_c(name = unique(.x$parameter)) +
   scale_y_reverse() +
-  facet_grid(year ~ parameter)
+  facet_grid(year ~ .)
   )</code></pre>
 <pre><code>[[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -2357,6 +2389,15 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[8]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[9]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-9.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[10]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-10.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="profiles-absolute" class="section level3" number="3.1.2">
 <h3 number="3.1.2"><span class="header-section-number">3.1.2</span> Profiles, absolute</h3>
@@ -2720,6 +2761,15 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[8]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[9]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-9.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[10]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-10.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>IO_NS_grid &lt;- IO_NS %&gt;% 
   select(lat, lon, depth, year, parameter, value) %&gt;% 
   mutate(depth = as.numeric(as.character(cut(depth,
@@ -2727,7 +2777,19 @@ jens-daniel-mueller
                      seq(250,1e4,500))))) %&gt;% 
   group_by(lat, depth, year, parameter) %&gt;% 
   summarise(value = mean(value, na.rm=TRUE)) %&gt;% 
-  ungroup()</code></pre>
+  ungroup()
+
+
+IO_NS_grid %&gt;%
+  group_by(depth, year, parameter) %&gt;%
+  summarise(value = mean(value, na.rm = TRUE)) %&gt;%
+  ungroup() %&gt;%
+  ggplot(aes(value , depth, fill = year)) +
+  geom_point(shape = 21) +
+  scale_fill_scico_d(direction = -1) +
+  scale_y_reverse() +
+  facet_wrap(~ parameter, scales = &quot;free_x&quot;, ncol = 3)</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="profiles-offset" class="section level3" number="3.1.3">
 <h3 number="3.1.3"><span class="header-section-number">3.1.3</span> Profiles, offset</h3>
@@ -3033,6 +3095,15 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[8]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[9]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-9.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[10]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-10.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="mean-offset" class="section level3" number="3.1.4">
 <h3 number="3.1.4"><span class="header-section-number">3.1.4</span> Mean offset</h3>
@@ -3220,6 +3291,7 @@ IO_EW &lt;- IO_EW %&gt;%
          lon, lat, depth,
          cruise, station, cast,
          temp, sal, gamma,
+         tco2, talk, phosphate,
          starts_with(&quot;cstar&quot;))
 
 
@@ -3574,6 +3646,15 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[8]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[9]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-9.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[10]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-10.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="profiles-absolute-1" class="section level3" number="3.2.2">
 <h3 number="3.2.2"><span class="header-section-number">3.2.2</span> Profiles, absolute</h3>
@@ -3871,6 +3952,15 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[8]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[9]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-9.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[10]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-10.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>IO_EW_grid &lt;- IO_EW %&gt;% 
   select(lon, lat, depth, year, parameter, value) %&gt;% 
   mutate(depth = as.numeric(as.character(cut(depth,
@@ -3878,7 +3968,19 @@ jens-daniel-mueller
                      seq(250,1e4,500))))) %&gt;% 
   group_by(lon, depth, year, parameter) %&gt;% 
   summarise(value = mean(value, na.rm=TRUE)) %&gt;% 
-  ungroup()</code></pre>
+  ungroup()
+
+
+IO_EW_grid %&gt;%
+  group_by(depth, year, parameter) %&gt;%
+  summarise(value = mean(value, na.rm = TRUE)) %&gt;%
+  ungroup() %&gt;%
+  ggplot(aes(value , depth, fill = year)) +
+  geom_point(shape = 21) +
+  scale_fill_scico_d(direction = -1) +
+  scale_y_reverse() +
+  facet_wrap(~ parameter, scales = &quot;free_x&quot;, ncol = 3)</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="profiles-offset-1" class="section level3" number="3.2.3">
 <h3 number="3.2.3"><span class="header-section-number">3.2.3</span> Profiles, offset</h3>
@@ -4184,6 +4286,15 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[8]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[9]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-9.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[10]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-10.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="mean-offset-1" class="section level3" number="3.2.4">
 <h3 number="3.2.4"><span class="header-section-number">3.2.4</span> Mean offset</h3>
@@ -4286,6 +4397,65 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+</div>
+</div>
+<div id="indian-n-s-e-w" class="section level2" number="3.3">
+<h2 number="3.3"><span class="header-section-number">3.3</span> Indian N-S + E-W</h2>
+<pre class="r"><code>IO_NS_EW_grid &lt;- 
+  bind_rows(
+    IO_NS_grid %&gt;%
+      filter(year %in% c(&quot;1995&quot;, &quot;2007&quot;)) %&gt;% 
+      mutate(year = recode(year, &quot;2007&quot; = &quot;2004&quot;),
+             lon = 999),
+    IO_EW_grid %&gt;% 
+      mutate(lat = 999)
+  )
+
+
+IO_NS_EW_grid %&gt;%
+  group_by(depth, year, parameter) %&gt;%
+  summarise(value = mean(value, na.rm = TRUE)) %&gt;%
+  ungroup() %&gt;%
+  ggplot(aes(value , depth, fill = year)) +
+  geom_point(shape = 21) +
+  scale_fill_scico_d(direction = -1) +
+  scale_y_reverse() +
+  facet_wrap(~ parameter, scales = &quot;free_x&quot;, ncol = 3)</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_EW_profiles_gridded-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>IO_NS_EW_grid_offset &lt;- IO_NS_EW_grid %&gt;% 
+  arrange(year) %&gt;% 
+  group_by(lat, lon, depth, parameter) %&gt;% 
+  mutate(delta_value = value - lag(value),
+         delta_year = paste(lag(year), year, sep = &quot;-&quot;)) %&gt;% 
+  ungroup() %&gt;% 
+  drop_na()</code></pre>
+<div id="mean-offset-2" class="section level3" number="3.3.1">
+<h3 number="3.3.1"><span class="header-section-number">3.3.1</span> Mean offset</h3>
+<pre class="r"><code>IO_NS_EW_grid_offset_mean &lt;-
+  IO_NS_EW_grid_offset %&gt;%
+  group_by(parameter, delta_year) %&gt;%
+  summarise(mean_delta_value = mean(delta_value),
+            sd_delta_value = sd(delta_value)) %&gt;%
+  ungroup()
+
+IO_NS_EW_grid_offset_mean %&gt;% 
+  filter(str_detect(parameter, &quot;cstar&quot;)) %&gt;% 
+  ggplot(aes(delta_year, mean_delta_value,
+             ymin = mean_delta_value - sd_delta_value,
+             ymax = mean_delta_value + sd_delta_value)) +
+  geom_hline(yintercept = 0) +
+  geom_pointrange() +
+  facet_wrap(~ parameter)</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_EW_mean_offset-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>IO_NS_EW_grid_offset_mean %&gt;% 
+  filter(!(str_detect(parameter, &quot;cstar&quot;))) %&gt;% 
+  ggplot(aes(delta_year, mean_delta_value,
+             ymin = mean_delta_value - sd_delta_value,
+             ymax = mean_delta_value + sd_delta_value)) +
+  geom_hline(yintercept = 0) +
+  geom_pointrange() +
+  facet_wrap(~ parameter, scales = &quot;free_y&quot;)</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_EW_mean_offset-2.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 </div>
@@ -6312,6 +6482,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f2871b9bcfdcde95f53736bba2625b148e6f1bbb/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-1.png" target="_blank">f2871b9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-20
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/c9363ce63998c02f18d225ec672f18ac2ebcbccb/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-1.png" target="_blank">c9363ce</a>
 </td>
 <td>
@@ -6392,6 +6573,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f2871b9bcfdcde95f53736bba2625b148e6f1bbb/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-2.png" target="_blank">f2871b9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-20
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/c9363ce63998c02f18d225ec672f18ac2ebcbccb/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-2.png" target="_blank">c9363ce</a>
@@ -6487,6 +6679,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f2871b9bcfdcde95f53736bba2625b148e6f1bbb/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-3.png" target="_blank">f2871b9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-20
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/c9363ce63998c02f18d225ec672f18ac2ebcbccb/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-3.png" target="_blank">c9363ce</a>
 </td>
 <td>
@@ -6580,6 +6783,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f2871b9bcfdcde95f53736bba2625b148e6f1bbb/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-4.png" target="_blank">f2871b9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-20
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/c9363ce63998c02f18d225ec672f18ac2ebcbccb/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-4.png" target="_blank">c9363ce</a>
 </td>
 <td>
@@ -6671,6 +6885,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f2871b9bcfdcde95f53736bba2625b148e6f1bbb/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-5.png" target="_blank">f2871b9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-20
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/c9363ce63998c02f18d225ec672f18ac2ebcbccb/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B-5.png" target="_blank">c9363ce</a>
