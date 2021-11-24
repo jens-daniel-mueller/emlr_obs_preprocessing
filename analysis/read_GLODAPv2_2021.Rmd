@@ -706,7 +706,7 @@ IO_EW <- IO_EW %>%
   filter(lon > 48)
 
 IO_EW <- IO_EW %>% 
-  filter(depth > 1500,
+  filter(depth > 2000,
          depth < 4000)
 
 map +
@@ -854,21 +854,54 @@ IO_EW_grid_offset_mean %>%
 
 ## Indian N-S + E-W
 
+```{r IO_NS_EW_map}
 
-```{r IO_NS_EW_profiles_gridded, fig.asp=2}
+map +
+  geom_tile(data = IO_EW %>% 
+              distinct(lon, lat, year),
+            aes(lon, lat)) +
+  geom_tile(data = IO_NS %>% 
+              distinct(lon, lat, year),
+            aes(lon, lat)) +
+  xlim(c(20,150)) +
+  ylim(c(-80, 40))
 
-IO_NS_EW_grid <- 
+
+```
+
+
+```{r IO_NS_EW_profiles_gridded, fig.asp=1}
+
+
+IO_NS_EW_grid <-
   bind_rows(
     IO_NS_grid %>%
-      filter(year %in% c("1995", "2007")) %>% 
+      filter(year %in% c("1995", "2007")) %>%
       mutate(year = recode(year, "2007" = "2004"),
              lon = 999),
-    IO_EW_grid %>% 
+    IO_EW_grid %>%
       mutate(lat = 999)
-  )
+  ) %>%
+  mutate(year = recode(year, "2004" = "2000s", "1995" = "1990s"))
+
+IO_NS_EW_grid %>%
+  filter(parameter %in% c("cstar", "tco2", "talk", "phosphate")) %>%
+  group_by(depth, year, parameter) %>%
+  summarise(value = mean(value, na.rm = TRUE)) %>%
+  ungroup() %>%
+  ggplot(aes(value , depth, fill = year, col = year)) +
+  geom_path() +
+  geom_point(shape = 21) +
+  scale_color_brewer(palette = "Set1",
+                    name = "decade") +
+  scale_fill_brewer(palette = "Set1",
+                    name = "decade") +
+  scale_y_reverse() +
+  facet_wrap( ~ parameter, scales = "free_x", ncol = 2)
 
 
 IO_NS_EW_grid %>%
+  filter(!(parameter %in% c("cstar", "tco2", "talk", "phosphate"))) %>% 
   group_by(depth, year, parameter) %>%
   summarise(value = mean(value, na.rm = TRUE)) %>%
   ungroup() %>%
