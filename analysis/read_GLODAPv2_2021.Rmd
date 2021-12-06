@@ -342,7 +342,67 @@ map +
 
 ```
 
-## Adjustments
+
+# Flagging
+
+## qc
+
+```{r qc_flagging, fig.asp=1.5}
+
+qc_flag <- full_join(
+  GLODAP,
+  GLODAP_expocodes
+)
+
+qc_flag <- qc_flag %>%
+  mutate(decade = cut(
+    year,
+    seq(1990, 2020, 10),
+    right = FALSE,
+    labels = c("1990-1999", "2000-2009", "2010-2019")
+  ),
+  .after = year) %>%
+  filter(!is.na(decade)) %>% 
+  select(lon, lat, basin_AIP, decade, cruise_expocode, ends_with("qc")) %>%
+  pivot_longer(ends_with("qc"),
+               names_to = "parameter",
+               values_to = "value")
+
+qc_flag_grid <- qc_flag %>%
+  count(lon, lat, decade, parameter, value)
+
+p_qc_flag_map <- qc_flag_grid %>% 
+  group_split(value) %>%
+  # head(1) %>% 
+  map(
+    ~map +
+  geom_tile(data = .x,
+            aes(lon, lat, fill=n)) +
+  facet_grid(parameter ~ decade) +
+  labs(title = paste("qc flag =", unique(.x$value))) +
+    scale_fill_viridis_c(option = "magma",
+                         direction = -1,
+                         trans = "log10")
+  )
+
+p_qc_flag_map
+
+pdf("output/qc_flag_coverage_maps.pdf")
+p_qc_flag_map
+dev.off()
+
+qc_flag %>% 
+  filter(basin_AIP == "Pacific",
+         decade == "1990-1999") %>% 
+  count(cruise_expocode, parameter, value) %>% 
+  arrange(value, -n) %>% 
+  write_csv("output/Pacific_1990_qc_by_cruise_and_parameter.csv")
+
+rm(qc_flag, qc_flag_grid, p_qc_flag_map)
+
+```
+
+# Adjustments
 
 Typically, the reasons for multiple expocode entries of the same cruise in the adjustment table list are:
 
@@ -447,6 +507,53 @@ GLODAP_adjustments %>%
   scale_y_log10() +
   facet_wrap(~ parameter, scales = "free_x")
 
+
+```
+
+# RV activity
+
+```{r RV_activity}
+
+RV_activity <- full_join(
+  GLODAP,
+  GLODAP_expocodes
+)
+
+RV_activity <- RV_activity %>%
+  mutate(decade = cut(
+    year,
+    seq(1990, 2020, 10),
+    right = FALSE,
+    labels = c("1990-1999", "2000-2009", "2010-2019")
+  ), .after = year) %>% 
+  filter(!is.na(decade))
+
+RV_activity <- RV_activity %>% 
+  mutate(RV = str_sub(cruise_expocode, 1, 4))
+
+RV_activity <- RV_activity %>% 
+  count(decade, basin_AIP, RV) %>% 
+  group_by(decade, basin_AIP) %>% 
+  mutate(n_total = sum(n)) %>% 
+  ungroup() %>% 
+  mutate(n_prop = 100* n / n_total)
+
+RV_activity <-RV_activity %>% 
+  group_by(decade, basin_AIP) %>% 
+  mutate(rank = rank(-n_prop)) %>% 
+  ungroup()
+
+RV_activity %>% 
+  ggplot(aes(rank, n_prop)) +
+  geom_line() +
+  geom_point() +
+  geom_text(data = RV_activity %>% filter(n_prop > 20),
+             aes(rank, n_prop, label = RV),
+             nudge_x = 5) +
+  labs(y = "proportion of tco2 samples (%)") +
+  facet_grid(decade ~ basin_AIP)
+
+rm(RV_activity)
 
 ```
 
