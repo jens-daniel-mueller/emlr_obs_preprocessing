@@ -99,6 +99,15 @@ and
 
 *You can check if thats the case by looking at which other carbon parameters are measured, i.e. by **checking their primary flags (e.g. G2talkf, G2tco2f and G2phts25p0f and G2fco2f). If only two are measured and one of them is fCO2, it means that the other carbon parameters (the ones with a primary flag of 0) are calculated using fCO2. Hence, for these instances no 2nd QC is done and the corresponding qc flag should be 0 and not 1.***
 
+```{r check_qc_values, eval=FALSE}
+
+GLODAP_qc_check <- GLODAP %>% 
+  filter(cruise == 717) %>% 
+  count(talkqc)
+
+```
+
+
 ```{r correct_qc_flag}
 
 # calculate number of measured co2 system variables
@@ -399,6 +408,63 @@ qc_flag %>%
   write_csv("output/Pacific_1990_qc_by_cruise_and_parameter.csv")
 
 rm(qc_flag, qc_flag_grid, p_qc_flag_map)
+
+```
+
+## f
+
+```{r f_flagging, fig.asp=1.5}
+
+f_flag <- full_join(
+  GLODAP,
+  GLODAP_expocodes
+)
+
+f_flag <- f_flag %>%
+  mutate(decade = cut(
+    year,
+    seq(1990, 2020, 10),
+    right = FALSE,
+    labels = c("1990-1999", "2000-2009", "2010-2019")
+  ),
+  .after = year) %>%
+  filter(!is.na(decade)) %>% 
+  select(lon, lat, basin_AIP, decade, cruise_expocode, ends_with("f")) %>%
+  pivot_longer(ends_with("f"),
+               names_to = "parameter",
+               values_to = "value")
+
+f_flag_grid <- f_flag %>%
+  count(lon, lat, decade, parameter, value)
+
+p_f_flag_map <- f_flag_grid %>% 
+  group_split(value) %>%
+  # head(1) %>% 
+  map(
+    ~map +
+  geom_tile(data = .x,
+            aes(lon, lat, fill=n)) +
+  facet_grid(parameter ~ decade) +
+  labs(title = paste("f flag =", unique(.x$value))) +
+    scale_fill_viridis_c(option = "magma",
+                         direction = -1,
+                         trans = "log10")
+  )
+
+p_f_flag_map
+
+pdf("output/f_flag_coverage_maps.pdf")
+p_f_flag_map
+dev.off()
+
+f_flag %>% 
+  filter(basin_AIP == "Pacific",
+         decade == "1990-1999") %>% 
+  count(cruise_expocode, parameter, value) %>% 
+  arrange(value, -n) %>% 
+  write_csv("output/Pacific_1990_f_by_cruise_and_parameter.csv")
+
+rm(f_flag, f_flag_grid, p_f_flag_map)
 
 ```
 
