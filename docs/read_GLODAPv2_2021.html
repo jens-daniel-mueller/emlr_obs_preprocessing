@@ -444,7 +444,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">GLODAPv2_2020</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">06 December, 2021</h4>
+<h4 class="date">08 December, 2021</h4>
 
 </div>
 
@@ -469,7 +469,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-12-06
+<strong>Last updated:</strong> 2021-12-08
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -560,16 +560,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeb578bd9b06e52b0562b82060365bd1e02904a824targetblankb578bd9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/b578bd9b06e52b0562b82060365bd1e02904a824" target="_blank">b578bd9</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreebadaed2f0464e54f4950711de04416ed2d5785b3targetblankbadaed2a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/badaed2f0464e54f4950711de04416ed2d5785b3" target="_blank">badaed2</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeb578bd9b06e52b0562b82060365bd1e02904a824targetblankb578bd9a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreebadaed2f0464e54f4950711de04416ed2d5785b3targetblankbadaed2a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/b578bd9b06e52b0562b82060365bd1e02904a824" target="_blank">b578bd9</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/badaed2f0464e54f4950711de04416ed2d5785b3" target="_blank">badaed2</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -578,7 +578,6 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
     Ignored:    data/
     Ignored:    output/
 
@@ -622,6 +621,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/badaed2f0464e54f4950711de04416ed2d5785b3/analysis/read_GLODAPv2_2021.Rmd" target="_blank">badaed2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-08
+</td>
+<td>
+plotted f maps
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/daa43b9852c98817bb42f9b739a4a07b58c1003b/docs/read_GLODAPv2_2021.html" target="_blank">daa43b9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-06
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1564,6 +1597,9 @@ GLODAP &lt;- GLODAP %&gt;%
 <p><em>Yes, the all calculated TA data from cruise 695 should have a talkqc of 0 (as they are based upon un QC’d fCO2 data…).</em></p>
 <p><em>And no (thanks to your hint and questions), I figured that <strong>this wrongly assigned 2nd QC flag is a problem for all calculated carbon data, which used fCO2 for the calculations</strong>. However, luckily this is not really often the case.</em></p>
 <p><em>You can check if thats the case by looking at which other carbon parameters are measured, i.e. by <strong>checking their primary flags (e.g. G2talkf, G2tco2f and G2phts25p0f and G2fco2f). If only two are measured and one of them is fCO2, it means that the other carbon parameters (the ones with a primary flag of 0) are calculated using fCO2. Hence, for these instances no 2nd QC is done and the corresponding qc flag should be 0 and not 1.</strong></em></p>
+<pre class="r"><code>GLODAP_qc_check &lt;- GLODAP %&gt;% 
+  filter(cruise == 717) %&gt;% 
+  count(talkqc)</code></pre>
 <pre class="r"><code># calculate number of measured co2 system variables
 
 GLODAP &lt;- GLODAP %&gt;%
@@ -1865,9 +1901,83 @@ p_qc_flag_map &lt;- qc_flag_grid %&gt;%
 p_qc_flag_map</code></pre>
 <pre><code>[[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/qc_flagging-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-qc_flagging-1">
+Past versions of qc_flagging-1.png
+</button>
+</p>
+<div id="fig-qc_flagging-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/daa43b9852c98817bb42f9b739a4a07b58c1003b/docs/figure/read_GLODAPv2_2021.Rmd/qc_flagging-1.png" target="_blank">daa43b9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[2]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/qc_flagging-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-qc_flagging-2">
+Past versions of qc_flagging-2.png
+</button>
+</p>
+<div id="fig-qc_flagging-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/daa43b9852c98817bb42f9b739a4a07b58c1003b/docs/figure/read_GLODAPv2_2021.Rmd/qc_flagging-2.png" target="_blank">daa43b9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>pdf(&quot;output/qc_flag_coverage_maps.pdf&quot;)
 p_qc_flag_map</code></pre>
 <pre><code>[[1]]</code></pre>
@@ -1884,6 +1994,72 @@ p_qc_flag_map</code></pre>
   write_csv(&quot;output/Pacific_1990_qc_by_cruise_and_parameter.csv&quot;)
 
 rm(qc_flag, qc_flag_grid, p_qc_flag_map)</code></pre>
+</div>
+<div id="f" class="section level2" number="3.2">
+<h2 number="3.2"><span class="header-section-number">3.2</span> f</h2>
+<pre class="r"><code>f_flag &lt;- full_join(
+  GLODAP,
+  GLODAP_expocodes
+)
+
+f_flag &lt;- f_flag %&gt;%
+  mutate(decade = cut(
+    year,
+    seq(1990, 2020, 10),
+    right = FALSE,
+    labels = c(&quot;1990-1999&quot;, &quot;2000-2009&quot;, &quot;2010-2019&quot;)
+  ),
+  .after = year) %&gt;%
+  filter(!is.na(decade)) %&gt;% 
+  select(lon, lat, basin_AIP, decade, cruise_expocode, ends_with(&quot;f&quot;)) %&gt;%
+  pivot_longer(ends_with(&quot;f&quot;),
+               names_to = &quot;parameter&quot;,
+               values_to = &quot;value&quot;)
+
+f_flag_grid &lt;- f_flag %&gt;%
+  count(lon, lat, decade, parameter, value)
+
+p_f_flag_map &lt;- f_flag_grid %&gt;% 
+  group_split(value) %&gt;%
+  # head(1) %&gt;% 
+  map(
+    ~map +
+  geom_tile(data = .x,
+            aes(lon, lat, fill=n)) +
+  facet_grid(parameter ~ decade) +
+  labs(title = paste(&quot;f flag =&quot;, unique(.x$value))) +
+    scale_fill_viridis_c(option = &quot;magma&quot;,
+                         direction = -1,
+                         trans = &quot;log10&quot;)
+  )
+
+p_f_flag_map</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/f_flagging-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/f_flagging-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/f_flagging-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>pdf(&quot;output/f_flag_coverage_maps.pdf&quot;)
+p_f_flag_map</code></pre>
+<pre><code>[[1]]</code></pre>
+<pre><code>
+[[2]]</code></pre>
+<pre><code>
+[[3]]</code></pre>
+<pre class="r"><code>dev.off()</code></pre>
+<pre><code>png 
+  2 </code></pre>
+<pre class="r"><code>f_flag %&gt;% 
+  filter(basin_AIP == &quot;Pacific&quot;,
+         decade == &quot;1990-1999&quot;) %&gt;% 
+  count(cruise_expocode, parameter, value) %&gt;% 
+  arrange(value, -n) %&gt;% 
+  write_csv(&quot;output/Pacific_1990_f_by_cruise_and_parameter.csv&quot;)
+
+rm(f_flag, f_flag_grid, p_f_flag_map)</code></pre>
 </div>
 </div>
 <div id="adjustments" class="section level1" number="4">
@@ -2064,6 +2240,43 @@ RV_activity %&gt;%
   labs(y = &quot;proportion of tco2 samples (%)&quot;) +
   facet_grid(decade ~ basin_AIP)</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/RV_activity-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-RV_activity-1">
+Past versions of RV_activity-1.png
+</button>
+</p>
+<div id="fig-RV_activity-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/daa43b9852c98817bb42f9b739a4a07b58c1003b/docs/figure/read_GLODAPv2_2021.Rmd/RV_activity-1.png" target="_blank">daa43b9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>rm(RV_activity)</code></pre>
 </div>
 <div id="crossover-checks" class="section level1" number="6">
