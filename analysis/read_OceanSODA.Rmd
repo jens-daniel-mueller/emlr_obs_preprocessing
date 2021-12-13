@@ -69,7 +69,8 @@ OceanSODA <- OceanSODA %>%
          sal = salinity, temp = temperature,
          tco2 = dic, talk, 
          rev_fac = revelle_factor,
-         pCO2 = spco2)
+         pCO2 = spco2,
+         fgco2)
 
 
 ```
@@ -279,6 +280,13 @@ OceanSODA_clim <- OceanSODA_annual %>%
   summarise_if(is.numeric, mean, na.rm = TRUE) %>% 
   ungroup()
 
+# calculate decadal climatological fields
+OceanSODA_clim_decadal <- OceanSODA_annual %>%
+  select(-c(grid_area)) %>% 
+  group_by(lat, lon, decade) %>%
+  summarise_if(is.numeric, mean, na.rm = TRUE) %>% 
+  ungroup()
+
 
 # calculate area-weighted annual mean within latitude band 
 OceanSODA_annual_lat <- OceanSODA_annual %>%
@@ -457,7 +465,7 @@ map +
 
 # Climatology map
 
-```{r rev_fac_climatology_maps, fig.asp=0.5}
+```{r climatology_maps, fig.asp=0.5}
 
 unique(OceanSODA_clim$year)
 
@@ -471,6 +479,25 @@ OceanSODA_clim %>%
          geom_raster(data = .x,
                      aes(lon, lat, fill = value)) +
          scale_fill_viridis_c(name = unique(.x$parameter)))
+
+
+```
+
+# Decadal climatology map
+
+```{r climatology_maps_decadal, fig.asp=1}
+
+OceanSODA_clim_decadal %>%
+  pivot_longer(sal:tco2_over_pCO2,
+               names_to = "parameter",
+               values_to = "value") %>%
+  group_split(parameter) %>%
+  # head(1) %>%
+  map( ~ map +
+         geom_raster(data = .x,
+                     aes(lon, lat, fill = value)) +
+         scale_fill_viridis_c(name = unique(.x$parameter)) +
+         facet_grid(decade ~ .))
 
 
 ```
