@@ -463,7 +463,9 @@ map +
 ```
 
 
-# Climatology map
+# Maps
+
+## Climatology
 
 ```{r climatology_maps, fig.asp=0.5}
 
@@ -483,7 +485,7 @@ OceanSODA_clim %>%
 
 ```
 
-# Decadal climatology map
+## Decadal climatology
 
 ```{r climatology_maps_decadal, fig.asp=1}
 
@@ -497,6 +499,41 @@ OceanSODA_clim_decadal %>%
          geom_raster(data = .x,
                      aes(lon, lat, fill = value)) +
          scale_fill_viridis_c(name = unique(.x$parameter)) +
+         facet_grid(decade ~ .))
+
+
+```
+
+
+## Decadal offset climatology
+
+```{r climatology_maps_decadal_offset, fig.asp=1}
+
+OceanSODA_clim_decadal_offset <- bind_rows(
+  OceanSODA_clim_decadal,
+  OceanSODA_clim %>% 
+    mutate(decade = "value_clim")
+)
+
+OceanSODA_clim_decadal_offset <- OceanSODA_clim_decadal_offset %>% 
+  pivot_longer(sal:tco2_over_pCO2,
+               names_to = "parameter",
+               values_to = "value") %>% 
+  select(lat, lon, decade, parameter, value) %>% 
+  pivot_wider(names_from = decade,
+              values_from = value) %>% 
+  pivot_longer(4:6,
+               names_to = "decade",
+               values_to = "value_decade") %>% 
+  mutate(offset = value_decade - value_clim)
+
+OceanSODA_clim_decadal_offset %>%
+  group_split(parameter) %>%
+  # head(1) %>%
+  map( ~ map +
+         geom_raster(data = .x,
+                     aes(lon, lat, fill = offset)) +
+         scale_fill_divergent(name = unique(.x$parameter)) +
          facet_grid(decade ~ .))
 
 
