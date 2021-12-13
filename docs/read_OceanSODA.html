@@ -444,7 +444,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">GLODAPv2_2016: Mapped Climatologies</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">22 November, 2021</h4>
+<h4 class="date">13 December, 2021</h4>
 
 </div>
 
@@ -469,7 +469,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-11-22
+<strong>Last updated:</strong> 2021-12-13
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -560,16 +560,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree5d9ebb223d1b7f6da4bbd5a3d2bbb11b2afe3ebatargetblank5d9ebb2a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/5d9ebb223d1b7f6da4bbd5a3d2bbb11b2afe3eba" target="_blank">5d9ebb2</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreecb88dbc2b25487049688d177309a653c131d98f2targetblankcb88dbca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/cb88dbc2b25487049688d177309a653c131d98f2" target="_blank">cb88dbc</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree5d9ebb223d1b7f6da4bbd5a3d2bbb11b2afe3ebatargetblank5d9ebb2a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreecb88dbc2b25487049688d177309a653c131d98f2targetblankcb88dbca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/5d9ebb223d1b7f6da4bbd5a3d2bbb11b2afe3eba" target="_blank">5d9ebb2</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/cb88dbc2b25487049688d177309a653c131d98f2" target="_blank">cb88dbc</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -579,6 +579,7 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/
+    Ignored:    output/
 
 Untracked files:
     Untracked:  code/read_GLODAPv2_2020.Rmd
@@ -620,6 +621,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/cb88dbc2b25487049688d177309a653c131d98f2/analysis/read_OceanSODA.Rmd" target="_blank">cb88dbc</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-13
+</td>
+<td>
+decadal climatology added
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/d6c2d11a19f66c68d52487b5dff951de39258a29/docs/read_OceanSODA.html" target="_blank">d6c2d11</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-22
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1114,7 +1149,8 @@ OceanSODA &lt;- OceanSODA %&gt;%
          sal = salinity, temp = temperature,
          tco2 = dic, talk, 
          rev_fac = revelle_factor,
-         pCO2 = spco2)</code></pre>
+         pCO2 = spco2,
+         fgco2)</code></pre>
 </div>
 <div id="seaflux" class="section level2" number="1.2">
 <h2 number="1.2"><span class="header-section-number">1.2</span> SeaFlux</h2>
@@ -1260,6 +1296,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d6c2d11a19f66c68d52487b5dff951de39258a29/docs/figure/read_OceanSODA.Rmd/air_sea_disequilibrium-1.png" target="_blank">d6c2d11</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-22
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/002b89cb6f0dbe245d77a907b682a9ea81ee6d6e/docs/figure/read_OceanSODA.Rmd/air_sea_disequilibrium-1.png" target="_blank">002b89c</a>
 </td>
 <td>
@@ -1351,6 +1398,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d6c2d11a19f66c68d52487b5dff951de39258a29/docs/figure/read_OceanSODA.Rmd/air_sea_disequilibrium-2.png" target="_blank">d6c2d11</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-22
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/002b89cb6f0dbe245d77a907b682a9ea81ee6d6e/docs/figure/read_OceanSODA.Rmd/air_sea_disequilibrium-2.png" target="_blank">002b89c</a>
 </td>
 <td>
@@ -1437,6 +1495,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d6c2d11a19f66c68d52487b5dff951de39258a29/docs/figure/read_OceanSODA.Rmd/air_sea_disequilibrium-3.png" target="_blank">d6c2d11</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-22
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/002b89cb6f0dbe245d77a907b682a9ea81ee6d6e/docs/figure/read_OceanSODA.Rmd/air_sea_disequilibrium-3.png" target="_blank">002b89c</a>
@@ -1537,6 +1606,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d6c2d11a19f66c68d52487b5dff951de39258a29/docs/figure/read_OceanSODA.Rmd/air_sea_disequilibrium-4.png" target="_blank">d6c2d11</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-22
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/002b89cb6f0dbe245d77a907b682a9ea81ee6d6e/docs/figure/read_OceanSODA.Rmd/air_sea_disequilibrium-4.png" target="_blank">002b89c</a>
 </td>
 <td>
@@ -1625,6 +1705,13 @@ OceanSODA_clim &lt;- OceanSODA_annual %&gt;%
   summarise_if(is.numeric, mean, na.rm = TRUE) %&gt;% 
   ungroup()
 
+# calculate decadal climatological fields
+OceanSODA_clim_decadal &lt;- OceanSODA_annual %&gt;%
+  select(-c(grid_area)) %&gt;% 
+  group_by(lat, lon, decade) %&gt;%
+  summarise_if(is.numeric, mean, na.rm = TRUE) %&gt;% 
+  ungroup()
+
 
 # calculate area-weighted annual mean within latitude band 
 OceanSODA_annual_lat &lt;- OceanSODA_annual %&gt;%
@@ -1678,6 +1765,43 @@ OceanSODA_annual_glob_trend &lt;- OceanSODA_annual_glob %&gt;%
   geom_tile(data = OceanSODA_clim,
             aes(lon, lat, fill = as.factor(year)))</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/revelle_factor_time_series-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-revelle_factor_time_series-1">
+Past versions of revelle_factor_time_series-1.png
+</button>
+</p>
+<div id="fig-revelle_factor_time_series-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d6c2d11a19f66c68d52487b5dff951de39258a29/docs/figure/read_OceanSODA.Rmd/revelle_factor_time_series-1.png" target="_blank">d6c2d11</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-22
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>pco2_atm_2004 &lt;- co2_atm_reccap2 %&gt;% 
   filter(year == 2004) %&gt;% 
   pull(pCO2)
@@ -1698,6 +1822,43 @@ co2_atm_reccap2_decade %&gt;%
   geom_point() +
   geom_path()</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/revelle_factor_time_series-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-revelle_factor_time_series-2">
+Past versions of revelle_factor_time_series-2.png
+</button>
+</p>
+<div id="fig-revelle_factor_time_series-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d6c2d11a19f66c68d52487b5dff951de39258a29/docs/figure/read_OceanSODA.Rmd/revelle_factor_time_series-2.png" target="_blank">d6c2d11</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-22
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>OceanSODA_revelle_hist &lt;- expand_grid(
   co2_atm_reccap2_decade,
   OceanSODA_clim
@@ -1712,6 +1873,43 @@ map +
   facet_wrap(~ decade) +
   scale_fill_viridis_c()</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/revelle_factor_time_series-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-revelle_factor_time_series-3">
+Past versions of revelle_factor_time_series-3.png
+</button>
+</p>
+<div id="fig-revelle_factor_time_series-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d6c2d11a19f66c68d52487b5dff951de39258a29/docs/figure/read_OceanSODA.Rmd/revelle_factor_time_series-3.png" target="_blank">d6c2d11</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-22
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>OceanSODA_revelle_hist &lt;- OceanSODA_revelle_hist %&gt;% 
   mutate(
     rev_fac = buffer(
@@ -1731,6 +1929,43 @@ map +
   facet_wrap(~ decade) +
   scale_fill_viridis_c()</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/revelle_factor_time_series-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-revelle_factor_time_series-4">
+Past versions of revelle_factor_time_series-4.png
+</button>
+</p>
+<div id="fig-revelle_factor_time_series-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d6c2d11a19f66c68d52487b5dff951de39258a29/docs/figure/read_OceanSODA.Rmd/revelle_factor_time_series-4.png" target="_blank">d6c2d11</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-22
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>OceanSODA_revelle_hist_time_series &lt;- OceanSODA_revelle_hist %&gt;% 
   mutate(area = earth_surf(lat, lon),
          rev_fac_scaled = rev_fac * area) %&gt;% 
@@ -1743,6 +1978,43 @@ OceanSODA_revelle_hist_time_series %&gt;%
   geom_point() + 
   geom_path()</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/revelle_factor_time_series-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-revelle_factor_time_series-5">
+Past versions of revelle_factor_time_series-5.png
+</button>
+</p>
+<div id="fig-revelle_factor_time_series-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d6c2d11a19f66c68d52487b5dff951de39258a29/docs/figure/read_OceanSODA.Rmd/revelle_factor_time_series-5.png" target="_blank">d6c2d11</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-22
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="write-files" class="section level1" number="4">
 <h1 number="4"><span class="header-section-number">4</span> Write files</h1>
@@ -1987,7 +2259,7 @@ jens-daniel-mueller
 <div id="climatology-map" class="section level1" number="6">
 <h1 number="6"><span class="header-section-number">6</span> Climatology map</h1>
 <pre class="r"><code>unique(OceanSODA_clim$year)</code></pre>
-<pre><code>[1] 2004.000 2011.000 2008.500 2004.400 2003.045</code></pre>
+<pre><code>[1] 2004.000 2003.786 2011.000 2008.500 2004.400 2003.045</code></pre>
 <pre class="r"><code>OceanSODA_clim %&gt;%
   pivot_longer(sal:tco2_over_pCO2,
                names_to = &quot;parameter&quot;,
@@ -1999,749 +2271,68 @@ jens-daniel-mueller
                      aes(lon, lat, fill = value)) +
          scale_fill_viridis_c(name = unique(.x$parameter)))</code></pre>
 <pre><code>[[1]]</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-rev_fac_climatology_maps-1">
-Past versions of rev_fac_climatology_maps-1.png
-</button>
-</p>
-<div id="fig-rev_fac_climatology_maps-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/002b89cb6f0dbe245d77a907b682a9ea81ee6d6e/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-1.png" target="_blank">002b89c</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-06
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/767aa261a17fee91741a7930c9a11647eb9ff7fe/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-1.png" target="_blank">767aa26</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-06
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/3a99e0b3fcdbefd05f5a5bda44e6828ae9b0ccfb/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-1.png" target="_blank">3a99e0b</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-05
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-1.png" target="_blank">5db29f4</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-05
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-1.png" target="_blank">ad81465</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-17
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4df00b5a141c1b3fbf24658798a8f0edc7871800/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-1.png" target="_blank">4df00b5</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-07
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-1.png" target="_blank">8186273</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-07
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/read_OceanSODA.Rmd/climatology_maps-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>
 [[2]]</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-rev_fac_climatology_maps-2">
-Past versions of rev_fac_climatology_maps-2.png
-</button>
-</p>
-<div id="fig-rev_fac_climatology_maps-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/002b89cb6f0dbe245d77a907b682a9ea81ee6d6e/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-2.png" target="_blank">002b89c</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-06
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/767aa261a17fee91741a7930c9a11647eb9ff7fe/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-2.png" target="_blank">767aa26</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-06
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/3a99e0b3fcdbefd05f5a5bda44e6828ae9b0ccfb/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-2.png" target="_blank">3a99e0b</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-05
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-2.png" target="_blank">5db29f4</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-05
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-2.png" target="_blank">ad81465</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-17
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4df00b5a141c1b3fbf24658798a8f0edc7871800/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-2.png" target="_blank">4df00b5</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-07
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-2.png" target="_blank">8186273</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-07
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/read_OceanSODA.Rmd/climatology_maps-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>
 [[3]]</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-3.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-rev_fac_climatology_maps-3">
-Past versions of rev_fac_climatology_maps-3.png
-</button>
-</p>
-<div id="fig-rev_fac_climatology_maps-3" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/002b89cb6f0dbe245d77a907b682a9ea81ee6d6e/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-3.png" target="_blank">002b89c</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-06
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/767aa261a17fee91741a7930c9a11647eb9ff7fe/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-3.png" target="_blank">767aa26</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-06
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/3a99e0b3fcdbefd05f5a5bda44e6828ae9b0ccfb/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-3.png" target="_blank">3a99e0b</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-05
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-3.png" target="_blank">5db29f4</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-05
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-3.png" target="_blank">ad81465</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-17
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4df00b5a141c1b3fbf24658798a8f0edc7871800/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-3.png" target="_blank">4df00b5</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-07
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-3.png" target="_blank">8186273</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-07
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/read_OceanSODA.Rmd/climatology_maps-3.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>
 [[4]]</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-4.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-rev_fac_climatology_maps-4">
-Past versions of rev_fac_climatology_maps-4.png
-</button>
-</p>
-<div id="fig-rev_fac_climatology_maps-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/002b89cb6f0dbe245d77a907b682a9ea81ee6d6e/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-4.png" target="_blank">002b89c</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-06
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/767aa261a17fee91741a7930c9a11647eb9ff7fe/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-4.png" target="_blank">767aa26</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-06
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/3a99e0b3fcdbefd05f5a5bda44e6828ae9b0ccfb/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-4.png" target="_blank">3a99e0b</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-05
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-4.png" target="_blank">5db29f4</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-05
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-4.png" target="_blank">ad81465</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-17
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4df00b5a141c1b3fbf24658798a8f0edc7871800/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-4.png" target="_blank">4df00b5</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-07
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-4.png" target="_blank">8186273</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-07
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/read_OceanSODA.Rmd/climatology_maps-4.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>
 [[5]]</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-5.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-rev_fac_climatology_maps-5">
-Past versions of rev_fac_climatology_maps-5.png
-</button>
-</p>
-<div id="fig-rev_fac_climatology_maps-5" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/002b89cb6f0dbe245d77a907b682a9ea81ee6d6e/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-5.png" target="_blank">002b89c</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-06
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/767aa261a17fee91741a7930c9a11647eb9ff7fe/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-5.png" target="_blank">767aa26</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-06
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/3a99e0b3fcdbefd05f5a5bda44e6828ae9b0ccfb/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-5.png" target="_blank">3a99e0b</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-05
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-5.png" target="_blank">5db29f4</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-05
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-5.png" target="_blank">ad81465</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-17
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4df00b5a141c1b3fbf24658798a8f0edc7871800/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-5.png" target="_blank">4df00b5</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-07
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-5.png" target="_blank">8186273</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-07
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/read_OceanSODA.Rmd/climatology_maps-5.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>
 [[6]]</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-6.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-rev_fac_climatology_maps-6">
-Past versions of rev_fac_climatology_maps-6.png
-</button>
-</p>
-<div id="fig-rev_fac_climatology_maps-6" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/002b89cb6f0dbe245d77a907b682a9ea81ee6d6e/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-6.png" target="_blank">002b89c</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-06
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/767aa261a17fee91741a7930c9a11647eb9ff7fe/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-6.png" target="_blank">767aa26</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-06
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/3a99e0b3fcdbefd05f5a5bda44e6828ae9b0ccfb/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-6.png" target="_blank">3a99e0b</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-05
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-6.png" target="_blank">5db29f4</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-05
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-6.png" target="_blank">ad81465</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-17
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4df00b5a141c1b3fbf24658798a8f0edc7871800/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-6.png" target="_blank">4df00b5</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-07
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-6.png" target="_blank">8186273</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-07
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/read_OceanSODA.Rmd/climatology_maps-6.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>
 [[7]]</code></pre>
-<p><img src="figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-7.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-rev_fac_climatology_maps-7">
-Past versions of rev_fac_climatology_maps-7.png
-</button>
-</p>
-<div id="fig-rev_fac_climatology_maps-7" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/002b89cb6f0dbe245d77a907b682a9ea81ee6d6e/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-7.png" target="_blank">002b89c</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-06
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/767aa261a17fee91741a7930c9a11647eb9ff7fe/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-7.png" target="_blank">767aa26</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-06
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/3a99e0b3fcdbefd05f5a5bda44e6828ae9b0ccfb/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-7.png" target="_blank">3a99e0b</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-05
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5db29f4d80b1694214e5c0f2b15852b23b93ceb6/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-7.png" target="_blank">5db29f4</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-05
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ad814652901e451f48cc0206567ea8f8ff44692b/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-7.png" target="_blank">ad81465</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-17
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4df00b5a141c1b3fbf24658798a8f0edc7871800/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-7.png" target="_blank">4df00b5</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-07
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8186273180f8135c84e8d2ecbad7bf7ae797cd63/docs/figure/read_OceanSODA.Rmd/rev_fac_climatology_maps-7.png" target="_blank">8186273</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-06-07
-</td>
-</tr>
-</tbody>
-</table>
+<p><img src="figure/read_OceanSODA.Rmd/climatology_maps-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[8]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/climatology_maps-8.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
+<div id="decadal-climatology-map" class="section level1" number="7">
+<h1 number="7"><span class="header-section-number">7</span> Decadal climatology map</h1>
+<pre class="r"><code>OceanSODA_clim_decadal %&gt;%
+  pivot_longer(sal:tco2_over_pCO2,
+               names_to = &quot;parameter&quot;,
+               values_to = &quot;value&quot;) %&gt;%
+  group_split(parameter) %&gt;%
+  # head(1) %&gt;%
+  map( ~ map +
+         geom_raster(data = .x,
+                     aes(lon, lat, fill = value)) +
+         scale_fill_viridis_c(name = unique(.x$parameter)) +
+         facet_grid(decade ~ .))</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/climatology_maps_decadal-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/climatology_maps_decadal-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/climatology_maps_decadal-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[4]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/climatology_maps_decadal-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[5]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/climatology_maps_decadal-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[6]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/climatology_maps_decadal-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[7]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/climatology_maps_decadal-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[8]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/climatology_maps_decadal-8.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-</div>
-<div id="time-series" class="section level1" number="7">
-<h1 number="7"><span class="header-section-number">7</span> Time series</h1>
+<div id="time-series" class="section level1" number="8">
+<h1 number="8"><span class="header-section-number">8</span> Time series</h1>
 <pre class="r"><code>OceanSODA_annual_lat %&gt;%
   group_split(parameter) %&gt;%
   # head(1) %&gt;%
@@ -3417,11 +3008,14 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[8]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/time_series-8.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="decadel-trends" class="section level1" number="8">
-<h1 number="8"><span class="header-section-number">8</span> Decadel trends</h1>
-<div id="global" class="section level2" number="8.1">
-<h2 number="8.1"><span class="header-section-number">8.1</span> Global</h2>
+<div id="decadel-trends" class="section level1" number="9">
+<h1 number="9"><span class="header-section-number">9</span> Decadel trends</h1>
+<div id="global" class="section level2" number="9.1">
+<h2 number="9.1"><span class="header-section-number">9.1</span> Global</h2>
 <pre class="r"><code>OceanSODA_annual_glob %&gt;%
   group_split(parameter) %&gt;%
   # head(1) %&gt;%
@@ -4097,19 +3691,8 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>OceanSODA_annual_glob_trend %&gt;%
-  filter(term == &quot;year&quot;) %&gt;%
-  group_split(parameter) %&gt;%
-  # head(1) %&gt;%
-  map(
-    ~ ggplot(data = .x,
-             aes(decade, estimate)) +
-      scale_fill_brewer(palette = &quot;Spectral&quot;) +
-      geom_point(shape = 21) +
-      geom_path() +
-      labs(y = paste(.x$parameter, &quot;annual change&quot;))
-  )</code></pre>
-<pre><code>[[1]]</code></pre>
+<pre><code>
+[[8]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/decadel_trends_glob-8.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-decadel_trends_glob-8">
@@ -4203,8 +3786,19 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>
-[[2]]</code></pre>
+<pre class="r"><code>OceanSODA_annual_glob_trend %&gt;%
+  filter(term == &quot;year&quot;) %&gt;%
+  group_split(parameter) %&gt;%
+  # head(1) %&gt;%
+  map(
+    ~ ggplot(data = .x,
+             aes(decade, estimate)) +
+      scale_fill_brewer(palette = &quot;Spectral&quot;) +
+      geom_point(shape = 21) +
+      geom_path() +
+      labs(y = paste(.x$parameter, &quot;annual change&quot;))
+  )</code></pre>
+<pre><code>[[1]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/decadel_trends_glob-9.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-decadel_trends_glob-9">
@@ -4299,7 +3893,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[3]]</code></pre>
+[[2]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/decadel_trends_glob-10.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-decadel_trends_glob-10">
@@ -4394,7 +3988,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[4]]</code></pre>
+[[3]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/decadel_trends_glob-11.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-decadel_trends_glob-11">
@@ -4489,7 +4083,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[5]]</code></pre>
+[[4]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/decadel_trends_glob-12.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-decadel_trends_glob-12">
@@ -4584,7 +4178,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[6]]</code></pre>
+[[5]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/decadel_trends_glob-13.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-decadel_trends_glob-13">
@@ -4679,7 +4273,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[7]]</code></pre>
+[[6]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/decadel_trends_glob-14.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-decadel_trends_glob-14">
@@ -4773,9 +4367,15 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[7]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_glob-15.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[8]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_glob-16.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="latitude-bands" class="section level2" number="8.2">
-<h2 number="8.2"><span class="header-section-number">8.2</span> Latitude bands</h2>
+<div id="latitude-bands" class="section level2" number="9.2">
+<h2 number="9.2"><span class="header-section-number">9.2</span> Latitude bands</h2>
 <pre class="r"><code>OceanSODA_annual_lat %&gt;%
   group_split(parameter) %&gt;%
   # head(1) %&gt;%
@@ -5452,19 +5052,8 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>OceanSODA_annual_lat_trend %&gt;%
-  filter(term == &quot;year&quot;) %&gt;%
-  group_split(parameter) %&gt;%
-  # head(1) %&gt;%
-  map(
-    ~ ggplot(data = .x,
-             aes(decade, estimate, fill = lat_bands)) +
-      scale_fill_brewer(palette = &quot;Spectral&quot;) +
-      geom_point(shape = 21) +
-      geom_path() +
-      labs(y = paste(.x$parameter, &quot;annual change&quot;))
-  )</code></pre>
-<pre><code>[[1]]</code></pre>
+<pre><code>
+[[8]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/decadel_trends_lat-8.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-decadel_trends_lat-8">
@@ -5558,8 +5147,19 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>
-[[2]]</code></pre>
+<pre class="r"><code>OceanSODA_annual_lat_trend %&gt;%
+  filter(term == &quot;year&quot;) %&gt;%
+  group_split(parameter) %&gt;%
+  # head(1) %&gt;%
+  map(
+    ~ ggplot(data = .x,
+             aes(decade, estimate, fill = lat_bands)) +
+      scale_fill_brewer(palette = &quot;Spectral&quot;) +
+      geom_point(shape = 21) +
+      geom_path() +
+      labs(y = paste(.x$parameter, &quot;annual change&quot;))
+  )</code></pre>
+<pre><code>[[1]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/decadel_trends_lat-9.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-decadel_trends_lat-9">
@@ -5654,7 +5254,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[3]]</code></pre>
+[[2]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/decadel_trends_lat-10.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-decadel_trends_lat-10">
@@ -5749,7 +5349,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[4]]</code></pre>
+[[3]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/decadel_trends_lat-11.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-decadel_trends_lat-11">
@@ -5844,7 +5444,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[5]]</code></pre>
+[[4]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/decadel_trends_lat-12.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-decadel_trends_lat-12">
@@ -5939,7 +5539,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[6]]</code></pre>
+[[5]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/decadel_trends_lat-13.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-decadel_trends_lat-13">
@@ -6034,7 +5634,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[7]]</code></pre>
+[[6]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/decadel_trends_lat-14.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-decadel_trends_lat-14">
@@ -6128,6 +5728,12 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[7]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_lat-15.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[8]]</code></pre>
+<p><img src="figure/read_OceanSODA.Rmd/decadel_trends_lat-16.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
