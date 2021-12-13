@@ -468,6 +468,134 @@ rm(f_flag, f_flag_grid, p_f_flag_map)
 
 ```
 
+## P18 phosphate
+
+
+```{r P18_nitrate}
+
+P18 <- full_join(
+  GLODAP,
+  GLODAP_expocodes
+)
+
+P18 <- P18 %>% 
+  filter(cruise_expocode %in% c("33RO20161119",
+                                "33RO20071215",
+                                "31DS19940126"))
+
+
+P18 %>% 
+  filter(!is.na(nitrate)) %>% 
+  ggplot(aes(lat, depth, col= nitrate)) +
+  geom_point() +
+  scale_color_viridis_c() +
+  scale_y_reverse() +
+  facet_grid(cruise_expocode ~.)
+
+P18_grid <- P18 %>% 
+  select(lat, lon, depth, cruise_expocode, nitrate) %>% 
+  mutate(depth = as.numeric(as.character(cut(depth,
+                     seq(0,1e4, 500), 
+                     seq(250,1e4,500))))) %>% 
+  group_by(lat, depth, cruise_expocode) %>% 
+  summarise(nitrate = mean(nitrate, na.rm=TRUE)) %>% 
+  ungroup()
+
+P18_grid %>% 
+  ggplot(aes(lat, depth, col= nitrate)) +
+  geom_point() +
+  scale_color_viridis_c() +
+  scale_y_reverse() +
+  facet_grid(cruise_expocode ~.)
+
+P18_grid %>% 
+  pivot_wider(names_from = cruise_expocode,
+              values_from = nitrate) %>% 
+  mutate(delta_nitrate_1994_2007 = `31DS19940126` - `33RO20071215`,
+         delta_nitrate_1994_2016 = `31DS19940126` - `33RO20161119`,
+         delta_nitrate_2007_2016 = `33RO20071215` - `33RO20161119`) %>% 
+  select(lat, depth, starts_with("delta")) %>% 
+  pivot_longer(starts_with("delta"),
+               values_to = "delta_nitrate",
+               names_to = "years",
+               names_prefix = "delta_nitrate_") %>% 
+  filter(delta_nitrate > -20,
+         depth > 1500) %>% 
+  ggplot(aes(lat, depth, col= delta_nitrate)) +
+  geom_point() +
+  scale_color_divergent() +
+  scale_y_reverse() +
+  facet_grid(years ~.)
+
+rm(P18, P18_grid)
+
+```
+
+
+```{r P18_nitrate_phosphate}
+
+P18 <- full_join(
+  GLODAP,
+  GLODAP_expocodes
+)
+
+P18 <- P18 %>% 
+  filter(cruise_expocode %in% c("33RO20161119",
+                                "33RO20071215",
+                                "31DS19940126"))
+
+P18 <- P18 %>% 
+  mutate(nitrate = nitrate / phosphate)
+
+
+P18 %>% 
+  filter(!is.na(nitrate)) %>% 
+  ggplot(aes(lat, depth, col= nitrate)) +
+  geom_point() +
+  scale_color_viridis_c() +
+  scale_y_reverse() +
+  facet_grid(cruise_expocode ~.)
+
+P18_grid <- P18 %>% 
+  select(lat, lon, depth, cruise_expocode, nitrate) %>% 
+  mutate(depth = as.numeric(as.character(cut(depth,
+                     seq(0,1e4, 500), 
+                     seq(250,1e4,500))))) %>% 
+  group_by(lat, depth, cruise_expocode) %>% 
+  summarise(nitrate = mean(nitrate, na.rm=TRUE)) %>% 
+  ungroup()
+
+P18_grid %>% 
+  ggplot(aes(lat, depth, col= nitrate)) +
+  geom_point() +
+  scale_color_viridis_c() +
+  scale_y_reverse() +
+  facet_grid(cruise_expocode ~.)
+
+P18_grid %>% 
+  pivot_wider(names_from = cruise_expocode,
+              values_from = nitrate) %>% 
+  mutate(delta_nitrate_1994_2007 = `31DS19940126` - `33RO20071215`,
+         delta_nitrate_1994_2016 = `31DS19940126` - `33RO20161119`,
+         delta_nitrate_2007_2016 = `33RO20071215` - `33RO20161119`) %>% 
+  select(lat, depth, starts_with("delta")) %>% 
+  pivot_longer(starts_with("delta"),
+               values_to = "delta_nitrate",
+               names_to = "years",
+               names_prefix = "delta_nitrate_") %>% 
+  filter(delta_nitrate > -20,
+         depth > 1500) %>% 
+  ggplot(aes(lat, depth, col= delta_nitrate)) +
+  geom_point() +
+  scale_color_divergent() +
+  scale_y_reverse() +
+  facet_grid(years ~.)
+
+rm(P18, P18_grid)
+
+```
+
+
 # Adjustments
 
 Typically, the reasons for multiple expocode entries of the same cruise in the adjustment table list are:
