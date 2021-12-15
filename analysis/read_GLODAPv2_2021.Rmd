@@ -468,6 +468,61 @@ rm(f_flag, f_flag_grid, p_f_flag_map)
 
 ```
 
+
+## data loss assesment
+
+```{r data_loss_assesment, fig.asp=1}
+
+loss <- full_join(
+  GLODAP,
+  GLODAP_expocodes
+)
+
+loss <- loss %>%
+  mutate(decade = cut(
+    year,
+    seq(1989, 2020, 10),
+    right = FALSE,
+    labels = c("1989-1999", "2000-2009", "2010-2019")
+  ),
+  .after = year) %>%
+  filter(!is.na(decade))
+
+loss <- loss %>% 
+  filter(if_all(ends_with("f"), ~ . != 9))
+
+loss_qc <- loss %>% 
+  select(lon, lat, basin_AIP, decade, cruise_expocode, ends_with("qc")) %>%
+  pivot_longer(ends_with("qc"),
+               names_to = "parameter",
+               values_to = "value")
+
+loss_qc %>% 
+  group_by(cruise_expocode, basin_AIP, decade, parameter, value) %>% 
+  count() %>% 
+  ungroup() %>% 
+  pivot_wider(names_from = value,
+              names_prefix = "qc_",
+              values_from = n,
+              values_fill = 0) %>% 
+  mutate(n_total = qc_0 + qc_1,
+         category = if_else(qc_0 <= 0.1*(n_total), "OK", "loss")) %>% 
+  group_by(basin_AIP, decade) %>% 
+  mutate(rank_n_total = rank(-n_total)) %>% 
+  ungroup() %>% 
+  filter(basin_AIP == "Atlantic") %>% 
+  ggplot(aes(rank_n_total, n_total, col=category)) +
+  geom_point() +
+  facet_grid(parameter ~ decade)
+
+
+
+
+```
+
+
+
+
 ## P18 phosphate
 
 ```{r P18_nitrate}
@@ -1463,7 +1518,7 @@ GLODAP_time_series %>%
 
 ## Comparison to GLODAP
 
-```{r CANYON-B, fig.asp=0.4}
+```{r CANYON-B, fig.asp=0.4, eval=FALSE}
 
 source("/net/kryo/work/uptools/co2_calculation/CANYON-B/CANYONB.R")
 
@@ -1575,7 +1630,7 @@ for (i_variable in variables) {
 
 ## Write Canyon-B file
 
-```{r write_Canyon-B_data_file}
+```{r write_Canyon-B_data_file, eval=FALSE}
 
 GLODAP_Can_B %>% 
   select(row_number,
