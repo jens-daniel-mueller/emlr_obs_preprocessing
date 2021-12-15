@@ -37,6 +37,8 @@
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -560,16 +562,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree554383a81beb174d78966a4ad53579b9f86514eftargetblank554383aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/554383a81beb174d78966a4ad53579b9f86514ef" target="_blank">554383a</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeacff55344b5f799512c3621d713d9b8fc59efb3btargetblankacff553a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/acff55344b5f799512c3621d713d9b8fc59efb3b" target="_blank">acff553</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree554383a81beb174d78966a4ad53579b9f86514eftargetblank554383aa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeacff55344b5f799512c3621d713d9b8fc59efb3btargetblankacff553a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/554383a81beb174d78966a4ad53579b9f86514ef" target="_blank">554383a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/acff55344b5f799512c3621d713d9b8fc59efb3b" target="_blank">acff553</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -621,6 +623,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/acff55344b5f799512c3621d713d9b8fc59efb3b/analysis/read_GLODAPv2_2021.Rmd" target="_blank">acff553</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+<td>
+plot qc data loss by cruise size
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/read_GLODAPv2_2021.html" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -2326,9 +2362,10 @@ loss &lt;- loss %&gt;%
   filter(!is.na(decade))
 
 loss &lt;- loss %&gt;% 
-  filter(if_all(ends_with(&quot;f&quot;), ~ . != 9))
-
-loss_qc &lt;- loss %&gt;% 
+  filter(if_all(ends_with(&quot;f&quot;), ~ . != 9))</code></pre>
+<div id="qc-1" class="section level3" number="3.3.1">
+<h3 number="3.3.1"><span class="header-section-number">3.3.1</span> qc</h3>
+<pre class="r"><code>loss_qc &lt;- loss %&gt;% 
   select(lon, lat, basin_AIP, decade, cruise_expocode, ends_with(&quot;qc&quot;)) %&gt;%
   pivot_longer(ends_with(&quot;qc&quot;),
                names_to = &quot;parameter&quot;,
@@ -2377,61 +2414,1677 @@ loss_qc_cruise %&gt;%
   map(
     ~ ggplot(data = .x,
              aes(rank_n_total, n_total, fill = as.factor(loss))) +
-      geom_label_repel(
-        data = .x %&gt;% filter(loss &gt; 0),
-        aes(label = cruise_expocode)
-      ) +
       geom_point(shape = 21, size = 2) +
-      scale_fill_brewer(palette = &quot;Spectral&quot;, direction = -1) +
+      scale_fill_brewer(palette = &quot;Spectral&quot;, direction = -1,
+                        name = &quot;variables missing&quot;) +
       facet_grid(decade ~ parameter_class) +
       labs(title = paste(&quot;basin_AIP:&quot;, unique(.x$basin_AIP))) +
       ylim(0, NA)
   )</code></pre>
 <pre><code>[[1]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/data_loss_assesment-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-data_loss_assesment-1">
-Past versions of data_loss_assesment-1.png
-</button>
-</p>
-<div id="fig-data_loss_assesment-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
+<p><img src="figure/read_GLODAPv2_2021.Rmd/qc_loss-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/qc_loss-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/qc_loss-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>loss_qc_cruise %&gt;% 
+  filter(loss &gt; 0, rank_n_total &lt;= 20) %&gt;% 
+  select(basin_AIP, decade, parameter_class, rank_n_total, cruise_expocode) %&gt;% 
+  arrange(basin_AIP, decade, parameter_class, rank_n_total) %&gt;% 
+  kable() %&gt;% 
+  kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th>
-Version
+<th style="text-align:left;">
+basin_AIP
 </th>
-<th>
-Author
+<th style="text-align:left;">
+decade
 </th>
-<th>
-Date
+<th style="text-align:left;">
+parameter_class
+</th>
+<th style="text-align:right;">
+rank_n_total
+</th>
+<th style="text-align:left;">
+cruise_expocode
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/faa6b3c12f5be77b652d6c8006c87966b0145be2/docs/figure/read_GLODAPv2_2021.Rmd/data_loss_assesment-1.png" target="_blank">faa6b3c</a>
+<td style="text-align:left;">
+Atlantic
 </td>
-<td>
-jens-daniel-mueller
+<td style="text-align:left;">
+1989-1999
 </td>
-<td>
-2021-12-15
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+15.0
+</td>
+<td style="text-align:left;">
+06AQ19920929
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+17.5
+</td>
+<td style="text-align:left;">
+58JH19940723
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+19.0
+</td>
+<td style="text-align:left;">
+06MT19970107
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+11.0
+</td>
+<td style="text-align:left;">
+06MT19900123
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+12.0
+</td>
+<td style="text-align:left;">
+33LK19960415
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+13.0
+</td>
+<td style="text-align:left;">
+33MW19930704
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+14.0
+</td>
+<td style="text-align:left;">
+35LU19890509
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+15.0
+</td>
+<td style="text-align:left;">
+06AQ19920929
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+17.5
+</td>
+<td style="text-align:left;">
+58JH19940723
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+17.5
+</td>
+<td style="text-align:left;">
+74AB19910501
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+20.0
+</td>
+<td style="text-align:left;">
+64TR19900417
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+7.0
+</td>
+<td style="text-align:left;">
+35TH20010823
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+13.0
+</td>
+<td style="text-align:left;">
+33RO20070710
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+16.0
+</td>
+<td style="text-align:left;">
+64PE20050817
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+19.0
+</td>
+<td style="text-align:left;">
+06MT20060712
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+7.0
+</td>
+<td style="text-align:left;">
+35TH20010823
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+8.0
+</td>
+<td style="text-align:left;">
+74DI20040404
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+9.0
+</td>
+<td style="text-align:left;">
+35TH20080610
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+11.0
+</td>
+<td style="text-align:left;">
+35TH20040604
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+12.0
+</td>
+<td style="text-align:left;">
+35TH20020611
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+14.0
+</td>
+<td style="text-align:left;">
+06M220060523
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+16.0
+</td>
+<td style="text-align:left;">
+64PE20050817
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+19.0
+</td>
+<td style="text-align:left;">
+06MT20060712
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+5.0
+</td>
+<td style="text-align:left;">
+74EQ20151206
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+13.0
+</td>
+<td style="text-align:left;">
+35TH20100608
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+14.0
+</td>
+<td style="text-align:left;">
+29AH20160617
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+16.0
+</td>
+<td style="text-align:left;">
+29AH20120623
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+18.0
+</td>
+<td style="text-align:left;">
+35UCKERFIXTS
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+11.0
+</td>
+<td style="text-align:left;">
+320619960503
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+18.0
+</td>
+<td style="text-align:left;">
+35UCKERFIXTS
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+10.0
+</td>
+<td style="text-align:left;">
+74DI20041103
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+11.0
+</td>
+<td style="text-align:left;">
+74DI20041213
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+10.0
+</td>
+<td style="text-align:left;">
+35MF20090103
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+11.0
+</td>
+<td style="text-align:left;">
+096U20160108
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+12.0
+</td>
+<td style="text-align:left;">
+91AA20171209
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+10.0
+</td>
+<td style="text-align:left;">
+35MF20090103
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+11.0
+</td>
+<td style="text-align:left;">
+096U20160108
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+12.0
+</td>
+<td style="text-align:left;">
+91AA20171209
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+2.0
+</td>
+<td style="text-align:left;">
+31DS19940126
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+4.0
+</td>
+<td style="text-align:left;">
+31DS19920907
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+4.0
+</td>
+<td style="text-align:left;">
+31DS19920907
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+6.0
+</td>
+<td style="text-align:left;">
+316N19930222
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+7.0
+</td>
+<td style="text-align:left;">
+316N19921006
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+8.0
+</td>
+<td style="text-align:left;">
+90KD19920214
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+11.0
+</td>
+<td style="text-align:left;">
+316N19921204
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+13.0
+</td>
+<td style="text-align:left;">
+31WT19910716
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+18.5
+</td>
+<td style="text-align:left;">
+316N19920502
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+18.5
+</td>
+<td style="text-align:left;">
+49HG19971110
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+17.0
+</td>
+<td style="text-align:left;">
+33RO20160505
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+17.0
+</td>
+<td style="text-align:left;">
+33RO20160505
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-</div>
+<div id="f-1" class="section level3" number="3.3.2">
+<h3 number="3.3.2"><span class="header-section-number">3.3.2</span> f</h3>
+<pre class="r"><code>loss_f &lt;- loss %&gt;% 
+  select(lon, lat, basin_AIP, decade, cruise_expocode, ends_with(&quot;f&quot;)) %&gt;%
+  pivot_longer(ends_with(&quot;f&quot;),
+               names_to = &quot;parameter&quot;,
+               values_to = &quot;value&quot;) %&gt;% 
+  mutate(parameter = str_remove(parameter, &quot;f&quot;))
+
+loss_f_cruise &lt;- loss_f %&gt;%
+  count(cruise_expocode, basin_AIP, decade, parameter, value) %&gt;%
+  pivot_wider(
+    names_from = value,
+    names_prefix = &quot;f_&quot;,
+    values_from = n,
+    values_fill = 0
+  ) %&gt;%
+  mutate(n_total = f_0 + f_2,
+         category = if_else(f_0 &lt;= 0.1 * (n_total), &quot;OK&quot;, &quot;loss&quot;)) %&gt;%
+  mutate(parameter_class = if_else(
+    parameter %in% c(&quot;tco2&quot;, &quot;talk&quot;, &quot;phosphate&quot;),
+    &quot;target&quot;,
+    &quot;predictor&quot;
+  )) %&gt;%
+  count(cruise_expocode,
+        basin_AIP,
+        decade,
+        n_total,
+        parameter_class,
+        category) %&gt;% 
+  pivot_wider(names_from = category,
+              values_from = n,
+              values_fill = 0) %&gt;% 
+  select(-OK) %&gt;% 
+  pivot_wider(names_from = parameter_class,
+              values_from = loss) %&gt;% 
+  group_by(basin_AIP, decade) %&gt;%
+  mutate(rank_n_total = rank(-n_total)) %&gt;%
+  ungroup() %&gt;% 
+  pivot_longer(predictor:target,
+               names_to = &quot;parameter_class&quot;,
+               values_to = &quot;loss&quot;)
+
+
+loss_f_cruise %&gt;%
+  filter(rank_n_total &lt;= 20) %&gt;%
+  group_split(basin_AIP) %&gt;%
+  # head(1) %&gt;%
+  map(
+    ~ ggplot(data = .x,
+             aes(rank_n_total, n_total, fill = as.factor(loss))) +
+      geom_point(shape = 21, size = 2) +
+      scale_fill_brewer(palette = &quot;Spectral&quot;, direction = -1,
+                        name = &quot;variables missing&quot;) +
+      facet_grid(decade ~ parameter_class) +
+      labs(title = paste(&quot;basin_AIP:&quot;, unique(.x$basin_AIP))) +
+      ylim(0, NA)
+  )</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/f_loss-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>
 [[2]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/data_loss_assesment-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/f_loss-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre><code>
 [[3]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/data_loss_assesment-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/f_loss-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>loss_f_cruise %&gt;% 
+  filter(loss &gt; 0, rank_n_total &lt;= 20) %&gt;% 
+  select(basin_AIP, decade, parameter_class, rank_n_total, cruise_expocode) %&gt;% 
+  arrange(basin_AIP, decade, parameter_class, rank_n_total) %&gt;% 
+  kable() %&gt;% 
+  kable_styling()</code></pre>
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+basin_AIP
+</th>
+<th style="text-align:left;">
+decade
+</th>
+<th style="text-align:left;">
+parameter_class
+</th>
+<th style="text-align:right;">
+rank_n_total
+</th>
+<th style="text-align:left;">
+cruise_expocode
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:left;">
+323019940104
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+7.0
+</td>
+<td style="text-align:left;">
+33RO19980123
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+9.0
+</td>
+<td style="text-align:left;">
+35A319950113
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+11.0
+</td>
+<td style="text-align:left;">
+06MT19900123
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+12.0
+</td>
+<td style="text-align:left;">
+33LK19960415
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+13.0
+</td>
+<td style="text-align:left;">
+33MW19930704
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+14.0
+</td>
+<td style="text-align:left;">
+35LU19890509
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+17.5
+</td>
+<td style="text-align:left;">
+58JH19940723
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+17.5
+</td>
+<td style="text-align:left;">
+74AB19910501
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+7.0
+</td>
+<td style="text-align:left;">
+35TH20010823
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+8.0
+</td>
+<td style="text-align:left;">
+74DI20040404
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+9.0
+</td>
+<td style="text-align:left;">
+35TH20080610
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+11.0
+</td>
+<td style="text-align:left;">
+35TH20040604
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+12.0
+</td>
+<td style="text-align:left;">
+35TH20020611
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+14.0
+</td>
+<td style="text-align:left;">
+06M220060523
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+10.0
+</td>
+<td style="text-align:left;">
+33RO20110926
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+13.0
+</td>
+<td style="text-align:left;">
+35TH20100608
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+14.0
+</td>
+<td style="text-align:left;">
+29AH20160617
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+16.0
+</td>
+<td style="text-align:left;">
+29AH20120623
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+19.0
+</td>
+<td style="text-align:left;">
+18HU20140502
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+11.0
+</td>
+<td style="text-align:left;">
+320619960503
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+18.0
+</td>
+<td style="text-align:left;">
+35UCKERFIXTS
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+2.0
+</td>
+<td style="text-align:left;">
+33RR20080204
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+10.0
+</td>
+<td style="text-align:left;">
+35MF20090103
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+11.0
+</td>
+<td style="text-align:left;">
+096U20160108
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+12.0
+</td>
+<td style="text-align:left;">
+91AA20171209
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:left;">
+31DS19960105
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+6.0
+</td>
+<td style="text-align:left;">
+316N19930222
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+7.0
+</td>
+<td style="text-align:left;">
+316N19921006
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+8.0
+</td>
+<td style="text-align:left;">
+90KD19920214
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+11.0
+</td>
+<td style="text-align:left;">
+316N19921204
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+13.0
+</td>
+<td style="text-align:left;">
+31WT19910716
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+16.0
+</td>
+<td style="text-align:left;">
+325019940125
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+17.0
+</td>
+<td style="text-align:left;">
+49HG19950807
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+18.5
+</td>
+<td style="text-align:left;">
+316N19920502
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+18.5
+</td>
+<td style="text-align:left;">
+49HG19971110
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:left;">
+33RO20071215
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+19.0
+</td>
+<td style="text-align:left;">
+49NZ20030220
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:left;">
+318M20091121
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+5.0
+</td>
+<td style="text-align:left;">
+320620170703
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div id="p18-phosphate" class="section level2" number="3.4">
 <h2 number="3.4"><span class="header-section-number">3.4</span> P18 phosphate</h2>
@@ -7644,6 +9297,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-1.png" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fde6c325ccb906198720e64077721c108ceb9b3f/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-1.png" target="_blank">fde6c32</a>
 </td>
 <td>
@@ -7704,6 +9368,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-2.png" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a96bf9e9d1beea032c1db76a5a1301f2c6231799/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-2.png" target="_blank">a96bf9e</a>
@@ -7768,6 +9443,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-3.png" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a96bf9e9d1beea032c1db76a5a1301f2c6231799/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-3.png" target="_blank">a96bf9e</a>
 </td>
 <td>
@@ -7828,6 +9514,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-4.png" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a96bf9e9d1beea032c1db76a5a1301f2c6231799/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-4.png" target="_blank">a96bf9e</a>
@@ -7892,6 +9589,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-5.png" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a96bf9e9d1beea032c1db76a5a1301f2c6231799/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-5.png" target="_blank">a96bf9e</a>
 </td>
 <td>
@@ -7952,6 +9660,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-6.png" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a96bf9e9d1beea032c1db76a5a1301f2c6231799/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-6.png" target="_blank">a96bf9e</a>
@@ -8016,6 +9735,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-7.png" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a96bf9e9d1beea032c1db76a5a1301f2c6231799/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-7.png" target="_blank">a96bf9e</a>
 </td>
 <td>
@@ -8076,6 +9806,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-8.png" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a96bf9e9d1beea032c1db76a5a1301f2c6231799/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-8.png" target="_blank">a96bf9e</a>
@@ -8140,6 +9881,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-9.png" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a96bf9e9d1beea032c1db76a5a1301f2c6231799/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-9.png" target="_blank">a96bf9e</a>
 </td>
 <td>
@@ -8200,6 +9952,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-10.png" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a96bf9e9d1beea032c1db76a5a1301f2c6231799/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-10.png" target="_blank">a96bf9e</a>
@@ -8264,6 +10027,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-11.png" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a96bf9e9d1beea032c1db76a5a1301f2c6231799/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-11.png" target="_blank">a96bf9e</a>
 </td>
 <td>
@@ -8324,6 +10098,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-12.png" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a96bf9e9d1beea032c1db76a5a1301f2c6231799/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-12.png" target="_blank">a96bf9e</a>
@@ -8388,6 +10173,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-13.png" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a96bf9e9d1beea032c1db76a5a1301f2c6231799/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-13.png" target="_blank">a96bf9e</a>
 </td>
 <td>
@@ -8448,6 +10244,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-14.png" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a96bf9e9d1beea032c1db76a5a1301f2c6231799/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-14.png" target="_blank">a96bf9e</a>
@@ -8512,6 +10319,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-15.png" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a96bf9e9d1beea032c1db76a5a1301f2c6231799/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-15.png" target="_blank">a96bf9e</a>
 </td>
 <td>
@@ -8572,6 +10390,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-16.png" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a96bf9e9d1beea032c1db76a5a1301f2c6231799/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-16.png" target="_blank">a96bf9e</a>
@@ -8636,6 +10465,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-17.png" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a96bf9e9d1beea032c1db76a5a1301f2c6231799/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-17.png" target="_blank">a96bf9e</a>
 </td>
 <td>
@@ -8696,6 +10536,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-18.png" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a96bf9e9d1beea032c1db76a5a1301f2c6231799/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-18.png" target="_blank">a96bf9e</a>
@@ -8760,6 +10611,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-19.png" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a96bf9e9d1beea032c1db76a5a1301f2c6231799/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-19.png" target="_blank">a96bf9e</a>
 </td>
 <td>
@@ -8820,6 +10682,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-20.png" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a96bf9e9d1beea032c1db76a5a1301f2c6231799/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-20.png" target="_blank">a96bf9e</a>
@@ -8884,6 +10757,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-21.png" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a96bf9e9d1beea032c1db76a5a1301f2c6231799/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-21.png" target="_blank">a96bf9e</a>
 </td>
 <td>
@@ -8946,6 +10830,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-22.png" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a96bf9e9d1beea032c1db76a5a1301f2c6231799/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-22.png" target="_blank">a96bf9e</a>
 </td>
 <td>
@@ -9006,6 +10901,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7ace7abe3cecd7e103a75f89d3acf207be8533b2/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-23.png" target="_blank">7ace7ab</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a96bf9e9d1beea032c1db76a5a1301f2c6231799/docs/figure/read_GLODAPv2_2021.Rmd/timeseries-23.png" target="_blank">a96bf9e</a>
@@ -9190,39 +11096,39 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] ggrepel_0.8.2   lubridate_1.7.9 ggforce_0.3.3   metR_0.9.0     
- [5] scico_1.2.0     patchwork_1.1.1 collapse_1.5.0  forcats_0.5.0  
- [9] stringr_1.4.0   dplyr_1.0.5     purrr_0.3.4     readr_1.4.0    
-[13] tidyr_1.1.3     tibble_3.1.3    ggplot2_3.3.5   tidyverse_1.3.0
-[17] workflowr_1.6.2
+ [1] kableExtra_1.3.1 ggrepel_0.8.2    lubridate_1.7.9  ggforce_0.3.3   
+ [5] metR_0.9.0       scico_1.2.0      patchwork_1.1.1  collapse_1.5.0  
+ [9] forcats_0.5.0    stringr_1.4.0    dplyr_1.0.5      purrr_0.3.4     
+[13] readr_1.4.0      tidyr_1.1.3      tibble_3.1.3     ggplot2_3.3.5   
+[17] tidyverse_1.3.0  workflowr_1.6.2 
 
 loaded via a namespace (and not attached):
  [1] nlme_3.1-149             fs_1.5.0                 RColorBrewer_1.1-2      
- [4] httr_1.4.2               rprojroot_2.0.2          tools_4.0.3             
- [7] backports_1.1.10         bslib_0.2.5.1            utf8_1.1.4              
-[10] R6_2.5.0                 mgcv_1.8-33              DBI_1.1.0               
-[13] colorspace_2.0-2         withr_2.3.0              tidyselect_1.1.0        
-[16] compiler_4.0.3           git2r_0.27.1             cli_3.0.1               
-[19] rvest_0.3.6              xml2_1.3.2               labeling_0.4.2          
-[22] sass_0.4.0               scales_1.1.1             checkmate_2.0.0         
-[25] digest_0.6.27            rmarkdown_2.10           pkgconfig_2.0.3         
-[28] htmltools_0.5.1.1        dbplyr_1.4.4             highr_0.8               
-[31] rlang_0.4.11             readxl_1.3.1             rstudioapi_0.13         
-[34] jquerylib_0.1.4          generics_0.1.0           farver_2.0.3            
-[37] jsonlite_1.7.1           magrittr_1.5             Matrix_1.2-18           
-[40] Rcpp_1.0.5               munsell_0.5.0            fansi_0.4.1             
-[43] lifecycle_1.0.0          stringi_1.5.3            whisker_0.4             
-[46] yaml_2.2.1               MASS_7.3-53              grid_4.0.3              
-[49] blob_1.2.1               parallel_4.0.3           promises_1.1.1          
-[52] crayon_1.3.4             lattice_0.20-41          splines_4.0.3           
-[55] haven_2.3.1              hms_0.5.3                knitr_1.33              
-[58] pillar_1.6.2             reprex_0.3.0             glue_1.4.2              
-[61] evaluate_0.14            RcppArmadillo_0.10.1.2.0 data.table_1.14.0       
-[64] modelr_0.1.8             vctrs_0.3.8              tweenr_1.0.2            
-[67] httpuv_1.5.4             cellranger_1.1.0         gtable_0.3.0            
-[70] polyclip_1.10-0          assertthat_0.2.1         xfun_0.25               
-[73] broom_0.7.9              RcppEigen_0.3.3.7.0      later_1.2.0             
-[76] viridisLite_0.3.0        ellipsis_0.3.2          </code></pre>
+ [4] webshot_0.5.2            httr_1.4.2               rprojroot_2.0.2         
+ [7] tools_4.0.3              backports_1.1.10         bslib_0.2.5.1           
+[10] utf8_1.1.4               R6_2.5.0                 mgcv_1.8-33             
+[13] DBI_1.1.0                colorspace_2.0-2         withr_2.3.0             
+[16] tidyselect_1.1.0         compiler_4.0.3           git2r_0.27.1            
+[19] cli_3.0.1                rvest_0.3.6              xml2_1.3.2              
+[22] labeling_0.4.2           sass_0.4.0               scales_1.1.1            
+[25] checkmate_2.0.0          digest_0.6.27            rmarkdown_2.10          
+[28] pkgconfig_2.0.3          htmltools_0.5.1.1        highr_0.8               
+[31] dbplyr_1.4.4             rlang_0.4.11             readxl_1.3.1            
+[34] rstudioapi_0.13          jquerylib_0.1.4          generics_0.1.0          
+[37] farver_2.0.3             jsonlite_1.7.1           magrittr_1.5            
+[40] Matrix_1.2-18            Rcpp_1.0.5               munsell_0.5.0           
+[43] fansi_0.4.1              lifecycle_1.0.0          stringi_1.5.3           
+[46] whisker_0.4              yaml_2.2.1               MASS_7.3-53             
+[49] grid_4.0.3               blob_1.2.1               parallel_4.0.3          
+[52] promises_1.1.1           crayon_1.3.4             lattice_0.20-41         
+[55] splines_4.0.3            haven_2.3.1              hms_0.5.3               
+[58] knitr_1.33               pillar_1.6.2             reprex_0.3.0            
+[61] glue_1.4.2               evaluate_0.14            RcppArmadillo_0.10.1.2.0
+[64] data.table_1.14.0        modelr_0.1.8             vctrs_0.3.8             
+[67] tweenr_1.0.2             httpuv_1.5.4             cellranger_1.1.0        
+[70] gtable_0.3.0             polyclip_1.10-0          assertthat_0.2.1        
+[73] xfun_0.25                broom_0.7.9              RcppEigen_0.3.3.7.0     
+[76] later_1.2.0              viridisLite_0.3.0        ellipsis_0.3.2          </code></pre>
 </div>
 </div>
 </div>
