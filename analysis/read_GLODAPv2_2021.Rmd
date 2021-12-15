@@ -26,6 +26,7 @@ path_preprocessing  <- paste(path_root, "/observations/preprocessing/", sep = ""
 ```{r load_libraries_specific, include=FALSE}
 library(lubridate)
 library(ggrepel)
+library(kableExtra)
 ```
 
 # Read files
@@ -472,7 +473,7 @@ rm(f_flag, f_flag_grid, p_f_flag_map)
 
 ## data loss assesment
 
-```{r data_loss_assesment, fig.asp=1}
+```{r data_loss_prepartion}
 
 loss <- full_join(
   GLODAP,
@@ -491,6 +492,12 @@ loss <- loss %>%
 
 loss <- loss %>% 
   filter(if_all(ends_with("f"), ~ . != 9))
+
+```
+
+### qc
+
+```{r qc_loss}
 
 loss_qc <- loss %>% 
   select(lon, lat, basin_AIP, decade, cruise_expocode, ends_with("qc")) %>%
@@ -541,19 +548,98 @@ loss_qc_cruise %>%
   map(
     ~ ggplot(data = .x,
              aes(rank_n_total, n_total, fill = as.factor(loss))) +
-      geom_label_repel(
-        data = .x %>% filter(loss > 0),
-        aes(label = cruise_expocode)
-      ) +
       geom_point(shape = 21, size = 2) +
-      scale_fill_brewer(palette = "Spectral", direction = -1) +
+      scale_fill_brewer(palette = "Spectral", direction = -1,
+                        name = "variables missing") +
       facet_grid(decade ~ parameter_class) +
       labs(title = paste("basin_AIP:", unique(.x$basin_AIP))) +
       ylim(0, NA)
   )
 
+loss_qc_cruise %>% 
+  filter(loss > 0, rank_n_total <= 20) %>% 
+  select(basin_AIP, decade, parameter_class, rank_n_total, cruise_expocode) %>% 
+  arrange(basin_AIP, decade, parameter_class, rank_n_total) %>% 
+  kable() %>% 
+  kable_styling()
+  
+
+```
 
 
+
+
+
+
+
+### f
+
+```{r f_loss}
+
+loss_f <- loss %>% 
+  select(lon, lat, basin_AIP, decade, cruise_expocode, ends_with("f")) %>%
+  pivot_longer(ends_with("f"),
+               names_to = "parameter",
+               values_to = "value") %>% 
+  mutate(parameter = str_remove(parameter, "f"))
+
+loss_f_cruise <- loss_f %>%
+  count(cruise_expocode, basin_AIP, decade, parameter, value) %>%
+  pivot_wider(
+    names_from = value,
+    names_prefix = "f_",
+    values_from = n,
+    values_fill = 0
+  ) %>%
+  mutate(n_total = f_0 + f_2,
+         category = if_else(f_0 <= 0.1 * (n_total), "OK", "loss")) %>%
+  mutate(parameter_class = if_else(
+    parameter %in% c("tco2", "talk", "phosphate"),
+    "target",
+    "predictor"
+  )) %>%
+  count(cruise_expocode,
+        basin_AIP,
+        decade,
+        n_total,
+        parameter_class,
+        category) %>% 
+  pivot_wider(names_from = category,
+              values_from = n,
+              values_fill = 0) %>% 
+  select(-OK) %>% 
+  pivot_wider(names_from = parameter_class,
+              values_from = loss) %>% 
+  group_by(basin_AIP, decade) %>%
+  mutate(rank_n_total = rank(-n_total)) %>%
+  ungroup() %>% 
+  pivot_longer(predictor:target,
+               names_to = "parameter_class",
+               values_to = "loss")
+
+
+loss_f_cruise %>%
+  filter(rank_n_total <= 20) %>%
+  group_split(basin_AIP) %>%
+  # head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(rank_n_total, n_total, fill = as.factor(loss))) +
+      geom_point(shape = 21, size = 2) +
+      scale_fill_brewer(palette = "Spectral", direction = -1,
+                        name = "variables missing") +
+      facet_grid(decade ~ parameter_class) +
+      labs(title = paste("basin_AIP:", unique(.x$basin_AIP))) +
+      ylim(0, NA)
+  )
+
+loss_f_cruise %>% 
+  filter(loss > 0, rank_n_total <= 20) %>% 
+  select(basin_AIP, decade, parameter_class, rank_n_total, cruise_expocode) %>% 
+  arrange(basin_AIP, decade, parameter_class, rank_n_total) %>% 
+  kable() %>% 
+  kable_styling()
+  
 
 ```
 
