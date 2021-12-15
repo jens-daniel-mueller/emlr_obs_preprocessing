@@ -985,25 +985,30 @@ IO_CRM_offset_mean <- IO_CRM_offset %>%
   ungroup()
 
 IO_CRM_offset %>%
-  filter(cell != "All") %>%
+  filter(parameter == "talk") %>%
   ggplot() +
-  scale_fill_brewer(palette = "Set1") +
-  geom_hline(data = IO_CRM_offset_mean,
+  scale_fill_brewer(palette = "Set1",
+                    name = "CRM batch") +
+  geom_hline(data = IO_CRM_offset_mean %>% filter(parameter == "talk"),
              aes(yintercept = offset_mean)) +
   geom_hline(
-    data = IO_CRM_offset_mean,
+    data = IO_CRM_offset_mean %>% filter(parameter == "talk"),
     aes(yintercept = offset_mean - offset_sd),
     linetype = 2
   ) +
   geom_hline(
-    data = IO_CRM_offset_mean,
+    data = IO_CRM_offset_mean %>% filter(parameter == "talk"),
     aes(yintercept = offset_mean + offset_sd),
     linetype = 2
   ) +
-  geom_point(aes(start_date, offset, fill = batch),
-             shape = 21,
-             size = 2) +
-  facet_wrap( ~ parameter)
+  geom_point(aes(start_date, offset, fill = batch, size=n),
+             shape = 21) +
+  scale_size(name = "Nr of\nmeasurements") +
+  labs(x = "Cruise start date",
+       y = "TA offset meas-CRM (µmol/kg)",
+       title = "RV Knorr IO 1990 - TA reference measurements",
+       subtitle = "Data source: Tables 1 and 2 from Millero et al. (1998)")
+
 
 ```
 
