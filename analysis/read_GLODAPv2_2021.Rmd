@@ -25,6 +25,7 @@ path_preprocessing  <- paste(path_root, "/observations/preprocessing/", sep = ""
 
 ```{r load_libraries_specific, include=FALSE}
 library(lubridate)
+library(ggrepel)
 ```
 
 # Read files
@@ -495,25 +496,61 @@ loss_qc <- loss %>%
   select(lon, lat, basin_AIP, decade, cruise_expocode, ends_with("qc")) %>%
   pivot_longer(ends_with("qc"),
                names_to = "parameter",
-               values_to = "value")
+               values_to = "value") %>% 
+  mutate(parameter = str_remove(parameter, "qc"))
 
-loss_qc %>% 
-  group_by(cruise_expocode, basin_AIP, decade, parameter, value) %>% 
-  count() %>% 
-  ungroup() %>% 
-  pivot_wider(names_from = value,
-              names_prefix = "qc_",
+loss_qc_cruise <- loss_qc %>%
+  count(cruise_expocode, basin_AIP, decade, parameter, value) %>%
+  pivot_wider(
+    names_from = value,
+    names_prefix = "qc_",
+    values_from = n,
+    values_fill = 0
+  ) %>%
+  mutate(n_total = qc_0 + qc_1,
+         category = if_else(qc_0 <= 0.1 * (n_total), "OK", "loss")) %>%
+  mutate(parameter_class = if_else(
+    parameter %in% c("tco2", "talk", "phosphate"),
+    "target",
+    "predictor"
+  )) %>%
+  count(cruise_expocode,
+        basin_AIP,
+        decade,
+        n_total,
+        parameter_class,
+        category) %>% 
+  pivot_wider(names_from = category,
               values_from = n,
               values_fill = 0) %>% 
-  mutate(n_total = qc_0 + qc_1,
-         category = if_else(qc_0 <= 0.1*(n_total), "OK", "loss")) %>% 
-  group_by(basin_AIP, decade) %>% 
-  mutate(rank_n_total = rank(-n_total)) %>% 
+  select(-OK) %>% 
+  pivot_wider(names_from = parameter_class,
+              values_from = loss) %>% 
+  group_by(basin_AIP, decade) %>%
+  mutate(rank_n_total = rank(-n_total)) %>%
   ungroup() %>% 
-  filter(basin_AIP == "Atlantic") %>% 
-  ggplot(aes(rank_n_total, n_total, col=category)) +
-  geom_point() +
-  facet_grid(parameter ~ decade)
+  pivot_longer(predictor:target,
+               names_to = "parameter_class",
+               values_to = "loss")
+
+
+loss_qc_cruise %>%
+  filter(rank_n_total <= 20) %>%
+  group_split(basin_AIP) %>%
+  # head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(rank_n_total, n_total, fill = as.factor(loss))) +
+      geom_label_repel(
+        data = .x %>% filter(loss > 0),
+        aes(label = cruise_expocode)
+      ) +
+      geom_point(shape = 21, size = 2) +
+      scale_fill_brewer(palette = "Spectral", direction = -1) +
+      facet_grid(decade ~ parameter_class) +
+      labs(title = paste("basin_AIP:", unique(.x$basin_AIP))) +
+      ylim(0, NA)
+  )
 
 
 
