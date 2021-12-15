@@ -562,16 +562,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree7802f47d46d69b9f516cd9cd21ef738eac5bde34targetblank7802f47a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/7802f47d46d69b9f516cd9cd21ef738eac5bde34" target="_blank">7802f47</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreebe2f94e6cdf948e4e720e156f1e48e6b55e2e75ftargetblankbe2f94ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/be2f94e6cdf948e4e720e156f1e48e6b55e2e75f" target="_blank">be2f94e</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree7802f47d46d69b9f516cd9cd21ef738eac5bde34targetblank7802f47a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreebe2f94e6cdf948e4e720e156f1e48e6b55e2e75ftargetblankbe2f94ea" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/7802f47d46d69b9f516cd9cd21ef738eac5bde34" target="_blank">7802f47</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/be2f94e6cdf948e4e720e156f1e48e6b55e2e75f" target="_blank">be2f94e</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -623,6 +623,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/be2f94e6cdf948e4e720e156f1e48e6b55e2e75f/analysis/read_GLODAPv2_2021.Rmd" target="_blank">be2f94e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+<td>
+analyse IO 1990 CRM data from Millero 1998 - TA only
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/d454df103852aad797d8c063e0526c9b98a67647/docs/read_GLODAPv2_2021.html" target="_blank">d454df1</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -4979,6 +5013,43 @@ IO_CRM_offset %&gt;%
   geom_histogram(binwidth = 1) +
   facet_wrap(~ parameter)</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/IO_1990_CRM-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_1990_CRM-1">
+Past versions of IO_1990_CRM-1.png
+</button>
+</p>
+<div id="fig-IO_1990_CRM-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d454df103852aad797d8c063e0526c9b98a67647/docs/figure/read_GLODAPv2_2021.Rmd/IO_1990_CRM-1.png" target="_blank">d454df1</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>IO_CRM_offset &lt;- IO_CRM_offset %&gt;% 
   filter(cell != &quot;All&quot;)
 
@@ -4989,26 +5060,67 @@ IO_CRM_offset_mean &lt;- IO_CRM_offset %&gt;%
   ungroup()
 
 IO_CRM_offset %&gt;%
-  filter(cell != &quot;All&quot;) %&gt;%
+  filter(parameter == &quot;talk&quot;) %&gt;%
   ggplot() +
-  scale_fill_brewer(palette = &quot;Set1&quot;) +
-  geom_hline(data = IO_CRM_offset_mean,
+  scale_fill_brewer(palette = &quot;Set1&quot;,
+                    name = &quot;CRM batch&quot;) +
+  geom_hline(data = IO_CRM_offset_mean %&gt;% filter(parameter == &quot;talk&quot;),
              aes(yintercept = offset_mean)) +
   geom_hline(
-    data = IO_CRM_offset_mean,
+    data = IO_CRM_offset_mean %&gt;% filter(parameter == &quot;talk&quot;),
     aes(yintercept = offset_mean - offset_sd),
     linetype = 2
   ) +
   geom_hline(
-    data = IO_CRM_offset_mean,
+    data = IO_CRM_offset_mean %&gt;% filter(parameter == &quot;talk&quot;),
     aes(yintercept = offset_mean + offset_sd),
     linetype = 2
   ) +
-  geom_point(aes(start_date, offset, fill = batch),
-             shape = 21,
-             size = 2) +
-  facet_wrap( ~ parameter)</code></pre>
+  geom_point(aes(start_date, offset, fill = batch, size=n),
+             shape = 21) +
+  scale_size(name = &quot;Nr of\nmeasurements&quot;) +
+  labs(x = &quot;Cruise start date&quot;,
+       y = &quot;TA offset meas-CRM (µmol/kg)&quot;,
+       title = &quot;RV Knorr IO 1990 - TA reference measurements&quot;,
+       subtitle = &quot;Data source: Tables 1 and 2 from Millero et al. (1998)&quot;)</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/IO_1990_CRM-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_1990_CRM-2">
+Past versions of IO_1990_CRM-2.png
+</button>
+</p>
+<div id="fig-IO_1990_CRM-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d454df103852aad797d8c063e0526c9b98a67647/docs/figure/read_GLODAPv2_2021.Rmd/IO_1990_CRM-2.png" target="_blank">d454df1</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="crossover-checks" class="section level1" number="7">
 <h1 number="7"><span class="header-section-number">7</span> Crossover checks</h1>
