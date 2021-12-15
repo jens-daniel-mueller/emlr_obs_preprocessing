@@ -560,16 +560,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreebe8751d304cf190ab1fd053503d854207ae717b3targetblankbe8751da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/be8751d304cf190ab1fd053503d854207ae717b3" target="_blank">be8751d</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree554383a81beb174d78966a4ad53579b9f86514eftargetblank554383aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/554383a81beb174d78966a4ad53579b9f86514ef" target="_blank">554383a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreebe8751d304cf190ab1fd053503d854207ae717b3targetblankbe8751da" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree554383a81beb174d78966a4ad53579b9f86514eftargetblank554383aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/be8751d304cf190ab1fd053503d854207ae717b3" target="_blank">be8751d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/554383a81beb174d78966a4ad53579b9f86514ef" target="_blank">554383a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -621,6 +621,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/554383a81beb174d78966a4ad53579b9f86514ef/analysis/read_GLODAPv2_2021.Rmd" target="_blank">554383a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+<td>
+plot qc data loss by cruise size
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/faa6b3c12f5be77b652d6c8006c87966b0145be2/docs/read_GLODAPv2_2021.html" target="_blank">faa6b3c</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -2298,26 +2332,106 @@ loss_qc &lt;- loss %&gt;%
   select(lon, lat, basin_AIP, decade, cruise_expocode, ends_with(&quot;qc&quot;)) %&gt;%
   pivot_longer(ends_with(&quot;qc&quot;),
                names_to = &quot;parameter&quot;,
-               values_to = &quot;value&quot;)
+               values_to = &quot;value&quot;) %&gt;% 
+  mutate(parameter = str_remove(parameter, &quot;qc&quot;))
 
-loss_qc %&gt;% 
-  group_by(cruise_expocode, basin_AIP, decade, parameter, value) %&gt;% 
-  count() %&gt;% 
-  ungroup() %&gt;% 
-  pivot_wider(names_from = value,
-              names_prefix = &quot;qc_&quot;,
+loss_qc_cruise &lt;- loss_qc %&gt;%
+  count(cruise_expocode, basin_AIP, decade, parameter, value) %&gt;%
+  pivot_wider(
+    names_from = value,
+    names_prefix = &quot;qc_&quot;,
+    values_from = n,
+    values_fill = 0
+  ) %&gt;%
+  mutate(n_total = qc_0 + qc_1,
+         category = if_else(qc_0 &lt;= 0.1 * (n_total), &quot;OK&quot;, &quot;loss&quot;)) %&gt;%
+  mutate(parameter_class = if_else(
+    parameter %in% c(&quot;tco2&quot;, &quot;talk&quot;, &quot;phosphate&quot;),
+    &quot;target&quot;,
+    &quot;predictor&quot;
+  )) %&gt;%
+  count(cruise_expocode,
+        basin_AIP,
+        decade,
+        n_total,
+        parameter_class,
+        category) %&gt;% 
+  pivot_wider(names_from = category,
               values_from = n,
               values_fill = 0) %&gt;% 
-  mutate(n_total = qc_0 + qc_1,
-         category = if_else(qc_0 &lt;= 0.1*(n_total), &quot;OK&quot;, &quot;loss&quot;)) %&gt;% 
-  group_by(basin_AIP, decade) %&gt;% 
-  mutate(rank_n_total = rank(-n_total)) %&gt;% 
+  select(-OK) %&gt;% 
+  pivot_wider(names_from = parameter_class,
+              values_from = loss) %&gt;% 
+  group_by(basin_AIP, decade) %&gt;%
+  mutate(rank_n_total = rank(-n_total)) %&gt;%
   ungroup() %&gt;% 
-  filter(basin_AIP == &quot;Atlantic&quot;) %&gt;% 
-  ggplot(aes(rank_n_total, n_total, col=category)) +
-  geom_point() +
-  facet_grid(parameter ~ decade)</code></pre>
+  pivot_longer(predictor:target,
+               names_to = &quot;parameter_class&quot;,
+               values_to = &quot;loss&quot;)
+
+
+loss_qc_cruise %&gt;%
+  filter(rank_n_total &lt;= 20) %&gt;%
+  group_split(basin_AIP) %&gt;%
+  # head(1) %&gt;%
+  map(
+    ~ ggplot(data = .x,
+             aes(rank_n_total, n_total, fill = as.factor(loss))) +
+      geom_label_repel(
+        data = .x %&gt;% filter(loss &gt; 0),
+        aes(label = cruise_expocode)
+      ) +
+      geom_point(shape = 21, size = 2) +
+      scale_fill_brewer(palette = &quot;Spectral&quot;, direction = -1) +
+      facet_grid(decade ~ parameter_class) +
+      labs(title = paste(&quot;basin_AIP:&quot;, unique(.x$basin_AIP))) +
+      ylim(0, NA)
+  )</code></pre>
+<pre><code>[[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/data_loss_assesment-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-data_loss_assesment-1">
+Past versions of data_loss_assesment-1.png
+</button>
+</p>
+<div id="fig-data_loss_assesment-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/faa6b3c12f5be77b652d6c8006c87966b0145be2/docs/figure/read_GLODAPv2_2021.Rmd/data_loss_assesment-1.png" target="_blank">faa6b3c</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/data_loss_assesment-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/data_loss_assesment-3.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="p18-phosphate" class="section level2" number="3.4">
 <h2 number="3.4"><span class="header-section-number">3.4</span> P18 phosphate</h2>
@@ -9076,16 +9190,17 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] lubridate_1.7.9 ggforce_0.3.3   metR_0.9.0      scico_1.2.0    
- [5] patchwork_1.1.1 collapse_1.5.0  forcats_0.5.0   stringr_1.4.0  
- [9] dplyr_1.0.5     purrr_0.3.4     readr_1.4.0     tidyr_1.1.3    
-[13] tibble_3.1.3    ggplot2_3.3.5   tidyverse_1.3.0 workflowr_1.6.2
+ [1] ggrepel_0.8.2   lubridate_1.7.9 ggforce_0.3.3   metR_0.9.0     
+ [5] scico_1.2.0     patchwork_1.1.1 collapse_1.5.0  forcats_0.5.0  
+ [9] stringr_1.4.0   dplyr_1.0.5     purrr_0.3.4     readr_1.4.0    
+[13] tidyr_1.1.3     tibble_3.1.3    ggplot2_3.3.5   tidyverse_1.3.0
+[17] workflowr_1.6.2
 
 loaded via a namespace (and not attached):
  [1] nlme_3.1-149             fs_1.5.0                 RColorBrewer_1.1-2      
  [4] httr_1.4.2               rprojroot_2.0.2          tools_4.0.3             
  [7] backports_1.1.10         bslib_0.2.5.1            utf8_1.1.4              
-[10] R6_2.5.0                 DBI_1.1.0                mgcv_1.8-33             
+[10] R6_2.5.0                 mgcv_1.8-33              DBI_1.1.0               
 [13] colorspace_2.0-2         withr_2.3.0              tidyselect_1.1.0        
 [16] compiler_4.0.3           git2r_0.27.1             cli_3.0.1               
 [19] rvest_0.3.6              xml2_1.3.2               labeling_0.4.2          
@@ -9099,8 +9214,8 @@ loaded via a namespace (and not attached):
 [43] lifecycle_1.0.0          stringi_1.5.3            whisker_0.4             
 [46] yaml_2.2.1               MASS_7.3-53              grid_4.0.3              
 [49] blob_1.2.1               parallel_4.0.3           promises_1.1.1          
-[52] crayon_1.3.4             lattice_0.20-41          haven_2.3.1             
-[55] splines_4.0.3            hms_0.5.3                knitr_1.33              
+[52] crayon_1.3.4             lattice_0.20-41          splines_4.0.3           
+[55] haven_2.3.1              hms_0.5.3                knitr_1.33              
 [58] pillar_1.6.2             reprex_0.3.0             glue_1.4.2              
 [61] evaluate_0.14            RcppArmadillo_0.10.1.2.0 data.table_1.14.0       
 [64] modelr_0.1.8             vctrs_0.3.8              tweenr_1.0.2            
