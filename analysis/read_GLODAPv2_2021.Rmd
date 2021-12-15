@@ -20,6 +20,7 @@ editor_options:
 
 ```{r define_paths}
 path_glodapv2_2021  <- "/nfs/kryo/work/updata/glodapv2_2021/"
+path_glodapv2_CRM  <- "/nfs/kryo/work/updata/glodapv2_CRM/"
 path_preprocessing  <- paste(path_root, "/observations/preprocessing/", sep = "")
 ```
 
@@ -77,6 +78,28 @@ GLODAP_expocodes <-
       sep = ""
     ),
     col_names = c("cruise", "cruise_expocode")
+  )
+
+```
+
+```{r read_IO_CRM}
+
+IO_CRM_meas <-
+  read_csv(
+    paste(
+      path_glodapv2_CRM,
+      "/Millero_1998_Tab2.csv",
+      sep = ""
+    )
+  )
+
+CRM_ref <-
+  read_csv(
+    paste(
+      path_glodapv2_CRM,
+      "/Dickson_CRM_reference_values_20211215.csv",
+      sep = ""
+    )
   )
 
 ```
@@ -914,6 +937,76 @@ RV_activity %>%
 rm(RV_activity)
 
 ```
+
+# Indian Ocean 1990 CRM
+
+```{r IO_1990_CRM}
+
+IO_CRM_meas <- IO_CRM_meas %>%
+  fill(cruise:batch) %>% 
+  select(-starts_with("ph")) %>% 
+  rename(talk_meas = talk_ave,
+         tco2_meas = tco2_ave)
+  
+CRM_ref <- CRM_ref %>% 
+  select(-c(date, comment, sal)) %>% 
+  rename(talk_ref = talk,
+         tco2_ref = tco2)
+
+IO_CRM_offset <-
+  left_join(IO_CRM_meas,
+            CRM_ref) %>% 
+  mutate(batch = as.factor(batch))
+
+IO_CRM_offset <- IO_CRM_offset %>% 
+  mutate(talk_offset = talk_meas - talk_ref,
+         tco2_offset = tco2_meas - tco2_ref)
+
+IO_CRM_offset <- IO_CRM_offset %>% 
+  select(-c(talk_meas:talk_ref)) %>% 
+  pivot_longer(ends_with("_offset"),
+               values_to = "offset",
+               names_to = "parameter") %>% 
+  mutate(parameter = str_remove(parameter, "_offset"),
+         start_date = mdy(start_date))
+
+IO_CRM_offset %>% 
+  ggplot(aes(offset)) +
+  geom_histogram(binwidth = 1) +
+  facet_wrap(~ parameter)
+
+IO_CRM_offset <- IO_CRM_offset %>% 
+  filter(cell != "All")
+
+IO_CRM_offset_mean <- IO_CRM_offset %>% 
+  group_by(parameter) %>% 
+  summarise(offset_mean = mean(offset),
+            offset_sd = sd(offset)) %>% 
+  ungroup()
+
+IO_CRM_offset %>%
+  filter(cell != "All") %>%
+  ggplot() +
+  scale_fill_brewer(palette = "Set1") +
+  geom_hline(data = IO_CRM_offset_mean,
+             aes(yintercept = offset_mean)) +
+  geom_hline(
+    data = IO_CRM_offset_mean,
+    aes(yintercept = offset_mean - offset_sd),
+    linetype = 2
+  ) +
+  geom_hline(
+    data = IO_CRM_offset_mean,
+    aes(yintercept = offset_mean + offset_sd),
+    linetype = 2
+  ) +
+  geom_point(aes(start_date, offset, fill = batch),
+             shape = 21,
+             size = 2) +
+  facet_wrap( ~ parameter)
+
+```
+
 
 
 # Crossover checks
