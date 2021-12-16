@@ -562,16 +562,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree3511fa706d508d8c485fe5881cabc19b15d49c0dtargetblank3511fa7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/3511fa706d508d8c485fe5881cabc19b15d49c0d" target="_blank">3511fa7</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeaca9273abb7d0d7e9f551d1a3a5dadc02adc3bc3targetblankaca9273a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/aca9273abb7d0d7e9f551d1a3a5dadc02adc3bc3" target="_blank">aca9273</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree3511fa706d508d8c485fe5881cabc19b15d49c0dtargetblank3511fa7a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeaca9273abb7d0d7e9f551d1a3a5dadc02adc3bc3targetblankaca9273a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/3511fa706d508d8c485fe5881cabc19b15d49c0d" target="_blank">3511fa7</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/aca9273abb7d0d7e9f551d1a3a5dadc02adc3bc3" target="_blank">aca9273</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -624,6 +624,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/aca9273abb7d0d7e9f551d1a3a5dadc02adc3bc3/analysis/read_GLODAPv2_2021.Rmd" target="_blank">aca9273</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+<td>
+added maps per expocode
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/6aa4b75cd79cdc8ce238c759da00ed9dc2a857d1/docs/read_GLODAPv2_2021.html" target="_blank">6aa4b75</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -2543,14 +2577,19 @@ rm(f_flag, f_flag_grid, p_f_flag_map)</code></pre>
 loss_all &lt;- loss_all %&gt;%
   mutate(decade = cut(
     year,
-    seq(1989, 2020, 10),
+    seq(1989, 2019, 10),
     right = FALSE,
     labels = c(&quot;1989-1999&quot;, &quot;2000-2009&quot;, &quot;2010-2019&quot;)
   ),
   .after = year) %&gt;%
   filter(!is.na(decade))
 
-loss &lt;- loss_all %&gt;% 
+map +
+  geom_tile(data = loss_all %&gt;% distinct(lon, lat, decade),
+            aes(lon, lat)) +
+  facet_grid(decade ~ .)</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/data_loss_prepartion-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>loss &lt;- loss_all %&gt;% 
   filter(if_all(ends_with(&quot;f&quot;), ~ . != 9))
 
 loss_all_n &lt;- loss_all %&gt;% 
@@ -2620,7 +2659,6 @@ loss_qc_cruise &lt;- loss_qc_cruise %&gt;%
   filter(n_cruise_rel &gt;= 3)
 
 loss_qc_cruise %&gt;%
-  # filter(n_cruise_rel_cum &lt;= 90) %&gt;%
   group_split(basin_AIP) %&gt;%
   # head(3) %&gt;%
   map(
@@ -2657,6 +2695,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6aa4b75cd79cdc8ce238c759da00ed9dc2a857d1/docs/figure/read_GLODAPv2_2021.Rmd/qc_loss-1.png" target="_blank">6aa4b75</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163f97608360713a6c01d5ea0b3780740a81fad7/docs/figure/read_GLODAPv2_2021.Rmd/qc_loss-1.png" target="_blank">163f976</a>
@@ -2721,6 +2770,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6aa4b75cd79cdc8ce238c759da00ed9dc2a857d1/docs/figure/read_GLODAPv2_2021.Rmd/qc_loss-2.png" target="_blank">6aa4b75</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163f97608360713a6c01d5ea0b3780740a81fad7/docs/figure/read_GLODAPv2_2021.Rmd/qc_loss-2.png" target="_blank">163f976</a>
 </td>
 <td>
@@ -2781,6 +2841,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6aa4b75cd79cdc8ce238c759da00ed9dc2a857d1/docs/figure/read_GLODAPv2_2021.Rmd/qc_loss-3.png" target="_blank">6aa4b75</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163f97608360713a6c01d5ea0b3780740a81fad7/docs/figure/read_GLODAPv2_2021.Rmd/qc_loss-3.png" target="_blank">163f976</a>
@@ -3179,8 +3250,7 @@ loss_qc_grid &lt;- left_join(loss_qc_cruise,
                           loss_grid)
 
 map +
-  geom_tile(data = loss_qc_grid %&gt;%
-              filter(rank_n_cruise &lt;= 20),
+  geom_tile(data = loss_qc_grid,
             aes(lon, lat, fill = loss)) +
   facet_grid(decade ~ parameter_class) +
   scale_fill_manual(values = grey_plasma)</code></pre>
@@ -3209,6 +3279,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6aa4b75cd79cdc8ce238c759da00ed9dc2a857d1/docs/figure/read_GLODAPv2_2021.Rmd/qc_loss_maps-1.png" target="_blank">6aa4b75</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163f97608360713a6c01d5ea0b3780740a81fad7/docs/figure/read_GLODAPv2_2021.Rmd/qc_loss_maps-1.png" target="_blank">163f976</a>
 </td>
 <td>
@@ -3233,6 +3314,30 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre class="r"><code>loss_qc_grid %&gt;% filter(loss != 0) %&gt;%
+  group_split(parameter_class, decade) %&gt;%
+  # head(1) %&gt;%
+  map(
+    ~ map +
+      geom_tile(data = .x,
+                aes(lon, lat, fill = cruise_expocode)) +
+      scale_fill_brewer(palette = &quot;Paired&quot;) +
+      facet_grid(decade ~ parameter_class)
+  )</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/qc_loss_maps-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/qc_loss_maps-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/qc_loss_maps-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[4]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/qc_loss_maps-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[5]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/qc_loss_maps-6.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="f-1" class="section level3" number="3.3.2">
 <h3 number="3.3.2"><span class="header-section-number">3.3.2</span> f</h3>
@@ -3335,6 +3440,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6aa4b75cd79cdc8ce238c759da00ed9dc2a857d1/docs/figure/read_GLODAPv2_2021.Rmd/f_loss-1.png" target="_blank">6aa4b75</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163f97608360713a6c01d5ea0b3780740a81fad7/docs/figure/read_GLODAPv2_2021.Rmd/f_loss-1.png" target="_blank">163f976</a>
 </td>
 <td>
@@ -3386,6 +3502,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6aa4b75cd79cdc8ce238c759da00ed9dc2a857d1/docs/figure/read_GLODAPv2_2021.Rmd/f_loss-2.png" target="_blank">6aa4b75</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163f97608360713a6c01d5ea0b3780740a81fad7/docs/figure/read_GLODAPv2_2021.Rmd/f_loss-2.png" target="_blank">163f976</a>
 </td>
 <td>
@@ -3435,6 +3562,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6aa4b75cd79cdc8ce238c759da00ed9dc2a857d1/docs/figure/read_GLODAPv2_2021.Rmd/f_loss-3.png" target="_blank">6aa4b75</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163f97608360713a6c01d5ea0b3780740a81fad7/docs/figure/read_GLODAPv2_2021.Rmd/f_loss-3.png" target="_blank">163f976</a>
@@ -3872,8 +4010,7 @@ target
 loss_f_grid &lt;- left_join(loss_f_cruise,
                           loss_grid)
 map +
-  geom_tile(data = loss_f_grid %&gt;%
-              filter(rank_n_cruise &lt;= 20),
+  geom_tile(data = loss_f_grid,
             aes(lon, lat, fill = loss)) +
   facet_grid(decade ~ parameter_class) +
   scale_fill_manual(values = grey_plasma)</code></pre>
@@ -3902,6 +4039,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6aa4b75cd79cdc8ce238c759da00ed9dc2a857d1/docs/figure/read_GLODAPv2_2021.Rmd/f_loss_maps-1.png" target="_blank">6aa4b75</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163f97608360713a6c01d5ea0b3780740a81fad7/docs/figure/read_GLODAPv2_2021.Rmd/f_loss_maps-1.png" target="_blank">163f976</a>
 </td>
 <td>
@@ -3926,6 +4074,24 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre class="r"><code>loss_f_grid %&gt;% filter(loss != 0) %&gt;%
+  group_split(parameter_class, decade) %&gt;%
+  # head(1) %&gt;%
+  map(
+    ~ map +
+      geom_tile(data = .x,
+                aes(lon, lat, fill = cruise_expocode)) +
+      scale_fill_brewer(palette = &quot;Paired&quot;) +
+      facet_grid(decade ~ parameter_class)
+  )</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/f_loss_maps-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/f_loss_maps-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/f_loss_maps-4.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="f-9" class="section level3" number="3.3.3">
 <h3 number="3.3.3"><span class="header-section-number">3.3.3</span> f == 9</h3>
@@ -4003,12 +4169,123 @@ loss_f9_cruise %&gt;%
   )</code></pre>
 <pre><code>[[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/f9_loss-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-f9_loss-1">
+Past versions of f9_loss-1.png
+</button>
+</p>
+<div id="fig-f9_loss-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6aa4b75cd79cdc8ce238c759da00ed9dc2a857d1/docs/figure/read_GLODAPv2_2021.Rmd/f9_loss-1.png" target="_blank">6aa4b75</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[2]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/f9_loss-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-f9_loss-2">
+Past versions of f9_loss-2.png
+</button>
+</p>
+<div id="fig-f9_loss-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6aa4b75cd79cdc8ce238c759da00ed9dc2a857d1/docs/figure/read_GLODAPv2_2021.Rmd/f9_loss-2.png" target="_blank">6aa4b75</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[3]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/f9_loss-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-f9_loss-3">
+Past versions of f9_loss-3.png
+</button>
+</p>
+<div id="fig-f9_loss-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6aa4b75cd79cdc8ce238c759da00ed9dc2a857d1/docs/figure/read_GLODAPv2_2021.Rmd/f9_loss-3.png" target="_blank">6aa4b75</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>loss_f9_cruise %&gt;% 
   filter(loss != 0) %&gt;% 
   select(basin_AIP, decade, parameter_class, rank_n_cruise, cruise_expocode) %&gt;% 
@@ -4641,12 +4918,75 @@ predictor
 loss_f9_grid &lt;- left_join(loss_f9_cruise,
                           loss_all_grid)
 map +
-  geom_tile(data = loss_f9_grid %&gt;%
-              filter(rank_n_cruise &lt;= 20),
+  geom_tile(data = loss_f9_grid,
             aes(lon, lat, fill = loss)) +
   facet_grid(decade ~ parameter_class) +
   scale_fill_manual(values = grey_plasma)</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/f9_loss_maps-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-f9_loss_maps-1">
+Past versions of f9_loss_maps-1.png
+</button>
+</p>
+<div id="fig-f9_loss_maps-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6aa4b75cd79cdc8ce238c759da00ed9dc2a857d1/docs/figure/read_GLODAPv2_2021.Rmd/f9_loss_maps-1.png" target="_blank">6aa4b75</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>loss_f9_grid %&gt;% filter(loss != 0) %&gt;%
+  group_split(parameter_class, decade) %&gt;%
+  # head(1) %&gt;%
+  map(
+    ~ map +
+      geom_tile(data = .x,
+                aes(lon, lat, fill = cruise_expocode)) +
+      scale_fill_brewer(palette = &quot;Paired&quot;) +
+      facet_grid(decade ~ parameter_class)
+  )</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/f9_loss_maps-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/f9_loss_maps-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/f9_loss_maps-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[4]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/f9_loss_maps-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[5]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/f9_loss_maps-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[6]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/f9_loss_maps-7.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="p18-phosphate" class="section level2" number="3.4">
