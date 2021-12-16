@@ -507,12 +507,18 @@ loss_all <- full_join(
 loss_all <- loss_all %>%
   mutate(decade = cut(
     year,
-    seq(1989, 2020, 10),
+    seq(1989, 2019, 10),
     right = FALSE,
     labels = c("1989-1999", "2000-2009", "2010-2019")
   ),
   .after = year) %>%
   filter(!is.na(decade))
+
+map +
+  geom_tile(data = loss_all %>% distinct(lon, lat, decade),
+            aes(lon, lat)) +
+  facet_grid(decade ~ .)
+
 
 loss <- loss_all %>% 
   filter(if_all(ends_with("f"), ~ . != 9))
@@ -589,7 +595,6 @@ loss_qc_cruise <- loss_qc_cruise %>%
   filter(n_cruise_rel >= 3)
 
 loss_qc_cruise %>%
-  # filter(n_cruise_rel_cum <= 90) %>%
   group_split(basin_AIP) %>%
   # head(3) %>%
   map(
@@ -624,11 +629,21 @@ loss_qc_grid <- left_join(loss_qc_cruise,
                           loss_grid)
 
 map +
-  geom_tile(data = loss_qc_grid %>%
-              filter(rank_n_cruise <= 20),
+  geom_tile(data = loss_qc_grid,
             aes(lon, lat, fill = loss)) +
   facet_grid(decade ~ parameter_class) +
   scale_fill_manual(values = grey_plasma)
+
+loss_qc_grid %>% filter(loss != 0) %>%
+  group_split(parameter_class, decade) %>%
+  # head(1) %>%
+  map(
+    ~ map +
+      geom_tile(data = .x,
+                aes(lon, lat, fill = cruise_expocode)) +
+      scale_fill_brewer(palette = "Paired") +
+      facet_grid(decade ~ parameter_class)
+  )
 
 ```
 
@@ -732,19 +747,23 @@ loss_grid <- loss %>% distinct(lon, lat, cruise_expocode)
 loss_f_grid <- left_join(loss_f_cruise,
                           loss_grid)
 map +
-  geom_tile(data = loss_f_grid %>%
-              filter(rank_n_cruise <= 20),
+  geom_tile(data = loss_f_grid,
             aes(lon, lat, fill = loss)) +
   facet_grid(decade ~ parameter_class) +
   scale_fill_manual(values = grey_plasma)
 
+loss_f_grid %>% filter(loss != 0) %>%
+  group_split(parameter_class, decade) %>%
+  # head(1) %>%
+  map(
+    ~ map +
+      geom_tile(data = .x,
+                aes(lon, lat, fill = cruise_expocode)) +
+      scale_fill_brewer(palette = "Paired") +
+      facet_grid(decade ~ parameter_class)
+  )
+
 ```
-
-
-
-
-
-
 
 
 ### f == 9
@@ -843,21 +862,23 @@ loss_all_grid <- loss_all %>% distinct(lon, lat, cruise_expocode)
 loss_f9_grid <- left_join(loss_f9_cruise,
                           loss_all_grid)
 map +
-  geom_tile(data = loss_f9_grid %>%
-              filter(rank_n_cruise <= 20),
+  geom_tile(data = loss_f9_grid,
             aes(lon, lat, fill = loss)) +
   facet_grid(decade ~ parameter_class) +
   scale_fill_manual(values = grey_plasma)
 
+loss_f9_grid %>% filter(loss != 0) %>%
+  group_split(parameter_class, decade) %>%
+  # head(1) %>%
+  map(
+    ~ map +
+      geom_tile(data = .x,
+                aes(lon, lat, fill = cruise_expocode)) +
+      scale_fill_brewer(palette = "Paired") +
+      facet_grid(decade ~ parameter_class)
+  )
+
 ```
-
-
-
-
-
-
-
-
 
 
 
