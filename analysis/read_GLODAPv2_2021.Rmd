@@ -561,26 +561,30 @@ loss_qc_cruise <- loss_qc %>%
   ungroup() %>% 
   pivot_longer(predictor:target,
                names_to = "parameter_class",
-               values_to = "loss")
+               values_to = "loss") %>% 
+  mutate(loss = as.factor(loss))
 
+grey_plasma <- c("grey80", viridisLite::plasma(4))
 
 loss_qc_cruise %>%
-  filter(rank_n_total <= 20) %>%
+  # filter(rank_n_total <= 20) %>%
   group_split(basin_AIP) %>%
   # head(1) %>%
   map(
     ~ ggplot(data = .x,
-             aes(rank_n_total, n_total, fill = as.factor(loss))) +
+             aes(rank_n_total, n_total, fill = loss)) +
       geom_point(shape = 21, size = 2) +
-      scale_fill_brewer(palette = "Spectral", direction = -1,
+      scale_fill_manual(values = grey_plasma,
                         name = "variables missing") +
       facet_grid(decade ~ parameter_class) +
       labs(title = paste("basin_AIP:", unique(.x$basin_AIP))) +
       ylim(0, NA)
   )
 
+
+
 loss_qc_cruise %>% 
-  filter(loss > 0, rank_n_total <= 20) %>% 
+  filter(loss != 0, rank_n_total <= 20) %>% 
   select(basin_AIP, decade, parameter_class, rank_n_total, cruise_expocode) %>% 
   arrange(basin_AIP, decade, parameter_class, rank_n_total) %>% 
   kable() %>% 
@@ -589,10 +593,24 @@ loss_qc_cruise %>%
 
 ```
 
+```{r qc_loss_maps}
+
+loss_grid <- loss %>% distinct(lon, lat, cruise_expocode)
+
+loss_qc_grid <- left_join(loss_qc_cruise,
+                          loss_grid)
 
 
+map +
+  geom_tile(data = loss_qc_grid,
+            aes(lon, lat), fill = "grey50") +
+  geom_tile(data = loss_qc_grid %>%
+              filter(rank_n_total <= 20),
+            aes(lon, lat, fill = loss)) +
+  facet_grid(decade ~ parameter_class) +
+  scale_fill_manual(values = grey_plasma)
 
-
+```
 
 
 ### f
@@ -638,7 +656,8 @@ loss_f_cruise <- loss_f %>%
   ungroup() %>% 
   pivot_longer(predictor:target,
                names_to = "parameter_class",
-               values_to = "loss")
+               values_to = "loss") %>% 
+  mutate(loss = as.factor(loss))
 
 
 loss_f_cruise %>%
@@ -657,7 +676,7 @@ loss_f_cruise %>%
   )
 
 loss_f_cruise %>% 
-  filter(loss > 0, rank_n_total <= 20) %>% 
+  filter(loss != 0, rank_n_total <= 20) %>% 
   select(basin_AIP, decade, parameter_class, rank_n_total, cruise_expocode) %>% 
   arrange(basin_AIP, decade, parameter_class, rank_n_total) %>% 
   kable() %>% 
@@ -666,7 +685,22 @@ loss_f_cruise %>%
 
 ```
 
+```{r f_loss_maps}
 
+loss_f_grid <- left_join(loss_f_cruise,
+                          loss_grid)
+
+
+map +
+  geom_tile(data = loss_f_grid,
+            aes(lon, lat), fill = "grey50") +
+  geom_tile(data = loss_f_grid %>%
+              filter(rank_n_total <= 20),
+            aes(lon, lat, fill = loss)) +
+  facet_grid(decade ~ parameter_class) +
+  scale_fill_manual(values = grey_plasma)
+
+```
 
 
 ## P18 phosphate
