@@ -562,16 +562,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree7fa3a9971e3a064df20ede8246facabfc3836513targetblank7fa3a99a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/7fa3a9971e3a064df20ede8246facabfc3836513" target="_blank">7fa3a99</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree3511fa706d508d8c485fe5881cabc19b15d49c0dtargetblank3511fa7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/3511fa706d508d8c485fe5881cabc19b15d49c0d" target="_blank">3511fa7</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree7fa3a9971e3a064df20ede8246facabfc3836513targetblank7fa3a99a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree3511fa706d508d8c485fe5881cabc19b15d49c0dtargetblank3511fa7a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/7fa3a9971e3a064df20ede8246facabfc3836513" target="_blank">7fa3a99</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/3511fa706d508d8c485fe5881cabc19b15d49c0d" target="_blank">3511fa7</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -584,6 +584,7 @@ Ignored files:
     Ignored:    output/
 
 Untracked files:
+    Untracked:  code/IO_1990_own_crossover_analysis_backup.R
     Untracked:  code/read_GLODAPv2_2020.Rmd
 
 </code></pre>
@@ -623,6 +624,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/3511fa706d508d8c485fe5881cabc19b15d49c0d/analysis/read_GLODAPv2_2021.Rmd" target="_blank">3511fa7</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+<td>
+f == 9 analysis added
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/163f97608360713a6c01d5ea0b3780740a81fad7/docs/read_GLODAPv2_2021.html" target="_blank">163f976</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -2500,12 +2535,12 @@ rm(f_flag, f_flag_grid, p_f_flag_map)</code></pre>
 </div>
 <div id="data-loss" class="section level2" number="3.3">
 <h2 number="3.3"><span class="header-section-number">3.3</span> data loss</h2>
-<pre class="r"><code>loss &lt;- full_join(
+<pre class="r"><code>loss_all &lt;- full_join(
   GLODAP,
   GLODAP_expocodes
 )
 
-loss &lt;- loss %&gt;%
+loss_all &lt;- loss_all %&gt;%
   mutate(decade = cut(
     year,
     seq(1989, 2020, 10),
@@ -2515,8 +2550,11 @@ loss &lt;- loss %&gt;%
   .after = year) %&gt;%
   filter(!is.na(decade))
 
-loss &lt;- loss %&gt;% 
+loss &lt;- loss_all %&gt;% 
   filter(if_all(ends_with(&quot;f&quot;), ~ . != 9))
+
+loss_all_n &lt;- loss_all %&gt;% 
+  count(basin_AIP, decade)
 
 loss_n &lt;- loss %&gt;% 
   count(basin_AIP, decade)</code></pre>
@@ -2579,15 +2617,15 @@ loss_qc_cruise &lt;- loss_qc_cruise %&gt;%
 grey_plasma &lt;- c(&quot;grey80&quot;, viridisLite::plasma(4))
 
 loss_qc_cruise &lt;- loss_qc_cruise %&gt;%
-  filter(n_cruise_rel_cum &lt;= 90)
+  filter(n_cruise_rel &gt;= 3)
 
 loss_qc_cruise %&gt;%
   # filter(n_cruise_rel_cum &lt;= 90) %&gt;%
   group_split(basin_AIP) %&gt;%
-  # head(1) %&gt;%
+  # head(3) %&gt;%
   map(
     ~ ggplot(data = .x,
-             aes(rank_n_cruise, n_cruise, fill = loss)) +
+             aes(rank_n_cruise, n_cruise_rel, fill = loss)) +
       geom_point(shape = 21, size = 2) +
       scale_fill_manual(values = grey_plasma,
                         name = &quot;variables missing&quot;) +
@@ -2619,6 +2657,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163f97608360713a6c01d5ea0b3780740a81fad7/docs/figure/read_GLODAPv2_2021.Rmd/qc_loss-1.png" target="_blank">163f976</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/be0850d94ee7bc12d104ced65c79d791cac69d85/docs/figure/read_GLODAPv2_2021.Rmd/qc_loss-1.png" target="_blank">be0850d</a>
@@ -2672,6 +2721,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163f97608360713a6c01d5ea0b3780740a81fad7/docs/figure/read_GLODAPv2_2021.Rmd/qc_loss-2.png" target="_blank">163f976</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/be0850d94ee7bc12d104ced65c79d791cac69d85/docs/figure/read_GLODAPv2_2021.Rmd/qc_loss-2.png" target="_blank">be0850d</a>
 </td>
 <td>
@@ -2723,6 +2783,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163f97608360713a6c01d5ea0b3780740a81fad7/docs/figure/read_GLODAPv2_2021.Rmd/qc_loss-3.png" target="_blank">163f976</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/be0850d94ee7bc12d104ced65c79d791cac69d85/docs/figure/read_GLODAPv2_2021.Rmd/qc_loss-3.png" target="_blank">be0850d</a>
 </td>
 <td>
@@ -2753,24 +2824,24 @@ jens-daniel-mueller
   arrange(basin_AIP, decade, parameter_class, rank_n_cruise) %&gt;% 
   kable() %&gt;% 
   kable_styling() %&gt;% 
-  scroll_box()</code></pre>
-<div style="border: 1px solid #ddd; padding: 5px; ">
+  scroll_box(height = &quot;300px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 basin_AIP
 </th>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 decade
 </th>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 parameter_class
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 rank_n_cruise
 </th>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 cruise_expocode
 </th>
 </tr>
@@ -2784,44 +2855,10 @@ Atlantic
 1989-1999
 </td>
 <td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-15.0
-</td>
-<td style="text-align:left;">
-06AQ19920929
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-17.5
-</td>
-<td style="text-align:left;">
-58JH19940723
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
 target
 </td>
 <td style="text-align:right;">
-11.0
+11
 </td>
 <td style="text-align:left;">
 06MT19900123
@@ -2838,7 +2875,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-12.0
+12
 </td>
 <td style="text-align:left;">
 33LK19960415
@@ -2855,61 +2892,10 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-13.0
+13
 </td>
 <td style="text-align:left;">
 33MW19930704
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-14.0
-</td>
-<td style="text-align:left;">
-35LU19890509
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-15.0
-</td>
-<td style="text-align:left;">
-06AQ19920929
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-17.5
-</td>
-<td style="text-align:left;">
-58JH19940723
 </td>
 </tr>
 <tr>
@@ -2923,7 +2909,7 @@ Atlantic
 predictor
 </td>
 <td style="text-align:right;">
-7.0
+7
 </td>
 <td style="text-align:left;">
 35TH20010823
@@ -2940,7 +2926,7 @@ Atlantic
 predictor
 </td>
 <td style="text-align:right;">
-13.0
+13
 </td>
 <td style="text-align:left;">
 33RO20070710
@@ -2954,78 +2940,10 @@ Atlantic
 2000-2009
 </td>
 <td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-16.0
-</td>
-<td style="text-align:left;">
-64PE20050817
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-19.0
-</td>
-<td style="text-align:left;">
-06MT20060712
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-22.0
-</td>
-<td style="text-align:left;">
-64PE20020506
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-23.0
-</td>
-<td style="text-align:left;">
-64PE20020211
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
 target
 </td>
 <td style="text-align:right;">
-7.0
+7
 </td>
 <td style="text-align:left;">
 35TH20010823
@@ -3042,7 +2960,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-8.0
+8
 </td>
 <td style="text-align:left;">
 74DI20040404
@@ -3059,7 +2977,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-9.0
+9
 </td>
 <td style="text-align:left;">
 35TH20080610
@@ -3076,7 +2994,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-11.0
+11
 </td>
 <td style="text-align:left;">
 35TH20040604
@@ -3093,7 +3011,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-12.0
+12
 </td>
 <td style="text-align:left;">
 35TH20020611
@@ -3104,186 +3022,16 @@ target
 Atlantic
 </td>
 <td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-14.0
-</td>
-<td style="text-align:left;">
-06M220060523
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-16.0
-</td>
-<td style="text-align:left;">
-64PE20050817
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-19.0
-</td>
-<td style="text-align:left;">
-06MT20060712
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-21.0
-</td>
-<td style="text-align:left;">
-06MT19990610
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-22.0
-</td>
-<td style="text-align:left;">
-64PE20020506
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-23.0
-</td>
-<td style="text-align:left;">
-64PE20020211
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
 2010-2019
 </td>
 <td style="text-align:left;">
 predictor
 </td>
 <td style="text-align:right;">
-5.0
+5
 </td>
 <td style="text-align:left;">
 74EQ20151206
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-24.5
-</td>
-<td style="text-align:left;">
-18HU20160430
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-13.0
-</td>
-<td style="text-align:left;">
-35TH20100608
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-14.0
-</td>
-<td style="text-align:left;">
-29AH20160617
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-16.0
-</td>
-<td style="text-align:left;">
-29AH20120623
 </td>
 </tr>
 <tr>
@@ -3297,7 +3045,7 @@ Indian
 target
 </td>
 <td style="text-align:right;">
-11.0
+11
 </td>
 <td style="text-align:left;">
 320619960503
@@ -3314,7 +3062,7 @@ Pacific
 predictor
 </td>
 <td style="text-align:right;">
-2.0
+2
 </td>
 <td style="text-align:left;">
 31DS19940126
@@ -3331,58 +3079,7 @@ Pacific
 predictor
 </td>
 <td style="text-align:right;">
-4.0
-</td>
-<td style="text-align:left;">
-31DS19920907
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-22.0
-</td>
-<td style="text-align:left;">
-320619970113
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-23.0
-</td>
-<td style="text-align:left;">
-33RR19971202
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-4.0
+4
 </td>
 <td style="text-align:left;">
 31DS19920907
@@ -3399,7 +3096,24 @@ Pacific
 target
 </td>
 <td style="text-align:right;">
-6.0
+4
+</td>
+<td style="text-align:left;">
+31DS19920907
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+6
 </td>
 <td style="text-align:left;">
 316N19930222
@@ -3416,7 +3130,7 @@ Pacific
 target
 </td>
 <td style="text-align:right;">
-7.0
+7
 </td>
 <td style="text-align:left;">
 316N19921006
@@ -3433,7 +3147,7 @@ Pacific
 target
 </td>
 <td style="text-align:right;">
-8.0
+8
 </td>
 <td style="text-align:left;">
 90KD19920214
@@ -3450,503 +3164,10 @@ Pacific
 target
 </td>
 <td style="text-align:right;">
-11.0
+11
 </td>
 <td style="text-align:left;">
 316N19921204
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-13.0
-</td>
-<td style="text-align:left;">
-31WT19910716
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-18.5
-</td>
-<td style="text-align:left;">
-316N19920502
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-18.5
-</td>
-<td style="text-align:left;">
-49HG19971110
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-22.0
-</td>
-<td style="text-align:left;">
-320619970113
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-26.0
-</td>
-<td style="text-align:left;">
-49HO19990719
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-28.0
-</td>
-<td style="text-align:left;">
-49NZ20030521
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-32.0
-</td>
-<td style="text-align:left;">
-49NZ20060120
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-33.0
-</td>
-<td style="text-align:left;">
-49NZ20021217
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-35.0
-</td>
-<td style="text-align:left;">
-21OR20080102
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-28.0
-</td>
-<td style="text-align:left;">
-49NZ20030521
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-31.0
-</td>
-<td style="text-align:left;">
-49NZ19981222
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-32.0
-</td>
-<td style="text-align:left;">
-49NZ20060120
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-33.0
-</td>
-<td style="text-align:left;">
-49NZ20021217
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-34.0
-</td>
-<td style="text-align:left;">
-49NZ20020107
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-35.0
-</td>
-<td style="text-align:left;">
-21OR20080102
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-17.0
-</td>
-<td style="text-align:left;">
-33RO20160505
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-21.0
-</td>
-<td style="text-align:left;">
-32WC20110812
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-35.0
-</td>
-<td style="text-align:left;">
-317W20130803
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-38.5
-</td>
-<td style="text-align:left;">
-49UP20120410
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-50.0
-</td>
-<td style="text-align:left;">
-325020100509
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-67.0
-</td>
-<td style="text-align:left;">
-49UP20101110
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-75.0
-</td>
-<td style="text-align:left;">
-32PO20130829
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-17.0
-</td>
-<td style="text-align:left;">
-33RO20160505
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-21.0
-</td>
-<td style="text-align:left;">
-32WC20110812
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-35.0
-</td>
-<td style="text-align:left;">
-317W20130803
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-46.0
-</td>
-<td style="text-align:left;">
-49UP20130619
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-50.0
-</td>
-<td style="text-align:left;">
-325020100509
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-75.0
-</td>
-<td style="text-align:left;">
-32PO20130829
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-78.5
-</td>
-<td style="text-align:left;">
-49UF20091022
 </td>
 </tr>
 </tbody>
@@ -3986,6 +3207,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163f97608360713a6c01d5ea0b3780740a81fad7/docs/figure/read_GLODAPv2_2021.Rmd/qc_loss_maps-1.png" target="_blank">163f976</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/be0850d94ee7bc12d104ced65c79d791cac69d85/docs/figure/read_GLODAPv2_2021.Rmd/qc_loss_maps-1.png" target="_blank">be0850d</a>
@@ -4061,7 +3293,7 @@ loss_f_cruise &lt;- loss_f_cruise %&gt;%
 grey_plasma &lt;- c(&quot;grey80&quot;, viridisLite::plasma(4))
 
 loss_f_cruise &lt;- loss_f_cruise %&gt;%
-  filter(n_cruise_rel_cum &lt;= 90)
+    filter(n_cruise_rel &gt;= 3)
 
 loss_f_cruise %&gt;%
   # filter(n_cruise_rel_cum &lt;= 90) %&gt;%
@@ -4101,6 +3333,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163f97608360713a6c01d5ea0b3780740a81fad7/docs/figure/read_GLODAPv2_2021.Rmd/f_loss-1.png" target="_blank">163f976</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ce6cdae27ceae7d6103b8dd4fbbe017d14cb4a73/docs/figure/read_GLODAPv2_2021.Rmd/f_loss-1.png" target="_blank">ce6cdae</a>
@@ -4143,6 +3386,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163f97608360713a6c01d5ea0b3780740a81fad7/docs/figure/read_GLODAPv2_2021.Rmd/f_loss-2.png" target="_blank">163f976</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ce6cdae27ceae7d6103b8dd4fbbe017d14cb4a73/docs/figure/read_GLODAPv2_2021.Rmd/f_loss-2.png" target="_blank">ce6cdae</a>
 </td>
 <td>
@@ -4183,6 +3437,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163f97608360713a6c01d5ea0b3780740a81fad7/docs/figure/read_GLODAPv2_2021.Rmd/f_loss-3.png" target="_blank">163f976</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ce6cdae27ceae7d6103b8dd4fbbe017d14cb4a73/docs/figure/read_GLODAPv2_2021.Rmd/f_loss-3.png" target="_blank">ce6cdae</a>
 </td>
 <td>
@@ -4202,24 +3467,24 @@ jens-daniel-mueller
   arrange(basin_AIP, decade, parameter_class, rank_n_cruise) %&gt;% 
   kable() %&gt;% 
   kable_styling() %&gt;% 
-  scroll_box()</code></pre>
-<div style="border: 1px solid #ddd; padding: 5px; ">
+  scroll_box(height = &quot;300px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 basin_AIP
 </th>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 decade
 </th>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 parameter_class
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 rank_n_cruise
 </th>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 cruise_expocode
 </th>
 </tr>
@@ -4236,7 +3501,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-1.0
+1
 </td>
 <td style="text-align:left;">
 323019940104
@@ -4253,7 +3518,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-7.0
+7
 </td>
 <td style="text-align:left;">
 33RO19980123
@@ -4270,7 +3535,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-9.0
+9
 </td>
 <td style="text-align:left;">
 35A319950113
@@ -4287,7 +3552,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-11.0
+11
 </td>
 <td style="text-align:left;">
 06MT19900123
@@ -4304,7 +3569,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-12.0
+12
 </td>
 <td style="text-align:left;">
 33LK19960415
@@ -4321,44 +3586,10 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-13.0
+13
 </td>
 <td style="text-align:left;">
 33MW19930704
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-14.0
-</td>
-<td style="text-align:left;">
-35LU19890509
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-17.5
-</td>
-<td style="text-align:left;">
-58JH19940723
 </td>
 </tr>
 <tr>
@@ -4372,7 +3603,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-7.0
+7
 </td>
 <td style="text-align:left;">
 35TH20010823
@@ -4389,7 +3620,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-8.0
+8
 </td>
 <td style="text-align:left;">
 74DI20040404
@@ -4406,7 +3637,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-9.0
+9
 </td>
 <td style="text-align:left;">
 35TH20080610
@@ -4423,7 +3654,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-11.0
+11
 </td>
 <td style="text-align:left;">
 35TH20040604
@@ -4440,7 +3671,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-12.0
+12
 </td>
 <td style="text-align:left;">
 35TH20020611
@@ -4451,118 +3682,16 @@ target
 Atlantic
 </td>
 <td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-14.0
-</td>
-<td style="text-align:left;">
-06M220060523
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-21.0
-</td>
-<td style="text-align:left;">
-06MT19990610
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
 2010-2019
 </td>
 <td style="text-align:left;">
 target
 </td>
 <td style="text-align:right;">
-10.0
+10
 </td>
 <td style="text-align:left;">
 33RO20110926
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-13.0
-</td>
-<td style="text-align:left;">
-35TH20100608
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-14.0
-</td>
-<td style="text-align:left;">
-29AH20160617
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-16.0
-</td>
-<td style="text-align:left;">
-29AH20120623
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-19.0
-</td>
-<td style="text-align:left;">
-18HU20140502
 </td>
 </tr>
 <tr>
@@ -4576,7 +3705,7 @@ Indian
 target
 </td>
 <td style="text-align:right;">
-11.0
+11
 </td>
 <td style="text-align:left;">
 320619960503
@@ -4593,7 +3722,7 @@ Indian
 target
 </td>
 <td style="text-align:right;">
-2.0
+2
 </td>
 <td style="text-align:left;">
 33RR20080204
@@ -4610,7 +3739,7 @@ Pacific
 target
 </td>
 <td style="text-align:right;">
-3.0
+3
 </td>
 <td style="text-align:left;">
 31DS19960105
@@ -4627,7 +3756,7 @@ Pacific
 target
 </td>
 <td style="text-align:right;">
-6.0
+6
 </td>
 <td style="text-align:left;">
 316N19930222
@@ -4644,7 +3773,7 @@ Pacific
 target
 </td>
 <td style="text-align:right;">
-7.0
+7
 </td>
 <td style="text-align:left;">
 316N19921006
@@ -4661,7 +3790,7 @@ Pacific
 target
 </td>
 <td style="text-align:right;">
-8.0
+8
 </td>
 <td style="text-align:left;">
 90KD19920214
@@ -4678,7 +3807,7 @@ Pacific
 target
 </td>
 <td style="text-align:right;">
-11.0
+11
 </td>
 <td style="text-align:left;">
 316N19921204
@@ -4689,203 +3818,16 @@ target
 Pacific
 </td>
 <td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-13.0
-</td>
-<td style="text-align:left;">
-31WT19910716
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-16.0
-</td>
-<td style="text-align:left;">
-325019940125
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-17.0
-</td>
-<td style="text-align:left;">
-49HG19950807
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-18.5
-</td>
-<td style="text-align:left;">
-316N19920502
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-18.5
-</td>
-<td style="text-align:left;">
-49HG19971110
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-22.0
-</td>
-<td style="text-align:left;">
-320619970113
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
 2000-2009
 </td>
 <td style="text-align:left;">
 target
 </td>
 <td style="text-align:right;">
-1.0
+1
 </td>
 <td style="text-align:left;">
 33RO20071215
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-19.0
-</td>
-<td style="text-align:left;">
-49NZ20030220
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-22.0
-</td>
-<td style="text-align:left;">
-49NZ20081011
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-31.0
-</td>
-<td style="text-align:left;">
-49NZ19981222
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-33.0
-</td>
-<td style="text-align:left;">
-49NZ20021217
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-34.0
-</td>
-<td style="text-align:left;">
-49NZ20020107
 </td>
 </tr>
 <tr>
@@ -4899,7 +3841,7 @@ Pacific
 target
 </td>
 <td style="text-align:right;">
-1.0
+1
 </td>
 <td style="text-align:left;">
 318M20091121
@@ -4916,44 +3858,10 @@ Pacific
 target
 </td>
 <td style="text-align:right;">
-5.0
+5
 </td>
 <td style="text-align:left;">
 320620170703
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-48.0
-</td>
-<td style="text-align:left;">
-49UP20120111
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Pacific
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-78.5
-</td>
-<td style="text-align:left;">
-49UF20091022
 </td>
 </tr>
 </tbody>
@@ -4994,6 +3902,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163f97608360713a6c01d5ea0b3780740a81fad7/docs/figure/read_GLODAPv2_2021.Rmd/f_loss_maps-1.png" target="_blank">163f976</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/be0850d94ee7bc12d104ced65c79d791cac69d85/docs/figure/read_GLODAPv2_2021.Rmd/f_loss_maps-1.png" target="_blank">be0850d</a>
 </td>
 <td>
@@ -5007,6 +3926,727 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+</div>
+<div id="f-9" class="section level3" number="3.3.3">
+<h3 number="3.3.3"><span class="header-section-number">3.3.3</span> f == 9</h3>
+<pre class="r"><code>loss_f9 &lt;- loss_all %&gt;% 
+  select(lon, lat, basin_AIP, decade, cruise_expocode, ends_with(&quot;f&quot;)) %&gt;%
+  pivot_longer(ends_with(&quot;f&quot;),
+               names_to = &quot;parameter&quot;,
+               values_to = &quot;value&quot;) %&gt;% 
+  mutate(parameter = str_remove(parameter, &quot;f&quot;))
+
+loss_f9_cruise &lt;- loss_f9 %&gt;%
+  count(cruise_expocode, basin_AIP, decade, parameter, value) %&gt;%
+  pivot_wider(
+    names_from = value,
+    names_prefix = &quot;f_&quot;,
+    values_from = n,
+    values_fill = 0
+  ) %&gt;%
+  mutate(n_cruise = f_0 + f_2 + f_9,
+         category = if_else(f_9 &lt;= 0.1 * (n_cruise), &quot;OK&quot;, &quot;loss&quot;)) %&gt;%
+  mutate(parameter_class = if_else(
+    parameter %in% c(&quot;tco2&quot;, &quot;talk&quot;, &quot;phosphate&quot;),
+    &quot;target&quot;,
+    &quot;predictor&quot;
+  )) %&gt;%
+  count(cruise_expocode,
+        basin_AIP,
+        decade,
+        n_cruise,
+        parameter_class,
+        category) %&gt;% 
+  pivot_wider(names_from = category,
+              values_from = n,
+              values_fill = 0) %&gt;% 
+  select(-OK) %&gt;% 
+  pivot_wider(names_from = parameter_class,
+              values_from = loss) %&gt;% 
+  group_by(basin_AIP, decade) %&gt;%
+  mutate(rank_n_cruise = rank(-n_cruise)) %&gt;%
+  ungroup()
+
+loss_f9_cruise &lt;- full_join(loss_f9_cruise, loss_all_n)
+
+loss_f9_cruise &lt;- loss_f9_cruise %&gt;% 
+  mutate(n_cruise_rel = 100 * n_cruise / n) %&gt;% 
+  arrange(basin_AIP, decade, -n_cruise_rel) %&gt;% 
+  group_by(basin_AIP, decade) %&gt;% 
+  mutate(n_cruise_rel_cum = cumsum(n_cruise_rel)) %&gt;% 
+  ungroup() %&gt;% 
+  select(-n)
+
+loss_f9_cruise &lt;- loss_f9_cruise %&gt;% 
+  pivot_longer(predictor:target,
+               names_to = &quot;parameter_class&quot;,
+               values_to = &quot;loss&quot;) %&gt;% 
+  mutate(loss = as.factor(loss))
+
+grey_plasma &lt;- c(&quot;grey80&quot;, viridisLite::plasma(4))
+
+loss_f9_cruise &lt;- loss_f9_cruise %&gt;%
+    filter(n_cruise_rel &gt;= 3)
+
+loss_f9_cruise %&gt;%
+  group_split(basin_AIP) %&gt;%
+  # head(1) %&gt;%
+  map(
+    ~ ggplot(data = .x,
+             aes(rank_n_cruise, n_cruise, fill = loss)) +
+      geom_point(shape = 21, size = 2) +
+      scale_fill_manual(values = grey_plasma,
+                        name = &quot;variables missing&quot;) +
+      facet_grid(decade ~ parameter_class) +
+      labs(title = paste(&quot;basin_AIP:&quot;, unique(.x$basin_AIP))) +
+      ylim(0, NA)
+  )</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/f9_loss-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/f9_loss-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/f9_loss-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>loss_f9_cruise %&gt;% 
+  filter(loss != 0) %&gt;% 
+  select(basin_AIP, decade, parameter_class, rank_n_cruise, cruise_expocode) %&gt;% 
+  arrange(basin_AIP, decade, parameter_class, rank_n_cruise) %&gt;% 
+  kable() %&gt;% 
+  kable_styling() %&gt;% 
+  scroll_box(height = &quot;300px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+basin_AIP
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+decade
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+parameter_class
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+rank_n_cruise
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+cruise_expocode
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+316N19871123
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+06AQ19980328
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+74DI19970807
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+316N19871123
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+33RO19980123
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+06AQ19980328
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+74DI19970807
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+33MW19930704
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+33RO20050111
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+33RO20030604
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+06AQ20050122
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+06AQ20080210
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+35TH19990712
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+06M220170104
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+06AQ20120107
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+33RO20110926
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+29HE20130320
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+06M220170104
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+316N19951202
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+316N19950310
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+35MF19960220
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+316N19951202
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+316N19941201
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+320619960503
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+316N19950611
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:left;">
+35MF19930123
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+09AR20071216
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+09AR20060102
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+09AR20141205
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+09AR20141205
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+33MW19920224
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+316N19920502
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+33MW19920224
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+316N19921006
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+325020060213
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>loss_all_grid &lt;- loss_all %&gt;% distinct(lon, lat, cruise_expocode)
+
+loss_f9_grid &lt;- left_join(loss_f9_cruise,
+                          loss_all_grid)
+map +
+  geom_tile(data = loss_f9_grid %&gt;%
+              filter(rank_n_cruise &lt;= 20),
+            aes(lon, lat, fill = loss)) +
+  facet_grid(decade ~ parameter_class) +
+  scale_fill_manual(values = grey_plasma)</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/f9_loss_maps-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="p18-phosphate" class="section level2" number="3.4">
@@ -5748,4145 +5388,8 @@ jens-daniel-mueller
 </div>
 </div>
 </div>
-<div id="crossover-checks" class="section level1" number="7">
-<h1 number="7"><span class="header-section-number">7</span> Crossover checks</h1>
-<div id="indian-n-s" class="section level2" number="7.1">
-<h2 number="7.1"><span class="header-section-number">7.1</span> Indian N-S</h2>
-<pre class="r"><code>IO_NS_cruises &lt;- c(249, 250,
-                       352, 353,
-                       1046,
-                       3035)
-
-IO_NS_GLODAP_grid &lt;- GLODAP %&gt;% 
-  filter(basin_AIP == &quot;Indian&quot;,
-         lon &gt; 70,
-         lon &lt; 100,
-         cruise %in% IO_NS_cruises
-         ) %&gt;%
-  mutate(cruise = as.factor(cruise)) %&gt;% 
-  distinct(lon, lat, cruise, year = as.factor(year(date)))
-
-map +
-  geom_tile(data = IO_NS_GLODAP_grid,
-            aes(lon, lat, fill = year)) +
-  facet_wrap(~ year)</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_data-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_data-1">
-Past versions of IO_NS_data-1.png
-</button>
-</p>
-<div id="fig-IO_NS_data-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_data-1.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>IO_NS &lt;- GLODAP %&gt;% 
-  filter(cruise %in% IO_NS_cruises)
-
-IO_NS &lt;- IO_NS %&gt;%
-  mutate(
-    cstar = tco2  - (117 * phosphate)  - 0.5 * (talk - (16 * phosphate)),
-    cstar_tco2 = tco2,
-    cstar_talk = -0.5 * talk,
-    cstar_phosphate = -117 * phosphate + 16 * 0.5 * phosphate
-  )
-
-
-IO_NS &lt;- IO_NS %&gt;%
-  select(year,
-         lon, lat, depth,
-         cruise, station, cast,
-         temp, sal, gamma,
-         tco2, talk, phosphate,
-         starts_with(&quot;cstar&quot;))
-
-
-IO_NS &lt;- IO_NS %&gt;% 
-  mutate(year = if_else(year == 1994, 1995, year),
-         year = as.factor(as.character(year)))
-
-IO_NS &lt;- IO_NS %&gt;% 
-  filter(lon &lt; 98)
-
-IO_NS &lt;- IO_NS %&gt;% 
-  filter(lat &gt; -25,
-         lat &lt; 0,
-         depth &gt; 2000,
-         depth &lt; 4000,
-         !(lat %in% c(-18.5,-5.5)))
-
-map +
-  geom_tile(data = IO_NS %&gt;% 
-              distinct(lon, lat, year),
-            aes(lon, lat, fill = year)) +
-  facet_wrap(~ year, ncol = 2)</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_data-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_data-2">
-Past versions of IO_NS_data-2.png
-</button>
-</p>
-<div id="fig-IO_NS_data-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_data-2.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>IO_NS &lt;- IO_NS %&gt;% 
-  pivot_longer(temp:cstar_phosphate,
-               names_to = &quot;parameter&quot;,
-               values_to = &quot;value&quot;)</code></pre>
-<div id="section" class="section level3" number="7.1.1">
-<h3 number="7.1.1"><span class="header-section-number">7.1.1</span> Section</h3>
-<pre class="r"><code>IO_NS %&gt;% 
-  group_split(parameter) %&gt;% 
-  # head(1) %&gt;%
-  map(
-    ~ ggplot(data = .x,
-             aes(lat , depth, col = value)) +
-  geom_point() +
-  scale_color_viridis_c(name = unique(.x$parameter)) +
-  scale_y_reverse() +
-  facet_grid(year ~ .)
-  )</code></pre>
-<pre><code>[[1]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_sections-1">
-Past versions of IO_NS_sections-1.png
-</button>
-</p>
-<div id="fig-IO_NS_sections-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-1.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2e6c3f135934580a528fd76742510c4d8f3c2540/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-1.png" target="_blank">2e6c3f1</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/c9363ce63998c02f18d225ec672f18ac2ebcbccb/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-1.png" target="_blank">c9363ce</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[2]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_sections-2">
-Past versions of IO_NS_sections-2.png
-</button>
-</p>
-<div id="fig-IO_NS_sections-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-2.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2e6c3f135934580a528fd76742510c4d8f3c2540/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-2.png" target="_blank">2e6c3f1</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/c9363ce63998c02f18d225ec672f18ac2ebcbccb/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-2.png" target="_blank">c9363ce</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[3]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-3.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_sections-3">
-Past versions of IO_NS_sections-3.png
-</button>
-</p>
-<div id="fig-IO_NS_sections-3" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-3.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2e6c3f135934580a528fd76742510c4d8f3c2540/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-3.png" target="_blank">2e6c3f1</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/c9363ce63998c02f18d225ec672f18ac2ebcbccb/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-3.png" target="_blank">c9363ce</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[4]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-4.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_sections-4">
-Past versions of IO_NS_sections-4.png
-</button>
-</p>
-<div id="fig-IO_NS_sections-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-4.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2e6c3f135934580a528fd76742510c4d8f3c2540/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-4.png" target="_blank">2e6c3f1</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/c9363ce63998c02f18d225ec672f18ac2ebcbccb/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-4.png" target="_blank">c9363ce</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[5]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-5.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_sections-5">
-Past versions of IO_NS_sections-5.png
-</button>
-</p>
-<div id="fig-IO_NS_sections-5" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-5.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2e6c3f135934580a528fd76742510c4d8f3c2540/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-5.png" target="_blank">2e6c3f1</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/c9363ce63998c02f18d225ec672f18ac2ebcbccb/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-5.png" target="_blank">c9363ce</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[6]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-6.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_sections-6">
-Past versions of IO_NS_sections-6.png
-</button>
-</p>
-<div id="fig-IO_NS_sections-6" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-6.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2e6c3f135934580a528fd76742510c4d8f3c2540/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-6.png" target="_blank">2e6c3f1</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/c9363ce63998c02f18d225ec672f18ac2ebcbccb/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-6.png" target="_blank">c9363ce</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[7]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-7.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_sections-7">
-Past versions of IO_NS_sections-7.png
-</button>
-</p>
-<div id="fig-IO_NS_sections-7" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-7.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2e6c3f135934580a528fd76742510c4d8f3c2540/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-7.png" target="_blank">2e6c3f1</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[8]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-8.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_sections-8">
-Past versions of IO_NS_sections-8.png
-</button>
-</p>
-<div id="fig-IO_NS_sections-8" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-8.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[9]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-9.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_sections-9">
-Past versions of IO_NS_sections-9.png
-</button>
-</p>
-<div id="fig-IO_NS_sections-9" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-9.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[10]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-10.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_sections-10">
-Past versions of IO_NS_sections-10.png
-</button>
-</p>
-<div id="fig-IO_NS_sections-10" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_sections-10.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="profiles-absolute" class="section level3" number="7.1.2">
-<h3 number="7.1.2"><span class="header-section-number">7.1.2</span> Profiles, absolute</h3>
-<pre class="r"><code>IO_NS %&gt;%
-  arrange(depth) %&gt;% 
-  group_split(parameter) %&gt;%
-  # head(1) %&gt;%
-  map(
-    ~ ggplot(data = .x,
-             aes(
-               value , depth, fill = year,
-             )) +
-      geom_point(shape = 21) +
-      scale_fill_scico_d(direction = -1) +
-      scale_y_reverse() +
-      labs(x = unique(.x$parameter)) +
-      facet_wrap( ~ lat, ncol = 3)
-  )</code></pre>
-<pre><code>[[1]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles-1">
-Past versions of IO_NS_profiles-1.png
-</button>
-</p>
-<div id="fig-IO_NS_profiles-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2e6c3f135934580a528fd76742510c4d8f3c2540/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-1.png" target="_blank">2e6c3f1</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/16dab594d05d72882094ef1029bea2f020ede938/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-1.png" target="_blank">16dab59</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[2]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles-2">
-Past versions of IO_NS_profiles-2.png
-</button>
-</p>
-<div id="fig-IO_NS_profiles-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2e6c3f135934580a528fd76742510c4d8f3c2540/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-2.png" target="_blank">2e6c3f1</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/16dab594d05d72882094ef1029bea2f020ede938/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-2.png" target="_blank">16dab59</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[3]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-3.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles-3">
-Past versions of IO_NS_profiles-3.png
-</button>
-</p>
-<div id="fig-IO_NS_profiles-3" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2e6c3f135934580a528fd76742510c4d8f3c2540/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-3.png" target="_blank">2e6c3f1</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/16dab594d05d72882094ef1029bea2f020ede938/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-3.png" target="_blank">16dab59</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[4]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-4.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles-4">
-Past versions of IO_NS_profiles-4.png
-</button>
-</p>
-<div id="fig-IO_NS_profiles-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2e6c3f135934580a528fd76742510c4d8f3c2540/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-4.png" target="_blank">2e6c3f1</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/16dab594d05d72882094ef1029bea2f020ede938/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-4.png" target="_blank">16dab59</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[5]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-5.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles-5">
-Past versions of IO_NS_profiles-5.png
-</button>
-</p>
-<div id="fig-IO_NS_profiles-5" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2e6c3f135934580a528fd76742510c4d8f3c2540/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-5.png" target="_blank">2e6c3f1</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/16dab594d05d72882094ef1029bea2f020ede938/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-5.png" target="_blank">16dab59</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[6]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-6.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles-6">
-Past versions of IO_NS_profiles-6.png
-</button>
-</p>
-<div id="fig-IO_NS_profiles-6" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-6.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2e6c3f135934580a528fd76742510c4d8f3c2540/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-6.png" target="_blank">2e6c3f1</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/16dab594d05d72882094ef1029bea2f020ede938/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-6.png" target="_blank">16dab59</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[7]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-7.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles-7">
-Past versions of IO_NS_profiles-7.png
-</button>
-</p>
-<div id="fig-IO_NS_profiles-7" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-7.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2e6c3f135934580a528fd76742510c4d8f3c2540/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-7.png" target="_blank">2e6c3f1</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[8]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-8.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles-8">
-Past versions of IO_NS_profiles-8.png
-</button>
-</p>
-<div id="fig-IO_NS_profiles-8" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-8.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[9]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-9.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles-9">
-Past versions of IO_NS_profiles-9.png
-</button>
-</p>
-<div id="fig-IO_NS_profiles-9" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-9.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[10]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-10.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles-10">
-Past versions of IO_NS_profiles-10.png
-</button>
-</p>
-<div id="fig-IO_NS_profiles-10" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles-10.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>IO_NS_grid &lt;- IO_NS %&gt;% 
-  select(lat, lon, depth, year, parameter, value) %&gt;% 
-  mutate(depth = as.numeric(as.character(cut(depth,
-                     seq(0,1e4, 500), 
-                     seq(250,1e4,500))))) %&gt;% 
-  group_by(lat, depth, year, parameter) %&gt;% 
-  summarise(value = mean(value, na.rm=TRUE)) %&gt;% 
-  ungroup()
-
-
-IO_NS_grid %&gt;%
-  group_by(depth, year, parameter) %&gt;%
-  summarise(value = mean(value, na.rm = TRUE)) %&gt;%
-  ungroup() %&gt;%
-  ggplot(aes(value , depth, fill = year)) +
-  geom_point(shape = 21) +
-  scale_fill_scico_d(direction = -1) +
-  scale_y_reverse() +
-  facet_wrap(~ parameter, scales = &quot;free_x&quot;, ncol = 3)</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles_gridded-1">
-Past versions of IO_NS_profiles_gridded-1.png
-</button>
-</p>
-<div id="fig-IO_NS_profiles_gridded-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded-1.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="profiles-offset" class="section level3" number="7.1.3">
-<h3 number="7.1.3"><span class="header-section-number">7.1.3</span> Profiles, offset</h3>
-<pre class="r"><code>IO_NS_grid_offset &lt;- IO_NS_grid %&gt;% 
-  arrange(year) %&gt;% 
-  group_by(lat, depth, parameter) %&gt;% 
-  mutate(delta_value = value - lag(value),
-         delta_year = paste(lag(year), year, sep = &quot;-&quot;)) %&gt;% 
-  ungroup() %&gt;% 
-  drop_na()
-
-IO_NS_grid_offset %&gt;%
-  group_split(parameter) %&gt;%
-  # head(1) %&gt;%
-  map(
-    ~ ggplot(data = .x,
-             aes(
-               delta_value , depth, fill = delta_year,
-             )) +
-      geom_vline(xintercept = 0) +
-      geom_point(shape = 21) +
-      scale_fill_scico_d(direction = -1) +
-      scale_y_reverse() +
-      labs(x = unique(.x$parameter)) +
-      facet_wrap( ~ lat, ncol = 3)
-  )</code></pre>
-<pre><code>[[1]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles_gridded_offset-1">
-Past versions of IO_NS_profiles_gridded_offset-1.png
-</button>
-</p>
-<div id="fig-IO_NS_profiles_gridded_offset-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f30883cc9219ab229a5da6f159a6173e233800f4/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-1.png" target="_blank">f30883c</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[2]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles_gridded_offset-2">
-Past versions of IO_NS_profiles_gridded_offset-2.png
-</button>
-</p>
-<div id="fig-IO_NS_profiles_gridded_offset-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f30883cc9219ab229a5da6f159a6173e233800f4/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-2.png" target="_blank">f30883c</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[3]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-3.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles_gridded_offset-3">
-Past versions of IO_NS_profiles_gridded_offset-3.png
-</button>
-</p>
-<div id="fig-IO_NS_profiles_gridded_offset-3" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f30883cc9219ab229a5da6f159a6173e233800f4/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-3.png" target="_blank">f30883c</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[4]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-4.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles_gridded_offset-4">
-Past versions of IO_NS_profiles_gridded_offset-4.png
-</button>
-</p>
-<div id="fig-IO_NS_profiles_gridded_offset-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f30883cc9219ab229a5da6f159a6173e233800f4/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-4.png" target="_blank">f30883c</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[5]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-5.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles_gridded_offset-5">
-Past versions of IO_NS_profiles_gridded_offset-5.png
-</button>
-</p>
-<div id="fig-IO_NS_profiles_gridded_offset-5" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f30883cc9219ab229a5da6f159a6173e233800f4/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-5.png" target="_blank">f30883c</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[6]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-6.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles_gridded_offset-6">
-Past versions of IO_NS_profiles_gridded_offset-6.png
-</button>
-</p>
-<div id="fig-IO_NS_profiles_gridded_offset-6" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-6.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f30883cc9219ab229a5da6f159a6173e233800f4/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-6.png" target="_blank">f30883c</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[7]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-7.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles_gridded_offset-7">
-Past versions of IO_NS_profiles_gridded_offset-7.png
-</button>
-</p>
-<div id="fig-IO_NS_profiles_gridded_offset-7" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-7.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f30883cc9219ab229a5da6f159a6173e233800f4/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-7.png" target="_blank">f30883c</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[8]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-8.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles_gridded_offset-8">
-Past versions of IO_NS_profiles_gridded_offset-8.png
-</button>
-</p>
-<div id="fig-IO_NS_profiles_gridded_offset-8" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-8.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[9]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-9.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles_gridded_offset-9">
-Past versions of IO_NS_profiles_gridded_offset-9.png
-</button>
-</p>
-<div id="fig-IO_NS_profiles_gridded_offset-9" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-9.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[10]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-10.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_profiles_gridded_offset-10">
-Past versions of IO_NS_profiles_gridded_offset-10.png
-</button>
-</p>
-<div id="fig-IO_NS_profiles_gridded_offset-10" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_profiles_gridded_offset-10.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="mean-offset" class="section level3" number="7.1.4">
-<h3 number="7.1.4"><span class="header-section-number">7.1.4</span> Mean offset</h3>
-<pre class="r"><code>IO_NS_grid_offset_mean &lt;-
-  IO_NS_grid_offset %&gt;%
-  group_by(parameter, delta_year) %&gt;%
-  summarise(mean_delta_value = mean(delta_value),
-            sd_delta_value = sd(delta_value)) %&gt;%
-  ungroup()
-
-IO_NS_grid_offset_mean %&gt;% 
-  filter(str_detect(parameter, &quot;cstar&quot;)) %&gt;% 
-  ggplot(aes(delta_year, mean_delta_value,
-             ymin = mean_delta_value - sd_delta_value,
-             ymax = mean_delta_value + sd_delta_value)) +
-  geom_hline(yintercept = 0) +
-  geom_pointrange() +
-  facet_wrap(~ parameter)</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_mean_offset-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_mean_offset-1">
-Past versions of IO_NS_mean_offset-1.png
-</button>
-</p>
-<div id="fig-IO_NS_mean_offset-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_mean_offset-1.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f30883cc9219ab229a5da6f159a6173e233800f4/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_mean_offset-1.png" target="_blank">f30883c</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>IO_NS_grid_offset_mean %&gt;% 
-  filter(!(str_detect(parameter, &quot;cstar&quot;))) %&gt;% 
-  ggplot(aes(delta_year, mean_delta_value,
-             ymin = mean_delta_value - sd_delta_value,
-             ymax = mean_delta_value + sd_delta_value)) +
-  geom_hline(yintercept = 0) +
-  geom_pointrange() +
-  facet_wrap(~ parameter, scales = &quot;free_y&quot;)</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_mean_offset-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_mean_offset-2">
-Past versions of IO_NS_mean_offset-2.png
-</button>
-</p>
-<div id="fig-IO_NS_mean_offset-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_mean_offset-2.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_mean_offset-2.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div id="indian-e-w" class="section level2" number="7.2">
-<h2 number="7.2"><span class="header-section-number">7.2</span> Indian E-W</h2>
-<pre class="r"><code>IO_EW_cruises &lt;- c(252, 488)
-
-IO_EW_GLODAP_grid &lt;- GLODAP %&gt;% 
-  filter(basin_AIP == &quot;Indian&quot;,
-         lat &gt; -25,
-         lat &lt; -15,
-         cruise %in% IO_EW_cruises
-         ) %&gt;%
-  mutate(cruise = as.factor(cruise)) %&gt;% 
-  distinct(lon, lat, cruise, year = as.factor(year(date)))
-
-map +
-  geom_tile(data = IO_EW_GLODAP_grid,
-            aes(lon, lat, fill = year)) +
-  facet_wrap(~ year)</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_data-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_data-1">
-Past versions of IO_EW_data-1.png
-</button>
-</p>
-<div id="fig-IO_EW_data-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_data-1.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>IO_EW &lt;- GLODAP %&gt;% 
-  filter(cruise %in% IO_EW_cruises)
-
-IO_EW &lt;- IO_EW %&gt;%
-  mutate(
-    cstar = tco2  - (117 * phosphate)  - 0.5 * (talk - (16 * phosphate)),
-    cstar_tco2 = tco2,
-    cstar_talk = -0.5 * talk,
-    cstar_phosphate = -117 * phosphate + 16 * 0.5 * phosphate
-  )
-
-
-IO_EW &lt;- IO_EW %&gt;%
-  select(year,
-         lon, lat, depth,
-         cruise, station, cast,
-         temp, sal, gamma,
-         tco2, talk, phosphate,
-         starts_with(&quot;cstar&quot;))
-
-
-IO_EW &lt;- IO_EW %&gt;% 
-  mutate(year = if_else(year == 2003, 2004, year),
-         year = as.factor(as.character(year)))
-
-IO_EW &lt;- IO_EW %&gt;% 
-  filter(lon &gt; 48)
-
-IO_EW &lt;- IO_EW %&gt;% 
-  filter(depth &gt; 2000,
-         depth &lt; 4000)
-
-map +
-  geom_tile(data = IO_EW %&gt;% 
-              distinct(lon, lat, year),
-            aes(lon, lat, fill = year)) +
-  # geom_vline(xintercept = 48) +
-  facet_wrap(~ year, ncol = 2)</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_data-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_data-2">
-Past versions of IO_EW_data-2.png
-</button>
-</p>
-<div id="fig-IO_EW_data-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_data-2.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_data-2.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>IO_EW &lt;- IO_EW %&gt;% 
-  pivot_longer(temp:cstar_phosphate,
-               names_to = &quot;parameter&quot;,
-               values_to = &quot;value&quot;)</code></pre>
-<div id="section-1" class="section level3" number="7.2.1">
-<h3 number="7.2.1"><span class="header-section-number">7.2.1</span> Section</h3>
-<pre class="r"><code>IO_EW %&gt;% 
-  group_split(parameter) %&gt;% 
-  # head(1) %&gt;%
-  map(
-    ~ ggplot(data = .x,
-             aes(lon , depth, col = value)) +
-  geom_point() +
-  scale_color_viridis_c() +
-  scale_y_reverse() +
-  facet_grid(year ~ parameter)
-  )</code></pre>
-<pre><code>[[1]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_sections-1">
-Past versions of IO_EW_sections-1.png
-</button>
-</p>
-<div id="fig-IO_EW_sections-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-1.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-1.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[2]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_sections-2">
-Past versions of IO_EW_sections-2.png
-</button>
-</p>
-<div id="fig-IO_EW_sections-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-2.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-2.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[3]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-3.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_sections-3">
-Past versions of IO_EW_sections-3.png
-</button>
-</p>
-<div id="fig-IO_EW_sections-3" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-3.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-3.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[4]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-4.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_sections-4">
-Past versions of IO_EW_sections-4.png
-</button>
-</p>
-<div id="fig-IO_EW_sections-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-4.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-4.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[5]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-5.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_sections-5">
-Past versions of IO_EW_sections-5.png
-</button>
-</p>
-<div id="fig-IO_EW_sections-5" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-5.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-5.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[6]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-6.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_sections-6">
-Past versions of IO_EW_sections-6.png
-</button>
-</p>
-<div id="fig-IO_EW_sections-6" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-6.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-6.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-6.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[7]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-7.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_sections-7">
-Past versions of IO_EW_sections-7.png
-</button>
-</p>
-<div id="fig-IO_EW_sections-7" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-7.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-7.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-7.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[8]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-8.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_sections-8">
-Past versions of IO_EW_sections-8.png
-</button>
-</p>
-<div id="fig-IO_EW_sections-8" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-8.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-8.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[9]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-9.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_sections-9">
-Past versions of IO_EW_sections-9.png
-</button>
-</p>
-<div id="fig-IO_EW_sections-9" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-9.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-9.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[10]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-10.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_sections-10">
-Past versions of IO_EW_sections-10.png
-</button>
-</p>
-<div id="fig-IO_EW_sections-10" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-10.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_sections-10.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="profiles-absolute-1" class="section level3" number="7.2.2">
-<h3 number="7.2.2"><span class="header-section-number">7.2.2</span> Profiles, absolute</h3>
-<pre class="r"><code>IO_EW %&gt;%
-  arrange(depth) %&gt;% 
-  group_split(parameter) %&gt;%
-  # head(1) %&gt;%
-  map(
-    ~ ggplot(data = .x,
-             aes(
-               value , depth, fill = year,
-             )) +
-      geom_point(shape = 21) +
-      scale_fill_scico_d(direction = -1) +
-      scale_y_reverse() +
-      labs(x = unique(.x$parameter)) +
-      facet_wrap( ~ lon, ncol = 3)
-  )</code></pre>
-<pre><code>[[1]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_profiles-1">
-Past versions of IO_EW_profiles-1.png
-</button>
-</p>
-<div id="fig-IO_EW_profiles-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-1.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-1.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[2]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_profiles-2">
-Past versions of IO_EW_profiles-2.png
-</button>
-</p>
-<div id="fig-IO_EW_profiles-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-2.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-2.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[3]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-3.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_profiles-3">
-Past versions of IO_EW_profiles-3.png
-</button>
-</p>
-<div id="fig-IO_EW_profiles-3" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-3.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-3.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[4]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-4.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_profiles-4">
-Past versions of IO_EW_profiles-4.png
-</button>
-</p>
-<div id="fig-IO_EW_profiles-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-4.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-4.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[5]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-5.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_profiles-5">
-Past versions of IO_EW_profiles-5.png
-</button>
-</p>
-<div id="fig-IO_EW_profiles-5" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-5.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-5.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[6]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-6.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_profiles-6">
-Past versions of IO_EW_profiles-6.png
-</button>
-</p>
-<div id="fig-IO_EW_profiles-6" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-6.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-6.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-6.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[7]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-7.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_profiles-7">
-Past versions of IO_EW_profiles-7.png
-</button>
-</p>
-<div id="fig-IO_EW_profiles-7" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-7.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-7.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-7.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[8]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-8.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_profiles-8">
-Past versions of IO_EW_profiles-8.png
-</button>
-</p>
-<div id="fig-IO_EW_profiles-8" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-8.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-8.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[9]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-9.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_profiles-9">
-Past versions of IO_EW_profiles-9.png
-</button>
-</p>
-<div id="fig-IO_EW_profiles-9" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-9.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-9.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[10]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-10.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_profiles-10">
-Past versions of IO_EW_profiles-10.png
-</button>
-</p>
-<div id="fig-IO_EW_profiles-10" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-10.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles-10.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>IO_EW_grid &lt;- IO_EW %&gt;% 
-  select(lon, lat, depth, year, parameter, value) %&gt;% 
-  mutate(depth = as.numeric(as.character(cut(depth,
-                     seq(0,1e4, 500), 
-                     seq(250,1e4,500))))) %&gt;% 
-  group_by(lon, depth, year, parameter) %&gt;% 
-  summarise(value = mean(value, na.rm=TRUE)) %&gt;% 
-  ungroup()
-
-
-IO_EW_grid %&gt;%
-  group_by(depth, year, parameter) %&gt;%
-  summarise(value = mean(value, na.rm = TRUE)) %&gt;%
-  ungroup() %&gt;%
-  ggplot(aes(value , depth, fill = year)) +
-  geom_point(shape = 21) +
-  scale_fill_scico_d(direction = -1) +
-  scale_y_reverse() +
-  facet_wrap(~ parameter, scales = &quot;free_x&quot;, ncol = 3)</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_profiles_gridded-1">
-Past versions of IO_EW_profiles_gridded-1.png
-</button>
-</p>
-<div id="fig-IO_EW_profiles_gridded-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded-1.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded-1.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="profiles-offset-1" class="section level3" number="7.2.3">
-<h3 number="7.2.3"><span class="header-section-number">7.2.3</span> Profiles, offset</h3>
-<pre class="r"><code>IO_EW_grid_offset &lt;- IO_EW_grid %&gt;% 
-  arrange(year) %&gt;% 
-  group_by(lon, depth, parameter) %&gt;% 
-  mutate(delta_value = value - lag(value),
-         delta_year = paste(lag(year), year, sep = &quot;-&quot;)) %&gt;% 
-  ungroup() %&gt;% 
-  drop_na()
-
-IO_EW_grid_offset %&gt;%
-  group_split(parameter) %&gt;%
-  # head(1) %&gt;%
-  map(
-    ~ ggplot(data = .x,
-             aes(
-               delta_value , depth, fill = delta_year,
-             )) +
-      geom_vline(xintercept = 0) +
-      geom_point(shape = 21) +
-      scale_fill_scico_d(direction = -1) +
-      scale_y_reverse() +
-      labs(x = unique(.x$parameter)) +
-      facet_wrap( ~ lon, ncol = 3)
-  )</code></pre>
-<pre><code>[[1]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_profiles_gridded_offset-1">
-Past versions of IO_EW_profiles_gridded_offset-1.png
-</button>
-</p>
-<div id="fig-IO_EW_profiles_gridded_offset-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-1.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-1.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[2]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_profiles_gridded_offset-2">
-Past versions of IO_EW_profiles_gridded_offset-2.png
-</button>
-</p>
-<div id="fig-IO_EW_profiles_gridded_offset-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-2.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-2.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[3]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-3.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_profiles_gridded_offset-3">
-Past versions of IO_EW_profiles_gridded_offset-3.png
-</button>
-</p>
-<div id="fig-IO_EW_profiles_gridded_offset-3" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-3.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-3.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[4]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-4.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_profiles_gridded_offset-4">
-Past versions of IO_EW_profiles_gridded_offset-4.png
-</button>
-</p>
-<div id="fig-IO_EW_profiles_gridded_offset-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-4.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-4.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[5]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-5.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_profiles_gridded_offset-5">
-Past versions of IO_EW_profiles_gridded_offset-5.png
-</button>
-</p>
-<div id="fig-IO_EW_profiles_gridded_offset-5" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-5.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-5.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[6]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-6.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_profiles_gridded_offset-6">
-Past versions of IO_EW_profiles_gridded_offset-6.png
-</button>
-</p>
-<div id="fig-IO_EW_profiles_gridded_offset-6" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-6.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-6.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-6.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[7]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-7.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_profiles_gridded_offset-7">
-Past versions of IO_EW_profiles_gridded_offset-7.png
-</button>
-</p>
-<div id="fig-IO_EW_profiles_gridded_offset-7" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-7.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-7.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-7.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[8]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-8.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_profiles_gridded_offset-8">
-Past versions of IO_EW_profiles_gridded_offset-8.png
-</button>
-</p>
-<div id="fig-IO_EW_profiles_gridded_offset-8" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-8.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-8.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[9]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-9.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_profiles_gridded_offset-9">
-Past versions of IO_EW_profiles_gridded_offset-9.png
-</button>
-</p>
-<div id="fig-IO_EW_profiles_gridded_offset-9" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-9.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-9.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[10]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-10.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_profiles_gridded_offset-10">
-Past versions of IO_EW_profiles_gridded_offset-10.png
-</button>
-</p>
-<div id="fig-IO_EW_profiles_gridded_offset-10" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-10.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_profiles_gridded_offset-10.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="mean-offset-1" class="section level3" number="7.2.4">
-<h3 number="7.2.4"><span class="header-section-number">7.2.4</span> Mean offset</h3>
-<pre class="r"><code>IO_EW_grid_offset_mean &lt;-
-  IO_EW_grid_offset %&gt;%
-  group_by(parameter, delta_year) %&gt;%
-  summarise(mean_delta_value = mean(delta_value),
-            sd_delta_value = sd(delta_value)) %&gt;%
-  ungroup()
-
-IO_EW_grid_offset_mean %&gt;% 
-  filter(str_detect(parameter, &quot;cstar&quot;)) %&gt;% 
-  ggplot(aes(delta_year, mean_delta_value,
-             ymin = mean_delta_value - sd_delta_value,
-             ymax = mean_delta_value + sd_delta_value)) +
-  geom_hline(yintercept = 0) +
-  geom_pointrange() +
-  facet_wrap(~ parameter)</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_mean_offset-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_mean_offset-1">
-Past versions of IO_EW_mean_offset-1.png
-</button>
-</p>
-<div id="fig-IO_EW_mean_offset-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_mean_offset-1.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_mean_offset-1.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>IO_EW_grid_offset_mean %&gt;% 
-  filter(!(str_detect(parameter, &quot;cstar&quot;))) %&gt;% 
-  ggplot(aes(delta_year, mean_delta_value,
-             ymin = mean_delta_value - sd_delta_value,
-             ymax = mean_delta_value + sd_delta_value)) +
-  geom_hline(yintercept = 0) +
-  geom_pointrange() +
-  facet_wrap(~ parameter, scales = &quot;free_y&quot;)</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_EW_mean_offset-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_EW_mean_offset-2">
-Past versions of IO_EW_mean_offset-2.png
-</button>
-</p>
-<div id="fig-IO_EW_mean_offset-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_mean_offset-2.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_mean_offset-2.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/375d7c7d0eccb90cedd095414f19de767ab3bbdc/docs/figure/read_GLODAPv2_2021.Rmd/IO_EW_mean_offset-2.png" target="_blank">375d7c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-18
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div id="indian-n-s-e-w" class="section level2" number="7.3">
-<h2 number="7.3"><span class="header-section-number">7.3</span> Indian N-S + E-W</h2>
-<pre class="r"><code>map +
-  geom_tile(data = IO_EW %&gt;% 
-              distinct(lon, lat, year),
-            aes(lon, lat)) +
-  geom_tile(data = IO_NS %&gt;% 
-              distinct(lon, lat, year),
-            aes(lon, lat)) +
-  xlim(c(20,150)) +
-  ylim(c(-80, 40))</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_EW_map-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_EW_map-1">
-Past versions of IO_NS_EW_map-1.png
-</button>
-</p>
-<div id="fig-IO_NS_EW_map-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_EW_map-1.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>IO_NS_EW_grid &lt;-
-  bind_rows(
-    IO_NS_grid %&gt;%
-      filter(year %in% c(&quot;1995&quot;, &quot;2007&quot;)) %&gt;%
-      mutate(year = recode(year, &quot;2007&quot; = &quot;2004&quot;),
-             lon = 999),
-    IO_EW_grid %&gt;%
-      mutate(lat = 999)
-  ) %&gt;%
-  mutate(year = recode(year, &quot;2004&quot; = &quot;2000s&quot;, &quot;1995&quot; = &quot;1990s&quot;))
-
-IO_NS_EW_grid %&gt;%
-  filter(parameter %in% c(&quot;cstar&quot;, &quot;tco2&quot;, &quot;talk&quot;, &quot;phosphate&quot;)) %&gt;%
-  group_by(depth, year, parameter) %&gt;%
-  summarise(value = mean(value, na.rm = TRUE)) %&gt;%
-  ungroup() %&gt;%
-  ggplot(aes(value , depth, fill = year, col = year)) +
-  geom_path() +
-  geom_point(shape = 21) +
-  scale_color_brewer(palette = &quot;Set1&quot;,
-                    name = &quot;decade&quot;) +
-  scale_fill_brewer(palette = &quot;Set1&quot;,
-                    name = &quot;decade&quot;) +
-  scale_y_reverse() +
-  facet_wrap( ~ parameter, scales = &quot;free_x&quot;, ncol = 2)</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_EW_profiles_gridded-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_EW_profiles_gridded-1">
-Past versions of IO_NS_EW_profiles_gridded-1.png
-</button>
-</p>
-<div id="fig-IO_NS_EW_profiles_gridded-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_EW_profiles_gridded-1.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_EW_profiles_gridded-1.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>IO_NS_EW_grid %&gt;%
-  filter(!(parameter %in% c(&quot;cstar&quot;, &quot;tco2&quot;, &quot;talk&quot;, &quot;phosphate&quot;))) %&gt;% 
-  group_by(depth, year, parameter) %&gt;%
-  summarise(value = mean(value, na.rm = TRUE)) %&gt;%
-  ungroup() %&gt;%
-  ggplot(aes(value , depth, fill = year)) +
-  geom_point(shape = 21) +
-  scale_fill_scico_d(direction = -1) +
-  scale_y_reverse() +
-  facet_wrap(~ parameter, scales = &quot;free_x&quot;, ncol = 3)</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_EW_profiles_gridded-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_EW_profiles_gridded-2">
-Past versions of IO_NS_EW_profiles_gridded-2.png
-</button>
-</p>
-<div id="fig-IO_NS_EW_profiles_gridded-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_EW_profiles_gridded-2.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>IO_NS_EW_grid_offset &lt;- IO_NS_EW_grid %&gt;% 
-  arrange(year) %&gt;% 
-  group_by(lat, lon, depth, parameter) %&gt;% 
-  mutate(delta_value = value - lag(value),
-         delta_year = paste(lag(year), year, sep = &quot;-&quot;)) %&gt;% 
-  ungroup() %&gt;% 
-  drop_na()</code></pre>
-<div id="mean-offset-2" class="section level3" number="7.3.1">
-<h3 number="7.3.1"><span class="header-section-number">7.3.1</span> Mean offset</h3>
-<pre class="r"><code>IO_NS_EW_grid_offset_mean &lt;-
-  IO_NS_EW_grid_offset %&gt;%
-  group_by(parameter, delta_year) %&gt;%
-  summarise(mean_delta_value = mean(delta_value),
-            sd_delta_value = sd(delta_value)) %&gt;%
-  ungroup()
-
-IO_NS_EW_grid_offset_mean %&gt;% 
-  filter(str_detect(parameter, &quot;cstar&quot;)) %&gt;% 
-  ggplot(aes(delta_year, mean_delta_value,
-             ymin = mean_delta_value - sd_delta_value,
-             ymax = mean_delta_value + sd_delta_value)) +
-  geom_hline(yintercept = 0) +
-  geom_pointrange() +
-  facet_wrap(~ parameter)</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_EW_mean_offset-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_EW_mean_offset-1">
-Past versions of IO_NS_EW_mean_offset-1.png
-</button>
-</p>
-<div id="fig-IO_NS_EW_mean_offset-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_EW_mean_offset-1.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_EW_mean_offset-1.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>IO_NS_EW_grid_offset_mean %&gt;% 
-  filter(!(str_detect(parameter, &quot;cstar&quot;))) %&gt;% 
-  ggplot(aes(delta_year, mean_delta_value,
-             ymin = mean_delta_value - sd_delta_value,
-             ymax = mean_delta_value + sd_delta_value)) +
-  geom_hline(yintercept = 0) +
-  geom_pointrange() +
-  facet_wrap(~ parameter, scales = &quot;free_y&quot;)</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/IO_NS_EW_mean_offset-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-IO_NS_EW_mean_offset-2">
-Past versions of IO_NS_EW_mean_offset-2.png
-</button>
-</p>
-<div id="fig-IO_NS_EW_mean_offset-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2b22ffe614d969f5631a513b90a84730fa363fdf/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_EW_mean_offset-2.png" target="_blank">2b22ffe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0ef46e8f2ce73acf0708cf6f4f2fbecb1b7482ac/docs/figure/read_GLODAPv2_2021.Rmd/IO_NS_EW_mean_offset-2.png" target="_blank">0ef46e8</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-11-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="write-files" class="section level1" number="8">
-<h1 number="8"><span class="header-section-number">8</span> Write files</h1>
+<div id="write-files" class="section level1" number="7">
+<h1 number="7"><span class="header-section-number">7</span> Write files</h1>
 <pre class="r"><code>GLODAP  %&gt;%
   write_csv(paste(path_preprocessing,
                   &quot;GLODAPv2.2021_preprocessed.csv&quot;,
@@ -9922,18 +5425,18 @@ GLODAP_adjustments  %&gt;%
 #     )
 #   )</code></pre>
 </div>
-<div id="overview-plots" class="section level1" number="9">
-<h1 number="9"><span class="header-section-number">9</span> Overview plots</h1>
-<div id="assign-coarse-spatial-grid" class="section level2" number="9.1">
-<h2 number="9.1"><span class="header-section-number">9.1</span> Assign coarse spatial grid</h2>
+<div id="overview-plots" class="section level1" number="8">
+<h1 number="8"><span class="header-section-number">8</span> Overview plots</h1>
+<div id="assign-coarse-spatial-grid" class="section level2" number="8.1">
+<h2 number="8.1"><span class="header-section-number">8.1</span> Assign coarse spatial grid</h2>
 <p>For the following plots, the cleaned data set was re-opened and observations were gridded spatially to intervals of:</p>
 <ul>
 <li>5° x 5°</li>
 </ul>
 <pre class="r"><code>GLODAP &lt;- m_grid_horizontal_coarse(GLODAP)</code></pre>
 </div>
-<div id="histogram-zonal-coverage" class="section level2" number="9.2">
-<h2 number="9.2"><span class="header-section-number">9.2</span> Histogram Zonal coverage</h2>
+<div id="histogram-zonal-coverage" class="section level2" number="8.2">
+<h2 number="8.2"><span class="header-section-number">8.2</span> Histogram Zonal coverage</h2>
 <pre class="r"><code>GLODAP_histogram_lat &lt;- GLODAP %&gt;%
   group_by(lat_grid) %&gt;%
   tally() %&gt;%
@@ -9995,8 +5498,8 @@ jens-daniel-mueller
 </div>
 <pre class="r"><code>rm(GLODAP_histogram_lat)</code></pre>
 </div>
-<div id="histogram-temporal-coverage" class="section level2" number="9.3">
-<h2 number="9.3"><span class="header-section-number">9.3</span> Histogram temporal coverage</h2>
+<div id="histogram-temporal-coverage" class="section level2" number="8.3">
+<h2 number="8.3"><span class="header-section-number">8.3</span> Histogram temporal coverage</h2>
 <pre class="r"><code>GLODAP_histogram_year &lt;- GLODAP %&gt;%
   group_by(year) %&gt;%
   tally() %&gt;%
@@ -10059,8 +5562,8 @@ jens-daniel-mueller
 </div>
 <pre class="r"><code>rm(GLODAP_histogram_year)</code></pre>
 </div>
-<div id="zonal-temporal-coverage-hovmoeller" class="section level2" number="9.4">
-<h2 number="9.4"><span class="header-section-number">9.4</span> Zonal temporal coverage (Hovmoeller)</h2>
+<div id="zonal-temporal-coverage-hovmoeller" class="section level2" number="8.4">
+<h2 number="8.4"><span class="header-section-number">8.4</span> Zonal temporal coverage (Hovmoeller)</h2>
 <pre class="r"><code>GLODAP_hovmoeller_year &lt;- GLODAP %&gt;%
   group_by(year, lat_grid) %&gt;%
   tally() %&gt;%
@@ -10124,8 +5627,8 @@ jens-daniel-mueller
 </div>
 <pre class="r"><code>rm(GLODAP_hovmoeller_year)</code></pre>
 </div>
-<div id="coverage-map" class="section level2" number="9.5">
-<h2 number="9.5"><span class="header-section-number">9.5</span> Coverage map</h2>
+<div id="coverage-map" class="section level2" number="8.5">
+<h2 number="8.5"><span class="header-section-number">8.5</span> Coverage map</h2>
 <pre class="r"><code>map +
   geom_raster(data = GLODAP_obs_grid,
               aes(lon, lat, fill = log10(n))) +
@@ -10315,8 +5818,8 @@ all_plots</code></pre>
 <pre><code>png 
   2 </code></pre>
 </div>
-<div id="time-series" class="section level2" number="9.6">
-<h2 number="9.6"><span class="header-section-number">9.6</span> Time series</h2>
+<div id="time-series" class="section level2" number="8.6">
+<h2 number="8.6"><span class="header-section-number">8.6</span> Time series</h2>
 <pre class="r"><code>GLODAP_time_series &lt;- GLODAP %&gt;% 
   select(year, basin_AIP, lat, depth, sal, temp,
          oxygen, aou, nitrate, silicate, phosphate,
@@ -10351,10 +5854,10 @@ GLODAP_time_series %&gt;%
   )</code></pre>
 </div>
 </div>
-<div id="canyon-b" class="section level1" number="10">
-<h1 number="10"><span class="header-section-number">10</span> CANYON-B</h1>
-<div id="comparison-to-glodap" class="section level2" number="10.1">
-<h2 number="10.1"><span class="header-section-number">10.1</span> Comparison to GLODAP</h2>
+<div id="canyon-b" class="section level1" number="9">
+<h1 number="9"><span class="header-section-number">9</span> CANYON-B</h1>
+<div id="comparison-to-glodap" class="section level2" number="9.1">
+<h2 number="9.1"><span class="header-section-number">9.1</span> Comparison to GLODAP</h2>
 <pre class="r"><code>source(&quot;/net/kryo/work/uptools/co2_calculation/CANYON-B/CANYONB.R&quot;)
 
 GLODAP_Can_B &lt;- GLODAP %&gt;%
@@ -10459,8 +5962,8 @@ for (i_variable in variables) {
   
 }</code></pre>
 </div>
-<div id="write-canyon-b-file" class="section level2" number="10.2">
-<h2 number="10.2"><span class="header-section-number">10.2</span> Write Canyon-B file</h2>
+<div id="write-canyon-b-file" class="section level2" number="9.2">
+<h2 number="9.2"><span class="header-section-number">9.2</span> Write Canyon-B file</h2>
 <pre class="r"><code>GLODAP_Can_B %&gt;% 
   select(row_number,
          talk_CANYONB, tco2_CANYONB,
