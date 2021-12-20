@@ -1266,7 +1266,7 @@ GLODAP <-
 
 ## Histograms
 
-```{r crossover_histograms}
+```{r crossover_histograms, fig.asp=1}
 
 GLODAP_adjustments_long <- GLODAP_adjustments %>%
   select(
@@ -1553,14 +1553,13 @@ for (i_expocodes_missing in expocodes_missing) {
   
 }
 
-rm(hline_intercept)
 
 ```
 
 
 ## IO 1990 data
 
-```{r crossover_analysis_data, fig.asp=1}
+```{r crossover_analysis_data, fig.asp=1.2}
 
 IO_1990_expocodes <- GLODAP %>%
   filter(str_detect(cruise_expocode, "316N199") &
@@ -1607,10 +1606,22 @@ xover_IO_1990 <- xover_IO_1990 %>%
                       "316N",
                       "other"))
 
-hline_intercept <- tibble(parameter = unique(xover_IO_1990$parameter)) %>%
-  mutate(intercept = if_else(parameter %in% c("salinity", "talk", "tco2"),
-                             0,
-                             1))
+
+xover_IO_1990_decade <- xover_IO_1990 %>%
+    mutate(decade = cut(
+      year(dateB),
+      seq(1989, 2019, 10),
+      right = FALSE,
+      labels = c("1989-1999", "2000-2009", "2010-2019")
+    )) %>%
+    filter(!is.na(decade),
+           !is.na(offset_adj),
+           !is.na(offset),
+           RV != "316N") %>%
+    group_by(parameter, decade) %>%
+    mutate(n = n()) %>%
+    ungroup() %>% 
+    filter(n > 2)
 
 
 p_crossover_ts <- xover_IO_1990 %>%
@@ -1629,23 +1640,15 @@ p_crossover_ts <- xover_IO_1990 %>%
 p_crossover_decadal <-
   ggplot() +
   geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
-  geom_violin(data = xover_IO_1990 %>%
-                 filter(year(dateB) >= 2000, year(dateB) < 2010),
-               aes(x = "2000s", y = offset), fill="gold") +
-  geom_boxplot(data = xover_IO_1990 %>%
-                 filter(year(dateB) >= 2000, year(dateB) < 2010),
-               aes(x = "2000s", y = offset),
-               width = 0.2) +
-  geom_violin(data = xover_IO_1990 %>%
-                 filter(year(dateB) >= 2010, year(dateB) < 2020),
-               aes(x = "2010s", y = offset), fill="gold") +
-  geom_boxplot(data = xover_IO_1990 %>%
-                 filter(year(dateB) >= 2010, year(dateB) < 2020),
-               aes(x = "2010s", y = offset),
+  geom_violin(data = xover_IO_1990_decade,
+               aes(x = decade, y = offset), fill="gold") +
+  geom_boxplot(data = xover_IO_1990_decade,
+               aes(x = decade, y = offset),
                width = 0.2) +
   facet_grid(parameter ~ ., scales = "free_y") +
   labs(title = "Decadal offsets") +
-  theme(axis.title.x = element_blank())
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(angle = 90))
 
 
 p_crossover_ts + p_crossover_decadal +
@@ -1669,29 +1672,32 @@ p_crossover_ts <- xover_IO_1990 %>%
 p_crossover_decadal <-
   ggplot() +
   geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
-  geom_violin(data = xover_IO_1990 %>%
-                 filter(year(dateB) >= 2000, year(dateB) < 2010),
-               aes(x = "2000s", y = offset_adj), fill="gold") +
-  geom_boxplot(data = xover_IO_1990 %>%
-                 filter(year(dateB) >= 2000, year(dateB) < 2010),
-               aes(x = "2000s", y = offset_adj),
-               width = 0.2) +
-  geom_violin(data = xover_IO_1990 %>%
-                 filter(year(dateB) >= 2010, year(dateB) < 2020),
-               aes(x = "2010s", y = offset_adj), fill="gold") +
-  geom_boxplot(data = xover_IO_1990 %>%
-                 filter(year(dateB) >= 2010, year(dateB) < 2020),
-               aes(x = "2010s", y = offset_adj),
+  geom_violin(data = xover_IO_1990_decade,
+               aes(x = decade, y = offset_adj), fill="gold") +
+  geom_boxplot(data = xover_IO_1990_decade,
+               aes(x = decade, y = offset_adj),
                width = 0.2) +
   facet_grid(parameter ~ ., scales = "free_y") +
-  labs(title = "Decadal offset_adjs") +
-  theme(axis.title.x = element_blank())
-
+  labs(title = "Decadal offsets") +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(angle = 90))
 
 p_crossover_ts + p_crossover_decadal +
   plot_layout(widths = c(2, 1))
 
+
+xover_IO_1990_decade %>%
+  group_by(parameter, decade) %>%
+  summarise(offset_adj_mean = mean(offset_adj, na.rm = TRUE),
+            offset_adj_median = median(offset_adj, na.rm = TRUE)) %>%
+  ungroup() %>%
+  kable() %>%
+  kable_styling() %>%
+  scroll_box(height = "300px")
+
+
 rm(p_crossover_ts, p_crossover_decadal)
+rm(hline_intercept)
 
 ```
 
