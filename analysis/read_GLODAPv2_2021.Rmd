@@ -1391,26 +1391,40 @@ xover <- bind_rows(glodapv2_xover,
 for (i_expocodes_missing in expocodes_missing) {
   # i_expocodes_missing <- expocodes_missing[2]
   
-  cruise <- GLODAP %>%
-    filter(cruise_expocode == i_expocodes_missing)
+  # cruise <- GLODAP %>%
+  #   filter(cruise_expocode == i_expocodes_missing)
   
   parameter_qc <- loss_qc %>%
     filter(cruise_expocode == i_expocodes_missing,
            category == "loss") %>%
     pull(parameter)
   
+  if (length(parameter_qc) > 0) {
+    parameter_qc <- parameter_qc %>% str_c(.,"-qc")
+  }
+    
   parameter_f <- loss_f %>%
     filter(cruise_expocode == i_expocodes_missing,
            category == "loss") %>%
     pull(parameter)
+    
+  if (length(parameter_f) > 0) {
+    parameter_f <- parameter_f %>% str_c(.,"-f")
+  }
   
   parameter_f9 <- loss_f9 %>%
     filter(cruise_expocode == i_expocodes_missing,
            category == "loss") %>%
     pull(parameter)
   
+  if (length(parameter_f9) > 0) {
+    parameter_f9 <- parameter_f9 %>% str_c(.,"-f9")
+  }
+  
   parameter_check <-
     unique(c(parameter_qc, parameter_f, parameter_f9))
+  
+  print(parameter_check)
   
   rm(parameter_qc, parameter_f, parameter_f9)
   
@@ -1466,8 +1480,8 @@ for (i_expocodes_missing in expocodes_missing) {
     geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
     geom_point() +
     facet_grid(parameter ~ ., scales = "free_y") +
-    labs(title = paste("Cruise:", i_expocodes_missing,
-                       "| parameter check:", parameter_check)) +
+    labs(title = paste(i_expocodes_missing,
+                       "| ", parameter_check)) +
     theme(
       legend.position = "bottom",
       legend.direction = "vertical",
