@@ -1388,11 +1388,17 @@ xover <- bind_rows(glodapv2_xover,
 
 ```{r crossover_missing_flagged_data}
 
+hline_intercept <-
+  tibble(parameter = unique(xover$parameter)) %>%
+  mutate(intercept = if_else(parameter %in% c("salinity", "talk", "tco2"),
+                             0,
+                             1))
+
 for (i_expocodes_missing in expocodes_missing) {
   # i_expocodes_missing <- expocodes_missing[2]
   
-  # cruise <- GLODAP %>%
-  #   filter(cruise_expocode == i_expocodes_missing)
+  cruise <- GLODAP %>%
+    filter(cruise_expocode == i_expocodes_missing)
   
   parameter_qc <- loss_qc %>%
     filter(cruise_expocode == i_expocodes_missing,
@@ -1400,7 +1406,7 @@ for (i_expocodes_missing in expocodes_missing) {
     pull(parameter)
   
   if (length(parameter_qc) > 0) {
-    parameter_qc <- parameter_qc %>% str_c(.,"-qc")
+    parameter_qc <- parameter_qc %>% str_c(.,"qc")
   }
     
   parameter_f <- loss_f %>%
@@ -1409,7 +1415,7 @@ for (i_expocodes_missing in expocodes_missing) {
     pull(parameter)
     
   if (length(parameter_f) > 0) {
-    parameter_f <- parameter_f %>% str_c(.,"-f")
+    parameter_f <- parameter_f %>% str_c(.,"f")
   }
   
   parameter_f9 <- loss_f9 %>%
@@ -1418,7 +1424,7 @@ for (i_expocodes_missing in expocodes_missing) {
     pull(parameter)
   
   if (length(parameter_f9) > 0) {
-    parameter_f9 <- parameter_f9 %>% str_c(.,"-f9")
+    parameter_f9 <- parameter_f9 %>% str_c(.,"f")
   }
   
   parameter_check <-
@@ -1464,15 +1470,31 @@ for (i_expocodes_missing in expocodes_missing) {
            dateB = ymd(str_sub(cruise_B, 5, 12)))
   
   
-  xover_cruise <- xover_cruise %>%
-    mutate(RV = str_sub(cruise_B, 1, 4))
+  # xover_cruise <- xover_cruise %>%
+  #   mutate(RV = str_sub(cruise_B, 1, 4))
   
-  hline_intercept <-
-    tibble(parameter = unique(xover_cruise$parameter)) %>%
-    mutate(intercept = if_else(parameter %in% c("salinity", "talk", "tco2"),
-                               0,
-                               1))
-  
+  for (i_parameter_check in parameter_check) {
+    # i_parameter_check <- parameter_check[1]
+    
+    cruise_flag_count <- cruise %>%
+      count(lon, lat, !!sym(i_parameter_check)) %>%
+      group_by(lon, lat) %>%
+      mutate(n_rel = 100 * n / sum(n)) %>%
+      ungroup()
+    
+    print(
+      map +
+        geom_tile(data = cruise_flag_count,
+                  aes(lon, lat, fill = n_rel)) +
+        scale_fill_viridis_c(option = "magma",
+                             direction = -1) +
+        facet_wrap(i_parameter_check, ncol = 2) +
+        labs(title = i_expocodes_missing,
+             subtitle = i_parameter_check)
+    )
+    
+  }
+
   p_crossover_ts <- xover_cruise %>%
     ggplot(aes(dateB, offset_adj)) +
     geom_vline(xintercept = ymd(str_sub(i_expocodes_missing, 5)),
@@ -1480,8 +1502,8 @@ for (i_expocodes_missing in expocodes_missing) {
     geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
     geom_point() +
     facet_grid(parameter ~ ., scales = "free_y") +
-    labs(title = paste(i_expocodes_missing,
-                       "| ", parameter_check)) +
+    labs(title = i_expocodes_missing,
+         subtitle = str_c(parameter_check, collapse = "+")) +
     theme(
       legend.position = "bottom",
       legend.direction = "vertical",
@@ -1517,9 +1539,10 @@ for (i_expocodes_missing in expocodes_missing) {
       aes(x = decade, y = offset_adj),
       width = 0.2
     ) +
+    labs(title = "Decadal averages") +
     facet_grid(parameter ~ ., scales = "free_y") +
-    labs(title = "Decadal offset_adjs") +
-    theme(axis.title.x = element_blank())
+    theme(axis.title.x = element_blank(),
+          axis.text.x = element_text(angle = 90))
   
   print(
   p_crossover_ts + p_crossover_decadal +
@@ -1529,6 +1552,8 @@ for (i_expocodes_missing in expocodes_missing) {
   rm(p_crossover_ts, p_crossover_decadal)
   
 }
+
+rm(hline_intercept)
 
 ```
 
