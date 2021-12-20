@@ -562,16 +562,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree0b0800efa9f2fb4c96b0a975587d5ba7f3fec34dtargetblank0b0800ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/0b0800efa9f2fb4c96b0a975587d5ba7f3fec34d" target="_blank">0b0800e</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree953ac0a959330a93b60778eb52df0d1961b532c3targetblank953ac0aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/953ac0a959330a93b60778eb52df0d1961b532c3" target="_blank">953ac0a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree0b0800efa9f2fb4c96b0a975587d5ba7f3fec34dtargetblank0b0800ea" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree953ac0a959330a93b60778eb52df0d1961b532c3targetblank953ac0aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/0b0800efa9f2fb4c96b0a975587d5ba7f3fec34d" target="_blank">0b0800e</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/953ac0a959330a93b60778eb52df0d1961b532c3" target="_blank">953ac0a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -580,6 +580,7 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
     Ignored:    data/
     Ignored:    output/
 
@@ -624,6 +625,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/953ac0a959330a93b60778eb52df0d1961b532c3/analysis/read_GLODAPv2_2021.Rmd" target="_blank">953ac0a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-20
+</td>
+<td>
+revised missing cruise crossover analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/d5ef2c6c0fd3dcce982a4f1125c860e1ef5ef45e/docs/read_GLODAPv2_2021.html" target="_blank">d5ef2c6</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-20
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -2824,7 +2859,7 @@ loss_n &lt;- loss %&gt;%
                values_to = &quot;value&quot;) %&gt;% 
   mutate(parameter = str_remove(parameter, &quot;qc&quot;))
 
-loss_qc_cruise &lt;- loss_qc %&gt;%
+loss_qc &lt;- loss_qc %&gt;%
   count(cruise_expocode, basin_AIP, decade, parameter, value) %&gt;%
   pivot_wider(
     names_from = value,
@@ -2833,7 +2868,9 @@ loss_qc_cruise &lt;- loss_qc %&gt;%
     values_fill = 0
   ) %&gt;%
   mutate(n_cruise = qc_0 + qc_1,
-         category = if_else(qc_0 &lt;= 0.1 * (n_cruise), &quot;OK&quot;, &quot;loss&quot;)) %&gt;%
+         category = if_else(qc_0 &lt;= 0.1 * (n_cruise), &quot;OK&quot;, &quot;loss&quot;))
+
+loss_qc_cruise &lt;- loss_qc %&gt;%
   mutate(parameter_class = if_else(
     parameter %in% c(&quot;tco2&quot;, &quot;talk&quot;, &quot;phosphate&quot;),
     &quot;target&quot;,
@@ -3751,7 +3788,7 @@ jens-daniel-mueller
                values_to = &quot;value&quot;) %&gt;% 
   mutate(parameter = str_remove(parameter, &quot;f&quot;))
 
-loss_f_cruise &lt;- loss_f %&gt;%
+loss_f &lt;- loss_f %&gt;%
   count(cruise_expocode, basin_AIP, decade, parameter, value) %&gt;%
   pivot_wider(
     names_from = value,
@@ -3760,7 +3797,9 @@ loss_f_cruise &lt;- loss_f %&gt;%
     values_fill = 0
   ) %&gt;%
   mutate(n_cruise = f_0 + f_2,
-         category = if_else(f_0 &lt;= 0.1 * (n_cruise), &quot;OK&quot;, &quot;loss&quot;)) %&gt;%
+         category = if_else(f_0 &lt;= 0.1 * (n_cruise), &quot;OK&quot;, &quot;loss&quot;))
+
+loss_f_cruise &lt;- loss_f %&gt;%
   mutate(parameter_class = if_else(
     parameter %in% c(&quot;tco2&quot;, &quot;talk&quot;, &quot;phosphate&quot;),
     &quot;target&quot;,
@@ -4616,7 +4655,7 @@ jens-daniel-mueller
                values_to = &quot;value&quot;) %&gt;% 
   mutate(parameter = str_remove(parameter, &quot;f&quot;))
 
-loss_f9_cruise &lt;- loss_f9 %&gt;%
+loss_f9 &lt;- loss_f9 %&gt;%
   count(cruise_expocode, basin_AIP, decade, parameter, value) %&gt;%
   pivot_wider(
     names_from = value,
@@ -4625,7 +4664,9 @@ loss_f9_cruise &lt;- loss_f9 %&gt;%
     values_fill = 0
   ) %&gt;%
   mutate(n_cruise = f_0 + f_2 + f_9,
-         category = if_else(f_9 &lt;= 0.1 * (n_cruise), &quot;OK&quot;, &quot;loss&quot;)) %&gt;%
+         category = if_else(f_9 &lt;= 0.1 * (n_cruise), &quot;OK&quot;, &quot;loss&quot;))
+
+loss_f9_cruise &lt;- loss_f9 %&gt;%
   mutate(parameter_class = if_else(
     parameter %in% c(&quot;tco2&quot;, &quot;talk&quot;, &quot;phosphate&quot;),
     &quot;target&quot;,
@@ -6421,6 +6462,43 @@ p_xover_histo_2021 &lt;-
 
 p_xover_histo + p_xover_histo_2021 + p_adjustment_histo</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_histograms-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_histograms-1">
+Past versions of crossover_histograms-1.png
+</button>
+</p>
+<div id="fig-crossover_histograms-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d5ef2c6c0fd3dcce982a4f1125c860e1ef5ef45e/docs/figure/read_GLODAPv2_2021.Rmd/crossover_histograms-1.png" target="_blank">d5ef2c6</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>rm(p_xover_histo, p_xover_histo_2021, p_adjustment_histo)</code></pre>
 </div>
 <div id="adjustment-correction" class="section level2" number="6.2">
@@ -6489,8 +6567,139 @@ glodapv2_2021_xover &lt;- glodapv2_2021_xover  %&gt;%
 xover &lt;- bind_rows(glodapv2_xover,
                    glodapv2_2021_xover)</code></pre>
 </div>
-<div id="io-1990" class="section level2" number="6.3">
-<h2 number="6.3"><span class="header-section-number">6.3</span> IO 1990</h2>
+<div id="missingflagged-data" class="section level2" number="6.3">
+<h2 number="6.3"><span class="header-section-number">6.3</span> Missing/flagged data</h2>
+<pre class="r"><code>for (i_expocodes_missing in expocodes_missing) {
+  # i_expocodes_missing &lt;- expocodes_missing[2]
+  
+  cruise &lt;- GLODAP %&gt;%
+    filter(cruise_expocode == i_expocodes_missing)
+  
+  parameter_qc &lt;- loss_qc %&gt;%
+    filter(cruise_expocode == i_expocodes_missing,
+           category == &quot;loss&quot;) %&gt;%
+    pull(parameter)
+  
+  parameter_f &lt;- loss_f %&gt;%
+    filter(cruise_expocode == i_expocodes_missing,
+           category == &quot;loss&quot;) %&gt;%
+    pull(parameter)
+  
+  parameter_f9 &lt;- loss_f9 %&gt;%
+    filter(cruise_expocode == i_expocodes_missing,
+           category == &quot;loss&quot;) %&gt;%
+    pull(parameter)
+  
+  parameter_check &lt;-
+    unique(c(parameter_qc, parameter_f, parameter_f9))
+  
+  rm(parameter_qc, parameter_f, parameter_f9)
+  
+  xover_cruise_A &lt;- xover %&gt;%
+    filter(cruise_A %in% i_expocodes_missing)
+  
+  xover_cruise_B &lt;- xover %&gt;%
+    filter(cruise_B %in% i_expocodes_missing)
+  
+  xover_cruise_B_rev &lt;- xover_cruise_B %&gt;%
+    rename(
+      cruise_A_back = cruise_A,
+      cruise_A = cruise_B,
+      adjustment_A_back = adjustment_A,
+      adjustment_A = adjustment_B
+    ) %&gt;%
+    rename(cruise_B = cruise_A_back,
+           adjustment_B = adjustment_A_back) %&gt;%
+    mutate(
+      offset = if_else(
+        parameter %in% c(&quot;salinity&quot;, &quot;talk&quot;, &quot;tco2&quot;),
+        -offset,
+        1 / offset
+      ),
+      offset_adj = if_else(
+        parameter %in% c(&quot;salinity&quot;, &quot;talk&quot;, &quot;tco2&quot;),
+        -offset_adj,
+        1 / offset_adj
+      )
+    )
+  
+  xover_cruise &lt;- bind_rows(xover_cruise_A,
+                            xover_cruise_B_rev)
+  
+  xover_cruise &lt;- xover_cruise %&gt;%
+    mutate(dateA = ymd(str_sub(cruise_A, 5, 12)),
+           dateB = ymd(str_sub(cruise_B, 5, 12)))
+  
+  
+  xover_cruise &lt;- xover_cruise %&gt;%
+    mutate(RV = str_sub(cruise_B, 1, 4))
+  
+  hline_intercept &lt;-
+    tibble(parameter = unique(xover_cruise$parameter)) %&gt;%
+    mutate(intercept = if_else(parameter %in% c(&quot;salinity&quot;, &quot;talk&quot;, &quot;tco2&quot;),
+                               0,
+                               1))
+  
+  p_crossover_ts &lt;- xover_cruise %&gt;%
+    ggplot(aes(dateB, offset_adj)) +
+    geom_vline(xintercept = ymd(str_sub(i_expocodes_missing, 5)),
+               col = &quot;red&quot;) +
+    geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+    geom_point() +
+    facet_grid(parameter ~ ., scales = &quot;free_y&quot;) +
+    labs(title = paste(&quot;Cruise:&quot;, i_expocodes_missing,
+                       &quot;| parameter check:&quot;, parameter_check)) +
+    theme(
+      legend.position = &quot;bottom&quot;,
+      legend.direction = &quot;vertical&quot;,
+      axis.title.x = element_blank()
+    )
+  
+  
+  xover_cruise_decade &lt;- xover_cruise %&gt;%
+    mutate(decade = cut(
+      year(dateB),
+      seq(1989, 2019, 10),
+      right = FALSE,
+      labels = c(&quot;1989-1999&quot;, &quot;2000-2009&quot;, &quot;2010-2019&quot;)
+    )) %&gt;%
+    filter(!is.na(decade),
+           !is.na(offset_adj)) %&gt;%
+    group_by(parameter, decade) %&gt;%
+    mutate(n = n()) %&gt;%
+    ungroup() %&gt;% 
+    filter(n &gt; 2)
+  
+  
+  p_crossover_decadal &lt;-
+    ggplot() +
+    geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+    geom_violin(
+      data = xover_cruise_decade,
+      aes(x = decade, y = offset_adj),
+      fill = &quot;gold&quot;
+    ) +
+    geom_boxplot(
+      data = xover_cruise_decade,
+      aes(x = decade, y = offset_adj),
+      width = 0.2
+    ) +
+    facet_grid(parameter ~ ., scales = &quot;free_y&quot;) +
+    labs(title = &quot;Decadal offset_adjs&quot;) +
+    theme(axis.title.x = element_blank())
+  
+  print(
+  p_crossover_ts + p_crossover_decadal +
+    plot_layout(widths = c(2, 1))
+  )
+  
+  rm(p_crossover_ts, p_crossover_decadal)
+  
+}</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-1.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-2.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-3.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-4.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-5.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-6.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-7.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-8.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-9.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-10.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-11.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-12.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-13.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-14.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-15.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-16.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-17.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-18.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-19.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-20.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-21.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-22.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-23.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-24.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-25.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-26.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-27.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-28.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-29.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-30.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-31.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-32.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-33.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="io-1990-data" class="section level2" number="6.4">
+<h2 number="6.4"><span class="header-section-number">6.4</span> IO 1990 data</h2>
 <pre class="r"><code>IO_1990_expocodes &lt;- GLODAP %&gt;%
   filter(str_detect(cruise_expocode, &quot;316N199&quot;) &amp;
            basin_AIP == &quot;Indian&quot;) %&gt;%
@@ -6604,6 +6813,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d5ef2c6c0fd3dcce982a4f1125c860e1ef5ef45e/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_data-1.png" target="_blank">d5ef2c6</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-20
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/00227e6739693d3d544eba899724cb6e1bf4dfad/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_data-1.png" target="_blank">00227e6</a>
 </td>
 <td>
@@ -6679,6 +6899,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d5ef2c6c0fd3dcce982a4f1125c860e1ef5ef45e/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_data-2.png" target="_blank">d5ef2c6</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-20
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/00227e6739693d3d544eba899724cb6e1bf4dfad/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_data-2.png" target="_blank">00227e6</a>
