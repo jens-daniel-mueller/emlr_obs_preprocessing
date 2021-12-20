@@ -658,7 +658,7 @@ loss_qc <- loss %>%
                values_to = "value") %>% 
   mutate(parameter = str_remove(parameter, "qc"))
 
-loss_qc_cruise <- loss_qc %>%
+loss_qc <- loss_qc %>%
   count(cruise_expocode, basin_AIP, decade, parameter, value) %>%
   pivot_wider(
     names_from = value,
@@ -667,7 +667,9 @@ loss_qc_cruise <- loss_qc %>%
     values_fill = 0
   ) %>%
   mutate(n_cruise = qc_0 + qc_1,
-         category = if_else(qc_0 <= 0.1 * (n_cruise), "OK", "loss")) %>%
+         category = if_else(qc_0 <= 0.1 * (n_cruise), "OK", "loss"))
+
+loss_qc_cruise <- loss_qc %>%
   mutate(parameter_class = if_else(
     parameter %in% c("tco2", "talk", "phosphate"),
     "target",
@@ -777,7 +779,7 @@ loss_f <- loss %>%
                values_to = "value") %>% 
   mutate(parameter = str_remove(parameter, "f"))
 
-loss_f_cruise <- loss_f %>%
+loss_f <- loss_f %>%
   count(cruise_expocode, basin_AIP, decade, parameter, value) %>%
   pivot_wider(
     names_from = value,
@@ -786,7 +788,9 @@ loss_f_cruise <- loss_f %>%
     values_fill = 0
   ) %>%
   mutate(n_cruise = f_0 + f_2,
-         category = if_else(f_0 <= 0.1 * (n_cruise), "OK", "loss")) %>%
+         category = if_else(f_0 <= 0.1 * (n_cruise), "OK", "loss"))
+
+loss_f_cruise <- loss_f %>%
   mutate(parameter_class = if_else(
     parameter %in% c("tco2", "talk", "phosphate"),
     "target",
@@ -893,7 +897,7 @@ loss_f9 <- loss_all %>%
                values_to = "value") %>% 
   mutate(parameter = str_remove(parameter, "f"))
 
-loss_f9_cruise <- loss_f9 %>%
+loss_f9 <- loss_f9 %>%
   count(cruise_expocode, basin_AIP, decade, parameter, value) %>%
   pivot_wider(
     names_from = value,
@@ -902,7 +906,9 @@ loss_f9_cruise <- loss_f9 %>%
     values_fill = 0
   ) %>%
   mutate(n_cruise = f_0 + f_2 + f_9,
-         category = if_else(f_9 <= 0.1 * (n_cruise), "OK", "loss")) %>%
+         category = if_else(f_9 <= 0.1 * (n_cruise), "OK", "loss"))
+
+loss_f9_cruise <- loss_f9 %>%
   mutate(parameter_class = if_else(
     parameter %in% c("tco2", "talk", "phosphate"),
     "target",
@@ -1378,9 +1384,142 @@ xover <- bind_rows(glodapv2_xover,
 
 ```
 
+## Missing/flagged data
+
+```{r crossover_missing_flagged_data}
+
+for (i_expocodes_missing in expocodes_missing) {
+  # i_expocodes_missing <- expocodes_missing[2]
+  
+  cruise <- GLODAP %>%
+    filter(cruise_expocode == i_expocodes_missing)
+  
+  parameter_qc <- loss_qc %>%
+    filter(cruise_expocode == i_expocodes_missing,
+           category == "loss") %>%
+    pull(parameter)
+  
+  parameter_f <- loss_f %>%
+    filter(cruise_expocode == i_expocodes_missing,
+           category == "loss") %>%
+    pull(parameter)
+  
+  parameter_f9 <- loss_f9 %>%
+    filter(cruise_expocode == i_expocodes_missing,
+           category == "loss") %>%
+    pull(parameter)
+  
+  parameter_check <-
+    unique(c(parameter_qc, parameter_f, parameter_f9))
+  
+  rm(parameter_qc, parameter_f, parameter_f9)
+  
+  xover_cruise_A <- xover %>%
+    filter(cruise_A %in% i_expocodes_missing)
+  
+  xover_cruise_B <- xover %>%
+    filter(cruise_B %in% i_expocodes_missing)
+  
+  xover_cruise_B_rev <- xover_cruise_B %>%
+    rename(
+      cruise_A_back = cruise_A,
+      cruise_A = cruise_B,
+      adjustment_A_back = adjustment_A,
+      adjustment_A = adjustment_B
+    ) %>%
+    rename(cruise_B = cruise_A_back,
+           adjustment_B = adjustment_A_back) %>%
+    mutate(
+      offset = if_else(
+        parameter %in% c("salinity", "talk", "tco2"),
+        -offset,
+        1 / offset
+      ),
+      offset_adj = if_else(
+        parameter %in% c("salinity", "talk", "tco2"),
+        -offset_adj,
+        1 / offset_adj
+      )
+    )
+  
+  xover_cruise <- bind_rows(xover_cruise_A,
+                            xover_cruise_B_rev)
+  
+  xover_cruise <- xover_cruise %>%
+    mutate(dateA = ymd(str_sub(cruise_A, 5, 12)),
+           dateB = ymd(str_sub(cruise_B, 5, 12)))
+  
+  
+  xover_cruise <- xover_cruise %>%
+    mutate(RV = str_sub(cruise_B, 1, 4))
+  
+  hline_intercept <-
+    tibble(parameter = unique(xover_cruise$parameter)) %>%
+    mutate(intercept = if_else(parameter %in% c("salinity", "talk", "tco2"),
+                               0,
+                               1))
+  
+  p_crossover_ts <- xover_cruise %>%
+    ggplot(aes(dateB, offset_adj)) +
+    geom_vline(xintercept = ymd(str_sub(i_expocodes_missing, 5)),
+               col = "red") +
+    geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+    geom_point() +
+    facet_grid(parameter ~ ., scales = "free_y") +
+    labs(title = paste("Cruise:", i_expocodes_missing,
+                       "| parameter check:", parameter_check)) +
+    theme(
+      legend.position = "bottom",
+      legend.direction = "vertical",
+      axis.title.x = element_blank()
+    )
+  
+  
+  xover_cruise_decade <- xover_cruise %>%
+    mutate(decade = cut(
+      year(dateB),
+      seq(1989, 2019, 10),
+      right = FALSE,
+      labels = c("1989-1999", "2000-2009", "2010-2019")
+    )) %>%
+    filter(!is.na(decade),
+           !is.na(offset_adj)) %>%
+    group_by(parameter, decade) %>%
+    mutate(n = n()) %>%
+    ungroup() %>% 
+    filter(n > 2)
+  
+  
+  p_crossover_decadal <-
+    ggplot() +
+    geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+    geom_violin(
+      data = xover_cruise_decade,
+      aes(x = decade, y = offset_adj),
+      fill = "gold"
+    ) +
+    geom_boxplot(
+      data = xover_cruise_decade,
+      aes(x = decade, y = offset_adj),
+      width = 0.2
+    ) +
+    facet_grid(parameter ~ ., scales = "free_y") +
+    labs(title = "Decadal offset_adjs") +
+    theme(axis.title.x = element_blank())
+  
+  print(
+  p_crossover_ts + p_crossover_decadal +
+    plot_layout(widths = c(2, 1))
+  )
+  
+  rm(p_crossover_ts, p_crossover_decadal)
+  
+}
+
+```
 
 
-## IO 1990
+## IO 1990 data
 
 ```{r crossover_analysis_data, fig.asp=1}
 
