@@ -1405,7 +1405,7 @@ for (i_expocodes_missing in expocodes_missing) {
     filter(cruise_expocode == i_expocodes_missing,
            category == "loss") 
   
-  parameter_qc
+  print(parameter_qc)
   
   parameter_qc <- parameter_qc %>%
     pull(parameter)
@@ -1418,7 +1418,7 @@ for (i_expocodes_missing in expocodes_missing) {
     filter(cruise_expocode == i_expocodes_missing,
            category == "loss")
   
-  parameter_f
+  print(parameter_f)
   
   parameter_f <- parameter_f %>%
     pull(parameter)
@@ -1431,7 +1431,7 @@ for (i_expocodes_missing in expocodes_missing) {
     filter(cruise_expocode == i_expocodes_missing,
            category == "loss")
   
-  parameter_f9
+  print(parameter_f9)
   
   parameter_f9 <- parameter_f9 %>%
     pull(parameter)
