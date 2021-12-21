@@ -562,16 +562,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreee60be652894396bde6db6942e381cd10d0b19faetargetblanke60be65a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/e60be652894396bde6db6942e381cd10d0b19fae" target="_blank">e60be65</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreef99a7ce47a69370099b332e114e39efeca45949ctargetblankf99a7cea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/f99a7ce47a69370099b332e114e39efeca45949c" target="_blank">f99a7ce</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreee60be652894396bde6db6942e381cd10d0b19faetargetblanke60be65a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreef99a7ce47a69370099b332e114e39efeca45949ctargetblankf99a7cea" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/e60be652894396bde6db6942e381cd10d0b19fae" target="_blank">e60be65</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/f99a7ce47a69370099b332e114e39efeca45949c" target="_blank">f99a7ce</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -580,7 +580,6 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
     Ignored:    data/
     Ignored:    output/
 
@@ -625,6 +624,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f99a7ce47a69370099b332e114e39efeca45949c/analysis/read_GLODAPv2_2021.Rmd" target="_blank">f99a7ce</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+<td>
+print tables with flagging number
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/read_GLODAPv2_2021.html" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -6733,7 +6766,7 @@ for (i_expocodes_missing in expocodes_missing) {
     filter(cruise_expocode == i_expocodes_missing,
            category == &quot;loss&quot;) 
   
-  parameter_qc
+  print(parameter_qc)
   
   parameter_qc &lt;- parameter_qc %&gt;%
     pull(parameter)
@@ -6746,7 +6779,7 @@ for (i_expocodes_missing in expocodes_missing) {
     filter(cruise_expocode == i_expocodes_missing,
            category == &quot;loss&quot;)
   
-  parameter_f
+  print(parameter_f)
   
   parameter_f &lt;- parameter_f %&gt;%
     pull(parameter)
@@ -6759,7 +6792,7 @@ for (i_expocodes_missing in expocodes_missing) {
     filter(cruise_expocode == i_expocodes_missing,
            category == &quot;loss&quot;)
   
-  parameter_f9
+  print(parameter_f9)
   
   parameter_f9 &lt;- parameter_f9 %&gt;%
     pull(parameter)
@@ -6907,7 +6940,18 @@ for (i_expocodes_missing in expocodes_missing) {
   rm(p_crossover_ts, p_crossover_decadal)
   
 }</code></pre>
-<pre><code>[1] &quot;talkf&quot;</code></pre>
+<pre><code>[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 320620170703    Pacific   2010-2019 talk       [4m2[24m809   449     [4m3[24m258 loss    
+[38;5;246m# A tibble: 0 × 9[39m
+[38;5;246m# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,[39m
+[38;5;246m#   category &lt;chr&gt;[39m
+[1] &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-1">
@@ -6993,6 +7037,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-2.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-2.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -7053,6 +7108,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-3.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-3.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -7088,7 +7154,18 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkf&quot;</code></pre>
+<pre><code>[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 323019940104    Atlantic  1989-1999 talk       [4m2[24m393   539     [4m2[24m932 loss    
+[38;5;246m# A tibble: 0 × 9[39m
+[38;5;246m# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,[39m
+[38;5;246m#   category &lt;chr&gt;[39m
+[1] &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-4.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-4">
@@ -7112,6 +7189,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-4.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-4.png" target="_blank">2704ff6</a>
@@ -7174,6 +7262,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-5.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-5.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -7234,6 +7333,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-6.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-6.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -7269,7 +7379,17 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;aouf&quot;</code></pre>
+<pre><code>[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 1 × 9[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 325020060213    Pacific   2000-2009 aou        [4m2[24m236   349     0     [4m2[24m585 loss    
+[1] &quot;aouf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-7.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-7">
@@ -7293,6 +7413,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-7.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-7.png" target="_blank">2704ff6</a>
@@ -7355,6 +7486,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-8.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-8.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -7415,6 +7557,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-9.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-9.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -7450,7 +7603,20 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;nitratef&quot;   &quot;phosphatef&quot; &quot;silicatef&quot;  &quot;talkf&quot;     </code></pre>
+<pre><code>[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 4 × 9[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 06AQ19980328    Atlantic  1989-1999 nitrate    [4m1[24m343   706     9     [4m2[24m058 loss    
+[38;5;250m2[39m 06AQ19980328    Atlantic  1989-1999 phosphate  [4m1[24m347   707     4     [4m2[24m058 loss    
+[38;5;250m3[39m 06AQ19980328    Atlantic  1989-1999 silicate   [4m1[24m348   708     2     [4m2[24m058 loss    
+[38;5;250m4[39m 06AQ19980328    Atlantic  1989-1999 talk          0  [4m2[24m058     0     [4m2[24m058 loss    
+[1] &quot;nitratef&quot;   &quot;phosphatef&quot; &quot;silicatef&quot;  &quot;talkf&quot;     </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-10.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-10">
@@ -7474,6 +7640,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-10.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-10.png" target="_blank">2704ff6</a>
@@ -7536,6 +7713,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-11.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-11.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -7594,6 +7782,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-12.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-12.png" target="_blank">2704ff6</a>
@@ -7656,6 +7855,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-13.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-13.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -7714,6 +7924,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-14.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-14.png" target="_blank">2704ff6</a>
@@ -7776,6 +7997,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-15.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-15.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -7834,6 +8066,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-16.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-16.png" target="_blank">2704ff6</a>
@@ -7896,6 +8139,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-17.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-17.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -7956,6 +8210,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-18.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-18.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -7991,7 +8256,23 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkqc&quot; &quot;talkf&quot;  &quot;aouf&quot;  </code></pre>
+<pre><code>[38;5;246m# A tibble: 2 × 8[39m
+  cruise_expocode basin_AIP decade    parameter  qc_0  qc_1 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 06MT19900123    Atlantic  1989-1999 talk        660     0      660 loss    
+[38;5;250m2[39m 06MT19900123    Pacific   1989-1999 talk          9     0        9 loss    
+[38;5;246m# A tibble: 2 × 8[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 06MT19900123    Atlantic  1989-1999 talk          0   660      660 loss    
+[38;5;250m2[39m 06MT19900123    Pacific   1989-1999 talk          0     9        9 loss    
+[38;5;246m# A tibble: 3 × 9[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 06MT19900123    Atlantic  1989-1999 talk          0   324   667      991 loss    
+[38;5;250m2[39m 06MT19900123    Pacific   1989-1999 aou         233    62     0      295 loss    
+[38;5;250m3[39m 06MT19900123    Pacific   1989-1999 talk          0   282    13      295 loss    
+[1] &quot;talkqc&quot; &quot;talkf&quot;  &quot;aouf&quot;  </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-19.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-19">
@@ -8015,6 +8296,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-19.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-19.png" target="_blank">2704ff6</a>
@@ -8077,6 +8369,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-20.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-20.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -8135,6 +8438,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-21.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-21.png" target="_blank">2704ff6</a>
@@ -8197,6 +8511,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-22.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-22.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -8255,6 +8580,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-23.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-23.png" target="_blank">2704ff6</a>
@@ -8317,6 +8653,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-24.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-24.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -8377,6 +8724,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-25.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-25.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -8412,7 +8770,18 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;aouf&quot;  &quot;talkf&quot;</code></pre>
+<pre><code>[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 2 × 9[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 316N19871123    Atlantic  1989-1999 aou        [4m2[24m554   344     0     [4m2[24m898 loss    
+[38;5;250m2[39m 316N19871123    Atlantic  1989-1999 talk       [4m1[24m870  [4m1[24m028     0     [4m2[24m898 loss    
+[1] &quot;aouf&quot;  &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-26.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-26">
@@ -8436,6 +8805,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-26.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-26.png" target="_blank">2704ff6</a>
@@ -8498,6 +8878,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-27.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-27.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -8556,6 +8947,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-28.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-28.png" target="_blank">2704ff6</a>
@@ -8618,6 +9020,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-29.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-29.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -8678,6 +9091,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-30.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-30.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -8713,7 +9137,20 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkqc&quot;     &quot;talkf&quot;      &quot;phosphatef&quot;</code></pre>
+<pre><code>[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter  qc_0  qc_1 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 316N19920502    Pacific   1989-1999 talk        570     0      570 loss    
+[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 316N19920502    Pacific   1989-1999 talk          0   570      570 loss    
+[38;5;246m# A tibble: 2 × 9[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 316N19920502    Pacific   1989-1999 phosphate  [4m2[24m676   376    29     [4m3[24m081 loss    
+[38;5;250m2[39m 316N19920502    Pacific   1989-1999 talk          0  [4m2[24m508   573     [4m3[24m081 loss    
+[1] &quot;talkqc&quot;     &quot;talkf&quot;      &quot;phosphatef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-31.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-31">
@@ -8737,6 +9174,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-31.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-31.png" target="_blank">2704ff6</a>
@@ -8799,6 +9247,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-32.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-32.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -8857,6 +9316,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-33.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-33.png" target="_blank">2704ff6</a>
@@ -8919,6 +9389,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-34.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-34.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -8955,6 +9436,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-35.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-35.png" target="_blank">2704ff6</a>
@@ -8995,6 +9487,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-36.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-36.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -9033,6 +9536,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-37.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-37.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -9046,7 +9560,19 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkqc&quot; &quot;talkf&quot; </code></pre>
+<pre><code>[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter  qc_0  qc_1 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 316N19921006    Pacific   1989-1999 talk       [4m1[24m352     0     [4m1[24m352 loss    
+[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 316N19921006    Pacific   1989-1999 talk          0  [4m1[24m352     [4m1[24m352 loss    
+[38;5;246m# A tibble: 1 × 9[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 316N19921006    Pacific   1989-1999 talk          0   175  [4m1[24m359     [4m1[24m534 loss    
+[1] &quot;talkqc&quot; &quot;talkf&quot; </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-38.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-38">
@@ -9070,6 +9596,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-38.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-38.png" target="_blank">2704ff6</a>
@@ -9110,6 +9647,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-39.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-39.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -9146,6 +9694,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-40.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-40.png" target="_blank">2704ff6</a>
@@ -9186,6 +9745,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-41.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-41.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -9224,6 +9794,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-42.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-42.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -9237,7 +9818,17 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkf&quot;</code></pre>
+<pre><code>[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 1 × 9[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 316N19941201    Indian    1989-1999 talk       [4m1[24m705   466     0     [4m2[24m171 loss    
+[1] &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-43.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-43">
@@ -9261,6 +9852,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-43.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-43.png" target="_blank">2704ff6</a>
@@ -9301,6 +9903,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-44.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-44.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -9339,6 +9952,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-45.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-45.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -9352,7 +9976,18 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;aouf&quot;      &quot;salinityf&quot;</code></pre>
+<pre><code>[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 2 × 9[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 316N19950310    Indian    1989-1999 aou        [4m1[24m958   439     0     [4m2[24m397 loss    
+[38;5;250m2[39m 316N19950310    Indian    1989-1999 salinity   [4m1[24m989   394    14     [4m2[24m397 loss    
+[1] &quot;aouf&quot;      &quot;salinityf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-46.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-46">
@@ -9376,6 +10011,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-46.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-46.png" target="_blank">2704ff6</a>
@@ -9416,6 +10062,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-47.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-47.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -9452,6 +10109,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-48.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-48.png" target="_blank">2704ff6</a>
@@ -9492,6 +10160,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-49.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-49.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -9530,6 +10209,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-50.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-50.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -9543,7 +10233,17 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkf&quot;</code></pre>
+<pre><code>[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 1 × 9[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 316N19950611    Indian    1989-1999 talk       [4m1[24m657   264     0     [4m1[24m921 loss    
+[1] &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-51.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-51">
@@ -9567,6 +10267,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-51.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-51.png" target="_blank">2704ff6</a>
@@ -9607,6 +10318,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-52.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-52.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -9645,6 +10367,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-53.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-53.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -9658,7 +10391,19 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkf&quot; &quot;tco2f&quot;</code></pre>
+<pre><code>[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 2 × 8[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 318M20091121    Pacific   2010-2019 talk       [4m4[24m159  [4m1[24m041     [4m5[24m200 loss    
+[38;5;250m2[39m 318M20091121    Pacific   2010-2019 tco2       [4m4[24m332   868     [4m5[24m200 loss    
+[38;5;246m# A tibble: 0 × 9[39m
+[38;5;246m# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,[39m
+[38;5;246m#   category &lt;chr&gt;[39m
+[1] &quot;talkf&quot; &quot;tco2f&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-54.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-54">
@@ -9682,6 +10427,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-54.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-54.png" target="_blank">2704ff6</a>
@@ -9722,6 +10478,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-55.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-55.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -9758,6 +10525,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-56.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-56.png" target="_blank">2704ff6</a>
@@ -9798,6 +10576,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-57.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-57.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -9836,6 +10625,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-58.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-58.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -9849,7 +10649,18 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;nitrateqc&quot;</code></pre>
+<pre><code>[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter  qc_0  qc_1 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 31DS19940126    Pacific   1989-1999 nitrate    [4m2[24m873     0     [4m2[24m873 loss    
+[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 0 × 9[39m
+[38;5;246m# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,[39m
+[38;5;246m#   category &lt;chr&gt;[39m
+[1] &quot;nitrateqc&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-59.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-59">
@@ -9873,6 +10684,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-59.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-59.png" target="_blank">2704ff6</a>
@@ -9913,6 +10735,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-60.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-60.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -9951,6 +10784,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-61.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-61.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -9964,7 +10808,18 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkf&quot;</code></pre>
+<pre><code>[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 31DS19960105    Pacific   1989-1999 talk       [4m2[24m395   282     [4m2[24m677 loss    
+[38;5;246m# A tibble: 0 × 9[39m
+[38;5;246m# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,[39m
+[38;5;246m#   category &lt;chr&gt;[39m
+[1] &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-62.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-62">
@@ -9988,6 +10843,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-62.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-62.png" target="_blank">2704ff6</a>
@@ -10028,6 +10894,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-63.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-63.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -10066,6 +10943,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-64.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-64.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -10079,7 +10967,19 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkqc&quot;     &quot;talkf&quot;      &quot;phosphatef&quot;</code></pre>
+<pre><code>[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter  qc_0  qc_1 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 33MW19930704    Atlantic  1989-1999 talk         78   545      623 loss    
+[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 33MW19930704    Atlantic  1989-1999 talk        500   123      623 loss    
+[38;5;246m# A tibble: 1 × 9[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 33MW19930704    Atlantic  1989-1999 phosphate   671  [4m1[24m146     1     [4m1[24m818 loss    
+[1] &quot;talkqc&quot;     &quot;talkf&quot;      &quot;phosphatef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-65.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-65">
@@ -10103,6 +11003,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-65.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-65.png" target="_blank">2704ff6</a>
@@ -10143,6 +11054,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-66.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-66.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -10179,6 +11101,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-67.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-67.png" target="_blank">2704ff6</a>
@@ -10219,6 +11152,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-68.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-68.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -10255,6 +11199,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-69.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-69.png" target="_blank">2704ff6</a>
@@ -10295,6 +11250,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-70.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-70.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -10333,6 +11299,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-71.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-71.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -10346,7 +11323,18 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkf&quot;      &quot;phosphatef&quot;</code></pre>
+<pre><code>[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 33RO19980123    Atlantic  1989-1999 talk        864   385     [4m1[24m249 loss    
+[38;5;246m# A tibble: 1 × 9[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 33RO19980123    Atlantic  1989-1999 phosphate  [4m1[24m430   661     5     [4m2[24m096 loss    
+[1] &quot;talkf&quot;      &quot;phosphatef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-72.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-72">
@@ -10370,6 +11358,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-72.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-72.png" target="_blank">2704ff6</a>
@@ -10410,6 +11409,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-73.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-73.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -10446,6 +11456,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-74.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-74.png" target="_blank">2704ff6</a>
@@ -10486,6 +11507,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-75.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-75.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -10524,6 +11556,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-76.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-76.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -10537,7 +11580,18 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkf&quot;</code></pre>
+<pre><code>[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 33RO20071215    Pacific   2000-2009 talk       [4m3[24m549   951     [4m4[24m500 loss    
+[38;5;246m# A tibble: 0 × 9[39m
+[38;5;246m# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,[39m
+[38;5;246m#   category &lt;chr&gt;[39m
+[1] &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-77.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-77">
@@ -10561,6 +11615,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-77.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-77.png" target="_blank">2704ff6</a>
@@ -10601,6 +11666,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-78.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-78.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -10639,6 +11715,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-79.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-79.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -10652,7 +11739,18 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;tco2f&quot;      &quot;phosphatef&quot;</code></pre>
+<pre><code>[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 33RO20110926    Atlantic  2010-2019 tco2        842   283     [4m1[24m125 loss    
+[38;5;246m# A tibble: 1 × 9[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 33RO20110926    Atlantic  2010-2019 phosphate  [4m1[24m239  [4m1[24m304     1     [4m2[24m544 loss    
+[1] &quot;tco2f&quot;      &quot;phosphatef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-80.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-80">
@@ -10676,6 +11774,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-80.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-80.png" target="_blank">2704ff6</a>
@@ -10716,6 +11825,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-81.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-81.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -10752,6 +11872,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-82.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-82.png" target="_blank">2704ff6</a>
@@ -10792,6 +11923,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-83.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-83.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -10830,6 +11972,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-84.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-84.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -10843,7 +11996,18 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;tco2f&quot;</code></pre>
+<pre><code>[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 33RR20080204    Indian    2000-2009 tco2       [4m1[24m720   405     [4m2[24m125 loss    
+[38;5;246m# A tibble: 0 × 9[39m
+[38;5;246m# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,[39m
+[38;5;246m#   category &lt;chr&gt;[39m
+[1] &quot;tco2f&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-85.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-85">
@@ -10867,6 +12031,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-85.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-85.png" target="_blank">2704ff6</a>
@@ -10907,6 +12082,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-86.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-86.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -10945,6 +12131,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-87.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-87.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -10958,7 +12155,18 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;tco2f&quot; &quot;aouf&quot; </code></pre>
+<pre><code>[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 35A319950113    Atlantic  1989-1999 tco2        733   162      895 loss    
+[38;5;246m# A tibble: 1 × 9[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 35A319950113    Atlantic  1989-1999 aou         900   198     0     [4m1[24m098 loss    
+[1] &quot;tco2f&quot; &quot;aouf&quot; </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-88.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-88">
@@ -10982,6 +12190,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-88.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-88.png" target="_blank">2704ff6</a>
@@ -11022,6 +12241,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-89.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-89.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -11058,6 +12288,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-90.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-90.png" target="_blank">2704ff6</a>
@@ -11098,6 +12339,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-91.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-91.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -11136,6 +12388,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-92.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2704ff6a439b4bba3e96c000921e6d88e6b84536/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-92.png" target="_blank">2704ff6</a>
 </td>
 <td>
@@ -11149,32 +12412,2409 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;phosphatef&quot;</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-93.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-94.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-95.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;silicatef&quot;</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-96.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-97.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-98.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;tco2qc&quot; &quot;tco2f&quot; </code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-99.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-100.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-101.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-102.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-103.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;tco2qc&quot;   &quot;tco2f&quot;    &quot;nitratef&quot;</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-104.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-105.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-106.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-107.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-108.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-109.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-110.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;tco2qc&quot; &quot;tco2f&quot; </code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-111.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-112.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-113.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-114.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-115.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;nitratef&quot;   &quot;phosphatef&quot; &quot;silicatef&quot; </code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-116.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-117.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-118.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-119.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-120.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-121.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-122.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;talkqc&quot; &quot;talkf&quot; </code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-123.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-124.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-125.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-126.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-127.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;nitrateqc&quot;</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-128.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-129.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-130.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;phosphatef&quot;</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-131.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-132.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-133.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;phosphatef&quot;</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-134.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-135.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-136.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;nitratef&quot;   &quot;phosphatef&quot; &quot;silicatef&quot;  &quot;talkf&quot;     </code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-137.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-138.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-139.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-140.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-141.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-142.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-143.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-144.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-145.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;talkf&quot;</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-146.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-147.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-148.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>[1] &quot;phosphatef&quot;</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-149.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-150.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-151.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 1 × 9[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 35MF19930123    Indian    1989-1999 phosphate     0  [4m1[24m436     0     [4m1[24m436 loss    
+[1] &quot;phosphatef&quot;</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-93.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-93">
+Past versions of crossover_missing_flagged_data-93.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-93" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-93.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-94.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-94">
+Past versions of crossover_missing_flagged_data-94.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-94" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-94.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-95.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-95">
+Past versions of crossover_missing_flagged_data-95.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-95" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-95.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 1 × 9[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 35MF19960220    Indian    1989-1999 silicate   [4m1[24m630   350    24     [4m2[24m004 loss    
+[1] &quot;silicatef&quot;</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-96.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-96">
+Past versions of crossover_missing_flagged_data-96.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-96" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-96.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-97.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-97">
+Past versions of crossover_missing_flagged_data-97.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-97" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-97.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-98.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-98">
+Past versions of crossover_missing_flagged_data-98.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-98" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-98.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter  qc_0  qc_1 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 35TH20020611    Atlantic  2000-2009 tco2        926     0      926 loss    
+[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 35TH20020611    Atlantic  2000-2009 tco2          0   926      926 loss    
+[38;5;246m# A tibble: 0 × 9[39m
+[38;5;246m# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,[39m
+[38;5;246m#   category &lt;chr&gt;[39m
+[1] &quot;tco2qc&quot; &quot;tco2f&quot; </code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-99.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-99">
+Past versions of crossover_missing_flagged_data-99.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-99" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-99.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-100.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-100">
+Past versions of crossover_missing_flagged_data-100.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-100" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-100.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-101.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-101">
+Past versions of crossover_missing_flagged_data-101.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-101" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-101.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-102.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-102">
+Past versions of crossover_missing_flagged_data-102.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-102" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-102.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-103.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-103">
+Past versions of crossover_missing_flagged_data-103.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-103" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-103.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter  qc_0  qc_1 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 35TH20040604    Atlantic  2000-2009 tco2        928     0      928 loss    
+[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 35TH20040604    Atlantic  2000-2009 tco2          0   928      928 loss    
+[38;5;246m# A tibble: 1 × 9[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 35TH20040604    Atlantic  2000-2009 nitrate     926   110    14     [4m1[24m050 loss    
+[1] &quot;tco2qc&quot;   &quot;tco2f&quot;    &quot;nitratef&quot;</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-104.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-104">
+Past versions of crossover_missing_flagged_data-104.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-104" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-104.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-105.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-105">
+Past versions of crossover_missing_flagged_data-105.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-105" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-105.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-106.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-106">
+Past versions of crossover_missing_flagged_data-106.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-106" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-106.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-107.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-107">
+Past versions of crossover_missing_flagged_data-107.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-107" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-107.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-108.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-108">
+Past versions of crossover_missing_flagged_data-108.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-108" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-108.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-109.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-109">
+Past versions of crossover_missing_flagged_data-109.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-109" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-109.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-110.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-110">
+Past versions of crossover_missing_flagged_data-110.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-110" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-110.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter  qc_0  qc_1 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 35TH20080610    Atlantic  2000-2009 tco2       [4m1[24m032     0     [4m1[24m032 loss    
+[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 35TH20080610    Atlantic  2000-2009 tco2          0  [4m1[24m032     [4m1[24m032 loss    
+[38;5;246m# A tibble: 0 × 9[39m
+[38;5;246m# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,[39m
+[38;5;246m#   category &lt;chr&gt;[39m
+[1] &quot;tco2qc&quot; &quot;tco2f&quot; </code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-111.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-111">
+Past versions of crossover_missing_flagged_data-111.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-111" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-111.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-112.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-112">
+Past versions of crossover_missing_flagged_data-112.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-112" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-112.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-113.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-113">
+Past versions of crossover_missing_flagged_data-113.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-113" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-113.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-114.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-114">
+Past versions of crossover_missing_flagged_data-114.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-114" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-114.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-115.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-115">
+Past versions of crossover_missing_flagged_data-115.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-115" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-115.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 3 × 9[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 74DI19970807    Atlantic  1989-1999 nitrate    [4m1[24m650   274    12     [4m1[24m936 loss    
+[38;5;250m2[39m 74DI19970807    Atlantic  1989-1999 phosphate     0  [4m1[24m936     0     [4m1[24m936 loss    
+[38;5;250m3[39m 74DI19970807    Atlantic  1989-1999 silicate   [4m1[24m649   262    25     [4m1[24m936 loss    
+[1] &quot;nitratef&quot;   &quot;phosphatef&quot; &quot;silicatef&quot; </code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-116.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-116">
+Past versions of crossover_missing_flagged_data-116.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-116" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-116.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-117.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-117">
+Past versions of crossover_missing_flagged_data-117.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-117" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-117.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-118.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-118">
+Past versions of crossover_missing_flagged_data-118.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-118" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-118.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-119.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-119">
+Past versions of crossover_missing_flagged_data-119.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-119" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-119.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-120.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-120">
+Past versions of crossover_missing_flagged_data-120.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-120" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-120.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-121.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-121">
+Past versions of crossover_missing_flagged_data-121.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-121" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-121.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-122.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-122">
+Past versions of crossover_missing_flagged_data-122.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-122" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-122.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter  qc_0  qc_1 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 74DI20040404    Atlantic  2000-2009 talk        110   948     [4m1[24m058 loss    
+[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 74DI20040404    Atlantic  2000-2009 talk        948   110     [4m1[24m058 loss    
+[38;5;246m# A tibble: 0 × 9[39m
+[38;5;246m# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,[39m
+[38;5;246m#   category &lt;chr&gt;[39m
+[1] &quot;talkqc&quot; &quot;talkf&quot; </code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-123.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-123">
+Past versions of crossover_missing_flagged_data-123.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-123" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-123.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-124.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-124">
+Past versions of crossover_missing_flagged_data-124.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-124" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-124.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-125.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-125">
+Past versions of crossover_missing_flagged_data-125.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-125" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-125.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-126.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-126">
+Past versions of crossover_missing_flagged_data-126.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-126" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-126.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-127.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-127">
+Past versions of crossover_missing_flagged_data-127.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-127" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-127.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[38;5;246m# A tibble: 1 × 8[39m
+  cruise_expocode basin_AIP decade    parameter  qc_0  qc_1 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 74EQ20151206    Atlantic  2010-2019 nitrate    [4m1[24m844     0     [4m1[24m844 loss    
+[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 0 × 9[39m
+[38;5;246m# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,[39m
+[38;5;246m#   category &lt;chr&gt;[39m
+[1] &quot;nitrateqc&quot;</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-128.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-128">
+Past versions of crossover_missing_flagged_data-128.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-128" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-128.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-129.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-129">
+Past versions of crossover_missing_flagged_data-129.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-129" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-129.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-130.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-130">
+Past versions of crossover_missing_flagged_data-130.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-130" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-130.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 1 × 9[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 33RO20030604    Atlantic  2000-2009 phosphate     0  [4m2[24m487     0     [4m2[24m487 loss    
+[1] &quot;phosphatef&quot;</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-131.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-131">
+Past versions of crossover_missing_flagged_data-131.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-131" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-131.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-132.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-132">
+Past versions of crossover_missing_flagged_data-132.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-132" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-132.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-133.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-133">
+Past versions of crossover_missing_flagged_data-133.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-133" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-133.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 1 × 9[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 33RO20050111    Atlantic  2000-2009 phosphate     0  [4m2[24m546     0     [4m2[24m546 loss    
+[1] &quot;phosphatef&quot;</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-134.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-134">
+Past versions of crossover_missing_flagged_data-134.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-134" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-134.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-135.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-135">
+Past versions of crossover_missing_flagged_data-135.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-135" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-135.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-136.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-136">
+Past versions of crossover_missing_flagged_data-136.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-136" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-136.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 3 × 8[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 06AQ20080210    Pacific   2000-2009 nitrate      48    17       65 loss    
+[38;5;250m2[39m 06AQ20080210    Pacific   2000-2009 phosphate    48    17       65 loss    
+[38;5;250m3[39m 06AQ20080210    Pacific   2000-2009 silicate     48    17       65 loss    
+[38;5;246m# A tibble: 5 × 9[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 06AQ20080210    Atlantic  2000-2009 talk       [4m1[24m144   778     0     [4m1[24m922 loss    
+[38;5;250m2[39m 06AQ20080210    Pacific   2000-2009 nitrate      62    31    24      117 loss    
+[38;5;250m3[39m 06AQ20080210    Pacific   2000-2009 phosphate    62    31    24      117 loss    
+[38;5;250m4[39m 06AQ20080210    Pacific   2000-2009 silicate     62    31    24      117 loss    
+[38;5;250m5[39m 06AQ20080210    Pacific   2000-2009 talk         74    43     0      117 loss    
+[1] &quot;nitratef&quot;   &quot;phosphatef&quot; &quot;silicatef&quot;  &quot;talkf&quot;     </code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-137.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-137">
+Past versions of crossover_missing_flagged_data-137.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-137" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-137.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-138.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-138">
+Past versions of crossover_missing_flagged_data-138.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-138" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-138.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-139.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-139">
+Past versions of crossover_missing_flagged_data-139.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-139" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-139.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-140.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-140">
+Past versions of crossover_missing_flagged_data-140.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-140" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-140.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-141.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-141">
+Past versions of crossover_missing_flagged_data-141.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-141" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-141.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-142.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-142">
+Past versions of crossover_missing_flagged_data-142.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-142" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-142.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-143.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-143">
+Past versions of crossover_missing_flagged_data-143.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-143" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-143.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-144.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-144">
+Past versions of crossover_missing_flagged_data-144.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-144" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-144.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-145.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-145">
+Past versions of crossover_missing_flagged_data-145.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-145" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-145.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 1 × 9[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 06AQ20050122    Atlantic  2000-2009 talk          0  [4m2[24m248     0     [4m2[24m248 loss    
+[1] &quot;talkf&quot;</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-146.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-146">
+Past versions of crossover_missing_flagged_data-146.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-146" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-146.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-147.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-147">
+Past versions of crossover_missing_flagged_data-147.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-147" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-147.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-148.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-148">
+Past versions of crossover_missing_flagged_data-148.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-148" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-148.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 0 × 8[39m
+[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
+[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
+[38;5;246m# A tibble: 1 × 9[39m
+  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
+  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
+[38;5;250m1[39m 29HE20130320    Atlantic  2010-2019 phosphate     0  [4m2[24m256     0     [4m2[24m256 loss    
+[1] &quot;phosphatef&quot;</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-149.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-149">
+Past versions of crossover_missing_flagged_data-149.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-149" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-149.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-150.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-150">
+Past versions of crossover_missing_flagged_data-150.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-150" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-150.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-151.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-151">
+Past versions of crossover_missing_flagged_data-151.png
+</button>
+</p>
+<div id="fig-crossover_missing_flagged_data-151" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fcff192d462bec643890f0f36b2168a0fe9950cf/docs/figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-151.png" target="_blank">fcff192</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="io-1990-data" class="section level2" number="6.4">
 <h2 number="6.4"><span class="header-section-number">6.4</span> IO 1990 data</h2>
