@@ -1395,14 +1395,19 @@ hline_intercept <-
                              1))
 
 for (i_expocodes_missing in expocodes_missing) {
-  # i_expocodes_missing <- expocodes_missing[2]
+  # i_expocodes_missing <- expocodes_missing[1]
   
   cruise <- GLODAP %>%
-    filter(cruise_expocode == i_expocodes_missing)
+    filter(cruise_expocode == i_expocodes_missing) %>% 
+    rename(salinity = sal)
   
   parameter_qc <- loss_qc %>%
     filter(cruise_expocode == i_expocodes_missing,
-           category == "loss") %>%
+           category == "loss") 
+  
+  parameter_qc
+  
+  parameter_qc <- parameter_qc %>%
     pull(parameter)
   
   if (length(parameter_qc) > 0) {
@@ -1411,7 +1416,11 @@ for (i_expocodes_missing in expocodes_missing) {
     
   parameter_f <- loss_f %>%
     filter(cruise_expocode == i_expocodes_missing,
-           category == "loss") %>%
+           category == "loss")
+  
+  parameter_f
+  
+  parameter_f <- parameter_f %>%
     pull(parameter)
     
   if (length(parameter_f) > 0) {
@@ -1420,7 +1429,11 @@ for (i_expocodes_missing in expocodes_missing) {
   
   parameter_f9 <- loss_f9 %>%
     filter(cruise_expocode == i_expocodes_missing,
-           category == "loss") %>%
+           category == "loss")
+  
+  parameter_f9
+  
+  parameter_f9 <- parameter_f9 %>%
     pull(parameter)
   
   if (length(parameter_f9) > 0) {
@@ -1488,6 +1501,20 @@ for (i_expocodes_missing in expocodes_missing) {
                   aes(lon, lat, fill = n_rel)) +
         scale_fill_viridis_c(option = "magma",
                              direction = -1) +
+        facet_wrap(i_parameter_check, ncol = 2) +
+        labs(title = i_expocodes_missing,
+             subtitle = i_parameter_check)
+    )
+    
+    i_parameter_check_var <- str_remove(i_parameter_check, "f")
+    i_parameter_check_var <- str_remove(i_parameter_check_var, "qc")
+    
+    print(
+      cruise %>% 
+        ggplot(aes(!!sym(i_parameter_check_var), depth, fill=station)) +
+        geom_point(alpha = 0.2, shape = 21) +
+        scale_fill_viridis_c() +
+        scale_y_reverse() +
         facet_wrap(i_parameter_check, ncol = 2) +
         labs(title = i_expocodes_missing,
              subtitle = i_parameter_check)
