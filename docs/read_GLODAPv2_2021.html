@@ -446,7 +446,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">GLODAPv2_2020</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">20 December, 2021</h4>
+<h4 class="date">21 December, 2021</h4>
 
 </div>
 
@@ -471,7 +471,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-12-20
+<strong>Last updated:</strong> 2021-12-21
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -562,16 +562,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree7511f8cabf151d878084908da63c3a7504826396targetblank7511f8ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/7511f8cabf151d878084908da63c3a7504826396" target="_blank">7511f8c</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreee60be652894396bde6db6942e381cd10d0b19faetargetblanke60be65a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/e60be652894396bde6db6942e381cd10d0b19fae" target="_blank">e60be65</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree7511f8cabf151d878084908da63c3a7504826396targetblank7511f8ca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreee60be652894396bde6db6942e381cd10d0b19faetargetblanke60be65a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/7511f8cabf151d878084908da63c3a7504826396" target="_blank">7511f8c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/e60be652894396bde6db6942e381cd10d0b19fae" target="_blank">e60be65</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -625,6 +625,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e60be652894396bde6db6942e381cd10d0b19fae/analysis/read_GLODAPv2_2021.Rmd" target="_blank">e60be65</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+<td>
+added flagging profiles
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/a87f8c743f5a00de4f0bf1ffbb2030f83a0164ce/docs/read_GLODAPv2_2021.html" target="_blank">a87f8c7</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-20
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -6588,6 +6622,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a87f8c743f5a00de4f0bf1ffbb2030f83a0164ce/docs/figure/read_GLODAPv2_2021.Rmd/crossover_histograms-1.png" target="_blank">a87f8c7</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-20
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d5ef2c6c0fd3dcce982a4f1125c860e1ef5ef45e/docs/figure/read_GLODAPv2_2021.Rmd/crossover_histograms-1.png" target="_blank">d5ef2c6</a>
 </td>
 <td>
@@ -6678,14 +6723,19 @@ xover &lt;- bind_rows(glodapv2_xover,
                              1))
 
 for (i_expocodes_missing in expocodes_missing) {
-  # i_expocodes_missing &lt;- expocodes_missing[2]
+  # i_expocodes_missing &lt;- expocodes_missing[1]
   
   cruise &lt;- GLODAP %&gt;%
-    filter(cruise_expocode == i_expocodes_missing)
+    filter(cruise_expocode == i_expocodes_missing) %&gt;% 
+    rename(salinity = sal)
   
   parameter_qc &lt;- loss_qc %&gt;%
     filter(cruise_expocode == i_expocodes_missing,
-           category == &quot;loss&quot;) %&gt;%
+           category == &quot;loss&quot;) 
+  
+  parameter_qc
+  
+  parameter_qc &lt;- parameter_qc %&gt;%
     pull(parameter)
   
   if (length(parameter_qc) &gt; 0) {
@@ -6694,7 +6744,11 @@ for (i_expocodes_missing in expocodes_missing) {
     
   parameter_f &lt;- loss_f %&gt;%
     filter(cruise_expocode == i_expocodes_missing,
-           category == &quot;loss&quot;) %&gt;%
+           category == &quot;loss&quot;)
+  
+  parameter_f
+  
+  parameter_f &lt;- parameter_f %&gt;%
     pull(parameter)
     
   if (length(parameter_f) &gt; 0) {
@@ -6703,7 +6757,11 @@ for (i_expocodes_missing in expocodes_missing) {
   
   parameter_f9 &lt;- loss_f9 %&gt;%
     filter(cruise_expocode == i_expocodes_missing,
-           category == &quot;loss&quot;) %&gt;%
+           category == &quot;loss&quot;)
+  
+  parameter_f9
+  
+  parameter_f9 &lt;- parameter_f9 %&gt;%
     pull(parameter)
   
   if (length(parameter_f9) &gt; 0) {
@@ -6771,6 +6829,20 @@ for (i_expocodes_missing in expocodes_missing) {
                   aes(lon, lat, fill = n_rel)) +
         scale_fill_viridis_c(option = &quot;magma&quot;,
                              direction = -1) +
+        facet_wrap(i_parameter_check, ncol = 2) +
+        labs(title = i_expocodes_missing,
+             subtitle = i_parameter_check)
+    )
+    
+    i_parameter_check_var &lt;- str_remove(i_parameter_check, &quot;f&quot;)
+    i_parameter_check_var &lt;- str_remove(i_parameter_check_var, &quot;qc&quot;)
+    
+    print(
+      cruise %&gt;% 
+        ggplot(aes(!!sym(i_parameter_check_var), depth, fill=station)) +
+        geom_point(alpha = 0.2, shape = 21) +
+        scale_fill_viridis_c() +
+        scale_y_reverse() +
         facet_wrap(i_parameter_check, ncol = 2) +
         labs(title = i_expocodes_missing,
              subtitle = i_parameter_check)
@@ -6956,7 +7028,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-3">
@@ -7017,6 +7088,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>[1] &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-4.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-4">
@@ -7077,7 +7149,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;aouf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-5.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-5">
@@ -7198,7 +7269,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;nitratef&quot;   &quot;phosphatef&quot; &quot;silicatef&quot;  &quot;talkf&quot;     </code></pre>
+<pre><code>[1] &quot;aouf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-7.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-7">
@@ -7379,6 +7450,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>[1] &quot;nitratef&quot;   &quot;phosphatef&quot; &quot;silicatef&quot;  &quot;talkf&quot;     </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-10.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-10">
@@ -7499,7 +7571,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkqc&quot; &quot;talkf&quot;  &quot;aouf&quot;  </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-12.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-12">
@@ -7740,7 +7811,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;aouf&quot;  &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-16.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-16">
@@ -7921,7 +7991,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkqc&quot;     &quot;talkf&quot;      &quot;phosphatef&quot;</code></pre>
+<pre><code>[1] &quot;talkqc&quot; &quot;talkf&quot;  &quot;aouf&quot;  </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-19.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-19">
@@ -8162,7 +8232,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkqc&quot; &quot;talkf&quot; </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-23.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-23">
@@ -8343,7 +8412,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkf&quot;</code></pre>
+<pre><code>[1] &quot;aouf&quot;  &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-26.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-26">
@@ -8464,7 +8533,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;aouf&quot;      &quot;salinityf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-28.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-28">
@@ -8645,7 +8713,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkf&quot;</code></pre>
+<pre><code>[1] &quot;talkqc&quot;     &quot;talkf&quot;      &quot;phosphatef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-31.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-31">
@@ -8766,7 +8834,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkf&quot; &quot;tco2f&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-33.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-33">
@@ -8903,7 +8970,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;nitrateqc&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-36.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-36">
@@ -8980,7 +9046,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkf&quot;</code></pre>
+<pre><code>[1] &quot;talkqc&quot; &quot;talkf&quot; </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-38.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-38">
@@ -9057,7 +9123,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkqc&quot;     &quot;talkf&quot;      &quot;phosphatef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-40.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-40">
@@ -9172,6 +9237,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>[1] &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-43.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-43">
@@ -9210,7 +9276,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkf&quot;      &quot;phosphatef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-44.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-44">
@@ -9287,6 +9352,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>[1] &quot;aouf&quot;      &quot;salinityf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-46.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-46">
@@ -9325,7 +9391,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-47.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-47">
@@ -9402,7 +9467,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;tco2f&quot;      &quot;phosphatef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-49.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-49">
@@ -9479,6 +9543,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>[1] &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-51.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-51">
@@ -9517,7 +9582,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;tco2f&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-52.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-52">
@@ -9594,7 +9658,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;tco2f&quot; &quot;aouf&quot; </code></pre>
+<pre><code>[1] &quot;talkf&quot; &quot;tco2f&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-54.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-54">
@@ -9709,7 +9773,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;phosphatef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-57.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-57">
@@ -9786,7 +9849,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;silicatef&quot;</code></pre>
+<pre><code>[1] &quot;nitrateqc&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-59.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-59">
@@ -9863,7 +9926,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;tco2qc&quot; &quot;tco2f&quot; </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-61.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-61">
@@ -9902,6 +9964,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>[1] &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-62.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-62">
@@ -9978,7 +10041,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;tco2qc&quot;   &quot;tco2f&quot;    &quot;nitratef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-64.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-64">
@@ -10017,6 +10079,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>[1] &quot;talkqc&quot;     &quot;talkf&quot;      &quot;phosphatef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-65.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-65">
@@ -10131,7 +10194,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;tco2qc&quot; &quot;tco2f&quot; </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-68.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-68">
@@ -10246,7 +10308,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;nitratef&quot;   &quot;phosphatef&quot; &quot;silicatef&quot; </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-71.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-71">
@@ -10285,6 +10346,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>[1] &quot;talkf&quot;      &quot;phosphatef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-72.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-72">
@@ -10399,7 +10461,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkqc&quot; &quot;talkf&quot; </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-75.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-75">
@@ -10476,6 +10537,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>[1] &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-77.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-77">
@@ -10514,7 +10576,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;nitrateqc&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-78.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-78">
@@ -10591,7 +10652,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;phosphatef&quot;</code></pre>
+<pre><code>[1] &quot;tco2f&quot;      &quot;phosphatef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-80.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-80">
@@ -10668,7 +10729,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;phosphatef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-82.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-82">
@@ -10745,7 +10805,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;nitratef&quot;   &quot;phosphatef&quot; &quot;silicatef&quot;  &quot;talkf&quot;     </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-84.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-84">
@@ -10784,6 +10843,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>[1] &quot;tco2f&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-85.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-85">
@@ -10898,6 +10958,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>[1] &quot;tco2f&quot; &quot;aouf&quot; </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-88.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-88">
@@ -10936,7 +10997,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-89.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-89">
@@ -11013,7 +11073,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[1] &quot;phosphatef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-91.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_missing_flagged_data-91">
@@ -11090,6 +11149,32 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>[1] &quot;phosphatef&quot;</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-93.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-94.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-95.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;silicatef&quot;</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-96.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-97.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-98.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;tco2qc&quot; &quot;tco2f&quot; </code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-99.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-100.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-101.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-102.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-103.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;tco2qc&quot;   &quot;tco2f&quot;    &quot;nitratef&quot;</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-104.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-105.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-106.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-107.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-108.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-109.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-110.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;tco2qc&quot; &quot;tco2f&quot; </code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-111.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-112.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-113.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-114.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-115.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;nitratef&quot;   &quot;phosphatef&quot; &quot;silicatef&quot; </code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-116.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-117.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-118.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-119.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-120.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-121.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-122.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;talkqc&quot; &quot;talkf&quot; </code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-123.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-124.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-125.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-126.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-127.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;nitrateqc&quot;</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-128.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-129.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-130.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;phosphatef&quot;</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-131.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-132.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-133.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;phosphatef&quot;</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-134.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-135.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-136.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;nitratef&quot;   &quot;phosphatef&quot; &quot;silicatef&quot;  &quot;talkf&quot;     </code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-137.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-138.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-139.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-140.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-141.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-142.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-143.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-144.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-145.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;talkf&quot;</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-146.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-147.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-148.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[1] &quot;phosphatef&quot;</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-149.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-150.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-151.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="io-1990-data" class="section level2" number="6.4">
 <h2 number="6.4"><span class="header-section-number">6.4</span> IO 1990 data</h2>
@@ -11210,6 +11295,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a87f8c743f5a00de4f0bf1ffbb2030f83a0164ce/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_data-1.png" target="_blank">a87f8c7</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-20
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d5ef2c6c0fd3dcce982a4f1125c860e1ef5ef45e/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_data-1.png" target="_blank">d5ef2c6</a>
 </td>
 <td>
@@ -11287,6 +11383,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a87f8c743f5a00de4f0bf1ffbb2030f83a0164ce/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_data-2.png" target="_blank">a87f8c7</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-20
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d5ef2c6c0fd3dcce982a4f1125c860e1ef5ef45e/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_data-2.png" target="_blank">d5ef2c6</a>
