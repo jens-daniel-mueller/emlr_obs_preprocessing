@@ -390,7 +390,7 @@ GLODAP <- GLODAP  %>%
 GLODAP <- GLODAP %>%
   select(-c(region,
             month:minute,
-            maxsampdepth, bottle, sigma0:sigma4,
+            maxsampdepth, sigma0:sigma4,
             nitrite:nitritef))
 
 
@@ -1541,8 +1541,7 @@ for (i_expocodes_missing in expocodes_missing) {
   xover_cruise_decade <- xover_cruise %>%
     mutate(decade = cut(
       year(dateB),
-      seq(1989, 2019, 10),
-      right = FALSE,
+      c(1989, 1999, 2009, 2019),
       labels = c("1989-1999", "2000-2009", "2010-2019")
     )) %>%
     filter(!is.na(decade),
@@ -1637,18 +1636,25 @@ xover_IO_1990 <- xover_IO_1990 %>%
 xover_IO_1990_decade <- xover_IO_1990 %>%
     mutate(decade = cut(
       year(dateB),
-      seq(1989, 2019, 10),
-      right = FALSE,
+      c(1989, 1999, 2009, 2019),
       labels = c("1989-1999", "2000-2009", "2010-2019")
     )) %>%
     filter(!is.na(decade),
            !is.na(offset_adj),
            !is.na(offset),
-           RV != "316N") %>%
-    group_by(parameter, decade) %>%
-    mutate(n = n()) %>%
-    ungroup() %>% 
-    filter(n > 2)
+           RV != "316N") %>% 
+  arrange(dateB)
+
+
+xover_IO_1990_decade %>%
+  group_by(parameter, decade) %>%
+  summarise(offset_adj_mean = mean(offset_adj, na.rm = TRUE),
+            offset_adj_median = median(offset_adj, na.rm = TRUE)) %>%
+  ungroup() %>%
+  kable() %>%
+  kable_styling() %>%
+  scroll_box(height = "300px")
+
 
 
 p_crossover_ts <- xover_IO_1990 %>%
@@ -1709,18 +1715,23 @@ p_crossover_decadal <-
   theme(axis.title.x = element_blank(),
         axis.text.x = element_text(angle = 90))
 
+  ggplot() +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  # geom_violin(data = xover_IO_1990 %>% 
+  #               filter(year(dateB) >= 2000, year(dateB) < 2010),
+  #              aes(x = "2000-2009", y = offset_adj), fill="gold") +
+  geom_boxplot(data = xover_IO_1990 %>% 
+                filter(year(dateB) >= 2000, year(dateB) < 2010),
+               aes(x = "2000-2009", y = offset_adj),
+               width = 0.2) +
+  facet_grid(parameter ~ ., scales = "free_y") +
+  labs(title = "Decadal offsets") +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(angle = 90))
+
 p_crossover_ts + p_crossover_decadal +
   plot_layout(widths = c(2, 1))
 
-
-xover_IO_1990_decade %>%
-  group_by(parameter, decade) %>%
-  summarise(offset_adj_mean = mean(offset_adj, na.rm = TRUE),
-            offset_adj_median = median(offset_adj, na.rm = TRUE)) %>%
-  ungroup() %>%
-  kable() %>%
-  kable_styling() %>%
-  scroll_box(height = "300px")
 
 
 rm(p_crossover_ts, p_crossover_decadal)
@@ -2069,13 +2080,13 @@ GLODAP_time_series %>%
 
 # CANYON-B
 
-## Comparison to GLODAP
+## Prediction
 
-```{r CANYON-B, fig.asp=0.4, eval=FALSE}
+```{r calc_CANYON-B}
 
 source("/net/kryo/work/uptools/co2_calculation/CANYON-B/CANYONB.R")
 
-GLODAP_Can_B <- GLODAP %>%
+GLODAP_CB <- GLODAP %>%
   mutate(lon = if_else(lon > 180, lon - 360, lon)) %>%
   arrange(year) %>% 
   select(row_number, year, date, lat, lon, depth, basin_AIP,
@@ -2083,11 +2094,11 @@ GLODAP_Can_B <- GLODAP %>%
          talk, tco2, nitrate, phosphate, silicate)
 
 # filter rows with essential variables for Canyon-B
-GLODAP_Can_B <- GLODAP_Can_B %>%
+GLODAP_CB <- GLODAP_CB %>%
   filter(across(c(lat, lon, depth,
                   temp, sal, oxygen), ~ !is.na(.x)))
 
-GLODAP_Can_B <- GLODAP_Can_B %>%
+GLODAP_CB <- GLODAP_CB %>%
   mutate(as_tibble(
     CANYONB(
       date = paste0(as.character(date), " 12:00"),
@@ -2101,11 +2112,11 @@ GLODAP_Can_B <- GLODAP_Can_B %>%
     )
   ))
 
-GLODAP_Can_B <- GLODAP_Can_B %>%
+GLODAP_CB <- GLODAP_CB %>%
   select(-ends_with(c("_cim", "_cin", "_cii")))
 
 
-GLODAP_Can_B <- GLODAP_Can_B %>%
+GLODAP_CB <- GLODAP_CB %>%
   rename(
     "talk_CANYONB" = "AT",
     "tco2_CANYONB" = "CT",
@@ -2115,13 +2126,21 @@ GLODAP_Can_B <- GLODAP_Can_B %>%
   )
 
 
+
+```
+
+## Comparison to observations
+
+```{r CANYON-B_vs_observationd, fig.asp=0.4}
+
+
 variables <- c("talk", "tco2", "nitrate", "phosphate", "silicate")
 
 for (i_variable in variables) {
   # i_variable <- variables[1]
   
   # calculate equal axis limits and binwidth
-  axis_lims <- GLODAP_Can_B %>%
+  axis_lims <- GLODAP_CB %>%
     drop_na() %>% 
     summarise(max_value = max(c(max(
       !!sym(i_variable)
@@ -2140,7 +2159,7 @@ for (i_variable in variables) {
   axis_lims <- c(axis_lims$min_value, axis_lims$max_value)
   
   print(
-    ggplot(GLODAP_Can_B, aes(
+    ggplot(GLODAP_CB, aes(
       x = !!sym(i_variable),
       y = !!sym(paste0(i_variable, "_CANYONB"))
     )) +
@@ -2154,12 +2173,12 @@ for (i_variable in variables) {
   ) 
   
   
-  # for (i_year in unique(GLODAP_Can_B$year)) {
+  # for (i_year in unique(GLODAP_CB$year)) {
   #   # i_year <- 2017
   #   
   #   print(
   #     ggplot(
-  #       GLODAP_Can_B %>% filter(year == i_year),
+  #       GLODAP_CB %>% filter(year == i_year),
   #       aes(x = !!sym(i_variable),
   #           y = !!sym(paste0(
   #             i_variable, "_CANYONB"
@@ -2181,11 +2200,11 @@ for (i_variable in variables) {
 
 ```
 
-## Write Canyon-B file
+## Write files
 
-```{r write_Canyon-B_data_file, eval=FALSE}
+```{r write_Canyon-B_data_file}
 
-GLODAP_Can_B %>% 
+GLODAP_CB %>% 
   select(row_number,
          talk_CANYONB, tco2_CANYONB,
          nitrate_CANYONB, phosphate_CANYONB, silicate_CANYONB) %>% 
@@ -2194,3 +2213,165 @@ GLODAP_Can_B %>%
                              sep = ""))
 
 ```
+
+# Crossover data
+
+## Gap filling
+
+```{r CANYON-B_gap_filling}
+
+GLODAP <- left_join(GLODAP,
+                    GLODAP_CB %>% 
+                      select(row_number, ends_with("_CANYONB")))
+
+# fill missing phosphate with CANYON-B estimate
+
+cruises_phosphate_gap_fill <- c("33MW19930704",
+                                "33RO20030604",
+                                "33RO20050111",
+                                "33RO19980123")
+
+GLODAP_phosphate_fill <- GLODAP %>%
+  filter(cruise_expocode %in% cruises_phosphate_gap_fill,
+         is.na(phosphate),
+         oxygenqc == 1)
+
+GLODAP_phosphate_fill <- GLODAP_phosphate_fill %>% 
+  mutate(phosphate = phosphate_CANYONB) %>% 
+  filter(!is.na(phosphate))
+
+# fill missing talk with CANYON-B estimate
+
+cruises_talk_gap_fill <- c("06AQ19980328")
+
+GLODAP_talk_fill <- GLODAP %>%
+  filter(cruise_expocode %in% cruises_talk_gap_fill,
+         is.na(talk),
+         oxygenqc == 1)
+
+GLODAP_talk_fill <- GLODAP_talk_fill %>% 
+  mutate(talk = talk_CANYONB) %>% 
+  filter(!is.na(talk))
+
+GLODAP_gap_fill <- bind_rows(
+  GLODAP_phosphate_fill,
+  GLODAP_talk_fill
+)
+
+```
+
+## Flagging
+
+```{r flagged_cruises}
+
+cruises_tco2_calc <- c(
+  "35TH20040604",
+  "29AH20160617")
+
+GLODAP_tco2_calc <- GLODAP %>% 
+  filter(cruise_expocode %in% cruises_tco2_calc,
+         tco2f == 0)
+
+cruises_talk_calc <- c(
+  "06MT19900123",
+  "316N19920502",
+  "316N19921006")
+
+GLODAP_talk_calc <- GLODAP %>% 
+  filter(cruise_expocode %in% cruises_talk_calc,
+         talkf == 0)
+
+GLODAP_calc <- bind_rows(
+  GLODAP_tco2_calc,
+  GLODAP_talk_calc
+)
+
+  
+```
+
+## Write files
+
+```{r write_files_for_crossover}
+
+GLODAP_crossover <- bind_rows(
+  GLODAP_gap_fill,
+  GLODAP_calc
+) 
+
+GLODAP_crossover_write <- GLODAP_crossover %>% 
+  select(
+    EXPOCODE = cruise_expocode,
+    STNNBR = station,
+    CASTNO = cast,
+    BTLNBR = bottle,
+    DATE = date,
+    LATITUDE = lat,
+    LONGITUDE = lon,
+    CTDPRS = pressure,
+    CTDTMP = temp,
+    CTDSAL = sal,
+    CTDSAL_FLAG_W = salinityf,
+    PHSPHT = phosphate,
+    PHSPHT_FLAG_W = phosphatef,
+    TCARBN = tco2,
+    TCARBN_FLAG_W = tco2f,
+    ALKALI = talk,
+    ALKALI_FLAG_W = talkf)
+
+GLODAP_crossover_write <- GLODAP_crossover_write %>% 
+  mutate(DATE = format(DATE,  "%Y%m%d"))
+
+
+last_line <- "END_DATA"
+
+for (i_EXPOCODE in unique(GLODAP_crossover_write$EXPOCODE)) {
+  # i_EXPOCODE <- unique(GLODAP_crossover_write$EXPOCODE)[1]
+  
+  temp <- GLODAP_crossover_write %>%
+    filter(EXPOCODE == i_EXPOCODE) %>%
+    add_row(.before = 1)
+  
+  cat("Bottle",
+      "\n",
+      file = paste0(
+        path_preprocessing,
+        "crossover_cruises/",
+        i_EXPOCODE,
+        ".exc.csv"
+      )
+    )
+  
+  temp %>%
+    write_csv(
+      file = paste0(
+        path_preprocessing,
+        "crossover_cruises/",
+        i_EXPOCODE,
+        ".exc.csv"
+      ),
+      na = "",
+      append = TRUE,
+      col_names = TRUE
+    )
+  
+  write(
+    last_line,
+    file = paste0(
+      path_preprocessing,
+      "crossover_cruises/",
+      i_EXPOCODE,
+      ".exc.csv"
+    ),
+    append = TRUE
+  )
+  
+  
+}
+
+
+
+
+
+```
+
+
