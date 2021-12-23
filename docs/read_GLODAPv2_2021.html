@@ -446,7 +446,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">GLODAPv2_2020</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">21 December, 2021</h4>
+<h4 class="date">23 December, 2021</h4>
 
 </div>
 
@@ -471,7 +471,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-12-21
+<strong>Last updated:</strong> 2021-12-23
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -562,16 +562,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreef99a7ce47a69370099b332e114e39efeca45949ctargetblankf99a7cea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/f99a7ce47a69370099b332e114e39efeca45949c" target="_blank">f99a7ce</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree468c3241a9aed5707f9b3c4ba85c711245b478e9targetblank468c324a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/468c3241a9aed5707f9b3c4ba85c711245b478e9" target="_blank">468c324</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreef99a7ce47a69370099b332e114e39efeca45949ctargetblankf99a7cea" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree468c3241a9aed5707f9b3c4ba85c711245b478e9targetblank468c324a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/f99a7ce47a69370099b332e114e39efeca45949c" target="_blank">f99a7ce</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/468c3241a9aed5707f9b3c4ba85c711245b478e9" target="_blank">468c324</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -624,6 +624,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/468c3241a9aed5707f9b3c4ba85c711245b478e9/analysis/read_GLODAPv2_2021.Rmd" target="_blank">468c324</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-23
+</td>
+<td>
+added crossover cruise subsetting
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/28ed51f5666de32498c2abb346f6c9bcaa446fa4/docs/read_GLODAPv2_2021.html" target="_blank">28ed51f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-21
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -2490,7 +2524,7 @@ GLODAP &lt;- inner_join(GLODAP, basinmask)</code></pre>
 GLODAP &lt;- GLODAP %&gt;%
   select(-c(region,
             month:minute,
-            maxsampdepth, bottle, sigma0:sigma4,
+            maxsampdepth, sigma0:sigma4,
             nitrite:nitritef))
 
 
@@ -6902,8 +6936,7 @@ for (i_expocodes_missing in expocodes_missing) {
   xover_cruise_decade &lt;- xover_cruise %&gt;%
     mutate(decade = cut(
       year(dateB),
-      seq(1989, 2019, 10),
-      right = FALSE,
+      c(1989, 1999, 2009, 2019),
       labels = c(&quot;1989-1999&quot;, &quot;2000-2009&quot;, &quot;2010-2019&quot;)
     )) %&gt;%
     filter(!is.na(decade),
@@ -14867,21 +14900,341 @@ xover_IO_1990 &lt;- xover_IO_1990 %&gt;%
 xover_IO_1990_decade &lt;- xover_IO_1990 %&gt;%
     mutate(decade = cut(
       year(dateB),
-      seq(1989, 2019, 10),
-      right = FALSE,
+      c(1989, 1999, 2009, 2019),
       labels = c(&quot;1989-1999&quot;, &quot;2000-2009&quot;, &quot;2010-2019&quot;)
     )) %&gt;%
     filter(!is.na(decade),
            !is.na(offset_adj),
            !is.na(offset),
-           RV != &quot;316N&quot;) %&gt;%
-    group_by(parameter, decade) %&gt;%
-    mutate(n = n()) %&gt;%
-    ungroup() %&gt;% 
-    filter(n &gt; 2)
+           RV != &quot;316N&quot;) %&gt;% 
+  arrange(dateB)
 
 
-p_crossover_ts &lt;- xover_IO_1990 %&gt;%
+xover_IO_1990_decade %&gt;%
+  group_by(parameter, decade) %&gt;%
+  summarise(offset_adj_mean = mean(offset_adj, na.rm = TRUE),
+            offset_adj_median = median(offset_adj, na.rm = TRUE)) %&gt;%
+  ungroup() %&gt;%
+  kable() %&gt;%
+  kable_styling() %&gt;%
+  scroll_box(height = &quot;300px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+parameter
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+decade
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_mean
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_median
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9957851
+</td>
+<td style="text-align:right;">
+0.9952475
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0018716
+</td>
+<td style="text-align:right;">
+1.0034000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.9942423
+</td>
+<td style="text-align:right;">
+0.9954335
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9951297
+</td>
+<td style="text-align:right;">
+0.9961500
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9984347
+</td>
+<td style="text-align:right;">
+1.0003001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.9992518
+</td>
+<td style="text-align:right;">
+0.9981748
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9916439
+</td>
+<td style="text-align:right;">
+0.9953220
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0050862
+</td>
+<td style="text-align:right;">
+1.0052750
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0016116
+</td>
+<td style="text-align:right;">
+1.0031516
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+-0.0014211
+</td>
+<td style="text-align:right;">
+-0.0011000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+-0.0009812
+</td>
+<td style="text-align:right;">
+-0.0012000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+-0.0008173
+</td>
+<td style="text-align:right;">
+-0.0009442
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9963137
+</td>
+<td style="text-align:right;">
+0.9996248
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0045634
+</td>
+<td style="text-align:right;">
+1.0058000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0076910
+</td>
+<td style="text-align:right;">
+1.0101825
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+2.8826300
+</td>
+<td style="text-align:right;">
+3.2700000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+2.9318063
+</td>
+<td style="text-align:right;">
+3.4280000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+3.3860085
+</td>
+<td style="text-align:right;">
+3.8736858
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+-0.7060357
+</td>
+<td style="text-align:right;">
+-0.3462000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+-2.6973312
+</td>
+<td style="text-align:right;">
+-2.5524500
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+-2.0787148
+</td>
+<td style="text-align:right;">
+-1.9810457
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>p_crossover_ts &lt;- xover_IO_1990 %&gt;%
   ggplot(aes(dateB, offset, col = RV)) +
   geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
   geom_point(shape = 21) +
@@ -14998,8 +15351,19 @@ p_crossover_decadal &lt;-
   theme(axis.title.x = element_blank(),
         axis.text.x = element_text(angle = 90))
 
-p_crossover_ts + p_crossover_decadal +
-  plot_layout(widths = c(2, 1))</code></pre>
+  ggplot() +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  # geom_violin(data = xover_IO_1990 %&gt;% 
+  #               filter(year(dateB) &gt;= 2000, year(dateB) &lt; 2010),
+  #              aes(x = &quot;2000-2009&quot;, y = offset_adj), fill=&quot;gold&quot;) +
+  geom_boxplot(data = xover_IO_1990 %&gt;% 
+                filter(year(dateB) &gt;= 2000, year(dateB) &lt; 2010),
+               aes(x = &quot;2000-2009&quot;, y = offset_adj),
+               width = 0.2) +
+  facet_grid(parameter ~ ., scales = &quot;free_y&quot;) +
+  labs(title = &quot;Decadal offsets&quot;) +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(angle = 90))</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_data-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_data-2">
@@ -15060,329 +15424,56 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>xover_IO_1990_decade %&gt;%
-  group_by(parameter, decade) %&gt;%
-  summarise(offset_adj_mean = mean(offset_adj, na.rm = TRUE),
-            offset_adj_median = median(offset_adj, na.rm = TRUE)) %&gt;%
-  ungroup() %&gt;%
-  kable() %&gt;%
-  kable_styling() %&gt;%
-  scroll_box(height = &quot;300px&quot;)</code></pre>
-<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
-<table class="table" style="margin-left: auto; margin-right: auto;">
+<pre class="r"><code>p_crossover_ts + p_crossover_decadal +
+  plot_layout(widths = c(2, 1))</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_data-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_data-3">
+Past versions of crossover_analysis_data-3.png
+</button>
+</p>
+<div id="fig-crossover_analysis_data-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
 <thead>
 <tr>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-parameter
+<th>
+Version
 </th>
-<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
-decade
+<th>
+Author
 </th>
-<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
-offset_adj_mean
-</th>
-<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
-offset_adj_median
+<th>
+Date
 </th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left;">
-nitrate
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d5ef2c6c0fd3dcce982a4f1125c860e1ef5ef45e/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_data-3.png" target="_blank">d5ef2c6</a>
 </td>
-<td style="text-align:left;">
-1989-1999
+<td>
+jens-daniel-mueller
 </td>
-<td style="text-align:right;">
-0.9959899
-</td>
-<td style="text-align:right;">
-0.9952475
+<td>
+2021-12-20
 </td>
 </tr>
 <tr>
-<td style="text-align:left;">
-nitrate
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/00227e6739693d3d544eba899724cb6e1bf4dfad/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_data-3.png" target="_blank">00227e6</a>
 </td>
-<td style="text-align:left;">
-2000-2009
+<td>
+jens-daniel-mueller
 </td>
-<td style="text-align:right;">
-1.0020712
-</td>
-<td style="text-align:right;">
-1.0034000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-nitrate
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:right;">
-0.9956764
-</td>
-<td style="text-align:right;">
-0.9972218
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-oxygen
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:right;">
-0.9963580
-</td>
-<td style="text-align:right;">
-0.9968205
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-oxygen
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:right;">
-0.9979539
-</td>
-<td style="text-align:right;">
-1.0001000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-oxygen
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:right;">
-0.9996038
-</td>
-<td style="text-align:right;">
-0.9988000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-phosphate
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:right;">
-0.9921185
-</td>
-<td style="text-align:right;">
-0.9961152
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-phosphate
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:right;">
-1.0054593
-</td>
-<td style="text-align:right;">
-1.0052750
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-phosphate
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:right;">
-1.0014519
-</td>
-<td style="text-align:right;">
-1.0030895
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-salinity
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:right;">
--0.0016439
-</td>
-<td style="text-align:right;">
--0.0012000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-salinity
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:right;">
--0.0011607
-</td>
-<td style="text-align:right;">
--0.0014500
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-salinity
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:right;">
--0.0006436
-</td>
-<td style="text-align:right;">
--0.0007971
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-silicate
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:right;">
-0.9994382
-</td>
-<td style="text-align:right;">
-1.0012621
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-silicate
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:right;">
-1.0045800
-</td>
-<td style="text-align:right;">
-1.0060099
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-silicate
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:right;">
-1.0068239
-</td>
-<td style="text-align:right;">
-1.0095287
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-talk
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:right;">
-3.0075385
-</td>
-<td style="text-align:right;">
-2.5782000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-talk
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:right;">
-2.6035750
-</td>
-<td style="text-align:right;">
-2.8893000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-talk
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:right;">
-3.7993687
-</td>
-<td style="text-align:right;">
-3.9545045
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-tco2
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:right;">
--0.7801709
-</td>
-<td style="text-align:right;">
--0.3723461
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-tco2
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:right;">
--2.5147148
-</td>
-<td style="text-align:right;">
--2.6792000
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-tco2
-</td>
-<td style="text-align:left;">
-2010-2019
-</td>
-<td style="text-align:right;">
--2.2868634
-</td>
-<td style="text-align:right;">
--1.9810457
+<td>
+2021-12-20
 </td>
 </tr>
 </tbody>
 </table>
+</div>
 </div>
 <pre class="r"><code>rm(p_crossover_ts, p_crossover_decadal)
 rm(hline_intercept)</code></pre>
@@ -16091,11 +16182,11 @@ GLODAP_time_series %&gt;%
 </div>
 <div id="canyon-b" class="section level1" number="11">
 <h1 number="11"><span class="header-section-number">11</span> CANYON-B</h1>
-<div id="comparison-to-glodap" class="section level2" number="11.1">
-<h2 number="11.1"><span class="header-section-number">11.1</span> Comparison to GLODAP</h2>
+<div id="prediction" class="section level2" number="11.1">
+<h2 number="11.1"><span class="header-section-number">11.1</span> Prediction</h2>
 <pre class="r"><code>source(&quot;/net/kryo/work/uptools/co2_calculation/CANYON-B/CANYONB.R&quot;)
 
-GLODAP_Can_B &lt;- GLODAP %&gt;%
+GLODAP_CB &lt;- GLODAP %&gt;%
   mutate(lon = if_else(lon &gt; 180, lon - 360, lon)) %&gt;%
   arrange(year) %&gt;% 
   select(row_number, year, date, lat, lon, depth, basin_AIP,
@@ -16103,11 +16194,11 @@ GLODAP_Can_B &lt;- GLODAP %&gt;%
          talk, tco2, nitrate, phosphate, silicate)
 
 # filter rows with essential variables for Canyon-B
-GLODAP_Can_B &lt;- GLODAP_Can_B %&gt;%
+GLODAP_CB &lt;- GLODAP_CB %&gt;%
   filter(across(c(lat, lon, depth,
                   temp, sal, oxygen), ~ !is.na(.x)))
 
-GLODAP_Can_B &lt;- GLODAP_Can_B %&gt;%
+GLODAP_CB &lt;- GLODAP_CB %&gt;%
   mutate(as_tibble(
     CANYONB(
       date = paste0(as.character(date), &quot; 12:00&quot;),
@@ -16121,27 +16212,28 @@ GLODAP_Can_B &lt;- GLODAP_Can_B %&gt;%
     )
   ))
 
-GLODAP_Can_B &lt;- GLODAP_Can_B %&gt;%
+GLODAP_CB &lt;- GLODAP_CB %&gt;%
   select(-ends_with(c(&quot;_cim&quot;, &quot;_cin&quot;, &quot;_cii&quot;)))
 
 
-GLODAP_Can_B &lt;- GLODAP_Can_B %&gt;%
+GLODAP_CB &lt;- GLODAP_CB %&gt;%
   rename(
     &quot;talk_CANYONB&quot; = &quot;AT&quot;,
     &quot;tco2_CANYONB&quot; = &quot;CT&quot;,
     &quot;nitrate_CANYONB&quot; = &quot;NO3&quot;,
     &quot;phosphate_CANYONB&quot; = &quot;PO4&quot;,
     &quot;silicate_CANYONB&quot; = &quot;SiOH4&quot;
-  )
-
-
-variables &lt;- c(&quot;talk&quot;, &quot;tco2&quot;, &quot;nitrate&quot;, &quot;phosphate&quot;, &quot;silicate&quot;)
+  )</code></pre>
+</div>
+<div id="comparison-to-observations" class="section level2" number="11.2">
+<h2 number="11.2"><span class="header-section-number">11.2</span> Comparison to observations</h2>
+<pre class="r"><code>variables &lt;- c(&quot;talk&quot;, &quot;tco2&quot;, &quot;nitrate&quot;, &quot;phosphate&quot;, &quot;silicate&quot;)
 
 for (i_variable in variables) {
   # i_variable &lt;- variables[1]
   
   # calculate equal axis limits and binwidth
-  axis_lims &lt;- GLODAP_Can_B %&gt;%
+  axis_lims &lt;- GLODAP_CB %&gt;%
     drop_na() %&gt;% 
     summarise(max_value = max(c(max(
       !!sym(i_variable)
@@ -16160,7 +16252,7 @@ for (i_variable in variables) {
   axis_lims &lt;- c(axis_lims$min_value, axis_lims$max_value)
   
   print(
-    ggplot(GLODAP_Can_B, aes(
+    ggplot(GLODAP_CB, aes(
       x = !!sym(i_variable),
       y = !!sym(paste0(i_variable, &quot;_CANYONB&quot;))
     )) +
@@ -16174,12 +16266,12 @@ for (i_variable in variables) {
   ) 
   
   
-  # for (i_year in unique(GLODAP_Can_B$year)) {
+  # for (i_year in unique(GLODAP_CB$year)) {
   #   # i_year &lt;- 2017
   #   
   #   print(
   #     ggplot(
-  #       GLODAP_Can_B %&gt;% filter(year == i_year),
+  #       GLODAP_CB %&gt;% filter(year == i_year),
   #       aes(x = !!sym(i_variable),
   #           y = !!sym(paste0(
   #             i_variable, &quot;_CANYONB&quot;
@@ -16196,16 +16288,161 @@ for (i_variable in variables) {
   # }
   
 }</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-1.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-2.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-3.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-4.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-5.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="write-canyon-b-file" class="section level2" number="11.2">
-<h2 number="11.2"><span class="header-section-number">11.2</span> Write Canyon-B file</h2>
-<pre class="r"><code>GLODAP_Can_B %&gt;% 
+<div id="write-files-1" class="section level2" number="11.3">
+<h2 number="11.3"><span class="header-section-number">11.3</span> Write files</h2>
+<pre class="r"><code>GLODAP_CB %&gt;% 
   select(row_number,
          talk_CANYONB, tco2_CANYONB,
          nitrate_CANYONB, phosphate_CANYONB, silicate_CANYONB) %&gt;% 
   write_csv(paste(path_preprocessing,
                              &quot;GLODAPv2.2021_Canyon-B.csv&quot;,
                              sep = &quot;&quot;))</code></pre>
+</div>
+</div>
+<div id="crossover-data" class="section level1" number="12">
+<h1 number="12"><span class="header-section-number">12</span> Crossover data</h1>
+<div id="gap-filling" class="section level2" number="12.1">
+<h2 number="12.1"><span class="header-section-number">12.1</span> Gap filling</h2>
+<pre class="r"><code>GLODAP &lt;- left_join(GLODAP,
+                    GLODAP_CB %&gt;% 
+                      select(row_number, ends_with(&quot;_CANYONB&quot;)))
+
+# fill missing phosphate with CANYON-B estimate
+
+cruises_phosphate_gap_fill &lt;- c(&quot;33MW19930704&quot;,
+                                &quot;33RO20030604&quot;,
+                                &quot;33RO20050111&quot;,
+                                &quot;33RO19980123&quot;)
+
+GLODAP_phosphate_fill &lt;- GLODAP %&gt;%
+  filter(cruise_expocode %in% cruises_phosphate_gap_fill,
+         is.na(phosphate),
+         oxygenqc == 1)
+
+GLODAP_phosphate_fill &lt;- GLODAP_phosphate_fill %&gt;% 
+  mutate(phosphate = phosphate_CANYONB) %&gt;% 
+  filter(!is.na(phosphate))
+
+# fill missing talk with CANYON-B estimate
+
+cruises_talk_gap_fill &lt;- c(&quot;06AQ19980328&quot;)
+
+GLODAP_talk_fill &lt;- GLODAP %&gt;%
+  filter(cruise_expocode %in% cruises_talk_gap_fill,
+         is.na(talk),
+         oxygenqc == 1)
+
+GLODAP_talk_fill &lt;- GLODAP_talk_fill %&gt;% 
+  mutate(talk = talk_CANYONB) %&gt;% 
+  filter(!is.na(talk))
+
+GLODAP_gap_fill &lt;- bind_rows(
+  GLODAP_phosphate_fill,
+  GLODAP_talk_fill
+)</code></pre>
+</div>
+<div id="flagging-1" class="section level2" number="12.2">
+<h2 number="12.2"><span class="header-section-number">12.2</span> Flagging</h2>
+<pre class="r"><code>cruises_tco2_calc &lt;- c(
+  &quot;35TH20040604&quot;,
+  &quot;29AH20160617&quot;)
+
+GLODAP_tco2_calc &lt;- GLODAP %&gt;% 
+  filter(cruise_expocode %in% cruises_tco2_calc,
+         tco2f == 0)
+
+cruises_talk_calc &lt;- c(
+  &quot;06MT19900123&quot;,
+  &quot;316N19920502&quot;,
+  &quot;316N19921006&quot;)
+
+GLODAP_talk_calc &lt;- GLODAP %&gt;% 
+  filter(cruise_expocode %in% cruises_talk_calc,
+         talkf == 0)
+
+GLODAP_calc &lt;- bind_rows(
+  GLODAP_tco2_calc,
+  GLODAP_talk_calc
+)</code></pre>
+</div>
+<div id="write-files-2" class="section level2" number="12.3">
+<h2 number="12.3"><span class="header-section-number">12.3</span> Write files</h2>
+<pre class="r"><code>GLODAP_crossover &lt;- bind_rows(
+  GLODAP_gap_fill,
+  GLODAP_calc
+) 
+
+GLODAP_crossover_write &lt;- GLODAP_crossover %&gt;% 
+  select(
+    EXPOCODE = cruise_expocode,
+    STNNBR = station,
+    CASTNO = cast,
+    BTLNBR = bottle,
+    DATE = date,
+    LATITUDE = lat,
+    LONGITUDE = lon,
+    CTDPRS = pressure,
+    CTDTMP = temp,
+    CTDSAL = sal,
+    CTDSAL_FLAG_W = salinityf,
+    PHSPHT = phosphate,
+    PHSPHT_FLAG_W = phosphatef,
+    TCARBN = tco2,
+    TCARBN_FLAG_W = tco2f,
+    ALKALI = talk,
+    ALKALI_FLAG_W = talkf)
+
+GLODAP_crossover_write &lt;- GLODAP_crossover_write %&gt;% 
+  mutate(DATE = format(DATE,  &quot;%Y%m%d&quot;))
+
+
+last_line &lt;- &quot;END_DATA&quot;
+
+for (i_EXPOCODE in unique(GLODAP_crossover_write$EXPOCODE)) {
+  # i_EXPOCODE &lt;- unique(GLODAP_crossover_write$EXPOCODE)[1]
+  
+  temp &lt;- GLODAP_crossover_write %&gt;%
+    filter(EXPOCODE == i_EXPOCODE) %&gt;%
+    add_row(.before = 1)
+  
+  cat(&quot;Bottle&quot;,
+      &quot;\n&quot;,
+      file = paste0(
+        path_preprocessing,
+        &quot;crossover_cruises/&quot;,
+        i_EXPOCODE,
+        &quot;.exc.csv&quot;
+      )
+    )
+  
+  temp %&gt;%
+    write_csv(
+      file = paste0(
+        path_preprocessing,
+        &quot;crossover_cruises/&quot;,
+        i_EXPOCODE,
+        &quot;.exc.csv&quot;
+      ),
+      na = &quot;&quot;,
+      append = TRUE,
+      col_names = TRUE
+    )
+  
+  write(
+    last_line,
+    file = paste0(
+      path_preprocessing,
+      &quot;crossover_cruises/&quot;,
+      i_EXPOCODE,
+      &quot;.exc.csv&quot;
+    ),
+    append = TRUE
+  )
+  
+  
+}</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -16234,39 +16471,39 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] kableExtra_1.3.1 ggrepel_0.8.2    lubridate_1.7.9  ggforce_0.3.3   
- [5] metR_0.9.0       scico_1.2.0      patchwork_1.1.1  collapse_1.5.0  
- [9] forcats_0.5.0    stringr_1.4.0    dplyr_1.0.5      purrr_0.3.4     
-[13] readr_1.4.0      tidyr_1.1.3      tibble_3.1.3     ggplot2_3.3.5   
-[17] tidyverse_1.3.0  workflowr_1.6.2 
+ [1] mgcv_1.8-33      nlme_3.1-149     kableExtra_1.3.1 ggrepel_0.8.2   
+ [5] lubridate_1.7.9  ggforce_0.3.3    metR_0.9.0       scico_1.2.0     
+ [9] patchwork_1.1.1  collapse_1.5.0   forcats_0.5.0    stringr_1.4.0   
+[13] dplyr_1.0.5      purrr_0.3.4      readr_1.4.0      tidyr_1.1.3     
+[17] tibble_3.1.3     ggplot2_3.3.5    tidyverse_1.3.0  workflowr_1.6.2 
 
 loaded via a namespace (and not attached):
- [1] nlme_3.1-149             fs_1.5.0                 RColorBrewer_1.1-2      
- [4] webshot_0.5.2            httr_1.4.2               rprojroot_2.0.2         
- [7] tools_4.0.3              backports_1.1.10         bslib_0.2.5.1           
-[10] utf8_1.1.4               R6_2.5.0                 mgcv_1.8-33             
-[13] DBI_1.1.0                colorspace_2.0-2         withr_2.3.0             
-[16] tidyselect_1.1.0         compiler_4.0.3           git2r_0.27.1            
-[19] cli_3.0.1                rvest_0.3.6              xml2_1.3.2              
-[22] labeling_0.4.2           sass_0.4.0               scales_1.1.1            
-[25] checkmate_2.0.0          digest_0.6.27            rmarkdown_2.10          
-[28] pkgconfig_2.0.3          htmltools_0.5.1.1        highr_0.8               
-[31] dbplyr_1.4.4             rlang_0.4.11             readxl_1.3.1            
-[34] rstudioapi_0.13          jquerylib_0.1.4          generics_0.1.0          
-[37] farver_2.0.3             jsonlite_1.7.1           magrittr_1.5            
-[40] Matrix_1.2-18            Rcpp_1.0.5               munsell_0.5.0           
-[43] fansi_0.4.1              lifecycle_1.0.0          stringi_1.5.3           
-[46] whisker_0.4              yaml_2.2.1               MASS_7.3-53             
-[49] grid_4.0.3               blob_1.2.1               parallel_4.0.3          
-[52] promises_1.1.1           crayon_1.3.4             lattice_0.20-41         
-[55] splines_4.0.3            haven_2.3.1              hms_0.5.3               
-[58] knitr_1.33               pillar_1.6.2             reprex_0.3.0            
-[61] glue_1.4.2               evaluate_0.14            RcppArmadillo_0.10.1.2.0
-[64] data.table_1.14.0        modelr_0.1.8             vctrs_0.3.8             
-[67] tweenr_1.0.2             httpuv_1.5.4             cellranger_1.1.0        
-[70] gtable_0.3.0             polyclip_1.10-0          assertthat_0.2.1        
-[73] xfun_0.25                broom_0.7.9              RcppEigen_0.3.3.7.0     
-[76] later_1.2.0              viridisLite_0.3.0        ellipsis_0.3.2          </code></pre>
+ [1] fs_1.5.0                 RColorBrewer_1.1-2       webshot_0.5.2           
+ [4] httr_1.4.2               rprojroot_2.0.2          tools_4.0.3             
+ [7] backports_1.1.10         bslib_0.2.5.1            utf8_1.1.4              
+[10] R6_2.5.0                 DBI_1.1.0                colorspace_2.0-2        
+[13] withr_2.3.0              tidyselect_1.1.0         compiler_4.0.3          
+[16] git2r_0.27.1             cli_3.0.1                rvest_0.3.6             
+[19] xml2_1.3.2               labeling_0.4.2           sass_0.4.0              
+[22] scales_1.1.1             checkmate_2.0.0          digest_0.6.27           
+[25] rmarkdown_2.10           pkgconfig_2.0.3          htmltools_0.5.1.1       
+[28] highr_0.8                dbplyr_1.4.4             rlang_0.4.11            
+[31] readxl_1.3.1             rstudioapi_0.13          jquerylib_0.1.4         
+[34] generics_0.1.0           farver_2.0.3             jsonlite_1.7.1          
+[37] magrittr_1.5             Matrix_1.2-18            Rcpp_1.0.5              
+[40] munsell_0.5.0            fansi_0.4.1              lifecycle_1.0.0         
+[43] stringi_1.5.3            whisker_0.4              yaml_2.2.1              
+[46] MASS_7.3-53              grid_4.0.3               blob_1.2.1              
+[49] parallel_4.0.3           promises_1.1.1           crayon_1.3.4            
+[52] lattice_0.20-41          splines_4.0.3            haven_2.3.1             
+[55] hms_0.5.3                knitr_1.33               pillar_1.6.2            
+[58] reprex_0.3.0             glue_1.4.2               evaluate_0.14           
+[61] RcppArmadillo_0.10.1.2.0 data.table_1.14.0        modelr_0.1.8            
+[64] vctrs_0.3.8              tweenr_1.0.2             httpuv_1.5.4            
+[67] cellranger_1.1.0         gtable_0.3.0             polyclip_1.10-0         
+[70] assertthat_0.2.1         xfun_0.25                broom_0.7.9             
+[73] RcppEigen_0.3.3.7.0      later_1.2.0              viridisLite_0.3.0       
+[76] ellipsis_0.3.2          </code></pre>
 </div>
 </div>
 </div>
