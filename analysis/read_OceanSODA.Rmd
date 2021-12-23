@@ -30,6 +30,7 @@ library(lubridate)
 library(marelac)
 library(broom)
 library(seacarb)
+library(zoo)
 ```
 
 # Read source files
@@ -37,8 +38,10 @@ library(seacarb)
 
 ```{r prepare_basin_mask}
 
-# use only three basin to assign general basin mask
-# ie this is not specific to the MLR fitting
+basinmask_5 <- basinmask %>% 
+  filter(MLR_basins == "5") %>% 
+  select(lat, lon, basin)
+
 basinmask <- basinmask %>% 
   filter(MLR_basins == "2") %>% 
   select(lat, lon, basin_AIP)
@@ -202,6 +205,10 @@ delta_pco2_annual <- delta_pco2_monthly %>%
   ) %>%
   ungroup()
 
+delta_pco2_annual <- delta_pco2_annual %>% 
+  mutate(fgco2_glob_roll = zoo::rollmean(fgco2_glob, 10, fill = NA))
+
+
 ggplot() +
   geom_path(data = delta_pco2_monthly,
             aes(decimal_date(time_mon), delta_pco2_glob, col = "monthly")) +
@@ -216,6 +223,8 @@ print(
               aes(decimal_date(time_mon), fgco2_glob, col = "monthly")) +
     geom_path(data = delta_pco2_annual,
               aes(year, fgco2_glob, col = "annual")) +
+    geom_path(data = delta_pco2_annual,
+              aes(year, fgco2_glob_roll, col = "5yr roll ave")) +
     scale_color_brewer(palette = "Set1", name = "Average") +
     labs(x = "year")
 )
@@ -336,6 +345,28 @@ OceanSODA_annual_glob_trend <- OceanSODA_annual_glob %>%
                     ~tidy(lm(value_area_ave ~ year, data = .x)))) %>% 
   select(-data) %>% 
   unnest(tidy)
+
+
+#regionall integrated air sea fluxes
+
+OceanSODA_annual_5 <- left_join(basinmask_5,
+                                OceanSODA_annual_all)
+
+# calculate area-weighted annual mean globally
+OceanSODA_annual_5 <- OceanSODA_annual_5 %>%
+  pivot_longer(sal:tco2_over_pCO2,
+               names_to = "parameter",
+               values_to = "value") %>%
+  mutate(value_area = value * grid_area) %>% 
+  group_by(year, parameter, basin) %>%
+  summarise(
+    area_total = sum(grid_area, na.rm = TRUE),
+    value_area_total = sum(value_area, na.rm = TRUE),
+    value_area_ave = value_area_total / area_total
+  ) %>%
+  ungroup() %>% 
+  select(-c(area_total,value_area_total))
+
 
 ```
 
@@ -540,6 +571,26 @@ OceanSODA_clim_decadal_offset %>%
 ```
 
 # Time series
+
+## 5 regions
+
+```{r time_series_5_regions}
+
+OceanSODA_annual_5 %>%
+  group_split(parameter) %>%
+  # head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(year, value_area_ave, col = basin)) +
+      scale_color_brewer(palette = "Set1") +
+      geom_path() +
+      geom_point() +
+      labs(y = .x$parameter)
+  )
+
+```
+
+## Lat bands
 
 ```{r time_series}
 
