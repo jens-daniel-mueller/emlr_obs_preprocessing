@@ -2380,14 +2380,16 @@ for (i_cruise in cruises_phosphate_gap_fill) {
     plot_layout(widths = c(2, 1))
   )
   
-  xover_add_decade %>%
-    filter(cruise_A %in% i_cruise) %>%
-    group_by(parameter, decade) %>%
-    summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %>%
-    ungroup() %>%
-    kable() %>%
-    kable_styling() %>%
-    scroll_box(height = "200px")
+  print(
+    xover_add_decade %>%
+      filter(cruise_A %in% i_cruise) %>%
+      group_by(parameter, decade) %>%
+      summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %>%
+      ungroup() %>%
+      kable() %>%
+      kable_styling() %>%
+      scroll_box(height = "200px")
+  )
   
 }
 
@@ -2452,14 +2454,16 @@ for (i_cruise in cruises_talk_gap_fill) {
   print(p_crossover_ts + p_crossover_decadal +
           plot_layout(widths = c(2, 1)))
   
-  xover_add_decade %>%
-    filter(cruise_A %in% i_cruise) %>%
-    group_by(parameter, decade) %>%
-    summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %>%
-    ungroup() %>%
-    kable() %>%
-    kable_styling() %>%
-    scroll_box(height = "200px")
+  print(
+    xover_add_decade %>%
+      filter(cruise_A %in% i_cruise) %>%
+      group_by(parameter, decade) %>%
+      summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %>%
+      ungroup() %>%
+      kable() %>%
+      kable_styling() %>%
+      scroll_box(height = "200px")
+  )
 }
 
 
@@ -2527,19 +2531,20 @@ for (i_cruise in cruises_tco2_calc) {
     theme(axis.title.x = element_blank(),
           axis.text.x = element_text(angle = 90))
   
+  print(p_crossover_ts + p_crossover_decadal +
+          plot_layout(widths = c(2, 1)))
+  
   print(
-  p_crossover_ts + p_crossover_decadal +
-    plot_layout(widths = c(2, 1))
+    xover_add_decade %>%
+      filter(cruise_A %in% i_cruise) %>%
+      group_by(parameter, decade) %>%
+      summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %>%
+      ungroup() %>%
+      kable() %>%
+      kable_styling() %>%
+      scroll_box(height = "200px")
   )
-    
-  xover_add_decade %>%
-    filter(cruise_A %in% i_cruise) %>%
-    group_by(parameter, decade) %>%
-    summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %>%
-    ungroup() %>%
-    kable() %>%
-    kable_styling() %>%
-    scroll_box(height = "200px")
+  
 }
 
 
@@ -2602,14 +2607,16 @@ for (i_cruise in cruises_talk_calc) {
     plot_layout(widths = c(2, 1))
   )
     
-  xover_add_decade %>%
-    filter(cruise_A %in% i_cruise) %>%
-    group_by(parameter, decade) %>%
-    summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %>%
-    ungroup() %>%
-    kable() %>%
-    kable_styling() %>%
-    scroll_box(height = "200px")
+  print(
+    xover_add_decade %>%
+      filter(cruise_A %in% i_cruise) %>%
+      group_by(parameter, decade) %>%
+      summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %>%
+      ungroup() %>%
+      kable() %>%
+      kable_styling() %>%
+      scroll_box(height = "200px")
+  )
 }
 
 
