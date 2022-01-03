@@ -562,16 +562,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreef71bc69154042fb81ef170f753b18f8b69b5412btargetblankf71bc69a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/f71bc69154042fb81ef170f753b18f8b69b5412b" target="_blank">f71bc69</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeee1e44a0b86f454d55fb2c699d3c7ea5428a4a54targetblankee1e44aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/ee1e44a0b86f454d55fb2c699d3c7ea5428a4a54" target="_blank">ee1e44a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreef71bc69154042fb81ef170f753b18f8b69b5412btargetblankf71bc69a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeee1e44a0b86f454d55fb2c699d3c7ea5428a4a54targetblankee1e44aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/f71bc69154042fb81ef170f753b18f8b69b5412b" target="_blank">f71bc69</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/ee1e44a0b86f454d55fb2c699d3c7ea5428a4a54" target="_blank">ee1e44a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -624,6 +624,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ee1e44a0b86f454d55fb2c699d3c7ea5428a4a54/analysis/read_GLODAPv2_2021.Rmd" target="_blank">ee1e44a</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-01-03
+</td>
+<td>
+plot crossover of gap filled data
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/ca3a146c92ea869f3eb3a7ea1153cbb50921f514/docs/read_GLODAPv2_2021.html" target="_blank">ca3a146</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-01-03
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -17142,15 +17176,6 @@ jens-daniel-mueller
     plot_layout(widths = c(2, 1))
   )
   
-  print(
-    xover_add_decade %&gt;%
-      filter(cruise_A %in% i_cruise) %&gt;%
-      group_by(parameter, decade) %&gt;%
-      summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %&gt;%
-      ungroup() %&gt;%
-      kable()
-  )
-  
 }</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_gap_filling-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -17201,62 +17226,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; parameter &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; decade &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;&quot;&gt; offset_ad_mean &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.9882398 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.9846140 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.9964602 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -0.6029753 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -0.3195600 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -0.9855887 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -0.1342253 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -1.6191444 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -3.8756236 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_gap_filling-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-CANYON-B_gap_filling-3">
@@ -17306,62 +17275,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; parameter &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; decade &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;&quot;&gt; offset_ad_mean &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.0012928 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.9921003 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.9944871 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -2.6727990 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -0.9500663 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -1.7612909 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.8379332 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -1.2259491 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -2.5484791 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_gap_filling-4.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-CANYON-B_gap_filling-4">
@@ -17411,62 +17324,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; parameter &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; decade &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;&quot;&gt; offset_ad_mean &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.000982 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.002560 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.003279 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.238213 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.266235 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.878658 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.456257 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.097398 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -2.001322 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_gap_filling-5.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-CANYON-B_gap_filling-5">
@@ -17516,62 +17373,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; parameter &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; decade &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;&quot;&gt; offset_ad_mean &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.9952849 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.0037495 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.9950980 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.1289735 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -5.2032065 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.3001826 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.4187870 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.0463619 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.4491628 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;</code></pre>
 <pre class="r"><code># fill missing talk with CANYON-B estimate
 
 cruises_talk_gap_fill &lt;- c(&quot;06AQ19980328&quot;)
@@ -17668,14 +17469,6 @@ jens-daniel-mueller
   print(p_crossover_ts + p_crossover_decadal +
           plot_layout(widths = c(2, 1)))
   
-  print(
-    xover_add_decade %&gt;%
-      filter(cruise_A %in% i_cruise) %&gt;%
-      group_by(parameter, decade) %&gt;%
-      summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %&gt;%
-      ungroup() %&gt;%
-      kable()
-  )
 }</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_gap_filling-7.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -17726,62 +17519,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; parameter &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; decade &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;&quot;&gt; offset_ad_mean &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.0088276 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.0053414 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.0092836 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 4.2986091 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -0.2162355 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.7206032 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.1144077 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -1.3551591 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -1.1823577 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;</code></pre>
 <pre class="r"><code>GLODAP_gap_fill &lt;- bind_rows(
   GLODAP_phosphate_fill,
   GLODAP_talk_fill
@@ -17880,15 +17617,6 @@ jens-daniel-mueller
   print(p_crossover_ts + p_crossover_decadal +
           plot_layout(widths = c(2, 1)))
   
-  print(
-    xover_add_decade %&gt;%
-      filter(cruise_A %in% i_cruise) %&gt;%
-      group_by(parameter, decade) %&gt;%
-      summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %&gt;%
-      ungroup() %&gt;%
-      kable()
-  )
-  
 }</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/flagged_cruises-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -17939,62 +17667,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; parameter &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; decade &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;&quot;&gt; offset_ad_mean &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.9712452 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.9765408 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.9766304 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.3314651 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.1230941 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -1.0676170 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 2.7288076 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.2641341 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -3.0344442 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/flagged_cruises-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-flagged_cruises-3">
@@ -18044,62 +17716,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; parameter &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; decade &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;&quot;&gt; offset_ad_mean &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.9796380 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.9899738 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.9904749 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.5510114 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 2.3884257 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -0.1395747 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 8.1120081 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 6.1180167 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.1923250 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;</code></pre>
 <pre class="r"><code>cruises_talk_calc &lt;- c(
   &quot;06MT19900123&quot;,
   &quot;316N19920502&quot;,
@@ -18194,14 +17810,6 @@ jens-daniel-mueller
     plot_layout(widths = c(2, 1))
   )
     
-    xover_add_decade %&gt;%
-      filter(cruise_A %in% i_cruise) %&gt;%
-      group_by(parameter, decade) %&gt;%
-      summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %&gt;%
-      ungroup() %&gt;%
-      kable() %&gt;%
-      print
-    
 }</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/flagged_cruises-5.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -18252,62 +17860,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; parameter &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; decade &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;&quot;&gt; offset_ad_mean &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.9925257 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.0010033 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.9922316 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -1.7866112 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -4.0659303 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -3.9344689 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -0.2131875 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -3.4099140 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -3.9523709 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/flagged_cruises-6.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-flagged_cruises-6">
@@ -18357,62 +17909,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; parameter &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; decade &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;&quot;&gt; offset_ad_mean &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.0067578 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.0075795 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.0127004 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -0.0551690 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -4.0265274 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -6.9326869 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.1582007 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.5997351 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -0.1669434 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/flagged_cruises-7.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-flagged_cruises-7">
@@ -18462,62 +17958,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>&lt;table&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; parameter &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;&quot;&gt; decade &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;&quot;&gt; offset_ad_mean &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.0017277 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.0137857 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; phosphate &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.0143839 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.4878711 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -0.9215473 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; talk &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; -2.7246632 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 1989-1999 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.2100602 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2000-2009 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 0.8386702 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; tco2 &lt;/td&gt;
-   &lt;td style=&quot;text-align:left;&quot;&gt; 2010-2019 &lt;/td&gt;
-   &lt;td style=&quot;text-align:right;&quot;&gt; 1.2167030 &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;</code></pre>
 <pre class="r"><code>GLODAP_calc &lt;- bind_rows(
   GLODAP_tco2_calc,
   GLODAP_talk_calc
