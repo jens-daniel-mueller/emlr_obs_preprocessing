@@ -2361,13 +2361,13 @@ for (i_cruise in cruises_phosphate_gap_fill) {
     geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
     geom_violin(
       data = xover_add_decade %>%
-        filter(cruise_A %in% cruises_phosphate_gap_fill),
+        filter(cruise_A %in% i_cruise),
       aes(x = decade, y = offset),
       fill = "gold"
     ) +
     geom_boxplot(
       data = xover_add_decade %>%
-        filter(cruise_A %in% cruises_phosphate_gap_fill),
+        filter(cruise_A %in% i_cruise),
       aes(x = decade, y = offset),
       width = 0.2
     ) +
@@ -2379,6 +2379,15 @@ for (i_cruise in cruises_phosphate_gap_fill) {
   p_crossover_ts + p_crossover_decadal +
     plot_layout(widths = c(2, 1))
   )
+  
+  xover_add_decade %>%
+    filter(cruise_A %in% i_cruise) %>%
+    group_by(parameter, decade) %>%
+    summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %>%
+    ungroup() %>%
+    kable() %>%
+    kable_styling() %>%
+    scroll_box(height = "200px")
   
 }
 
@@ -2426,13 +2435,13 @@ for (i_cruise in cruises_talk_gap_fill) {
     geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
     geom_violin(
       data = xover_add_decade %>%
-        filter(cruise_A %in% cruises_phosphate_gap_fill),
+        filter(cruise_A %in% i_cruise),
       aes(x = decade, y = offset),
       fill = "gold"
     ) +
     geom_boxplot(
       data = xover_add_decade %>%
-        filter(cruise_A %in% cruises_phosphate_gap_fill),
+        filter(cruise_A %in% i_cruise),
       aes(x = decade, y = offset),
       width = 0.2
     ) +
@@ -2440,11 +2449,17 @@ for (i_cruise in cruises_talk_gap_fill) {
     theme(axis.title.x = element_blank(),
           axis.text.x = element_text(angle = 90))
   
-  print(
-  p_crossover_ts + p_crossover_decadal +
-    plot_layout(widths = c(2, 1))
-  )
+  print(p_crossover_ts + p_crossover_decadal +
+          plot_layout(widths = c(2, 1)))
   
+  xover_add_decade %>%
+    filter(cruise_A %in% i_cruise) %>%
+    group_by(parameter, decade) %>%
+    summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %>%
+    ungroup() %>%
+    kable() %>%
+    kable_styling() %>%
+    scroll_box(height = "200px")
 }
 
 
@@ -2498,13 +2513,13 @@ for (i_cruise in cruises_tco2_calc) {
     geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
     geom_violin(
       data = xover_add_decade %>%
-        filter(cruise_A %in% cruises_phosphate_gap_fill),
+        filter(cruise_A %in% i_cruise),
       aes(x = decade, y = offset),
       fill = "gold"
     ) +
     geom_boxplot(
       data = xover_add_decade %>%
-        filter(cruise_A %in% cruises_phosphate_gap_fill),
+        filter(cruise_A %in% i_cruise),
       aes(x = decade, y = offset),
       width = 0.2
     ) +
@@ -2516,7 +2531,15 @@ for (i_cruise in cruises_tco2_calc) {
   p_crossover_ts + p_crossover_decadal +
     plot_layout(widths = c(2, 1))
   )
-  
+    
+  xover_add_decade %>%
+    filter(cruise_A %in% i_cruise) %>%
+    group_by(parameter, decade) %>%
+    summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %>%
+    ungroup() %>%
+    kable() %>%
+    kable_styling() %>%
+    scroll_box(height = "200px")
 }
 
 
@@ -2560,13 +2583,13 @@ for (i_cruise in cruises_talk_calc) {
     geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
     geom_violin(
       data = xover_add_decade %>%
-        filter(cruise_A %in% cruises_phosphate_gap_fill),
+        filter(cruise_A %in% i_cruise),
       aes(x = decade, y = offset),
       fill = "gold"
     ) +
     geom_boxplot(
       data = xover_add_decade %>%
-        filter(cruise_A %in% cruises_phosphate_gap_fill),
+        filter(cruise_A %in% i_cruise),
       aes(x = decade, y = offset),
       width = 0.2
     ) +
@@ -2578,7 +2601,15 @@ for (i_cruise in cruises_talk_calc) {
   p_crossover_ts + p_crossover_decadal +
     plot_layout(widths = c(2, 1))
   )
-  
+    
+  xover_add_decade %>%
+    filter(cruise_A %in% i_cruise) %>%
+    group_by(parameter, decade) %>%
+    summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %>%
+    ungroup() %>%
+    kable() %>%
+    kable_styling() %>%
+    scroll_box(height = "200px")
 }
 
 
