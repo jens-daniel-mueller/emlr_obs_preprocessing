@@ -2386,10 +2386,7 @@ for (i_cruise in cruises_phosphate_gap_fill) {
       group_by(parameter, decade) %>%
       summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %>%
       ungroup() %>%
-      kable() %>%
-      kable_styling() %>%
-      scroll_box(height = "200px") %>%
-      htmltools::HTML()
+      kable()
   )
   
 }
@@ -2461,10 +2458,7 @@ for (i_cruise in cruises_talk_gap_fill) {
       group_by(parameter, decade) %>%
       summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %>%
       ungroup() %>%
-      kable() %>%
-      kable_styling() %>%
-      scroll_box(height = "200px") %>%
-      htmltools::HTML()
+      kable()
   )
 }
 
@@ -2542,10 +2536,7 @@ for (i_cruise in cruises_tco2_calc) {
       group_by(parameter, decade) %>%
       summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %>%
       ungroup() %>%
-      kable() %>%
-      kable_styling() %>%
-      scroll_box(height = "200px") %>%
-      htmltools::HTML()
+      kable()
   )
   
 }
@@ -2616,9 +2607,6 @@ for (i_cruise in cruises_talk_calc) {
       summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %>%
       ungroup() %>%
       kable() %>%
-      kable_styling() %>%
-      scroll_box(height = "200px") %>%
-      htmltools::HTML() %>% 
       print
     
 }
