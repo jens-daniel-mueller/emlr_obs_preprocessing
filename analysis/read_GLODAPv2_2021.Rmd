@@ -2388,7 +2388,8 @@ for (i_cruise in cruises_phosphate_gap_fill) {
       ungroup() %>%
       kable() %>%
       kable_styling() %>%
-      scroll_box(height = "200px")
+      scroll_box(height = "200px") %>%
+      htmltools::HTML()
   )
   
 }
@@ -2462,7 +2463,8 @@ for (i_cruise in cruises_talk_gap_fill) {
       ungroup() %>%
       kable() %>%
       kable_styling() %>%
-      scroll_box(height = "200px")
+      scroll_box(height = "200px") %>%
+      htmltools::HTML()
   )
 }
 
@@ -2542,7 +2544,8 @@ for (i_cruise in cruises_tco2_calc) {
       ungroup() %>%
       kable() %>%
       kable_styling() %>%
-      scroll_box(height = "200px")
+      scroll_box(height = "200px") %>%
+      htmltools::HTML()
   )
   
 }
@@ -2607,7 +2610,6 @@ for (i_cruise in cruises_talk_calc) {
     plot_layout(widths = c(2, 1))
   )
     
-  print(
     xover_add_decade %>%
       filter(cruise_A %in% i_cruise) %>%
       group_by(parameter, decade) %>%
@@ -2615,8 +2617,10 @@ for (i_cruise in cruises_talk_calc) {
       ungroup() %>%
       kable() %>%
       kable_styling() %>%
-      scroll_box(height = "200px")
-  )
+      scroll_box(height = "200px") %>%
+      htmltools::HTML() %>% 
+      print
+    
 }
 
 
