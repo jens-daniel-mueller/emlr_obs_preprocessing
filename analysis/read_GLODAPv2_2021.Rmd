@@ -2380,15 +2380,6 @@ for (i_cruise in cruises_phosphate_gap_fill) {
     plot_layout(widths = c(2, 1))
   )
   
-  print(
-    xover_add_decade %>%
-      filter(cruise_A %in% i_cruise) %>%
-      group_by(parameter, decade) %>%
-      summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %>%
-      ungroup() %>%
-      kable()
-  )
-  
 }
 
 # fill missing talk with CANYON-B estimate
@@ -2452,14 +2443,6 @@ for (i_cruise in cruises_talk_gap_fill) {
   print(p_crossover_ts + p_crossover_decadal +
           plot_layout(widths = c(2, 1)))
   
-  print(
-    xover_add_decade %>%
-      filter(cruise_A %in% i_cruise) %>%
-      group_by(parameter, decade) %>%
-      summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %>%
-      ungroup() %>%
-      kable()
-  )
 }
 
 
@@ -2530,15 +2513,6 @@ for (i_cruise in cruises_tco2_calc) {
   print(p_crossover_ts + p_crossover_decadal +
           plot_layout(widths = c(2, 1)))
   
-  print(
-    xover_add_decade %>%
-      filter(cruise_A %in% i_cruise) %>%
-      group_by(parameter, decade) %>%
-      summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %>%
-      ungroup() %>%
-      kable()
-  )
-  
 }
 
 
@@ -2600,14 +2574,6 @@ for (i_cruise in cruises_talk_calc) {
   p_crossover_ts + p_crossover_decadal +
     plot_layout(widths = c(2, 1))
   )
-    
-    xover_add_decade %>%
-      filter(cruise_A %in% i_cruise) %>%
-      group_by(parameter, decade) %>%
-      summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %>%
-      ungroup() %>%
-      kable() %>%
-      print
     
 }
 
