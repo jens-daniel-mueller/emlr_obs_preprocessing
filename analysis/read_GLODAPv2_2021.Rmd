@@ -177,6 +177,28 @@ glodapv2_2021_xover <- glodapv2_2021_xover %>%
          cruise_A = Cruise_A,
          cruise_B = Cruise_B)
 
+
+# tables for data not qc'ed in the regular GLODAP release
+# provided by Nico Lange
+
+glodapv2_2021_xover_files_add <-
+  fs::dir_ls(paste0(path_crossover, "/glodapv2_2021_additional_crossover"))
+
+glodapv2_2021_xover_add <- glodapv2_2021_xover_files_add %>% 
+  map_dfr(readxl::read_excel)
+
+glodapv2_2021_xover_add <- glodapv2_2021_xover_add %>%
+  rename(parameter = Parameter) %>%
+  mutate(parameter = recode(parameter,
+                            "alkalinity" = "talk"))
+
+
+glodapv2_2021_xover_add <- glodapv2_2021_xover_add %>% 
+  rename(offset = Offset,
+         offset_sd = Std,
+         cruise_A = Cruise_A,
+         cruise_B = Cruise_B)
+
 ```
 
 ## Missing/flagged cruises
@@ -1581,8 +1603,6 @@ for (i_expocodes_missing in expocodes_missing) {
 
 
 ```
-
-
 ## IO 1990 data
 
 ```{r crossover_analysis_data, fig.asp=1.2}
@@ -1735,7 +1755,6 @@ p_crossover_ts + p_crossover_decadal +
 
 
 rm(p_crossover_ts, p_crossover_decadal)
-rm(hline_intercept)
 
 ```
 
@@ -2082,7 +2101,7 @@ GLODAP_time_series %>%
 
 ## Prediction
 
-```{r calc_CANYON-B}
+```{r calc_CANYON-B, eval=FALSE}
 
 source("/net/kryo/work/uptools/co2_calculation/CANYON-B/CANYONB.R")
 
@@ -2131,7 +2150,7 @@ GLODAP_CB <- GLODAP_CB %>%
 
 ## Comparison to observations
 
-```{r CANYON-B_vs_observationd, fig.asp=0.4}
+```{r CANYON-B_vs_observationd, fig.asp=0.4, eval=FALSE}
 
 
 variables <- c("talk", "tco2", "nitrate", "phosphate", "silicate")
@@ -2202,7 +2221,7 @@ for (i_variable in variables) {
 
 ## Write files
 
-```{r write_Canyon-B_data_file}
+```{r write_Canyon-B_data_file, eval=FALSE}
 
 GLODAP_CB %>% 
   select(row_number,
@@ -2216,7 +2235,79 @@ GLODAP_CB %>%
 
 # Crossover data
 
+
+```{r read_Canyon-B_data_file}
+
+GLODAP_CB <-
+  read_csv(paste(path_preprocessing,
+                 "GLODAPv2.2021_Canyon-B.csv",
+                 sep = ""))
+
+```
+
+```{r prepare_additional_crossover_data}
+
+xover_add_decade <- glodapv2_2021_xover_add %>%
+  mutate(dateA = ymd(str_sub(cruise_A, 5, 12)),
+         dateB = ymd(str_sub(cruise_B, 5, 12))) %>%
+  mutate(decade = cut(
+    year(dateB),
+    c(1989, 1999, 2009, 2019),
+    labels = c("1989-1999", "2000-2009", "2010-2019")
+  )) %>%
+  filter(!is.na(decade),
+         !is.na(offset)) %>%
+  arrange(dateB)
+
+
+xover_add_decade %>%
+  group_by(parameter, decade) %>%
+  summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %>%
+  ungroup() %>%
+  kable() %>%
+  kable_styling() %>%
+  scroll_box(height = "300px")
+
+hline_intercept <- hline_intercept %>% 
+  filter(parameter %in% unique(xover_add_decade$parameter))
+
+
+p_crossover_ts <- xover_add_decade %>%
+  ggplot(aes(dateB, offset)) +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_point(shape = 21) +
+  scale_color_brewer(palette = "Set1") +
+  facet_grid(parameter ~ ., scales = "free_y") +
+  labs(title = "Crossover 316N199XXXXX") +
+  theme(
+    legend.position = "bottom",
+    legend.direction = "vertical",
+    axis.title.x = element_blank()
+  )
+
+p_crossover_decadal <-
+  ggplot() +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_violin(data = xover_add_decade,
+               aes(x = decade, y = offset), fill="gold") +
+  geom_boxplot(data = xover_add_decade,
+               aes(x = decade, y = offset),
+               width = 0.2) +
+  facet_grid(parameter ~ ., scales = "free_y") +
+  labs(title = "Decadal offsets") +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(angle = 90))
+
+
+p_crossover_ts + p_crossover_decadal +
+  plot_layout(widths = c(2, 1))
+
+```
+
+
+
 ## Gap filling
+
 
 ```{r CANYON-B_gap_filling}
 
@@ -2240,6 +2331,57 @@ GLODAP_phosphate_fill <- GLODAP_phosphate_fill %>%
   mutate(phosphate = phosphate_CANYONB) %>% 
   filter(!is.na(phosphate))
 
+map +
+  geom_tile(data = GLODAP_phosphate_fill %>%
+              distinct(lon, lat, cruise_expocode),
+            aes(lon, lat, fill = cruise_expocode)) +
+  scale_fill_brewer(palette = "Set1")
+
+
+
+for (i_cruise in cruises_phosphate_gap_fill) {
+  # i_cruise <- cruises_phosphate_gap_fill[1]
+  
+  p_crossover_ts <- xover_add_decade %>%
+    filter(cruise_A %in% i_cruise) %>%
+    ggplot(aes(dateB, offset)) +
+    geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+    geom_point(shape = 21) +
+    scale_color_brewer(palette = "Set1") +
+    facet_grid(parameter ~ ., scales = "free_y") +
+    labs(title = i_cruise) +
+    theme(
+      legend.position = "bottom",
+      legend.direction = "vertical",
+      axis.title.x = element_blank()
+    )
+  
+  p_crossover_decadal <-
+    ggplot() +
+    geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+    geom_violin(
+      data = xover_add_decade %>%
+        filter(cruise_A %in% cruises_phosphate_gap_fill),
+      aes(x = decade, y = offset),
+      fill = "gold"
+    ) +
+    geom_boxplot(
+      data = xover_add_decade %>%
+        filter(cruise_A %in% cruises_phosphate_gap_fill),
+      aes(x = decade, y = offset),
+      width = 0.2
+    ) +
+    facet_grid(parameter ~ ., scales = "free_y") +
+    theme(axis.title.x = element_blank(),
+          axis.text.x = element_text(angle = 90))
+  
+  print(
+  p_crossover_ts + p_crossover_decadal +
+    plot_layout(widths = c(2, 1))
+  )
+  
+}
+
 # fill missing talk with CANYON-B estimate
 
 cruises_talk_gap_fill <- c("06AQ19980328")
@@ -2252,6 +2394,59 @@ GLODAP_talk_fill <- GLODAP %>%
 GLODAP_talk_fill <- GLODAP_talk_fill %>% 
   mutate(talk = talk_CANYONB) %>% 
   filter(!is.na(talk))
+
+
+map +
+  geom_tile(data = GLODAP_talk_fill %>%
+              distinct(lon, lat, cruise_expocode),
+            aes(lon, lat, fill = cruise_expocode)) +
+  scale_fill_brewer(palette = "Set1")
+
+
+
+for (i_cruise in cruises_talk_gap_fill) {
+  # i_cruise <- cruises_phosphate_gap_fill[1]
+  
+  p_crossover_ts <- xover_add_decade %>%
+    filter(cruise_A %in% i_cruise) %>%
+    ggplot(aes(dateB, offset)) +
+    geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+    geom_point(shape = 21) +
+    scale_color_brewer(palette = "Set1") +
+    facet_grid(parameter ~ ., scales = "free_y") +
+    labs(title = i_cruise) +
+    theme(
+      legend.position = "bottom",
+      legend.direction = "vertical",
+      axis.title.x = element_blank()
+    )
+  
+  p_crossover_decadal <-
+    ggplot() +
+    geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+    geom_violin(
+      data = xover_add_decade %>%
+        filter(cruise_A %in% cruises_phosphate_gap_fill),
+      aes(x = decade, y = offset),
+      fill = "gold"
+    ) +
+    geom_boxplot(
+      data = xover_add_decade %>%
+        filter(cruise_A %in% cruises_phosphate_gap_fill),
+      aes(x = decade, y = offset),
+      width = 0.2
+    ) +
+    facet_grid(parameter ~ ., scales = "free_y") +
+    theme(axis.title.x = element_blank(),
+          axis.text.x = element_text(angle = 90))
+  
+  print(
+  p_crossover_ts + p_crossover_decadal +
+    plot_layout(widths = c(2, 1))
+  )
+  
+}
+
 
 GLODAP_gap_fill <- bind_rows(
   GLODAP_phosphate_fill,
@@ -2272,6 +2467,59 @@ GLODAP_tco2_calc <- GLODAP %>%
   filter(cruise_expocode %in% cruises_tco2_calc,
          tco2f == 0)
 
+
+map +
+  geom_tile(data = GLODAP_tco2_calc %>%
+              distinct(lon, lat, cruise_expocode),
+            aes(lon, lat, fill = cruise_expocode)) +
+  scale_fill_brewer(palette = "Set1")
+
+
+
+for (i_cruise in cruises_tco2_calc) {
+  # i_cruise <- cruises_phosphate_gap_fill[1]
+  
+  p_crossover_ts <- xover_add_decade %>%
+    filter(cruise_A %in% i_cruise) %>%
+    ggplot(aes(dateB, offset)) +
+    geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+    geom_point(shape = 21) +
+    scale_color_brewer(palette = "Set1") +
+    facet_grid(parameter ~ ., scales = "free_y") +
+    labs(title = i_cruise) +
+    theme(
+      legend.position = "bottom",
+      legend.direction = "vertical",
+      axis.title.x = element_blank()
+    )
+  
+  p_crossover_decadal <-
+    ggplot() +
+    geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+    geom_violin(
+      data = xover_add_decade %>%
+        filter(cruise_A %in% cruises_phosphate_gap_fill),
+      aes(x = decade, y = offset),
+      fill = "gold"
+    ) +
+    geom_boxplot(
+      data = xover_add_decade %>%
+        filter(cruise_A %in% cruises_phosphate_gap_fill),
+      aes(x = decade, y = offset),
+      width = 0.2
+    ) +
+    facet_grid(parameter ~ ., scales = "free_y") +
+    theme(axis.title.x = element_blank(),
+          axis.text.x = element_text(angle = 90))
+  
+  print(
+  p_crossover_ts + p_crossover_decadal +
+    plot_layout(widths = c(2, 1))
+  )
+  
+}
+
+
 cruises_talk_calc <- c(
   "06MT19900123",
   "316N19920502",
@@ -2280,6 +2528,59 @@ cruises_talk_calc <- c(
 GLODAP_talk_calc <- GLODAP %>% 
   filter(cruise_expocode %in% cruises_talk_calc,
          talkf == 0)
+
+
+map +
+  geom_tile(data = GLODAP_talk_calc %>%
+              distinct(lon, lat, cruise_expocode),
+            aes(lon, lat, fill = cruise_expocode)) +
+  scale_fill_brewer(palette = "Set1")
+
+
+
+for (i_cruise in cruises_talk_calc) {
+  # i_cruise <- cruises_phosphate_gap_fill[1]
+  
+  p_crossover_ts <- xover_add_decade %>%
+    filter(cruise_A %in% i_cruise) %>%
+    ggplot(aes(dateB, offset)) +
+    geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+    geom_point(shape = 21) +
+    scale_color_brewer(palette = "Set1") +
+    facet_grid(parameter ~ ., scales = "free_y") +
+    labs(title = i_cruise) +
+    theme(
+      legend.position = "bottom",
+      legend.direction = "vertical",
+      axis.title.x = element_blank()
+    )
+  
+  p_crossover_decadal <-
+    ggplot() +
+    geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+    geom_violin(
+      data = xover_add_decade %>%
+        filter(cruise_A %in% cruises_phosphate_gap_fill),
+      aes(x = decade, y = offset),
+      fill = "gold"
+    ) +
+    geom_boxplot(
+      data = xover_add_decade %>%
+        filter(cruise_A %in% cruises_phosphate_gap_fill),
+      aes(x = decade, y = offset),
+      width = 0.2
+    ) +
+    facet_grid(parameter ~ ., scales = "free_y") +
+    theme(axis.title.x = element_blank(),
+          axis.text.x = element_text(angle = 90))
+  
+  print(
+  p_crossover_ts + p_crossover_decadal +
+    plot_layout(widths = c(2, 1))
+  )
+  
+}
+
 
 GLODAP_calc <- bind_rows(
   GLODAP_tco2_calc,
