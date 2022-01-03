@@ -562,16 +562,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreec5258b19072407a774d701a285f8109fcc92d961targetblankc5258b1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/c5258b19072407a774d701a285f8109fcc92d961" target="_blank">c5258b1</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreef71bc69154042fb81ef170f753b18f8b69b5412btargetblankf71bc69a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/f71bc69154042fb81ef170f753b18f8b69b5412b" target="_blank">f71bc69</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreec5258b19072407a774d701a285f8109fcc92d961targetblankc5258b1a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreef71bc69154042fb81ef170f753b18f8b69b5412btargetblankf71bc69a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/c5258b19072407a774d701a285f8109fcc92d961" target="_blank">c5258b1</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/f71bc69154042fb81ef170f753b18f8b69b5412b" target="_blank">f71bc69</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -624,6 +624,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f71bc69154042fb81ef170f753b18f8b69b5412b/analysis/read_GLODAPv2_2021.Rmd" target="_blank">f71bc69</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-01-03
+</td>
+<td>
+plot crossover of gap filled data
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/6e1b56c362148c6883d05a28f156e483e375dd59/docs/read_GLODAPv2_2021.html" target="_blank">6e1b56c</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-01-03
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -17114,10 +17148,7 @@ jens-daniel-mueller
       group_by(parameter, decade) %&gt;%
       summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %&gt;%
       ungroup() %&gt;%
-      kable() %&gt;%
-      kable_styling() %&gt;%
-      scroll_box(height = &quot;200px&quot;) %&gt;%
-      htmltools::HTML()
+      kable()
   )
   
 }</code></pre>
@@ -17170,12 +17201,12 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>&lt;div style=&quot;border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:200px; &quot;&gt;&lt;table class=&quot;table&quot; style=&quot;margin-left: auto; margin-right: auto;&quot;&gt;
+<pre><code>&lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style=&quot;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; parameter &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; decade &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; offset_ad_mean &lt;/th&gt;
+   &lt;th style=&quot;text-align:left;&quot;&gt; parameter &lt;/th&gt;
+   &lt;th style=&quot;text-align:left;&quot;&gt; decade &lt;/th&gt;
+   &lt;th style=&quot;text-align:right;&quot;&gt; offset_ad_mean &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
@@ -17225,7 +17256,7 @@ jens-daniel-mueller
    &lt;td style=&quot;text-align:right;&quot;&gt; -3.8756236 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
-&lt;/table&gt;&lt;/div&gt;</code></pre>
+&lt;/table&gt;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_gap_filling-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-CANYON-B_gap_filling-3">
@@ -17275,12 +17306,12 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>&lt;div style=&quot;border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:200px; &quot;&gt;&lt;table class=&quot;table&quot; style=&quot;margin-left: auto; margin-right: auto;&quot;&gt;
+<pre><code>&lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style=&quot;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; parameter &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; decade &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; offset_ad_mean &lt;/th&gt;
+   &lt;th style=&quot;text-align:left;&quot;&gt; parameter &lt;/th&gt;
+   &lt;th style=&quot;text-align:left;&quot;&gt; decade &lt;/th&gt;
+   &lt;th style=&quot;text-align:right;&quot;&gt; offset_ad_mean &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
@@ -17330,7 +17361,7 @@ jens-daniel-mueller
    &lt;td style=&quot;text-align:right;&quot;&gt; -2.5484791 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
-&lt;/table&gt;&lt;/div&gt;</code></pre>
+&lt;/table&gt;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_gap_filling-4.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-CANYON-B_gap_filling-4">
@@ -17380,12 +17411,12 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>&lt;div style=&quot;border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:200px; &quot;&gt;&lt;table class=&quot;table&quot; style=&quot;margin-left: auto; margin-right: auto;&quot;&gt;
+<pre><code>&lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style=&quot;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; parameter &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; decade &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; offset_ad_mean &lt;/th&gt;
+   &lt;th style=&quot;text-align:left;&quot;&gt; parameter &lt;/th&gt;
+   &lt;th style=&quot;text-align:left;&quot;&gt; decade &lt;/th&gt;
+   &lt;th style=&quot;text-align:right;&quot;&gt; offset_ad_mean &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
@@ -17435,7 +17466,7 @@ jens-daniel-mueller
    &lt;td style=&quot;text-align:right;&quot;&gt; -2.001322 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
-&lt;/table&gt;&lt;/div&gt;</code></pre>
+&lt;/table&gt;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_gap_filling-5.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-CANYON-B_gap_filling-5">
@@ -17485,12 +17516,12 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>&lt;div style=&quot;border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:200px; &quot;&gt;&lt;table class=&quot;table&quot; style=&quot;margin-left: auto; margin-right: auto;&quot;&gt;
+<pre><code>&lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style=&quot;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; parameter &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; decade &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; offset_ad_mean &lt;/th&gt;
+   &lt;th style=&quot;text-align:left;&quot;&gt; parameter &lt;/th&gt;
+   &lt;th style=&quot;text-align:left;&quot;&gt; decade &lt;/th&gt;
+   &lt;th style=&quot;text-align:right;&quot;&gt; offset_ad_mean &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
@@ -17540,7 +17571,7 @@ jens-daniel-mueller
    &lt;td style=&quot;text-align:right;&quot;&gt; 0.4491628 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
-&lt;/table&gt;&lt;/div&gt;</code></pre>
+&lt;/table&gt;</code></pre>
 <pre class="r"><code># fill missing talk with CANYON-B estimate
 
 cruises_talk_gap_fill &lt;- c(&quot;06AQ19980328&quot;)
@@ -17643,10 +17674,7 @@ jens-daniel-mueller
       group_by(parameter, decade) %&gt;%
       summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %&gt;%
       ungroup() %&gt;%
-      kable() %&gt;%
-      kable_styling() %&gt;%
-      scroll_box(height = &quot;200px&quot;) %&gt;%
-      htmltools::HTML()
+      kable()
   )
 }</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_gap_filling-7.png" width="672" style="display: block; margin: auto;" /></p>
@@ -17698,12 +17726,12 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>&lt;div style=&quot;border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:200px; &quot;&gt;&lt;table class=&quot;table&quot; style=&quot;margin-left: auto; margin-right: auto;&quot;&gt;
+<pre><code>&lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style=&quot;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; parameter &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; decade &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; offset_ad_mean &lt;/th&gt;
+   &lt;th style=&quot;text-align:left;&quot;&gt; parameter &lt;/th&gt;
+   &lt;th style=&quot;text-align:left;&quot;&gt; decade &lt;/th&gt;
+   &lt;th style=&quot;text-align:right;&quot;&gt; offset_ad_mean &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
@@ -17753,7 +17781,7 @@ jens-daniel-mueller
    &lt;td style=&quot;text-align:right;&quot;&gt; -1.1823577 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
-&lt;/table&gt;&lt;/div&gt;</code></pre>
+&lt;/table&gt;</code></pre>
 <pre class="r"><code>GLODAP_gap_fill &lt;- bind_rows(
   GLODAP_phosphate_fill,
   GLODAP_talk_fill
@@ -17858,10 +17886,7 @@ jens-daniel-mueller
       group_by(parameter, decade) %&gt;%
       summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %&gt;%
       ungroup() %&gt;%
-      kable() %&gt;%
-      kable_styling() %&gt;%
-      scroll_box(height = &quot;200px&quot;) %&gt;%
-      htmltools::HTML()
+      kable()
   )
   
 }</code></pre>
@@ -17914,12 +17939,12 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>&lt;div style=&quot;border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:200px; &quot;&gt;&lt;table class=&quot;table&quot; style=&quot;margin-left: auto; margin-right: auto;&quot;&gt;
+<pre><code>&lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style=&quot;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; parameter &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; decade &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; offset_ad_mean &lt;/th&gt;
+   &lt;th style=&quot;text-align:left;&quot;&gt; parameter &lt;/th&gt;
+   &lt;th style=&quot;text-align:left;&quot;&gt; decade &lt;/th&gt;
+   &lt;th style=&quot;text-align:right;&quot;&gt; offset_ad_mean &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
@@ -17969,7 +17994,7 @@ jens-daniel-mueller
    &lt;td style=&quot;text-align:right;&quot;&gt; -3.0344442 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
-&lt;/table&gt;&lt;/div&gt;</code></pre>
+&lt;/table&gt;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/flagged_cruises-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-flagged_cruises-3">
@@ -18019,12 +18044,12 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>&lt;div style=&quot;border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:200px; &quot;&gt;&lt;table class=&quot;table&quot; style=&quot;margin-left: auto; margin-right: auto;&quot;&gt;
+<pre><code>&lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style=&quot;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; parameter &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; decade &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; offset_ad_mean &lt;/th&gt;
+   &lt;th style=&quot;text-align:left;&quot;&gt; parameter &lt;/th&gt;
+   &lt;th style=&quot;text-align:left;&quot;&gt; decade &lt;/th&gt;
+   &lt;th style=&quot;text-align:right;&quot;&gt; offset_ad_mean &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
@@ -18074,7 +18099,7 @@ jens-daniel-mueller
    &lt;td style=&quot;text-align:right;&quot;&gt; 1.1923250 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
-&lt;/table&gt;&lt;/div&gt;</code></pre>
+&lt;/table&gt;</code></pre>
 <pre class="r"><code>cruises_talk_calc &lt;- c(
   &quot;06MT19900123&quot;,
   &quot;316N19920502&quot;,
@@ -18175,9 +18200,6 @@ jens-daniel-mueller
       summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %&gt;%
       ungroup() %&gt;%
       kable() %&gt;%
-      kable_styling() %&gt;%
-      scroll_box(height = &quot;200px&quot;) %&gt;%
-      htmltools::HTML() %&gt;% 
       print
     
 }</code></pre>
@@ -18230,12 +18252,12 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>&lt;div style=&quot;border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:200px; &quot;&gt;&lt;table class=&quot;table&quot; style=&quot;margin-left: auto; margin-right: auto;&quot;&gt;
+<pre><code>&lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style=&quot;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; parameter &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; decade &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; offset_ad_mean &lt;/th&gt;
+   &lt;th style=&quot;text-align:left;&quot;&gt; parameter &lt;/th&gt;
+   &lt;th style=&quot;text-align:left;&quot;&gt; decade &lt;/th&gt;
+   &lt;th style=&quot;text-align:right;&quot;&gt; offset_ad_mean &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
@@ -18285,7 +18307,7 @@ jens-daniel-mueller
    &lt;td style=&quot;text-align:right;&quot;&gt; -3.9523709 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
-&lt;/table&gt;&lt;/div&gt;</code></pre>
+&lt;/table&gt;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/flagged_cruises-6.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-flagged_cruises-6">
@@ -18335,12 +18357,12 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>&lt;div style=&quot;border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:200px; &quot;&gt;&lt;table class=&quot;table&quot; style=&quot;margin-left: auto; margin-right: auto;&quot;&gt;
+<pre><code>&lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style=&quot;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; parameter &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; decade &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; offset_ad_mean &lt;/th&gt;
+   &lt;th style=&quot;text-align:left;&quot;&gt; parameter &lt;/th&gt;
+   &lt;th style=&quot;text-align:left;&quot;&gt; decade &lt;/th&gt;
+   &lt;th style=&quot;text-align:right;&quot;&gt; offset_ad_mean &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
@@ -18390,7 +18412,7 @@ jens-daniel-mueller
    &lt;td style=&quot;text-align:right;&quot;&gt; -0.1669434 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
-&lt;/table&gt;&lt;/div&gt;</code></pre>
+&lt;/table&gt;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/flagged_cruises-7.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-flagged_cruises-7">
@@ -18440,12 +18462,12 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>&lt;div style=&quot;border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:200px; &quot;&gt;&lt;table class=&quot;table&quot; style=&quot;margin-left: auto; margin-right: auto;&quot;&gt;
+<pre><code>&lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style=&quot;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; parameter &lt;/th&gt;
-   &lt;th style=&quot;text-align:left;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; decade &lt;/th&gt;
-   &lt;th style=&quot;text-align:right;position: sticky; top:0; background-color: #FFFFFF;&quot;&gt; offset_ad_mean &lt;/th&gt;
+   &lt;th style=&quot;text-align:left;&quot;&gt; parameter &lt;/th&gt;
+   &lt;th style=&quot;text-align:left;&quot;&gt; decade &lt;/th&gt;
+   &lt;th style=&quot;text-align:right;&quot;&gt; offset_ad_mean &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
@@ -18495,7 +18517,7 @@ jens-daniel-mueller
    &lt;td style=&quot;text-align:right;&quot;&gt; 1.2167030 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
-&lt;/table&gt;&lt;/div&gt;</code></pre>
+&lt;/table&gt;</code></pre>
 <pre class="r"><code>GLODAP_calc &lt;- bind_rows(
   GLODAP_tco2_calc,
   GLODAP_talk_calc
