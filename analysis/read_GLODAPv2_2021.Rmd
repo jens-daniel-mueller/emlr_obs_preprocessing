@@ -2259,14 +2259,24 @@ xover_add_decade <- glodapv2_2021_xover_add %>%
          !is.na(offset)) %>%
   arrange(dateB)
 
+xover_add_decade %>%
+  group_by(parameter, cruise_A) %>%
+  summarise(offset_mean = mean(offset, na.rm = TRUE)) %>%
+  ungroup() %>%
+  kable(caption = "Long-term average per cruise and parameter") %>%
+  kable_styling() %>%
+  scroll_box(height = "250px")
+
 
 xover_add_decade %>%
-  group_by(parameter, decade) %>%
-  summarise(offset_ad_mean = mean(offset, na.rm = TRUE)) %>%
+  group_by(parameter, decade, cruise_A) %>%
+  summarise(offset_mean = mean(offset, na.rm = TRUE)) %>%
   ungroup() %>%
-  kable() %>%
+  kable(caption = "Decadal average per cruise and parameter") %>%
   kable_styling() %>%
-  scroll_box(height = "300px")
+  scroll_box(height = "250px")
+
+
 
 hline_intercept <- hline_intercept %>% 
   filter(parameter %in% unique(xover_add_decade$parameter))
@@ -2278,7 +2288,6 @@ p_crossover_ts <- xover_add_decade %>%
   geom_point(shape = 21) +
   scale_color_brewer(palette = "Set1") +
   facet_grid(parameter ~ ., scales = "free_y") +
-  labs(title = "Crossover 316N199XXXXX") +
   theme(
     legend.position = "bottom",
     legend.direction = "vertical",
