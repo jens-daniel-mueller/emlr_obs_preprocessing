@@ -446,7 +446,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">GLODAPv2_2020</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">04 January, 2022</h4>
+<h4 class="date">12 January, 2022</h4>
 
 </div>
 
@@ -471,7 +471,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-01-04
+<strong>Last updated:</strong> 2022-01-12
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -562,16 +562,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree98d874a71079114048840fef84c5713480d4ed4btargetblank98d874aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/98d874a71079114048840fef84c5713480d4ed4b" target="_blank">98d874a</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree86182f012129b1d18f22e6b65b4699539bb4ab41targetblank86182f0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/86182f012129b1d18f22e6b65b4699539bb4ab41" target="_blank">86182f0</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree98d874a71079114048840fef84c5713480d4ed4btargetblank98d874aa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree86182f012129b1d18f22e6b65b4699539bb4ab41targetblank86182f0a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/98d874a71079114048840fef84c5713480d4ed4b" target="_blank">98d874a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/86182f012129b1d18f22e6b65b4699539bb4ab41" target="_blank">86182f0</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -580,7 +580,6 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
     Ignored:    data/
     Ignored:    output/
 
@@ -625,6 +624,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/86182f012129b1d18f22e6b65b4699539bb4ab41/analysis/read_GLODAPv2_2021.Rmd" target="_blank">86182f0</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-01-12
+</td>
+<td>
+data contribution per cruise
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/ecc669fd74b1b3c1a23f4677ebf89bbd66d95c43/docs/read_GLODAPv2_2021.html" target="_blank">ecc669f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-01-04
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -16071,12 +16104,12 @@ jens-daniel-mueller
 </div>
 <div id="rv-activity" class="section level1" number="7">
 <h1><span class="header-section-number">7</span> RV activity</h1>
-<pre class="r"><code>RV_activity &lt;- full_join(
+<pre class="r"><code>GLODAP_counts &lt;- full_join(
   GLODAP,
   GLODAP_expocodes
 )
 
-RV_activity &lt;- RV_activity %&gt;%
+GLODAP_counts &lt;- GLODAP_counts %&gt;%
   mutate(decade = cut(
     year,
     seq(1990, 2020, 10),
@@ -16085,10 +16118,10 @@ RV_activity &lt;- RV_activity %&gt;%
   ), .after = year) %&gt;% 
   filter(!is.na(decade))
 
-RV_activity &lt;- RV_activity %&gt;% 
+GLODAP_counts &lt;- GLODAP_counts %&gt;% 
   mutate(RV = str_sub(cruise_expocode, 1, 4))
 
-RV_activity &lt;- RV_activity %&gt;% 
+RV_activity &lt;- GLODAP_counts %&gt;% 
   count(decade, basin_AIP, RV) %&gt;% 
   group_by(decade, basin_AIP) %&gt;% 
   mutate(n_total = sum(n)) %&gt;% 
@@ -16149,8 +16182,841 @@ jens-daniel-mueller
 </div>
 <pre class="r"><code>rm(RV_activity)</code></pre>
 </div>
-<div id="indian-ocean-1990-crm" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> Indian Ocean 1990 CRM</h1>
+<div id="largest-cruises" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Largest cruises</h1>
+<pre class="r"><code>large_cruises &lt;- GLODAP_counts %&gt;% 
+  count(decade, basin_AIP, cruise_expocode) %&gt;% 
+  group_by(decade, basin_AIP) %&gt;% 
+  mutate(n_total = sum(n)) %&gt;% 
+  ungroup() %&gt;% 
+  mutate(n_prop = 100* n / n_total)
+
+large_cruises &lt;- large_cruises %&gt;% 
+  group_by(decade, basin_AIP) %&gt;% 
+  mutate(rank = rank(-n_prop)) %&gt;% 
+  ungroup()
+
+
+large_cruises %&gt;%
+  group_split(decade, basin_AIP) %&gt;%
+  head(1) %&gt;%
+  map(
+    ~
+      ggplot(data = .x,
+             aes(rank, n_prop)) +
+      geom_line() +
+      geom_point(
+        data = .x %&gt;% filter(rank &lt;= 5),
+        aes(rank, n_prop, fill = cruise_expocode), shape = 21) +
+      scale_fill_brewer(palette = &quot;Set1&quot;) +
+      xlim(0, max(large_cruises$rank)) +
+      labs(y = &quot;proportion of tco2 samples (%)&quot;) +
+      facet_grid(decade ~ basin_AIP)
+  )</code></pre>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/large_cruises-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>large_cruises %&gt;%
+  filter(rank &lt;= 5) %&gt;% 
+  select(decade, basin_AIP, rank, n_prop, cruise_expocode) %&gt;% 
+  mutate(n_prop = round(n_prop, 1)) %&gt;% 
+  arrange(decade, basin_AIP, rank) %&gt;% 
+  kable() %&gt;% 
+  kable_styling() %&gt;% 
+  scroll_box(height = &quot;300px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+decade
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+basin_AIP
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+rank
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+n_prop
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+cruise_expocode
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+5.4
+</td>
+<td style="text-align:left;">
+323019940104
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3.9
+</td>
+<td style="text-align:left;">
+33RO19980123
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+3.8
+</td>
+<td style="text-align:left;">
+06AQ19980328
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3.6
+</td>
+<td style="text-align:left;">
+316N19970530
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3.6
+</td>
+<td style="text-align:left;">
+74DI19970807
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+8.1
+</td>
+<td style="text-align:left;">
+316N19951202
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+8.0
+</td>
+<td style="text-align:left;">
+316N19950124
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+7.7
+</td>
+<td style="text-align:left;">
+316N19950310
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+7.3
+</td>
+<td style="text-align:left;">
+316N19950829
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+7.0
+</td>
+<td style="text-align:left;">
+316N19941201
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+5.7
+</td>
+<td style="text-align:left;">
+316N19920502
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+5.6
+</td>
+<td style="text-align:left;">
+31DS19960105
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+5.6
+</td>
+<td style="text-align:left;">
+31DS19940126
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5.5
+</td>
+<td style="text-align:left;">
+318M19940327
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4.2
+</td>
+<td style="text-align:left;">
+31DS19920907
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+4.6
+</td>
+<td style="text-align:left;">
+33RO20050111
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4.5
+</td>
+<td style="text-align:left;">
+33RO20030604
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4.1
+</td>
+<td style="text-align:left;">
+06AQ20050122
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+3.5
+</td>
+<td style="text-align:left;">
+06AQ20080210
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+2.7
+</td>
+<td style="text-align:left;">
+35MF20080207
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+19.4
+</td>
+<td style="text-align:left;">
+33RR20090320
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+10.4
+</td>
+<td style="text-align:left;">
+33RR20070322
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+9.1
+</td>
+<td style="text-align:left;">
+33RR20070204
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+9.0
+</td>
+<td style="text-align:left;">
+33RR20080204
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+8.2
+</td>
+<td style="text-align:left;">
+49NZ20031209
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+7.0
+</td>
+<td style="text-align:left;">
+33RO20071215
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+6.0
+</td>
+<td style="text-align:left;">
+318M20040615
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4.9
+</td>
+<td style="text-align:left;">
+49NZ20030803
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4.6
+</td>
+<td style="text-align:left;">
+49NZ20090410
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+4.6
+</td>
+<td style="text-align:left;">
+49NZ20051031
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+6.8
+</td>
+<td style="text-align:left;">
+33RO20100308
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+6.3
+</td>
+<td style="text-align:left;">
+33RO20130803
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+5.7
+</td>
+<td style="text-align:left;">
+33RO20110926
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+5.5
+</td>
+<td style="text-align:left;">
+740H20180228
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5.1
+</td>
+<td style="text-align:left;">
+33RO20131223
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+19.3
+</td>
+<td style="text-align:left;">
+33RO20180423
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+18.4
+</td>
+<td style="text-align:left;">
+33RR20160321
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+12.5
+</td>
+<td style="text-align:left;">
+33RR20160208
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+10.5
+</td>
+<td style="text-align:left;">
+096U20180111
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+9.6
+</td>
+<td style="text-align:left;">
+325020190403
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+5.9
+</td>
+<td style="text-align:left;">
+33RO20161119
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+4.1
+</td>
+<td style="text-align:left;">
+318M20130321
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+4.1
+</td>
+<td style="text-align:left;">
+320620180309
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+4.0
+</td>
+<td style="text-align:left;">
+320620170703
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+Pacific
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+3.6
+</td>
+<td style="text-align:left;">
+49RY20110515
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>rm(GLODAP_count, large_cruises)</code></pre>
+</div>
+<div id="indian-ocean-1990-crm" class="section level1" number="9">
+<h1><span class="header-section-number">9</span> Indian Ocean 1990 CRM</h1>
 <pre class="r"><code>IO_CRM_meas &lt;- IO_CRM_meas %&gt;%
   fill(cruise:batch) %&gt;% 
   select(-starts_with(&quot;ph&quot;)) %&gt;% 
@@ -16304,8 +17170,8 @@ jens-daniel-mueller
 </div>
 </div>
 </div>
-<div id="write-files" class="section level1" number="9">
-<h1><span class="header-section-number">9</span> Write files</h1>
+<div id="write-files" class="section level1" number="10">
+<h1><span class="header-section-number">10</span> Write files</h1>
 <pre class="r"><code>GLODAP  %&gt;%
   write_csv(paste(path_preprocessing,
                   &quot;GLODAPv2.2021_preprocessed.csv&quot;,
@@ -16341,18 +17207,18 @@ GLODAP_adjustments  %&gt;%
 #     )
 #   )</code></pre>
 </div>
-<div id="overview-plots" class="section level1" number="10">
-<h1><span class="header-section-number">10</span> Overview plots</h1>
-<div id="assign-coarse-spatial-grid" class="section level2" number="10.1">
-<h2><span class="header-section-number">10.1</span> Assign coarse spatial grid</h2>
+<div id="overview-plots" class="section level1" number="11">
+<h1><span class="header-section-number">11</span> Overview plots</h1>
+<div id="assign-coarse-spatial-grid" class="section level2" number="11.1">
+<h2><span class="header-section-number">11.1</span> Assign coarse spatial grid</h2>
 <p>For the following plots, the cleaned data set was re-opened and observations were gridded spatially to intervals of:</p>
 <ul>
 <li>5° x 5°</li>
 </ul>
 <pre class="r"><code>GLODAP &lt;- m_grid_horizontal_coarse(GLODAP)</code></pre>
 </div>
-<div id="histogram-zonal-coverage" class="section level2" number="10.2">
-<h2><span class="header-section-number">10.2</span> Histogram Zonal coverage</h2>
+<div id="histogram-zonal-coverage" class="section level2" number="11.2">
+<h2><span class="header-section-number">11.2</span> Histogram Zonal coverage</h2>
 <pre class="r"><code>GLODAP_histogram_lat &lt;- GLODAP %&gt;%
   group_by(lat_grid) %&gt;%
   tally() %&gt;%
@@ -16414,8 +17280,8 @@ jens-daniel-mueller
 </div>
 <pre class="r"><code>rm(GLODAP_histogram_lat)</code></pre>
 </div>
-<div id="histogram-temporal-coverage" class="section level2" number="10.3">
-<h2><span class="header-section-number">10.3</span> Histogram temporal coverage</h2>
+<div id="histogram-temporal-coverage" class="section level2" number="11.3">
+<h2><span class="header-section-number">11.3</span> Histogram temporal coverage</h2>
 <pre class="r"><code>GLODAP_histogram_year &lt;- GLODAP %&gt;%
   group_by(year) %&gt;%
   tally() %&gt;%
@@ -16478,8 +17344,8 @@ jens-daniel-mueller
 </div>
 <pre class="r"><code>rm(GLODAP_histogram_year)</code></pre>
 </div>
-<div id="zonal-temporal-coverage-hovmoeller" class="section level2" number="10.4">
-<h2><span class="header-section-number">10.4</span> Zonal temporal coverage (Hovmoeller)</h2>
+<div id="zonal-temporal-coverage-hovmoeller" class="section level2" number="11.4">
+<h2><span class="header-section-number">11.4</span> Zonal temporal coverage (Hovmoeller)</h2>
 <pre class="r"><code>GLODAP_hovmoeller_year &lt;- GLODAP %&gt;%
   group_by(year, lat_grid) %&gt;%
   tally() %&gt;%
@@ -16543,8 +17409,8 @@ jens-daniel-mueller
 </div>
 <pre class="r"><code>rm(GLODAP_hovmoeller_year)</code></pre>
 </div>
-<div id="coverage-map" class="section level2" number="10.5">
-<h2><span class="header-section-number">10.5</span> Coverage map</h2>
+<div id="coverage-map" class="section level2" number="11.5">
+<h2><span class="header-section-number">11.5</span> Coverage map</h2>
 <pre class="r"><code>map +
   geom_raster(data = GLODAP_obs_grid,
               aes(lon, lat, fill = log10(n))) +
@@ -16734,8 +17600,8 @@ all_plots</code></pre>
 <pre><code>png 
   2 </code></pre>
 </div>
-<div id="time-series" class="section level2" number="10.6">
-<h2><span class="header-section-number">10.6</span> Time series</h2>
+<div id="time-series" class="section level2" number="11.6">
+<h2><span class="header-section-number">11.6</span> Time series</h2>
 <pre class="r"><code>GLODAP_time_series &lt;- GLODAP %&gt;% 
   select(year, basin_AIP, lat, depth, sal, temp,
          oxygen, aou, nitrate, silicate, phosphate,
@@ -16770,10 +17636,10 @@ GLODAP_time_series %&gt;%
   )</code></pre>
 </div>
 </div>
-<div id="canyon-b" class="section level1" number="11">
-<h1><span class="header-section-number">11</span> CANYON-B</h1>
-<div id="prediction" class="section level2" number="11.1">
-<h2><span class="header-section-number">11.1</span> Prediction</h2>
+<div id="canyon-b" class="section level1" number="12">
+<h1><span class="header-section-number">12</span> CANYON-B</h1>
+<div id="prediction" class="section level2" number="12.1">
+<h2><span class="header-section-number">12.1</span> Prediction</h2>
 <pre class="r"><code>source(&quot;/net/kryo/work/uptools/co2_calculation/CANYON-B/CANYONB.R&quot;)
 
 GLODAP_CB &lt;- GLODAP %&gt;%
@@ -16815,8 +17681,8 @@ GLODAP_CB &lt;- GLODAP_CB %&gt;%
     &quot;silicate_CANYONB&quot; = &quot;SiOH4&quot;
   )</code></pre>
 </div>
-<div id="comparison-to-observations" class="section level2" number="11.2">
-<h2><span class="header-section-number">11.2</span> Comparison to observations</h2>
+<div id="comparison-to-observations" class="section level2" number="12.2">
+<h2><span class="header-section-number">12.2</span> Comparison to observations</h2>
 <pre class="r"><code>variables &lt;- c(&quot;talk&quot;, &quot;tco2&quot;, &quot;nitrate&quot;, &quot;phosphate&quot;, &quot;silicate&quot;)
 
 for (i_variable in variables) {
@@ -16879,8 +17745,8 @@ for (i_variable in variables) {
   
 }</code></pre>
 </div>
-<div id="write-files-1" class="section level2" number="11.3">
-<h2><span class="header-section-number">11.3</span> Write files</h2>
+<div id="write-files-1" class="section level2" number="12.3">
+<h2><span class="header-section-number">12.3</span> Write files</h2>
 <pre class="r"><code>GLODAP_CB %&gt;% 
   select(row_number,
          talk_CANYONB, tco2_CANYONB,
@@ -16890,12 +17756,29 @@ for (i_variable in variables) {
                              sep = &quot;&quot;))</code></pre>
 </div>
 </div>
-<div id="crossover-data" class="section level1" number="12">
-<h1><span class="header-section-number">12</span> Crossover data</h1>
+<div id="crossover-data" class="section level1" number="13">
+<h1><span class="header-section-number">13</span> Crossover data</h1>
 <pre class="r"><code>GLODAP_CB &lt;-
   read_csv(paste(path_preprocessing,
                  &quot;GLODAPv2.2021_Canyon-B.csv&quot;,
                  sep = &quot;&quot;))</code></pre>
+<pre class="r"><code>cruises_phosphate_gap_fill &lt;-
+  c(&quot;33MW19930704&quot;,
+    &quot;33RO20030604&quot;,
+    &quot;33RO20050111&quot;,
+    &quot;33RO19980123&quot;)
+
+cruises_talk_gap_fill &lt;-
+  c(&quot;06AQ19980328&quot;)
+
+cruises_tco2_calc &lt;-
+  c(&quot;35TH20040604&quot;,
+    &quot;29AH20160617&quot;)
+
+cruises_talk_calc &lt;-
+  c(&quot;06MT19900123&quot;,
+    &quot;316N19920502&quot;,
+    &quot;316N19921006&quot;)</code></pre>
 <pre class="r"><code>xover_add_decade &lt;- glodapv2_2021_xover_add %&gt;%
   mutate(dateA = ymd(str_sub(cruise_A, 5, 12)),
          dateB = ymd(str_sub(cruise_B, 5, 12))) %&gt;%
@@ -18559,6 +19442,330 @@ tco2
 </tbody>
 </table>
 </div>
+<pre class="r"><code>xover_add_decade %&gt;%
+  filter(cruise_A %in% cruises_talk_calc,
+         parameter == &quot;talk&quot;) %&gt;% 
+  group_by(parameter, decade, cruise_A) %&gt;%
+  summarise(offset_mean = mean(offset, na.rm = TRUE)) %&gt;%
+  ungroup() %&gt;%
+  kable(caption = &quot;Decadal talk average per cruise&quot;) %&gt;%
+  kable_styling() %&gt;%
+  scroll_box(height = &quot;250px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:250px; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Decadal talk average per cruise
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+parameter
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+decade
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+cruise_A
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_mean
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+06MT19900123
+</td>
+<td style="text-align:right;">
+-1.7866112
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+316N19920502
+</td>
+<td style="text-align:right;">
+-0.0551690
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+316N19921006
+</td>
+<td style="text-align:right;">
+0.4878711
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+06MT19900123
+</td>
+<td style="text-align:right;">
+-4.0659303
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+316N19920502
+</td>
+<td style="text-align:right;">
+-4.0265274
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+316N19921006
+</td>
+<td style="text-align:right;">
+-0.9215473
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+06MT19900123
+</td>
+<td style="text-align:right;">
+-3.9344689
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+316N19920502
+</td>
+<td style="text-align:right;">
+-6.9326869
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:left;">
+316N19921006
+</td>
+<td style="text-align:right;">
+-2.7246632
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>xover_add_decade %&gt;%
+  filter(cruise_A %in% cruises_talk_calc,
+         parameter == &quot;talk&quot;) %&gt;% 
+  group_by(parameter, decade) %&gt;%
+  summarise(offset_mean = mean(offset, na.rm = TRUE)) %&gt;%
+  ungroup() %&gt;%
+  kable(caption = &quot;Decadal talk average&quot;) %&gt;%
+  kable_styling() %&gt;%
+  scroll_box(height = &quot;250px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:250px; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+Decadal talk average
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+parameter
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+decade
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_mean
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+-0.7851301
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+-3.6581063
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+-4.6182733
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>xover_add_decade %&gt;%
+  filter(cruise_A %in% cruises_talk_calc,
+         parameter == &quot;talk&quot;) %&gt;% 
+  group_by(parameter) %&gt;%
+  summarise(offset_mean = mean(offset, na.rm = TRUE)) %&gt;%
+  ungroup() %&gt;%
+  kable(caption = &quot;talk average&quot;) %&gt;%
+  kable_styling() %&gt;%
+  scroll_box(height = &quot;250px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:250px; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+talk average
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+parameter
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_mean
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:right;">
+-3.407015
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>xover_add_decade %&gt;%
+  filter(cruise_A %in% cruises_talk_calc,
+         parameter == &quot;talk&quot;) %&gt;% 
+  group_by(parameter, cruise_A) %&gt;%
+  summarise(offset_mean = mean(offset, na.rm = TRUE)) %&gt;%
+  ungroup() %&gt;%
+  kable(caption = &quot;talk average per cruise&quot;) %&gt;%
+  kable_styling() %&gt;%
+  scroll_box(height = &quot;250px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:250px; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<caption>
+talk average per cruise
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+parameter
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+cruise_A
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_mean
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+06MT19900123
+</td>
+<td style="text-align:right;">
+-3.557482
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+316N19920502
+</td>
+<td style="text-align:right;">
+-4.333354
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+316N19921006
+</td>
+<td style="text-align:right;">
+-1.052780
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <pre class="r"><code>hline_intercept &lt;- hline_intercept %&gt;% 
   filter(parameter %in% unique(xover_add_decade$parameter))
 
@@ -18616,6 +19823,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ecc669fd74b1b3c1a23f4677ebf89bbd66d95c43/docs/figure/read_GLODAPv2_2021.Rmd/prepare_additional_crossover_data-1.png" target="_blank">ecc669f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-01-04
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/494beda4944077d633d2c1f1e6e5367e2cccf719/docs/figure/read_GLODAPv2_2021.Rmd/prepare_additional_crossover_data-1.png" target="_blank">494beda</a>
 </td>
 <td>
@@ -18629,18 +19847,13 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<div id="gap-filling" class="section level2" number="12.1">
-<h2><span class="header-section-number">12.1</span> Gap filling</h2>
+<div id="gap-filling" class="section level2" number="13.1">
+<h2><span class="header-section-number">13.1</span> Gap filling</h2>
 <pre class="r"><code>GLODAP &lt;- left_join(GLODAP,
                     GLODAP_CB %&gt;% 
                       select(row_number, ends_with(&quot;_CANYONB&quot;)))
 
 # fill missing phosphate with CANYON-B estimate
-
-cruises_phosphate_gap_fill &lt;- c(&quot;33MW19930704&quot;,
-                                &quot;33RO20030604&quot;,
-                                &quot;33RO20050111&quot;,
-                                &quot;33RO19980123&quot;)
 
 GLODAP_phosphate_fill &lt;- GLODAP %&gt;%
   filter(cruise_expocode %in% cruises_phosphate_gap_fill,
@@ -18934,8 +20147,6 @@ jens-daniel-mueller
 </div>
 <pre class="r"><code># fill missing talk with CANYON-B estimate
 
-cruises_talk_gap_fill &lt;- c(&quot;06AQ19980328&quot;)
-
 GLODAP_talk_fill &lt;- GLODAP %&gt;%
   filter(cruise_expocode %in% cruises_talk_gap_fill,
          is.na(talk),
@@ -19083,13 +20294,9 @@ jens-daniel-mueller
   GLODAP_talk_fill
 )</code></pre>
 </div>
-<div id="flagging-1" class="section level2" number="12.2">
-<h2><span class="header-section-number">12.2</span> Flagging</h2>
-<pre class="r"><code>cruises_tco2_calc &lt;- c(
-  &quot;35TH20040604&quot;,
-  &quot;29AH20160617&quot;)
-
-GLODAP_tco2_calc &lt;- GLODAP %&gt;% 
+<div id="flagging-1" class="section level2" number="13.2">
+<h2><span class="header-section-number">13.2</span> Flagging</h2>
+<pre class="r"><code>GLODAP_tco2_calc &lt;- GLODAP %&gt;% 
   filter(cruise_expocode %in% cruises_tco2_calc,
          tco2f == 0)
 
@@ -19275,12 +20482,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>cruises_talk_calc &lt;- c(
-  &quot;06MT19900123&quot;,
-  &quot;316N19920502&quot;,
-  &quot;316N19921006&quot;)
-
-GLODAP_talk_calc &lt;- GLODAP %&gt;% 
+<pre class="r"><code>GLODAP_talk_calc &lt;- GLODAP %&gt;% 
   filter(cruise_expocode %in% cruises_talk_calc,
          talkf == 0)
 
@@ -19522,8 +20724,8 @@ jens-daniel-mueller
   GLODAP_talk_calc
 )</code></pre>
 </div>
-<div id="write-files-2" class="section level2" number="12.3">
-<h2><span class="header-section-number">12.3</span> Write files</h2>
+<div id="write-files-2" class="section level2" number="13.3">
+<h2><span class="header-section-number">13.3</span> Write files</h2>
 <pre class="r"><code>GLODAP_crossover &lt;- bind_rows(
   GLODAP_gap_fill,
   GLODAP_calc
