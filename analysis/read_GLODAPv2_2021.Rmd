@@ -1762,12 +1762,12 @@ rm(p_crossover_ts, p_crossover_decadal)
 
 ```{r RV_activity}
 
-RV_activity <- full_join(
+GLODAP_counts <- full_join(
   GLODAP,
   GLODAP_expocodes
 )
 
-RV_activity <- RV_activity %>%
+GLODAP_counts <- GLODAP_counts %>%
   mutate(decade = cut(
     year,
     seq(1990, 2020, 10),
@@ -1776,10 +1776,10 @@ RV_activity <- RV_activity %>%
   ), .after = year) %>% 
   filter(!is.na(decade))
 
-RV_activity <- RV_activity %>% 
+GLODAP_counts <- GLODAP_counts %>% 
   mutate(RV = str_sub(cruise_expocode, 1, 4))
 
-RV_activity <- RV_activity %>% 
+RV_activity <- GLODAP_counts %>% 
   count(decade, basin_AIP, RV) %>% 
   group_by(decade, basin_AIP) %>% 
   mutate(n_total = sum(n)) %>% 
@@ -1804,6 +1804,57 @@ RV_activity %>%
 rm(RV_activity)
 
 ```
+
+
+
+# Largest cruises
+
+```{r large_cruises, fig.asp=0.5}
+
+large_cruises <- GLODAP_counts %>% 
+  count(decade, basin_AIP, cruise_expocode) %>% 
+  group_by(decade, basin_AIP) %>% 
+  mutate(n_total = sum(n)) %>% 
+  ungroup() %>% 
+  mutate(n_prop = 100* n / n_total)
+
+large_cruises <- large_cruises %>% 
+  group_by(decade, basin_AIP) %>% 
+  mutate(rank = rank(-n_prop)) %>% 
+  ungroup()
+
+
+large_cruises %>%
+  group_split(decade, basin_AIP) %>%
+  head(1) %>%
+  map(
+    ~
+      ggplot(data = .x,
+             aes(rank, n_prop)) +
+      geom_line() +
+      geom_point(
+        data = .x %>% filter(rank <= 5),
+        aes(rank, n_prop, fill = cruise_expocode), shape = 21) +
+      scale_fill_brewer(palette = "Set1") +
+      xlim(0, max(large_cruises$rank)) +
+      labs(y = "proportion of tco2 samples (%)") +
+      facet_grid(decade ~ basin_AIP)
+  )
+
+large_cruises %>%
+  filter(rank <= 5) %>% 
+  select(decade, basin_AIP, rank, n_prop, cruise_expocode) %>% 
+  mutate(n_prop = round(n_prop, 1)) %>% 
+  arrange(decade, basin_AIP, rank) %>% 
+  kable() %>% 
+  kable_styling() %>% 
+  scroll_box(height = "300px")
+
+rm(GLODAP_count, large_cruises)
+
+```
+
+
 
 # Indian Ocean 1990 CRM
 
@@ -2245,6 +2296,33 @@ GLODAP_CB <-
 
 ```
 
+```{r define_cruises_to_check}
+
+cruises_phosphate_gap_fill <-
+  c("33MW19930704",
+    "33RO20030604",
+    "33RO20050111",
+    "33RO19980123")
+
+cruises_talk_gap_fill <-
+  c("06AQ19980328")
+
+cruises_tco2_calc <-
+  c("35TH20040604",
+    "29AH20160617")
+
+cruises_talk_calc <-
+  c("06MT19900123",
+    "316N19920502",
+    "316N19921006")
+
+
+```
+
+
+
+
+
 ```{r prepare_additional_crossover_data}
 
 xover_add_decade <- glodapv2_2021_xover_add %>%
@@ -2273,6 +2351,46 @@ xover_add_decade %>%
   summarise(offset_mean = mean(offset, na.rm = TRUE)) %>%
   ungroup() %>%
   kable(caption = "Decadal average per cruise and parameter") %>%
+  kable_styling() %>%
+  scroll_box(height = "250px")
+
+xover_add_decade %>%
+  filter(cruise_A %in% cruises_talk_calc,
+         parameter == "talk") %>% 
+  group_by(parameter, decade, cruise_A) %>%
+  summarise(offset_mean = mean(offset, na.rm = TRUE)) %>%
+  ungroup() %>%
+  kable(caption = "Decadal talk average per cruise") %>%
+  kable_styling() %>%
+  scroll_box(height = "250px")
+
+xover_add_decade %>%
+  filter(cruise_A %in% cruises_talk_calc,
+         parameter == "talk") %>% 
+  group_by(parameter, decade) %>%
+  summarise(offset_mean = mean(offset, na.rm = TRUE)) %>%
+  ungroup() %>%
+  kable(caption = "Decadal talk average") %>%
+  kable_styling() %>%
+  scroll_box(height = "250px")
+
+xover_add_decade %>%
+  filter(cruise_A %in% cruises_talk_calc,
+         parameter == "talk") %>% 
+  group_by(parameter) %>%
+  summarise(offset_mean = mean(offset, na.rm = TRUE)) %>%
+  ungroup() %>%
+  kable(caption = "talk average") %>%
+  kable_styling() %>%
+  scroll_box(height = "250px")
+
+xover_add_decade %>%
+  filter(cruise_A %in% cruises_talk_calc,
+         parameter == "talk") %>% 
+  group_by(parameter, cruise_A) %>%
+  summarise(offset_mean = mean(offset, na.rm = TRUE)) %>%
+  ungroup() %>%
+  kable(caption = "talk average per cruise") %>%
   kable_styling() %>%
   scroll_box(height = "250px")
 
@@ -2325,11 +2443,6 @@ GLODAP <- left_join(GLODAP,
                       select(row_number, ends_with("_CANYONB")))
 
 # fill missing phosphate with CANYON-B estimate
-
-cruises_phosphate_gap_fill <- c("33MW19930704",
-                                "33RO20030604",
-                                "33RO20050111",
-                                "33RO19980123")
 
 GLODAP_phosphate_fill <- GLODAP %>%
   filter(cruise_expocode %in% cruises_phosphate_gap_fill,
@@ -2392,8 +2505,6 @@ for (i_cruise in cruises_phosphate_gap_fill) {
 }
 
 # fill missing talk with CANYON-B estimate
-
-cruises_talk_gap_fill <- c("06AQ19980328")
 
 GLODAP_talk_fill <- GLODAP %>%
   filter(cruise_expocode %in% cruises_talk_gap_fill,
@@ -2466,9 +2577,6 @@ GLODAP_gap_fill <- bind_rows(
 
 ```{r flagged_cruises}
 
-cruises_tco2_calc <- c(
-  "35TH20040604",
-  "29AH20160617")
 
 GLODAP_tco2_calc <- GLODAP %>% 
   filter(cruise_expocode %in% cruises_tco2_calc,
@@ -2524,11 +2632,6 @@ for (i_cruise in cruises_tco2_calc) {
   
 }
 
-
-cruises_talk_calc <- c(
-  "06MT19900123",
-  "316N19920502",
-  "316N19921006")
 
 GLODAP_talk_calc <- GLODAP %>% 
   filter(cruise_expocode %in% cruises_talk_calc,
