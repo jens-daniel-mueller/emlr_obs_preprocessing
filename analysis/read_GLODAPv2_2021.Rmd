@@ -1936,6 +1936,7 @@ IO_CRM_offset %>%
 ```{r write_clean_data_files}
 
 GLODAP  %>%
+  select(-cruise_expocode) %>% 
   write_csv(paste(path_preprocessing,
                   "GLODAPv2.2021_preprocessed.csv",
                   sep = ""))
@@ -2152,7 +2153,7 @@ GLODAP_time_series %>%
 
 ## Prediction
 
-```{r calc_CANYON-B, eval=FALSE}
+```{r calc_CANYON-B}
 
 source("/net/kryo/work/uptools/co2_calculation/CANYON-B/CANYONB.R")
 
@@ -2201,7 +2202,7 @@ GLODAP_CB <- GLODAP_CB %>%
 
 ## Comparison to observations
 
-```{r CANYON-B_vs_observationd, fig.asp=0.4, eval=FALSE}
+```{r CANYON-B_vs_observationd, fig.asp=0.4}
 
 
 variables <- c("talk", "tco2", "nitrate", "phosphate", "silicate")
@@ -2272,7 +2273,7 @@ for (i_variable in variables) {
 
 ## Write files
 
-```{r write_Canyon-B_data_file, eval=FALSE}
+```{r write_Canyon-B_data_file}
 
 GLODAP_CB %>% 
   select(row_number,
