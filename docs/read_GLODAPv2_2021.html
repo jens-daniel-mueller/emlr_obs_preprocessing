@@ -562,16 +562,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree8eced638a54540f056f685ad1672191c989717catargetblank8eced63a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/8eced638a54540f056f685ad1672191c989717ca" target="_blank">8eced63</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree0c2d71913b7424dbf77022339c257dc145bc6ae0targetblank0c2d719a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/0c2d71913b7424dbf77022339c257dc145bc6ae0" target="_blank">0c2d719</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree8eced638a54540f056f685ad1672191c989717catargetblank8eced63a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree0c2d71913b7424dbf77022339c257dc145bc6ae0targetblank0c2d719a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/8eced638a54540f056f685ad1672191c989717ca" target="_blank">8eced63</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/0c2d71913b7424dbf77022339c257dc145bc6ae0" target="_blank">0c2d719</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -630,6 +630,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/0c2d71913b7424dbf77022339c257dc145bc6ae0/analysis/read_GLODAPv2_2021.Rmd" target="_blank">0c2d719</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+<td>
+decadal crossover evaluation pre subbasin
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/read_GLODAPv2_2021.html" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -16221,9 +16255,12 @@ jens-daniel-mueller
   NP_expocodes &lt;- inner_join(GLODAP, basinmask_5) %&gt;%
     filter(basin == i_basin)
   
+  print(
   map +
     geom_tile(data = NP_expocodes %&gt;% distinct(lon, lat),
-              aes(lon, lat))
+              aes(lon, lat)) +
+    labs(title = i_basin)
+  )
   
   NP_expocodes_qc &lt;- NP_expocodes %&gt;%
     select(row_number, cruise_expocode, ends_with(&quot;qc&quot;)) %&gt;%
@@ -16265,7 +16302,7 @@ jens-daniel-mueller
   
   
   for (decade_start in seq(1990, 2010, 10)) {
-    # decade_start &lt;- seq(1990, 2010, 10)[1]
+    # decade_start &lt;- seq(1990, 2010, 10)[3]
     
     xover_NP_A &lt;- xover_NP %&gt;%
       filter(dateA &gt;= decade_start &amp; dateA &lt; decade_start + 10)
@@ -16298,24 +16335,24 @@ jens-daniel-mueller
         )
       )
     
-    xover_NP &lt;- bind_rows(xover_NP_A,
+    xover_NP_decade &lt;- bind_rows(xover_NP_A,
                           xover_NP_B_rev)
     
     rm(xover_NP_A, xover_NP_B, xover_NP_B_rev)
     
     
-    xover_NP &lt;- left_join(xover_NP,
+    xover_NP_decade &lt;- left_join(xover_NP_decade,
                           NP_expocodes %&gt;% rename(cruise_A = cruise_expocode,
                                                   n_A = n))
-    xover_NP &lt;- left_join(xover_NP,
+    xover_NP_decade &lt;- left_join(xover_NP_decade,
                           NP_expocodes %&gt;% rename(cruise_B = cruise_expocode,
                                                   n_B = n))
     
-    xover_NP &lt;- xover_NP %&gt;%
+    xover_NP_decade &lt;- xover_NP_decade %&gt;%
       mutate(n = n_A + n_B) %&gt;%
       select(-starts_with(&quot;n_&quot;))
     
-    xover_NP_decade &lt;- xover_NP %&gt;%
+    xover_NP_decade &lt;- xover_NP_decade %&gt;%
       mutate(decade = cut(
         dateB,
         c(1989, 1999, 2009, 2019),
@@ -16406,6 +16443,44 @@ jens-daniel-mueller
     
   }
 }</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-1">
+Past versions of crossover_analysis_5_basin_decadal-1.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-1.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
@@ -16791,7 +16866,82 @@ tco2
 </tbody>
 </table>
 </div>
-<img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-1.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-2.png" width="672" style="display: block; margin: auto;" />
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-2">
+Past versions of crossover_analysis_5_basin_decadal-2.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-2.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-3">
+Past versions of crossover_analysis_5_basin_decadal-3.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-3.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
@@ -16836,6 +16986,40 @@ nitrate
 </tr>
 <tr>
 <td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0000257
+</td>
+<td style="text-align:right;">
+1.0000169
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0018432
+</td>
+<td style="text-align:right;">
+1.0032042
+</td>
+<td style="text-align:right;">
+1.0010000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 oxygen
 </td>
 <td style="text-align:left;">
@@ -16849,6 +17033,40 @@ oxygen
 </td>
 <td style="text-align:right;">
 0.9989082
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0001226
+</td>
+<td style="text-align:right;">
+1.0000061
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0048498
+</td>
+<td style="text-align:right;">
+1.0077504
+</td>
+<td style="text-align:right;">
+1.0008366
 </td>
 </tr>
 <tr>
@@ -16870,6 +17088,40 @@ phosphate
 </tr>
 <tr>
 <td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0001405
+</td>
+<td style="text-align:right;">
+1.0000473
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0023287
+</td>
+<td style="text-align:right;">
+1.0075652
+</td>
+<td style="text-align:right;">
+1.0017836
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 salinity
 </td>
 <td style="text-align:left;">
@@ -16883,6 +17135,40 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.0013737
+</td>
+<td style="text-align:right;">
+0.0007828
+</td>
+<td style="text-align:right;">
+0.0011662
 </td>
 </tr>
 <tr>
@@ -16904,6 +17190,40 @@ silicate
 </tr>
 <tr>
 <td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0000616
+</td>
+<td style="text-align:right;">
+1.0000493
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.9971455
+</td>
+<td style="text-align:right;">
+0.9957033
+</td>
+<td style="text-align:right;">
+0.9966471
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 talk
 </td>
 <td style="text-align:left;">
@@ -16917,6 +17237,40 @@ talk
 </td>
 <td style="text-align:right;">
 -0.9474929
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.4102622
+</td>
+<td style="text-align:right;">
+0.3930889
+</td>
+<td style="text-align:right;">
+0.0754311
 </td>
 </tr>
 <tr>
@@ -16936,10 +17290,119 @@ tco2
 0.7950000
 </td>
 </tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+-0.5040925
+</td>
+<td style="text-align:right;">
+-0.1939446
+</td>
+<td style="text-align:right;">
+-0.4672284
+</td>
+</tr>
 </tbody>
 </table>
 </div>
-<img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-3.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-4.png" width="672" style="display: block; margin: auto;" />
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-4">
+Past versions of crossover_analysis_5_basin_decadal-4.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-4.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-5">
+Past versions of crossover_analysis_5_basin_decadal-5.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-5.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
@@ -16966,11 +17429,479 @@ offset_adj_median
 </thead>
 <tbody>
 <tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+1.0033810
+</td>
+<td style="text-align:right;">
+1.0017172
+</td>
+<td style="text-align:right;">
+1.0023572
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9982013
+</td>
+<td style="text-align:right;">
+0.9968501
+</td>
+<td style="text-align:right;">
+0.9990010
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0000207
+</td>
+<td style="text-align:right;">
+1.0000299
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+0.9943415
+</td>
+<td style="text-align:right;">
+0.9915882
+</td>
+<td style="text-align:right;">
+1.0000030
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9954891
+</td>
+<td style="text-align:right;">
+0.9928671
+</td>
+<td style="text-align:right;">
+0.9991641
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0001594
+</td>
+<td style="text-align:right;">
+1.0006474
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+0.9927765
+</td>
+<td style="text-align:right;">
+0.9917255
+</td>
+<td style="text-align:right;">
+0.9932937
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9977907
+</td>
+<td style="text-align:right;">
+0.9925594
+</td>
+<td style="text-align:right;">
+0.9982195
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0000294
+</td>
+<td style="text-align:right;">
+1.0000333
+</td>
+<td style="text-align:right;">
+1.0000001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+-0.0006308
+</td>
+<td style="text-align:right;">
+-0.0005616
+</td>
+<td style="text-align:right;">
+-0.0003744
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+-0.0013737
+</td>
+<td style="text-align:right;">
+-0.0007828
+</td>
+<td style="text-align:right;">
+-0.0011662
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+1.0035691
+</td>
+<td style="text-align:right;">
+1.0045246
+</td>
+<td style="text-align:right;">
+1.0033109
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0030595
+</td>
+<td style="text-align:right;">
+1.0045904
+</td>
+<td style="text-align:right;">
+1.0033641
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0000484
+</td>
+<td style="text-align:right;">
+1.0001006
+</td>
+<td style="text-align:right;">
+1.0000001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+-1.7413708
+</td>
+<td style="text-align:right;">
+-1.5103407
+</td>
+<td style="text-align:right;">
+-1.7398016
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+-0.4102622
+</td>
+<td style="text-align:right;">
+-0.3930889
+</td>
+<td style="text-align:right;">
+-0.0754311
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+1.2565001
+</td>
+<td style="text-align:right;">
+0.9928463
+</td>
+<td style="text-align:right;">
+1.0330440
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.5040925
+</td>
+<td style="text-align:right;">
+0.1939446
+</td>
+<td style="text-align:right;">
+0.4672284
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
 </tr>
 </tbody>
 </table>
 </div>
-<img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-5.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-6.png" width="672" style="display: block; margin: auto;" />
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-6">
+Past versions of crossover_analysis_5_basin_decadal-6.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-6.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-7">
+Past versions of crossover_analysis_5_basin_decadal-7.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-7.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-8">
+Past versions of crossover_analysis_5_basin_decadal-8.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-8.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
@@ -17356,7 +18287,82 @@ tco2
 </tbody>
 </table>
 </div>
-<img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-7.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-8.png" width="672" style="display: block; margin: auto;" />
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-9">
+Past versions of crossover_analysis_5_basin_decadal-9.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-9" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-9.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-10.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-10">
+Past versions of crossover_analysis_5_basin_decadal-10.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-10" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-10.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
@@ -17401,6 +18407,40 @@ nitrate
 </tr>
 <tr>
 <td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0000725
+</td>
+<td style="text-align:right;">
+1.0000580
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0016937
+</td>
+<td style="text-align:right;">
+0.9999443
+</td>
+<td style="text-align:right;">
+1.0011000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 oxygen
 </td>
 <td style="text-align:left;">
@@ -17414,6 +18454,40 @@ oxygen
 </td>
 <td style="text-align:right;">
 0.9996750
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0000574
+</td>
+<td style="text-align:right;">
+1.0000638
+</td>
+<td style="text-align:right;">
+1.0000004
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0028668
+</td>
+<td style="text-align:right;">
+1.0016501
+</td>
+<td style="text-align:right;">
+1.0032604
 </td>
 </tr>
 <tr>
@@ -17435,6 +18509,40 @@ phosphate
 </tr>
 <tr>
 <td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0000953
+</td>
+<td style="text-align:right;">
+1.0000507
+</td>
+<td style="text-align:right;">
+1.0000006
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0081250
+</td>
+<td style="text-align:right;">
+1.0092757
+</td>
+<td style="text-align:right;">
+1.0011000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 salinity
 </td>
 <td style="text-align:left;">
@@ -17448,6 +18556,40 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0010000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.0012337
+</td>
+<td style="text-align:right;">
+0.0011848
+</td>
+<td style="text-align:right;">
+0.0000507
 </td>
 </tr>
 <tr>
@@ -17469,6 +18611,40 @@ silicate
 </tr>
 <tr>
 <td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0018525
+</td>
+<td style="text-align:right;">
+1.0015999
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.9949076
+</td>
+<td style="text-align:right;">
+0.9947182
+</td>
+<td style="text-align:right;">
+0.9938433
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 talk
 </td>
 <td style="text-align:left;">
@@ -17482,6 +18658,40 @@ talk
 </td>
 <td style="text-align:right;">
 1.4167500
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.3090154
+</td>
+<td style="text-align:right;">
+1.1958616
+</td>
+<td style="text-align:right;">
+0.9447500
 </td>
 </tr>
 <tr>
@@ -17501,10 +18711,119 @@ tco2
 1.6913000
 </td>
 </tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+-0.0656638
+</td>
+<td style="text-align:right;">
+-0.0647531
+</td>
+<td style="text-align:right;">
+-0.1067000
+</td>
+</tr>
 </tbody>
 </table>
 </div>
-<img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-9.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-10.png" width="672" style="display: block; margin: auto;" />
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-11.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-11">
+Past versions of crossover_analysis_5_basin_decadal-11.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-11" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-11.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-12">
+Past versions of crossover_analysis_5_basin_decadal-12.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-12" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
@@ -17531,11 +18850,479 @@ offset_adj_median
 </thead>
 <tbody>
 <tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+1.0004320
+</td>
+<td style="text-align:right;">
+1.0016295
+</td>
+<td style="text-align:right;">
+0.9992058
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9984909
+</td>
+<td style="text-align:right;">
+1.0002253
+</td>
+<td style="text-align:right;">
+0.9989012
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0000604
+</td>
+<td style="text-align:right;">
+1.0000595
+</td>
+<td style="text-align:right;">
+1.0000031
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+0.9979632
+</td>
+<td style="text-align:right;">
+0.9984111
+</td>
+<td style="text-align:right;">
+0.9984566
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9972214
+</td>
+<td style="text-align:right;">
+0.9984275
+</td>
+<td style="text-align:right;">
+0.9967502
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0000210
+</td>
+<td style="text-align:right;">
+1.0000176
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+0.9966369
+</td>
+<td style="text-align:right;">
+0.9988655
+</td>
+<td style="text-align:right;">
+0.9963749
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9925266
+</td>
+<td style="text-align:right;">
+0.9914080
+</td>
+<td style="text-align:right;">
+0.9989012
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0001150
+</td>
+<td style="text-align:right;">
+1.0000584
+</td>
+<td style="text-align:right;">
+1.0000017
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+-0.0004036
+</td>
+<td style="text-align:right;">
+-0.0001912
+</td>
+<td style="text-align:right;">
+-0.0004000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+-0.0012337
+</td>
+<td style="text-align:right;">
+-0.0011848
+</td>
+<td style="text-align:right;">
+-0.0000507
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+1.0107674
+</td>
+<td style="text-align:right;">
+1.0148146
+</td>
+<td style="text-align:right;">
+1.0051918
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0064439
+</td>
+<td style="text-align:right;">
+1.0061670
+</td>
+<td style="text-align:right;">
+1.0061948
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0001251
+</td>
+<td style="text-align:right;">
+1.0001223
+</td>
+<td style="text-align:right;">
+1.0000008
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+0.5974985
+</td>
+<td style="text-align:right;">
+0.5783019
+</td>
+<td style="text-align:right;">
+0.8136912
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+-1.3090154
+</td>
+<td style="text-align:right;">
+-1.1958616
+</td>
+<td style="text-align:right;">
+-0.9447500
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+1.8598674
+</td>
+<td style="text-align:right;">
+1.7959912
+</td>
+<td style="text-align:right;">
+1.7432059
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.0656638
+</td>
+<td style="text-align:right;">
+0.0647531
+</td>
+<td style="text-align:right;">
+0.1067000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
 </tr>
 </tbody>
 </table>
 </div>
-<img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-11.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" width="672" style="display: block; margin: auto;" />
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-13.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-13">
+Past versions of crossover_analysis_5_basin_decadal-13.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-13" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-13.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-14.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-14">
+Past versions of crossover_analysis_5_basin_decadal-14.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-14" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-14.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-15.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-15">
+Past versions of crossover_analysis_5_basin_decadal-15.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-15" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-15.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
@@ -17921,7 +19708,82 @@ tco2
 </tbody>
 </table>
 </div>
-<img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-13.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-14.png" width="672" style="display: block; margin: auto;" />
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-16.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-16">
+Past versions of crossover_analysis_5_basin_decadal-16.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-16" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-16.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-17.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-17">
+Past versions of crossover_analysis_5_basin_decadal-17.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-17" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-17.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
@@ -17966,6 +19828,40 @@ nitrate
 </tr>
 <tr>
 <td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0001334
+</td>
+<td style="text-align:right;">
+1.0000891
+</td>
+<td style="text-align:right;">
+1.0000003
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.9938363
+</td>
+<td style="text-align:right;">
+0.9932698
+</td>
+<td style="text-align:right;">
+0.9956679
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 oxygen
 </td>
 <td style="text-align:left;">
@@ -17979,6 +19875,40 @@ oxygen
 </td>
 <td style="text-align:right;">
 1.0001322
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0000399
+</td>
+<td style="text-align:right;">
+1.0000443
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0007849
+</td>
+<td style="text-align:right;">
+0.9993524
+</td>
+<td style="text-align:right;">
+1.0008785
 </td>
 </tr>
 <tr>
@@ -18000,6 +19930,40 @@ phosphate
 </tr>
 <tr>
 <td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0000605
+</td>
+<td style="text-align:right;">
+1.0000581
+</td>
+<td style="text-align:right;">
+1.0000007
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0009060
+</td>
+<td style="text-align:right;">
+1.0014515
+</td>
+<td style="text-align:right;">
+1.0020777
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 salinity
 </td>
 <td style="text-align:left;">
@@ -18013,6 +19977,40 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0001000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.0018489
+</td>
+<td style="text-align:right;">
+0.0017559
+</td>
+<td style="text-align:right;">
+0.0018358
 </td>
 </tr>
 <tr>
@@ -18034,6 +20032,40 @@ silicate
 </tr>
 <tr>
 <td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0002136
+</td>
+<td style="text-align:right;">
+1.0001160
+</td>
+<td style="text-align:right;">
+1.0000001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0005760
+</td>
+<td style="text-align:right;">
+1.0021476
+</td>
+<td style="text-align:right;">
+1.0018409
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 talk
 </td>
 <td style="text-align:left;">
@@ -18047,6 +20079,40 @@ talk
 </td>
 <td style="text-align:right;">
 -1.9213000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.4627533
+</td>
+<td style="text-align:right;">
+0.2254189
+</td>
+<td style="text-align:right;">
+-0.1629833
 </td>
 </tr>
 <tr>
@@ -18066,10 +20132,119 @@ tco2
 1.8213000
 </td>
 </tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+-0.7239355
+</td>
+<td style="text-align:right;">
+-0.5062694
+</td>
+<td style="text-align:right;">
+-0.9718994
+</td>
+</tr>
 </tbody>
 </table>
 </div>
-<img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-15.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-16.png" width="672" style="display: block; margin: auto;" />
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-18.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-18">
+Past versions of crossover_analysis_5_basin_decadal-18.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-18" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-18.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-19.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-19">
+Past versions of crossover_analysis_5_basin_decadal-19.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-19" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-19.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
@@ -18096,11 +20271,479 @@ offset_adj_median
 </thead>
 <tbody>
 <tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+1.0069899
+</td>
+<td style="text-align:right;">
+1.0061261
+</td>
+<td style="text-align:right;">
+1.0066951
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0062825
+</td>
+<td style="text-align:right;">
+1.0068542
+</td>
+<td style="text-align:right;">
+1.0043510
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0000230
+</td>
+<td style="text-align:right;">
+1.0000238
+</td>
+<td style="text-align:right;">
+1.0000008
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+0.9974536
+</td>
+<td style="text-align:right;">
+0.9989410
+</td>
+<td style="text-align:right;">
+0.9988229
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9992598
+</td>
+<td style="text-align:right;">
+1.0006850
+</td>
+<td style="text-align:right;">
+0.9991223
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0000122
+</td>
+<td style="text-align:right;">
+1.0000159
+</td>
+<td style="text-align:right;">
+1.0000001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+0.9978153
+</td>
+<td style="text-align:right;">
+0.9984112
+</td>
+<td style="text-align:right;">
+0.9968583
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9991875
+</td>
+<td style="text-align:right;">
+0.9986294
+</td>
+<td style="text-align:right;">
+0.9979266
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0000224
+</td>
+<td style="text-align:right;">
+1.0000181
+</td>
+<td style="text-align:right;">
+1.0000068
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+-0.0008975
+</td>
+<td style="text-align:right;">
+0.0000274
+</td>
+<td style="text-align:right;">
+0.0002009
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+-0.0018489
+</td>
+<td style="text-align:right;">
+-0.0017559
+</td>
+<td style="text-align:right;">
+-0.0018358
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+0.9953659
+</td>
+<td style="text-align:right;">
+0.9936255
+</td>
+<td style="text-align:right;">
+0.9942641
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9997295
+</td>
+<td style="text-align:right;">
+0.9980689
+</td>
+<td style="text-align:right;">
+0.9981628
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0002316
+</td>
+<td style="text-align:right;">
+1.0002007
+</td>
+<td style="text-align:right;">
+1.0000313
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+-2.0841410
+</td>
+<td style="text-align:right;">
+-2.7929988
+</td>
+<td style="text-align:right;">
+-1.9921088
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+-0.4627533
+</td>
+<td style="text-align:right;">
+-0.2254189
+</td>
+<td style="text-align:right;">
+0.1629833
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+2.4120977
+</td>
+<td style="text-align:right;">
+2.0509233
+</td>
+<td style="text-align:right;">
+2.2425192
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.7239355
+</td>
+<td style="text-align:right;">
+0.5062694
+</td>
+<td style="text-align:right;">
+0.9718994
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
 </tr>
 </tbody>
 </table>
 </div>
-<img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-17.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-18.png" width="672" style="display: block; margin: auto;" />
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-20.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-20">
+Past versions of crossover_analysis_5_basin_decadal-20.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-20" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-20.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-21.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-21">
+Past versions of crossover_analysis_5_basin_decadal-21.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-21" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-21.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-22.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-22">
+Past versions of crossover_analysis_5_basin_decadal-22.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-22" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-22.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
@@ -18486,7 +21129,82 @@ tco2
 </tbody>
 </table>
 </div>
-<img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-19.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-20.png" width="672" style="display: block; margin: auto;" />
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-23.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-23">
+Past versions of crossover_analysis_5_basin_decadal-23.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-23" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-23.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-24.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-24">
+Past versions of crossover_analysis_5_basin_decadal-24.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-24" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-24.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
@@ -18531,6 +21249,40 @@ nitrate
 </tr>
 <tr>
 <td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0002885
+</td>
+<td style="text-align:right;">
+1.0002526
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0046295
+</td>
+<td style="text-align:right;">
+1.0024768
+</td>
+<td style="text-align:right;">
+1.0053216
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 oxygen
 </td>
 <td style="text-align:left;">
@@ -18544,6 +21296,40 @@ oxygen
 </td>
 <td style="text-align:right;">
 0.9979551
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0001412
+</td>
+<td style="text-align:right;">
+1.0001818
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0038086
+</td>
+<td style="text-align:right;">
+1.0027344
+</td>
+<td style="text-align:right;">
+1.0027017
 </td>
 </tr>
 <tr>
@@ -18565,6 +21351,40 @@ phosphate
 </tr>
 <tr>
 <td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0007723
+</td>
+<td style="text-align:right;">
+1.0009562
+</td>
+<td style="text-align:right;">
+1.0000002
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0027112
+</td>
+<td style="text-align:right;">
+1.0011740
+</td>
+<td style="text-align:right;">
+1.0012237
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 salinity
 </td>
 <td style="text-align:left;">
@@ -18578,6 +21398,40 @@ salinity
 </td>
 <td style="text-align:right;">
 -0.0013000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+-0.0064878
+</td>
+<td style="text-align:right;">
+-0.0043466
+</td>
+<td style="text-align:right;">
+-0.0026000
 </td>
 </tr>
 <tr>
@@ -18599,6 +21453,40 @@ silicate
 </tr>
 <tr>
 <td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0008673
+</td>
+<td style="text-align:right;">
+1.0008117
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.9850334
+</td>
+<td style="text-align:right;">
+0.9855459
+</td>
+<td style="text-align:right;">
+0.9869000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 talk
 </td>
 <td style="text-align:left;">
@@ -18612,6 +21500,40 @@ talk
 </td>
 <td style="text-align:right;">
 -0.0668000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+-0.7200088
+</td>
+<td style="text-align:right;">
+-1.1461204
+</td>
+<td style="text-align:right;">
+-1.2687164
 </td>
 </tr>
 <tr>
@@ -18631,10 +21553,119 @@ tco2
 2.9689000
 </td>
 </tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+-3.8259951
+</td>
+<td style="text-align:right;">
+-3.0322458
+</td>
+<td style="text-align:right;">
+-3.7469366
+</td>
+</tr>
 </tbody>
 </table>
 </div>
-<img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-21.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-22.png" width="672" style="display: block; margin: auto;" />
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-25.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-25">
+Past versions of crossover_analysis_5_basin_decadal-25.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-25" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-25.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-26.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-26">
+Past versions of crossover_analysis_5_basin_decadal-26.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-26" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-26.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
@@ -18661,11 +21692,479 @@ offset_adj_median
 </thead>
 <tbody>
 <tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+0.9928999
+</td>
+<td style="text-align:right;">
+0.9947839
+</td>
+<td style="text-align:right;">
+0.9913006
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9957013
+</td>
+<td style="text-align:right;">
+0.9978117
+</td>
+<td style="text-align:right;">
+0.9947065
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0001135
+</td>
+<td style="text-align:right;">
+1.0001063
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+0.9942633
+</td>
+<td style="text-align:right;">
+0.9952196
+</td>
+<td style="text-align:right;">
+0.9949403
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9964431
+</td>
+<td style="text-align:right;">
+0.9974930
+</td>
+<td style="text-align:right;">
+0.9973055
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0000370
+</td>
+<td style="text-align:right;">
+1.0000302
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+0.9970529
+</td>
+<td style="text-align:right;">
+0.9996759
+</td>
+<td style="text-align:right;">
+0.9989105
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9975853
+</td>
+<td style="text-align:right;">
+0.9990935
+</td>
+<td style="text-align:right;">
+0.9987778
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0000847
+</td>
+<td style="text-align:right;">
+1.0000862
+</td>
+<td style="text-align:right;">
+1.0000001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+0.0035802
+</td>
+<td style="text-align:right;">
+0.0023281
+</td>
+<td style="text-align:right;">
+-0.0000487
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.0064878
+</td>
+<td style="text-align:right;">
+0.0043466
+</td>
+<td style="text-align:right;">
+0.0026000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+1.0170031
+</td>
+<td style="text-align:right;">
+1.0159833
+</td>
+<td style="text-align:right;">
+1.0177997
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0164748
+</td>
+<td style="text-align:right;">
+1.0158553
+</td>
+<td style="text-align:right;">
+1.0132739
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0002313
+</td>
+<td style="text-align:right;">
+1.0002201
+</td>
+<td style="text-align:right;">
+1.0000004
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+0.3766157
+</td>
+<td style="text-align:right;">
+0.4021624
+</td>
+<td style="text-align:right;">
+0.8105105
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.7200088
+</td>
+<td style="text-align:right;">
+1.1461204
+</td>
+<td style="text-align:right;">
+1.2687164
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+6.7308628
+</td>
+<td style="text-align:right;">
+5.2884049
+</td>
+<td style="text-align:right;">
+7.7144298
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+3.8259951
+</td>
+<td style="text-align:right;">
+3.0322458
+</td>
+<td style="text-align:right;">
+3.7469366
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
 </tr>
 </tbody>
 </table>
 </div>
-<img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-23.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-24.png" width="672" style="display: block; margin: auto;" />
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-27.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-27">
+Past versions of crossover_analysis_5_basin_decadal-27.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-27" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-27.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-28.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-28">
+Past versions of crossover_analysis_5_basin_decadal-28.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-28" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-28.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-29.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-29">
+Past versions of crossover_analysis_5_basin_decadal-29.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-29" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-29.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
@@ -19051,7 +22550,45 @@ tco2
 </tbody>
 </table>
 </div>
-<img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-25.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-26.png" width="672" style="display: block; margin: auto;" />
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-30.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-30">
+Past versions of crossover_analysis_5_basin_decadal-30.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-30" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-30.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-31.png" width="672" style="display: block; margin: auto;" />
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
@@ -19096,6 +22633,40 @@ nitrate
 </tr>
 <tr>
 <td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0000429
+</td>
+<td style="text-align:right;">
+1.0000381
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.9990939
+</td>
+<td style="text-align:right;">
+0.9992134
+</td>
+<td style="text-align:right;">
+0.9997290
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 oxygen
 </td>
 <td style="text-align:left;">
@@ -19109,6 +22680,40 @@ oxygen
 </td>
 <td style="text-align:right;">
 0.9942918
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0003993
+</td>
+<td style="text-align:right;">
+1.0003619
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0029198
+</td>
+<td style="text-align:right;">
+1.0042679
+</td>
+<td style="text-align:right;">
+0.9994962
 </td>
 </tr>
 <tr>
@@ -19130,6 +22735,40 @@ phosphate
 </tr>
 <tr>
 <td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0001191
+</td>
+<td style="text-align:right;">
+1.0001604
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0056392
+</td>
+<td style="text-align:right;">
+1.0058295
+</td>
+<td style="text-align:right;">
+1.0062517
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 salinity
 </td>
 <td style="text-align:left;">
@@ -19143,6 +22782,40 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0009000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.0015983
+</td>
+<td style="text-align:right;">
+0.0012445
+</td>
+<td style="text-align:right;">
+0.0013562
 </td>
 </tr>
 <tr>
@@ -19164,6 +22837,40 @@ silicate
 </tr>
 <tr>
 <td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0000821
+</td>
+<td style="text-align:right;">
+1.0000937
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.9955159
+</td>
+<td style="text-align:right;">
+0.9962325
+</td>
+<td style="text-align:right;">
+0.9955220
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 talk
 </td>
 <td style="text-align:left;">
@@ -19177,6 +22884,40 @@ talk
 </td>
 <td style="text-align:right;">
 -0.4376000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.5997282
+</td>
+<td style="text-align:right;">
+1.5684540
+</td>
+<td style="text-align:right;">
+1.6458585
 </td>
 </tr>
 <tr>
@@ -19196,10 +22937,44 @@ tco2
 0.4286000
 </td>
 </tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+-0.4773818
+</td>
+<td style="text-align:right;">
+-0.6948785
+</td>
+<td style="text-align:right;">
+-0.5675000
+</td>
+</tr>
 </tbody>
 </table>
 </div>
-<img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-27.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-28.png" width="672" style="display: block; margin: auto;" />
+<img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-32.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-33.png" width="672" style="display: block; margin: auto;" />
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
@@ -19226,11 +23001,366 @@ offset_adj_median
 </thead>
 <tbody>
 <tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+1.0004739
+</td>
+<td style="text-align:right;">
+1.0034215
+</td>
+<td style="text-align:right;">
+1.0013137
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0009802
+</td>
+<td style="text-align:right;">
+1.0008379
+</td>
+<td style="text-align:right;">
+1.0002711
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0000078
+</td>
+<td style="text-align:right;">
+1.0000076
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+0.9936765
+</td>
+<td style="text-align:right;">
+0.9951442
+</td>
+<td style="text-align:right;">
+0.9969659
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9974012
+</td>
+<td style="text-align:right;">
+0.9961867
+</td>
+<td style="text-align:right;">
+1.0005040
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0000412
+</td>
+<td style="text-align:right;">
+1.0000264
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+0.9942793
+</td>
+<td style="text-align:right;">
+0.9971747
+</td>
+<td style="text-align:right;">
+0.9932937
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9945115
+</td>
+<td style="text-align:right;">
+0.9942950
+</td>
+<td style="text-align:right;">
+0.9937871
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0000225
+</td>
+<td style="text-align:right;">
+1.0000212
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+0.0010850
+</td>
+<td style="text-align:right;">
+0.0020684
+</td>
+<td style="text-align:right;">
+-0.0000190
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+-0.0015983
+</td>
+<td style="text-align:right;">
+-0.0012445
+</td>
+<td style="text-align:right;">
+-0.0013562
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+1.0030559
+</td>
+<td style="text-align:right;">
+1.0034864
+</td>
+<td style="text-align:right;">
+1.0034525
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0045767
+</td>
+<td style="text-align:right;">
+1.0038398
+</td>
+<td style="text-align:right;">
+1.0044981
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0000277
+</td>
+<td style="text-align:right;">
+1.0000254
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+-1.5502396
+</td>
+<td style="text-align:right;">
+-2.0912907
+</td>
+<td style="text-align:right;">
+-2.0013646
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+-1.5997282
+</td>
+<td style="text-align:right;">
+-1.5684540
+</td>
+<td style="text-align:right;">
+-1.6458585
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+1990-1999
+</td>
+<td style="text-align:right;">
+0.9094575
+</td>
+<td style="text-align:right;">
+1.1260676
+</td>
+<td style="text-align:right;">
+0.9545519
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.4773818
+</td>
+<td style="text-align:right;">
+0.6948785
+</td>
+<td style="text-align:right;">
+0.5675000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-29.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-30.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-34.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-35.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="north-pacific-2010s" class="section level2" number="6.6">
 <h2><span class="header-section-number">6.6</span> North Pacific 2010s</h2>
