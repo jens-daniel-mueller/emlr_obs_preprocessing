@@ -14,8 +14,8 @@
 
 <title>Anthropogenic CO2 from 1994 to 2007</title>
 
-<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -40,7 +40,7 @@
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
-<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
 <style type="text/css">
 div.section {
@@ -401,6 +401,9 @@ div.tocify {
     <li>
       <a href="read_Sabine_2004.html">Sabine 2004</a>
     </li>
+    <li>
+      <a href="read_RECCAP2_flux_products.html">Flux products</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -444,7 +447,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Anthropogenic CO2 from 1994 to 2007</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">20 November, 2021</h4>
+<h4 class="date">15 February, 2022</h4>
 
 </div>
 
@@ -469,7 +472,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-11-20
+<strong>Last updated:</strong> 2022-02-15
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -478,8 +481,8 @@ div.tocify {
 <strong>Knit directory:</strong> <code>emlr_obs_preprocessing/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
 </p>
 <p>
-This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
-  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -560,16 +563,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree46c1246cafdf70c7dbb7681b04e429e202c7a969targetblank46c1246a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/46c1246cafdf70c7dbb7681b04e429e202c7a969" target="_blank">46c1246</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreefc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5targetblankfc1cf80a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/fc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5" target="_blank">fc1cf80</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree46c1246cafdf70c7dbb7681b04e429e202c7a969targetblank46c1246a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreefc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5targetblankfc1cf80a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/46c1246cafdf70c7dbb7681b04e429e202c7a969" target="_blank">46c1246</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/fc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5" target="_blank">fc1cf80</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -579,11 +582,14 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/
+    Ignored:    output/
 
 Untracked files:
+    Untracked:  code/IO_1990_own_crossover_analysis_backup.R
     Untracked:  code/read_GLODAPv2_2020.Rmd
 
 Unstaged changes:
+    Modified:   analysis/_site.yml
     Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
@@ -623,6 +629,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/f2871b9bcfdcde95f53736bba2625b148e6f1bbb/docs/read_Gruber_2019.html" target="_blank">f2871b9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-20
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -835,19 +858,19 @@ rerun with revised variable names
 </div>
 </div>
 <div id="data-source" class="section level1" number="1">
-<h1 number="1"><span class="header-section-number">1</span> Data source</h1>
+<h1><span class="header-section-number">1</span> Data source</h1>
 <ul>
 <li>Anthropogenic CO2 estimates (1994-2007) by Gruber et al. (2019) downloaded in August 2020 from <a href="https://www.nodc.noaa.gov/ocads/oceans/ndp_100/ndp100.html" target="_blank">NOAA/NCEI Ocean Carbon Data System (OCADS)</a></li>
 </ul>
 </div>
 <div id="read-nc-files" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> Read nc files</h1>
+<h1><span class="header-section-number">2</span> Read nc files</h1>
 <p>Here, we use the standard case V101 for public and raw data sets.</p>
 <div id="public-data-sets" class="section level2" number="2.1">
-<h2 number="2.1"><span class="header-section-number">2.1</span> Public data sets</h2>
+<h2><span class="header-section-number">2.1</span> Public data sets</h2>
 <p>The publicly available data sets contain only positive Cant estimates.</p>
 <div id="d-fields" class="section level3" number="2.1.1">
-<h3 number="2.1.1"><span class="header-section-number">2.1.1</span> 3d fields</h3>
+<h3><span class="header-section-number">2.1.1</span> 3d fields</h3>
 <pre class="r"><code># open file
 dcant &lt;- tidync(paste(
   path_gruber_2019,
@@ -878,7 +901,7 @@ dcant &lt;- dcant %&gt;%
 rm(dcant_gamma)</code></pre>
 </div>
 <div id="column-inventories" class="section level3" number="2.1.2">
-<h3 number="2.1.2"><span class="header-section-number">2.1.2</span> Column inventories</h3>
+<h3><span class="header-section-number">2.1.2</span> Column inventories</h3>
 <pre class="r"><code>dcant_inv &lt;- tidync(paste(
   path_gruber_2019,
   &quot;inv_dcant_emlr_cstar_gruber_94-07_vs1.nc&quot;,
@@ -920,7 +943,7 @@ dcant_inv_all &lt;- dcant_inv_all %&gt;%
 </div>
 </div>
 <div id="raw-data" class="section level2" number="2.2">
-<h2 number="2.2"><span class="header-section-number">2.2</span> Raw data</h2>
+<h2><span class="header-section-number">2.2</span> Raw data</h2>
 <p>Internally available data sets also contain negative Cant estimates, as they are generated in the “raw” output of the eMLR mapping step.</p>
 <pre class="r"><code># open v 101 file
 V101 &lt;- tidync(paste(path_gruber_2019,
@@ -941,7 +964,7 @@ V101 &lt;- V101 %&gt;%
 </div>
 </div>
 <div id="apply-basin-mask" class="section level1" number="3">
-<h1 number="3"><span class="header-section-number">3</span> Apply basin mask</h1>
+<h1><span class="header-section-number">3</span> Apply basin mask</h1>
 <pre class="r"><code># use only three basin to assign general basin mask
 # ie this is not specific to the MLR fitting
 basinmask &lt;- basinmask %&gt;% 
@@ -954,29 +977,29 @@ dcant_inv_all &lt;- inner_join(dcant_inv_all, basinmask)
 V101 &lt;- inner_join(V101, basinmask)</code></pre>
 </div>
 <div id="join-pos-and-all-delta-cant" class="section level1" number="4">
-<h1 number="4"><span class="header-section-number">4</span> Join pos and all delta Cant</h1>
+<h1><span class="header-section-number">4</span> Join pos and all delta Cant</h1>
 <pre class="r"><code># join files
 dcant_3d &lt;- inner_join(dcant, V101)
 
 rm(dcant, V101)</code></pre>
 </div>
 <div id="zonal-mean-section" class="section level1" number="5">
-<h1 number="5"><span class="header-section-number">5</span> Zonal mean section</h1>
+<h1><span class="header-section-number">5</span> Zonal mean section</h1>
 <pre class="r"><code>dcant_zonal &lt;- m_zonal_mean_sd(dcant_3d)</code></pre>
 </div>
 <div id="column-inventory" class="section level1" number="6">
-<h1 number="6"><span class="header-section-number">6</span> Column inventory</h1>
+<h1><span class="header-section-number">6</span> Column inventory</h1>
 <div id="calculation" class="section level2" number="6.1">
-<h2 number="6.1"><span class="header-section-number">6.1</span> Calculation</h2>
+<h2><span class="header-section-number">6.1</span> Calculation</h2>
 <pre class="r"><code>dcant_inv_layers &lt;- m_dcant_inv(dcant_3d)
 
 dcant_inv &lt;- dcant_inv_layers %&gt;% 
   filter(inv_depth == params_global$inventory_depth_standard)</code></pre>
 </div>
 <div id="plots" class="section level2" number="6.2">
-<h2 number="6.2"><span class="header-section-number">6.2</span> Plots</h2>
+<h2><span class="header-section-number">6.2</span> Plots</h2>
 <div id="all-cant" class="section level3" number="6.2.1">
-<h3 number="6.2.1"><span class="header-section-number">6.2.1</span> All Cant</h3>
+<h3><span class="header-section-number">6.2.1</span> All Cant</h3>
 <pre class="r"><code>p_map_cant_inv(
   df = dcant_inv,
   var = &quot;dcant&quot;,
@@ -1043,7 +1066,7 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="pos-cant" class="section level3" number="6.2.2">
-<h3 number="6.2.2"><span class="header-section-number">6.2.2</span> Pos Cant</h3>
+<h3><span class="header-section-number">6.2.2</span> Pos Cant</h3>
 <pre class="r"><code>p_map_cant_inv(
   df = dcant_inv,
   var = &quot;dcant_pos&quot;)</code></pre>
@@ -1184,7 +1207,7 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="published-inventories" class="section level3" number="6.2.3">
-<h3 number="6.2.3"><span class="header-section-number">6.2.3</span> Published inventories</h3>
+<h3><span class="header-section-number">6.2.3</span> Published inventories</h3>
 <pre class="r"><code>p_map_cant_inv(
   df = dcant_inv,
   var = &quot;dcant_pos&quot;)</code></pre>
@@ -1261,7 +1284,7 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="published-vs-calculated" class="section level3" number="6.2.4">
-<h3 number="6.2.4"><span class="header-section-number">6.2.4</span> Published vs calculated</h3>
+<h3><span class="header-section-number">6.2.4</span> Published vs calculated</h3>
 <pre class="r"><code># join published and calculated data sets
 dcant_inv_offset &lt;- inner_join(
   dcant_inv %&gt;% rename(dcant_re = dcant_pos),
@@ -1344,9 +1367,9 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="horizontal-plane-maps" class="section level1" number="7">
-<h1 number="7"><span class="header-section-number">7</span> Horizontal plane maps</h1>
+<h1><span class="header-section-number">7</span> Horizontal plane maps</h1>
 <div id="all-cant-1" class="section level2" number="7.1">
-<h2 number="7.1"><span class="header-section-number">7.1</span> All Cant</h2>
+<h2><span class="header-section-number">7.1</span> All Cant</h2>
 <pre class="r"><code>p_map_climatology(
   df = dcant_3d,
   var = &quot;dcant&quot;,
@@ -1402,7 +1425,7 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="positive-cant" class="section level2" number="7.2">
-<h2 number="7.2"><span class="header-section-number">7.2</span> Positive Cant</h2>
+<h2><span class="header-section-number">7.2</span> Positive Cant</h2>
 <pre class="r"><code>p_map_climatology(
   df = dcant_3d,
   var = &quot;dcant_pos&quot;)</code></pre>
@@ -1457,7 +1480,7 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="neutral-density" class="section level2" number="7.3">
-<h2 number="7.3"><span class="header-section-number">7.3</span> Neutral density</h2>
+<h2><span class="header-section-number">7.3</span> Neutral density</h2>
 <pre class="r"><code>p_map_climatology(
   df = dcant_3d,
   var = &quot;gamma&quot;)</code></pre>
@@ -1513,9 +1536,9 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="zonal-mean-section-plot" class="section level1" number="8">
-<h1 number="8"><span class="header-section-number">8</span> Zonal mean section plot</h1>
+<h1><span class="header-section-number">8</span> Zonal mean section plot</h1>
 <div id="positive-cant-1" class="section level2" number="8.1">
-<h2 number="8.1"><span class="header-section-number">8.1</span> Positive Cant</h2>
+<h2><span class="header-section-number">8.1</span> Positive Cant</h2>
 <pre class="r"><code>dcant_zonal %&gt;%
   group_split(basin_AIP) %&gt;%
   head(1) %&gt;%
@@ -1580,9 +1603,9 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="global-sections-plot" class="section level1" number="9">
-<h1 number="9"><span class="header-section-number">9</span> Global sections plot</h1>
+<h1><span class="header-section-number">9</span> Global sections plot</h1>
 <div id="all-cant-2" class="section level2" number="9.1">
-<h2 number="9.1"><span class="header-section-number">9.1</span> All Cant</h2>
+<h2><span class="header-section-number">9.1</span> All Cant</h2>
 <pre class="r"><code>p_section_global(
   df = dcant_3d,
   var = &quot;dcant&quot;,
@@ -1627,7 +1650,7 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="positive-cant-2" class="section level2" number="9.2">
-<h2 number="9.2"><span class="header-section-number">9.2</span> Positive Cant</h2>
+<h2><span class="header-section-number">9.2</span> Positive Cant</h2>
 <pre class="r"><code>p_section_global(
   df = dcant_3d,
   var = &quot;dcant_pos&quot;)</code></pre>
@@ -1672,9 +1695,9 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="sections-at-regular-longitudes" class="section level1" number="10">
-<h1 number="10"><span class="header-section-number">10</span> Sections at regular longitudes</h1>
+<h1><span class="header-section-number">10</span> Sections at regular longitudes</h1>
 <div id="all-cant-3" class="section level2" number="10.1">
-<h2 number="10.1"><span class="header-section-number">10.1</span> All Cant</h2>
+<h2><span class="header-section-number">10.1</span> All Cant</h2>
 <pre class="r"><code>p_section_climatology_regular(
   df = dcant_3d,
   var = &quot;dcant&quot;,
@@ -1719,7 +1742,7 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="positive-cant-3" class="section level2" number="10.2">
-<h2 number="10.2"><span class="header-section-number">10.2</span> Positive Cant</h2>
+<h2><span class="header-section-number">10.2</span> Positive Cant</h2>
 <pre class="r"><code>p_section_climatology_regular(
   df = dcant_3d,
   var = &quot;dcant_pos&quot;)</code></pre>
@@ -1763,7 +1786,7 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="neutral-density-1" class="section level2" number="10.3">
-<h2 number="10.3"><span class="header-section-number">10.3</span> Neutral density</h2>
+<h2><span class="header-section-number">10.3</span> Neutral density</h2>
 <pre class="r"><code>p_section_climatology_regular(
   df = dcant_3d,
   var = &quot;gamma&quot;)</code></pre>
@@ -1808,7 +1831,7 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="write-files" class="section level1" number="11">
-<h1 number="11"><span class="header-section-number">11</span> Write files</h1>
+<h1><span class="header-section-number">11</span> Write files</h1>
 <pre class="r"><code>dcant_3d %&gt;%
   write_csv(paste(path_preprocessing,
                   &quot;G19_dcant_3d.csv&quot;,
@@ -1830,7 +1853,7 @@ dcant_zonal %&gt;%
                   sep = &quot;&quot;))</code></pre>
 </div>
 <div id="reccap2-ocean" class="section level1" number="12">
-<h1 number="12"><span class="header-section-number">12</span> RECCAP2-ocean</h1>
+<h1><span class="header-section-number">12</span> RECCAP2-ocean</h1>
 <pre class="r"><code># extract coordinate reference system
 G19_raster &lt;- raster::brick(paste0(
   path_gruber_2019,
@@ -1879,24 +1902,24 @@ dcant &lt;- dcant %&gt;%
   m_layer_thickness() %&gt;% 
   mutate(surface_area = marelac::earth_surf(lat, lon),
          volume = layer_thickness * surface_area,
-         volume = if_else(is.na(dcant), NaN, volume))</code></pre>
-<pre><code>Error in get(genname, envir = envir) : object &#39;testthat_print&#39; not found</code></pre>
-<pre class="r"><code># check total volume
+         volume = if_else(is.na(dcant), NaN, volume))
+
+# check total volume
 dcant %&gt;% 
   summarise(total_ocean_volume = sum(volume, na.rm = TRUE))</code></pre>
-<pre><code>[38;5;246m# A tibble: 1 × 1[39m
+<pre><code># A tibble: 1 × 1
   total_ocean_volume
-               [3m[38;5;246m&lt;dbl&gt;[39m[23m
-[38;5;250m1[39m            1.25[38;5;246me[39m18</code></pre>
+               &lt;dbl&gt;
+1            1.25e18</code></pre>
 <pre class="r"><code># check total dcant
 dcant %&gt;% 
   filter(depth &lt;= 3000) %&gt;% 
   mutate(dcant_inv = dcant * volume) %&gt;% 
   summarise(total_dcant = sum(dcant_inv, na.rm = TRUE)*12*1e-15)</code></pre>
-<pre><code>[38;5;246m# A tibble: 1 × 1[39m
+<pre><code># A tibble: 1 × 1
   total_dcant
-        [3m[38;5;246m&lt;dbl&gt;[39m[23m
-[38;5;250m1[39m        31.8</code></pre>
+        &lt;dbl&gt;
+1        31.8</code></pre>
 <pre class="r"><code># select relevant columns
 dcant &lt;- dcant %&gt;% 
   select(lon, lat, depth, dcant, volume)
@@ -2048,20 +2071,20 @@ dcant_reopen</code></pre>
              max: 0.0229962165359498
 
      3 dimensions:
-        longitude  Size:360
+        longitude  Size:360 
             units: degrees_east
             long_name: longitude
-        latitude  Size:180
+        latitude  Size:180 
             units: degrees_north
             long_name: latitude
-        z  Size:33   *** is unlimited ***
+        z  Size:33   *** is unlimited *** 
             units: unknown
             long_name: z
 
     3 global attributes:
         Conventions: CF-1.4
-        created_by: R, packages ncdf4 and raster (version 3.4-5)
-        date: 2021-11-20 00:39:24</code></pre>
+        created_by: R, packages ncdf4 and raster (version 3.5-11)
+        date: 2022-02-16 00:00:53</code></pre>
 <pre class="r"><code>print(dcant_reopen)</code></pre>
 <pre><code>File /nfs/kryo/work/jenmueller/emlr_cant/observations/preprocessing/dcant_Gruber2019_1994-2007_v20211012.nc (NC_FORMAT_CLASSIC):
 
@@ -2140,20 +2163,20 @@ dcant_reopen</code></pre>
              max: 0.0229962165359498
 
      3 dimensions:
-        longitude  Size:360
+        longitude  Size:360 
             units: degrees_east
             long_name: longitude
-        latitude  Size:180
+        latitude  Size:180 
             units: degrees_north
             long_name: latitude
-        z  Size:33   *** is unlimited ***
+        z  Size:33   *** is unlimited *** 
             units: unknown
             long_name: z
 
     3 global attributes:
         Conventions: CF-1.4
-        created_by: R, packages ncdf4 and raster (version 3.4-5)
-        date: 2021-11-20 00:39:24</code></pre>
+        created_by: R, packages ncdf4 and raster (version 3.5-11)
+        date: 2022-02-16 00:00:53</code></pre>
 <pre class="r"><code>names(dcant_reopen$var)</code></pre>
 <pre><code>[1] &quot;crs&quot;   &quot;dcant&quot;</code></pre>
 <pre class="r"><code># add units
@@ -2278,20 +2301,20 @@ volume_reopen</code></pre>
              max: 3100118755654.2
 
      3 dimensions:
-        longitude  Size:360
+        longitude  Size:360 
             units: degrees_east
             long_name: longitude
-        latitude  Size:180
+        latitude  Size:180 
             units: degrees_north
             long_name: latitude
-        z  Size:33   *** is unlimited ***
+        z  Size:33   *** is unlimited *** 
             units: unknown
             long_name: z
 
     3 global attributes:
         Conventions: CF-1.4
-        created_by: R, packages ncdf4 and raster (version 3.4-5)
-        date: 2021-11-20 00:39:25</code></pre>
+        created_by: R, packages ncdf4 and raster (version 3.5-11)
+        date: 2022-02-16 00:00:53</code></pre>
 <pre class="r"><code>print(volume_reopen)</code></pre>
 <pre><code>File /nfs/kryo/work/jenmueller/emlr_cant/observations/preprocessing/volume_Gruber2019_1994-2007_v20211012.nc (NC_FORMAT_CLASSIC):
 
@@ -2370,20 +2393,20 @@ volume_reopen</code></pre>
              max: 3100118755654.2
 
      3 dimensions:
-        longitude  Size:360
+        longitude  Size:360 
             units: degrees_east
             long_name: longitude
-        latitude  Size:180
+        latitude  Size:180 
             units: degrees_north
             long_name: latitude
-        z  Size:33   *** is unlimited ***
+        z  Size:33   *** is unlimited *** 
             units: unknown
             long_name: z
 
     3 global attributes:
         Conventions: CF-1.4
-        created_by: R, packages ncdf4 and raster (version 3.4-5)
-        date: 2021-11-20 00:39:25</code></pre>
+        created_by: R, packages ncdf4 and raster (version 3.5-11)
+        date: 2022-02-16 00:00:53</code></pre>
 <pre class="r"><code>names(volume_reopen$var)</code></pre>
 <pre><code>[1] &quot;crs&quot;    &quot;volume&quot;</code></pre>
 <pre class="r"><code># add units
@@ -2716,13 +2739,13 @@ jens-daniel-mueller
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.0.3 (2020-10-10)
+<pre><code>R version 4.1.2 (2021-11-01)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: openSUSE Leap 15.2
+Running under: openSUSE Leap 15.3
 
 Matrix products: default
-BLAS:   /usr/local/R-4.0.3/lib64/R/lib/libRblas.so
-LAPACK: /usr/local/R-4.0.3/lib64/R/lib/libRlapack.so
+BLAS:   /usr/local/R-4.1.2/lib64/R/lib/libRblas.so
+LAPACK: /usr/local/R-4.1.2/lib64/R/lib/libRlapack.so
 
 locale:
  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -2736,51 +2759,54 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] ncdf4_1.17      stars_0.5-2     sf_0.9-8        abind_1.4-5    
- [5] tidync_0.2.4    ggforce_0.3.3   metR_0.9.0      scico_1.2.0    
- [9] patchwork_1.1.1 collapse_1.5.0  forcats_0.5.0   stringr_1.4.0  
-[13] dplyr_1.0.5     purrr_0.3.4     readr_1.4.0     tidyr_1.1.3    
-[17] tibble_3.1.3    ggplot2_3.3.5   tidyverse_1.3.0 workflowr_1.6.2
+ [1] ncdf4_1.19      stars_0.5-5     sf_1.0-5        abind_1.4-5    
+ [5] tidync_0.2.4    ggforce_0.3.3   metR_0.11.0     scico_1.3.0    
+ [9] patchwork_1.1.1 collapse_1.7.0  forcats_0.5.1   stringr_1.4.0  
+[13] dplyr_1.0.7     purrr_0.3.4     readr_2.1.1     tidyr_1.1.4    
+[17] tibble_3.1.6    ggplot2_3.3.5   tidyverse_1.3.1 workflowr_1.7.0
 
 loaded via a namespace (and not attached):
- [1] colorspace_2.0-2         RcppEigen_0.3.3.7.0      ellipsis_0.3.2          
- [4] class_7.3-17             rgdal_1.5-18             rprojroot_2.0.2         
- [7] RcppArmadillo_0.10.1.2.0 fs_1.5.0                 rstudioapi_0.13         
-[10] farver_2.0.3             fansi_0.4.1              lubridate_1.7.9         
-[13] xml2_1.3.2               codetools_0.2-16         knitr_1.33              
-[16] polyclip_1.10-0          jsonlite_1.7.1           gsw_1.0-5               
-[19] broom_0.7.9              dbplyr_1.4.4             compiler_4.0.3          
-[22] httr_1.4.2               backports_1.1.10         assertthat_0.2.1        
-[25] Matrix_1.2-18            cli_3.0.1                later_1.2.0             
-[28] tweenr_1.0.2             htmltools_0.5.1.1        tools_4.0.3             
-[31] gtable_0.3.0             glue_1.4.2               Rcpp_1.0.5              
-[34] cellranger_1.1.0         jquerylib_0.1.4          RNetCDF_2.4-2           
-[37] raster_3.4-5             vctrs_0.3.8              lwgeom_0.2-5            
-[40] xfun_0.25                testthat_2.3.2           rvest_0.3.6             
-[43] lifecycle_1.0.0          ncmeta_0.3.0             oce_1.2-0               
-[46] MASS_7.3-53              scales_1.1.1             hms_0.5.3               
-[49] promises_1.1.1           parallel_4.0.3           yaml_2.2.1              
-[52] sass_0.4.0               stringi_1.5.3            highr_0.8               
-[55] e1071_1.7-4              checkmate_2.0.0          shape_1.4.5             
-[58] rlang_0.4.11             pkgconfig_2.0.3          evaluate_0.14           
-[61] lattice_0.20-41          labeling_0.4.2           tidyselect_1.1.0        
-[64] seacarb_3.2.14           magrittr_1.5             R6_2.5.0                
-[67] generics_0.1.0           DBI_1.1.0                pillar_1.6.2            
-[70] haven_2.3.1              whisker_0.4              withr_2.3.0             
-[73] units_0.6-7              sp_1.4-4                 modelr_0.1.8            
-[76] crayon_1.3.4             KernSmooth_2.23-17       utf8_1.1.4              
-[79] rmarkdown_2.10           grid_4.0.3               readxl_1.3.1            
-[82] isoband_0.2.2            data.table_1.14.0        blob_1.2.1              
-[85] git2r_0.27.1             reprex_0.3.0             digest_0.6.27           
-[88] classInt_0.4-3           httpuv_1.5.4             munsell_0.5.0           
-[91] viridisLite_0.3.0        bslib_0.2.5.1            marelac_2.1.10          </code></pre>
+  [1] colorspace_2.0-2   ellipsis_0.3.2     class_7.3-20      
+  [4] rgdal_1.5-28       rprojroot_2.0.2    fs_1.5.2          
+  [7] rstudioapi_0.13    proxy_0.4-26       farver_2.1.0      
+ [10] bit64_4.0.5        fansi_1.0.2        lubridate_1.8.0   
+ [13] xml2_1.3.3         codetools_0.2-18   knitr_1.37        
+ [16] polyclip_1.10-0    jsonlite_1.7.3     gsw_1.0-6         
+ [19] broom_0.7.11       dbplyr_2.1.1       compiler_4.1.2    
+ [22] httr_1.4.2         backports_1.4.1    assertthat_0.2.1  
+ [25] fastmap_1.1.0      cli_3.1.1          later_1.3.0       
+ [28] tweenr_1.0.2       htmltools_0.5.2    tools_4.1.2       
+ [31] gtable_0.3.0       glue_1.6.0         Rcpp_1.0.8        
+ [34] cellranger_1.1.0   jquerylib_0.1.4    RNetCDF_2.5-2     
+ [37] raster_3.5-11      vctrs_0.3.8        lwgeom_0.2-8      
+ [40] xfun_0.29          ps_1.6.0           rvest_1.0.2       
+ [43] lifecycle_1.0.1    ncmeta_0.3.0       oce_1.5-0         
+ [46] terra_1.5-12       getPass_0.2-2      MASS_7.3-55       
+ [49] scales_1.1.1       vroom_1.5.7        hms_1.1.1         
+ [52] promises_1.2.0.1   parallel_4.1.2     yaml_2.2.1        
+ [55] sass_0.4.0         stringi_1.7.6      highr_0.9         
+ [58] e1071_1.7-9        checkmate_2.0.0    shape_1.4.6       
+ [61] rlang_0.4.12       pkgconfig_2.0.3    SolveSAPHE_2.1.0  
+ [64] evaluate_0.14      lattice_0.20-45    labeling_0.4.2    
+ [67] bit_4.0.4          processx_3.5.2     tidyselect_1.1.1  
+ [70] seacarb_3.3.0      magrittr_2.0.1     R6_2.5.1          
+ [73] generics_0.1.1     DBI_1.1.2          pillar_1.6.4      
+ [76] haven_2.4.3        whisker_0.4        withr_2.4.3       
+ [79] units_0.7-2        sp_1.4-6           modelr_0.1.8      
+ [82] crayon_1.4.2       KernSmooth_2.23-20 utf8_1.2.2        
+ [85] tzdb_0.2.0         rmarkdown_2.11     grid_4.1.2        
+ [88] readxl_1.3.1       isoband_0.2.5      data.table_1.14.2 
+ [91] callr_3.7.0        git2r_0.29.0       reprex_2.0.1      
+ [94] digest_0.6.29      classInt_0.4-3     httpuv_1.6.5      
+ [97] munsell_0.5.0      viridisLite_0.4.0  bslib_0.3.1       
+[100] marelac_2.1.10    </code></pre>
 </div>
 </div>
 
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
 TeX fonts only; see
-http://docs.mathjax.org/en/latest/configuration.html.  This will make
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
 the presentation more consistent at the cost of the webpage sometimes
 taking slightly longer to load. Note that this only works because the
 footer is added to webpages before the MathJax javascript. -->

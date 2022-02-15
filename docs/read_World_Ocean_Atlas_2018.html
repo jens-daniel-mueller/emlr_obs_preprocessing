@@ -14,8 +14,8 @@
 
 <title>World Ocean Atlas 2018</title>
 
-<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -40,7 +40,7 @@
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
-<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
 <style type="text/css">
 div.section {
@@ -401,6 +401,9 @@ div.tocify {
     <li>
       <a href="read_Sabine_2004.html">Sabine 2004</a>
     </li>
+    <li>
+      <a href="read_RECCAP2_flux_products.html">Flux products</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -444,7 +447,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">World Ocean Atlas 2018</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">19 November, 2021</h4>
+<h4 class="date">15 February, 2022</h4>
 
 </div>
 
@@ -469,7 +472,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-11-19
+<strong>Last updated:</strong> 2022-02-15
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -478,8 +481,8 @@ div.tocify {
 <strong>Knit directory:</strong> <code>emlr_obs_preprocessing/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
 </p>
 <p>
-This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
-  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -560,16 +563,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree46c1246cafdf70c7dbb7681b04e429e202c7a969targetblank46c1246a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/46c1246cafdf70c7dbb7681b04e429e202c7a969" target="_blank">46c1246</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreefc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5targetblankfc1cf80a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/fc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5" target="_blank">fc1cf80</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree46c1246cafdf70c7dbb7681b04e429e202c7a969targetblank46c1246a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreefc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5targetblankfc1cf80a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/46c1246cafdf70c7dbb7681b04e429e202c7a969" target="_blank">46c1246</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/fc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5" target="_blank">fc1cf80</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -579,11 +582,14 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/
+    Ignored:    output/
 
 Untracked files:
+    Untracked:  code/IO_1990_own_crossover_analysis_backup.R
     Untracked:  code/read_GLODAPv2_2020.Rmd
 
 Unstaged changes:
+    Modified:   analysis/_site.yml
     Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
@@ -623,6 +629,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/f2871b9bcfdcde95f53736bba2625b148e6f1bbb/docs/read_World_Ocean_Atlas_2018.html" target="_blank">f2871b9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-20
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1600,17 +1623,17 @@ Initial commit
 </div>
 </div>
 <div id="data-source" class="section level1" number="1">
-<h1 number="1"><span class="header-section-number">1</span> Data source</h1>
+<h1><span class="header-section-number">1</span> Data source</h1>
 <ul>
 <li>Data source: <a href="https://www.nodc.noaa.gov/OC5/woa18/woa18data.html" target="_blank">World Ocean Atlas 2018</a></li>
 </ul>
 </div>
 <div id="masks" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> Masks</h1>
+<h1><span class="header-section-number">2</span> Masks</h1>
 <div id="land" class="section level2" number="2.1">
-<h2 number="2.1"><span class="header-section-number">2.1</span> Land</h2>
+<h2><span class="header-section-number">2.1</span> Land</h2>
 <div id="read-mask" class="section level3" number="2.1.1">
-<h3 number="2.1.1"><span class="header-section-number">2.1.1</span> Read mask</h3>
+<h3><span class="header-section-number">2.1.1</span> Read mask</h3>
 <p>The land sea mask with 1x1° resolution from the file <code>landsea_01.msk</code> was used.</p>
 <pre class="r"><code>landsea_01 &lt;- read_csv(
   paste(
@@ -1621,7 +1644,7 @@ Initial commit
   col_types = list(.default = &quot;d&quot;))</code></pre>
 </div>
 <div id="label" class="section level3" number="2.1.2">
-<h3 number="2.1.2"><span class="header-section-number">2.1.2</span> Label</h3>
+<h3><span class="header-section-number">2.1.2</span> Label</h3>
 <p>According to the <a href="https://data.nodc.noaa.gov/woa/WOA18/DOC/woa18documentation.pdf" target="_blank">WOA18 documentation</a> document:</p>
 <p><em>“The landsea_XX.msk contains the standard depth level number at which the bottom of the ocean is first encountered at each quarter-degree or one-degree square for the entire world. Land will have a value of 1, corresponding to the surface.”</em></p>
 <p>The landmask was derived as coordinates with value 1.</p>
@@ -1646,9 +1669,9 @@ rm(landsea_01)</code></pre>
 </div>
 </div>
 <div id="basins" class="section level2" number="2.2">
-<h2 number="2.2"><span class="header-section-number">2.2</span> Basins</h2>
+<h2><span class="header-section-number">2.2</span> Basins</h2>
 <div id="read-mask-1" class="section level3" number="2.2.1">
-<h3 number="2.2.1"><span class="header-section-number">2.2.1</span> Read mask</h3>
+<h3><span class="header-section-number">2.2.1</span> Read mask</h3>
 <p>The surface mask (0m) with 1x1° resolution from the file <code>basinmask_01.msk</code> was used.</p>
 <pre class="r"><code>basinmask_01 &lt;- read_csv(
   paste(
@@ -1664,7 +1687,7 @@ basinmask_01 &lt;- basinmask_01 %&gt;%
   rename(lat = Latitude, lon = Longitude)</code></pre>
 </div>
 <div id="basins-for-budgets" class="section level3" number="2.2.2">
-<h3 number="2.2.2"><span class="header-section-number">2.2.2</span> Basins for budgets</h3>
+<h3><span class="header-section-number">2.2.2</span> Basins for budgets</h3>
 <p>According to <a href="https://www.nodc.noaa.gov/OC5/WOD/wod-woa-faqs.html" target="_blank">WOA FAQ</a> website and <a href="https://data.nodc.noaa.gov/woa/WOA18/DOC/woa18documentation.pdf" target="_blank">WOA18 documentation</a>, number codes in the mask files were used to assign ocean basins as follows:</p>
 <p>Atlantic Ocean:</p>
 <ul>
@@ -1830,7 +1853,7 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="basins-for-mlr-fitting" class="section level3" number="2.2.3">
-<h3 number="2.2.3"><span class="header-section-number">2.2.3</span> Basins for MLR fitting</h3>
+<h3><span class="header-section-number">2.2.3</span> Basins for MLR fitting</h3>
 <p>For the MLR fitting, ocean basins are further split up, as plotted below.</p>
 <pre class="r"><code># 1 basins
 basinmask_01 &lt;- basinmask_01 %&gt;%
@@ -2776,7 +2799,7 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="global-section" class="section level2" number="2.3">
-<h2 number="2.3"><span class="header-section-number">2.3</span> Global section</h2>
+<h2><span class="header-section-number">2.3</span> Global section</h2>
 <p>To plot sections from the North Atlantic south to the Southern Ocean, around Antarctica and back North across the Pacific Ocean, corresponding coordinates were subsetted from the basin mask and distances between coordinate grid points calculated.</p>
 <pre class="r"><code>section &lt;- basinmask_01 %&gt;%
   select(lon, lat)
@@ -3004,7 +3027,7 @@ Jens Müller
 </div>
 </div>
 <div id="write-files" class="section level2" number="2.4">
-<h2 number="2.4"><span class="header-section-number">2.4</span> Write files</h2>
+<h2><span class="header-section-number">2.4</span> Write files</h2>
 <pre class="r"><code># basin mask
 basinmask_01 %&gt;%
   write_csv(paste(path_files,
@@ -3024,7 +3047,7 @@ map %&gt;%
 </div>
 </div>
 <div id="climatology-s-and-t" class="section level1" number="3">
-<h1 number="3"><span class="header-section-number">3</span> Climatology S and T</h1>
+<h1><span class="header-section-number">3</span> Climatology S and T</h1>
 <p>Copied from the WOA FAQ website, the file naming conventions is:</p>
 <p>PREF_DDDD_VTTFFGG.EXT, where:</p>
 <ul>
@@ -3051,7 +3074,7 @@ map %&gt;%
 <p><em>What are the units for temperature and salinity in the WOA18?</em></p>
 <p><em>In situ temperatures used for WOA18 are not converted from their original scale, so there is a mix of IPTS-48, IPTS-68, and ITS-90 (and pre IPTS-48 temperatures). The differences between scales are small (on the order of 0.01°C) and should not have much effect on the climatological means, except, possibly at very deep depths. Values for salinity are on the Practical salinity scale (PSS-78). Pre-1978 salinity values converted from conductivity may have used a different salinity scale. Pre-conductivity salinities use the Knudsen method.</em></p>
 <div id="read-nc-files" class="section level2" number="3.1">
-<h2 number="3.1"><span class="header-section-number">3.1</span> Read nc files</h2>
+<h2><span class="header-section-number">3.1</span> Read nc files</h2>
 <pre class="r"><code># temperature
 
 WOA18_temp &lt;- tidync(paste(
@@ -3086,12 +3109,12 @@ WOA18_sal_tibble &lt;- WOA18_sal_tibble  %&gt;%
 rm(WOA18_sal, WOA18_temp)</code></pre>
 </div>
 <div id="join-predictors" class="section level2" number="3.2">
-<h2 number="3.2"><span class="header-section-number">3.2</span> Join predictors</h2>
+<h2><span class="header-section-number">3.2</span> Join predictors</h2>
 <pre class="r"><code>WOA18_sal_temp &lt;- full_join(WOA18_sal_tibble, WOA18_temp_tibble)
 rm(WOA18_sal_tibble, WOA18_temp_tibble)</code></pre>
 </div>
 <div id="apply-basin-mask" class="section level2" number="3.3">
-<h2 number="3.3"><span class="header-section-number">3.3</span> Apply basin mask</h2>
+<h2><span class="header-section-number">3.3</span> Apply basin mask</h2>
 <pre class="r"><code># use only three basin to assign general basin mask
 # ie this is not specific to the MLR fitting
 
@@ -3104,15 +3127,15 @@ basinmask_01 &lt;- basinmask_01 %&gt;%
 WOA18_sal_temp &lt;- inner_join(WOA18_sal_temp, basinmask_01)</code></pre>
 </div>
 <div id="subset-depth-levels" class="section level2" number="3.4">
-<h2 number="3.4"><span class="header-section-number">3.4</span> Subset depth levels</h2>
+<h2><span class="header-section-number">3.4</span> Subset depth levels</h2>
 <pre class="r"><code>WOA18_sal_temp &lt;- WOA18_sal_temp %&gt;% 
   filter(depth %in% params_global$depth_levels_33)</code></pre>
 </div>
 <div id="potential-temperature" class="section level2" number="3.5">
-<h2 number="3.5"><span class="header-section-number">3.5</span> Potential temperature</h2>
+<h2><span class="header-section-number">3.5</span> Potential temperature</h2>
 <p>Potential temperature is calculated as in input variable for the neutral density calculation.</p>
 <div id="calculation" class="section level3" number="3.5.1">
-<h3 number="3.5.1"><span class="header-section-number">3.5.1</span> Calculation</h3>
+<h3><span class="header-section-number">3.5.1</span> Calculation</h3>
 <pre class="r"><code>WOA18_sal_temp &lt;- WOA18_sal_temp %&gt;% 
   mutate(THETA = swTheta(salinity = sal,
                          temperature = temp,
@@ -3122,7 +3145,7 @@ WOA18_sal_temp &lt;- inner_join(WOA18_sal_temp, basinmask_01)</code></pre>
                          latitude = lat))</code></pre>
 </div>
 <div id="profile" class="section level3" number="3.5.2">
-<h3 number="3.5.2"><span class="header-section-number">3.5.2</span> Profile</h3>
+<h3><span class="header-section-number">3.5.2</span> Profile</h3>
 <p>Example profile from North Atlantic Ocean.</p>
 <pre class="r"><code>WOA18_sal_temp %&gt;%
   filter(lat == params_global$lat_Atl_profile,
@@ -3262,7 +3285,7 @@ Jens Müller
 </div>
 </div>
 <div id="section" class="section level3" number="3.5.3">
-<h3 number="3.5.3"><span class="header-section-number">3.5.3</span> Section</h3>
+<h3><span class="header-section-number">3.5.3</span> Section</h3>
 <pre class="r"><code>p_section_global(
   df = WOA18_sal_temp,
   var = &quot;THETA&quot;)</code></pre>
@@ -3373,10 +3396,10 @@ Jens Müller
 </div>
 </div>
 <div id="neutral-density" class="section level2" number="3.6">
-<h2 number="3.6"><span class="header-section-number">3.6</span> Neutral density</h2>
+<h2><span class="header-section-number">3.6</span> Neutral density</h2>
 <p>Neutral density gamma was calculated with a Python script provided by Serazin et al (2011), which performs a polynomial approximation of the original gamma calculation.</p>
 <div id="calculation-1" class="section level3" number="3.6.1">
-<h3 number="3.6.1"><span class="header-section-number">3.6.1</span> Calculation</h3>
+<h3><span class="header-section-number">3.6.1</span> Calculation</h3>
 <pre class="r"><code># calculate pressure from depth
 
 WOA18_sal_temp &lt;- WOA18_sal_temp %&gt;%
@@ -3419,21 +3442,21 @@ rm(WOA18_sal_temp_gamma_calc, WOA18_sal_temp_gamma_prep)</code></pre>
 </div>
 </div>
 <div id="write-file" class="section level2" number="3.7">
-<h2 number="3.7"><span class="header-section-number">3.7</span> Write file</h2>
+<h2><span class="header-section-number">3.7</span> Write file</h2>
 <pre class="r"><code>WOA18_sal_temp %&gt;%
   write_csv(paste(path_preprocessing,
                   &quot;WOA18_sal_temp.csv&quot;,
                   sep = &quot;&quot;))</code></pre>
 </div>
 <div id="temperature-plots" class="section level2" number="3.8">
-<h2 number="3.8"><span class="header-section-number">3.8</span> Temperature plots</h2>
+<h2><span class="header-section-number">3.8</span> Temperature plots</h2>
 <p>Below, following subsets of the climatologies are plotted for all relevant parameters:</p>
 <ul>
 <li>Horizontal planes at 0, 150, 500, 2000, 5, 155, 483, 1969, 3, 160, 534, 2054m</li>
 <li>Global section as defined above and indicated as white lines in maps.</li>
 </ul>
 <div id="surface-map" class="section level3" number="3.8.1">
-<h3 number="3.8.1"><span class="header-section-number">3.8.1</span> Surface map</h3>
+<h3><span class="header-section-number">3.8.1</span> Surface map</h3>
 <pre class="r"><code>p_map_climatology(
   df = WOA18_sal_temp,
   var = &quot;temp&quot;)</code></pre>
@@ -3598,7 +3621,7 @@ Jens Müller
 </div>
 </div>
 <div id="section-1" class="section level3" number="3.8.2">
-<h3 number="3.8.2"><span class="header-section-number">3.8.2</span> Section</h3>
+<h3><span class="header-section-number">3.8.2</span> Section</h3>
 <pre class="r"><code>p_section_global(
   df = WOA18_sal_temp,
   var = &quot;temp&quot;)</code></pre>
@@ -3720,9 +3743,9 @@ Jens Müller
 </div>
 </div>
 <div id="salinity-plots" class="section level2" number="3.9">
-<h2 number="3.9"><span class="header-section-number">3.9</span> Salinity plots</h2>
+<h2><span class="header-section-number">3.9</span> Salinity plots</h2>
 <div id="surface-map-1" class="section level3" number="3.9.1">
-<h3 number="3.9.1"><span class="header-section-number">3.9.1</span> Surface map</h3>
+<h3><span class="header-section-number">3.9.1</span> Surface map</h3>
 <pre class="r"><code>p_map_climatology(
   df = WOA18_sal_temp,
   var = &quot;sal&quot;)</code></pre>
@@ -3876,7 +3899,7 @@ Jens Müller
 </div>
 </div>
 <div id="section-2" class="section level3" number="3.9.2">
-<h3 number="3.9.2"><span class="header-section-number">3.9.2</span> Section</h3>
+<h3><span class="header-section-number">3.9.2</span> Section</h3>
 <pre class="r"><code>p_section_global(
   df = WOA18_sal_temp,
   var = &quot;sal&quot;)</code></pre>
@@ -3987,9 +4010,9 @@ Jens Müller
 </div>
 </div>
 <div id="neutral-density-plots" class="section level2" number="3.10">
-<h2 number="3.10"><span class="header-section-number">3.10</span> Neutral density plots</h2>
+<h2><span class="header-section-number">3.10</span> Neutral density plots</h2>
 <div id="surface-map-2" class="section level3" number="3.10.1">
-<h3 number="3.10.1"><span class="header-section-number">3.10.1</span> Surface map</h3>
+<h3><span class="header-section-number">3.10.1</span> Surface map</h3>
 <pre class="r"><code>p_map_climatology(
   df = WOA18_sal_temp,
   var = &quot;gamma&quot;)</code></pre>
@@ -4121,7 +4144,7 @@ Jens Müller
 </div>
 </div>
 <div id="section-3" class="section level3" number="3.10.2">
-<h3 number="3.10.2"><span class="header-section-number">3.10.2</span> Section</h3>
+<h3><span class="header-section-number">3.10.2</span> Section</h3>
 <pre class="r"><code>p_section_global(
   df = WOA18_sal_temp,
   var = &quot;gamma&quot;)</code></pre>
@@ -4233,9 +4256,9 @@ Jens Müller
 </div>
 </div>
 <div id="climatology-nuts-and-o2" class="section level1" number="4">
-<h1 number="4"><span class="header-section-number">4</span> Climatology Nuts and O2</h1>
+<h1><span class="header-section-number">4</span> Climatology Nuts and O2</h1>
 <div id="read-nc-files-1" class="section level2" number="4.1">
-<h2 number="4.1"><span class="header-section-number">4.1</span> Read nc files</h2>
+<h2><span class="header-section-number">4.1</span> Read nc files</h2>
 <p>Data are read-in looping over all relevant files, thereby reproducing the same subsetting steps as applied above to the salintity and temperature fields.</p>
 <pre class="r"><code># Keep grid cells of WOA18 sal temp data set, to join with
 WOA18_nuts_O2 &lt;-
@@ -5621,7 +5644,7 @@ Jens Müller
 </div>
 </div>
 <div id="write-file-1" class="section level2" number="4.2">
-<h2 number="4.2"><span class="header-section-number">4.2</span> Write file</h2>
+<h2><span class="header-section-number">4.2</span> Write file</h2>
 <pre class="r"><code>WOA18_nuts_O2 %&gt;%
   rename(phosphate = p_an,
          nitrate = n_an,
@@ -5639,13 +5662,13 @@ Jens Müller
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.0.3 (2020-10-10)
+<pre><code>R version 4.1.2 (2021-11-01)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: openSUSE Leap 15.2
+Running under: openSUSE Leap 15.3
 
 Matrix products: default
-BLAS:   /usr/local/R-4.0.3/lib64/R/lib/libRblas.so
-LAPACK: /usr/local/R-4.0.3/lib64/R/lib/libRlapack.so
+BLAS:   /usr/local/R-4.1.2/lib64/R/lib/libRblas.so
+LAPACK: /usr/local/R-4.1.2/lib64/R/lib/libRlapack.so
 
 locale:
  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -5659,32 +5682,33 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] patchwork_1.1.1  geosphere_1.5-10 oce_1.2-0        gsw_1.0-5       
- [5] testthat_2.3.2   reticulate_1.18  tidync_0.2.4     forcats_0.5.0   
- [9] stringr_1.4.0    dplyr_1.0.5      purrr_0.3.4      readr_1.4.0     
-[13] tidyr_1.1.3      tibble_3.1.3     ggplot2_3.3.5    tidyverse_1.3.0 
-[17] workflowr_1.6.2 
+ [1] patchwork_1.1.1  geosphere_1.5-14 oce_1.5-0        gsw_1.0-6       
+ [5] reticulate_1.23  tidync_0.2.4     forcats_0.5.1    stringr_1.4.0   
+ [9] dplyr_1.0.7      purrr_0.3.4      readr_2.1.1      tidyr_1.1.4     
+[13] tibble_3.1.6     ggplot2_3.3.5    tidyverse_1.3.1  workflowr_1.7.0 
 
 loaded via a namespace (and not attached):
- [1] httr_1.4.2         sass_0.4.0         viridisLite_0.3.0  jsonlite_1.7.1    
- [5] modelr_0.1.8       bslib_0.2.5.1      assertthat_0.2.1   highr_0.8         
- [9] sp_1.4-4           blob_1.2.1         cellranger_1.1.0   yaml_2.2.1        
-[13] pillar_1.6.2       backports_1.1.10   lattice_0.20-41    glue_1.4.2        
-[17] digest_0.6.27      RColorBrewer_1.1-2 promises_1.1.1     rvest_0.3.6       
-[21] colorspace_2.0-2   htmltools_0.5.1.1  httpuv_1.5.4       Matrix_1.2-18     
-[25] pkgconfig_2.0.3    broom_0.7.9        haven_2.3.1        scales_1.1.1      
-[29] whisker_0.4        later_1.2.0        git2r_0.27.1       farver_2.0.3      
-[33] generics_0.1.0     ellipsis_0.3.2     withr_2.3.0        cli_3.0.1         
-[37] magrittr_1.5       crayon_1.3.4       readxl_1.3.1       evaluate_0.14     
-[41] fs_1.5.0           ncdf4_1.17         fansi_0.4.1        xml2_1.3.2        
-[45] tools_4.0.3        hms_0.5.3          lifecycle_1.0.0    munsell_0.5.0     
-[49] reprex_0.3.0       isoband_0.2.2      compiler_4.0.3     jquerylib_0.1.4   
-[53] RNetCDF_2.4-2      rlang_0.4.11       grid_4.0.3         rstudioapi_0.13   
-[57] rappdirs_0.3.1     labeling_0.4.2     rmarkdown_2.10     gtable_0.3.0      
-[61] DBI_1.1.0          R6_2.5.0           ncmeta_0.3.0       lubridate_1.7.9   
-[65] knitr_1.33         utf8_1.1.4         rprojroot_2.0.2    stringi_1.5.3     
-[69] Rcpp_1.0.5         vctrs_0.3.8        dbplyr_1.4.4       tidyselect_1.1.0  
-[73] xfun_0.25         </code></pre>
+ [1] fs_1.5.2           lubridate_1.8.0    bit64_4.0.5        RColorBrewer_1.1-2
+ [5] httr_1.4.2         rprojroot_2.0.2    tools_4.1.2        backports_1.4.1   
+ [9] bslib_0.3.1        utf8_1.2.2         R6_2.5.1           DBI_1.1.2         
+[13] colorspace_2.0-2   withr_2.4.3        sp_1.4-6           tidyselect_1.1.1  
+[17] processx_3.5.2     bit_4.0.4          compiler_4.1.2     git2r_0.29.0      
+[21] cli_3.1.1          rvest_1.0.2        RNetCDF_2.5-2      xml2_1.3.3        
+[25] isoband_0.2.5      labeling_0.4.2     sass_0.4.0         scales_1.1.1      
+[29] callr_3.7.0        rappdirs_0.3.3     digest_0.6.29      rmarkdown_2.11    
+[33] pkgconfig_2.0.3    htmltools_0.5.2    highr_0.9          dbplyr_2.1.1      
+[37] fastmap_1.1.0      rlang_0.4.12       readxl_1.3.1       rstudioapi_0.13   
+[41] farver_2.1.0       jquerylib_0.1.4    generics_0.1.1     jsonlite_1.7.3    
+[45] vroom_1.5.7        magrittr_2.0.1     ncmeta_0.3.0       Matrix_1.4-0      
+[49] Rcpp_1.0.8         munsell_0.5.0      fansi_1.0.2        lifecycle_1.0.1   
+[53] stringi_1.7.6      whisker_0.4        yaml_2.2.1         grid_4.1.2        
+[57] parallel_4.1.2     promises_1.2.0.1   crayon_1.4.2       lattice_0.20-45   
+[61] haven_2.4.3        hms_1.1.1          knitr_1.37         ps_1.6.0          
+[65] pillar_1.6.4       reprex_2.0.1       glue_1.6.0         evaluate_0.14     
+[69] getPass_0.2-2      modelr_0.1.8       png_0.1-7          vctrs_0.3.8       
+[73] tzdb_0.2.0         httpuv_1.6.5       cellranger_1.1.0   gtable_0.3.0      
+[77] assertthat_0.2.1   xfun_0.29          broom_0.7.11       later_1.3.0       
+[81] viridisLite_0.4.0  ncdf4_1.19         ellipsis_0.3.2     here_1.0.1        </code></pre>
 </div>
 </div>
 </div>
@@ -5692,7 +5716,7 @@ loaded via a namespace (and not attached):
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
 TeX fonts only; see
-http://docs.mathjax.org/en/latest/configuration.html.  This will make
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
 the presentation more consistent at the cost of the webpage sometimes
 taking slightly longer to load. Note that this only works because the
 footer is added to webpages before the MathJax javascript. -->

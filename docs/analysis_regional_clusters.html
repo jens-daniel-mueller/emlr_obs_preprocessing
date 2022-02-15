@@ -14,8 +14,8 @@
 
 <title>Regional cluster</title>
 
-<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -40,7 +40,7 @@
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
-<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
 <style type="text/css">
 div.section {
@@ -401,6 +401,9 @@ div.tocify {
     <li>
       <a href="read_Sabine_2004.html">Sabine 2004</a>
     </li>
+    <li>
+      <a href="read_RECCAP2_flux_products.html">Flux products</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -444,7 +447,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Regional cluster</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">20 November, 2021</h4>
+<h4 class="date">15 February, 2022</h4>
 
 </div>
 
@@ -469,7 +472,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-11-20
+<strong>Last updated:</strong> 2022-02-15
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -478,8 +481,8 @@ div.tocify {
 <strong>Knit directory:</strong> <code>emlr_obs_preprocessing/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
 </p>
 <p>
-This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
-  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -560,16 +563,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree46c1246cafdf70c7dbb7681b04e429e202c7a969targetblank46c1246a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/46c1246cafdf70c7dbb7681b04e429e202c7a969" target="_blank">46c1246</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreefc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5targetblankfc1cf80a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/fc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5" target="_blank">fc1cf80</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree46c1246cafdf70c7dbb7681b04e429e202c7a969targetblank46c1246a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreefc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5targetblankfc1cf80a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/46c1246cafdf70c7dbb7681b04e429e202c7a969" target="_blank">46c1246</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/fc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5" target="_blank">fc1cf80</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -579,11 +582,14 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/
+    Ignored:    output/
 
 Untracked files:
+    Untracked:  code/IO_1990_own_crossover_analysis_backup.R
     Untracked:  code/read_GLODAPv2_2020.Rmd
 
 Unstaged changes:
+    Modified:   analysis/_site.yml
     Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
@@ -623,6 +629,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/f2871b9bcfdcde95f53736bba2625b148e6f1bbb/docs/analysis_regional_clusters.html" target="_blank">f2871b9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-11-20
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -886,7 +909,7 @@ implemented k-means clustering
 </div>
 </div>
 <div id="data-source" class="section level1" number="1">
-<h1 number="1"><span class="header-section-number">1</span> Data source</h1>
+<h1><span class="header-section-number">1</span> Data source</h1>
 <p>Currently, following data sets and predictor variables are used for clustering:</p>
 <ul>
 <li>GLODAPv2_2016b_MappedClimatologies
@@ -930,7 +953,7 @@ GLODAP_predictors &lt;- GLODAP_predictors %&gt;%
   drop_na()</code></pre>
 </div>
 <div id="scaling-predictors" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> Scaling predictors</h1>
+<h1><span class="header-section-number">2</span> Scaling predictors</h1>
 <pre class="r"><code>cluster_predictors &lt;- GLODAP_predictors %&gt;% 
   select(oxygen, phosphate, Cant, temp)
 
@@ -994,7 +1017,7 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="number-of-clusters" class="section level1" number="3">
-<h1 number="3"><span class="header-section-number">3</span> Number of clusters</h1>
+<h1><span class="header-section-number">3</span> Number of clusters</h1>
 <p>Based on a random subset of 1000 data points, the optimum number of clusters was inspected as elbow plot.</p>
 <pre class="r"><code>cluster_predictors_sub &lt;- cluster_predictors %&gt;% 
   sample_n(1e3)
@@ -1215,7 +1238,7 @@ jens-daniel-mueller
 # fviz_nbclust(nb)</code></pre>
 </div>
 <div id="clustering" class="section level1" number="4">
-<h1 number="4"><span class="header-section-number">4</span> Clustering</h1>
+<h1><span class="header-section-number">4</span> Clustering</h1>
 <pre class="r"><code>clusters &lt;- kmeans(cluster_predictors,
        centers = 6,
        iter.max = 10)
@@ -1223,7 +1246,7 @@ jens-daniel-mueller
 GLODAP_predictors &lt;- GLODAP_predictors %&gt;% 
   mutate(cluster = as.factor(clusters$cluster))</code></pre>
 <div id="maps" class="section level2" number="4.1">
-<h2 number="4.1"><span class="header-section-number">4.1</span> Maps</h2>
+<h2><span class="header-section-number">4.1</span> Maps</h2>
 <pre class="r"><code>map +
   geom_raster(data = GLODAP_predictors %&gt;%
                 filter(depth %in% c(0,100,500,1000, 2000, 5000)),
@@ -1293,7 +1316,7 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="zonal-sections" class="section level2" number="4.2">
-<h2 number="4.2"><span class="header-section-number">4.2</span> Zonal sections</h2>
+<h2><span class="header-section-number">4.2</span> Zonal sections</h2>
 <pre class="r"><code>ggplot(
   data = GLODAP_predictors %&gt;%
     filter(lon %in% params_global$longitude_sections_basin,
@@ -1373,13 +1396,13 @@ jens-daniel-mueller
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.0.3 (2020-10-10)
+<pre><code>R version 4.1.2 (2021-11-01)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: openSUSE Leap 15.2
+Running under: openSUSE Leap 15.3
 
 Matrix products: default
-BLAS:   /usr/local/R-4.0.3/lib64/R/lib/libRblas.so
-LAPACK: /usr/local/R-4.0.3/lib64/R/lib/libRlapack.so
+BLAS:   /usr/local/R-4.1.2/lib64/R/lib/libRblas.so
+LAPACK: /usr/local/R-4.1.2/lib64/R/lib/libRlapack.so
 
 locale:
  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -1393,42 +1416,35 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] NbClust_3.0      factoextra_1.0.7 ggforce_0.3.3    metR_0.9.0      
- [5] scico_1.2.0      patchwork_1.1.1  collapse_1.5.0   forcats_0.5.0   
- [9] stringr_1.4.0    dplyr_1.0.5      purrr_0.3.4      readr_1.4.0     
-[13] tidyr_1.1.3      tibble_3.1.3     ggplot2_3.3.5    tidyverse_1.3.0 
-[17] workflowr_1.6.2 
+ [1] NbClust_3.0      factoextra_1.0.7 ggforce_0.3.3    metR_0.11.0     
+ [5] scico_1.3.0      patchwork_1.1.1  collapse_1.7.0   forcats_0.5.1   
+ [9] stringr_1.4.0    dplyr_1.0.7      purrr_0.3.4      readr_2.1.1     
+[13] tidyr_1.1.4      tibble_3.1.6     ggplot2_3.3.5    tidyverse_1.3.1 
+[17] workflowr_1.7.0 
 
 loaded via a namespace (and not attached):
- [1] fs_1.5.0                 lubridate_1.7.9          httr_1.4.2              
- [4] rprojroot_2.0.2          tools_4.0.3              backports_1.1.10        
- [7] bslib_0.2.5.1            utf8_1.1.4               R6_2.5.0                
-[10] DBI_1.1.0                colorspace_2.0-2         withr_2.3.0             
-[13] tidyselect_1.1.0         curl_4.3                 compiler_4.0.3          
-[16] git2r_0.27.1             cli_3.0.1                rvest_0.3.6             
-[19] xml2_1.3.2               labeling_0.4.2           sass_0.4.0              
-[22] scales_1.1.1             checkmate_2.0.0          digest_0.6.27           
-[25] foreign_0.8-80           rmarkdown_2.10           rio_0.5.16              
-[28] pkgconfig_2.0.3          htmltools_0.5.1.1        dbplyr_1.4.4            
-[31] highr_0.8                rlang_0.4.11             readxl_1.3.1            
-[34] rstudioapi_0.13          jquerylib_0.1.4          generics_0.1.0          
-[37] farver_2.0.3             jsonlite_1.7.1           zip_2.1.1               
-[40] car_3.0-10               magrittr_1.5             Matrix_1.2-18           
-[43] Rcpp_1.0.5               munsell_0.5.0            fansi_0.4.1             
-[46] abind_1.4-5              lifecycle_1.0.0          stringi_1.5.3           
-[49] whisker_0.4              yaml_2.2.1               carData_3.0-4           
-[52] MASS_7.3-53              grid_4.0.3               blob_1.2.1              
-[55] parallel_4.0.3           promises_1.1.1           ggrepel_0.8.2           
-[58] crayon_1.3.4             lattice_0.20-41          haven_2.3.1             
-[61] hms_0.5.3                knitr_1.33               pillar_1.6.2            
-[64] ggpubr_0.4.0             ggsignif_0.6.1           reprex_0.3.0            
-[67] glue_1.4.2               evaluate_0.14            RcppArmadillo_0.10.1.2.0
-[70] data.table_1.14.0        modelr_0.1.8             vctrs_0.3.8             
-[73] tweenr_1.0.2             httpuv_1.5.4             cellranger_1.1.0        
-[76] gtable_0.3.0             polyclip_1.10-0          assertthat_0.2.1        
-[79] openxlsx_4.2.3           xfun_0.25                broom_0.7.9             
-[82] RcppEigen_0.3.3.7.0      rstatix_0.7.0            later_1.2.0             
-[85] viridisLite_0.3.0        cluster_2.1.0            ellipsis_0.3.2          </code></pre>
+ [1] fs_1.5.2          lubridate_1.8.0   bit64_4.0.5       httr_1.4.2       
+ [5] rprojroot_2.0.2   tools_4.1.2       backports_1.4.1   bslib_0.3.1      
+ [9] utf8_1.2.2        R6_2.5.1          DBI_1.1.2         colorspace_2.0-2 
+[13] withr_2.4.3       tidyselect_1.1.1  processx_3.5.2    bit_4.0.4        
+[17] compiler_4.1.2    git2r_0.29.0      cli_3.1.1         rvest_1.0.2      
+[21] xml2_1.3.3        labeling_0.4.2    sass_0.4.0        scales_1.1.1     
+[25] checkmate_2.0.0   callr_3.7.0       digest_0.6.29     rmarkdown_2.11   
+[29] pkgconfig_2.0.3   htmltools_0.5.2   highr_0.9         dbplyr_2.1.1     
+[33] fastmap_1.1.0     rlang_0.4.12      readxl_1.3.1      rstudioapi_0.13  
+[37] jquerylib_0.1.4   generics_0.1.1    farver_2.1.0      jsonlite_1.7.3   
+[41] vroom_1.5.7       car_3.0-12        magrittr_2.0.1    Rcpp_1.0.8       
+[45] munsell_0.5.0     fansi_1.0.2       abind_1.4-5       lifecycle_1.0.1  
+[49] stringi_1.7.6     whisker_0.4       yaml_2.2.1        carData_3.0-5    
+[53] MASS_7.3-55       grid_4.1.2        parallel_4.1.2    promises_1.2.0.1 
+[57] ggrepel_0.9.1     crayon_1.4.2      haven_2.4.3       hms_1.1.1        
+[61] knitr_1.37        ps_1.6.0          pillar_1.6.4      ggpubr_0.4.0     
+[65] ggsignif_0.6.3    reprex_2.0.1      glue_1.6.0        evaluate_0.14    
+[69] getPass_0.2-2     data.table_1.14.2 modelr_0.1.8      vctrs_0.3.8      
+[73] tzdb_0.2.0        tweenr_1.0.2      httpuv_1.6.5      cellranger_1.1.0 
+[77] gtable_0.3.0      polyclip_1.10-0   assertthat_0.2.1  xfun_0.29        
+[81] broom_0.7.11      rstatix_0.7.0     later_1.3.0       viridisLite_0.4.0
+[85] cluster_2.1.2     ellipsis_0.3.2   </code></pre>
 </div>
 </div>
 </div>
@@ -1436,7 +1452,7 @@ loaded via a namespace (and not attached):
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
 TeX fonts only; see
-http://docs.mathjax.org/en/latest/configuration.html.  This will make
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
 the presentation more consistent at the cost of the webpage sometimes
 taking slightly longer to load. Note that this only works because the
 footer is added to webpages before the MathJax javascript. -->

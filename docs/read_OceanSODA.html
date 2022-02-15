@@ -12,10 +12,10 @@
 <meta name="author" content="Jens Daniel Müller" />
 
 
-<title>GLODAPv2_2016: Mapped Climatologies</title>
+<title>OceanSODA - ETHZ</title>
 
-<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -40,7 +40,7 @@
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
-<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
 <style type="text/css">
 div.section {
@@ -401,6 +401,9 @@ div.tocify {
     <li>
       <a href="read_Sabine_2004.html">Sabine 2004</a>
     </li>
+    <li>
+      <a href="read_RECCAP2_flux_products.html">Flux products</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -442,9 +445,9 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">GLODAPv2_2016: Mapped Climatologies</h1>
+<h1 class="title toc-ignore">OceanSODA - ETHZ</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">23 December, 2021</h4>
+<h4 class="date">15 February, 2022</h4>
 
 </div>
 
@@ -469,7 +472,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-12-23
+<strong>Last updated:</strong> 2022-02-15
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -478,8 +481,8 @@ div.tocify {
 <strong>Knit directory:</strong> <code>emlr_obs_preprocessing/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
 </p>
 <p>
-This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
-  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -560,16 +563,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree513243ce4f64824d0a0f34d1f6db5bb229401e18targetblank513243ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/513243ce4f64824d0a0f34d1f6db5bb229401e18" target="_blank">513243c</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreefc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5targetblankfc1cf80a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/fc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5" target="_blank">fc1cf80</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree513243ce4f64824d0a0f34d1f6db5bb229401e18targetblank513243ca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreefc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5targetblankfc1cf80a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/513243ce4f64824d0a0f34d1f6db5bb229401e18" target="_blank">513243c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/fc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5" target="_blank">fc1cf80</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -584,6 +587,10 @@ Ignored files:
 Untracked files:
     Untracked:  code/IO_1990_own_crossover_analysis_backup.R
     Untracked:  code/read_GLODAPv2_2020.Rmd
+
+Unstaged changes:
+    Modified:   analysis/_site.yml
+    Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
 <p>
@@ -622,6 +629,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/fc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5/analysis/read_OceanSODA.Rmd" target="_blank">fc1cf80</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+<td>
+rerun with flux products
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/a36645fda147b79b0c9019dd1c3fb24b8fc31b8d/docs/read_OceanSODA.html" target="_blank">a36645f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-23
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1191,7 +1232,7 @@ included OceanSODA
 </div>
 </div>
 <div id="read-source-files" class="section level1" number="1">
-<h1 number="1"><span class="header-section-number">1</span> Read source files</h1>
+<h1><span class="header-section-number">1</span> Read source files</h1>
 <pre class="r"><code>basinmask_5 &lt;- basinmask %&gt;% 
   filter(MLR_basins == &quot;5&quot;) %&gt;% 
   select(lat, lon, basin)
@@ -1200,7 +1241,7 @@ basinmask &lt;- basinmask %&gt;%
   filter(MLR_basins == &quot;2&quot;) %&gt;% 
   select(lat, lon, basin_AIP)</code></pre>
 <div id="oceansoda" class="section level2" number="1.1">
-<h2 number="1.1"><span class="header-section-number">1.1</span> OceanSODA</h2>
+<h2><span class="header-section-number">1.1</span> OceanSODA</h2>
 <pre class="r"><code>OceanSODA &lt;-
   tidync(paste(
     path_updata,
@@ -1224,7 +1265,7 @@ OceanSODA &lt;- OceanSODA %&gt;%
          fgco2)</code></pre>
 </div>
 <div id="seaflux" class="section level2" number="1.2">
-<h2 number="1.2"><span class="header-section-number">1.2</span> SeaFlux</h2>
+<h2><span class="header-section-number">1.2</span> SeaFlux</h2>
 <pre class="r"><code>path_SeaFlux &lt;- 
 paste0(path_updata,&quot;pco2_seaflux/&quot;)
 
@@ -1258,7 +1299,7 @@ sol &lt;-
   hyper_tibble()</code></pre>
 </div>
 <div id="join-data" class="section level2" number="1.3">
-<h2 number="1.3"><span class="header-section-number">1.3</span> Join data</h2>
+<h2><span class="header-section-number">1.3</span> Join data</h2>
 <pre class="r"><code>all_variables &lt;- full_join(icefrac, kw)
 all_variables &lt;- full_join(all_variables, pCO2atm)
 all_variables &lt;- full_join(all_variables, sol)
@@ -1275,7 +1316,7 @@ OceanSODA &lt;- OceanSODA %&gt;%
   select(-time)</code></pre>
 </div>
 <div id="atm-pco2" class="section level2" number="1.4">
-<h2 number="1.4"><span class="header-section-number">1.4</span> Atm pCO2</h2>
+<h2><span class="header-section-number">1.4</span> Atm pCO2</h2>
 <pre class="r"><code># Note: this file is only created downstream in read_CO2_atm.Rmd
 co2_atm_reccap2 &lt;-
   read_csv(paste(path_preprocessing,
@@ -1284,7 +1325,7 @@ co2_atm_reccap2 &lt;-
 </div>
 </div>
 <div id="air-sea-disequilibrium" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> Air-sea disequilibrium</h1>
+<h1><span class="header-section-number">2</span> Air-sea disequilibrium</h1>
 <pre class="r"><code>all_variables &lt;- OceanSODA %&gt;%
   select(
     time_mon = date,
@@ -1473,6 +1514,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a36645fda147b79b0c9019dd1c3fb24b8fc31b8d/docs/figure/read_OceanSODA.Rmd/air_sea_disequilibrium-2.png" target="_blank">a36645f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d6c2d11a19f66c68d52487b5dff951de39258a29/docs/figure/read_OceanSODA.Rmd/air_sea_disequilibrium-2.png" target="_blank">d6c2d11</a>
@@ -1753,7 +1805,7 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="compute-climatologies" class="section level1" number="3">
-<h1 number="3"><span class="header-section-number">3</span> Compute climatologies</h1>
+<h1><span class="header-section-number">3</span> Compute climatologies</h1>
 <pre class="r"><code># calculate annual averaged fields
 OceanSODA_annual_all &lt;- OceanSODA %&gt;%
   mutate(tco2_over_pCO2 = tco2 / pCO2) %&gt;%
@@ -2159,7 +2211,7 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="write-files" class="section level1" number="4">
-<h1 number="4"><span class="header-section-number">4</span> Write files</h1>
+<h1><span class="header-section-number">4</span> Write files</h1>
 <pre class="r"><code>OceanSODA_annual_all %&gt;%
   write_csv(paste0(path_preprocessing,
                    &quot;OceanSODA.csv&quot;))
@@ -2178,7 +2230,7 @@ delta_pco2_annual %&gt;%
                    &quot;OceanSODA_disequilibrium_annual.csv&quot;))</code></pre>
 </div>
 <div id="control-plots" class="section level1" number="5">
-<h1 number="5"><span class="header-section-number">5</span> Control plots</h1>
+<h1><span class="header-section-number">5</span> Control plots</h1>
 <pre class="r"><code>map +
   geom_raster(data = OceanSODA_annual %&gt;%
                 filter(year == 2010), aes(lon, lat, fill = lat_bands)) +
@@ -2421,9 +2473,9 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="maps" class="section level1" number="6">
-<h1 number="6"><span class="header-section-number">6</span> Maps</h1>
+<h1><span class="header-section-number">6</span> Maps</h1>
 <div id="climatology" class="section level2" number="6.1">
-<h2 number="6.1"><span class="header-section-number">6.1</span> Climatology</h2>
+<h2><span class="header-section-number">6.1</span> Climatology</h2>
 <pre class="r"><code>unique(OceanSODA_clim$year)</code></pre>
 <pre><code>[1] 2004.000 2003.786 2011.000 2008.500 2004.400 2003.045</code></pre>
 <pre class="r"><code>OceanSODA_clim %&gt;%
@@ -2757,7 +2809,7 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="decadal-climatology" class="section level2" number="6.2">
-<h2 number="6.2"><span class="header-section-number">6.2</span> Decadal climatology</h2>
+<h2><span class="header-section-number">6.2</span> Decadal climatology</h2>
 <pre class="r"><code>OceanSODA_clim_decadal %&gt;%
   pivot_longer(sal:tco2_over_pCO2,
                names_to = &quot;parameter&quot;,
@@ -3090,7 +3142,7 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="decadal-offset-climatology" class="section level2" number="6.3">
-<h2 number="6.3"><span class="header-section-number">6.3</span> Decadal offset climatology</h2>
+<h2><span class="header-section-number">6.3</span> Decadal offset climatology</h2>
 <pre class="r"><code>OceanSODA_clim_decadal_offset &lt;- bind_rows(
   OceanSODA_clim_decadal,
   OceanSODA_clim %&gt;% 
@@ -3439,9 +3491,9 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="time-series" class="section level1" number="7">
-<h1 number="7"><span class="header-section-number">7</span> Time series</h1>
+<h1><span class="header-section-number">7</span> Time series</h1>
 <div id="regions" class="section level2" number="7.1">
-<h2 number="7.1"><span class="header-section-number">7.1</span> 5 regions</h2>
+<h2><span class="header-section-number">7.1</span> 5 regions</h2>
 <pre class="r"><code>OceanSODA_annual_5 %&gt;%
   group_split(parameter) %&gt;%
   # head(1) %&gt;%
@@ -3455,30 +3507,326 @@ jens-daniel-mueller
   )</code></pre>
 <pre><code>[[1]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/time_series_5_regions-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-time_series_5_regions-1">
+Past versions of time_series_5_regions-1.png
+</button>
+</p>
+<div id="fig-time_series_5_regions-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a36645fda147b79b0c9019dd1c3fb24b8fc31b8d/docs/figure/read_OceanSODA.Rmd/time_series_5_regions-1.png" target="_blank">a36645f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[2]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/time_series_5_regions-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-time_series_5_regions-2">
+Past versions of time_series_5_regions-2.png
+</button>
+</p>
+<div id="fig-time_series_5_regions-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a36645fda147b79b0c9019dd1c3fb24b8fc31b8d/docs/figure/read_OceanSODA.Rmd/time_series_5_regions-2.png" target="_blank">a36645f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[3]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/time_series_5_regions-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-time_series_5_regions-3">
+Past versions of time_series_5_regions-3.png
+</button>
+</p>
+<div id="fig-time_series_5_regions-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a36645fda147b79b0c9019dd1c3fb24b8fc31b8d/docs/figure/read_OceanSODA.Rmd/time_series_5_regions-3.png" target="_blank">a36645f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[4]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/time_series_5_regions-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-time_series_5_regions-4">
+Past versions of time_series_5_regions-4.png
+</button>
+</p>
+<div id="fig-time_series_5_regions-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a36645fda147b79b0c9019dd1c3fb24b8fc31b8d/docs/figure/read_OceanSODA.Rmd/time_series_5_regions-4.png" target="_blank">a36645f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[5]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/time_series_5_regions-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-time_series_5_regions-5">
+Past versions of time_series_5_regions-5.png
+</button>
+</p>
+<div id="fig-time_series_5_regions-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a36645fda147b79b0c9019dd1c3fb24b8fc31b8d/docs/figure/read_OceanSODA.Rmd/time_series_5_regions-5.png" target="_blank">a36645f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[6]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/time_series_5_regions-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-time_series_5_regions-6">
+Past versions of time_series_5_regions-6.png
+</button>
+</p>
+<div id="fig-time_series_5_regions-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a36645fda147b79b0c9019dd1c3fb24b8fc31b8d/docs/figure/read_OceanSODA.Rmd/time_series_5_regions-6.png" target="_blank">a36645f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[7]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/time_series_5_regions-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-time_series_5_regions-7">
+Past versions of time_series_5_regions-7.png
+</button>
+</p>
+<div id="fig-time_series_5_regions-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a36645fda147b79b0c9019dd1c3fb24b8fc31b8d/docs/figure/read_OceanSODA.Rmd/time_series_5_regions-7.png" target="_blank">a36645f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[8]]</code></pre>
 <p><img src="figure/read_OceanSODA.Rmd/time_series_5_regions-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-time_series_5_regions-8">
+Past versions of time_series_5_regions-8.png
+</button>
+</p>
+<div id="fig-time_series_5_regions-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a36645fda147b79b0c9019dd1c3fb24b8fc31b8d/docs/figure/read_OceanSODA.Rmd/time_series_5_regions-8.png" target="_blank">a36645f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="lat-bands" class="section level2" number="7.2">
-<h2 number="7.2"><span class="header-section-number">7.2</span> Lat bands</h2>
+<h2><span class="header-section-number">7.2</span> Lat bands</h2>
 <pre class="r"><code>OceanSODA_annual_lat %&gt;%
   group_split(parameter) %&gt;%
   # head(1) %&gt;%
@@ -4274,9 +4622,9 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="decadel-trends" class="section level1" number="8">
-<h1 number="8"><span class="header-section-number">8</span> Decadel trends</h1>
+<h1><span class="header-section-number">8</span> Decadel trends</h1>
 <div id="global" class="section level2" number="8.1">
-<h2 number="8.1"><span class="header-section-number">8.1</span> Global</h2>
+<h2><span class="header-section-number">8.1</span> Global</h2>
 <pre class="r"><code>OceanSODA_annual_glob %&gt;%
   group_split(parameter) %&gt;%
   # head(1) %&gt;%
@@ -5864,7 +6212,7 @@ jens-daniel-mueller
 </div>
 </div>
 <div id="latitude-bands" class="section level2" number="8.2">
-<h2 number="8.2"><span class="header-section-number">8.2</span> Latitude bands</h2>
+<h2><span class="header-section-number">8.2</span> Latitude bands</h2>
 <pre class="r"><code>OceanSODA_annual_lat %&gt;%
   group_split(parameter) %&gt;%
   # head(1) %&gt;%
@@ -7459,13 +7807,13 @@ jens-daniel-mueller
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.0.3 (2020-10-10)
+<pre><code>R version 4.1.2 (2021-11-01)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: openSUSE Leap 15.2
+Running under: openSUSE Leap 15.3
 
 Matrix products: default
-BLAS:   /usr/local/R-4.0.3/lib64/R/lib/libRblas.so
-LAPACK: /usr/local/R-4.0.3/lib64/R/lib/libRlapack.so
+BLAS:   /usr/local/R-4.1.2/lib64/R/lib/libRblas.so
+LAPACK: /usr/local/R-4.1.2/lib64/R/lib/libRlapack.so
 
 locale:
  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -7479,42 +7827,37 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] zoo_1.8-8       seacarb_3.2.14  oce_1.2-0       gsw_1.0-5      
- [5] testthat_2.3.2  broom_0.7.9     marelac_2.1.10  shape_1.4.5    
- [9] lubridate_1.7.9 tidync_0.2.4    ggforce_0.3.3   metR_0.9.0     
-[13] scico_1.2.0     patchwork_1.1.1 collapse_1.5.0  forcats_0.5.0  
-[17] stringr_1.4.0   dplyr_1.0.5     purrr_0.3.4     readr_1.4.0    
-[21] tidyr_1.1.3     tibble_3.1.3    ggplot2_3.3.5   tidyverse_1.3.0
-[25] workflowr_1.6.2
+ [1] zoo_1.8-9        seacarb_3.3.0    SolveSAPHE_2.1.0 oce_1.5-0       
+ [5] gsw_1.0-6        broom_0.7.11     marelac_2.1.10   shape_1.4.6     
+ [9] lubridate_1.8.0  tidync_0.2.4     ggforce_0.3.3    metR_0.11.0     
+[13] scico_1.3.0      patchwork_1.1.1  collapse_1.7.0   forcats_0.5.1   
+[17] stringr_1.4.0    dplyr_1.0.7      purrr_0.3.4      readr_2.1.1     
+[21] tidyr_1.1.4      tibble_3.1.6     ggplot2_3.3.5    tidyverse_1.3.1 
+[25] workflowr_1.7.0 
 
 loaded via a namespace (and not attached):
- [1] nlme_3.1-149             fs_1.5.0                 RColorBrewer_1.1-2      
- [4] httr_1.4.2               rprojroot_2.0.2          tools_4.0.3             
- [7] backports_1.1.10         bslib_0.2.5.1            utf8_1.1.4              
-[10] R6_2.5.0                 mgcv_1.8-33              DBI_1.1.0               
-[13] colorspace_2.0-2         withr_2.3.0              tidyselect_1.1.0        
-[16] compiler_4.0.3           git2r_0.27.1             cli_3.0.1               
-[19] rvest_0.3.6              RNetCDF_2.4-2            xml2_1.3.2              
-[22] labeling_0.4.2           sass_0.4.0               scales_1.1.1            
-[25] checkmate_2.0.0          digest_0.6.27            rmarkdown_2.10          
-[28] pkgconfig_2.0.3          htmltools_0.5.1.1        highr_0.8               
-[31] dbplyr_1.4.4             rlang_0.4.11             readxl_1.3.1            
-[34] rstudioapi_0.13          jquerylib_0.1.4          generics_0.1.0          
-[37] farver_2.0.3             jsonlite_1.7.1           magrittr_1.5            
-[40] ncmeta_0.3.0             Matrix_1.2-18            Rcpp_1.0.5              
-[43] munsell_0.5.0            fansi_0.4.1              lifecycle_1.0.0         
-[46] stringi_1.5.3            whisker_0.4              yaml_2.2.1              
-[49] MASS_7.3-53              grid_4.0.3               blob_1.2.1              
-[52] parallel_4.0.3           promises_1.1.1           crayon_1.3.4            
-[55] lattice_0.20-41          splines_4.0.3            haven_2.3.1             
-[58] hms_0.5.3                knitr_1.33               pillar_1.6.2            
-[61] reprex_0.3.0             glue_1.4.2               evaluate_0.14           
-[64] RcppArmadillo_0.10.1.2.0 data.table_1.14.0        modelr_0.1.8            
-[67] vctrs_0.3.8              tweenr_1.0.2             httpuv_1.5.4            
-[70] cellranger_1.1.0         gtable_0.3.0             polyclip_1.10-0         
-[73] assertthat_0.2.1         xfun_0.25                RcppEigen_0.3.3.7.0     
-[76] later_1.2.0              viridisLite_0.3.0        ncdf4_1.17              
-[79] ellipsis_0.3.2          </code></pre>
+ [1] nlme_3.1-155       fs_1.5.2           bit64_4.0.5        RColorBrewer_1.1-2
+ [5] httr_1.4.2         rprojroot_2.0.2    tools_4.1.2        backports_1.4.1   
+ [9] bslib_0.3.1        utf8_1.2.2         R6_2.5.1           mgcv_1.8-38       
+[13] DBI_1.1.2          colorspace_2.0-2   withr_2.4.3        tidyselect_1.1.1  
+[17] processx_3.5.2     bit_4.0.4          compiler_4.1.2     git2r_0.29.0      
+[21] cli_3.1.1          rvest_1.0.2        RNetCDF_2.5-2      xml2_1.3.3        
+[25] labeling_0.4.2     sass_0.4.0         scales_1.1.1       checkmate_2.0.0   
+[29] callr_3.7.0        digest_0.6.29      rmarkdown_2.11     pkgconfig_2.0.3   
+[33] htmltools_0.5.2    highr_0.9          dbplyr_2.1.1       fastmap_1.1.0     
+[37] rlang_0.4.12       readxl_1.3.1       rstudioapi_0.13    jquerylib_0.1.4   
+[41] generics_0.1.1     farver_2.1.0       jsonlite_1.7.3     vroom_1.5.7       
+[45] magrittr_2.0.1     ncmeta_0.3.0       Matrix_1.4-0       Rcpp_1.0.8        
+[49] munsell_0.5.0      fansi_1.0.2        lifecycle_1.0.1    stringi_1.7.6     
+[53] whisker_0.4        yaml_2.2.1         MASS_7.3-55        grid_4.1.2        
+[57] parallel_4.1.2     promises_1.2.0.1   crayon_1.4.2       lattice_0.20-45   
+[61] splines_4.1.2      haven_2.4.3        hms_1.1.1          knitr_1.37        
+[65] ps_1.6.0           pillar_1.6.4       reprex_2.0.1       glue_1.6.0        
+[69] evaluate_0.14      getPass_0.2-2      data.table_1.14.2  modelr_0.1.8      
+[73] vctrs_0.3.8        tzdb_0.2.0         tweenr_1.0.2       httpuv_1.6.5      
+[77] cellranger_1.1.0   gtable_0.3.0       polyclip_1.10-0    assertthat_0.2.1  
+[81] xfun_0.29          later_1.3.0        viridisLite_0.4.0  ncdf4_1.19        
+[85] ellipsis_0.3.2    </code></pre>
 </div>
 </div>
 </div>
@@ -7522,7 +7865,7 @@ loaded via a namespace (and not attached):
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
 TeX fonts only; see
-http://docs.mathjax.org/en/latest/configuration.html.  This will make
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
 the presentation more consistent at the cost of the webpage sometimes
 taking slightly longer to load. Note that this only works because the
 footer is added to webpages before the MathJax javascript. -->
