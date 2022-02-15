@@ -562,16 +562,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree856705fe21425b88bb0c6a6e0800ca60ad6a5ab4targetblank856705fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/856705fe21425b88bb0c6a6e0800ca60ad6a5ab4" target="_blank">856705f</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree04014b7d610687a68bac96b71c6ac8f0736e324btargetblank04014b7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/04014b7d610687a68bac96b71c6ac8f0736e324b" target="_blank">04014b7</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree856705fe21425b88bb0c6a6e0800ca60ad6a5ab4targetblank856705fa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree04014b7d610687a68bac96b71c6ac8f0736e324btargetblank04014b7a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/856705fe21425b88bb0c6a6e0800ca60ad6a5ab4" target="_blank">856705f</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/04014b7d610687a68bac96b71c6ac8f0736e324b" target="_blank">04014b7</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -630,6 +630,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/04014b7d610687a68bac96b71c6ac8f0736e324b/analysis/read_GLODAPv2_2021.Rmd" target="_blank">04014b7</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+<td>
+decadal crossover evaluation pre subbasin
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/4a7550e36960693453e185e87c6dfbd896652d3a/docs/read_GLODAPv2_2021.html" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -16295,23 +16329,20 @@ jens-daniel-mueller
     )
   )
 
-
-
 for (i_basin in unique(basinmask_5$basin)) {
   # i_basin &lt;- unique(basinmask_5$basin)[3]
   
-  
-  NP_expocodes &lt;- inner_join(GLODAP, basinmask_5) %&gt;%
+  expocodes_subbasin &lt;- inner_join(GLODAP, basinmask_5) %&gt;%
     filter(basin == i_basin)
   
   print(
   map +
-    geom_tile(data = NP_expocodes %&gt;% distinct(lon, lat),
+    geom_tile(data = expocodes_subbasin %&gt;% distinct(lon, lat),
               aes(lon, lat)) +
     labs(title = i_basin)
   )
   
-  NP_expocodes_qc &lt;- NP_expocodes %&gt;%
+  expocodes_subbasin_qc &lt;- expocodes_subbasin %&gt;%
     select(row_number, cruise_expocode, ends_with(&quot;qc&quot;)) %&gt;%
     pivot_longer(ends_with(&quot;qc&quot;),
                  names_to = &quot;parameter&quot;,
@@ -16321,7 +16352,7 @@ for (i_basin in unique(basinmask_5$basin)) {
                 values_from = value) %&gt;%
     count(cruise_expocode)
   
-  NP_expocodes_f &lt;- NP_expocodes %&gt;%
+  expocodes_subbasin_f &lt;- expocodes_subbasin %&gt;%
     select(row_number, cruise_expocode, ends_with(&quot;f&quot;)) %&gt;%
     pivot_longer(ends_with(&quot;f&quot;),
                  names_to = &quot;parameter&quot;,
@@ -16331,21 +16362,21 @@ for (i_basin in unique(basinmask_5$basin)) {
                 values_from = value) %&gt;%
     count(cruise_expocode)
   
-  NP_expocodes &lt;- inner_join(NP_expocodes_f, NP_expocodes_qc) %&gt;%
+  expocodes_subbasin &lt;- inner_join(expocodes_subbasin_f, expocodes_subbasin_qc) %&gt;%
     group_by(cruise_expocode) %&gt;%
     summarise(n = min(n)) %&gt;%
     ungroup()
   
-  rm(NP_expocodes_f, NP_expocodes_qc)
+  rm(expocodes_subbasin_f, expocodes_subbasin_qc)
   
-  xover_NP &lt;- xover %&gt;%
+  xover_subbasin &lt;- xover %&gt;%
     filter(
-      cruise_A %in% NP_expocodes$cruise_expocode &amp;
-        cruise_B %in% NP_expocodes$cruise_expocode
+      cruise_A %in% expocodes_subbasin$cruise_expocode &amp;
+        cruise_B %in% expocodes_subbasin$cruise_expocode
     )
   
   
-  xover_NP &lt;- xover_NP %&gt;%
+  xover_subbasin &lt;- xover_subbasin %&gt;%
     mutate(dateA = year(ymd(str_sub(cruise_A, 5, 12))),
            dateB = year(ymd(str_sub(cruise_B, 5, 12))))
   
@@ -16353,13 +16384,13 @@ for (i_basin in unique(basinmask_5$basin)) {
   for (i_decade_start in seq(1990, 2010, 10)) {
     # i_decade_start &lt;- seq(1990, 2010, 10)[3]
     
-    xover_NP_A &lt;- xover_NP %&gt;%
+    xover_subbasin_A &lt;- xover_subbasin %&gt;%
       filter(dateA &gt;= i_decade_start &amp; dateA &lt; i_decade_start + 10)
     
-    xover_NP_B &lt;- xover_NP %&gt;%
+    xover_subbasin_B &lt;- xover_subbasin %&gt;%
       filter(dateB &gt;= i_decade_start &amp; dateB &lt; i_decade_start + 10)
     
-    xover_NP_B_rev &lt;- xover_NP_B %&gt;%
+    xover_subbasin_B_rev &lt;- xover_subbasin_B %&gt;%
       rename(
         cruise_A_back = cruise_A,
         cruise_A = cruise_B,
@@ -16384,24 +16415,24 @@ for (i_basin in unique(basinmask_5$basin)) {
         )
       )
     
-    xover_NP_decade &lt;- bind_rows(xover_NP_A,
-                          xover_NP_B_rev)
+    xover_subbasin_decade &lt;- bind_rows(xover_subbasin_A,
+                          xover_subbasin_B_rev)
     
-    rm(xover_NP_A, xover_NP_B, xover_NP_B_rev)
+    rm(xover_subbasin_A, xover_subbasin_B, xover_subbasin_B_rev)
     
     
-    xover_NP_decade &lt;- left_join(xover_NP_decade,
-                          NP_expocodes %&gt;% rename(cruise_A = cruise_expocode,
+    xover_subbasin_decade &lt;- left_join(xover_subbasin_decade,
+                          expocodes_subbasin %&gt;% rename(cruise_A = cruise_expocode,
                                                   n_A = n))
-    xover_NP_decade &lt;- left_join(xover_NP_decade,
-                          NP_expocodes %&gt;% rename(cruise_B = cruise_expocode,
+    xover_subbasin_decade &lt;- left_join(xover_subbasin_decade,
+                          expocodes_subbasin %&gt;% rename(cruise_B = cruise_expocode,
                                                   n_B = n))
     
-    xover_NP_decade &lt;- xover_NP_decade %&gt;%
+    xover_subbasin_decade &lt;- xover_subbasin_decade %&gt;%
       mutate(n = n_A + n_B) %&gt;%
       select(-starts_with(&quot;n_&quot;))
     
-    xover_NP_decade &lt;- xover_NP_decade %&gt;%
+    xover_subbasin_decade &lt;- xover_subbasin_decade %&gt;%
       mutate(decade = cut(
         dateB,
         c(1989, 1999, 2009, 2019),
@@ -16412,37 +16443,38 @@ for (i_basin in unique(basinmask_5$basin)) {
              !is.na(offset)) %&gt;%
       arrange(dateB, dateA)
     
-    xover_NP_decade_stats &lt;- xover_NP_decade %&gt;%
+    xover_subbasin_decade_stats &lt;- xover_subbasin_decade %&gt;%
       group_by(parameter, decade) %&gt;%
       summarise(
         offset_adj_mean = mean(offset_adj, na.rm = TRUE),
+        offset_adj_sd = sd(offset_adj, na.rm = TRUE),
         offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n, na.rm = TRUE),
         offset_adj_median = median(offset_adj, na.rm = TRUE)
       )
     
-    xover_NP_decade_stats &lt;- xover_NP_decade_stats %&gt;% 
+    xover_subbasin_decade_stats &lt;- xover_subbasin_decade_stats %&gt;% 
       mutate(basin = i_basin,
              decade_start = i_decade_start)
     
-    if (exists(&quot;xover_NP_decade_stats_all&quot;)) {
-      xover_NP_decade_stats_all &lt;-
-        bind_rows(xover_NP_decade_stats_all, xover_NP_decade_stats)
+    if (exists(&quot;xover_subbasin_decade_stats_all&quot;)) {
+      xover_subbasin_decade_stats_all &lt;-
+        bind_rows(xover_subbasin_decade_stats_all, xover_subbasin_decade_stats)
     }
     
-    if (!exists(&quot;xover_NP_decade_stats_all&quot;)) {
-      xover_NP_decade_stats_all &lt;- xover_NP_decade_stats
+    if (!exists(&quot;xover_subbasin_decade_stats_all&quot;)) {
+      xover_subbasin_decade_stats_all &lt;- xover_subbasin_decade_stats
     }
     
     
     print(
-      xover_NP_decade_stats %&gt;%
+      xover_subbasin_decade_stats %&gt;%
         kable(caption = paste0(i_basin, &quot; | &quot;, i_decade_start, &quot;s&quot;)) %&gt;%
         kable_styling() %&gt;%
         scroll_box(height = &quot;300px&quot;)
     )
     
     
-    p_crossover_ts &lt;- xover_NP_decade %&gt;%
+    p_crossover_ts &lt;- xover_subbasin_decade %&gt;%
       ggplot(aes(dateB, offset)) +
       geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
       geom_point(shape = 21) +
@@ -16458,9 +16490,9 @@ for (i_basin in unique(basinmask_5$basin)) {
     p_crossover_decadal &lt;-
       ggplot() +
       geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
-      geom_violin(data = xover_NP_decade,
+      geom_violin(data = xover_subbasin_decade,
                   aes(x = decade, y = offset), fill = &quot;gold&quot;) +
-      geom_boxplot(data = xover_NP_decade,
+      geom_boxplot(data = xover_subbasin_decade,
                    aes(x = decade, y = offset),
                    width = 0.2) +
       facet_grid(parameter ~ ., scales = &quot;free_y&quot;) +
@@ -16473,7 +16505,7 @@ for (i_basin in unique(basinmask_5$basin)) {
     
     rm(p_crossover_ts, p_crossover_decadal)
     
-    p_crossover_ts &lt;- xover_NP_decade %&gt;%
+    p_crossover_ts &lt;- xover_subbasin_decade %&gt;%
       ggplot(aes(dateB, offset_adj)) +
       geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
       geom_point(shape = 21) +
@@ -16489,10 +16521,10 @@ for (i_basin in unique(basinmask_5$basin)) {
     p_crossover_decadal &lt;-
       ggplot() +
       geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
-      geom_violin(data = xover_NP_decade,
+      geom_violin(data = xover_subbasin_decade,
                   aes(x = decade, y = offset_adj),
                   fill = &quot;gold&quot;) +
-      geom_boxplot(data = xover_NP_decade,
+      geom_boxplot(data = xover_subbasin_decade,
                    aes(x = decade, y = offset_adj),
                    width = 0.2) +
       facet_grid(parameter ~ ., scales = &quot;free_y&quot;) +
@@ -16530,6 +16562,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-1.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-1.png" target="_blank">8804a83</a>
@@ -16573,6 +16616,9 @@ decade
 offset_adj_mean
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_sd
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 offset_adj_mean_weighted
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
@@ -16598,6 +16644,9 @@ nitrate
 1.0000910
 </td>
 <td style="text-align:right;">
+0.0135540
+</td>
+<td style="text-align:right;">
 1.0000372
 </td>
 <td style="text-align:right;">
@@ -16619,6 +16668,9 @@ nitrate
 </td>
 <td style="text-align:right;">
 0.9987923
+</td>
+<td style="text-align:right;">
+0.0125895
 </td>
 <td style="text-align:right;">
 0.9997011
@@ -16644,6 +16696,9 @@ nitrate
 0.9967609
 </td>
 <td style="text-align:right;">
+0.0114346
+</td>
+<td style="text-align:right;">
 0.9983688
 </td>
 <td style="text-align:right;">
@@ -16665,6 +16720,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 1.0021247
+</td>
+<td style="text-align:right;">
+0.0675069
 </td>
 <td style="text-align:right;">
 1.0012006
@@ -16690,6 +16748,9 @@ oxygen
 1.0015645
 </td>
 <td style="text-align:right;">
+0.0124248
+</td>
+<td style="text-align:right;">
 1.0010338
 </td>
 <td style="text-align:right;">
@@ -16711,6 +16772,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 1.0062411
+</td>
+<td style="text-align:right;">
+0.0248566
 </td>
 <td style="text-align:right;">
 1.0092096
@@ -16736,6 +16800,9 @@ phosphate
 1.0001459
 </td>
 <td style="text-align:right;">
+0.0171707
+</td>
+<td style="text-align:right;">
 1.0000378
 </td>
 <td style="text-align:right;">
@@ -16757,6 +16824,9 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0048570
+</td>
+<td style="text-align:right;">
+0.0130865
 </td>
 <td style="text-align:right;">
 1.0057215
@@ -16782,6 +16852,9 @@ phosphate
 1.0073893
 </td>
 <td style="text-align:right;">
+0.0107726
+</td>
+<td style="text-align:right;">
 1.0084500
 </td>
 <td style="text-align:right;">
@@ -16803,6 +16876,9 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+0.0027627
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -16828,6 +16904,9 @@ salinity
 -0.0004555
 </td>
 <td style="text-align:right;">
+0.0017727
+</td>
+<td style="text-align:right;">
 -0.0001972
 </td>
 <td style="text-align:right;">
@@ -16849,6 +16928,9 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0006308
+</td>
+<td style="text-align:right;">
+0.0018835
 </td>
 <td style="text-align:right;">
 0.0005616
@@ -16874,6 +16956,9 @@ silicate
 1.0001243
 </td>
 <td style="text-align:right;">
+0.0158518
+</td>
+<td style="text-align:right;">
 1.0000261
 </td>
 <td style="text-align:right;">
@@ -16895,6 +16980,9 @@ silicate
 </td>
 <td style="text-align:right;">
 0.9984605
+</td>
+<td style="text-align:right;">
+0.0134817
 </td>
 <td style="text-align:right;">
 0.9980534
@@ -16920,6 +17008,9 @@ silicate
 0.9965859
 </td>
 <td style="text-align:right;">
+0.0119938
+</td>
+<td style="text-align:right;">
 0.9956523
 </td>
 <td style="text-align:right;">
@@ -16941,6 +17032,9 @@ talk
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+5.9961838
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -16966,6 +17060,9 @@ talk
 -1.9069189
 </td>
 <td style="text-align:right;">
+9.3838907
+</td>
+<td style="text-align:right;">
 -2.2407446
 </td>
 <td style="text-align:right;">
@@ -16987,6 +17084,9 @@ talk
 </td>
 <td style="text-align:right;">
 1.7413708
+</td>
+<td style="text-align:right;">
+3.7810331
 </td>
 <td style="text-align:right;">
 1.5103407
@@ -17012,6 +17112,9 @@ tco2
 0.0000000
 </td>
 <td style="text-align:right;">
+3.2332682
+</td>
+<td style="text-align:right;">
 0.0000000
 </td>
 <td style="text-align:right;">
@@ -17035,6 +17138,9 @@ tco2
 -0.5338567
 </td>
 <td style="text-align:right;">
+2.7115335
+</td>
+<td style="text-align:right;">
 -0.4998497
 </td>
 <td style="text-align:right;">
@@ -17056,6 +17162,9 @@ tco2
 </td>
 <td style="text-align:right;">
 -1.2565001
+</td>
+<td style="text-align:right;">
+1.6924134
 </td>
 <td style="text-align:right;">
 -0.9928463
@@ -17096,6 +17205,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-2.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-2.png" target="_blank">8804a83</a>
@@ -17147,6 +17267,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-3.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-3.png" target="_blank">8804a83</a>
 </td>
 <td>
@@ -17188,6 +17319,9 @@ decade
 offset_adj_mean
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_sd
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 offset_adj_mean_weighted
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
@@ -17213,6 +17347,9 @@ nitrate
 1.0013699
 </td>
 <td style="text-align:right;">
+0.0128325
+</td>
+<td style="text-align:right;">
 1.0003412
 </td>
 <td style="text-align:right;">
@@ -17234,6 +17371,9 @@ nitrate
 </td>
 <td style="text-align:right;">
 1.0000257
+</td>
+<td style="text-align:right;">
+0.0071848
 </td>
 <td style="text-align:right;">
 1.0000169
@@ -17259,6 +17399,9 @@ nitrate
 1.0018432
 </td>
 <td style="text-align:right;">
+0.0064809
+</td>
+<td style="text-align:right;">
 1.0032042
 </td>
 <td style="text-align:right;">
@@ -17280,6 +17423,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 0.9985873
+</td>
+<td style="text-align:right;">
+0.0121170
 </td>
 <td style="text-align:right;">
 0.9990006
@@ -17305,6 +17451,9 @@ oxygen
 1.0001226
 </td>
 <td style="text-align:right;">
+0.0156835
+</td>
+<td style="text-align:right;">
 1.0000061
 </td>
 <td style="text-align:right;">
@@ -17326,6 +17475,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 1.0048498
+</td>
+<td style="text-align:right;">
+0.0187485
 </td>
 <td style="text-align:right;">
 1.0077504
@@ -17351,6 +17503,9 @@ phosphate
 0.9953337
 </td>
 <td style="text-align:right;">
+0.0129161
+</td>
+<td style="text-align:right;">
 0.9944604
 </td>
 <td style="text-align:right;">
@@ -17372,6 +17527,9 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0001405
+</td>
+<td style="text-align:right;">
+0.0167878
 </td>
 <td style="text-align:right;">
 1.0000473
@@ -17397,6 +17555,9 @@ phosphate
 1.0023287
 </td>
 <td style="text-align:right;">
+0.0107479
+</td>
+<td style="text-align:right;">
 1.0075652
 </td>
 <td style="text-align:right;">
@@ -17418,6 +17579,9 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0004555
+</td>
+<td style="text-align:right;">
+0.0017727
 </td>
 <td style="text-align:right;">
 0.0001972
@@ -17443,6 +17607,9 @@ salinity
 0.0000000
 </td>
 <td style="text-align:right;">
+0.0017937
+</td>
+<td style="text-align:right;">
 0.0000000
 </td>
 <td style="text-align:right;">
@@ -17464,6 +17631,9 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0013737
+</td>
+<td style="text-align:right;">
+0.0017565
 </td>
 <td style="text-align:right;">
 0.0007828
@@ -17489,6 +17659,9 @@ silicate
 1.0017204
 </td>
 <td style="text-align:right;">
+0.0133112
+</td>
+<td style="text-align:right;">
 1.0020400
 </td>
 <td style="text-align:right;">
@@ -17510,6 +17683,9 @@ silicate
 </td>
 <td style="text-align:right;">
 1.0000616
+</td>
+<td style="text-align:right;">
+0.0111178
 </td>
 <td style="text-align:right;">
 1.0000493
@@ -17535,6 +17711,9 @@ silicate
 0.9971455
 </td>
 <td style="text-align:right;">
+0.0139991
+</td>
+<td style="text-align:right;">
 0.9957033
 </td>
 <td style="text-align:right;">
@@ -17556,6 +17735,9 @@ talk
 </td>
 <td style="text-align:right;">
 1.9069189
+</td>
+<td style="text-align:right;">
+9.3838907
 </td>
 <td style="text-align:right;">
 2.2407446
@@ -17581,6 +17763,9 @@ talk
 0.0000000
 </td>
 <td style="text-align:right;">
+3.6173404
+</td>
+<td style="text-align:right;">
 0.0000000
 </td>
 <td style="text-align:right;">
@@ -17602,6 +17787,9 @@ talk
 </td>
 <td style="text-align:right;">
 0.4102622
+</td>
+<td style="text-align:right;">
+2.6715271
 </td>
 <td style="text-align:right;">
 0.3930889
@@ -17627,6 +17815,9 @@ tco2
 0.5338567
 </td>
 <td style="text-align:right;">
+2.7115335
+</td>
+<td style="text-align:right;">
 0.4998497
 </td>
 <td style="text-align:right;">
@@ -17650,6 +17841,9 @@ tco2
 0.0000000
 </td>
 <td style="text-align:right;">
+3.0902109
+</td>
+<td style="text-align:right;">
 0.0000000
 </td>
 <td style="text-align:right;">
@@ -17671,6 +17865,9 @@ tco2
 </td>
 <td style="text-align:right;">
 -0.5040925
+</td>
+<td style="text-align:right;">
+2.7686106
 </td>
 <td style="text-align:right;">
 -0.1939446
@@ -17711,6 +17908,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-4.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-4.png" target="_blank">8804a83</a>
@@ -17762,6 +17970,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-5.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-5.png" target="_blank">8804a83</a>
 </td>
 <td>
@@ -17803,6 +18022,9 @@ decade
 offset_adj_mean
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_sd
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 offset_adj_mean_weighted
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
@@ -17828,6 +18050,9 @@ nitrate
 1.0033810
 </td>
 <td style="text-align:right;">
+0.0116295
+</td>
+<td style="text-align:right;">
 1.0017172
 </td>
 <td style="text-align:right;">
@@ -17849,6 +18074,9 @@ nitrate
 </td>
 <td style="text-align:right;">
 0.9982013
+</td>
+<td style="text-align:right;">
+0.0064228
 </td>
 <td style="text-align:right;">
 0.9968501
@@ -17874,6 +18102,9 @@ nitrate
 1.0000207
 </td>
 <td style="text-align:right;">
+0.0065305
+</td>
+<td style="text-align:right;">
 1.0000299
 </td>
 <td style="text-align:right;">
@@ -17895,6 +18126,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 0.9943415
+</td>
+<td style="text-align:right;">
+0.0223399
 </td>
 <td style="text-align:right;">
 0.9915882
@@ -17920,6 +18154,9 @@ oxygen
 0.9954891
 </td>
 <td style="text-align:right;">
+0.0170950
+</td>
+<td style="text-align:right;">
 0.9928671
 </td>
 <td style="text-align:right;">
@@ -17941,6 +18178,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 1.0001594
+</td>
+<td style="text-align:right;">
+0.0180072
 </td>
 <td style="text-align:right;">
 1.0006474
@@ -17966,6 +18206,9 @@ phosphate
 0.9927765
 </td>
 <td style="text-align:right;">
+0.0105861
+</td>
+<td style="text-align:right;">
 0.9917255
 </td>
 <td style="text-align:right;">
@@ -17987,6 +18230,9 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9977907
+</td>
+<td style="text-align:right;">
+0.0107224
 </td>
 <td style="text-align:right;">
 0.9925594
@@ -18012,6 +18258,9 @@ phosphate
 1.0000294
 </td>
 <td style="text-align:right;">
+0.0077158
+</td>
+<td style="text-align:right;">
 1.0000333
 </td>
 <td style="text-align:right;">
@@ -18033,6 +18282,9 @@ salinity
 </td>
 <td style="text-align:right;">
 -0.0006308
+</td>
+<td style="text-align:right;">
+0.0018835
 </td>
 <td style="text-align:right;">
 -0.0005616
@@ -18058,6 +18310,9 @@ salinity
 -0.0013737
 </td>
 <td style="text-align:right;">
+0.0017565
+</td>
+<td style="text-align:right;">
 -0.0007828
 </td>
 <td style="text-align:right;">
@@ -18079,6 +18334,9 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+0.0012701
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -18104,6 +18362,9 @@ silicate
 1.0035691
 </td>
 <td style="text-align:right;">
+0.0120731
+</td>
+<td style="text-align:right;">
 1.0045246
 </td>
 <td style="text-align:right;">
@@ -18125,6 +18386,9 @@ silicate
 </td>
 <td style="text-align:right;">
 1.0030595
+</td>
+<td style="text-align:right;">
+0.0141461
 </td>
 <td style="text-align:right;">
 1.0045904
@@ -18150,6 +18414,9 @@ silicate
 1.0000484
 </td>
 <td style="text-align:right;">
+0.0099059
+</td>
+<td style="text-align:right;">
 1.0001006
 </td>
 <td style="text-align:right;">
@@ -18171,6 +18438,9 @@ talk
 </td>
 <td style="text-align:right;">
 -1.7413708
+</td>
+<td style="text-align:right;">
+3.7810331
 </td>
 <td style="text-align:right;">
 -1.5103407
@@ -18196,6 +18466,9 @@ talk
 -0.4102622
 </td>
 <td style="text-align:right;">
+2.6715271
+</td>
+<td style="text-align:right;">
 -0.3930889
 </td>
 <td style="text-align:right;">
@@ -18217,6 +18490,9 @@ talk
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+1.7840793
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -18242,6 +18518,9 @@ tco2
 1.2565001
 </td>
 <td style="text-align:right;">
+1.6924134
+</td>
+<td style="text-align:right;">
 0.9928463
 </td>
 <td style="text-align:right;">
@@ -18265,6 +18544,9 @@ tco2
 0.5040925
 </td>
 <td style="text-align:right;">
+2.7686106
+</td>
+<td style="text-align:right;">
 0.1939446
 </td>
 <td style="text-align:right;">
@@ -18286,6 +18568,9 @@ tco2
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+1.7742321
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -18326,6 +18611,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-6.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-6.png" target="_blank">8804a83</a>
@@ -18377,6 +18673,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-7.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-7.png" target="_blank">8804a83</a>
 </td>
 <td>
@@ -18426,6 +18733,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-8.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-8.png" target="_blank">8804a83</a>
 </td>
 <td>
@@ -18467,6 +18785,9 @@ decade
 offset_adj_mean
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_sd
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 offset_adj_mean_weighted
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
@@ -18492,6 +18813,9 @@ nitrate
 1.0002255
 </td>
 <td style="text-align:right;">
+0.0213952
+</td>
+<td style="text-align:right;">
 1.0002590
 </td>
 <td style="text-align:right;">
@@ -18513,6 +18837,9 @@ nitrate
 </td>
 <td style="text-align:right;">
 0.9988906
+</td>
+<td style="text-align:right;">
+0.0322295
 </td>
 <td style="text-align:right;">
 1.0001052
@@ -18538,6 +18865,9 @@ nitrate
 0.9998354
 </td>
 <td style="text-align:right;">
+0.0164189
+</td>
+<td style="text-align:right;">
 0.9986441
 </td>
 <td style="text-align:right;">
@@ -18559,6 +18889,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 1.0000180
+</td>
+<td style="text-align:right;">
+0.0060272
 </td>
 <td style="text-align:right;">
 1.0000184
@@ -18584,6 +18917,9 @@ oxygen
 0.9999171
 </td>
 <td style="text-align:right;">
+0.0092378
+</td>
+<td style="text-align:right;">
 0.9987831
 </td>
 <td style="text-align:right;">
@@ -18605,6 +18941,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 1.0021150
+</td>
+<td style="text-align:right;">
+0.0087339
 </td>
 <td style="text-align:right;">
 1.0016508
@@ -18630,6 +18969,9 @@ phosphate
 1.0001246
 </td>
 <td style="text-align:right;">
+0.0159302
+</td>
+<td style="text-align:right;">
 1.0001229
 </td>
 <td style="text-align:right;">
@@ -18651,6 +18993,9 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0004472
+</td>
+<td style="text-align:right;">
+0.0207214
 </td>
 <td style="text-align:right;">
 1.0008675
@@ -18676,6 +19021,9 @@ phosphate
 1.0041425
 </td>
 <td style="text-align:right;">
+0.0288342
+</td>
+<td style="text-align:right;">
 1.0018979
 </td>
 <td style="text-align:right;">
@@ -18697,6 +19045,9 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+0.0034319
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -18722,6 +19073,9 @@ salinity
 -0.0011322
 </td>
 <td style="text-align:right;">
+0.0055341
+</td>
+<td style="text-align:right;">
 -0.0009565
 </td>
 <td style="text-align:right;">
@@ -18743,6 +19097,9 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0004036
+</td>
+<td style="text-align:right;">
+0.0029662
 </td>
 <td style="text-align:right;">
 0.0001912
@@ -18768,6 +19125,9 @@ silicate
 1.0003375
 </td>
 <td style="text-align:right;">
+0.0261537
+</td>
+<td style="text-align:right;">
 1.0003305
 </td>
 <td style="text-align:right;">
@@ -18789,6 +19149,9 @@ silicate
 </td>
 <td style="text-align:right;">
 0.9901491
+</td>
+<td style="text-align:right;">
+0.0375113
 </td>
 <td style="text-align:right;">
 0.9922513
@@ -18814,6 +19177,9 @@ silicate
 0.9900532
 </td>
 <td style="text-align:right;">
+0.0264099
+</td>
+<td style="text-align:right;">
 0.9861078
 </td>
 <td style="text-align:right;">
@@ -18835,6 +19201,9 @@ talk
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+1.3604734
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -18860,6 +19229,9 @@ talk
 -1.8070750
 </td>
 <td style="text-align:right;">
+3.1753371
+</td>
+<td style="text-align:right;">
 -2.1275570
 </td>
 <td style="text-align:right;">
@@ -18881,6 +19253,9 @@ talk
 </td>
 <td style="text-align:right;">
 -0.5974985
+</td>
+<td style="text-align:right;">
+2.7863374
 </td>
 <td style="text-align:right;">
 -0.5783019
@@ -18906,6 +19281,9 @@ tco2
 0.0000000
 </td>
 <td style="text-align:right;">
+2.5388364
+</td>
+<td style="text-align:right;">
 0.0000000
 </td>
 <td style="text-align:right;">
@@ -18929,6 +19307,9 @@ tco2
 -1.0285789
 </td>
 <td style="text-align:right;">
+2.5567809
+</td>
+<td style="text-align:right;">
 -1.1192790
 </td>
 <td style="text-align:right;">
@@ -18950,6 +19331,9 @@ tco2
 </td>
 <td style="text-align:right;">
 -1.8598674
+</td>
+<td style="text-align:right;">
+1.8542801
 </td>
 <td style="text-align:right;">
 -1.7959912
@@ -18990,6 +19374,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-9.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-9.png" target="_blank">8804a83</a>
@@ -19041,6 +19436,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-10.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-10.png" target="_blank">8804a83</a>
 </td>
 <td>
@@ -19082,6 +19488,9 @@ decade
 offset_adj_mean
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_sd
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 offset_adj_mean_weighted
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
@@ -19107,6 +19516,9 @@ nitrate
 1.0020362
 </td>
 <td style="text-align:right;">
+0.0293242
+</td>
+<td style="text-align:right;">
 1.0008357
 </td>
 <td style="text-align:right;">
@@ -19128,6 +19540,9 @@ nitrate
 </td>
 <td style="text-align:right;">
 1.0000725
+</td>
+<td style="text-align:right;">
+0.0121769
 </td>
 <td style="text-align:right;">
 1.0000580
@@ -19153,6 +19568,9 @@ nitrate
 1.0016937
 </td>
 <td style="text-align:right;">
+0.0136628
+</td>
+<td style="text-align:right;">
 0.9999443
 </td>
 <td style="text-align:right;">
@@ -19174,6 +19592,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 1.0001672
+</td>
+<td style="text-align:right;">
+0.0092431
 </td>
 <td style="text-align:right;">
 1.0013016
@@ -19199,6 +19620,9 @@ oxygen
 1.0000574
 </td>
 <td style="text-align:right;">
+0.0107910
+</td>
+<td style="text-align:right;">
 1.0000638
 </td>
 <td style="text-align:right;">
@@ -19220,6 +19644,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 1.0028668
+</td>
+<td style="text-align:right;">
+0.0090837
 </td>
 <td style="text-align:right;">
 1.0016501
@@ -19245,6 +19672,9 @@ phosphate
 0.9999784
 </td>
 <td style="text-align:right;">
+0.0209686
+</td>
+<td style="text-align:right;">
 0.9994902
 </td>
 <td style="text-align:right;">
@@ -19266,6 +19696,9 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0000953
+</td>
+<td style="text-align:right;">
+0.0140014
 </td>
 <td style="text-align:right;">
 1.0000507
@@ -19291,6 +19724,9 @@ phosphate
 1.0081250
 </td>
 <td style="text-align:right;">
+0.0253785
+</td>
+<td style="text-align:right;">
 1.0092757
 </td>
 <td style="text-align:right;">
@@ -19312,6 +19748,9 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0011322
+</td>
+<td style="text-align:right;">
+0.0055341
 </td>
 <td style="text-align:right;">
 0.0009565
@@ -19337,6 +19776,9 @@ salinity
 0.0000000
 </td>
 <td style="text-align:right;">
+0.0049318
+</td>
+<td style="text-align:right;">
 0.0000000
 </td>
 <td style="text-align:right;">
@@ -19358,6 +19800,9 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0012337
+</td>
+<td style="text-align:right;">
+0.0067151
 </td>
 <td style="text-align:right;">
 0.0011848
@@ -19383,6 +19828,9 @@ silicate
 1.0114300
 </td>
 <td style="text-align:right;">
+0.0398372
+</td>
+<td style="text-align:right;">
 1.0087609
 </td>
 <td style="text-align:right;">
@@ -19404,6 +19852,9 @@ silicate
 </td>
 <td style="text-align:right;">
 1.0018525
+</td>
+<td style="text-align:right;">
+0.0619886
 </td>
 <td style="text-align:right;">
 1.0015999
@@ -19429,6 +19880,9 @@ silicate
 0.9949076
 </td>
 <td style="text-align:right;">
+0.0361630
+</td>
+<td style="text-align:right;">
 0.9947182
 </td>
 <td style="text-align:right;">
@@ -19450,6 +19904,9 @@ talk
 </td>
 <td style="text-align:right;">
 1.8070750
+</td>
+<td style="text-align:right;">
+3.1753371
 </td>
 <td style="text-align:right;">
 2.1275570
@@ -19475,6 +19932,9 @@ talk
 0.0000000
 </td>
 <td style="text-align:right;">
+3.1065346
+</td>
+<td style="text-align:right;">
 0.0000000
 </td>
 <td style="text-align:right;">
@@ -19496,6 +19956,9 @@ talk
 </td>
 <td style="text-align:right;">
 1.3090154
+</td>
+<td style="text-align:right;">
+2.6701418
 </td>
 <td style="text-align:right;">
 1.1958616
@@ -19521,6 +19984,9 @@ tco2
 1.0285789
 </td>
 <td style="text-align:right;">
+2.5567809
+</td>
+<td style="text-align:right;">
 1.1192790
 </td>
 <td style="text-align:right;">
@@ -19544,6 +20010,9 @@ tco2
 0.0000000
 </td>
 <td style="text-align:right;">
+2.5033593
+</td>
+<td style="text-align:right;">
 0.0000000
 </td>
 <td style="text-align:right;">
@@ -19565,6 +20034,9 @@ tco2
 </td>
 <td style="text-align:right;">
 -0.0656638
+</td>
+<td style="text-align:right;">
+1.8481982
 </td>
 <td style="text-align:right;">
 -0.0647531
@@ -19605,6 +20077,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-11.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-11.png" target="_blank">8804a83</a>
@@ -19656,6 +20139,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" target="_blank">8804a83</a>
 </td>
 <td>
@@ -19697,6 +20191,9 @@ decade
 offset_adj_mean
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_sd
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 offset_adj_mean_weighted
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
@@ -19722,6 +20219,9 @@ nitrate
 1.0004320
 </td>
 <td style="text-align:right;">
+0.0166191
+</td>
+<td style="text-align:right;">
 1.0016295
 </td>
 <td style="text-align:right;">
@@ -19743,6 +20243,9 @@ nitrate
 </td>
 <td style="text-align:right;">
 0.9984909
+</td>
+<td style="text-align:right;">
+0.0136402
 </td>
 <td style="text-align:right;">
 1.0002253
@@ -19768,6 +20271,9 @@ nitrate
 1.0000604
 </td>
 <td style="text-align:right;">
+0.0112289
+</td>
+<td style="text-align:right;">
 1.0000595
 </td>
 <td style="text-align:right;">
@@ -19789,6 +20295,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 0.9979632
+</td>
+<td style="text-align:right;">
+0.0085943
 </td>
 <td style="text-align:right;">
 0.9984111
@@ -19814,6 +20323,9 @@ oxygen
 0.9972214
 </td>
 <td style="text-align:right;">
+0.0089795
+</td>
+<td style="text-align:right;">
 0.9984275
 </td>
 <td style="text-align:right;">
@@ -19835,6 +20347,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 1.0000210
+</td>
+<td style="text-align:right;">
+0.0065725
 </td>
 <td style="text-align:right;">
 1.0000176
@@ -19860,6 +20375,9 @@ phosphate
 0.9966369
 </td>
 <td style="text-align:right;">
+0.0272791
+</td>
+<td style="text-align:right;">
 0.9988655
 </td>
 <td style="text-align:right;">
@@ -19881,6 +20399,9 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9925266
+</td>
+<td style="text-align:right;">
+0.0239819
 </td>
 <td style="text-align:right;">
 0.9914080
@@ -19906,6 +20427,9 @@ phosphate
 1.0001150
 </td>
 <td style="text-align:right;">
+0.0156687
+</td>
+<td style="text-align:right;">
 1.0000584
 </td>
 <td style="text-align:right;">
@@ -19927,6 +20451,9 @@ salinity
 </td>
 <td style="text-align:right;">
 -0.0004036
+</td>
+<td style="text-align:right;">
+0.0029662
 </td>
 <td style="text-align:right;">
 -0.0001912
@@ -19952,6 +20479,9 @@ salinity
 -0.0012337
 </td>
 <td style="text-align:right;">
+0.0067151
+</td>
+<td style="text-align:right;">
 -0.0011848
 </td>
 <td style="text-align:right;">
@@ -19973,6 +20503,9 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+0.0024898
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -19998,6 +20531,9 @@ silicate
 1.0107674
 </td>
 <td style="text-align:right;">
+0.0275559
+</td>
+<td style="text-align:right;">
 1.0148146
 </td>
 <td style="text-align:right;">
@@ -20019,6 +20555,9 @@ silicate
 </td>
 <td style="text-align:right;">
 1.0064439
+</td>
+<td style="text-align:right;">
+0.0374334
 </td>
 <td style="text-align:right;">
 1.0061670
@@ -20044,6 +20583,9 @@ silicate
 1.0001251
 </td>
 <td style="text-align:right;">
+0.0161346
+</td>
+<td style="text-align:right;">
 1.0001223
 </td>
 <td style="text-align:right;">
@@ -20065,6 +20607,9 @@ talk
 </td>
 <td style="text-align:right;">
 0.5974985
+</td>
+<td style="text-align:right;">
+2.7863374
 </td>
 <td style="text-align:right;">
 0.5783019
@@ -20090,6 +20635,9 @@ talk
 -1.3090154
 </td>
 <td style="text-align:right;">
+2.6701418
+</td>
+<td style="text-align:right;">
 -1.1958616
 </td>
 <td style="text-align:right;">
@@ -20111,6 +20659,9 @@ talk
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+1.7979367
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -20136,6 +20687,9 @@ tco2
 1.8598674
 </td>
 <td style="text-align:right;">
+1.8542801
+</td>
+<td style="text-align:right;">
 1.7959912
 </td>
 <td style="text-align:right;">
@@ -20159,6 +20713,9 @@ tco2
 0.0656638
 </td>
 <td style="text-align:right;">
+1.8481982
+</td>
+<td style="text-align:right;">
 0.0647531
 </td>
 <td style="text-align:right;">
@@ -20180,6 +20737,9 @@ tco2
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+1.6005303
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -20220,6 +20780,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-13.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-13.png" target="_blank">8804a83</a>
@@ -20269,6 +20840,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-14.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-14.png" target="_blank">8804a83</a>
@@ -20361,6 +20943,9 @@ decade
 offset_adj_mean
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_sd
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 offset_adj_mean_weighted
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
@@ -20386,6 +20971,9 @@ nitrate
 1.0001047
 </td>
 <td style="text-align:right;">
+0.0145383
+</td>
+<td style="text-align:right;">
 1.0000564
 </td>
 <td style="text-align:right;">
@@ -20407,6 +20995,9 @@ nitrate
 </td>
 <td style="text-align:right;">
 0.9998960
+</td>
+<td style="text-align:right;">
+0.0188514
 </td>
 <td style="text-align:right;">
 1.0000253
@@ -20432,6 +21023,9 @@ nitrate
 0.9931633
 </td>
 <td style="text-align:right;">
+0.0102768
+</td>
+<td style="text-align:right;">
 0.9939763
 </td>
 <td style="text-align:right;">
@@ -20453,6 +21047,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 1.0000701
+</td>
+<td style="text-align:right;">
+0.0119076
 </td>
 <td style="text-align:right;">
 1.0000841
@@ -20478,6 +21075,9 @@ oxygen
 0.9988041
 </td>
 <td style="text-align:right;">
+0.0103323
+</td>
+<td style="text-align:right;">
 0.9993330
 </td>
 <td style="text-align:right;">
@@ -20499,6 +21099,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 1.0026078
+</td>
+<td style="text-align:right;">
+0.0075400
 </td>
 <td style="text-align:right;">
 1.0011090
@@ -20524,6 +21127,9 @@ phosphate
 1.0000907
 </td>
 <td style="text-align:right;">
+0.0135443
+</td>
+<td style="text-align:right;">
 1.0000861
 </td>
 <td style="text-align:right;">
@@ -20545,6 +21151,9 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0021132
+</td>
+<td style="text-align:right;">
+0.0137941
 </td>
 <td style="text-align:right;">
 1.0022736
@@ -20570,6 +21179,9 @@ phosphate
 1.0023022
 </td>
 <td style="text-align:right;">
+0.0107815
+</td>
+<td style="text-align:right;">
 1.0016784
 </td>
 <td style="text-align:right;">
@@ -20591,6 +21203,9 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+0.0025633
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -20616,6 +21231,9 @@ salinity
 0.0009612
 </td>
 <td style="text-align:right;">
+0.0031643
+</td>
+<td style="text-align:right;">
 0.0003647
 </td>
 <td style="text-align:right;">
@@ -20637,6 +21255,9 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0008975
+</td>
+<td style="text-align:right;">
+0.0047108
 </td>
 <td style="text-align:right;">
 -0.0000274
@@ -20662,6 +21283,9 @@ silicate
 1.0003655
 </td>
 <td style="text-align:right;">
+0.0272635
+</td>
+<td style="text-align:right;">
 1.0004177
 </td>
 <td style="text-align:right;">
@@ -20683,6 +21307,9 @@ silicate
 </td>
 <td style="text-align:right;">
 1.0014820
+</td>
+<td style="text-align:right;">
+0.0228503
 </td>
 <td style="text-align:right;">
 1.0027016
@@ -20708,6 +21335,9 @@ silicate
 1.0048879
 </td>
 <td style="text-align:right;">
+0.0154447
+</td>
+<td style="text-align:right;">
 1.0066379
 </td>
 <td style="text-align:right;">
@@ -20729,6 +21359,9 @@ talk
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+2.9762752
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -20754,6 +21387,9 @@ talk
 1.9866327
 </td>
 <td style="text-align:right;">
+3.2416636
+</td>
+<td style="text-align:right;">
 2.4022193
 </td>
 <td style="text-align:right;">
@@ -20775,6 +21411,9 @@ talk
 </td>
 <td style="text-align:right;">
 2.0841410
+</td>
+<td style="text-align:right;">
+2.8443193
 </td>
 <td style="text-align:right;">
 2.7929988
@@ -20800,6 +21439,9 @@ tco2
 0.0000000
 </td>
 <td style="text-align:right;">
+1.6935864
+</td>
+<td style="text-align:right;">
 0.0000000
 </td>
 <td style="text-align:right;">
@@ -20823,6 +21465,9 @@ tco2
 -1.6637212
 </td>
 <td style="text-align:right;">
+2.1444850
+</td>
+<td style="text-align:right;">
 -1.7945690
 </td>
 <td style="text-align:right;">
@@ -20844,6 +21489,9 @@ tco2
 </td>
 <td style="text-align:right;">
 -2.4120977
+</td>
+<td style="text-align:right;">
+1.6739726
 </td>
 <td style="text-align:right;">
 -2.0509233
@@ -20884,6 +21532,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-16.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-16.png" target="_blank">8804a83</a>
@@ -20935,6 +21594,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-17.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-17.png" target="_blank">8804a83</a>
 </td>
 <td>
@@ -20976,6 +21646,9 @@ decade
 offset_adj_mean
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_sd
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 offset_adj_mean_weighted
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
@@ -21001,6 +21674,9 @@ nitrate
 1.0004543
 </td>
 <td style="text-align:right;">
+0.0187861
+</td>
+<td style="text-align:right;">
 1.0001531
 </td>
 <td style="text-align:right;">
@@ -21022,6 +21698,9 @@ nitrate
 </td>
 <td style="text-align:right;">
 1.0001334
+</td>
+<td style="text-align:right;">
+0.0164388
 </td>
 <td style="text-align:right;">
 1.0000891
@@ -21047,6 +21726,9 @@ nitrate
 0.9938363
 </td>
 <td style="text-align:right;">
+0.0090026
+</td>
+<td style="text-align:right;">
 0.9932698
 </td>
 <td style="text-align:right;">
@@ -21068,6 +21750,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 1.0013033
+</td>
+<td style="text-align:right;">
+0.0103625
 </td>
 <td style="text-align:right;">
 1.0007491
@@ -21093,6 +21778,9 @@ oxygen
 1.0000399
 </td>
 <td style="text-align:right;">
+0.0089898
+</td>
+<td style="text-align:right;">
 1.0000443
 </td>
 <td style="text-align:right;">
@@ -21114,6 +21802,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 1.0007849
+</td>
+<td style="text-align:right;">
+0.0067417
 </td>
 <td style="text-align:right;">
 0.9993524
@@ -21139,6 +21830,9 @@ phosphate
 0.9980782
 </td>
 <td style="text-align:right;">
+0.0137844
+</td>
+<td style="text-align:right;">
 0.9978779
 </td>
 <td style="text-align:right;">
@@ -21160,6 +21854,9 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0000605
+</td>
+<td style="text-align:right;">
+0.0111217
 </td>
 <td style="text-align:right;">
 1.0000581
@@ -21185,6 +21882,9 @@ phosphate
 1.0009060
 </td>
 <td style="text-align:right;">
+0.0097940
+</td>
+<td style="text-align:right;">
 1.0014515
 </td>
 <td style="text-align:right;">
@@ -21206,6 +21906,9 @@ salinity
 </td>
 <td style="text-align:right;">
 -0.0009612
+</td>
+<td style="text-align:right;">
+0.0031643
 </td>
 <td style="text-align:right;">
 -0.0003647
@@ -21231,6 +21934,9 @@ salinity
 0.0000000
 </td>
 <td style="text-align:right;">
+0.0025063
+</td>
+<td style="text-align:right;">
 0.0000000
 </td>
 <td style="text-align:right;">
@@ -21252,6 +21958,9 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0018489
+</td>
+<td style="text-align:right;">
+0.0041454
 </td>
 <td style="text-align:right;">
 0.0017559
@@ -21277,6 +21986,9 @@ silicate
 0.9990485
 </td>
 <td style="text-align:right;">
+0.0234314
+</td>
+<td style="text-align:right;">
 0.9977195
 </td>
 <td style="text-align:right;">
@@ -21298,6 +22010,9 @@ silicate
 </td>
 <td style="text-align:right;">
 1.0002136
+</td>
+<td style="text-align:right;">
+0.0208118
 </td>
 <td style="text-align:right;">
 1.0001160
@@ -21323,6 +22038,9 @@ silicate
 1.0005760
 </td>
 <td style="text-align:right;">
+0.0175663
+</td>
+<td style="text-align:right;">
 1.0021476
 </td>
 <td style="text-align:right;">
@@ -21344,6 +22062,9 @@ talk
 </td>
 <td style="text-align:right;">
 -1.9866327
+</td>
+<td style="text-align:right;">
+3.2416636
 </td>
 <td style="text-align:right;">
 -2.4022193
@@ -21369,6 +22090,9 @@ talk
 0.0000000
 </td>
 <td style="text-align:right;">
+3.1999028
+</td>
+<td style="text-align:right;">
 0.0000000
 </td>
 <td style="text-align:right;">
@@ -21390,6 +22114,9 @@ talk
 </td>
 <td style="text-align:right;">
 0.4627533
+</td>
+<td style="text-align:right;">
+3.0967473
 </td>
 <td style="text-align:right;">
 0.2254189
@@ -21415,6 +22142,9 @@ tco2
 1.6637212
 </td>
 <td style="text-align:right;">
+2.1444850
+</td>
+<td style="text-align:right;">
 1.7945690
 </td>
 <td style="text-align:right;">
@@ -21438,6 +22168,9 @@ tco2
 0.0000000
 </td>
 <td style="text-align:right;">
+3.3864853
+</td>
+<td style="text-align:right;">
 0.0000000
 </td>
 <td style="text-align:right;">
@@ -21459,6 +22192,9 @@ tco2
 </td>
 <td style="text-align:right;">
 -0.7239355
+</td>
+<td style="text-align:right;">
+2.5428093
 </td>
 <td style="text-align:right;">
 -0.5062694
@@ -21499,6 +22235,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-18.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-18.png" target="_blank">8804a83</a>
@@ -21550,6 +22297,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-19.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-19.png" target="_blank">8804a83</a>
 </td>
 <td>
@@ -21591,6 +22349,9 @@ decade
 offset_adj_mean
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_sd
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 offset_adj_mean_weighted
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
@@ -21616,6 +22377,9 @@ nitrate
 1.0069899
 </td>
 <td style="text-align:right;">
+0.0105564
+</td>
+<td style="text-align:right;">
 1.0061261
 </td>
 <td style="text-align:right;">
@@ -21637,6 +22401,9 @@ nitrate
 </td>
 <td style="text-align:right;">
 1.0062825
+</td>
+<td style="text-align:right;">
+0.0091450
 </td>
 <td style="text-align:right;">
 1.0068542
@@ -21662,6 +22429,9 @@ nitrate
 1.0000230
 </td>
 <td style="text-align:right;">
+0.0072457
+</td>
+<td style="text-align:right;">
 1.0000238
 </td>
 <td style="text-align:right;">
@@ -21683,6 +22453,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 0.9974536
+</td>
+<td style="text-align:right;">
+0.0074586
 </td>
 <td style="text-align:right;">
 0.9989410
@@ -21708,6 +22481,9 @@ oxygen
 0.9992598
 </td>
 <td style="text-align:right;">
+0.0067273
+</td>
+<td style="text-align:right;">
 1.0006850
 </td>
 <td style="text-align:right;">
@@ -21729,6 +22505,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 1.0000122
+</td>
+<td style="text-align:right;">
+0.0052798
 </td>
 <td style="text-align:right;">
 1.0000159
@@ -21754,6 +22533,9 @@ phosphate
 0.9978153
 </td>
 <td style="text-align:right;">
+0.0107862
+</td>
+<td style="text-align:right;">
 0.9984112
 </td>
 <td style="text-align:right;">
@@ -21775,6 +22557,9 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9991875
+</td>
+<td style="text-align:right;">
+0.0098673
 </td>
 <td style="text-align:right;">
 0.9986294
@@ -21800,6 +22585,9 @@ phosphate
 1.0000224
 </td>
 <td style="text-align:right;">
+0.0077246
+</td>
+<td style="text-align:right;">
 1.0000181
 </td>
 <td style="text-align:right;">
@@ -21821,6 +22609,9 @@ salinity
 </td>
 <td style="text-align:right;">
 -0.0008975
+</td>
+<td style="text-align:right;">
+0.0047108
 </td>
 <td style="text-align:right;">
 0.0000274
@@ -21846,6 +22637,9 @@ salinity
 -0.0018489
 </td>
 <td style="text-align:right;">
+0.0041454
+</td>
+<td style="text-align:right;">
 -0.0017559
 </td>
 <td style="text-align:right;">
@@ -21867,6 +22661,9 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+0.0019406
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -21892,6 +22689,9 @@ silicate
 0.9953659
 </td>
 <td style="text-align:right;">
+0.0154007
+</td>
+<td style="text-align:right;">
 0.9936255
 </td>
 <td style="text-align:right;">
@@ -21913,6 +22713,9 @@ silicate
 </td>
 <td style="text-align:right;">
 0.9997295
+</td>
+<td style="text-align:right;">
+0.0178870
 </td>
 <td style="text-align:right;">
 0.9980689
@@ -21938,6 +22741,9 @@ silicate
 1.0002316
 </td>
 <td style="text-align:right;">
+0.0230110
+</td>
+<td style="text-align:right;">
 1.0002007
 </td>
 <td style="text-align:right;">
@@ -21959,6 +22765,9 @@ talk
 </td>
 <td style="text-align:right;">
 -2.0841410
+</td>
+<td style="text-align:right;">
+2.8443193
 </td>
 <td style="text-align:right;">
 -2.7929988
@@ -21984,6 +22793,9 @@ talk
 -0.4627533
 </td>
 <td style="text-align:right;">
+3.0967473
+</td>
+<td style="text-align:right;">
 -0.2254189
 </td>
 <td style="text-align:right;">
@@ -22005,6 +22817,9 @@ talk
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+1.1152891
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -22030,6 +22845,9 @@ tco2
 2.4120977
 </td>
 <td style="text-align:right;">
+1.6739726
+</td>
+<td style="text-align:right;">
 2.0509233
 </td>
 <td style="text-align:right;">
@@ -22053,6 +22871,9 @@ tco2
 0.7239355
 </td>
 <td style="text-align:right;">
+2.5428093
+</td>
+<td style="text-align:right;">
 0.5062694
 </td>
 <td style="text-align:right;">
@@ -22074,6 +22895,9 @@ tco2
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+2.0059804
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -22114,6 +22938,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-20.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-20.png" target="_blank">8804a83</a>
@@ -22165,6 +23000,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-21.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-21.png" target="_blank">8804a83</a>
 </td>
 <td>
@@ -22214,6 +23060,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-22.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-22.png" target="_blank">8804a83</a>
 </td>
 <td>
@@ -22255,6 +23112,9 @@ decade
 offset_adj_mean
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_sd
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 offset_adj_mean_weighted
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
@@ -22280,6 +23140,9 @@ nitrate
 1.0002216
 </td>
 <td style="text-align:right;">
+0.0210870
+</td>
+<td style="text-align:right;">
 1.0002478
 </td>
 <td style="text-align:right;">
@@ -22301,6 +23164,9 @@ nitrate
 </td>
 <td style="text-align:right;">
 1.0060106
+</td>
+<td style="text-align:right;">
+0.0231158
 </td>
 <td style="text-align:right;">
 1.0072847
@@ -22326,6 +23192,9 @@ nitrate
 1.0076626
 </td>
 <td style="text-align:right;">
+0.0227285
+</td>
+<td style="text-align:right;">
 1.0057461
 </td>
 <td style="text-align:right;">
@@ -22347,6 +23216,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 1.0000623
+</td>
+<td style="text-align:right;">
+0.0111770
 </td>
 <td style="text-align:right;">
 1.0000502
@@ -22372,6 +23244,9 @@ oxygen
 1.0028432
 </td>
 <td style="text-align:right;">
+0.0151035
+</td>
+<td style="text-align:right;">
 1.0026438
 </td>
 <td style="text-align:right;">
@@ -22393,6 +23268,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 1.0059298
+</td>
+<td style="text-align:right;">
+0.0127849
 </td>
 <td style="text-align:right;">
 1.0049356
@@ -22418,6 +23296,9 @@ phosphate
 1.0004435
 </td>
 <td style="text-align:right;">
+0.0298607
+</td>
+<td style="text-align:right;">
 1.0004353
 </td>
 <td style="text-align:right;">
@@ -22439,6 +23320,9 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9935484
+</td>
+<td style="text-align:right;">
+0.0435414
 </td>
 <td style="text-align:right;">
 0.9943921
@@ -22464,6 +23348,9 @@ phosphate
 1.0039893
 </td>
 <td style="text-align:right;">
+0.0323897
+</td>
+<td style="text-align:right;">
 1.0013460
 </td>
 <td style="text-align:right;">
@@ -22485,6 +23372,9 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+0.0105298
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -22510,6 +23400,9 @@ salinity
 0.0002803
 </td>
 <td style="text-align:right;">
+0.0135644
+</td>
+<td style="text-align:right;">
 0.0007632
 </td>
 <td style="text-align:right;">
@@ -22531,6 +23424,9 @@ salinity
 </td>
 <td style="text-align:right;">
 -0.0035802
+</td>
+<td style="text-align:right;">
+0.0129847
 </td>
 <td style="text-align:right;">
 -0.0023281
@@ -22556,6 +23452,9 @@ silicate
 1.0015029
 </td>
 <td style="text-align:right;">
+0.0552438
+</td>
+<td style="text-align:right;">
 1.0013693
 </td>
 <td style="text-align:right;">
@@ -22577,6 +23476,9 @@ silicate
 </td>
 <td style="text-align:right;">
 1.0039906
+</td>
+<td style="text-align:right;">
+0.0533408
 </td>
 <td style="text-align:right;">
 1.0088465
@@ -22602,6 +23504,9 @@ silicate
 0.9861506
 </td>
 <td style="text-align:right;">
+0.0531541
+</td>
+<td style="text-align:right;">
 0.9870197
 </td>
 <td style="text-align:right;">
@@ -22623,6 +23528,9 @@ talk
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+3.0549682
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -22648,6 +23556,9 @@ talk
 0.2509969
 </td>
 <td style="text-align:right;">
+3.3257618
+</td>
+<td style="text-align:right;">
 0.4016342
 </td>
 <td style="text-align:right;">
@@ -22669,6 +23580,9 @@ talk
 </td>
 <td style="text-align:right;">
 -0.3766157
+</td>
+<td style="text-align:right;">
+4.6523587
 </td>
 <td style="text-align:right;">
 -0.4021624
@@ -22694,6 +23608,9 @@ tco2
 0.0000000
 </td>
 <td style="text-align:right;">
+4.3495103
+</td>
+<td style="text-align:right;">
 0.0000000
 </td>
 <td style="text-align:right;">
@@ -22717,6 +23634,9 @@ tco2
 -3.0020110
 </td>
 <td style="text-align:right;">
+3.7962001
+</td>
+<td style="text-align:right;">
 -2.4708710
 </td>
 <td style="text-align:right;">
@@ -22738,6 +23658,9 @@ tco2
 </td>
 <td style="text-align:right;">
 -6.7308628
+</td>
+<td style="text-align:right;">
+5.1418767
 </td>
 <td style="text-align:right;">
 -5.2884049
@@ -22778,6 +23701,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-23.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-23.png" target="_blank">8804a83</a>
@@ -22829,6 +23763,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-24.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-24.png" target="_blank">8804a83</a>
 </td>
 <td>
@@ -22870,6 +23815,9 @@ decade
 offset_adj_mean
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_sd
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 offset_adj_mean_weighted
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
@@ -22895,6 +23843,9 @@ nitrate
 0.9945440
 </td>
 <td style="text-align:right;">
+0.0226545
+</td>
+<td style="text-align:right;">
 0.9933068
 </td>
 <td style="text-align:right;">
@@ -22916,6 +23867,9 @@ nitrate
 </td>
 <td style="text-align:right;">
 1.0002885
+</td>
+<td style="text-align:right;">
+0.0240904
 </td>
 <td style="text-align:right;">
 1.0002526
@@ -22941,6 +23895,9 @@ nitrate
 1.0046295
 </td>
 <td style="text-align:right;">
+0.0177526
+</td>
+<td style="text-align:right;">
 1.0024768
 </td>
 <td style="text-align:right;">
@@ -22962,6 +23919,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 0.9973873
+</td>
+<td style="text-align:right;">
+0.0148099
 </td>
 <td style="text-align:right;">
 0.9976011
@@ -22987,6 +23947,9 @@ oxygen
 1.0001412
 </td>
 <td style="text-align:right;">
+0.0168356
+</td>
+<td style="text-align:right;">
 1.0001818
 </td>
 <td style="text-align:right;">
@@ -23008,6 +23971,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 1.0038086
+</td>
+<td style="text-align:right;">
+0.0155267
 </td>
 <td style="text-align:right;">
 1.0027344
@@ -23033,6 +23999,9 @@ phosphate
 1.0084914
 </td>
 <td style="text-align:right;">
+0.0459496
+</td>
+<td style="text-align:right;">
 1.0078826
 </td>
 <td style="text-align:right;">
@@ -23054,6 +24023,9 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0007723
+</td>
+<td style="text-align:right;">
+0.0395190
 </td>
 <td style="text-align:right;">
 1.0009562
@@ -23079,6 +24051,9 @@ phosphate
 1.0027112
 </td>
 <td style="text-align:right;">
+0.0173204
+</td>
+<td style="text-align:right;">
 1.0011740
 </td>
 <td style="text-align:right;">
@@ -23100,6 +24075,9 @@ salinity
 </td>
 <td style="text-align:right;">
 -0.0002803
+</td>
+<td style="text-align:right;">
+0.0135644
 </td>
 <td style="text-align:right;">
 -0.0007632
@@ -23125,6 +24103,9 @@ salinity
 0.0000000
 </td>
 <td style="text-align:right;">
+0.0132424
+</td>
+<td style="text-align:right;">
 0.0000000
 </td>
 <td style="text-align:right;">
@@ -23146,6 +24127,9 @@ salinity
 </td>
 <td style="text-align:right;">
 -0.0064878
+</td>
+<td style="text-align:right;">
+0.0129637
 </td>
 <td style="text-align:right;">
 -0.0043466
@@ -23171,6 +24155,9 @@ silicate
 0.9988106
 </td>
 <td style="text-align:right;">
+0.0529929
+</td>
+<td style="text-align:right;">
 0.9940171
 </td>
 <td style="text-align:right;">
@@ -23192,6 +24179,9 @@ silicate
 </td>
 <td style="text-align:right;">
 1.0008673
+</td>
+<td style="text-align:right;">
+0.0417936
 </td>
 <td style="text-align:right;">
 1.0008117
@@ -23217,6 +24207,9 @@ silicate
 0.9850334
 </td>
 <td style="text-align:right;">
+0.0343804
+</td>
+<td style="text-align:right;">
 0.9855459
 </td>
 <td style="text-align:right;">
@@ -23238,6 +24231,9 @@ talk
 </td>
 <td style="text-align:right;">
 -0.2509969
+</td>
+<td style="text-align:right;">
+3.3257618
 </td>
 <td style="text-align:right;">
 -0.4016342
@@ -23263,6 +24259,9 @@ talk
 0.0000000
 </td>
 <td style="text-align:right;">
+3.3115850
+</td>
+<td style="text-align:right;">
 0.0000000
 </td>
 <td style="text-align:right;">
@@ -23284,6 +24283,9 @@ talk
 </td>
 <td style="text-align:right;">
 -0.7200088
+</td>
+<td style="text-align:right;">
+5.4773205
 </td>
 <td style="text-align:right;">
 -1.1461204
@@ -23309,6 +24311,9 @@ tco2
 3.0020110
 </td>
 <td style="text-align:right;">
+3.7962001
+</td>
+<td style="text-align:right;">
 2.4708710
 </td>
 <td style="text-align:right;">
@@ -23332,6 +24337,9 @@ tco2
 0.0000000
 </td>
 <td style="text-align:right;">
+2.9059169
+</td>
+<td style="text-align:right;">
 0.0000000
 </td>
 <td style="text-align:right;">
@@ -23353,6 +24361,9 @@ tco2
 </td>
 <td style="text-align:right;">
 -3.8259951
+</td>
+<td style="text-align:right;">
+3.4324554
 </td>
 <td style="text-align:right;">
 -3.0322458
@@ -23393,6 +24404,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-25.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-25.png" target="_blank">8804a83</a>
@@ -23444,6 +24466,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-26.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-26.png" target="_blank">8804a83</a>
 </td>
 <td>
@@ -23485,6 +24518,9 @@ decade
 offset_adj_mean
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_sd
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 offset_adj_mean_weighted
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
@@ -23510,6 +24546,9 @@ nitrate
 0.9928999
 </td>
 <td style="text-align:right;">
+0.0224797
+</td>
+<td style="text-align:right;">
 0.9947839
 </td>
 <td style="text-align:right;">
@@ -23531,6 +24570,9 @@ nitrate
 </td>
 <td style="text-align:right;">
 0.9957013
+</td>
+<td style="text-align:right;">
+0.0176186
 </td>
 <td style="text-align:right;">
 0.9978117
@@ -23556,6 +24598,9 @@ nitrate
 1.0001135
 </td>
 <td style="text-align:right;">
+0.0151827
+</td>
+<td style="text-align:right;">
 1.0001063
 </td>
 <td style="text-align:right;">
@@ -23577,6 +24622,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 0.9942633
+</td>
+<td style="text-align:right;">
+0.0124958
 </td>
 <td style="text-align:right;">
 0.9952196
@@ -23602,6 +24650,9 @@ oxygen
 0.9964431
 </td>
 <td style="text-align:right;">
+0.0154126
+</td>
+<td style="text-align:right;">
 0.9974930
 </td>
 <td style="text-align:right;">
@@ -23623,6 +24674,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 1.0000370
+</td>
+<td style="text-align:right;">
+0.0086484
 </td>
 <td style="text-align:right;">
 1.0000302
@@ -23648,6 +24702,9 @@ phosphate
 0.9970529
 </td>
 <td style="text-align:right;">
+0.0320720
+</td>
+<td style="text-align:right;">
 0.9996759
 </td>
 <td style="text-align:right;">
@@ -23669,6 +24726,9 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9975853
+</td>
+<td style="text-align:right;">
+0.0168610
 </td>
 <td style="text-align:right;">
 0.9990935
@@ -23694,6 +24754,9 @@ phosphate
 1.0000847
 </td>
 <td style="text-align:right;">
+0.0131231
+</td>
+<td style="text-align:right;">
 1.0000862
 </td>
 <td style="text-align:right;">
@@ -23715,6 +24778,9 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0035802
+</td>
+<td style="text-align:right;">
+0.0129847
 </td>
 <td style="text-align:right;">
 0.0023281
@@ -23740,6 +24806,9 @@ salinity
 0.0064878
 </td>
 <td style="text-align:right;">
+0.0129637
+</td>
+<td style="text-align:right;">
 0.0043466
 </td>
 <td style="text-align:right;">
@@ -23761,6 +24830,9 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+0.0042167
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -23786,6 +24858,9 @@ silicate
 1.0170031
 </td>
 <td style="text-align:right;">
+0.0556180
+</td>
+<td style="text-align:right;">
 1.0159833
 </td>
 <td style="text-align:right;">
@@ -23807,6 +24882,9 @@ silicate
 </td>
 <td style="text-align:right;">
 1.0164748
+</td>
+<td style="text-align:right;">
+0.0369565
 </td>
 <td style="text-align:right;">
 1.0158553
@@ -23832,6 +24910,9 @@ silicate
 1.0002313
 </td>
 <td style="text-align:right;">
+0.0216609
+</td>
+<td style="text-align:right;">
 1.0002201
 </td>
 <td style="text-align:right;">
@@ -23853,6 +24934,9 @@ talk
 </td>
 <td style="text-align:right;">
 0.3766157
+</td>
+<td style="text-align:right;">
+4.6523587
 </td>
 <td style="text-align:right;">
 0.4021624
@@ -23878,6 +24962,9 @@ talk
 0.7200088
 </td>
 <td style="text-align:right;">
+5.4773205
+</td>
+<td style="text-align:right;">
 1.1461204
 </td>
 <td style="text-align:right;">
@@ -23899,6 +24986,9 @@ talk
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+6.4254264
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -23924,6 +25014,9 @@ tco2
 6.7308628
 </td>
 <td style="text-align:right;">
+5.1418767
+</td>
+<td style="text-align:right;">
 5.2884049
 </td>
 <td style="text-align:right;">
@@ -23947,6 +25040,9 @@ tco2
 3.8259951
 </td>
 <td style="text-align:right;">
+3.4324554
+</td>
+<td style="text-align:right;">
 3.0322458
 </td>
 <td style="text-align:right;">
@@ -23968,6 +25064,9 @@ tco2
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+3.2444041
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -24008,6 +25107,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-27.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-27.png" target="_blank">8804a83</a>
@@ -24059,6 +25169,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-28.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-28.png" target="_blank">8804a83</a>
 </td>
 <td>
@@ -24108,6 +25229,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-29.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-29.png" target="_blank">8804a83</a>
 </td>
 <td>
@@ -24149,6 +25281,9 @@ decade
 offset_adj_mean
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_sd
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 offset_adj_mean_weighted
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
@@ -24174,6 +25309,9 @@ nitrate
 1.0000822
 </td>
 <td style="text-align:right;">
+0.0128283
+</td>
+<td style="text-align:right;">
 1.0001041
 </td>
 <td style="text-align:right;">
@@ -24195,6 +25333,9 @@ nitrate
 </td>
 <td style="text-align:right;">
 0.9993837
+</td>
+<td style="text-align:right;">
+0.0126450
 </td>
 <td style="text-align:right;">
 0.9970720
@@ -24220,6 +25361,9 @@ nitrate
 0.9996404
 </td>
 <td style="text-align:right;">
+0.0107156
+</td>
+<td style="text-align:right;">
 0.9966815
 </td>
 <td style="text-align:right;">
@@ -24241,6 +25385,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 1.0007308
+</td>
+<td style="text-align:right;">
+0.0389311
 </td>
 <td style="text-align:right;">
 1.0011947
@@ -24266,6 +25413,9 @@ oxygen
 1.0076218
 </td>
 <td style="text-align:right;">
+0.0312738
+</td>
+<td style="text-align:right;">
 1.0042530
 </td>
 <td style="text-align:right;">
@@ -24287,6 +25437,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 1.0066858
+</td>
+<td style="text-align:right;">
+0.0183370
 </td>
 <td style="text-align:right;">
 1.0051605
@@ -24312,6 +25465,9 @@ phosphate
 1.0001394
 </td>
 <td style="text-align:right;">
+0.0167235
+</td>
+<td style="text-align:right;">
 1.0001411
 </td>
 <td style="text-align:right;">
@@ -24333,6 +25489,9 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9982351
+</td>
+<td style="text-align:right;">
+0.0162192
 </td>
 <td style="text-align:right;">
 0.9968676
@@ -24358,6 +25517,9 @@ phosphate
 1.0059922
 </td>
 <td style="text-align:right;">
+0.0152279
+</td>
+<td style="text-align:right;">
 1.0030759
 </td>
 <td style="text-align:right;">
@@ -24379,6 +25541,9 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+0.0021750
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -24404,6 +25569,9 @@ salinity
 -0.0007977
 </td>
 <td style="text-align:right;">
+0.0022377
+</td>
+<td style="text-align:right;">
 -0.0009524
 </td>
 <td style="text-align:right;">
@@ -24425,6 +25593,9 @@ salinity
 </td>
 <td style="text-align:right;">
 -0.0010850
+</td>
+<td style="text-align:right;">
+0.0176338
 </td>
 <td style="text-align:right;">
 -0.0020684
@@ -24450,6 +25621,9 @@ silicate
 1.0001737
 </td>
 <td style="text-align:right;">
+0.0186622
+</td>
+<td style="text-align:right;">
 1.0002312
 </td>
 <td style="text-align:right;">
@@ -24471,6 +25645,9 @@ silicate
 </td>
 <td style="text-align:right;">
 0.9982685
+</td>
+<td style="text-align:right;">
+0.0223113
 </td>
 <td style="text-align:right;">
 0.9976305
@@ -24496,6 +25673,9 @@ silicate
 0.9970521
 </td>
 <td style="text-align:right;">
+0.0099473
+</td>
+<td style="text-align:right;">
 0.9966349
 </td>
 <td style="text-align:right;">
@@ -24517,6 +25697,9 @@ talk
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+3.7896391
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -24542,6 +25725,9 @@ talk
 0.6577284
 </td>
 <td style="text-align:right;">
+3.1516485
+</td>
+<td style="text-align:right;">
 1.0461176
 </td>
 <td style="text-align:right;">
@@ -24563,6 +25749,9 @@ talk
 </td>
 <td style="text-align:right;">
 1.5502396
+</td>
+<td style="text-align:right;">
+3.2648760
 </td>
 <td style="text-align:right;">
 2.0912907
@@ -24588,6 +25777,9 @@ tco2
 0.0000000
 </td>
 <td style="text-align:right;">
+3.9913530
+</td>
+<td style="text-align:right;">
 0.0000000
 </td>
 <td style="text-align:right;">
@@ -24611,6 +25803,9 @@ tco2
 -0.3578554
 </td>
 <td style="text-align:right;">
+3.8868821
+</td>
+<td style="text-align:right;">
 -0.9168012
 </td>
 <td style="text-align:right;">
@@ -24632,6 +25827,9 @@ tco2
 </td>
 <td style="text-align:right;">
 -0.9094575
+</td>
+<td style="text-align:right;">
+3.0694834
 </td>
 <td style="text-align:right;">
 -1.1260676
@@ -24672,6 +25870,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-30.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-30.png" target="_blank">8804a83</a>
@@ -24723,6 +25932,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-31.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-31.png" target="_blank">8804a83</a>
 </td>
 <td>
@@ -24753,6 +25973,9 @@ decade
 offset_adj_mean
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_sd
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 offset_adj_mean_weighted
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
@@ -24778,6 +26001,9 @@ nitrate
 1.0007770
 </td>
 <td style="text-align:right;">
+0.0126884
+</td>
+<td style="text-align:right;">
 1.0031072
 </td>
 <td style="text-align:right;">
@@ -24799,6 +26025,9 @@ nitrate
 </td>
 <td style="text-align:right;">
 1.0000429
+</td>
+<td style="text-align:right;">
+0.0092687
 </td>
 <td style="text-align:right;">
 1.0000381
@@ -24824,6 +26053,9 @@ nitrate
 0.9990939
 </td>
 <td style="text-align:right;">
+0.0085547
+</td>
+<td style="text-align:right;">
 0.9992134
 </td>
 <td style="text-align:right;">
@@ -24845,6 +26077,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 0.9936123
+</td>
+<td style="text-align:right;">
+0.0404782
 </td>
 <td style="text-align:right;">
 0.9973541
@@ -24870,6 +26105,9 @@ oxygen
 1.0003993
 </td>
 <td style="text-align:right;">
+0.0283617
+</td>
+<td style="text-align:right;">
 1.0003619
 </td>
 <td style="text-align:right;">
@@ -24891,6 +26129,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 1.0029198
+</td>
+<td style="text-align:right;">
+0.0182671
 </td>
 <td style="text-align:right;">
 1.0042679
@@ -24916,6 +26157,9 @@ phosphate
 1.0020508
 </td>
 <td style="text-align:right;">
+0.0175578
+</td>
+<td style="text-align:right;">
 1.0034528
 </td>
 <td style="text-align:right;">
@@ -24937,6 +26181,9 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0001191
+</td>
+<td style="text-align:right;">
+0.0155168
 </td>
 <td style="text-align:right;">
 1.0001604
@@ -24962,6 +26209,9 @@ phosphate
 1.0056392
 </td>
 <td style="text-align:right;">
+0.0110298
+</td>
+<td style="text-align:right;">
 1.0058295
 </td>
 <td style="text-align:right;">
@@ -24983,6 +26233,9 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0007977
+</td>
+<td style="text-align:right;">
+0.0022377
 </td>
 <td style="text-align:right;">
 0.0009524
@@ -25008,6 +26261,9 @@ salinity
 0.0000000
 </td>
 <td style="text-align:right;">
+0.0021318
+</td>
+<td style="text-align:right;">
 0.0000000
 </td>
 <td style="text-align:right;">
@@ -25029,6 +26285,9 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0015983
+</td>
+<td style="text-align:right;">
+0.0043209
 </td>
 <td style="text-align:right;">
 0.0012445
@@ -25054,6 +26313,9 @@ silicate
 1.0021669
 </td>
 <td style="text-align:right;">
+0.0195615
+</td>
+<td style="text-align:right;">
 1.0027186
 </td>
 <td style="text-align:right;">
@@ -25075,6 +26337,9 @@ silicate
 </td>
 <td style="text-align:right;">
 1.0000821
+</td>
+<td style="text-align:right;">
+0.0128734
 </td>
 <td style="text-align:right;">
 1.0000937
@@ -25100,6 +26365,9 @@ silicate
 0.9955159
 </td>
 <td style="text-align:right;">
+0.0084629
+</td>
+<td style="text-align:right;">
 0.9962325
 </td>
 <td style="text-align:right;">
@@ -25121,6 +26389,9 @@ talk
 </td>
 <td style="text-align:right;">
 -0.6577284
+</td>
+<td style="text-align:right;">
+3.1516485
 </td>
 <td style="text-align:right;">
 -1.0461176
@@ -25146,6 +26417,9 @@ talk
 0.0000000
 </td>
 <td style="text-align:right;">
+2.9385024
+</td>
+<td style="text-align:right;">
 0.0000000
 </td>
 <td style="text-align:right;">
@@ -25167,6 +26441,9 @@ talk
 </td>
 <td style="text-align:right;">
 1.5997282
+</td>
+<td style="text-align:right;">
+2.6393958
 </td>
 <td style="text-align:right;">
 1.5684540
@@ -25192,6 +26469,9 @@ tco2
 0.3578554
 </td>
 <td style="text-align:right;">
+3.8868821
+</td>
+<td style="text-align:right;">
 0.9168012
 </td>
 <td style="text-align:right;">
@@ -25215,6 +26495,9 @@ tco2
 0.0000000
 </td>
 <td style="text-align:right;">
+3.2420278
+</td>
+<td style="text-align:right;">
 0.0000000
 </td>
 <td style="text-align:right;">
@@ -25236,6 +26519,9 @@ tco2
 </td>
 <td style="text-align:right;">
 -0.4773818
+</td>
+<td style="text-align:right;">
+2.7125545
 </td>
 <td style="text-align:right;">
 -0.6948785
@@ -25278,6 +26564,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-32.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-32.png" target="_blank">8804a83</a>
 </td>
 <td>
@@ -25316,6 +26613,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-33.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-33.png" target="_blank">8804a83</a>
 </td>
 <td>
@@ -25346,6 +26654,9 @@ decade
 offset_adj_mean
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_sd
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 offset_adj_mean_weighted
 </th>
 <th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
@@ -25371,6 +26682,9 @@ nitrate
 1.0004739
 </td>
 <td style="text-align:right;">
+0.0107055
+</td>
+<td style="text-align:right;">
 1.0034215
 </td>
 <td style="text-align:right;">
@@ -25392,6 +26706,9 @@ nitrate
 </td>
 <td style="text-align:right;">
 1.0009802
+</td>
+<td style="text-align:right;">
+0.0085779
 </td>
 <td style="text-align:right;">
 1.0008379
@@ -25417,6 +26734,9 @@ nitrate
 1.0000078
 </td>
 <td style="text-align:right;">
+0.0039653
+</td>
+<td style="text-align:right;">
 1.0000076
 </td>
 <td style="text-align:right;">
@@ -25438,6 +26758,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 0.9936765
+</td>
+<td style="text-align:right;">
+0.0175353
 </td>
 <td style="text-align:right;">
 0.9951442
@@ -25463,6 +26786,9 @@ oxygen
 0.9974012
 </td>
 <td style="text-align:right;">
+0.0172020
+</td>
+<td style="text-align:right;">
 0.9961867
 </td>
 <td style="text-align:right;">
@@ -25484,6 +26810,9 @@ oxygen
 </td>
 <td style="text-align:right;">
 1.0000412
+</td>
+<td style="text-align:right;">
+0.0090867
 </td>
 <td style="text-align:right;">
 1.0000264
@@ -25509,6 +26838,9 @@ phosphate
 0.9942793
 </td>
 <td style="text-align:right;">
+0.0156666
+</td>
+<td style="text-align:right;">
 0.9971747
 </td>
 <td style="text-align:right;">
@@ -25530,6 +26862,9 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9945115
+</td>
+<td style="text-align:right;">
+0.0108789
 </td>
 <td style="text-align:right;">
 0.9942950
@@ -25555,6 +26890,9 @@ phosphate
 1.0000225
 </td>
 <td style="text-align:right;">
+0.0067122
+</td>
+<td style="text-align:right;">
 1.0000212
 </td>
 <td style="text-align:right;">
@@ -25576,6 +26914,9 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0010850
+</td>
+<td style="text-align:right;">
+0.0176338
 </td>
 <td style="text-align:right;">
 0.0020684
@@ -25601,6 +26942,9 @@ salinity
 -0.0015983
 </td>
 <td style="text-align:right;">
+0.0043209
+</td>
+<td style="text-align:right;">
 -0.0012445
 </td>
 <td style="text-align:right;">
@@ -25622,6 +26966,9 @@ salinity
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+0.0031958
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -25647,6 +26994,9 @@ silicate
 1.0030559
 </td>
 <td style="text-align:right;">
+0.0099876
+</td>
+<td style="text-align:right;">
 1.0034864
 </td>
 <td style="text-align:right;">
@@ -25668,6 +27018,9 @@ silicate
 </td>
 <td style="text-align:right;">
 1.0045767
+</td>
+<td style="text-align:right;">
+0.0085289
 </td>
 <td style="text-align:right;">
 1.0038398
@@ -25693,6 +27046,9 @@ silicate
 1.0000277
 </td>
 <td style="text-align:right;">
+0.0074419
+</td>
+<td style="text-align:right;">
 1.0000254
 </td>
 <td style="text-align:right;">
@@ -25714,6 +27070,9 @@ talk
 </td>
 <td style="text-align:right;">
 -1.5502396
+</td>
+<td style="text-align:right;">
+3.2648760
 </td>
 <td style="text-align:right;">
 -2.0912907
@@ -25739,6 +27098,9 @@ talk
 -1.5997282
 </td>
 <td style="text-align:right;">
+2.6393958
+</td>
+<td style="text-align:right;">
 -1.5684540
 </td>
 <td style="text-align:right;">
@@ -25760,6 +27122,9 @@ talk
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+3.9756474
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -25785,6 +27150,9 @@ tco2
 0.9094575
 </td>
 <td style="text-align:right;">
+3.0694834
+</td>
+<td style="text-align:right;">
 1.1260676
 </td>
 <td style="text-align:right;">
@@ -25808,6 +27176,9 @@ tco2
 0.4773818
 </td>
 <td style="text-align:right;">
+2.7125545
+</td>
+<td style="text-align:right;">
 0.6948785
 </td>
 <td style="text-align:right;">
@@ -25829,6 +27200,9 @@ tco2
 </td>
 <td style="text-align:right;">
 0.0000000
+</td>
+<td style="text-align:right;">
+2.2247482
 </td>
 <td style="text-align:right;">
 0.0000000
@@ -25871,6 +27245,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-34.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-34.png" target="_blank">8804a83</a>
 </td>
 <td>
@@ -25909,6 +27294,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-35.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-35.png" target="_blank">8804a83</a>
 </td>
 <td>
@@ -25922,9 +27318,41 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>xover_NP_decade_stats_all %&gt;%
-  # mutate(decade_start = paste0(decade_start , &quot;-&quot;, decade_start + 9)) %&gt;%
-  filter(parameter %in% c(&quot;talk&quot;, &quot;tco2&quot;, &quot;phosphate&quot;)) %&gt;%
+<pre class="r"><code>xover_subbasin_decade_stats_all &lt;- xover_subbasin_decade_stats_all %&gt;%
+    mutate(
+    basin = fct_relevel(
+      basin,
+      &quot;N. Pacific&quot;,
+      &quot;S. Pacific&quot;,
+      &quot;N. Atlantic&quot;,
+      &quot;S. Atlantic&quot;,
+      &quot;Indian&quot;
+    )
+  )
+
+
+xover_subbasin_decade_stats_all_cstar &lt;- xover_subbasin_decade_stats_all %&gt;%
+  filter(parameter %in% c(&quot;talk&quot;, &quot;phosphate&quot;, &quot;tco2&quot;)) %&gt;% 
+  select(
+    parameter,
+    basin,
+    decade,
+    decade_start,
+    offset_adj_mean_weighted,
+  ) %&gt;%
+  pivot_wider(names_from = parameter,
+              values_from = offset_adj_mean_weighted) %&gt;%
+  mutate(cstar = tco2  - 
+           (117 * (1 - phosphate) * 2e-6)  - 0.5 * 
+           (talk - (16 * (1 - phosphate) * 2e-6))) %&gt;%
+  pivot_longer(phosphate:cstar,
+               values_to = &quot;offset_adj_mean_weighted&quot;,
+               names_to = &quot;parameter&quot;)
+  # filter(parameter == &quot;cstar&quot;)
+
+
+xover_subbasin_decade_stats_all_cstar %&gt;% 
+  # filter(parameter %in% c(&quot;talk&quot;, &quot;tco2&quot;, &quot;phosphate&quot;)) %&gt;%
   ggplot(aes(decade_start, offset_adj_mean_weighted)) +
   geom_hline(data = hline_intercept %&gt;% filter(parameter %in% c(&quot;talk&quot;, &quot;tco2&quot;, &quot;phosphate&quot;)), aes(yintercept = intercept)) +
   geom_point(aes(fill = basin), shape = 21) +
@@ -25934,8 +27362,106 @@ jens-daniel-mueller
   scale_x_continuous(breaks = seq(1990, 2010, 10)) +
   facet_grid(parameter ~ decade, scales = &quot;free_y&quot;)</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/full_decadal_crossover_analysis-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>xover_NP_decade_stats_all %&gt;%
-  # mutate(decade_start = paste0(decade_start , &quot;-&quot;, decade_start + 9)) %&gt;%
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-full_decadal_crossover_analysis-1">
+Past versions of full_decadal_crossover_analysis-1.png
+</button>
+</p>
+<div id="fig-full_decadal_crossover_analysis-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/full_decadal_crossover_analysis-1.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>xover_subbasin_decade_stats_all %&gt;% 
+  filter(parameter %in% c(&quot;talk&quot;, &quot;tco2&quot;, &quot;phosphate&quot;)) %&gt;%
+  ggplot(aes(decade_start, offset_adj_mean_weighted)) +
+  geom_hline(data = hline_intercept %&gt;% filter(parameter %in% c(&quot;talk&quot;, &quot;tco2&quot;, &quot;phosphate&quot;)), aes(yintercept = intercept)) +
+  geom_point(aes(fill = basin), shape = 21) +
+  geom_line(aes(col = basin)) +
+  scale_fill_brewer(palette = &quot;Paired&quot;) +
+  scale_color_brewer(palette = &quot;Paired&quot;) +
+  scale_x_continuous(breaks = seq(1990, 2010, 10)) +
+  facet_grid(parameter ~ decade, scales = &quot;free_y&quot;)</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/full_decadal_crossover_analysis-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-full_decadal_crossover_analysis-2">
+Past versions of full_decadal_crossover_analysis-2.png
+</button>
+</p>
+<div id="fig-full_decadal_crossover_analysis-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/full_decadal_crossover_analysis-2.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>xover_subbasin_decade_stats_all %&gt;% 
+  filter(parameter %in% c(&quot;talk&quot;, &quot;tco2&quot;, &quot;phosphate&quot;)) %&gt;%
+  ggplot(aes(decade_start, offset_adj_mean_weighted)) +
+  geom_hline(data = hline_intercept %&gt;% filter(parameter %in% c(&quot;talk&quot;, &quot;tco2&quot;, &quot;phosphate&quot;)), aes(yintercept = intercept)) +
+  geom_point(aes(fill = basin), shape = 21) +
+  geom_linerange(aes(ymin = offset_adj_mean_weighted - offset_adj_sd,
+                     ymax = offset_adj_mean_weighted + offset_adj_sd,
+                     col = basin)) +
+  geom_line(aes(col = basin)) +
+  scale_fill_brewer(palette = &quot;Paired&quot;) +
+  scale_color_brewer(palette = &quot;Paired&quot;) +
+  scale_x_continuous(breaks = seq(1990, 2010, 10)) +
+  facet_grid(parameter ~ decade, scales = &quot;free_y&quot;)</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/full_decadal_crossover_analysis-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>xover_subbasin_decade_stats_all %&gt;%
   filter(parameter %in% c(&quot;talk&quot;, &quot;tco2&quot;, &quot;phosphate&quot;)) %&gt;%
   ggplot(aes(decade_start, offset_adj_mean)) +
   geom_hline(data = hline_intercept %&gt;% filter(parameter %in% c(&quot;talk&quot;, &quot;tco2&quot;, &quot;phosphate&quot;)), aes(yintercept = intercept)) +
@@ -25945,7 +27471,7 @@ jens-daniel-mueller
   scale_color_brewer(palette = &quot;Paired&quot;) +
   scale_x_continuous(breaks = seq(1990, 2010, 10)) +
   facet_grid(parameter ~ decade, scales = &quot;free_y&quot;)</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/full_decadal_crossover_analysis-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/full_decadal_crossover_analysis-4.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="rv-activity" class="section level1" number="7">
