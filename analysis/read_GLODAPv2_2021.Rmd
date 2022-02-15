@@ -1563,7 +1563,6 @@ for (i_expocodes_missing in expocodes_missing) {
       axis.title.x = element_blank()
     )
   
-  
   xover_cruise_decade <- xover_cruise %>%
     mutate(decade = cut(
       year(dateB),
@@ -1767,7 +1766,7 @@ rm(p_crossover_ts, p_crossover_decadal)
 
 ## 5 basin decadal
 
-```{r crossover_analysis_5_basin_decadal, fig.asp=1.2}
+```{r crossover_analysis_5_basin_decadal, fig.asp=1.2, results='asis'}
 
 for (i_basin in unique(basinmask_5$basin)) {
   # i_basin <- unique(basinmask_5$basin)[3]
@@ -1881,18 +1880,19 @@ for (i_basin in unique(basinmask_5$basin)) {
              !is.na(offset)) %>%
       arrange(dateB, dateA)
     
-    
-    xover_NP_decade %>%
-      group_by(parameter, decade) %>%
-      summarise(
-        offset_adj_mean = mean(offset_adj, na.rm = TRUE),
-        offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n, na.rm = TRUE),
-        offset_adj_median = median(offset_adj, na.rm = TRUE)
-      ) %>%
-      ungroup() %>%
-      kable(caption = paste0(i_basin, " | ", decade_start, "s")) %>%
-      kable_styling() %>%
-      scroll_box(height = "300px")
+    print(
+      xover_NP_decade %>%
+        group_by(parameter, decade) %>%
+        summarise(
+          offset_adj_mean = mean(offset_adj, na.rm = TRUE),
+          offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n, na.rm = TRUE),
+          offset_adj_median = median(offset_adj, na.rm = TRUE)
+        ) %>%
+        ungroup() %>%
+        kable(caption = paste0(i_basin, " | ", decade_start, "s")) %>%
+        kable_styling() %>%
+        scroll_box(height = "300px")
+    )
     
     
     p_crossover_ts <- xover_NP %>%
@@ -1921,9 +1921,8 @@ for (i_basin in unique(basinmask_5$basin)) {
       theme(axis.title.x = element_blank(),
             axis.text.x = element_text(angle = 90))
     
-    
-    p_crossover_ts + p_crossover_decadal +
-      plot_layout(widths = c(2, 1))
+    print(p_crossover_ts + p_crossover_decadal +
+            plot_layout(widths = c(2, 1)))
     
     rm(p_crossover_ts, p_crossover_decadal)
     
@@ -1954,8 +1953,8 @@ for (i_basin in unique(basinmask_5$basin)) {
       theme(axis.title.x = element_blank(),
             axis.text.x = element_text(angle = 90))
     
-    p_crossover_ts + p_crossover_decadal +
-      plot_layout(widths = c(2, 1))
+    print(p_crossover_ts + p_crossover_decadal +
+            plot_layout(widths = c(2, 1)))
     
     rm(p_crossover_ts, p_crossover_decadal)
     
