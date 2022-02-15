@@ -1,0 +1,203 @@
+---
+title: "RECCAP-ocean surface flux products"
+author: "Jens Daniel Müller"
+date:  "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  workflowr::wflow_html:
+    number_sections: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+editor_options:
+  chunk_output_type: console
+---
+
+
+```{r parent, child = "/nfs/kryo/work/jenmueller/emlr_cant/utilities/setup.Rmd"}
+# this chunk runs the code stored in setup.Rmd
+# if required, please refer to instructions given here:
+# https://jdblischak.github.io/workflowr/articles/wflow-07-common-code.html
+```
+
+```{r define_paths, include=FALSE}
+path_reccap2_surface_co2   <- "/nfs/kryo/work/updata/reccap2/Surface_CO2"
+path_preprocessing    <- paste(path_root, "/observations/preprocessing/", sep = "")
+```
+
+```{r load_libraries_specific, include=FALSE}
+library(tidync)
+library(lubridate)
+```
+
+# Read source files
+
+
+```{r prepare_basin_mask}
+
+basinmask_5 <- basinmask %>% 
+  filter(MLR_basins == "5") %>% 
+  select(lat, lon, basin)
+
+basinmask <- basinmask %>% 
+  filter(MLR_basins == "2") %>% 
+  select(lat, lon, basin_AIP)
+
+
+```
+
+## Read data
+
+### Globally integrated time series
+
+```{r read_globally_integrated_time_series}
+
+surface_co2_products <- list.files(path_reccap2_surface_co2)
+
+surface_co2_products <-
+  surface_co2_products[!str_detect(surface_co2_products, pattern = "\\.")]
+
+# Remove data sets that do not meet formatting requirements
+
+surface_co2_products <-
+  surface_co2_products[!str_detect(surface_co2_products, pattern = "JMAMLR_v20210312")]
+
+surface_co2_products <-
+  surface_co2_products[!str_detect(surface_co2_products, pattern = "LDEO_2021_clim_RECCAP2_v20210702")]
+
+surface_co2_products <-
+  surface_co2_products[!str_detect(surface_co2_products, pattern = "spco2_LDEO_HPD_1985-2018_v20211210")]
+
+surface_co2_products <-
+  surface_co2_products[!str_detect(surface_co2_products, pattern = "NIES-nn_v202011")]
+
+surface_co2_products <-
+  surface_co2_products[!str_detect(surface_co2_products, pattern = "SOMFFN_v20211121")]
+
+### loop
+
+for (i_surface_co2_products in surface_co2_products) {
+  # i_surface_co2_products <- surface_co2_products[5]
+  
+  path_product <- paste(path_reccap2_surface_co2,
+                        i_surface_co2_products,
+                        sep = "/")
+  
+  fgco2_glob_file_name <-
+    list.files(path_product, pattern = "fgco2_glob")
+  
+  fgco2_glob <-
+    tidync(paste(path_product,
+                 fgco2_glob_file_name,
+                 sep = "/"))
+  
+  fgco2_glob <- fgco2_glob %>%
+    hyper_tibble()
+  
+  fgco2_glob <- fgco2_glob %>%
+    mutate(product = i_surface_co2_products)
+  
+  if (exists("fgco2_glob_all")) {
+    fgco2_glob_all <- bind_rows(fgco2_glob_all, fgco2_glob)
+  }
+  
+  if (!exists("fgco2_glob_all")) {
+    fgco2_glob_all <- fgco2_glob
+  }
+  
+}
+
+
+
+```
+
+```{r fgco2_time_series}
+
+
+fgco2_glob_all <- fgco2_glob_all %>% 
+  mutate(date = as.Date(time, origin = '1980-01-01'),
+         year = year(date),
+         fgco2_glob = fgco2_glob) %>% 
+  select(product, year, date, fgco2_glob)
+
+
+fgco2_glob_all %>% 
+  ggplot(aes(date, fgco2_glob, col=product)) +
+  geom_line() +
+  theme(legend.position = "bottom")
+
+
+fgco2_glob_all_annual <- fgco2_glob_all %>% 
+  group_by(year, product) %>% 
+  summarise(fgco2_glob = mean(fgco2_glob)) %>% 
+  ungroup()
+  
+
+fgco2_glob_all_annual %>% 
+  ggplot(aes(year, fgco2_glob, col=product)) +
+  geom_line() +
+  theme(legend.position = "bottom")
+
+fgco2_glob_all_annual_cum_1994 <- fgco2_glob_all_annual %>% 
+  filter(year >= 1994) %>% 
+  arrange(year) %>% 
+  group_by(product) %>% 
+  mutate(fgco2_glob_cum = cumsum(fgco2_glob)) %>% 
+  ungroup()
+  
+
+fgco2_glob_all_annual_cum_1994 %>%
+  ggplot(aes(year, fgco2_glob_cum, col = product)) +
+  geom_line() +
+  geom_point(shape = 21, fill = "white") +
+  theme(legend.position = "bottom")
+
+
+fgco2_glob_all_annual_ensemble <- fgco2_glob_all_annual %>%
+  filter(product != "UOEX_Wat20_1985_2019_v20211204") %>% 
+  group_by(year) %>%
+  summarise(fgco2_glob_sd = sd(fgco2_glob),
+            fgco2_glob = mean(fgco2_glob)) %>%
+  ungroup()
+
+ggplot() +
+  geom_ribbon(
+    data =
+      fgco2_glob_all_annual_ensemble,
+    aes(
+      year,
+      ymax = fgco2_glob + fgco2_glob_sd,
+      ymin = fgco2_glob - fgco2_glob_sd,
+      fill = "ensemble SD"
+    ), alpha = 0.3
+  ) +
+  geom_line(data =
+              fgco2_glob_all_annual,
+            aes(year, fgco2_glob, group = product, col = "individual products")) +
+  geom_line(data =
+              fgco2_glob_all_annual_ensemble,
+            aes(year, fgco2_glob, col = "ensemble mean"), size = 1) +
+  scale_fill_manual(values = "red") +
+  scale_color_manual(values = c("red", "grey50")) +
+  theme(legend.position = "bottom",
+        legend.title = element_blank())
+
+```
+
+
+
+# Write files
+
+```{r write_RECCAP2_fgco2_files}
+
+fgco2_glob_all %>%
+  write_csv(paste0(path_preprocessing,
+                   "RECCAP2_fgco2_glob_all.csv"))
+
+fgco2_glob_all_annual %>%
+  write_csv(paste0(path_preprocessing,
+                   "RECCAP2_fgco2_glob_all_annual.csv"))
+
+
+
+```
+
