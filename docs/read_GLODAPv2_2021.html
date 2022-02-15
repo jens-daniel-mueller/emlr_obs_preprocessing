@@ -14,8 +14,8 @@
 
 <title>GLODAPv2_2020</title>
 
-<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -42,7 +42,7 @@
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
-<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
 <style type="text/css">
 div.section {
@@ -446,7 +446,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">GLODAPv2_2020</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">17 January, 2022</h4>
+<h4 class="date">15 February, 2022</h4>
 
 </div>
 
@@ -471,7 +471,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-01-17
+<strong>Last updated:</strong> 2022-02-15
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -480,8 +480,8 @@ div.tocify {
 <strong>Knit directory:</strong> <code>emlr_obs_preprocessing/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
 </p>
 <p>
-This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
-  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -562,16 +562,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree0a1ca0720ae429353aac66162f8bce9e7db2c056targetblank0a1ca07a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/0a1ca0720ae429353aac66162f8bce9e7db2c056" target="_blank">0a1ca07</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree73fc278505cdc69691609d5794d4f4c7d364f947targetblank73fc278a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/73fc278505cdc69691609d5794d4f4c7d364f947" target="_blank">73fc278</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree0a1ca0720ae429353aac66162f8bce9e7db2c056targetblank0a1ca07a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree73fc278505cdc69691609d5794d4f4c7d364f947targetblank73fc278a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/0a1ca0720ae429353aac66162f8bce9e7db2c056" target="_blank">0a1ca07</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/73fc278505cdc69691609d5794d4f4c7d364f947" target="_blank">73fc278</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -584,8 +584,14 @@ Ignored files:
     Ignored:    output/
 
 Untracked files:
+    Untracked:  analysis/read_RECCAP2_flux_products.Rmd
     Untracked:  code/IO_1990_own_crossover_analysis_backup.R
     Untracked:  code/read_GLODAPv2_2020.Rmd
+
+Unstaged changes:
+    Modified:   analysis/read_CO2_atm.Rmd
+    Modified:   analysis/read_OceanSODA.Rmd
+    Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
 <p>
@@ -624,6 +630,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/73fc278505cdc69691609d5794d4f4c7d364f947/analysis/read_GLODAPv2_2021.Rmd" target="_blank">73fc278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+<td>
+decadal crossover evaluation pre subbasin
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/4d9d1cde1674f19b4920a0cc40cb32573c3bdfcb/docs/read_GLODAPv2_2021.html" target="_blank">4d9d1cd</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-01-17
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -2834,6 +2874,10 @@ GLODAP &lt;- GLODAP  %&gt;%
 <h2><span class="header-section-number">2.4</span> Apply basin mask</h2>
 <pre class="r"><code># use only three basin to assign general basin mask
 # ie this is not specific to the MLR fitting
+basinmask_5 &lt;- basinmask %&gt;% 
+  filter(MLR_basins == &quot;5&quot;) %&gt;% 
+  select(lat, lon, basin)
+
 basinmask &lt;- basinmask %&gt;% 
   filter(MLR_basins == &quot;2&quot;) %&gt;% 
   select(lat, lon, basin_AIP)
@@ -6791,18 +6835,18 @@ jens-daniel-mueller
                names_to = &quot;flag&quot;,
                values_to = &quot;value&quot;) %&gt;% 
   distinct(flag, value)</code></pre>
-<pre><code>[38;5;246m# A tibble: 9 × 2[39m
+<pre><code># A tibble: 9 × 2
   flag        value
-  [3m[38;5;246m&lt;chr&gt;[39m[23m       [3m[38;5;246m&lt;dbl&gt;[39m[23m
-[38;5;250m1[39m salinityqc      1
-[38;5;250m2[39m oxygenqc        1
-[38;5;250m3[39m nitrateqc       1
-[38;5;250m4[39m silicateqc      1
-[38;5;250m5[39m phosphateqc     1
-[38;5;250m6[39m tco2qc          1
-[38;5;250m7[39m talkqc          1
-[38;5;250m8[39m talkqc          0
-[38;5;250m9[39m tco2qc          0</code></pre>
+  &lt;chr&gt;       &lt;dbl&gt;
+1 salinityqc      1
+2 oxygenqc        1
+3 nitrateqc       1
+4 silicateqc      1
+5 phosphateqc     1
+6 tco2qc          1
+7 talkqc          1
+8 talkqc          0
+9 tco2qc          0</code></pre>
 <pre class="r"><code>rm(A16)</code></pre>
 </div>
 </div>
@@ -7301,17 +7345,17 @@ for (i_expocodes_missing in expocodes_missing) {
   rm(p_crossover_ts, p_crossover_decadal)
   
 }</code></pre>
-<pre><code>[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 1 × 8[39m
+<pre><code># A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 320620170703    Pacific   2010-2019 talk       [4m2[24m809   449     [4m3[24m258 loss    
-[38;5;246m# A tibble: 0 × 9[39m
-[38;5;246m# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,[39m
-[38;5;246m#   category &lt;chr&gt;[39m
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 320620170703    Pacific   2010-2019 talk       2809   449     3258 loss    
+# A tibble: 0 × 9
+# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,
+#   category &lt;chr&gt;
 [1] &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -7526,17 +7570,17 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 1 × 8[39m
+<pre><code># A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 323019940104    Atlantic  1989-1999 talk       [4m2[24m393   539     [4m2[24m932 loss    
-[38;5;246m# A tibble: 0 × 9[39m
-[38;5;246m# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,[39m
-[38;5;246m#   category &lt;chr&gt;[39m
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 323019940104    Atlantic  1989-1999 talk       2393   539     2932 loss    
+# A tibble: 0 × 9
+# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,
+#   category &lt;chr&gt;
 [1] &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-4.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -7762,16 +7806,16 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 1 × 9[39m
-  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 325020060213    Pacific   2000-2009 aou        [4m2[24m236   349     0     [4m2[24m585 loss    
+<pre><code># A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 1 × 9
+  cruise_expocode basin_AIP decade parameter   f_2   f_9   f_0 n_cruise category
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;  &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 325020060213    Pacific   2000-… aou        2236   349     0     2585 loss    
 [1] &quot;aouf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-7.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -7997,19 +8041,19 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 4 × 9[39m
-  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 06AQ19980328    Atlantic  1989-1999 nitrate    [4m1[24m343   706     9     [4m2[24m058 loss    
-[38;5;250m2[39m 06AQ19980328    Atlantic  1989-1999 phosphate  [4m1[24m347   707     4     [4m2[24m058 loss    
-[38;5;250m3[39m 06AQ19980328    Atlantic  1989-1999 silicate   [4m1[24m348   708     2     [4m2[24m058 loss    
-[38;5;250m4[39m 06AQ19980328    Atlantic  1989-1999 talk          0  [4m2[24m058     0     [4m2[24m058 loss    
+<pre><code># A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 4 × 9
+  cruise_expocode basin_AIP decade parameter   f_2   f_9   f_0 n_cruise category
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;  &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 06AQ19980328    Atlantic  1989-… nitrate    1343   706     9     2058 loss    
+2 06AQ19980328    Atlantic  1989-… phosphate  1347   707     4     2058 loss    
+3 06AQ19980328    Atlantic  1989-… silicate   1348   708     2     2058 loss    
+4 06AQ19980328    Atlantic  1989-… talk          0  2058     0     2058 loss    
 [1] &quot;nitratef&quot;   &quot;phosphatef&quot; &quot;silicatef&quot;  &quot;talkf&quot;     </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-10.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -8661,22 +8705,22 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 2 × 8[39m
+<pre><code># A tibble: 2 × 8
   cruise_expocode basin_AIP decade    parameter  qc_0  qc_1 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 06MT19900123    Atlantic  1989-1999 talk        660     0      660 loss    
-[38;5;250m2[39m 06MT19900123    Pacific   1989-1999 talk          9     0        9 loss    
-[38;5;246m# A tibble: 2 × 8[39m
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 06MT19900123    Atlantic  1989-1999 talk        660     0      660 loss    
+2 06MT19900123    Pacific   1989-1999 talk          9     0        9 loss    
+# A tibble: 2 × 8
   cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 06MT19900123    Atlantic  1989-1999 talk          0   660      660 loss    
-[38;5;250m2[39m 06MT19900123    Pacific   1989-1999 talk          0     9        9 loss    
-[38;5;246m# A tibble: 3 × 9[39m
-  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 06MT19900123    Atlantic  1989-1999 talk          0   324   667      991 loss    
-[38;5;250m2[39m 06MT19900123    Pacific   1989-1999 aou         233    62     0      295 loss    
-[38;5;250m3[39m 06MT19900123    Pacific   1989-1999 talk          0   282    13      295 loss    
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 06MT19900123    Atlantic  1989-1999 talk          0   660      660 loss    
+2 06MT19900123    Pacific   1989-1999 talk          0     9        9 loss    
+# A tibble: 3 × 9
+  cruise_expocode basin_AIP decade parameter   f_2   f_9   f_0 n_cruise category
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;  &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 06MT19900123    Atlantic  1989-… talk          0   324   667      991 loss    
+2 06MT19900123    Pacific   1989-… aou         233    62     0      295 loss    
+3 06MT19900123    Pacific   1989-… talk          0   282    13      295 loss    
 [1] &quot;talkqc&quot; &quot;talkf&quot;  &quot;aouf&quot;  </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-19.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -9186,17 +9230,17 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 2 × 9[39m
-  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 316N19871123    Atlantic  1989-1999 aou        [4m2[24m554   344     0     [4m2[24m898 loss    
-[38;5;250m2[39m 316N19871123    Atlantic  1989-1999 talk       [4m1[24m870  [4m1[24m028     0     [4m2[24m898 loss    
+<pre><code># A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 2 × 9
+  cruise_expocode basin_AIP decade parameter   f_2   f_9   f_0 n_cruise category
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;  &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 316N19871123    Atlantic  1989-… aou        2554   344     0     2898 loss    
+2 316N19871123    Atlantic  1989-… talk       1870  1028     0     2898 loss    
 [1] &quot;aouf&quot;  &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-26.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -9553,19 +9597,19 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 1 × 8[39m
+<pre><code># A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter  qc_0  qc_1 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 316N19920502    Pacific   1989-1999 talk        570     0      570 loss    
-[38;5;246m# A tibble: 1 × 8[39m
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 316N19920502    Pacific   1989-1999 talk        570     0      570 loss    
+# A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 316N19920502    Pacific   1989-1999 talk          0   570      570 loss    
-[38;5;246m# A tibble: 2 × 9[39m
-  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 316N19920502    Pacific   1989-1999 phosphate  [4m2[24m676   376    29     [4m3[24m081 loss    
-[38;5;250m2[39m 316N19920502    Pacific   1989-1999 talk          0  [4m2[24m508   573     [4m3[24m081 loss    
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 316N19920502    Pacific   1989-1999 talk          0   570      570 loss    
+# A tibble: 2 × 9
+  cruise_expocode basin_AIP decade parameter   f_2   f_9   f_0 n_cruise category
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;  &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 316N19920502    Pacific   1989-… phosphate  2676   376    29     3081 loss    
+2 316N19920502    Pacific   1989-… talk          0  2508   573     3081 loss    
 [1] &quot;talkqc&quot;     &quot;talkf&quot;      &quot;phosphatef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-31.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -9987,18 +10031,18 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 1 × 8[39m
+<pre><code># A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter  qc_0  qc_1 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 316N19921006    Pacific   1989-1999 talk       [4m1[24m352     0     [4m1[24m352 loss    
-[38;5;246m# A tibble: 1 × 8[39m
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 316N19921006    Pacific   1989-1999 talk       1352     0     1352 loss    
+# A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 316N19921006    Pacific   1989-1999 talk          0  [4m1[24m352     [4m1[24m352 loss    
-[38;5;246m# A tibble: 1 × 9[39m
-  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 316N19921006    Pacific   1989-1999 talk          0   175  [4m1[24m359     [4m1[24m534 loss    
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 316N19921006    Pacific   1989-1999 talk          0  1352     1352 loss    
+# A tibble: 1 × 9
+  cruise_expocode basin_AIP decade parameter   f_2   f_9   f_0 n_cruise category
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;  &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 316N19921006    Pacific   1989-… talk          0   175  1359     1534 loss    
 [1] &quot;talkqc&quot; &quot;talkf&quot; </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-38.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -10256,16 +10300,16 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 1 × 9[39m
-  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 316N19941201    Indian    1989-1999 talk       [4m1[24m705   466     0     [4m2[24m171 loss    
+<pre><code># A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 1 × 9
+  cruise_expocode basin_AIP decade parameter   f_2   f_9   f_0 n_cruise category
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;  &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 316N19941201    Indian    1989-… talk       1705   466     0     2171 loss    
 [1] &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-43.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -10425,17 +10469,17 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 2 × 9[39m
-  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 316N19950310    Indian    1989-1999 aou        [4m1[24m958   439     0     [4m2[24m397 loss    
-[38;5;250m2[39m 316N19950310    Indian    1989-1999 salinity   [4m1[24m989   394    14     [4m2[24m397 loss    
+<pre><code># A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 2 × 9
+  cruise_expocode basin_AIP decade parameter   f_2   f_9   f_0 n_cruise category
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;  &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 316N19950310    Indian    1989-… aou        1958   439     0     2397 loss    
+2 316N19950310    Indian    1989-… salinity   1989   394    14     2397 loss    
 [1] &quot;aouf&quot;      &quot;salinityf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-46.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -10693,16 +10737,16 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 1 × 9[39m
-  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 316N19950611    Indian    1989-1999 talk       [4m1[24m657   264     0     [4m1[24m921 loss    
+<pre><code># A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 1 × 9
+  cruise_expocode basin_AIP decade parameter   f_2   f_9   f_0 n_cruise category
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;  &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 316N19950611    Indian    1989-… talk       1657   264     0     1921 loss    
 [1] &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-51.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -10862,18 +10906,18 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 2 × 8[39m
+<pre><code># A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 2 × 8
   cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 318M20091121    Pacific   2010-2019 talk       [4m4[24m159  [4m1[24m041     [4m5[24m200 loss    
-[38;5;250m2[39m 318M20091121    Pacific   2010-2019 tco2       [4m4[24m332   868     [4m5[24m200 loss    
-[38;5;246m# A tibble: 0 × 9[39m
-[38;5;246m# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,[39m
-[38;5;246m#   category &lt;chr&gt;[39m
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 318M20091121    Pacific   2010-2019 talk       4159  1041     5200 loss    
+2 318M20091121    Pacific   2010-2019 tco2       4332   868     5200 loss    
+# A tibble: 0 × 9
+# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,
+#   category &lt;chr&gt;
 [1] &quot;talkf&quot; &quot;tco2f&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-54.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -11131,17 +11175,17 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 1 × 8[39m
+<pre><code># A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter  qc_0  qc_1 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 31DS19940126    Pacific   1989-1999 nitrate    [4m2[24m873     0     [4m2[24m873 loss    
-[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 0 × 9[39m
-[38;5;246m# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,[39m
-[38;5;246m#   category &lt;chr&gt;[39m
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 31DS19940126    Pacific   1989-1999 nitrate    2873     0     2873 loss    
+# A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 0 × 9
+# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,
+#   category &lt;chr&gt;
 [1] &quot;nitrateqc&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-59.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -11301,17 +11345,17 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 1 × 8[39m
+<pre><code># A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 31DS19960105    Pacific   1989-1999 talk       [4m2[24m395   282     [4m2[24m677 loss    
-[38;5;246m# A tibble: 0 × 9[39m
-[38;5;246m# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,[39m
-[38;5;246m#   category &lt;chr&gt;[39m
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 31DS19960105    Pacific   1989-1999 talk       2395   282     2677 loss    
+# A tibble: 0 × 9
+# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,
+#   category &lt;chr&gt;
 [1] &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-62.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -11471,18 +11515,18 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 1 × 8[39m
+<pre><code># A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter  qc_0  qc_1 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 33MW19930704    Atlantic  1989-1999 talk         78   545      623 loss    
-[38;5;246m# A tibble: 1 × 8[39m
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 33MW19930704    Atlantic  1989-1999 talk         78   545      623 loss    
+# A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 33MW19930704    Atlantic  1989-1999 talk        500   123      623 loss    
-[38;5;246m# A tibble: 1 × 9[39m
-  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 33MW19930704    Atlantic  1989-1999 phosphate   671  [4m1[24m146     1     [4m1[24m818 loss    
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 33MW19930704    Atlantic  1989-1999 talk        500   123      623 loss    
+# A tibble: 1 × 9
+  cruise_expocode basin_AIP decade parameter   f_2   f_9   f_0 n_cruise category
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;  &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 33MW19930704    Atlantic  1989-… phosphate   671  1146     1     1818 loss    
 [1] &quot;talkqc&quot;     &quot;talkf&quot;      &quot;phosphatef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-65.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -11838,17 +11882,17 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 1 × 8[39m
+<pre><code># A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 33RO19980123    Atlantic  1989-1999 talk        864   385     [4m1[24m249 loss    
-[38;5;246m# A tibble: 1 × 9[39m
-  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 33RO19980123    Atlantic  1989-1999 phosphate  [4m1[24m430   661     5     [4m2[24m096 loss    
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 33RO19980123    Atlantic  1989-1999 talk        864   385     1249 loss    
+# A tibble: 1 × 9
+  cruise_expocode basin_AIP decade parameter   f_2   f_9   f_0 n_cruise category
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;  &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 33RO19980123    Atlantic  1989-… phosphate  1430   661     5     2096 loss    
 [1] &quot;talkf&quot;      &quot;phosphatef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-72.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -12106,17 +12150,17 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 1 × 8[39m
+<pre><code># A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 33RO20071215    Pacific   2000-2009 talk       [4m3[24m549   951     [4m4[24m500 loss    
-[38;5;246m# A tibble: 0 × 9[39m
-[38;5;246m# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,[39m
-[38;5;246m#   category &lt;chr&gt;[39m
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 33RO20071215    Pacific   2000-2009 talk       3549   951     4500 loss    
+# A tibble: 0 × 9
+# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,
+#   category &lt;chr&gt;
 [1] &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-77.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -12276,17 +12320,17 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 1 × 8[39m
+<pre><code># A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 33RO20110926    Atlantic  2010-2019 tco2        842   283     [4m1[24m125 loss    
-[38;5;246m# A tibble: 1 × 9[39m
-  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 33RO20110926    Atlantic  2010-2019 phosphate  [4m1[24m239  [4m1[24m304     1     [4m2[24m544 loss    
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 33RO20110926    Atlantic  2010-2019 tco2        842   283     1125 loss    
+# A tibble: 1 × 9
+  cruise_expocode basin_AIP decade parameter   f_2   f_9   f_0 n_cruise category
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;  &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 33RO20110926    Atlantic  2010-… phosphate  1239  1304     1     2544 loss    
 [1] &quot;tco2f&quot;      &quot;phosphatef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-80.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -12544,17 +12588,17 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 1 × 8[39m
+<pre><code># A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 33RR20080204    Indian    2000-2009 tco2       [4m1[24m720   405     [4m2[24m125 loss    
-[38;5;246m# A tibble: 0 × 9[39m
-[38;5;246m# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,[39m
-[38;5;246m#   category &lt;chr&gt;[39m
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 33RR20080204    Indian    2000-2009 tco2       1720   405     2125 loss    
+# A tibble: 0 × 9
+# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,
+#   category &lt;chr&gt;
 [1] &quot;tco2f&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-85.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -12703,17 +12747,17 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 1 × 8[39m
+<pre><code># A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 35A319950113    Atlantic  1989-1999 tco2        733   162      895 loss    
-[38;5;246m# A tibble: 1 × 9[39m
-  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 35A319950113    Atlantic  1989-1999 aou         900   198     0     [4m1[24m098 loss    
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 35A319950113    Atlantic  1989-1999 tco2        733   162      895 loss    
+# A tibble: 1 × 9
+  cruise_expocode basin_AIP decade parameter   f_2   f_9   f_0 n_cruise category
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;  &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 35A319950113    Atlantic  1989-… aou         900   198     0     1098 loss    
 [1] &quot;tco2f&quot; &quot;aouf&quot; </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-88.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -12960,16 +13004,16 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 1 × 9[39m
-  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 35MF19930123    Indian    1989-1999 phosphate     0  [4m1[24m436     0     [4m1[24m436 loss    
+<pre><code># A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 1 × 9
+  cruise_expocode basin_AIP decade parameter   f_2   f_9   f_0 n_cruise category
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;  &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 35MF19930123    Indian    1989-… phosphate     0  1436     0     1436 loss    
 [1] &quot;phosphatef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-93.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -13085,16 +13129,16 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 1 × 9[39m
-  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 35MF19960220    Indian    1989-1999 silicate   [4m1[24m630   350    24     [4m2[24m004 loss    
+<pre><code># A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 1 × 9
+  cruise_expocode basin_AIP decade parameter   f_2   f_9   f_0 n_cruise category
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;  &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 35MF19960220    Indian    1989-… silicate   1630   350    24     2004 loss    
 [1] &quot;silicatef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-96.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -13210,18 +13254,18 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 1 × 8[39m
+<pre><code># A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter  qc_0  qc_1 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 35TH20020611    Atlantic  2000-2009 tco2        926     0      926 loss    
-[38;5;246m# A tibble: 1 × 8[39m
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 35TH20020611    Atlantic  2000-2009 tco2        926     0      926 loss    
+# A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 35TH20020611    Atlantic  2000-2009 tco2          0   926      926 loss    
-[38;5;246m# A tibble: 0 × 9[39m
-[38;5;246m# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,[39m
-[38;5;246m#   category &lt;chr&gt;[39m
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 35TH20020611    Atlantic  2000-2009 tco2          0   926      926 loss    
+# A tibble: 0 × 9
+# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,
+#   category &lt;chr&gt;
 [1] &quot;tco2qc&quot; &quot;tco2f&quot; </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-99.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -13424,18 +13468,18 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 1 × 8[39m
+<pre><code># A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter  qc_0  qc_1 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 35TH20040604    Atlantic  2000-2009 tco2        928     0      928 loss    
-[38;5;246m# A tibble: 1 × 8[39m
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 35TH20040604    Atlantic  2000-2009 tco2        928     0      928 loss    
+# A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 35TH20040604    Atlantic  2000-2009 tco2          0   928      928 loss    
-[38;5;246m# A tibble: 1 × 9[39m
-  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 35TH20040604    Atlantic  2000-2009 nitrate     926   110    14     [4m1[24m050 loss    
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 35TH20040604    Atlantic  2000-2009 tco2          0   928      928 loss    
+# A tibble: 1 × 9
+  cruise_expocode basin_AIP decade parameter   f_2   f_9   f_0 n_cruise category
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;  &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 35TH20040604    Atlantic  2000-… nitrate     926   110    14     1050 loss    
 [1] &quot;tco2qc&quot;   &quot;tco2f&quot;    &quot;nitratef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-104.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -13714,18 +13758,18 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 1 × 8[39m
+<pre><code># A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter  qc_0  qc_1 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 35TH20080610    Atlantic  2000-2009 tco2       [4m1[24m032     0     [4m1[24m032 loss    
-[38;5;246m# A tibble: 1 × 8[39m
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 35TH20080610    Atlantic  2000-2009 tco2       1032     0     1032 loss    
+# A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 35TH20080610    Atlantic  2000-2009 tco2          0  [4m1[24m032     [4m1[24m032 loss    
-[38;5;246m# A tibble: 0 × 9[39m
-[38;5;246m# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,[39m
-[38;5;246m#   category &lt;chr&gt;[39m
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 35TH20080610    Atlantic  2000-2009 tco2          0  1032     1032 loss    
+# A tibble: 0 × 9
+# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,
+#   category &lt;chr&gt;
 [1] &quot;tco2qc&quot; &quot;tco2f&quot; </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-111.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -13928,18 +13972,18 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 3 × 9[39m
-  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 74DI19970807    Atlantic  1989-1999 nitrate    [4m1[24m650   274    12     [4m1[24m936 loss    
-[38;5;250m2[39m 74DI19970807    Atlantic  1989-1999 phosphate     0  [4m1[24m936     0     [4m1[24m936 loss    
-[38;5;250m3[39m 74DI19970807    Atlantic  1989-1999 silicate   [4m1[24m649   262    25     [4m1[24m936 loss    
+<pre><code># A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 3 × 9
+  cruise_expocode basin_AIP decade parameter   f_2   f_9   f_0 n_cruise category
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;  &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 74DI19970807    Atlantic  1989-… nitrate    1650   274    12     1936 loss    
+2 74DI19970807    Atlantic  1989-… phosphate     0  1936     0     1936 loss    
+3 74DI19970807    Atlantic  1989-… silicate   1649   262    25     1936 loss    
 [1] &quot;nitratef&quot;   &quot;phosphatef&quot; &quot;silicatef&quot; </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-116.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -14218,18 +14262,18 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 1 × 8[39m
+<pre><code># A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter  qc_0  qc_1 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 74DI20040404    Atlantic  2000-2009 talk        110   948     [4m1[24m058 loss    
-[38;5;246m# A tibble: 1 × 8[39m
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 74DI20040404    Atlantic  2000-2009 talk        110   948     1058 loss    
+# A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 74DI20040404    Atlantic  2000-2009 talk        948   110     [4m1[24m058 loss    
-[38;5;246m# A tibble: 0 × 9[39m
-[38;5;246m# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,[39m
-[38;5;246m#   category &lt;chr&gt;[39m
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 74DI20040404    Atlantic  2000-2009 talk        948   110     1058 loss    
+# A tibble: 0 × 9
+# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,
+#   category &lt;chr&gt;
 [1] &quot;talkqc&quot; &quot;talkf&quot; </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-123.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -14432,17 +14476,17 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 1 × 8[39m
+<pre><code># A tibble: 1 × 8
   cruise_expocode basin_AIP decade    parameter  qc_0  qc_1 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 74EQ20151206    Atlantic  2010-2019 nitrate    [4m1[24m844     0     [4m1[24m844 loss    
-[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 0 × 9[39m
-[38;5;246m# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,[39m
-[38;5;246m#   category &lt;chr&gt;[39m
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 74EQ20151206    Atlantic  2010-2019 nitrate    1844     0     1844 loss    
+# A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 0 × 9
+# … with 9 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_9 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;,
+#   category &lt;chr&gt;
 [1] &quot;nitrateqc&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-128.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -14558,16 +14602,16 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 1 × 9[39m
-  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 33RO20030604    Atlantic  2000-2009 phosphate     0  [4m2[24m487     0     [4m2[24m487 loss    
+<pre><code># A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 1 × 9
+  cruise_expocode basin_AIP decade parameter   f_2   f_9   f_0 n_cruise category
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;  &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 33RO20030604    Atlantic  2000-… phosphate     0  2487     0     2487 loss    
 [1] &quot;phosphatef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-131.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -14694,16 +14738,16 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 1 × 9[39m
-  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 33RO20050111    Atlantic  2000-2009 phosphate     0  [4m2[24m546     0     [4m2[24m546 loss    
+<pre><code># A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 1 × 9
+  cruise_expocode basin_AIP decade parameter   f_2   f_9   f_0 n_cruise category
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;  &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 33RO20050111    Atlantic  2000-… phosphate     0  2546     0     2546 loss    
 [1] &quot;phosphatef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-134.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -14830,23 +14874,23 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 3 × 8[39m
+<pre><code># A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 3 × 8
   cruise_expocode basin_AIP decade    parameter   f_2   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 06AQ20080210    Pacific   2000-2009 nitrate      48    17       65 loss    
-[38;5;250m2[39m 06AQ20080210    Pacific   2000-2009 phosphate    48    17       65 loss    
-[38;5;250m3[39m 06AQ20080210    Pacific   2000-2009 silicate     48    17       65 loss    
-[38;5;246m# A tibble: 5 × 9[39m
-  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 06AQ20080210    Atlantic  2000-2009 talk       [4m1[24m144   778     0     [4m1[24m922 loss    
-[38;5;250m2[39m 06AQ20080210    Pacific   2000-2009 nitrate      62    31    24      117 loss    
-[38;5;250m3[39m 06AQ20080210    Pacific   2000-2009 phosphate    62    31    24      117 loss    
-[38;5;250m4[39m 06AQ20080210    Pacific   2000-2009 silicate     62    31    24      117 loss    
-[38;5;250m5[39m 06AQ20080210    Pacific   2000-2009 talk         74    43     0      117 loss    
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;     &lt;chr&gt;     &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 06AQ20080210    Pacific   2000-2009 nitrate      48    17       65 loss    
+2 06AQ20080210    Pacific   2000-2009 phosphate    48    17       65 loss    
+3 06AQ20080210    Pacific   2000-2009 silicate     48    17       65 loss    
+# A tibble: 5 × 9
+  cruise_expocode basin_AIP decade parameter   f_2   f_9   f_0 n_cruise category
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;  &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 06AQ20080210    Atlantic  2000-… talk       1144   778     0     1922 loss    
+2 06AQ20080210    Pacific   2000-… nitrate      62    31    24      117 loss    
+3 06AQ20080210    Pacific   2000-… phosphate    62    31    24      117 loss    
+4 06AQ20080210    Pacific   2000-… silicate     62    31    24      117 loss    
+5 06AQ20080210    Pacific   2000-… talk         74    43     0      117 loss    
 [1] &quot;nitratef&quot;   &quot;phosphatef&quot; &quot;silicatef&quot;  &quot;talkf&quot;     </code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-137.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -15201,16 +15245,16 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 1 × 9[39m
-  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 06AQ20050122    Atlantic  2000-2009 talk          0  [4m2[24m248     0     [4m2[24m248 loss    
+<pre><code># A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 1 × 9
+  cruise_expocode basin_AIP decade parameter   f_2   f_9   f_0 n_cruise category
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;  &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 06AQ20050122    Atlantic  2000-… talk          0  2248     0     2248 loss    
 [1] &quot;talkf&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-146.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -15337,16 +15381,16 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 0 × 8[39m
-[38;5;246m# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,[39m
-[38;5;246m#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;[39m
-[38;5;246m# A tibble: 1 × 9[39m
-  cruise_expocode basin_AIP decade    parameter   f_2   f_9   f_0 n_cruise category
-  [3m[38;5;246m&lt;chr&gt;[39m[23m           [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;fct&gt;[39m[23m     [3m[38;5;246m&lt;chr&gt;[39m[23m     [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;int&gt;[39m[23m    [3m[38;5;246m&lt;int&gt;[39m[23m [3m[38;5;246m&lt;chr&gt;[39m[23m   
-[38;5;250m1[39m 29HE20130320    Atlantic  2010-2019 phosphate     0  [4m2[24m256     0     [4m2[24m256 loss    
+<pre><code># A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, qc_0 &lt;int&gt;, qc_1 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 0 × 8
+# … with 8 variables: cruise_expocode &lt;chr&gt;, basin_AIP &lt;chr&gt;, decade &lt;fct&gt;,
+#   parameter &lt;chr&gt;, f_2 &lt;int&gt;, f_0 &lt;int&gt;, n_cruise &lt;int&gt;, category &lt;chr&gt;
+# A tibble: 1 × 9
+  cruise_expocode basin_AIP decade parameter   f_2   f_9   f_0 n_cruise category
+  &lt;chr&gt;           &lt;chr&gt;     &lt;fct&gt;  &lt;chr&gt;     &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt; &lt;chr&gt;   
+1 29HE20130320    Atlantic  2010-… phosphate     0  2256     0     2256 loss    
 [1] &quot;phosphatef&quot;</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_missing_flagged_data-149.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -16133,6 +16177,1272 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre class="r"><code>rm(p_crossover_ts, p_crossover_decadal)</code></pre>
+</div>
+<div id="basin-decadal" class="section level2" number="6.5">
+<h2><span class="header-section-number">6.5</span> 5 basin decadal</h2>
+<pre class="r"><code>for (i_basin in unique(basinmask_5$basin)) {
+  # i_basin &lt;- unique(basinmask_5$basin)[3]
+  
+  
+  NP_expocodes &lt;- inner_join(GLODAP, basinmask_5) %&gt;%
+    filter(basin == i_basin)
+  
+  map +
+    geom_tile(data = NP_expocodes %&gt;% distinct(lon, lat),
+              aes(lon, lat))
+  
+  NP_expocodes_qc &lt;- NP_expocodes %&gt;%
+    select(row_number, cruise_expocode, ends_with(&quot;qc&quot;)) %&gt;%
+    pivot_longer(ends_with(&quot;qc&quot;),
+                 names_to = &quot;parameter&quot;,
+                 values_to = &quot;value&quot;) %&gt;%
+    filter(value == 1) %&gt;%
+    pivot_wider(names_from = parameter,
+                values_from = value) %&gt;%
+    count(cruise_expocode)
+  
+  NP_expocodes_f &lt;- NP_expocodes %&gt;%
+    select(row_number, cruise_expocode, ends_with(&quot;f&quot;)) %&gt;%
+    pivot_longer(ends_with(&quot;f&quot;),
+                 names_to = &quot;parameter&quot;,
+                 values_to = &quot;value&quot;) %&gt;%
+    filter(value == 2) %&gt;%
+    pivot_wider(names_from = parameter,
+                values_from = value) %&gt;%
+    count(cruise_expocode)
+  
+  NP_expocodes &lt;- inner_join(NP_expocodes_f, NP_expocodes_qc) %&gt;%
+    group_by(cruise_expocode) %&gt;%
+    summarise(n = min(n)) %&gt;%
+    ungroup()
+  
+  rm(NP_expocodes_f, NP_expocodes_qc)
+  
+  xover_NP &lt;- xover %&gt;%
+    filter(
+      cruise_A %in% NP_expocodes$cruise_expocode &amp;
+        cruise_B %in% NP_expocodes$cruise_expocode
+    )
+  
+  
+  xover_NP &lt;- xover_NP %&gt;%
+    mutate(dateA = year(ymd(str_sub(cruise_A, 5, 12))),
+           dateB = year(ymd(str_sub(cruise_B, 5, 12))))
+  
+  
+  for (decade_start in seq(1990, 2010, 10)) {
+    # decade_start &lt;- seq(1990, 2010, 10)[1]
+    
+    xover_NP_A &lt;- xover_NP %&gt;%
+      filter(dateA &gt;= decade_start &amp; dateA &lt; decade_start + 10)
+    
+    xover_NP_B &lt;- xover_NP %&gt;%
+      filter(dateB &gt;= decade_start &amp; dateB &lt; decade_start + 10)
+    
+    xover_NP_B_rev &lt;- xover_NP_B %&gt;%
+      rename(
+        cruise_A_back = cruise_A,
+        cruise_A = cruise_B,
+        dateA_back = dateA,
+        dateA = dateB,
+        adjustment_A_back = adjustment_A,
+        adjustment_A = adjustment_B
+      ) %&gt;%
+      rename(cruise_B = cruise_A_back,
+             dateB = dateA_back,
+             adjustment_B = adjustment_A_back) %&gt;%
+      mutate(
+        offset = if_else(
+          parameter %in% c(&quot;salinity&quot;, &quot;talk&quot;, &quot;tco2&quot;),
+          -offset,
+          1 / offset
+        ),
+        offset_adj = if_else(
+          parameter %in% c(&quot;salinity&quot;, &quot;talk&quot;, &quot;tco2&quot;),
+          -offset_adj,
+          1 / offset_adj
+        )
+      )
+    
+    xover_NP &lt;- bind_rows(xover_NP_A,
+                          xover_NP_B_rev)
+    
+    rm(xover_NP_A, xover_NP_B, xover_NP_B_rev)
+    
+    
+    xover_NP &lt;- left_join(xover_NP,
+                          NP_expocodes %&gt;% rename(cruise_A = cruise_expocode,
+                                                  n_A = n))
+    xover_NP &lt;- left_join(xover_NP,
+                          NP_expocodes %&gt;% rename(cruise_B = cruise_expocode,
+                                                  n_B = n))
+    
+    xover_NP &lt;- xover_NP %&gt;%
+      mutate(n = n_A + n_B) %&gt;%
+      select(-starts_with(&quot;n_&quot;))
+    
+    xover_NP_decade &lt;- xover_NP %&gt;%
+      mutate(decade = cut(
+        dateB,
+        c(1989, 1999, 2009, 2019),
+        labels = c(&quot;1990-1999&quot;, &quot;2000-2009&quot;, &quot;2010-2019&quot;)
+      )) %&gt;%
+      filter(!is.na(decade),
+             !is.na(offset_adj),
+             !is.na(offset)) %&gt;%
+      arrange(dateB, dateA)
+    
+    
+    xover_NP_decade %&gt;%
+      group_by(parameter, decade) %&gt;%
+      summarise(
+        offset_adj_mean = mean(offset_adj, na.rm = TRUE),
+        offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n, na.rm = TRUE),
+        offset_adj_median = median(offset_adj, na.rm = TRUE)
+      ) %&gt;%
+      ungroup() %&gt;%
+      kable(caption = paste0(i_basin, &quot; | &quot;, decade_start, &quot;s&quot;)) %&gt;%
+      kable_styling() %&gt;%
+      scroll_box(height = &quot;300px&quot;)
+    
+    
+    p_crossover_ts &lt;- xover_NP %&gt;%
+      ggplot(aes(dateB, offset)) +
+      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_point(shape = 21) +
+      scale_color_brewer(palette = &quot;Set1&quot;) +
+      facet_grid(parameter ~ ., scales = &quot;free_y&quot;) +
+      labs(title = paste0(i_basin, &quot; | &quot;, decade_start, &quot;s&quot;)) +
+      theme(
+        legend.position = &quot;bottom&quot;,
+        legend.direction = &quot;vertical&quot;,
+        axis.title.x = element_blank()
+      )
+    
+    p_crossover_decadal &lt;-
+      ggplot() +
+      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_violin(data = xover_NP_decade,
+                  aes(x = decade, y = offset), fill = &quot;gold&quot;) +
+      geom_boxplot(data = xover_NP_decade,
+                   aes(x = decade, y = offset),
+                   width = 0.2) +
+      facet_grid(parameter ~ ., scales = &quot;free_y&quot;) +
+      labs(title = &quot;Decadal offsets&quot;) +
+      theme(axis.title.x = element_blank(),
+            axis.text.x = element_text(angle = 90))
+    
+    
+    p_crossover_ts + p_crossover_decadal +
+      plot_layout(widths = c(2, 1))
+    
+    rm(p_crossover_ts, p_crossover_decadal)
+    
+    p_crossover_ts &lt;- xover_NP %&gt;%
+      ggplot(aes(dateB, offset_adj)) +
+      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_point(shape = 21) +
+      scale_color_brewer(palette = &quot;Set1&quot;) +
+      facet_grid(parameter ~ ., scales = &quot;free_y&quot;) +
+      labs(title = paste0(i_basin, &quot; | &quot;, decade_start, &quot;s&quot;)) +
+      theme(
+        legend.position = &quot;bottom&quot;,
+        legend.direction = &quot;vertical&quot;,
+        axis.title.x = element_blank()
+      )
+    
+    p_crossover_decadal &lt;-
+      ggplot() +
+      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_violin(data = xover_NP_decade,
+                  aes(x = decade, y = offset_adj),
+                  fill = &quot;gold&quot;) +
+      geom_boxplot(data = xover_NP_decade,
+                   aes(x = decade, y = offset_adj),
+                   width = 0.2) +
+      facet_grid(parameter ~ ., scales = &quot;free_y&quot;) +
+      labs(title = &quot;Decadal offsets&quot;) +
+      theme(axis.title.x = element_blank(),
+            axis.text.x = element_text(angle = 90))
+    
+    p_crossover_ts + p_crossover_decadal +
+      plot_layout(widths = c(2, 1))
+    
+    rm(p_crossover_ts, p_crossover_decadal)
+    
+  }
+}</code></pre>
+</div>
+<div id="north-pacific-2010s" class="section level2" number="6.6">
+<h2><span class="header-section-number">6.6</span> North Pacific 2010s</h2>
+<pre class="r"><code>NP_expocodes &lt;- inner_join(GLODAP, basinmask_5) %&gt;%
+  filter(basin == &quot;N_Pacific&quot;)
+
+map +
+  geom_tile(data = NP_expocodes %&gt;% distinct(lon, lat),
+            aes(lon, lat))</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_North_Pacific_2010s-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>NP_expocodes_qc &lt;- NP_expocodes %&gt;% 
+  select(row_number, cruise_expocode, ends_with(&quot;qc&quot;)) %&gt;%
+  pivot_longer(ends_with(&quot;qc&quot;),
+               names_to = &quot;parameter&quot;,
+               values_to = &quot;value&quot;) %&gt;% 
+  filter(value == 1) %&gt;% 
+  pivot_wider(names_from = parameter,
+              values_from = value) %&gt;% 
+  count(cruise_expocode)
+
+NP_expocodes_f &lt;- NP_expocodes %&gt;% 
+  select(row_number, cruise_expocode, ends_with(&quot;f&quot;)) %&gt;%
+  pivot_longer(ends_with(&quot;f&quot;),
+               names_to = &quot;parameter&quot;,
+               values_to = &quot;value&quot;) %&gt;% 
+  filter(value == 2) %&gt;% 
+  pivot_wider(names_from = parameter,
+              values_from = value) %&gt;% 
+  count(cruise_expocode)
+
+NP_expocodes &lt;- inner_join(NP_expocodes_f, NP_expocodes_qc) %&gt;% 
+  group_by(cruise_expocode) %&gt;% 
+  summarise(n = min(n)) %&gt;% 
+  ungroup()
+
+rm(NP_expocodes_f, NP_expocodes_qc)
+
+xover_NP &lt;- xover %&gt;% 
+  filter(cruise_A %in% NP_expocodes$cruise_expocode &amp;
+         cruise_B %in% NP_expocodes$cruise_expocode)
+
+
+xover_NP &lt;- xover_NP %&gt;%
+  mutate(dateA = year(ymd(str_sub(cruise_A, 5, 12))),
+         dateB = year(ymd(str_sub(cruise_B, 5, 12))))
+
+
+xover_NP_2010_A &lt;- xover_NP %&gt;%
+  filter(dateA &gt;= 2010)
+
+xover_NP_2010_B &lt;- xover_NP %&gt;%
+  filter(dateB &gt;= 2010)
+
+xover_NP_2010_B_rev &lt;- xover_NP_2010_B %&gt;%
+  rename(
+    cruise_A_back = cruise_A,
+    cruise_A = cruise_B,
+    dateA_back = dateA,
+    dateA = dateB,
+    adjustment_A_back = adjustment_A,
+    adjustment_A = adjustment_B
+  ) %&gt;%
+  rename(cruise_B = cruise_A_back,
+         dateB = dateA_back,
+         adjustment_B = adjustment_A_back) %&gt;%
+  mutate(
+    offset = if_else(parameter %in% c(&quot;salinity&quot;, &quot;talk&quot;, &quot;tco2&quot;),
+                     -offset,
+                     1/offset),
+    offset_adj = if_else(
+      parameter %in% c(&quot;salinity&quot;, &quot;talk&quot;, &quot;tco2&quot;),
+      -offset_adj,
+      1/offset_adj
+    )
+  )
+
+xover_NP_2010 &lt;- bind_rows(xover_NP_2010_A,
+                           xover_NP_2010_B_rev)
+
+
+xover_NP_2010 &lt;- left_join(
+  xover_NP_2010,
+  NP_expocodes %&gt;% rename(cruise_A = cruise_expocode,
+                          n_A = n))
+xover_NP_2010 &lt;- left_join(
+  xover_NP_2010,
+  NP_expocodes %&gt;% rename(cruise_B = cruise_expocode,
+                          n_B = n))
+
+xover_NP_2010 &lt;- xover_NP_2010 %&gt;% 
+  mutate(n = n_A + n_B) %&gt;% 
+  select(-starts_with(&quot;n_&quot;))
+
+xover_NP_2010_decade &lt;- xover_NP_2010 %&gt;%
+    mutate(decade = cut(
+      dateB,
+      c(1989, 1999, 2009, 2019),
+      labels = c(&quot;1989-1999&quot;, &quot;2000-2009&quot;, &quot;2010-2019&quot;)
+    )) %&gt;%
+    filter(!is.na(decade),
+           !is.na(offset_adj),
+           !is.na(offset)) %&gt;% 
+  arrange(dateB, dateA)
+
+
+xover_NP_2010_decade %&gt;%
+  group_by(parameter, decade) %&gt;%
+  summarise(offset_adj_mean = mean(offset_adj, na.rm = TRUE),
+            offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n, na.rm = TRUE),
+            offset_adj_median = median(offset_adj, na.rm = TRUE)) %&gt;%
+  ungroup() %&gt;%
+  kable() %&gt;%
+  kable_styling() %&gt;%
+  scroll_box(height = &quot;300px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+parameter
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+decade
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_mean
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_mean_weighted
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_median
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+1.0004739
+</td>
+<td style="text-align:right;">
+1.0034215
+</td>
+<td style="text-align:right;">
+1.0013137
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0009802
+</td>
+<td style="text-align:right;">
+1.0008379
+</td>
+<td style="text-align:right;">
+1.0002711
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0000078
+</td>
+<td style="text-align:right;">
+1.0000076
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9936765
+</td>
+<td style="text-align:right;">
+0.9951442
+</td>
+<td style="text-align:right;">
+0.9969659
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9974012
+</td>
+<td style="text-align:right;">
+0.9961867
+</td>
+<td style="text-align:right;">
+1.0005040
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0000412
+</td>
+<td style="text-align:right;">
+1.0000264
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9942793
+</td>
+<td style="text-align:right;">
+0.9971747
+</td>
+<td style="text-align:right;">
+0.9932937
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9945115
+</td>
+<td style="text-align:right;">
+0.9942950
+</td>
+<td style="text-align:right;">
+0.9937871
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0000225
+</td>
+<td style="text-align:right;">
+1.0000212
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.0010850
+</td>
+<td style="text-align:right;">
+0.0020684
+</td>
+<td style="text-align:right;">
+-0.0000190
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+-0.0015983
+</td>
+<td style="text-align:right;">
+-0.0012445
+</td>
+<td style="text-align:right;">
+-0.0013562
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+1.0030559
+</td>
+<td style="text-align:right;">
+1.0034864
+</td>
+<td style="text-align:right;">
+1.0034525
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0045767
+</td>
+<td style="text-align:right;">
+1.0038398
+</td>
+<td style="text-align:right;">
+1.0044981
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+1.0000277
+</td>
+<td style="text-align:right;">
+1.0000254
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+-1.5502396
+</td>
+<td style="text-align:right;">
+-2.0912907
+</td>
+<td style="text-align:right;">
+-2.0013646
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+-1.5997282
+</td>
+<td style="text-align:right;">
+-1.5684540
+</td>
+<td style="text-align:right;">
+-1.6458585
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9094575
+</td>
+<td style="text-align:right;">
+1.1260676
+</td>
+<td style="text-align:right;">
+0.9545519
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.4773818
+</td>
+<td style="text-align:right;">
+0.6948785
+</td>
+<td style="text-align:right;">
+0.5675000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2010-2019
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>p_crossover_ts &lt;- xover_NP_2010 %&gt;%
+  ggplot(aes(dateB, offset)) +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_point(shape = 21) +
+  scale_color_brewer(palette = &quot;Set1&quot;) +
+  facet_grid(parameter ~ ., scales = &quot;free_y&quot;) +
+  labs(title = &quot;Crossover with 2010s&quot;) +
+  theme(
+    legend.position = &quot;bottom&quot;,
+    legend.direction = &quot;vertical&quot;,
+    axis.title.x = element_blank()
+  )
+
+p_crossover_decadal &lt;-
+  ggplot() +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_violin(data = xover_NP_2010_decade,
+               aes(x = decade, y = offset), fill=&quot;gold&quot;) +
+  geom_boxplot(data = xover_NP_2010_decade,
+               aes(x = decade, y = offset),
+               width = 0.2) +
+  facet_grid(parameter ~ ., scales = &quot;free_y&quot;) +
+  labs(title = &quot;Decadal offsets&quot;) +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(angle = 90))
+
+
+p_crossover_ts + p_crossover_decadal +
+  plot_layout(widths = c(2, 1))</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_North_Pacific_2010s-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>rm(p_crossover_ts, p_crossover_decadal)
+
+p_crossover_ts &lt;- xover_NP_2010 %&gt;%
+  ggplot(aes(dateB, offset_adj)) +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_point(shape = 21) +
+  scale_color_brewer(palette = &quot;Set1&quot;) +
+  facet_grid(parameter ~ ., scales = &quot;free_y&quot;) +
+  labs(title = &quot;Crossover 2010s&quot;) +
+  theme(
+    legend.position = &quot;bottom&quot;,
+    legend.direction = &quot;vertical&quot;,
+    axis.title.x = element_blank()
+  )
+
+p_crossover_decadal &lt;-
+  ggplot() +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_violin(data = xover_NP_2010_decade,
+               aes(x = decade, y = offset_adj), fill=&quot;gold&quot;) +
+  geom_boxplot(data = xover_NP_2010_decade,
+               aes(x = decade, y = offset_adj),
+               width = 0.2) +
+  facet_grid(parameter ~ ., scales = &quot;free_y&quot;) +
+  labs(title = &quot;Decadal offsets&quot;) +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(angle = 90))
+
+p_crossover_ts + p_crossover_decadal +
+  plot_layout(widths = c(2, 1))</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_North_Pacific_2010s-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>rm(p_crossover_ts, p_crossover_decadal)</code></pre>
+</div>
+<div id="north-pacific-2000s" class="section level2" number="6.7">
+<h2><span class="header-section-number">6.7</span> North Pacific 2000s</h2>
+<pre class="r"><code>xover_NP_2000_A &lt;- xover_NP %&gt;%
+  filter(dateA &gt;= 2000 &amp; dateA &lt; 2010)
+
+xover_NP_2000_B &lt;- xover_NP %&gt;%
+  filter(dateB &gt;= 2000 &amp; dateB &lt; 2010)
+
+xover_NP_2000_B_rev &lt;- xover_NP_2000_B %&gt;%
+  rename(
+    cruise_A_back = cruise_A,
+    cruise_A = cruise_B,
+    dateA_back = dateA,
+    dateA = dateB,
+    adjustment_A_back = adjustment_A,
+    adjustment_A = adjustment_B
+  ) %&gt;%
+  rename(cruise_B = cruise_A_back,
+         dateB = dateA_back,
+         adjustment_B = adjustment_A_back) %&gt;%
+  mutate(
+    offset = if_else(parameter %in% c(&quot;salinity&quot;, &quot;talk&quot;, &quot;tco2&quot;),
+                     -offset,
+                     1/offset),
+    offset_adj = if_else(
+      parameter %in% c(&quot;salinity&quot;, &quot;talk&quot;, &quot;tco2&quot;),
+      -offset_adj,
+      1/offset_adj
+    )
+  )
+
+xover_NP_2000 &lt;- bind_rows(xover_NP_2000_A,
+                           xover_NP_2000_B_rev)
+
+xover_NP_2000 &lt;- left_join(
+  xover_NP_2000,
+  NP_expocodes %&gt;% rename(cruise_A = cruise_expocode,
+                          n_A = n))
+xover_NP_2000 &lt;- left_join(
+  xover_NP_2000,
+  NP_expocodes %&gt;% rename(cruise_B = cruise_expocode,
+                          n_B = n))
+
+xover_NP_2000 &lt;- xover_NP_2000 %&gt;% 
+  mutate(n = n_A + n_B) %&gt;% 
+  select(-starts_with(&quot;n_&quot;))
+
+xover_NP_2000_decade &lt;- xover_NP_2000 %&gt;%
+    mutate(decade = cut(
+      dateB,
+      c(1989, 1999, 2009, 2019),
+      labels = c(&quot;1989-1999&quot;, &quot;2000-2009&quot;, &quot;2000-2019&quot;)
+    )) %&gt;%
+    filter(!is.na(decade),
+           !is.na(offset_adj),
+           !is.na(offset)) %&gt;% 
+  arrange(dateB, dateA)
+
+
+xover_NP_2000_decade %&gt;%
+  group_by(parameter, decade) %&gt;%
+  summarise(offset_adj_mean = mean(offset_adj, na.rm = TRUE),
+            offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n, na.rm = TRUE),
+            offset_adj_median = median(offset_adj, na.rm = TRUE)) %&gt;%
+  ungroup() %&gt;%
+  kable() %&gt;%
+  kable_styling() %&gt;%
+  scroll_box(height = &quot;300px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+parameter
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+decade
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_mean
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_mean_weighted
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_median
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+1.0007770
+</td>
+<td style="text-align:right;">
+1.0031072
+</td>
+<td style="text-align:right;">
+1.0003001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0000429
+</td>
+<td style="text-align:right;">
+1.0000381
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2000-2019
+</td>
+<td style="text-align:right;">
+0.9990939
+</td>
+<td style="text-align:right;">
+0.9992134
+</td>
+<td style="text-align:right;">
+0.9997290
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9936123
+</td>
+<td style="text-align:right;">
+0.9973541
+</td>
+<td style="text-align:right;">
+0.9942918
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0003993
+</td>
+<td style="text-align:right;">
+1.0003619
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+oxygen
+</td>
+<td style="text-align:left;">
+2000-2019
+</td>
+<td style="text-align:right;">
+1.0029198
+</td>
+<td style="text-align:right;">
+1.0042679
+</td>
+<td style="text-align:right;">
+0.9994962
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+1.0020508
+</td>
+<td style="text-align:right;">
+1.0034528
+</td>
+<td style="text-align:right;">
+1.0014803
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0001191
+</td>
+<td style="text-align:right;">
+1.0001604
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2000-2019
+</td>
+<td style="text-align:right;">
+1.0056392
+</td>
+<td style="text-align:right;">
+1.0058295
+</td>
+<td style="text-align:right;">
+1.0062517
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.0007977
+</td>
+<td style="text-align:right;">
+0.0009524
+</td>
+<td style="text-align:right;">
+0.0009000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+salinity
+</td>
+<td style="text-align:left;">
+2000-2019
+</td>
+<td style="text-align:right;">
+0.0015983
+</td>
+<td style="text-align:right;">
+0.0012445
+</td>
+<td style="text-align:right;">
+0.0013562
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+1.0021669
+</td>
+<td style="text-align:right;">
+1.0027186
+</td>
+<td style="text-align:right;">
+1.0013310
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0000821
+</td>
+<td style="text-align:right;">
+1.0000937
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2000-2019
+</td>
+<td style="text-align:right;">
+0.9955159
+</td>
+<td style="text-align:right;">
+0.9962325
+</td>
+<td style="text-align:right;">
+0.9955220
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+-0.6577284
+</td>
+<td style="text-align:right;">
+-1.0461176
+</td>
+<td style="text-align:right;">
+-0.4376000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2019
+</td>
+<td style="text-align:right;">
+1.5997282
+</td>
+<td style="text-align:right;">
+1.5684540
+</td>
+<td style="text-align:right;">
+1.6458585
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.3578554
+</td>
+<td style="text-align:right;">
+0.9168012
+</td>
+<td style="text-align:right;">
+0.4286000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2000-2019
+</td>
+<td style="text-align:right;">
+-0.4773818
+</td>
+<td style="text-align:right;">
+-0.6948785
+</td>
+<td style="text-align:right;">
+-0.5675000
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>p_crossover_ts &lt;- xover_NP_2000 %&gt;%
+  ggplot(aes(dateB, offset)) +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_point(shape = 21) +
+  scale_color_brewer(palette = &quot;Set1&quot;) +
+  facet_grid(parameter ~ ., scales = &quot;free_y&quot;) +
+  labs(title = &quot;Crossover with 2000s&quot;) +
+  theme(
+    legend.position = &quot;bottom&quot;,
+    legend.direction = &quot;vertical&quot;,
+    axis.title.x = element_blank()
+  )
+
+p_crossover_decadal &lt;-
+  ggplot() +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_violin(data = xover_NP_2000_decade,
+               aes(x = decade, y = offset), fill=&quot;gold&quot;) +
+  geom_boxplot(data = xover_NP_2000_decade,
+               aes(x = decade, y = offset),
+               width = 0.2) +
+  facet_grid(parameter ~ ., scales = &quot;free_y&quot;) +
+  labs(title = &quot;Decadal offsets&quot;) +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(angle = 90))
+
+
+p_crossover_ts + p_crossover_decadal +
+  plot_layout(widths = c(2, 1))</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_North_Pacific_2000s-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>rm(p_crossover_ts, p_crossover_decadal)
+
+p_crossover_ts &lt;- xover_NP_2000 %&gt;%
+  ggplot(aes(dateB, offset_adj)) +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_point(shape = 21) +
+  scale_color_brewer(palette = &quot;Set1&quot;) +
+  facet_grid(parameter ~ ., scales = &quot;free_y&quot;) +
+  labs(title = &quot;Crossover 2000s&quot;) +
+  theme(
+    legend.position = &quot;bottom&quot;,
+    legend.direction = &quot;vertical&quot;,
+    axis.title.x = element_blank()
+  )
+
+p_crossover_decadal &lt;-
+  ggplot() +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_violin(data = xover_NP_2000_decade,
+               aes(x = decade, y = offset_adj), fill=&quot;gold&quot;) +
+  geom_boxplot(data = xover_NP_2000_decade,
+               aes(x = decade, y = offset_adj),
+               width = 0.2) +
+  facet_grid(parameter ~ ., scales = &quot;free_y&quot;) +
+  labs(title = &quot;Decadal offsets&quot;) +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(angle = 90))
+
+p_crossover_ts + p_crossover_decadal +
+  plot_layout(widths = c(2, 1))</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_North_Pacific_2000s-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>rm(p_crossover_ts, p_crossover_decadal)</code></pre>
 </div>
 </div>
@@ -17816,251 +19126,6 @@ for (i_variable in variables) {
   # }
   
 }</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-CANYON-B_vs_observationd-1">
-Past versions of CANYON-B_vs_observationd-1.png
-</button>
-</p>
-<div id="fig-CANYON-B_vs_observationd-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/494beda4944077d633d2c1f1e6e5367e2cccf719/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-1.png" target="_blank">494beda</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-01-03
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/51ec1fef7790143424d19628ff64ec44f121e081/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-1.png" target="_blank">51ec1fe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-12-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-CANYON-B_vs_observationd-2">
-Past versions of CANYON-B_vs_observationd-2.png
-</button>
-</p>
-<div id="fig-CANYON-B_vs_observationd-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/494beda4944077d633d2c1f1e6e5367e2cccf719/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-2.png" target="_blank">494beda</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-01-03
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/51ec1fef7790143424d19628ff64ec44f121e081/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-2.png" target="_blank">51ec1fe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-12-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-3.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-CANYON-B_vs_observationd-3">
-Past versions of CANYON-B_vs_observationd-3.png
-</button>
-</p>
-<div id="fig-CANYON-B_vs_observationd-3" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/494beda4944077d633d2c1f1e6e5367e2cccf719/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-3.png" target="_blank">494beda</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-01-03
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/51ec1fef7790143424d19628ff64ec44f121e081/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-3.png" target="_blank">51ec1fe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-12-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-4.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-CANYON-B_vs_observationd-4">
-Past versions of CANYON-B_vs_observationd-4.png
-</button>
-</p>
-<div id="fig-CANYON-B_vs_observationd-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/494beda4944077d633d2c1f1e6e5367e2cccf719/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-4.png" target="_blank">494beda</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-01-03
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/51ec1fef7790143424d19628ff64ec44f121e081/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-4.png" target="_blank">51ec1fe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-12-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-5.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-CANYON-B_vs_observationd-5">
-Past versions of CANYON-B_vs_observationd-5.png
-</button>
-</p>
-<div id="fig-CANYON-B_vs_observationd-5" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/494beda4944077d633d2c1f1e6e5367e2cccf719/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-5.png" target="_blank">494beda</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-01-03
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/51ec1fef7790143424d19628ff64ec44f121e081/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-5.png" target="_blank">51ec1fe</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-12-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 </div>
 <div id="write-files-1" class="section level2" number="12.3">
 <h2><span class="header-section-number">12.3</span> Write files</h2>
@@ -21125,13 +22190,13 @@ for (i_EXPOCODE in unique(GLODAP_crossover_write$EXPOCODE)) {
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.0.3 (2020-10-10)
+<pre><code>R version 4.1.2 (2021-11-01)
 Platform: x86_64-pc-linux-gnu (64-bit)
 Running under: openSUSE Leap 15.3
 
 Matrix products: default
-BLAS:   /usr/local/R-4.0.3/lib64/R/lib/libRblas.so
-LAPACK: /usr/local/R-4.0.3/lib64/R/lib/libRlapack.so
+BLAS:   /usr/local/R-4.1.2/lib64/R/lib/libRblas.so
+LAPACK: /usr/local/R-4.1.2/lib64/R/lib/libRlapack.so
 
 locale:
  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -21145,38 +22210,35 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] mgcv_1.8-33      nlme_3.1-149     kableExtra_1.3.1 ggrepel_0.8.2   
- [5] lubridate_1.7.9  ggforce_0.3.3    metR_0.9.0       scico_1.2.0     
- [9] patchwork_1.1.1  collapse_1.5.0   forcats_0.5.0    stringr_1.4.0   
-[13] dplyr_1.0.5      purrr_0.3.4      readr_1.4.0      tidyr_1.1.3     
-[17] tibble_3.1.3     ggplot2_3.3.5    tidyverse_1.3.0  workflowr_1.6.2 
+ [1] kableExtra_1.3.4 ggrepel_0.9.1    lubridate_1.8.0  ggforce_0.3.3   
+ [5] metR_0.11.0      scico_1.3.0      patchwork_1.1.1  collapse_1.7.0  
+ [9] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.7      purrr_0.3.4     
+[13] readr_2.1.1      tidyr_1.1.4      tibble_3.1.6     ggplot2_3.3.5   
+[17] tidyverse_1.3.1  workflowr_1.7.0 
 
 loaded via a namespace (and not attached):
- [1] fs_1.5.0                 webshot_0.5.2            RColorBrewer_1.1-2      
- [4] httr_1.4.2               rprojroot_2.0.2          tools_4.0.3             
- [7] backports_1.1.10         utf8_1.1.4               R6_2.5.0                
-[10] DBI_1.1.0                colorspace_2.0-2         withr_2.3.0             
-[13] tidyselect_1.1.0         compiler_4.0.3           git2r_0.27.1            
-[16] cli_3.0.1                rvest_0.3.6              xml2_1.3.2              
-[19] labeling_0.4.2           scales_1.1.1             checkmate_2.0.0         
-[22] digest_0.6.27            rmarkdown_2.10           pkgconfig_2.0.3         
-[25] htmltools_0.5.0          dbplyr_1.4.4             highr_0.8               
-[28] rlang_0.4.10             readxl_1.3.1             rstudioapi_0.13         
-[31] farver_2.0.3             generics_0.1.0           jsonlite_1.7.1          
-[34] magrittr_1.5             Matrix_1.2-18            Rcpp_1.0.5              
-[37] munsell_0.5.0            fansi_0.4.1              lifecycle_1.0.0         
-[40] stringi_1.5.3            whisker_0.4              yaml_2.2.1              
-[43] MASS_7.3-53              grid_4.0.3               blob_1.2.1              
-[46] parallel_4.0.3           promises_1.1.1           crayon_1.3.4            
-[49] lattice_0.20-41          splines_4.0.3            haven_2.3.1             
-[52] hms_0.5.3                knitr_1.33               pillar_1.6.2            
-[55] reprex_0.3.0             glue_1.4.2               evaluate_0.14           
-[58] RcppArmadillo_0.10.1.0.0 data.table_1.14.0        modelr_0.1.8            
-[61] vctrs_0.3.8              tweenr_1.0.2             httpuv_1.5.4            
-[64] cellranger_1.1.0         gtable_0.3.0             polyclip_1.10-0         
-[67] assertthat_0.2.1         xfun_0.25                broom_0.7.9             
-[70] RcppEigen_0.3.3.7.0      later_1.2.0              viridisLite_0.3.0       
-[73] ellipsis_0.3.2          </code></pre>
+ [1] nlme_3.1-155       fs_1.5.2           bit64_4.0.5        RColorBrewer_1.1-2
+ [5] webshot_0.5.2      httr_1.4.2         rprojroot_2.0.2    tools_4.1.2       
+ [9] backports_1.4.1    bslib_0.3.1        utf8_1.2.2         R6_2.5.1          
+[13] mgcv_1.8-38        DBI_1.1.2          colorspace_2.0-2   withr_2.4.3       
+[17] tidyselect_1.1.1   processx_3.5.2     bit_4.0.4          compiler_4.1.2    
+[21] git2r_0.29.0       cli_3.1.1          rvest_1.0.2        xml2_1.3.3        
+[25] labeling_0.4.2     sass_0.4.0         scales_1.1.1       checkmate_2.0.0   
+[29] callr_3.7.0        systemfonts_1.0.3  digest_0.6.29      svglite_2.0.0     
+[33] rmarkdown_2.11     pkgconfig_2.0.3    htmltools_0.5.2    highr_0.9         
+[37] dbplyr_2.1.1       fastmap_1.1.0      rlang_0.4.12       readxl_1.3.1      
+[41] rstudioapi_0.13    jquerylib_0.1.4    generics_0.1.1     farver_2.1.0      
+[45] jsonlite_1.7.3     vroom_1.5.7        magrittr_2.0.1     Matrix_1.4-0      
+[49] Rcpp_1.0.8         munsell_0.5.0      fansi_1.0.2        lifecycle_1.0.1   
+[53] stringi_1.7.6      whisker_0.4        yaml_2.2.1         MASS_7.3-55       
+[57] grid_4.1.2         parallel_4.1.2     promises_1.2.0.1   crayon_1.4.2      
+[61] lattice_0.20-45    splines_4.1.2      haven_2.4.3        hms_1.1.1         
+[65] knitr_1.37         ps_1.6.0           pillar_1.6.4       reprex_2.0.1      
+[69] glue_1.6.0         evaluate_0.14      getPass_0.2-2      data.table_1.14.2 
+[73] modelr_0.1.8       vctrs_0.3.8        tzdb_0.2.0         tweenr_1.0.2      
+[77] httpuv_1.6.5       cellranger_1.1.0   gtable_0.3.0       polyclip_1.10-0   
+[81] assertthat_0.2.1   xfun_0.29          broom_0.7.11       later_1.3.0       
+[85] viridisLite_0.4.0  ellipsis_0.3.2    </code></pre>
 </div>
 </div>
 </div>
@@ -21184,7 +22246,7 @@ loaded via a namespace (and not attached):
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
 TeX fonts only; see
-http://docs.mathjax.org/en/latest/configuration.html.  This will make
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
 the presentation more consistent at the cost of the webpage sometimes
 taking slightly longer to load. Note that this only works because the
 footer is added to webpages before the MathJax javascript. -->
