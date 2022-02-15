@@ -386,6 +386,10 @@ GLODAP <- m_grid_horizontal(GLODAP)
 
 # use only three basin to assign general basin mask
 # ie this is not specific to the MLR fitting
+basinmask_5 <- basinmask %>% 
+  filter(MLR_basins == "5") %>% 
+  select(lat, lon, basin)
+
 basinmask <- basinmask %>% 
   filter(MLR_basins == "2") %>% 
   select(lat, lon, basin_AIP)
@@ -1603,6 +1607,8 @@ for (i_expocodes_missing in expocodes_missing) {
 
 
 ```
+
+
 ## IO 1990 data
 
 ```{r crossover_analysis_data, fig.asp=1.2}
@@ -1753,6 +1759,527 @@ p_crossover_ts + p_crossover_decadal +
   plot_layout(widths = c(2, 1))
 
 
+
+rm(p_crossover_ts, p_crossover_decadal)
+
+```
+
+
+## 5 basin decadal
+
+```{r crossover_analysis_5_basin_decadal, fig.asp=1.2}
+
+for (i_basin in unique(basinmask_5$basin)) {
+  # i_basin <- unique(basinmask_5$basin)[3]
+  
+  
+  NP_expocodes <- inner_join(GLODAP, basinmask_5) %>%
+    filter(basin == i_basin)
+  
+  map +
+    geom_tile(data = NP_expocodes %>% distinct(lon, lat),
+              aes(lon, lat))
+  
+  NP_expocodes_qc <- NP_expocodes %>%
+    select(row_number, cruise_expocode, ends_with("qc")) %>%
+    pivot_longer(ends_with("qc"),
+                 names_to = "parameter",
+                 values_to = "value") %>%
+    filter(value == 1) %>%
+    pivot_wider(names_from = parameter,
+                values_from = value) %>%
+    count(cruise_expocode)
+  
+  NP_expocodes_f <- NP_expocodes %>%
+    select(row_number, cruise_expocode, ends_with("f")) %>%
+    pivot_longer(ends_with("f"),
+                 names_to = "parameter",
+                 values_to = "value") %>%
+    filter(value == 2) %>%
+    pivot_wider(names_from = parameter,
+                values_from = value) %>%
+    count(cruise_expocode)
+  
+  NP_expocodes <- inner_join(NP_expocodes_f, NP_expocodes_qc) %>%
+    group_by(cruise_expocode) %>%
+    summarise(n = min(n)) %>%
+    ungroup()
+  
+  rm(NP_expocodes_f, NP_expocodes_qc)
+  
+  xover_NP <- xover %>%
+    filter(
+      cruise_A %in% NP_expocodes$cruise_expocode &
+        cruise_B %in% NP_expocodes$cruise_expocode
+    )
+  
+  
+  xover_NP <- xover_NP %>%
+    mutate(dateA = year(ymd(str_sub(cruise_A, 5, 12))),
+           dateB = year(ymd(str_sub(cruise_B, 5, 12))))
+  
+  
+  for (decade_start in seq(1990, 2010, 10)) {
+    # decade_start <- seq(1990, 2010, 10)[1]
+    
+    xover_NP_A <- xover_NP %>%
+      filter(dateA >= decade_start & dateA < decade_start + 10)
+    
+    xover_NP_B <- xover_NP %>%
+      filter(dateB >= decade_start & dateB < decade_start + 10)
+    
+    xover_NP_B_rev <- xover_NP_B %>%
+      rename(
+        cruise_A_back = cruise_A,
+        cruise_A = cruise_B,
+        dateA_back = dateA,
+        dateA = dateB,
+        adjustment_A_back = adjustment_A,
+        adjustment_A = adjustment_B
+      ) %>%
+      rename(cruise_B = cruise_A_back,
+             dateB = dateA_back,
+             adjustment_B = adjustment_A_back) %>%
+      mutate(
+        offset = if_else(
+          parameter %in% c("salinity", "talk", "tco2"),
+          -offset,
+          1 / offset
+        ),
+        offset_adj = if_else(
+          parameter %in% c("salinity", "talk", "tco2"),
+          -offset_adj,
+          1 / offset_adj
+        )
+      )
+    
+    xover_NP <- bind_rows(xover_NP_A,
+                          xover_NP_B_rev)
+    
+    rm(xover_NP_A, xover_NP_B, xover_NP_B_rev)
+    
+    
+    xover_NP <- left_join(xover_NP,
+                          NP_expocodes %>% rename(cruise_A = cruise_expocode,
+                                                  n_A = n))
+    xover_NP <- left_join(xover_NP,
+                          NP_expocodes %>% rename(cruise_B = cruise_expocode,
+                                                  n_B = n))
+    
+    xover_NP <- xover_NP %>%
+      mutate(n = n_A + n_B) %>%
+      select(-starts_with("n_"))
+    
+    xover_NP_decade <- xover_NP %>%
+      mutate(decade = cut(
+        dateB,
+        c(1989, 1999, 2009, 2019),
+        labels = c("1990-1999", "2000-2009", "2010-2019")
+      )) %>%
+      filter(!is.na(decade),
+             !is.na(offset_adj),
+             !is.na(offset)) %>%
+      arrange(dateB, dateA)
+    
+    
+    xover_NP_decade %>%
+      group_by(parameter, decade) %>%
+      summarise(
+        offset_adj_mean = mean(offset_adj, na.rm = TRUE),
+        offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n, na.rm = TRUE),
+        offset_adj_median = median(offset_adj, na.rm = TRUE)
+      ) %>%
+      ungroup() %>%
+      kable(caption = paste0(i_basin, " | ", decade_start, "s")) %>%
+      kable_styling() %>%
+      scroll_box(height = "300px")
+    
+    
+    p_crossover_ts <- xover_NP %>%
+      ggplot(aes(dateB, offset)) +
+      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_point(shape = 21) +
+      scale_color_brewer(palette = "Set1") +
+      facet_grid(parameter ~ ., scales = "free_y") +
+      labs(title = paste0(i_basin, " | ", decade_start, "s")) +
+      theme(
+        legend.position = "bottom",
+        legend.direction = "vertical",
+        axis.title.x = element_blank()
+      )
+    
+    p_crossover_decadal <-
+      ggplot() +
+      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_violin(data = xover_NP_decade,
+                  aes(x = decade, y = offset), fill = "gold") +
+      geom_boxplot(data = xover_NP_decade,
+                   aes(x = decade, y = offset),
+                   width = 0.2) +
+      facet_grid(parameter ~ ., scales = "free_y") +
+      labs(title = "Decadal offsets") +
+      theme(axis.title.x = element_blank(),
+            axis.text.x = element_text(angle = 90))
+    
+    
+    p_crossover_ts + p_crossover_decadal +
+      plot_layout(widths = c(2, 1))
+    
+    rm(p_crossover_ts, p_crossover_decadal)
+    
+    p_crossover_ts <- xover_NP %>%
+      ggplot(aes(dateB, offset_adj)) +
+      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_point(shape = 21) +
+      scale_color_brewer(palette = "Set1") +
+      facet_grid(parameter ~ ., scales = "free_y") +
+      labs(title = paste0(i_basin, " | ", decade_start, "s")) +
+      theme(
+        legend.position = "bottom",
+        legend.direction = "vertical",
+        axis.title.x = element_blank()
+      )
+    
+    p_crossover_decadal <-
+      ggplot() +
+      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_violin(data = xover_NP_decade,
+                  aes(x = decade, y = offset_adj),
+                  fill = "gold") +
+      geom_boxplot(data = xover_NP_decade,
+                   aes(x = decade, y = offset_adj),
+                   width = 0.2) +
+      facet_grid(parameter ~ ., scales = "free_y") +
+      labs(title = "Decadal offsets") +
+      theme(axis.title.x = element_blank(),
+            axis.text.x = element_text(angle = 90))
+    
+    p_crossover_ts + p_crossover_decadal +
+      plot_layout(widths = c(2, 1))
+    
+    rm(p_crossover_ts, p_crossover_decadal)
+    
+  }
+}
+
+```
+
+
+## North Pacific 2010s
+
+```{r crossover_analysis_North_Pacific_2010s, fig.asp=1.2}
+
+NP_expocodes <- inner_join(GLODAP, basinmask_5) %>%
+  filter(basin == "N_Pacific")
+
+map +
+  geom_tile(data = NP_expocodes %>% distinct(lon, lat),
+            aes(lon, lat))
+
+NP_expocodes_qc <- NP_expocodes %>% 
+  select(row_number, cruise_expocode, ends_with("qc")) %>%
+  pivot_longer(ends_with("qc"),
+               names_to = "parameter",
+               values_to = "value") %>% 
+  filter(value == 1) %>% 
+  pivot_wider(names_from = parameter,
+              values_from = value) %>% 
+  count(cruise_expocode)
+
+NP_expocodes_f <- NP_expocodes %>% 
+  select(row_number, cruise_expocode, ends_with("f")) %>%
+  pivot_longer(ends_with("f"),
+               names_to = "parameter",
+               values_to = "value") %>% 
+  filter(value == 2) %>% 
+  pivot_wider(names_from = parameter,
+              values_from = value) %>% 
+  count(cruise_expocode)
+
+NP_expocodes <- inner_join(NP_expocodes_f, NP_expocodes_qc) %>% 
+  group_by(cruise_expocode) %>% 
+  summarise(n = min(n)) %>% 
+  ungroup()
+
+rm(NP_expocodes_f, NP_expocodes_qc)
+
+xover_NP <- xover %>% 
+  filter(cruise_A %in% NP_expocodes$cruise_expocode &
+         cruise_B %in% NP_expocodes$cruise_expocode)
+
+
+xover_NP <- xover_NP %>%
+  mutate(dateA = year(ymd(str_sub(cruise_A, 5, 12))),
+         dateB = year(ymd(str_sub(cruise_B, 5, 12))))
+
+
+xover_NP_2010_A <- xover_NP %>%
+  filter(dateA >= 2010)
+
+xover_NP_2010_B <- xover_NP %>%
+  filter(dateB >= 2010)
+
+xover_NP_2010_B_rev <- xover_NP_2010_B %>%
+  rename(
+    cruise_A_back = cruise_A,
+    cruise_A = cruise_B,
+    dateA_back = dateA,
+    dateA = dateB,
+    adjustment_A_back = adjustment_A,
+    adjustment_A = adjustment_B
+  ) %>%
+  rename(cruise_B = cruise_A_back,
+         dateB = dateA_back,
+         adjustment_B = adjustment_A_back) %>%
+  mutate(
+    offset = if_else(parameter %in% c("salinity", "talk", "tco2"),
+                     -offset,
+                     1/offset),
+    offset_adj = if_else(
+      parameter %in% c("salinity", "talk", "tco2"),
+      -offset_adj,
+      1/offset_adj
+    )
+  )
+
+xover_NP_2010 <- bind_rows(xover_NP_2010_A,
+                           xover_NP_2010_B_rev)
+
+
+xover_NP_2010 <- left_join(
+  xover_NP_2010,
+  NP_expocodes %>% rename(cruise_A = cruise_expocode,
+                          n_A = n))
+xover_NP_2010 <- left_join(
+  xover_NP_2010,
+  NP_expocodes %>% rename(cruise_B = cruise_expocode,
+                          n_B = n))
+
+xover_NP_2010 <- xover_NP_2010 %>% 
+  mutate(n = n_A + n_B) %>% 
+  select(-starts_with("n_"))
+
+xover_NP_2010_decade <- xover_NP_2010 %>%
+    mutate(decade = cut(
+      dateB,
+      c(1989, 1999, 2009, 2019),
+      labels = c("1989-1999", "2000-2009", "2010-2019")
+    )) %>%
+    filter(!is.na(decade),
+           !is.na(offset_adj),
+           !is.na(offset)) %>% 
+  arrange(dateB, dateA)
+
+
+xover_NP_2010_decade %>%
+  group_by(parameter, decade) %>%
+  summarise(offset_adj_mean = mean(offset_adj, na.rm = TRUE),
+            offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n, na.rm = TRUE),
+            offset_adj_median = median(offset_adj, na.rm = TRUE)) %>%
+  ungroup() %>%
+  kable() %>%
+  kable_styling() %>%
+  scroll_box(height = "300px")
+
+
+p_crossover_ts <- xover_NP_2010 %>%
+  ggplot(aes(dateB, offset)) +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_point(shape = 21) +
+  scale_color_brewer(palette = "Set1") +
+  facet_grid(parameter ~ ., scales = "free_y") +
+  labs(title = "Crossover with 2010s") +
+  theme(
+    legend.position = "bottom",
+    legend.direction = "vertical",
+    axis.title.x = element_blank()
+  )
+
+p_crossover_decadal <-
+  ggplot() +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_violin(data = xover_NP_2010_decade,
+               aes(x = decade, y = offset), fill="gold") +
+  geom_boxplot(data = xover_NP_2010_decade,
+               aes(x = decade, y = offset),
+               width = 0.2) +
+  facet_grid(parameter ~ ., scales = "free_y") +
+  labs(title = "Decadal offsets") +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(angle = 90))
+
+
+p_crossover_ts + p_crossover_decadal +
+  plot_layout(widths = c(2, 1))
+
+rm(p_crossover_ts, p_crossover_decadal)
+
+p_crossover_ts <- xover_NP_2010 %>%
+  ggplot(aes(dateB, offset_adj)) +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_point(shape = 21) +
+  scale_color_brewer(palette = "Set1") +
+  facet_grid(parameter ~ ., scales = "free_y") +
+  labs(title = "Crossover 2010s") +
+  theme(
+    legend.position = "bottom",
+    legend.direction = "vertical",
+    axis.title.x = element_blank()
+  )
+
+p_crossover_decadal <-
+  ggplot() +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_violin(data = xover_NP_2010_decade,
+               aes(x = decade, y = offset_adj), fill="gold") +
+  geom_boxplot(data = xover_NP_2010_decade,
+               aes(x = decade, y = offset_adj),
+               width = 0.2) +
+  facet_grid(parameter ~ ., scales = "free_y") +
+  labs(title = "Decadal offsets") +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(angle = 90))
+
+p_crossover_ts + p_crossover_decadal +
+  plot_layout(widths = c(2, 1))
+
+rm(p_crossover_ts, p_crossover_decadal)
+
+```
+
+## North Pacific 2000s
+
+```{r crossover_analysis_North_Pacific_2000s, fig.asp=1.2}
+
+xover_NP_2000_A <- xover_NP %>%
+  filter(dateA >= 2000 & dateA < 2010)
+
+xover_NP_2000_B <- xover_NP %>%
+  filter(dateB >= 2000 & dateB < 2010)
+
+xover_NP_2000_B_rev <- xover_NP_2000_B %>%
+  rename(
+    cruise_A_back = cruise_A,
+    cruise_A = cruise_B,
+    dateA_back = dateA,
+    dateA = dateB,
+    adjustment_A_back = adjustment_A,
+    adjustment_A = adjustment_B
+  ) %>%
+  rename(cruise_B = cruise_A_back,
+         dateB = dateA_back,
+         adjustment_B = adjustment_A_back) %>%
+  mutate(
+    offset = if_else(parameter %in% c("salinity", "talk", "tco2"),
+                     -offset,
+                     1/offset),
+    offset_adj = if_else(
+      parameter %in% c("salinity", "talk", "tco2"),
+      -offset_adj,
+      1/offset_adj
+    )
+  )
+
+xover_NP_2000 <- bind_rows(xover_NP_2000_A,
+                           xover_NP_2000_B_rev)
+
+xover_NP_2000 <- left_join(
+  xover_NP_2000,
+  NP_expocodes %>% rename(cruise_A = cruise_expocode,
+                          n_A = n))
+xover_NP_2000 <- left_join(
+  xover_NP_2000,
+  NP_expocodes %>% rename(cruise_B = cruise_expocode,
+                          n_B = n))
+
+xover_NP_2000 <- xover_NP_2000 %>% 
+  mutate(n = n_A + n_B) %>% 
+  select(-starts_with("n_"))
+
+xover_NP_2000_decade <- xover_NP_2000 %>%
+    mutate(decade = cut(
+      dateB,
+      c(1989, 1999, 2009, 2019),
+      labels = c("1989-1999", "2000-2009", "2000-2019")
+    )) %>%
+    filter(!is.na(decade),
+           !is.na(offset_adj),
+           !is.na(offset)) %>% 
+  arrange(dateB, dateA)
+
+
+xover_NP_2000_decade %>%
+  group_by(parameter, decade) %>%
+  summarise(offset_adj_mean = mean(offset_adj, na.rm = TRUE),
+            offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n, na.rm = TRUE),
+            offset_adj_median = median(offset_adj, na.rm = TRUE)) %>%
+  ungroup() %>%
+  kable() %>%
+  kable_styling() %>%
+  scroll_box(height = "300px")
+
+
+
+p_crossover_ts <- xover_NP_2000 %>%
+  ggplot(aes(dateB, offset)) +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_point(shape = 21) +
+  scale_color_brewer(palette = "Set1") +
+  facet_grid(parameter ~ ., scales = "free_y") +
+  labs(title = "Crossover with 2000s") +
+  theme(
+    legend.position = "bottom",
+    legend.direction = "vertical",
+    axis.title.x = element_blank()
+  )
+
+p_crossover_decadal <-
+  ggplot() +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_violin(data = xover_NP_2000_decade,
+               aes(x = decade, y = offset), fill="gold") +
+  geom_boxplot(data = xover_NP_2000_decade,
+               aes(x = decade, y = offset),
+               width = 0.2) +
+  facet_grid(parameter ~ ., scales = "free_y") +
+  labs(title = "Decadal offsets") +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(angle = 90))
+
+
+p_crossover_ts + p_crossover_decadal +
+  plot_layout(widths = c(2, 1))
+
+rm(p_crossover_ts, p_crossover_decadal)
+
+p_crossover_ts <- xover_NP_2000 %>%
+  ggplot(aes(dateB, offset_adj)) +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_point(shape = 21) +
+  scale_color_brewer(palette = "Set1") +
+  facet_grid(parameter ~ ., scales = "free_y") +
+  labs(title = "Crossover 2000s") +
+  theme(
+    legend.position = "bottom",
+    legend.direction = "vertical",
+    axis.title.x = element_blank()
+  )
+
+p_crossover_decadal <-
+  ggplot() +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_violin(data = xover_NP_2000_decade,
+               aes(x = decade, y = offset_adj), fill="gold") +
+  geom_boxplot(data = xover_NP_2000_decade,
+               aes(x = decade, y = offset_adj),
+               width = 0.2) +
+  facet_grid(parameter ~ ., scales = "free_y") +
+  labs(title = "Decadal offsets") +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(angle = 90))
+
+p_crossover_ts + p_crossover_decadal +
+  plot_layout(widths = c(2, 1))
 
 rm(p_crossover_ts, p_crossover_decadal)
 
@@ -1933,7 +2460,7 @@ IO_CRM_offset %>%
 
 # Write files
 
-```{r write_clean_data_files}
+```{r write_clean_data_files, eval=FALSE}
 
 GLODAP  %>%
   select(-cruise_expocode) %>% 
@@ -2153,7 +2680,7 @@ GLODAP_time_series %>%
 
 ## Prediction
 
-```{r calc_CANYON-B}
+```{r calc_CANYON-B, eval=FALSE}
 
 source("/net/kryo/work/uptools/co2_calculation/CANYON-B/CANYONB.R")
 
@@ -2202,7 +2729,7 @@ GLODAP_CB <- GLODAP_CB %>%
 
 ## Comparison to observations
 
-```{r CANYON-B_vs_observationd, fig.asp=0.4}
+```{r CANYON-B_vs_observationd, fig.asp=0.4, eval=FALSE}
 
 
 variables <- c("talk", "tco2", "nitrate", "phosphate", "silicate")
@@ -2273,7 +2800,7 @@ for (i_variable in variables) {
 
 ## Write files
 
-```{r write_Canyon-B_data_file}
+```{r write_Canyon-B_data_file, eval=FALSE}
 
 GLODAP_CB %>% 
   select(row_number,
