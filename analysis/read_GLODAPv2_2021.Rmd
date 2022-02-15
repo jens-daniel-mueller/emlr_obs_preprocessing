@@ -1775,9 +1775,12 @@ for (i_basin in unique(basinmask_5$basin)) {
   NP_expocodes <- inner_join(GLODAP, basinmask_5) %>%
     filter(basin == i_basin)
   
+  print(
   map +
     geom_tile(data = NP_expocodes %>% distinct(lon, lat),
-              aes(lon, lat))
+              aes(lon, lat)) +
+    labs(title = i_basin)
+  )
   
   NP_expocodes_qc <- NP_expocodes %>%
     select(row_number, cruise_expocode, ends_with("qc")) %>%
@@ -1819,7 +1822,7 @@ for (i_basin in unique(basinmask_5$basin)) {
   
   
   for (decade_start in seq(1990, 2010, 10)) {
-    # decade_start <- seq(1990, 2010, 10)[1]
+    # decade_start <- seq(1990, 2010, 10)[3]
     
     xover_NP_A <- xover_NP %>%
       filter(dateA >= decade_start & dateA < decade_start + 10)
@@ -1852,24 +1855,24 @@ for (i_basin in unique(basinmask_5$basin)) {
         )
       )
     
-    xover_NP <- bind_rows(xover_NP_A,
+    xover_NP_decade <- bind_rows(xover_NP_A,
                           xover_NP_B_rev)
     
     rm(xover_NP_A, xover_NP_B, xover_NP_B_rev)
     
     
-    xover_NP <- left_join(xover_NP,
+    xover_NP_decade <- left_join(xover_NP_decade,
                           NP_expocodes %>% rename(cruise_A = cruise_expocode,
                                                   n_A = n))
-    xover_NP <- left_join(xover_NP,
+    xover_NP_decade <- left_join(xover_NP_decade,
                           NP_expocodes %>% rename(cruise_B = cruise_expocode,
                                                   n_B = n))
     
-    xover_NP <- xover_NP %>%
+    xover_NP_decade <- xover_NP_decade %>%
       mutate(n = n_A + n_B) %>%
       select(-starts_with("n_"))
     
-    xover_NP_decade <- xover_NP %>%
+    xover_NP_decade <- xover_NP_decade %>%
       mutate(decade = cut(
         dateB,
         c(1989, 1999, 2009, 2019),
