@@ -1927,37 +1927,6 @@ for (i_basin in unique(basinmask_5$basin)) {
     
     
     p_crossover_ts <- xover_subbasin_decade %>%
-      ggplot(aes(dateB, offset)) +
-      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
-      geom_point(shape = 21) +
-      scale_color_brewer(palette = "Set1") +
-      facet_grid(parameter ~ ., scales = "free_y") +
-      labs(title = paste0(i_basin, " | ", i_decade_start, "s")) +
-      theme(
-        legend.position = "bottom",
-        legend.direction = "vertical",
-        axis.title.x = element_blank()
-      )
-    
-    p_crossover_decadal <-
-      ggplot() +
-      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
-      geom_violin(data = xover_subbasin_decade,
-                  aes(x = decade, y = offset), fill = "gold") +
-      geom_boxplot(data = xover_subbasin_decade,
-                   aes(x = decade, y = offset),
-                   width = 0.2) +
-      facet_grid(parameter ~ ., scales = "free_y") +
-      labs(title = "Decadal offsets") +
-      theme(axis.title.x = element_blank(),
-            axis.text.x = element_text(angle = 90))
-    
-    print(p_crossover_ts + p_crossover_decadal +
-            plot_layout(widths = c(2, 1)))
-    
-    rm(p_crossover_ts, p_crossover_decadal)
-    
-    p_crossover_ts <- xover_subbasin_decade %>%
       ggplot(aes(dateB, offset_adj)) +
       geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
       geom_point(shape = 21) +
@@ -2029,21 +1998,13 @@ xover_subbasin_decade_stats_all_cstar <- xover_subbasin_decade_stats_all %>%
   # filter(parameter == "cstar")
 
 
-xover_subbasin_decade_stats_all_cstar %>% 
+
+xover_subbasin_decade_stats_all_cstar %>%
   # filter(parameter %in% c("talk", "tco2", "phosphate")) %>%
   ggplot(aes(decade_start, offset_adj_mean_weighted)) +
-  geom_hline(data = hline_intercept %>% filter(parameter %in% c("talk", "tco2", "phosphate")), aes(yintercept = intercept)) +
-  geom_point(aes(fill = basin), shape = 21) +
-  geom_line(aes(col = basin)) +
-  scale_fill_brewer(palette = "Paired") +
-  scale_color_brewer(palette = "Paired") +
-  scale_x_continuous(breaks = seq(1990, 2010, 10)) +
-  facet_grid(parameter ~ decade, scales = "free_y")
-
-xover_subbasin_decade_stats_all %>% 
-  filter(parameter %in% c("talk", "tco2", "phosphate")) %>%
-  ggplot(aes(decade_start, offset_adj_mean_weighted)) +
-  geom_hline(data = hline_intercept %>% filter(parameter %in% c("talk", "tco2", "phosphate")), aes(yintercept = intercept)) +
+  geom_hline(data = hline_intercept %>%
+               filter(parameter %in% c("talk", "tco2", "phosphate")),
+             aes(yintercept = intercept)) +
   geom_point(aes(fill = basin), shape = 21) +
   geom_line(aes(col = basin)) +
   scale_fill_brewer(palette = "Paired") +

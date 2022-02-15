@@ -1,5 +1,5 @@
 ---
-title: "GLODAPv2_2016: Mapped Climatologies"
+title: "OceanSODA - ETHZ"
 author: "Jens Daniel Müller"
 date:  "`r format(Sys.time(), '%d %B, %Y')`"
 output: 

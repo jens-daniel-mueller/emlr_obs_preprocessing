@@ -89,6 +89,8 @@ co2_atm_reccap2 <- co2_atm_reccap2 %>%
 ggplot() +
   # geom_path(data = co2_atm_reccap2, aes(year, pCO2, col="reccap2")) +
   geom_point(data = co2_atm_reccap2, aes(year, pCO2, col="reccap2")) +
+  # geom_smooth(data = co2_atm_reccap2, aes(year, pCO2, col="reccap2"),
+  #             method = "lm", formula = y ~ x + I(x^2)) +
   # geom_path(data = co2_atm, aes(year, pCO2, col="NOAA")) +
   geom_point(data = co2_atm, aes(year, pCO2, col="NOAA")) +
   scale_color_brewer(palette = "Set1") +
