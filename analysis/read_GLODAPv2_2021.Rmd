@@ -1782,7 +1782,7 @@ basinmask_5 <- basinmask_5 %>%
   )
 
 for (i_basin in unique(basinmask_5$basin)) {
-  # i_basin <- unique(basinmask_5$basin)[3]
+  # i_basin <- unique(basinmask_5$basin)[5]
   
   expocodes_subbasin <- inner_join(GLODAP, basinmask_5) %>%
     filter(basin == i_basin)
@@ -1831,6 +1831,92 @@ for (i_basin in unique(basinmask_5$basin)) {
   xover_subbasin <- xover_subbasin %>%
     mutate(dateA = year(ymd(str_sub(cruise_A, 5, 12))),
            dateB = year(ymd(str_sub(cruise_B, 5, 12))))
+  
+  
+  for (i_cruise_expocode in expocodes_subbasin$cruise_expocode){
+    # i_cruise_expocode <- expocodes_subbasin$cruise_expocode[1]
+    
+    xover_cruise_A <- xover_subbasin %>%
+      filter(cruise_A == i_cruise_expocode)
+    
+    xover_cruise_B <- xover_subbasin %>%
+      filter(cruise_B == i_cruise_expocode)
+
+    xover_cruise_B_rev <- xover_cruise_B %>%
+      rename(
+        cruise_A_back = cruise_A,
+        cruise_A = cruise_B,
+        dateA_back = dateA,
+        dateA = dateB,
+        adjustment_A_back = adjustment_A,
+        adjustment_A = adjustment_B
+      ) %>%
+      rename(cruise_B = cruise_A_back,
+             dateB = dateA_back,
+             adjustment_B = adjustment_A_back) %>%
+      mutate(
+        offset = if_else(
+          parameter %in% c("salinity", "talk", "tco2"),
+          -offset,
+          1 / offset
+        ),
+        offset_adj = if_else(
+          parameter %in% c("salinity", "talk", "tco2"),
+          -offset_adj,
+          1 / offset_adj
+        )
+      )
+    
+    xover_cruise <- bind_rows(xover_cruise_A,
+                              xover_cruise_B_rev)
+    
+    rm(xover_cruise_A, xover_cruise_B, xover_cruise_B_rev)
+    
+    xover_cruise <- xover_cruise %>% 
+      group_by(cruise_A, cruise_B, dateA, dateB, parameter) %>% 
+      summarise(offset = mean(offset, na.rm = TRUE),
+                offset_adj = mean(offset_adj, na.rm = TRUE)) %>% 
+      ungroup()
+    
+    
+    xover_cruise <- left_join(xover_cruise,
+                              expocodes_subbasin %>% rename(cruise_B = cruise_expocode))
+    
+    xover_cruise <- xover_cruise %>%
+      mutate(decade = cut(
+        dateB,
+        c(1989, 1999, 2009, 2019),
+        labels = c("1990-1999", "2000-2009", "2010-2019")
+      )) %>%
+      filter(!is.na(decade),
+             !is.na(offset_adj),
+             !is.na(offset)) %>%
+      arrange(dateB, dateA)
+    
+    xover_cruise_stats <- xover_cruise %>%
+      group_by(parameter, dateA, decade) %>%
+      summarise(
+        offset_adj_mean = mean(offset_adj, na.rm = TRUE),
+        offset_adj_sd = sd(offset_adj, na.rm = TRUE),
+        offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n, na.rm = TRUE),
+        offset_adj_median = median(offset_adj, na.rm = TRUE)
+      )
+    
+    xover_cruise_stats <- xover_cruise_stats %>% 
+      mutate(basin = i_basin,
+             cruise_expocode = i_cruise_expocode)
+    
+    if (exists("xover_cruise_stats_all")) {
+      xover_cruise_stats_all <-
+        bind_rows(xover_cruise_stats_all, xover_cruise_stats)
+    }
+    
+    if (!exists("xover_cruise_stats_all")) {
+      xover_cruise_stats_all <- xover_cruise_stats
+    }
+    
+  }
+  
   
   
   for (i_decade_start in seq(1990, 2010, 10)) {
@@ -2037,6 +2123,70 @@ xover_subbasin_decade_stats_all %>%
   scale_x_continuous(breaks = seq(1990, 2010, 10)) +
   facet_grid(parameter ~ decade, scales = "free_y")
 
+
+```
+
+
+```{r cruise_crossover_analysis}
+
+
+xover_cruise_stats_all <- xover_cruise_stats_all %>%
+  mutate(basin = fct_relevel(
+    basin,
+    "N. Pacific",
+    "S. Pacific",
+    "N. Atlantic",
+    "S. Atlantic",
+    "Indian"
+  ))
+
+expocodes <- inner_join(GLODAP, basinmask_5)
+
+expocodes <- expocodes %>%
+  count(basin, cruise_expocode)
+
+
+xover_cruise_stats_all <- left_join(xover_cruise_stats_all,
+                                    expocodes)
+
+xover_cruise_stats_all_cstar <- xover_cruise_stats_all %>%
+  filter(parameter %in% c("talk", "phosphate", "tco2")) %>%
+  select(parameter,
+         dateA,
+         basin,
+         decade,
+         cruise_expocode,
+         n,
+         offset_adj_mean_weighted,) %>%
+  pivot_wider(names_from = parameter,
+              values_from = offset_adj_mean_weighted) %>%
+  mutate(cstar = tco2  -
+           (117 * (1 - phosphate) * 2e-6)  - 0.5 *
+           (talk - (16 * (1 - phosphate) * 2e-6))) %>%
+  pivot_longer(phosphate:cstar,
+               values_to = "offset_adj_mean_weighted",
+               names_to = "parameter")
+# filter(parameter == "cstar")
+
+hline_intercept <-
+  tibble(parameter = unique(xover_cruise_stats_all_cstar$parameter)) %>%
+  mutate(intercept = if_else(parameter %in% c("cstar", "talk", "tco2"),
+                             0,
+                             1))
+
+xover_cruise_stats_all_cstar %>%
+  # filter(parameter %in% c("talk", "tco2", "phosphate")) %>%
+  group_by(basin) %>%
+  group_split() %>%
+  # head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(dateA, offset_adj_mean_weighted, size = n)) +
+      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_point(alpha = 0.3) +
+      labs(title = .x$basin) +
+      facet_grid(parameter ~ decade, scales = "free_y")
+  )
 
 ```
 

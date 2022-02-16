@@ -5,7 +5,7 @@
 
 # commit regular changes (locally) and rebuild site
 # this takes only changed files into account
-wflow_publish(all = TRUE, message = "rerun without saving expocodes")
+wflow_publish(all = TRUE, message = "cruise wise crossover analysis")
 
 # commit changes including _site.yml (locally) and rebuild site in the specified order
 # you can also run this code with only some of the files. In this case remove the rebuild=TRUE command
@@ -15,19 +15,27 @@ wflow_publish(here::here(
     "index.Rmd",
     "config_dependencies.Rmd",
     "config_parameterization.Rmd",
+    "analysis_regional_clusters.Rmd",
     "read_World_Ocean_Atlas_2018.Rmd",
     "read_GLODAPv2_2016_MappedClimatologies.Rmd",
     "read_OceanSODA.Rmd",
+    "read_RECCAP2_flux_products.Rmd",
     "read_GLODAPv2_2021.Rmd",
     "read_Key_2004.Rmd",
     "read_Gruber_2019.Rmd",
     "read_Sabine_2004.Rmd",
-    "read_CO2_atm.Rmd",
-    "analysis_regional_clusters.Rmd"
+    "read_CO2_atm.Rmd"
   )
 ),
-message = "rerun with GLODAP cast column",
+message = "rerun with flux products",
 republish = TRUE)
+
+wflow_publish(here::here(
+  "analysis",
+  c(
+    "read_RECCAP2_flux_products.Rmd")
+),
+message = "testrun new script")
 
 
 # Push latest version to GitHub

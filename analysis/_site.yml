@@ -29,6 +29,8 @@ navbar:
       href: read_Gruber_2019.html
     - text: Sabine 2004
       href: read_Sabine_2004.html
+    - text: Flux products
+      href: read_RECCAP2_flux_products.html
   - text: Atmospheric CO2
     href: read_CO2_atm.html
   - text: Clustering
