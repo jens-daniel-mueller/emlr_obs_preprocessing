@@ -447,7 +447,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">RECCAP-ocean surface flux products</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">15 February, 2022</h4>
+<h4 class="date">17 February, 2022</h4>
 
 </div>
 
@@ -472,7 +472,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-02-15
+<strong>Last updated:</strong> 2022-02-17
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -563,16 +563,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreefc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5targetblankfc1cf80a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/fc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5" target="_blank">fc1cf80</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree761164805752c9cc98597c4cac8fe8739dd0ff31targetblank7611648a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/761164805752c9cc98597c4cac8fe8739dd0ff31" target="_blank">7611648</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreefc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5targetblankfc1cf80a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree761164805752c9cc98597c4cac8fe8739dd0ff31targetblank7611648a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/fc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5" target="_blank">fc1cf80</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/761164805752c9cc98597c4cac8fe8739dd0ff31" target="_blank">7611648</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -589,7 +589,7 @@ Untracked files:
     Untracked:  code/read_GLODAPv2_2020.Rmd
 
 Unstaged changes:
-    Modified:   analysis/_site.yml
+    Modified:   analysis/read_World_Ocean_Atlas_2018.Rmd
     Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
@@ -631,6 +631,40 @@ Message
 <tbody>
 <tr>
 <td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/761164805752c9cc98597c4cac8fe8739dd0ff31/analysis/read_RECCAP2_flux_products.Rmd" target="_blank">7611648</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-17
+</td>
+<td>
+read Seaflux data
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/6e65117873da381f301c05463db6061611f178b7/docs/read_RECCAP2_flux_products.html" target="_blank">6e65117</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
 html
 </td>
 <td>
@@ -670,8 +704,6 @@ testrun new script
 </div>
 </div>
 </div>
-<div id="read-source-files" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Read source files</h1>
 <pre class="r"><code>basinmask_5 &lt;- basinmask %&gt;% 
   filter(MLR_basins == &quot;5&quot;) %&gt;% 
   select(lat, lon, basin)
@@ -679,10 +711,12 @@ testrun new script
 basinmask &lt;- basinmask %&gt;% 
   filter(MLR_basins == &quot;2&quot;) %&gt;% 
   select(lat, lon, basin_AIP)</code></pre>
-<div id="read-data" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Read data</h2>
-<div id="globally-integrated-time-series" class="section level3" number="1.1.1">
-<h3><span class="header-section-number">1.1.1</span> Globally integrated time series</h3>
+<div id="read-data" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Read data</h1>
+<div id="globally-integrated-time-series" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> Globally integrated time series</h2>
+<div id="reccap2-ocean" class="section level3" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> RECCAP2-ocean</h3>
 <pre class="r"><code>surface_co2_products &lt;- list.files(path_reccap2_surface_co2)
 
 surface_co2_products &lt;-
@@ -704,6 +738,9 @@ surface_co2_products &lt;-
 
 surface_co2_products &lt;-
   surface_co2_products[!str_detect(surface_co2_products, pattern = &quot;SOMFFN_v20211121&quot;)]
+
+surface_co2_products &lt;-
+  surface_co2_products[!str_detect(surface_co2_products, pattern = &quot;AOML_EXTRAT_v20211130&quot;)]
 
 ### loop
 
@@ -737,6 +774,45 @@ for (i_surface_co2_products in surface_co2_products) {
   }
   
 }</code></pre>
+</div>
+<div id="seaflux" class="section level3" number="1.1.2">
+<h3><span class="header-section-number">1.1.2</span> Seaflux</h3>
+<pre class="r"><code>fgco2_seaflux_file &lt;- paste0(path_seaflux_surface_co2,
+                             &quot;SeaFlux_v2021.04_fgco2_global.nc&quot;)
+
+fgco2_seaflux &lt;-
+  tidync(fgco2_seaflux_file) %&gt;% 
+  hyper_tibble()
+
+ncmeta::nc_atts(fgco2_seaflux_file)</code></pre>
+<pre><code># A tibble: 9 × 4
+     id name        variable     value       
+  &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;        &lt;named list&gt;
+1     0 units       time         &lt;chr [1]&gt;   
+2     1 calendar    time         &lt;chr [1]&gt;   
+3     0 description wind         &lt;chr [1]&gt;   
+4     0 description product      &lt;chr [1]&gt;   
+5     0 _FillValue  fgco2_global &lt;dbl [1]&gt;   
+6     1 units       fgco2_global &lt;chr [1]&gt;   
+7     2 long_name   fgco2_global &lt;chr [1]&gt;   
+8     3 product     fgco2_global &lt;chr [1]&gt;   
+9     4 description fgco2_global &lt;chr [1]&gt;   </code></pre>
+<pre class="r"><code>ncmeta::nc_atts(fgco2_seaflux_file, &quot;time&quot;) %&gt;% tidyr::unnest(cols = c(value))</code></pre>
+<pre><code># A tibble: 2 × 4
+     id name     variable value                
+  &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;                
+1     0 units    time     days since 1982-01-15
+2     1 calendar time     proleptic_gregorian  </code></pre>
+<pre class="r"><code>fgco2_seaflux &lt;- fgco2_seaflux %&gt;% 
+  mutate(date = as.Date(time, origin = &#39;1982-01-15&#39;),
+         year = year(date))</code></pre>
+</div>
+</div>
+</div>
+<div id="timeseries" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Timeseries</h1>
+<div id="reccap2" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> RECCAP2</h2>
 <pre class="r"><code>fgco2_glob_all &lt;- fgco2_glob_all %&gt;% 
   mutate(date = as.Date(time, origin = &#39;1980-01-01&#39;),
          year = year(date),
@@ -748,44 +824,7 @@ fgco2_glob_all %&gt;%
   ggplot(aes(date, fgco2_glob, col=product)) +
   geom_line() +
   theme(legend.position = &quot;bottom&quot;)</code></pre>
-<p><img src="figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fgco2_time_series-1">
-Past versions of fgco2_time_series-1.png
-</button>
-</p>
-<div id="fig-fgco2_time_series-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/008f1c050cfbfbc00cd11d3cdbfd3ddb109b7cc5/docs/figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series-1.png" target="_blank">008f1c0</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-02-15
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_RECCAP2-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>fgco2_glob_all_annual &lt;- fgco2_glob_all %&gt;% 
   group_by(year, product) %&gt;% 
   summarise(fgco2_glob = mean(fgco2_glob)) %&gt;% 
@@ -796,44 +835,7 @@ fgco2_glob_all_annual %&gt;%
   ggplot(aes(year, fgco2_glob, col=product)) +
   geom_line() +
   theme(legend.position = &quot;bottom&quot;)</code></pre>
-<p><img src="figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fgco2_time_series-2">
-Past versions of fgco2_time_series-2.png
-</button>
-</p>
-<div id="fig-fgco2_time_series-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/008f1c050cfbfbc00cd11d3cdbfd3ddb109b7cc5/docs/figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series-2.png" target="_blank">008f1c0</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-02-15
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_RECCAP2-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>fgco2_glob_all_annual_cum_1994 &lt;- fgco2_glob_all_annual %&gt;% 
   filter(year &gt;= 1994) %&gt;% 
   arrange(year) %&gt;% 
@@ -847,44 +849,7 @@ fgco2_glob_all_annual_cum_1994 %&gt;%
   geom_line() +
   geom_point(shape = 21, fill = &quot;white&quot;) +
   theme(legend.position = &quot;bottom&quot;)</code></pre>
-<p><img src="figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series-3.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fgco2_time_series-3">
-Past versions of fgco2_time_series-3.png
-</button>
-</p>
-<div id="fig-fgco2_time_series-3" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/008f1c050cfbfbc00cd11d3cdbfd3ddb109b7cc5/docs/figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series-3.png" target="_blank">008f1c0</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-02-15
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_RECCAP2-3.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>fgco2_glob_all_annual_ensemble &lt;- fgco2_glob_all_annual %&gt;%
   filter(product != &quot;UOEX_Wat20_1985_2019_v20211204&quot;) %&gt;% 
   group_by(year) %&gt;%
@@ -913,56 +878,94 @@ ggplot() +
   scale_color_manual(values = c(&quot;red&quot;, &quot;grey50&quot;)) +
   theme(legend.position = &quot;bottom&quot;,
         legend.title = element_blank())</code></pre>
-<p><img src="figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series-4.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fgco2_time_series-4">
-Past versions of fgco2_time_series-4.png
-</button>
-</p>
-<div id="fig-fgco2_time_series-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/008f1c050cfbfbc00cd11d3cdbfd3ddb109b7cc5/docs/figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series-4.png" target="_blank">008f1c0</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-02-15
-</td>
-</tr>
-</tbody>
-</table>
+<p><img src="figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_RECCAP2-4.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="seaflux-1" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Seaflux</h2>
+<pre class="r"><code>fgco2_seaflux &lt;- fgco2_seaflux %&gt;% 
+  mutate(fgco2_glob = -fgco2_global) %&gt;% 
+  select(product, wind, year, date, fgco2_glob)
+
+
+fgco2_seaflux %&gt;% 
+  ggplot(aes(date, fgco2_glob, col=wind)) +
+  geom_line() +
+  theme(legend.position = &quot;bottom&quot;) +
+  facet_wrap(~ product)</code></pre>
+<p><img src="figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_seaflux-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>fgco2_seaflux_annual &lt;- fgco2_seaflux %&gt;% 
+  filter(wind %in% c(&quot;CCMP2&quot;, &quot;ERA5&quot;, &quot;JRA55&quot;)) %&gt;% 
+  group_by(year, product) %&gt;% 
+  summarise(fgco2_glob = mean(fgco2_glob)) %&gt;% 
+  ungroup()
+  
+
+fgco2_seaflux_annual %&gt;% 
+  ggplot(aes(year, fgco2_glob, col=product)) +
+  geom_line() +
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_seaflux-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>fgco2_seaflux_annual_cum_1994 &lt;- fgco2_seaflux_annual %&gt;% 
+  filter(year &gt;= 1994) %&gt;% 
+  arrange(year) %&gt;% 
+  group_by(product) %&gt;% 
+  mutate(fgco2_glob_cum = cumsum(fgco2_glob)) %&gt;% 
+  ungroup()
+  
+
+fgco2_seaflux_annual_cum_1994 %&gt;%
+  ggplot(aes(year, fgco2_glob_cum, col = product)) +
+  geom_line() +
+  geom_point(shape = 21, fill = &quot;white&quot;) +
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_seaflux-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>fgco2_seaflux_annual_ensemble &lt;- fgco2_seaflux_annual %&gt;%
+  group_by(year) %&gt;%
+  summarise(fgco2_glob_sd = sd(fgco2_glob),
+            fgco2_glob = mean(fgco2_glob)) %&gt;%
+  ungroup()
+
+ggplot() +
+  geom_ribbon(
+    data =
+      fgco2_seaflux_annual_ensemble,
+    aes(
+      year,
+      ymax = fgco2_glob + fgco2_glob_sd,
+      ymin = fgco2_glob - fgco2_glob_sd,
+      fill = &quot;ensemble SD&quot;
+    ), alpha = 0.3
+  ) +
+  geom_line(data =
+              fgco2_seaflux_annual,
+            aes(year, fgco2_glob, group = product, col = &quot;individual products&quot;)) +
+  geom_line(data =
+              fgco2_seaflux_annual_ensemble,
+            aes(year, fgco2_glob, col = &quot;ensemble mean&quot;), size = 1) +
+  scale_fill_manual(values = &quot;red&quot;) +
+  scale_color_manual(values = c(&quot;red&quot;, &quot;grey50&quot;)) +
+  theme(legend.position = &quot;bottom&quot;,
+        legend.title = element_blank())</code></pre>
+<p><img src="figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_seaflux-4.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
-</div>
-</div>
-</div>
-<div id="write-files" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Write files</h1>
+<div id="write-files" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Write files</h1>
 <pre class="r"><code>fgco2_glob_all %&gt;%
   write_csv(paste0(path_preprocessing,
                    &quot;RECCAP2_fgco2_glob_all.csv&quot;))
 
 fgco2_glob_all_annual %&gt;%
   write_csv(paste0(path_preprocessing,
-                   &quot;RECCAP2_fgco2_glob_all_annual.csv&quot;))</code></pre>
+                   &quot;RECCAP2_fgco2_glob_all_annual.csv&quot;))
+
+fgco2_seaflux %&gt;%
+  write_csv(paste0(path_preprocessing,
+                   &quot;Seaflux_fgco2_glob.csv&quot;))
+
+fgco2_seaflux_annual %&gt;%
+  write_csv(paste0(path_preprocessing,
+                   &quot;Seaflux_fgco2_glob_annual.csv&quot;))</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
