@@ -145,6 +145,23 @@ tcant_zonal <- m_zonal_mean_sd(tcant_3d)
 
 ```
 
+```{r calculate_budgets}
+
+m_dcant_budget(
+  tcant_inv_layers %>%
+    rename(dcant = tcant,
+           dcant_pos = tcant_pos) %>%
+    mutate(method = "total",
+           data_source = "obs")) %>%
+  select(-c(data_source, method)) %>% 
+  group_by(estimate) %>%
+  mutate(ratio = round(value / lag(value),3)) %>%
+  ungroup() %>% 
+  arrange(estimate, inv_depth)
+
+```
+
+
 
 # Plots
 
