@@ -1,5 +1,5 @@
 ---
-title: "RECCAP-ocean surface flux products"
+title: "Surface flux products"
 author: "Jens Daniel Müller"
 date:  "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
@@ -30,81 +30,71 @@ library(tidync)
 library(lubridate)
 ```
 
-```{r prepare_basin_mask}
-
-basinmask_5 <- basinmask %>% 
-  filter(MLR_basins == "5") %>% 
-  select(lat, lon, basin)
-
-basinmask <- basinmask %>% 
-  filter(MLR_basins == "2") %>% 
-  select(lat, lon, basin_AIP)
-
-
-```
-
 # Read data
 
-## Globally integrated time series
+## fgco2 global integrals
 
-### RECCAP2-ocean
+### RECCAP2
 
-```{r read_globally_integrated_time_series}
+```{r read_fgco2_RECCAP2}
 
-surface_co2_products <- list.files(path_reccap2_surface_co2)
+products <- list.files(path_reccap2_surface_co2)
 
-surface_co2_products <-
-  surface_co2_products[!str_detect(surface_co2_products, pattern = "\\.")]
+products <-
+  products[!str_detect(products, pattern = "\\.")]
 
 # Remove data sets that do not meet formatting requirements
 
-surface_co2_products <-
-  surface_co2_products[!str_detect(surface_co2_products, pattern = "JMAMLR_v20210312")]
+products <-
+  products[!str_detect(products, pattern = "JMAMLR_v20210312")]
 
-surface_co2_products <-
-  surface_co2_products[!str_detect(surface_co2_products, pattern = "LDEO_2021_clim_RECCAP2_v20210702")]
+products <-
+  products[!str_detect(products, pattern = "JMAMLR_v20211202")]
 
-surface_co2_products <-
-  surface_co2_products[!str_detect(surface_co2_products, pattern = "spco2_LDEO_HPD_1985-2018_v20211210")]
+products <-
+  products[!str_detect(products, pattern = "LDEO_2021_clim_RECCAP2_v20210702")]
 
-surface_co2_products <-
-  surface_co2_products[!str_detect(surface_co2_products, pattern = "NIES-nn_v202011")]
+products <-
+  products[!str_detect(products, pattern = "spco2_LDEO_HPD_1985-2018_v20211210")]
 
-surface_co2_products <-
-  surface_co2_products[!str_detect(surface_co2_products, pattern = "SOMFFN_v20211121")]
+products <-
+  products[!str_detect(products, pattern = "NIES-nn_v202011")]
 
-surface_co2_products <-
-  surface_co2_products[!str_detect(surface_co2_products, pattern = "AOML_EXTRAT_v20211130")]
+products <-
+  products[!str_detect(products, pattern = "SOMFFN_v20211121")]
+
+products <-
+  products[!str_detect(products, pattern = "AOML_EXTRAT_v20211130")]
 
 ### loop
 
-for (i_surface_co2_products in surface_co2_products) {
-  # i_surface_co2_products <- surface_co2_products[5]
+for (i_products in products) {
+  # i_products <- products[5]
   
   path_product <- paste(path_reccap2_surface_co2,
-                        i_surface_co2_products,
+                        i_products,
                         sep = "/")
   
-  fgco2_glob_file_name <-
+  product_file_name <-
     list.files(path_product, pattern = "fgco2_glob")
   
-  fgco2_glob <-
+  RECCAP2 <-
     tidync(paste(path_product,
-                 fgco2_glob_file_name,
+                 product_file_name,
                  sep = "/"))
   
-  fgco2_glob <- fgco2_glob %>%
+  RECCAP2 <- RECCAP2 %>%
     hyper_tibble()
   
-  fgco2_glob <- fgco2_glob %>%
-    mutate(product = i_surface_co2_products)
+  RECCAP2 <- RECCAP2 %>%
+    mutate(product = i_products)
   
-  if (exists("fgco2_glob_all")) {
-    fgco2_glob_all <- bind_rows(fgco2_glob_all, fgco2_glob)
+  if (exists("RECCAP2_all")) {
+    RECCAP2_all <- bind_rows(RECCAP2_all, RECCAP2)
   }
   
-  if (!exists("fgco2_glob_all")) {
-    fgco2_glob_all <- fgco2_glob
+  if (!exists("RECCAP2_all")) {
+    RECCAP2_all <- RECCAP2
   }
   
 }
@@ -117,18 +107,18 @@ for (i_surface_co2_products in surface_co2_products) {
 
 ```{r read_seaflux_data}
 
-fgco2_seaflux_file <- paste0(path_seaflux_surface_co2,
+SeaFlux_file_name <- paste0(path_seaflux_surface_co2,
                              "SeaFlux_v2021.04_fgco2_global.nc")
 
-fgco2_seaflux <-
-  tidync(fgco2_seaflux_file) %>% 
+SeaFlux <-
+  tidync(SeaFlux_file_name) %>% 
   hyper_tibble()
 
-ncmeta::nc_atts(fgco2_seaflux_file)
-ncmeta::nc_atts(fgco2_seaflux_file, "time") %>% tidyr::unnest(cols = c(value))
+ncmeta::nc_atts(SeaFlux_file_name)
+ncmeta::nc_atts(SeaFlux_file_name, "time") %>% tidyr::unnest(cols = c(value))
 
 
-fgco2_seaflux <- fgco2_seaflux %>% 
+SeaFlux <- SeaFlux %>% 
   mutate(date = as.Date(time, origin = '1982-01-15'),
          year = year(date))
 
@@ -141,32 +131,30 @@ fgco2_seaflux <- fgco2_seaflux %>%
 
 ```{r fgco2_time_series_RECCAP2}
 
-
-fgco2_glob_all <- fgco2_glob_all %>% 
+RECCAP2_all <- RECCAP2_all %>% 
   mutate(date = as.Date(time, origin = '1980-01-01'),
-         year = year(date),
-         fgco2_glob = fgco2_glob) %>% 
+         year = year(date)) %>% 
   select(product, year, date, fgco2_glob)
 
 
-fgco2_glob_all %>% 
+RECCAP2_all %>% 
   ggplot(aes(date, fgco2_glob, col=product)) +
   geom_line() +
   theme(legend.position = "bottom")
 
 
-fgco2_glob_all_annual <- fgco2_glob_all %>% 
+RECCAP2_all_annual <- RECCAP2_all %>% 
   group_by(year, product) %>% 
   summarise(fgco2_glob = mean(fgco2_glob)) %>% 
   ungroup()
   
 
-fgco2_glob_all_annual %>% 
+RECCAP2_all_annual %>% 
   ggplot(aes(year, fgco2_glob, col=product)) +
   geom_line() +
   theme(legend.position = "bottom")
 
-fgco2_glob_all_annual_cum_1994 <- fgco2_glob_all_annual %>% 
+RECCAP2_all_annual_cum_1994 <- RECCAP2_all_annual %>% 
   filter(year >= 1994) %>% 
   arrange(year) %>% 
   group_by(product) %>% 
@@ -174,14 +162,14 @@ fgco2_glob_all_annual_cum_1994 <- fgco2_glob_all_annual %>%
   ungroup()
   
 
-fgco2_glob_all_annual_cum_1994 %>%
+RECCAP2_all_annual_cum_1994 %>%
   ggplot(aes(year, fgco2_glob_cum, col = product)) +
   geom_line() +
   geom_point(shape = 21, fill = "white") +
   theme(legend.position = "bottom")
 
 
-fgco2_glob_all_annual_ensemble <- fgco2_glob_all_annual %>%
+RECCAP2_all_annual_ensemble <- RECCAP2_all_annual %>%
   filter(product != "UOEX_Wat20_1985_2019_v20211204") %>% 
   group_by(year) %>%
   summarise(fgco2_glob_sd = sd(fgco2_glob),
@@ -191,7 +179,7 @@ fgco2_glob_all_annual_ensemble <- fgco2_glob_all_annual %>%
 ggplot() +
   geom_ribbon(
     data =
-      fgco2_glob_all_annual_ensemble,
+      RECCAP2_all_annual_ensemble,
     aes(
       year,
       ymax = fgco2_glob + fgco2_glob_sd,
@@ -200,10 +188,10 @@ ggplot() +
     ), alpha = 0.3
   ) +
   geom_line(data =
-              fgco2_glob_all_annual,
+              RECCAP2_all_annual,
             aes(year, fgco2_glob, group = product, col = "individual products")) +
   geom_line(data =
-              fgco2_glob_all_annual_ensemble,
+              RECCAP2_all_annual_ensemble,
             aes(year, fgco2_glob, col = "ensemble mean"), size = 1) +
   scale_fill_manual(values = "red") +
   scale_color_manual(values = c("red", "grey50")) +
@@ -217,32 +205,31 @@ ggplot() +
 
 ```{r fgco2_time_series_seaflux}
 
-
-fgco2_seaflux <- fgco2_seaflux %>% 
+SeaFlux <- SeaFlux %>% 
   mutate(fgco2_glob = -fgco2_global) %>% 
   select(product, wind, year, date, fgco2_glob)
 
 
-fgco2_seaflux %>% 
+SeaFlux %>% 
   ggplot(aes(date, fgco2_glob, col=wind)) +
   geom_line() +
   theme(legend.position = "bottom") +
   facet_wrap(~ product)
 
 
-fgco2_seaflux_annual <- fgco2_seaflux %>% 
+SeaFlux_annual <- SeaFlux %>% 
   filter(wind %in% c("CCMP2", "ERA5", "JRA55")) %>% 
   group_by(year, product) %>% 
   summarise(fgco2_glob = mean(fgco2_glob)) %>% 
   ungroup()
   
 
-fgco2_seaflux_annual %>% 
+SeaFlux_annual %>% 
   ggplot(aes(year, fgco2_glob, col=product)) +
   geom_line() +
   theme(legend.position = "bottom")
 
-fgco2_seaflux_annual_cum_1994 <- fgco2_seaflux_annual %>% 
+SeaFlux_annual_cum_1994 <- SeaFlux_annual %>% 
   filter(year >= 1994) %>% 
   arrange(year) %>% 
   group_by(product) %>% 
@@ -250,14 +237,14 @@ fgco2_seaflux_annual_cum_1994 <- fgco2_seaflux_annual %>%
   ungroup()
   
 
-fgco2_seaflux_annual_cum_1994 %>%
+SeaFlux_annual_cum_1994 %>%
   ggplot(aes(year, fgco2_glob_cum, col = product)) +
   geom_line() +
   geom_point(shape = 21, fill = "white") +
   theme(legend.position = "bottom")
 
 
-fgco2_seaflux_annual_ensemble <- fgco2_seaflux_annual %>%
+SeaFlux_annual_ensemble <- SeaFlux_annual %>%
   group_by(year) %>%
   summarise(fgco2_glob_sd = sd(fgco2_glob),
             fgco2_glob = mean(fgco2_glob)) %>%
@@ -266,7 +253,7 @@ fgco2_seaflux_annual_ensemble <- fgco2_seaflux_annual %>%
 ggplot() +
   geom_ribbon(
     data =
-      fgco2_seaflux_annual_ensemble,
+      SeaFlux_annual_ensemble,
     aes(
       year,
       ymax = fgco2_glob + fgco2_glob_sd,
@@ -275,10 +262,10 @@ ggplot() +
     ), alpha = 0.3
   ) +
   geom_line(data =
-              fgco2_seaflux_annual,
+              SeaFlux_annual,
             aes(year, fgco2_glob, group = product, col = "individual products")) +
   geom_line(data =
-              fgco2_seaflux_annual_ensemble,
+              SeaFlux_annual_ensemble,
             aes(year, fgco2_glob, col = "ensemble mean"), size = 1) +
   scale_fill_manual(values = "red") +
   scale_color_manual(values = c("red", "grey50")) +
@@ -287,28 +274,57 @@ ggplot() +
 
 ```
 
+## Comparison
+
+
+```{r fgco2_time_series_comparison}
+
+ggplot() +
+  geom_line(data = SeaFlux_annual,
+            aes(year, fgco2_glob, group = product,
+                col = "Seaflux")) +
+  geom_line(data = RECCAP2_all_annual,
+            aes(year, fgco2_glob, group = product,
+                col = "RECCAP2")) +
+  scale_color_brewer(palette = "Dark2") +
+  theme(legend.position = "bottom",
+        legend.title = element_blank())
+
+ggplot() +
+  geom_line(data = SeaFlux_annual_cum_1994,
+            aes(year, fgco2_glob_cum, group = product,
+                col = "Seaflux")) +
+  geom_line(data = RECCAP2_all_annual_cum_1994,
+            aes(year, fgco2_glob_cum, group = product,
+                col = "RECCAP2")) +
+  scale_color_brewer(palette = "Dark2") +
+  theme(legend.position = "bottom",
+        legend.title = element_blank())
+
+
+```
 
 
 
 # Write files
 
-```{r write_RECCAP2_fgco2_files}
+```{r write_fgco2_files}
 
-fgco2_glob_all %>%
+RECCAP2_all %>%
   write_csv(paste0(path_preprocessing,
-                   "RECCAP2_fgco2_glob_all.csv"))
+                   "fgco2_glob_RECCAP2_all.csv"))
 
-fgco2_glob_all_annual %>%
+RECCAP2_all_annual %>%
   write_csv(paste0(path_preprocessing,
-                   "RECCAP2_fgco2_glob_all_annual.csv"))
+                   "fgco2_glob_RECCAP2_all_annual.csv"))
 
-fgco2_seaflux %>%
+SeaFlux %>%
   write_csv(paste0(path_preprocessing,
-                   "Seaflux_fgco2_glob.csv"))
+                   "fgco2_glob_Seaflux.csv"))
 
-fgco2_seaflux_annual %>%
+SeaFlux_annual %>%
   write_csv(paste0(path_preprocessing,
-                   "Seaflux_fgco2_glob_annual.csv"))
+                   "fgco2_glob_Seaflux_annual.csv"))
 
 
 
