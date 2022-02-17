@@ -12,7 +12,7 @@
 <meta name="author" content="Jens Daniel Müller" />
 
 
-<title>RECCAP-ocean surface flux products</title>
+<title>Surface flux products</title>
 
 <script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -445,7 +445,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">RECCAP-ocean surface flux products</h1>
+<h1 class="title toc-ignore">Surface flux products</h1>
 <h4 class="author">Jens Daniel Müller</h4>
 <h4 class="date">17 February, 2022</h4>
 
@@ -563,16 +563,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree761164805752c9cc98597c4cac8fe8739dd0ff31targetblank7611648a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/761164805752c9cc98597c4cac8fe8739dd0ff31" target="_blank">7611648</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree78b36b3fb19a75367e7fdc71ad5d583d14b95930targetblank78b36b3a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/78b36b3fb19a75367e7fdc71ad5d583d14b95930" target="_blank">78b36b3</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree761164805752c9cc98597c4cac8fe8739dd0ff31targetblank7611648a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree78b36b3fb19a75367e7fdc71ad5d583d14b95930targetblank78b36b3a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/761164805752c9cc98597c4cac8fe8739dd0ff31" target="_blank">7611648</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/78b36b3fb19a75367e7fdc71ad5d583d14b95930" target="_blank">78b36b3</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -629,6 +629,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/78b36b3fb19a75367e7fdc71ad5d583d14b95930/analysis/read_RECCAP2_flux_products.Rmd" target="_blank">78b36b3</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-17
+</td>
+<td>
+read Seaflux data
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/163d599b5632de6442c14b0512fc416cda88c8e3/docs/read_RECCAP2_flux_products.html" target="_blank">163d599</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-17
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -704,87 +738,83 @@ testrun new script
 </div>
 </div>
 </div>
-<pre class="r"><code>basinmask_5 &lt;- basinmask %&gt;% 
-  filter(MLR_basins == &quot;5&quot;) %&gt;% 
-  select(lat, lon, basin)
-
-basinmask &lt;- basinmask %&gt;% 
-  filter(MLR_basins == &quot;2&quot;) %&gt;% 
-  select(lat, lon, basin_AIP)</code></pre>
 <div id="read-data" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Read data</h1>
-<div id="globally-integrated-time-series" class="section level2" number="1.1">
-<h2><span class="header-section-number">1.1</span> Globally integrated time series</h2>
-<div id="reccap2-ocean" class="section level3" number="1.1.1">
-<h3><span class="header-section-number">1.1.1</span> RECCAP2-ocean</h3>
-<pre class="r"><code>surface_co2_products &lt;- list.files(path_reccap2_surface_co2)
+<div id="fgco2-global-integrals" class="section level2" number="1.1">
+<h2><span class="header-section-number">1.1</span> fgco2 global integrals</h2>
+<div id="reccap2" class="section level3" number="1.1.1">
+<h3><span class="header-section-number">1.1.1</span> RECCAP2</h3>
+<pre class="r"><code>products &lt;- list.files(path_reccap2_surface_co2)
 
-surface_co2_products &lt;-
-  surface_co2_products[!str_detect(surface_co2_products, pattern = &quot;\\.&quot;)]
+products &lt;-
+  products[!str_detect(products, pattern = &quot;\\.&quot;)]
 
 # Remove data sets that do not meet formatting requirements
 
-surface_co2_products &lt;-
-  surface_co2_products[!str_detect(surface_co2_products, pattern = &quot;JMAMLR_v20210312&quot;)]
+products &lt;-
+  products[!str_detect(products, pattern = &quot;JMAMLR_v20210312&quot;)]
 
-surface_co2_products &lt;-
-  surface_co2_products[!str_detect(surface_co2_products, pattern = &quot;LDEO_2021_clim_RECCAP2_v20210702&quot;)]
+products &lt;-
+  products[!str_detect(products, pattern = &quot;JMAMLR_v20211202&quot;)]
 
-surface_co2_products &lt;-
-  surface_co2_products[!str_detect(surface_co2_products, pattern = &quot;spco2_LDEO_HPD_1985-2018_v20211210&quot;)]
+products &lt;-
+  products[!str_detect(products, pattern = &quot;LDEO_2021_clim_RECCAP2_v20210702&quot;)]
 
-surface_co2_products &lt;-
-  surface_co2_products[!str_detect(surface_co2_products, pattern = &quot;NIES-nn_v202011&quot;)]
+products &lt;-
+  products[!str_detect(products, pattern = &quot;spco2_LDEO_HPD_1985-2018_v20211210&quot;)]
 
-surface_co2_products &lt;-
-  surface_co2_products[!str_detect(surface_co2_products, pattern = &quot;SOMFFN_v20211121&quot;)]
+products &lt;-
+  products[!str_detect(products, pattern = &quot;NIES-nn_v202011&quot;)]
 
-surface_co2_products &lt;-
-  surface_co2_products[!str_detect(surface_co2_products, pattern = &quot;AOML_EXTRAT_v20211130&quot;)]
+products &lt;-
+  products[!str_detect(products, pattern = &quot;SOMFFN_v20211121&quot;)]
+
+products &lt;-
+  products[!str_detect(products, pattern = &quot;AOML_EXTRAT_v20211130&quot;)]
 
 ### loop
 
-for (i_surface_co2_products in surface_co2_products) {
-  # i_surface_co2_products &lt;- surface_co2_products[5]
+for (i_products in products) {
+  # i_products &lt;- products[5]
   
   path_product &lt;- paste(path_reccap2_surface_co2,
-                        i_surface_co2_products,
+                        i_products,
                         sep = &quot;/&quot;)
   
-  fgco2_glob_file_name &lt;-
+  product_file_name &lt;-
     list.files(path_product, pattern = &quot;fgco2_glob&quot;)
   
-  fgco2_glob &lt;-
+  RECCAP2 &lt;-
     tidync(paste(path_product,
-                 fgco2_glob_file_name,
+                 product_file_name,
                  sep = &quot;/&quot;))
   
-  fgco2_glob &lt;- fgco2_glob %&gt;%
+  RECCAP2 &lt;- RECCAP2 %&gt;%
     hyper_tibble()
   
-  fgco2_glob &lt;- fgco2_glob %&gt;%
-    mutate(product = i_surface_co2_products)
+  RECCAP2 &lt;- RECCAP2 %&gt;%
+    mutate(product = i_products)
   
-  if (exists(&quot;fgco2_glob_all&quot;)) {
-    fgco2_glob_all &lt;- bind_rows(fgco2_glob_all, fgco2_glob)
+  if (exists(&quot;RECCAP2_all&quot;)) {
+    RECCAP2_all &lt;- bind_rows(RECCAP2_all, RECCAP2)
   }
   
-  if (!exists(&quot;fgco2_glob_all&quot;)) {
-    fgco2_glob_all &lt;- fgco2_glob
+  if (!exists(&quot;RECCAP2_all&quot;)) {
+    RECCAP2_all &lt;- RECCAP2
   }
   
 }</code></pre>
 </div>
 <div id="seaflux" class="section level3" number="1.1.2">
 <h3><span class="header-section-number">1.1.2</span> Seaflux</h3>
-<pre class="r"><code>fgco2_seaflux_file &lt;- paste0(path_seaflux_surface_co2,
+<pre class="r"><code>SeaFlux_file_name &lt;- paste0(path_seaflux_surface_co2,
                              &quot;SeaFlux_v2021.04_fgco2_global.nc&quot;)
 
-fgco2_seaflux &lt;-
-  tidync(fgco2_seaflux_file) %&gt;% 
+SeaFlux &lt;-
+  tidync(SeaFlux_file_name) %&gt;% 
   hyper_tibble()
 
-ncmeta::nc_atts(fgco2_seaflux_file)</code></pre>
+ncmeta::nc_atts(SeaFlux_file_name)</code></pre>
 <pre><code># A tibble: 9 × 4
      id name        variable     value       
   &lt;int&gt; &lt;chr&gt;       &lt;chr&gt;        &lt;named list&gt;
@@ -797,13 +827,13 @@ ncmeta::nc_atts(fgco2_seaflux_file)</code></pre>
 7     2 long_name   fgco2_global &lt;chr [1]&gt;   
 8     3 product     fgco2_global &lt;chr [1]&gt;   
 9     4 description fgco2_global &lt;chr [1]&gt;   </code></pre>
-<pre class="r"><code>ncmeta::nc_atts(fgco2_seaflux_file, &quot;time&quot;) %&gt;% tidyr::unnest(cols = c(value))</code></pre>
+<pre class="r"><code>ncmeta::nc_atts(SeaFlux_file_name, &quot;time&quot;) %&gt;% tidyr::unnest(cols = c(value))</code></pre>
 <pre><code># A tibble: 2 × 4
      id name     variable value                
   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;                
 1     0 units    time     days since 1982-01-15
 2     1 calendar time     proleptic_gregorian  </code></pre>
-<pre class="r"><code>fgco2_seaflux &lt;- fgco2_seaflux %&gt;% 
+<pre class="r"><code>SeaFlux &lt;- SeaFlux %&gt;% 
   mutate(date = as.Date(time, origin = &#39;1982-01-15&#39;),
          year = year(date))</code></pre>
 </div>
@@ -811,32 +841,105 @@ ncmeta::nc_atts(fgco2_seaflux_file)</code></pre>
 </div>
 <div id="timeseries" class="section level1" number="2">
 <h1><span class="header-section-number">2</span> Timeseries</h1>
-<div id="reccap2" class="section level2" number="2.1">
+<div id="reccap2-1" class="section level2" number="2.1">
 <h2><span class="header-section-number">2.1</span> RECCAP2</h2>
-<pre class="r"><code>fgco2_glob_all &lt;- fgco2_glob_all %&gt;% 
+<pre class="r"><code>RECCAP2_all &lt;- RECCAP2_all %&gt;% 
   mutate(date = as.Date(time, origin = &#39;1980-01-01&#39;),
-         year = year(date),
-         fgco2_glob = fgco2_glob) %&gt;% 
+         year = year(date)) %&gt;% 
   select(product, year, date, fgco2_glob)
 
 
-fgco2_glob_all %&gt;% 
+RECCAP2_all %&gt;% 
   ggplot(aes(date, fgco2_glob, col=product)) +
   geom_line() +
   theme(legend.position = &quot;bottom&quot;)</code></pre>
 <p><img src="figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_RECCAP2-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>fgco2_glob_all_annual &lt;- fgco2_glob_all %&gt;% 
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fgco2_time_series_RECCAP2-1">
+Past versions of fgco2_time_series_RECCAP2-1.png
+</button>
+</p>
+<div id="fig-fgco2_time_series_RECCAP2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163d599b5632de6442c14b0512fc416cda88c8e3/docs/figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_RECCAP2-1.png" target="_blank">163d599</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-17
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>RECCAP2_all_annual &lt;- RECCAP2_all %&gt;% 
   group_by(year, product) %&gt;% 
   summarise(fgco2_glob = mean(fgco2_glob)) %&gt;% 
   ungroup()
   
 
-fgco2_glob_all_annual %&gt;% 
+RECCAP2_all_annual %&gt;% 
   ggplot(aes(year, fgco2_glob, col=product)) +
   geom_line() +
   theme(legend.position = &quot;bottom&quot;)</code></pre>
 <p><img src="figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_RECCAP2-2.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>fgco2_glob_all_annual_cum_1994 &lt;- fgco2_glob_all_annual %&gt;% 
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fgco2_time_series_RECCAP2-2">
+Past versions of fgco2_time_series_RECCAP2-2.png
+</button>
+</p>
+<div id="fig-fgco2_time_series_RECCAP2-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163d599b5632de6442c14b0512fc416cda88c8e3/docs/figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_RECCAP2-2.png" target="_blank">163d599</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-17
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>RECCAP2_all_annual_cum_1994 &lt;- RECCAP2_all_annual %&gt;% 
   filter(year &gt;= 1994) %&gt;% 
   arrange(year) %&gt;% 
   group_by(product) %&gt;% 
@@ -844,13 +947,50 @@ fgco2_glob_all_annual %&gt;%
   ungroup()
   
 
-fgco2_glob_all_annual_cum_1994 %&gt;%
+RECCAP2_all_annual_cum_1994 %&gt;%
   ggplot(aes(year, fgco2_glob_cum, col = product)) +
   geom_line() +
   geom_point(shape = 21, fill = &quot;white&quot;) +
   theme(legend.position = &quot;bottom&quot;)</code></pre>
 <p><img src="figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_RECCAP2-3.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>fgco2_glob_all_annual_ensemble &lt;- fgco2_glob_all_annual %&gt;%
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fgco2_time_series_RECCAP2-3">
+Past versions of fgco2_time_series_RECCAP2-3.png
+</button>
+</p>
+<div id="fig-fgco2_time_series_RECCAP2-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163d599b5632de6442c14b0512fc416cda88c8e3/docs/figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_RECCAP2-3.png" target="_blank">163d599</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-17
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>RECCAP2_all_annual_ensemble &lt;- RECCAP2_all_annual %&gt;%
   filter(product != &quot;UOEX_Wat20_1985_2019_v20211204&quot;) %&gt;% 
   group_by(year) %&gt;%
   summarise(fgco2_glob_sd = sd(fgco2_glob),
@@ -860,7 +1000,7 @@ fgco2_glob_all_annual_cum_1994 %&gt;%
 ggplot() +
   geom_ribbon(
     data =
-      fgco2_glob_all_annual_ensemble,
+      RECCAP2_all_annual_ensemble,
     aes(
       year,
       ymax = fgco2_glob + fgco2_glob_sd,
@@ -869,43 +1009,154 @@ ggplot() +
     ), alpha = 0.3
   ) +
   geom_line(data =
-              fgco2_glob_all_annual,
+              RECCAP2_all_annual,
             aes(year, fgco2_glob, group = product, col = &quot;individual products&quot;)) +
   geom_line(data =
-              fgco2_glob_all_annual_ensemble,
+              RECCAP2_all_annual_ensemble,
             aes(year, fgco2_glob, col = &quot;ensemble mean&quot;), size = 1) +
   scale_fill_manual(values = &quot;red&quot;) +
   scale_color_manual(values = c(&quot;red&quot;, &quot;grey50&quot;)) +
   theme(legend.position = &quot;bottom&quot;,
         legend.title = element_blank())</code></pre>
 <p><img src="figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_RECCAP2-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fgco2_time_series_RECCAP2-4">
+Past versions of fgco2_time_series_RECCAP2-4.png
+</button>
+</p>
+<div id="fig-fgco2_time_series_RECCAP2-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163d599b5632de6442c14b0512fc416cda88c8e3/docs/figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_RECCAP2-4.png" target="_blank">163d599</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-17
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="seaflux-1" class="section level2" number="2.2">
 <h2><span class="header-section-number">2.2</span> Seaflux</h2>
-<pre class="r"><code>fgco2_seaflux &lt;- fgco2_seaflux %&gt;% 
+<pre class="r"><code>SeaFlux &lt;- SeaFlux %&gt;% 
   mutate(fgco2_glob = -fgco2_global) %&gt;% 
   select(product, wind, year, date, fgco2_glob)
 
 
-fgco2_seaflux %&gt;% 
+SeaFlux %&gt;% 
   ggplot(aes(date, fgco2_glob, col=wind)) +
   geom_line() +
   theme(legend.position = &quot;bottom&quot;) +
   facet_wrap(~ product)</code></pre>
 <p><img src="figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_seaflux-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>fgco2_seaflux_annual &lt;- fgco2_seaflux %&gt;% 
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fgco2_time_series_seaflux-1">
+Past versions of fgco2_time_series_seaflux-1.png
+</button>
+</p>
+<div id="fig-fgco2_time_series_seaflux-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163d599b5632de6442c14b0512fc416cda88c8e3/docs/figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_seaflux-1.png" target="_blank">163d599</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-17
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>SeaFlux_annual &lt;- SeaFlux %&gt;% 
   filter(wind %in% c(&quot;CCMP2&quot;, &quot;ERA5&quot;, &quot;JRA55&quot;)) %&gt;% 
   group_by(year, product) %&gt;% 
   summarise(fgco2_glob = mean(fgco2_glob)) %&gt;% 
   ungroup()
   
 
-fgco2_seaflux_annual %&gt;% 
+SeaFlux_annual %&gt;% 
   ggplot(aes(year, fgco2_glob, col=product)) +
   geom_line() +
   theme(legend.position = &quot;bottom&quot;)</code></pre>
 <p><img src="figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_seaflux-2.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>fgco2_seaflux_annual_cum_1994 &lt;- fgco2_seaflux_annual %&gt;% 
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fgco2_time_series_seaflux-2">
+Past versions of fgco2_time_series_seaflux-2.png
+</button>
+</p>
+<div id="fig-fgco2_time_series_seaflux-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163d599b5632de6442c14b0512fc416cda88c8e3/docs/figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_seaflux-2.png" target="_blank">163d599</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-17
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>SeaFlux_annual_cum_1994 &lt;- SeaFlux_annual %&gt;% 
   filter(year &gt;= 1994) %&gt;% 
   arrange(year) %&gt;% 
   group_by(product) %&gt;% 
@@ -913,13 +1164,50 @@ fgco2_seaflux_annual %&gt;%
   ungroup()
   
 
-fgco2_seaflux_annual_cum_1994 %&gt;%
+SeaFlux_annual_cum_1994 %&gt;%
   ggplot(aes(year, fgco2_glob_cum, col = product)) +
   geom_line() +
   geom_point(shape = 21, fill = &quot;white&quot;) +
   theme(legend.position = &quot;bottom&quot;)</code></pre>
 <p><img src="figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_seaflux-3.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>fgco2_seaflux_annual_ensemble &lt;- fgco2_seaflux_annual %&gt;%
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fgco2_time_series_seaflux-3">
+Past versions of fgco2_time_series_seaflux-3.png
+</button>
+</p>
+<div id="fig-fgco2_time_series_seaflux-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163d599b5632de6442c14b0512fc416cda88c8e3/docs/figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_seaflux-3.png" target="_blank">163d599</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-17
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>SeaFlux_annual_ensemble &lt;- SeaFlux_annual %&gt;%
   group_by(year) %&gt;%
   summarise(fgco2_glob_sd = sd(fgco2_glob),
             fgco2_glob = mean(fgco2_glob)) %&gt;%
@@ -928,7 +1216,7 @@ fgco2_seaflux_annual_cum_1994 %&gt;%
 ggplot() +
   geom_ribbon(
     data =
-      fgco2_seaflux_annual_ensemble,
+      SeaFlux_annual_ensemble,
     aes(
       year,
       ymax = fgco2_glob + fgco2_glob_sd,
@@ -937,35 +1225,97 @@ ggplot() +
     ), alpha = 0.3
   ) +
   geom_line(data =
-              fgco2_seaflux_annual,
+              SeaFlux_annual,
             aes(year, fgco2_glob, group = product, col = &quot;individual products&quot;)) +
   geom_line(data =
-              fgco2_seaflux_annual_ensemble,
+              SeaFlux_annual_ensemble,
             aes(year, fgco2_glob, col = &quot;ensemble mean&quot;), size = 1) +
   scale_fill_manual(values = &quot;red&quot;) +
   scale_color_manual(values = c(&quot;red&quot;, &quot;grey50&quot;)) +
   theme(legend.position = &quot;bottom&quot;,
         legend.title = element_blank())</code></pre>
 <p><img src="figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_seaflux-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-fgco2_time_series_seaflux-4">
+Past versions of fgco2_time_series_seaflux-4.png
+</button>
+</p>
+<div id="fig-fgco2_time_series_seaflux-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/163d599b5632de6442c14b0512fc416cda88c8e3/docs/figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_seaflux-4.png" target="_blank">163d599</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-17
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="comparison" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Comparison</h2>
+<pre class="r"><code>ggplot() +
+  geom_line(data = SeaFlux_annual,
+            aes(year, fgco2_glob, group = product,
+                col = &quot;Seaflux&quot;)) +
+  geom_line(data = RECCAP2_all_annual,
+            aes(year, fgco2_glob, group = product,
+                col = &quot;RECCAP2&quot;)) +
+  scale_color_brewer(palette = &quot;Dark2&quot;) +
+  theme(legend.position = &quot;bottom&quot;,
+        legend.title = element_blank())</code></pre>
+<p><img src="figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_comparison-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot() +
+  geom_line(data = SeaFlux_annual_cum_1994,
+            aes(year, fgco2_glob_cum, group = product,
+                col = &quot;Seaflux&quot;)) +
+  geom_line(data = RECCAP2_all_annual_cum_1994,
+            aes(year, fgco2_glob_cum, group = product,
+                col = &quot;RECCAP2&quot;)) +
+  scale_color_brewer(palette = &quot;Dark2&quot;) +
+  theme(legend.position = &quot;bottom&quot;,
+        legend.title = element_blank())</code></pre>
+<p><img src="figure/read_RECCAP2_flux_products.Rmd/fgco2_time_series_comparison-2.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="write-files" class="section level1" number="3">
 <h1><span class="header-section-number">3</span> Write files</h1>
-<pre class="r"><code>fgco2_glob_all %&gt;%
+<pre class="r"><code>RECCAP2_all %&gt;%
   write_csv(paste0(path_preprocessing,
-                   &quot;RECCAP2_fgco2_glob_all.csv&quot;))
+                   &quot;fgco2_glob_RECCAP2_all.csv&quot;))
 
-fgco2_glob_all_annual %&gt;%
+RECCAP2_all_annual %&gt;%
   write_csv(paste0(path_preprocessing,
-                   &quot;RECCAP2_fgco2_glob_all_annual.csv&quot;))
+                   &quot;fgco2_glob_RECCAP2_all_annual.csv&quot;))
 
-fgco2_seaflux %&gt;%
+SeaFlux %&gt;%
   write_csv(paste0(path_preprocessing,
-                   &quot;Seaflux_fgco2_glob.csv&quot;))
+                   &quot;fgco2_glob_Seaflux.csv&quot;))
 
-fgco2_seaflux_annual %&gt;%
+SeaFlux_annual %&gt;%
   write_csv(paste0(path_preprocessing,
-                   &quot;Seaflux_fgco2_glob_annual.csv&quot;))</code></pre>
+                   &quot;fgco2_glob_Seaflux_annual.csv&quot;))</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1001,26 +1351,26 @@ other attached packages:
 [17] workflowr_1.7.0
 
 loaded via a namespace (and not attached):
- [1] fs_1.5.2          bit64_4.0.5       httr_1.4.2        rprojroot_2.0.2  
- [5] tools_4.1.2       backports_1.4.1   bslib_0.3.1       utf8_1.2.2       
- [9] R6_2.5.1          DBI_1.1.2         colorspace_2.0-2  withr_2.4.3      
-[13] tidyselect_1.1.1  processx_3.5.2    bit_4.0.4         compiler_4.1.2   
-[17] git2r_0.29.0      cli_3.1.1         rvest_1.0.2       RNetCDF_2.5-2    
-[21] xml2_1.3.3        labeling_0.4.2    sass_0.4.0        scales_1.1.1     
-[25] checkmate_2.0.0   callr_3.7.0       digest_0.6.29     rmarkdown_2.11   
-[29] pkgconfig_2.0.3   htmltools_0.5.2   highr_0.9         dbplyr_2.1.1     
-[33] fastmap_1.1.0     rlang_0.4.12      readxl_1.3.1      rstudioapi_0.13  
-[37] jquerylib_0.1.4   generics_0.1.1    farver_2.1.0      jsonlite_1.7.3   
-[41] vroom_1.5.7       magrittr_2.0.1    ncmeta_0.3.0      Rcpp_1.0.8       
-[45] munsell_0.5.0     fansi_1.0.2       lifecycle_1.0.1   stringi_1.7.6    
-[49] whisker_0.4       yaml_2.2.1        MASS_7.3-55       grid_4.1.2       
-[53] parallel_4.1.2    promises_1.2.0.1  crayon_1.4.2      haven_2.4.3      
-[57] hms_1.1.1         knitr_1.37        ps_1.6.0          pillar_1.6.4     
-[61] reprex_2.0.1      glue_1.6.0        evaluate_0.14     getPass_0.2-2    
-[65] data.table_1.14.2 modelr_0.1.8      vctrs_0.3.8       tzdb_0.2.0       
-[69] tweenr_1.0.2      httpuv_1.6.5      cellranger_1.1.0  gtable_0.3.0     
-[73] polyclip_1.10-0   assertthat_0.2.1  xfun_0.29         broom_0.7.11     
-[77] later_1.3.0       ncdf4_1.19        ellipsis_0.3.2   </code></pre>
+ [1] fs_1.5.2           bit64_4.0.5        RColorBrewer_1.1-2 httr_1.4.2        
+ [5] rprojroot_2.0.2    tools_4.1.2        backports_1.4.1    bslib_0.3.1       
+ [9] utf8_1.2.2         R6_2.5.1           DBI_1.1.2          colorspace_2.0-2  
+[13] withr_2.4.3        tidyselect_1.1.1   processx_3.5.2     bit_4.0.4         
+[17] compiler_4.1.2     git2r_0.29.0       cli_3.1.1          rvest_1.0.2       
+[21] RNetCDF_2.5-2      xml2_1.3.3         labeling_0.4.2     sass_0.4.0        
+[25] scales_1.1.1       checkmate_2.0.0    callr_3.7.0        digest_0.6.29     
+[29] rmarkdown_2.11     pkgconfig_2.0.3    htmltools_0.5.2    highr_0.9         
+[33] dbplyr_2.1.1       fastmap_1.1.0      rlang_0.4.12       readxl_1.3.1      
+[37] rstudioapi_0.13    jquerylib_0.1.4    generics_0.1.1     farver_2.1.0      
+[41] jsonlite_1.7.3     vroom_1.5.7        magrittr_2.0.1     ncmeta_0.3.0      
+[45] Rcpp_1.0.8         munsell_0.5.0      fansi_1.0.2        lifecycle_1.0.1   
+[49] stringi_1.7.6      whisker_0.4        yaml_2.2.1         MASS_7.3-55       
+[53] grid_4.1.2         parallel_4.1.2     promises_1.2.0.1   crayon_1.4.2      
+[57] haven_2.4.3        hms_1.1.1          knitr_1.37         ps_1.6.0          
+[61] pillar_1.6.4       reprex_2.0.1       glue_1.6.0         evaluate_0.14     
+[65] getPass_0.2-2      data.table_1.14.2  modelr_0.1.8       vctrs_0.3.8       
+[69] tzdb_0.2.0         tweenr_1.0.2       httpuv_1.6.5       cellranger_1.1.0  
+[73] gtable_0.3.0       polyclip_1.10-0    assertthat_0.2.1   xfun_0.29         
+[77] broom_0.7.11       later_1.3.0        ncdf4_1.19         ellipsis_0.3.2    </code></pre>
 </div>
 </div>
 
