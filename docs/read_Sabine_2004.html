@@ -447,7 +447,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Anthropogenic CO2 from 1994 to 2007</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">16 February, 2022</h4>
+<h4 class="date">17 February, 2022</h4>
 
 </div>
 
@@ -472,7 +472,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-02-16
+<strong>Last updated:</strong> 2022-02-17
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -563,16 +563,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreefc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5targetblankfc1cf80a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/fc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5" target="_blank">fc1cf80</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree1c01415f414ac4d6b370898d4c7f8875b6a6301atargetblank1c01415a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/1c01415f414ac4d6b370898d4c7f8875b6a6301a" target="_blank">1c01415</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreefc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5targetblankfc1cf80a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree1c01415f414ac4d6b370898d4c7f8875b6a6301atargetblank1c01415a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/fc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5" target="_blank">fc1cf80</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/1c01415f414ac4d6b370898d4c7f8875b6a6301a" target="_blank">1c01415</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -587,10 +587,6 @@ Ignored files:
 Untracked files:
     Untracked:  code/IO_1990_own_crossover_analysis_backup.R
     Untracked:  code/read_GLODAPv2_2020.Rmd
-
-Unstaged changes:
-    Modified:   analysis/_site.yml
-    Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
 <p>
@@ -629,6 +625,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/1c01415f414ac4d6b370898d4c7f8875b6a6301a/analysis/read_Sabine_2004.Rmd" target="_blank">1c01415</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-17
+</td>
+<td>
+added S04 budget calculation
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/6e65117873da381f301c05463db6061611f178b7/docs/read_Sabine_2004.html" target="_blank">6e65117</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -858,6 +888,30 @@ tcant_inv &lt;- tcant_inv_layers %&gt;%
 <div id="zonal-mean-section" class="section level2" number="4.2">
 <h2><span class="header-section-number">4.2</span> Zonal mean section</h2>
 <pre class="r"><code>tcant_zonal &lt;- m_zonal_mean_sd(tcant_3d)</code></pre>
+<pre class="r"><code>m_dcant_budget(
+  tcant_inv_layers %&gt;%
+    rename(dcant = tcant,
+           dcant_pos = tcant_pos) %&gt;%
+    mutate(method = &quot;total&quot;,
+           data_source = &quot;obs&quot;)) %&gt;%
+  select(-c(data_source, method)) %&gt;% 
+  group_by(estimate) %&gt;%
+  mutate(ratio = round(value / lag(value),3)) %&gt;%
+  ungroup() %&gt;% 
+  arrange(estimate, inv_depth)</code></pre>
+<pre><code># A tibble: 10 × 4
+   inv_depth estimate  value  ratio
+       &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;
+ 1       100 dcant      16.8 NA    
+ 2       500 dcant      63.0  3.75 
+ 3      1000 dcant      87.9  1.39 
+ 4      3000 dcant     102.   1.16 
+ 5     10000 dcant      97.7  0.963
+ 6       100 dcant_pos  16.8 NA    
+ 7       500 dcant_pos  63.0  3.75 
+ 8      1000 dcant_pos  88.2  1.40 
+ 9      3000 dcant_pos 104.   1.18 
+10     10000 dcant_pos 106.   1.02 </code></pre>
 </div>
 </div>
 <div id="plots" class="section level1" number="5">
