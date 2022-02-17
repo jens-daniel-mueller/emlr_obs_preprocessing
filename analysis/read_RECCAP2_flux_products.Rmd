@@ -21,6 +21,7 @@ editor_options:
 
 ```{r define_paths, include=FALSE}
 path_reccap2_surface_co2   <- "/nfs/kryo/work/updata/reccap2/Surface_CO2"
+path_seaflux_surface_co2   <- "/nfs/kryo/work/updata/pco2_seaflux/"
 path_preprocessing    <- paste(path_root, "/observations/preprocessing/", sep = "")
 ```
 
@@ -28,9 +29,6 @@ path_preprocessing    <- paste(path_root, "/observations/preprocessing/", sep = 
 library(tidync)
 library(lubridate)
 ```
-
-# Read source files
-
 
 ```{r prepare_basin_mask}
 
@@ -45,9 +43,11 @@ basinmask <- basinmask %>%
 
 ```
 
-## Read data
+# Read data
 
-### Globally integrated time series
+## Globally integrated time series
+
+### RECCAP2-ocean
 
 ```{r read_globally_integrated_time_series}
 
@@ -72,6 +72,9 @@ surface_co2_products <-
 
 surface_co2_products <-
   surface_co2_products[!str_detect(surface_co2_products, pattern = "SOMFFN_v20211121")]
+
+surface_co2_products <-
+  surface_co2_products[!str_detect(surface_co2_products, pattern = "AOML_EXTRAT_v20211130")]
 
 ### loop
 
@@ -110,7 +113,33 @@ for (i_surface_co2_products in surface_co2_products) {
 
 ```
 
-```{r fgco2_time_series}
+### Seaflux
+
+```{r read_seaflux_data}
+
+fgco2_seaflux_file <- paste0(path_seaflux_surface_co2,
+                             "SeaFlux_v2021.04_fgco2_global.nc")
+
+fgco2_seaflux <-
+  tidync(fgco2_seaflux_file) %>% 
+  hyper_tibble()
+
+ncmeta::nc_atts(fgco2_seaflux_file)
+ncmeta::nc_atts(fgco2_seaflux_file, "time") %>% tidyr::unnest(cols = c(value))
+
+
+fgco2_seaflux <- fgco2_seaflux %>% 
+  mutate(date = as.Date(time, origin = '1982-01-15'),
+         year = year(date))
+
+
+```
+
+# Timeseries
+
+## RECCAP2
+
+```{r fgco2_time_series_RECCAP2}
 
 
 fgco2_glob_all <- fgco2_glob_all %>% 
@@ -184,6 +213,82 @@ ggplot() +
 ```
 
 
+## Seaflux
+
+```{r fgco2_time_series_seaflux}
+
+
+fgco2_seaflux <- fgco2_seaflux %>% 
+  mutate(fgco2_glob = -fgco2_global) %>% 
+  select(product, wind, year, date, fgco2_glob)
+
+
+fgco2_seaflux %>% 
+  ggplot(aes(date, fgco2_glob, col=wind)) +
+  geom_line() +
+  theme(legend.position = "bottom") +
+  facet_wrap(~ product)
+
+
+fgco2_seaflux_annual <- fgco2_seaflux %>% 
+  filter(wind %in% c("CCMP2", "ERA5", "JRA55")) %>% 
+  group_by(year, product) %>% 
+  summarise(fgco2_glob = mean(fgco2_glob)) %>% 
+  ungroup()
+  
+
+fgco2_seaflux_annual %>% 
+  ggplot(aes(year, fgco2_glob, col=product)) +
+  geom_line() +
+  theme(legend.position = "bottom")
+
+fgco2_seaflux_annual_cum_1994 <- fgco2_seaflux_annual %>% 
+  filter(year >= 1994) %>% 
+  arrange(year) %>% 
+  group_by(product) %>% 
+  mutate(fgco2_glob_cum = cumsum(fgco2_glob)) %>% 
+  ungroup()
+  
+
+fgco2_seaflux_annual_cum_1994 %>%
+  ggplot(aes(year, fgco2_glob_cum, col = product)) +
+  geom_line() +
+  geom_point(shape = 21, fill = "white") +
+  theme(legend.position = "bottom")
+
+
+fgco2_seaflux_annual_ensemble <- fgco2_seaflux_annual %>%
+  group_by(year) %>%
+  summarise(fgco2_glob_sd = sd(fgco2_glob),
+            fgco2_glob = mean(fgco2_glob)) %>%
+  ungroup()
+
+ggplot() +
+  geom_ribbon(
+    data =
+      fgco2_seaflux_annual_ensemble,
+    aes(
+      year,
+      ymax = fgco2_glob + fgco2_glob_sd,
+      ymin = fgco2_glob - fgco2_glob_sd,
+      fill = "ensemble SD"
+    ), alpha = 0.3
+  ) +
+  geom_line(data =
+              fgco2_seaflux_annual,
+            aes(year, fgco2_glob, group = product, col = "individual products")) +
+  geom_line(data =
+              fgco2_seaflux_annual_ensemble,
+            aes(year, fgco2_glob, col = "ensemble mean"), size = 1) +
+  scale_fill_manual(values = "red") +
+  scale_color_manual(values = c("red", "grey50")) +
+  theme(legend.position = "bottom",
+        legend.title = element_blank())
+
+```
+
+
+
 
 # Write files
 
@@ -196,6 +301,14 @@ fgco2_glob_all %>%
 fgco2_glob_all_annual %>%
   write_csv(paste0(path_preprocessing,
                    "RECCAP2_fgco2_glob_all_annual.csv"))
+
+fgco2_seaflux %>%
+  write_csv(paste0(path_preprocessing,
+                   "Seaflux_fgco2_glob.csv"))
+
+fgco2_seaflux_annual %>%
+  write_csv(paste0(path_preprocessing,
+                   "Seaflux_fgco2_glob_annual.csv"))
 
 
 
