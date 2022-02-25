@@ -98,11 +98,13 @@ landmask <- landmask %>%
          lon = Longitude) %>%
   mutate(lon = if_else(lon < 20, lon + 360, lon))
 
-landmask <- landmask %>%
-  filter(region == "land",
-         lat >= params_global$lat_min,
+landseamask <- landmask %>%
+  filter(lat >= params_global$lat_min,
          lat <= params_global$lat_max
-         ) %>%
+         )
+
+landmask <- landmask %>%
+  filter(region == "land") %>%
   select(-region)
 
 rm(landsea_01)
@@ -202,6 +204,18 @@ map +
   geom_raster(data = basinmask_01,
               aes(lon, lat, fill = basin_AIP)) +
   scale_fill_brewer(palette = "Dark2")
+
+```
+
+```{r landsea_masks_WOA18_map, fig.asp=0.5}
+
+# generate base map, which is further used throughout the project
+ggplot() +
+  geom_raster(data = landseamask,
+              aes(lon, lat, fill = region)) +
+  coord_quickmap(expand = 0) +
+  scale_fill_brewer(palette = "Paired") +
+  theme(axis.title = element_blank())
 
 ```
 
@@ -413,6 +427,12 @@ map +
 ## Write files
 
 ```{r write_files}
+
+# land sea mask
+landseamask %>%
+  write_csv(paste(path_files,
+                  "land_sea_mask_WOA18.csv",
+                  sep = ""))
 
 # basin mask
 basinmask_01 %>%

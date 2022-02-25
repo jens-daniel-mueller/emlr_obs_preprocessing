@@ -1764,7 +1764,9 @@ rm(p_crossover_ts, p_crossover_decadal)
 ```
 
 
-## 5 basin decadal
+## 5 basin
+
+### Decadal
 
 ```{r crossover_analysis_5_basin_decadal, fig.asp=1.2, results='asis'}
 
@@ -2049,6 +2051,8 @@ for (i_basin in unique(basinmask_5$basin)) {
 
 ```
 
+### Decadal averages
+
 ```{r full_decadal_crossover_analysis}
 
 xover_subbasin_decade_stats_all <- xover_subbasin_decade_stats_all %>%
@@ -2126,8 +2130,9 @@ xover_subbasin_decade_stats_all %>%
 
 ```
 
+### Cruise mean offsets
 
-```{r cruise_crossover_analysis}
+```{r cruise_mean_crossover_analysis}
 
 
 xover_cruise_stats_all <- xover_cruise_stats_all %>%
@@ -2187,6 +2192,120 @@ xover_cruise_stats_all_cstar %>%
       labs(title = .x$basin) +
       facet_grid(parameter ~ decade, scales = "free_y")
   )
+
+```
+
+
+### Cruise by cruise
+
+```{r cruise_crossover_analysis}
+
+
+for (i_basin in unique(basinmask_5$basin)) {
+  # i_basin <- unique(basinmask_5$basin)[5]
+  
+  expocodes_subbasin <- inner_join(GLODAP, basinmask_5) %>%
+    filter(basin == i_basin)
+  
+  print(map +
+          geom_tile(data = expocodes_subbasin %>% distinct(lon, lat),
+                    aes(lon, lat)) +
+          labs(title = i_basin))
+  
+  expocodes_subbasin_qc <- expocodes_subbasin %>%
+    select(row_number, cruise_expocode, ends_with("qc")) %>%
+    pivot_longer(ends_with("qc"),
+                 names_to = "parameter",
+                 values_to = "value") %>%
+    filter(value == 1) %>%
+    pivot_wider(names_from = parameter,
+                values_from = value) %>%
+    count(cruise_expocode)
+  
+  expocodes_subbasin_f <- expocodes_subbasin %>%
+    select(row_number, cruise_expocode, ends_with("f")) %>%
+    pivot_longer(ends_with("f"),
+                 names_to = "parameter",
+                 values_to = "value") %>%
+    filter(value == 2) %>%
+    pivot_wider(names_from = parameter,
+                values_from = value) %>%
+    count(cruise_expocode)
+  
+  expocodes_subbasin <-
+    inner_join(expocodes_subbasin_f, expocodes_subbasin_qc) %>%
+    group_by(cruise_expocode) %>%
+    summarise(n = min(n)) %>%
+    ungroup()
+  
+  rm(expocodes_subbasin_f, expocodes_subbasin_qc)
+  
+  xover_subbasin <- xover %>%
+    filter(
+      cruise_A %in% expocodes_subbasin$cruise_expocode &
+        cruise_B %in% expocodes_subbasin$cruise_expocode
+    )
+  
+  
+  xover_subbasin <- xover_subbasin %>%
+    mutate(dateA = ymd(str_sub(cruise_A, 5, 12)),
+           dateB = ymd(str_sub(cruise_B, 5, 12)))
+  
+  
+  xover_cruise_A <- xover_subbasin %>%
+    filter(dateA > dateB)
+  
+  xover_cruise_B <- xover_subbasin %>%
+    filter(dateA < dateB)
+  
+  xover_cruise_B_rev <- xover_cruise_B %>%
+    rename(
+      cruise_A_back = cruise_A,
+      cruise_A = cruise_B,
+      dateA_back = dateA,
+      dateA = dateB,
+      adjustment_A_back = adjustment_A,
+      adjustment_A = adjustment_B
+    ) %>%
+    rename(cruise_B = cruise_A_back,
+           dateB = dateA_back,
+           adjustment_B = adjustment_A_back) %>%
+    mutate(
+      offset = if_else(
+        parameter %in% c("salinity", "talk", "tco2"),
+        -offset,
+        1 / offset
+      ),
+      offset_adj = if_else(
+        parameter %in% c("salinity", "talk", "tco2"),
+        -offset_adj,
+        1 / offset_adj
+      )
+    )
+  
+  xover_cruise <- bind_rows(xover_cruise_A,
+                            xover_cruise_B_rev)
+  
+  rm(xover_cruise_A, xover_cruise_B, xover_cruise_B_rev)
+  
+  print(
+  xover_cruise %>%
+    filter(dateA > ymd("1990-01-01") &
+             dateB > ymd("1990-01-01") &
+             !is.na(offset_adj)) %>%
+    # filter(parameter == "talk") %>%
+    group_split(parameter) %>%
+    map(
+      ~ ggplot(data = .x,
+               aes(dateA, dateB, col = offset_adj)) +
+        geom_point() +
+        colorspace::scale_color_continuous_divergingx(palette = "RdBu") +
+        labs(title = paste(i_basin, "|", .x$parameter)) +
+        coord_fixed()
+    )
+  )
+      
+}
 
 ```
 
