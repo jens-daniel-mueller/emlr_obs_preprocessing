@@ -31,6 +31,7 @@ path_preprocessing  <- paste(path_root, "/observations/preprocessing/", sep = ""
 library(lubridate)
 library(ggrepel)
 library(kableExtra)
+library(colorspace)
 ```
 
 # Read files
@@ -2252,6 +2253,22 @@ for (i_basin in unique(basinmask_5$basin)) {
            dateB = ymd(str_sub(cruise_B, 5, 12)))
   
   
+  xover_subbasin <- left_join(
+    xover_subbasin,
+    expocodes_subbasin %>% rename(cruise_A = cruise_expocode,
+                                  n_A = n)
+  )
+  xover_subbasin <- left_join(
+    xover_subbasin,
+    expocodes_subbasin %>% rename(cruise_B = cruise_expocode,
+                                  n_B = n)
+  )
+  
+  xover_subbasin <- xover_subbasin %>%
+    mutate(n = n_A + n_B) %>%
+    select(-starts_with("n_"))
+  
+  
   xover_cruise_A <- xover_subbasin %>%
     filter(dateA > dateB)
   
@@ -2293,19 +2310,92 @@ for (i_basin in unique(basinmask_5$basin)) {
     filter(dateA > ymd("1990-01-01") &
              dateB > ymd("1990-01-01") &
              !is.na(offset_adj)) %>%
-    # filter(parameter == "talk") %>%
+    filter(parameter %in% c("talk", "tco2")) %>%
+    mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf))) %>% 
     group_split(parameter) %>%
     map(
       ~ ggplot(data = .x,
-               aes(dateA, dateB, col = offset_adj)) +
-        geom_point() +
-        colorspace::scale_color_continuous_divergingx(palette = "RdBu") +
+               aes(dateA, dateB, col = offset_adj, size = n)) +
+        geom_point(alpha = 0.5) +
+        scale_color_discrete_diverging(palette = "Blue-Red") +
+        labs(title = paste(i_basin, "|", .x$parameter)) +
+        coord_fixed()
+    )
+  )
+  
+    
+  print(
+  xover_cruise %>%
+    filter(dateA > ymd("1990-01-01") &
+             dateB > ymd("1990-01-01") &
+             !is.na(offset_adj)) %>%
+    filter(parameter %in% c("talk", "tco2")) %>%
+    mutate(yearA = year(dateA),
+           yearB = year(dateB)) %>%
+    group_by(parameter, yearA, yearB) %>%
+    summarise(offset_adj_weighted_mean = weighted.mean(x = offset_adj, w=n, na.rm = TRUE),
+              n = sum(n)) %>%
+    ungroup() %>% 
+    mutate(offset_adj_weighted_mean = cut(offset_adj_weighted_mean, c(-Inf, -5, -2, -1, 1, 2, 5, Inf))) %>% 
+    group_split(parameter) %>%
+    map(
+      ~ ggplot(data = .x,
+               aes(yearA, yearB, col = offset_adj_weighted_mean, size =n)) +
+        geom_point(alpha = 0.5) +
+        scale_color_discrete_diverging(palette = "Blue-Red") +
+        labs(title = paste(i_basin, "|", .x$parameter)) +
+        coord_fixed()
+    )
+  )
+  
+  print(
+  xover_cruise %>%
+    filter(dateA > ymd("1990-01-01") &
+             dateB > ymd("1990-01-01") &
+             !is.na(offset_adj)) %>%
+    filter(parameter %in% c("phosphate")) %>%
+    mutate(offset_adj = cut(offset_adj, 1 + c(-Inf, -5, -2, -1, 1, 2, 5, Inf)/100)) %>% 
+    group_split(parameter) %>%
+    map(
+      ~ ggplot(data = .x,
+               aes(dateA, dateB, col = offset_adj, size = n)) +
+        geom_point(alpha = 0.5) +
+        scale_color_discrete_diverging(palette = "Blue-Red") +
+        labs(title = paste(i_basin, "|", .x$parameter)) +
+        coord_fixed()
+    )
+  )
+
+  
+  print(
+  xover_cruise %>%
+    filter(dateA > ymd("1990-01-01") &
+             dateB > ymd("1990-01-01") &
+             !is.na(offset_adj)) %>%
+    filter(parameter %in% c("phosphate")) %>%
+    mutate(yearA = year(dateA),
+           yearB = year(dateB)) %>%
+    group_by(parameter, yearA, yearB) %>%
+    summarise(offset_adj_weighted_mean = weighted.mean(x = offset_adj, w=n, na.rm = TRUE),
+              n = sum(n)) %>%
+    ungroup() %>% 
+    mutate(offset_adj_weighted_mean = cut(offset_adj_weighted_mean, 1 + c(-Inf, -5, -2, -1, 1, 2, 5, Inf)/100)) %>% 
+    group_split(parameter) %>%
+    map(
+      ~ ggplot(data = .x,
+               aes(yearA, yearB, col = offset_adj_weighted_mean, size = n)) +
+        geom_point(alpha = 0.5) +
+        scale_color_discrete_diverging(palette = "Blue-Red") +
         labs(title = paste(i_basin, "|", .x$parameter)) +
         coord_fixed()
     )
   )
       
 }
+
+
+# hcl_palettes("diverging", n = 7, plot = TRUE)
+# hcl_palettes("diverging")
 
 ```
 
