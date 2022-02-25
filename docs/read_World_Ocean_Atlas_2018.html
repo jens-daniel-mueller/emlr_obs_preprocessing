@@ -447,7 +447,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">World Ocean Atlas 2018</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">15 February, 2022</h4>
+<h4 class="date">25 February, 2022</h4>
 
 </div>
 
@@ -472,7 +472,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-02-15
+<strong>Last updated:</strong> 2022-02-25
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -563,16 +563,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreefc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5targetblankfc1cf80a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/fc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5" target="_blank">fc1cf80</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree4030fe6eb0186b58507763d3221ebe4f18560eectargetblank4030fe6a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/4030fe6eb0186b58507763d3221ebe4f18560eec" target="_blank">4030fe6</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreefc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5targetblankfc1cf80a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree4030fe6eb0186b58507763d3221ebe4f18560eectargetblank4030fe6a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/fc1cf80e3c981dfd9ba860c88bf68ad23b02b2f5" target="_blank">fc1cf80</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/4030fe6eb0186b58507763d3221ebe4f18560eec" target="_blank">4030fe6</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -587,10 +587,6 @@ Ignored files:
 Untracked files:
     Untracked:  code/IO_1990_own_crossover_analysis_backup.R
     Untracked:  code/read_GLODAPv2_2020.Rmd
-
-Unstaged changes:
-    Modified:   analysis/_site.yml
-    Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
 <p>
@@ -629,6 +625,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4030fe6eb0186b58507763d3221ebe4f18560eec/analysis/read_World_Ocean_Atlas_2018.Rmd" target="_blank">4030fe6</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-25
+</td>
+<td>
+added cruise by cruise offset analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/6e65117873da381f301c05463db6061611f178b7/docs/read_World_Ocean_Atlas_2018.html" target="_blank">6e65117</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1658,11 +1688,13 @@ landmask &lt;- landmask %&gt;%
          lon = Longitude) %&gt;%
   mutate(lon = if_else(lon &lt; 20, lon + 360, lon))
 
-landmask &lt;- landmask %&gt;%
-  filter(region == &quot;land&quot;,
-         lat &gt;= params_global$lat_min,
+landseamask &lt;- landmask %&gt;%
+  filter(lat &gt;= params_global$lat_min,
          lat &lt;= params_global$lat_max
-         ) %&gt;%
+         )
+
+landmask &lt;- landmask %&gt;%
+  filter(region == &quot;land&quot;) %&gt;%
   select(-region)
 
 rm(landsea_01)</code></pre>
@@ -1851,6 +1883,14 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre class="r"><code># generate base map, which is further used throughout the project
+ggplot() +
+  geom_raster(data = landseamask,
+              aes(lon, lat, fill = region)) +
+  coord_quickmap(expand = 0) +
+  scale_fill_brewer(palette = &quot;Paired&quot;) +
+  theme(axis.title = element_blank())</code></pre>
+<p><img src="figure/read_World_Ocean_Atlas_2018.Rmd/landsea_masks_WOA18_map-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="basins-for-mlr-fitting" class="section level3" number="2.2.3">
 <h3><span class="header-section-number">2.2.3</span> Basins for MLR fitting</h3>
@@ -3028,7 +3068,13 @@ Jens Müller
 </div>
 <div id="write-files" class="section level2" number="2.4">
 <h2><span class="header-section-number">2.4</span> Write files</h2>
-<pre class="r"><code># basin mask
+<pre class="r"><code># land sea mask
+landseamask %&gt;%
+  write_csv(paste(path_files,
+                  &quot;land_sea_mask_WOA18.csv&quot;,
+                  sep = &quot;&quot;))
+
+# basin mask
 basinmask_01 %&gt;%
   write_csv(paste(path_files,
                   &quot;basin_mask_WOA18.csv&quot;,
