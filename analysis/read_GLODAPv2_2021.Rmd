@@ -1853,7 +1853,7 @@ for (i_basin in unique(basinmask_5$basin)) {
       theme(legend.title = element_blank())
   )
   
-  
+  rm(expocodes_subbasin_all, expocodes_subbasin_clean)
   
   # filter crossover with both cruises falling into subbasin
   xover_subbasin <- xover %>%
@@ -2055,7 +2055,7 @@ for (i_basin in unique(basinmask_5$basin)) {
   }
 }
 
-rm(xover_subbasin, xover_subbasin_decade, xover_subbasin_decade_stats)
+rm(xover_subbasin, xover_cruise_stats, xover_subbasin_decade, xover_subbasin_decade_stats)
 
 ```
 
@@ -2192,7 +2192,7 @@ xover_cruise_stats_all_cstar %>%
 
 
 for (i_basin in unique(basinmask_5$basin)) {
-  # i_basin <- unique(basinmask_5$basin)[5]
+  # i_basin <- unique(basinmask_5$basin)[4]
   
   expocodes_subbasin <- inner_join(GLODAP, basinmask_5) %>%
     filter(basin == i_basin)
@@ -2230,6 +2230,38 @@ for (i_basin in unique(basinmask_5$basin)) {
   
   rm(expocodes_subbasin_f, expocodes_subbasin_qc)
   
+  expocodes_subbasin_all <- inner_join(GLODAP, basinmask_5) %>%
+    filter(basin == i_basin)
+  
+  expocodes_subbasin_clean <- inner_join(GLODAP, basinmask_5) %>%
+    filter(basin == i_basin,
+           cruise_expocode %in% expocodes_subbasin$cruise_expocode)
+  
+  print(
+    map +
+      geom_tile(
+        data = expocodes_subbasin_all %>%
+          mutate(decade = m_grid_decade(year)) %>%
+          distinct(lon, lat, decade) %>% 
+          drop_na(),
+        aes(lon, lat, fill="all")
+      ) +
+      geom_tile(
+        data = expocodes_subbasin_clean %>%
+          mutate(decade = m_grid_decade(year)) %>%
+          distinct(lon, lat, decade) %>% 
+          drop_na(),
+        aes(lon, lat, fill="filtered")
+      ) +
+      scale_fill_brewer(palette = "Set1", direction = -1) +
+      labs(title = i_basin) +
+      facet_grid(decade ~ .) +
+      theme(legend.title = element_blank())
+  )
+  
+  rm(expocodes_subbasin_all, expocodes_subbasin_clean)
+  
+  
   xover_subbasin <- xover %>%
     filter(
       cruise_A %in% expocodes_subbasin$cruise_expocode &
@@ -2247,6 +2279,7 @@ for (i_basin in unique(basinmask_5$basin)) {
     expocodes_subbasin %>% rename(cruise_A = cruise_expocode,
                                   n_A = n)
   )
+  
   xover_subbasin <- left_join(
     xover_subbasin,
     expocodes_subbasin %>% rename(cruise_B = cruise_expocode,
@@ -2262,7 +2295,7 @@ for (i_basin in unique(basinmask_5$basin)) {
     filter(date_A > date_B)
   
   xover_cruise_B <- xover_subbasin %>%
-    filter(date_A < date_B)
+    filter(date_A <= date_B)
   
   xover_cruise_B_rev <- xover_cruise_B %>%
     rename(
@@ -2381,9 +2414,6 @@ for (i_basin in unique(basinmask_5$basin)) {
       
 }
 
-
-# hcl_palettes("diverging", n = 7, plot = TRUE)
-# hcl_palettes("diverging")
 
 ```
 

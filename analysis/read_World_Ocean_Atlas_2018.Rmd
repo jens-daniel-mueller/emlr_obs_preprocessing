@@ -96,12 +96,12 @@ landmask <- landsea_01 %>%
 landmask <- landmask %>%
   rename(lat = Latitude,
          lon = Longitude) %>%
-  mutate(lon = if_else(lon < 20, lon + 360, lon))
-
-landseamask <- landmask %>%
+  mutate(lon = if_else(lon < 20, lon + 360, lon)) %>%
   filter(lat >= params_global$lat_min,
          lat <= params_global$lat_max
          )
+
+landseamask <- landmask
 
 landmask <- landmask %>%
   filter(region == "land") %>%
@@ -192,10 +192,10 @@ basinmask_01 <- basinmask_01  %>%
 ```{r basin_AIP_masks_WOA18_map, fig.asp=0.5}
 
 # generate base map, which is further used throughout the project
-map <- 
+map <-
   ggplot() +
-  geom_raster(data = landmask,
-              aes(lon, lat), fill = "grey80") +
+  geom_tile(data = landmask,
+            aes(lon, lat), fill = "grey80") +
   coord_quickmap(expand = 0) +
   theme(axis.title = element_blank())
 

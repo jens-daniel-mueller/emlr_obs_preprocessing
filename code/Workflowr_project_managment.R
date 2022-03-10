@@ -33,9 +33,9 @@ republish = TRUE)
 wflow_publish(here::here(
   "analysis",
   c(
-    "read_RECCAP2_flux_products.Rmd")
+    "read_GLODAPv2_2021.Rmd")
 ),
-message = "read Seaflux data")
+message = "revised xover analysis")
 
 
 # Push latest version to GitHub
