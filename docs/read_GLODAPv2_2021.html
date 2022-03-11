@@ -565,16 +565,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreea5262b7a5e1b68d6a0ea0947f0584d189354251ftargetblanka5262b7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/a5262b7a5e1b68d6a0ea0947f0584d189354251f" target="_blank">a5262b7</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreef9a4a5b8f784672a29dd35ed4edf3a92a6ea1fc2targetblankf9a4a5ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/f9a4a5b8f784672a29dd35ed4edf3a92a6ea1fc2" target="_blank">f9a4a5b</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreea5262b7a5e1b68d6a0ea0947f0584d189354251ftargetblanka5262b7a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreef9a4a5b8f784672a29dd35ed4edf3a92a6ea1fc2targetblankf9a4a5ba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/a5262b7a5e1b68d6a0ea0947f0584d189354251f" target="_blank">a5262b7</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/f9a4a5b8f784672a29dd35ed4edf3a92a6ea1fc2" target="_blank">f9a4a5b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -627,6 +627,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f9a4a5b8f784672a29dd35ed4edf3a92a6ea1fc2/analysis/read_GLODAPv2_2021.Rmd" target="_blank">f9a4a5b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+<td>
+revised cruise-by_cruise
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/efd65812f561171657b255ccfb6a7f1bc881d83a/docs/read_GLODAPv2_2021.html" target="_blank">efd6581</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -18785,9 +18819,9 @@ rm(xover_IO_1990, xover_IO_1990_decade)</code></pre>
   return(df_rev)
 }</code></pre>
 </div>
-<div id="filter-xover-basin" class="section level3" number="7.3.2">
-<h3><span class="header-section-number">7.3.2</span> Filter xover basin</h3>
-<p>Here, I filter all crossover and use only those were both cruises covered the subbasin of interest.</p>
+<div id="cruise-by-cruise" class="section level3" number="7.3.2">
+<h3><span class="header-section-number">7.3.2</span> Cruise-by-cruise</h3>
+<p>Here, I filter all crossover and use only those were both cruises covered the basin of interest.</p>
 <pre class="r"><code># reformat basin labels
 basinmask_5 &lt;- basinmask_5 %&gt;%
   mutate(
@@ -18927,9 +18961,24 @@ for (i_basin in basins) {
     mutate(date_A = ymd(str_sub(cruise_A, 5, 12)),
            date_B = ymd(str_sub(cruise_B, 5, 12)))
   
-  xover_basin &lt;- xover_basin %&gt;% 
+  xover_basin &lt;- xover_basin %&gt;%
     mutate(basin = i_basin)
-      
+  
+  xover_basin_A &lt;- xover_basin %&gt;%
+    filter(date_A &gt; date_B)
+  
+  xover_basin_B &lt;- xover_basin %&gt;%
+    filter(date_A &lt;= date_B)
+  
+  xover_basin_B_rev &lt;- m_xover_reverse(df = xover_basin_B)
+  
+  xover_basin &lt;- bind_rows(xover_basin_A,
+                           xover_basin_B_rev)
+  
+  rm(xover_basin_A,
+     xover_basin_B,
+     xover_basin_B_rev)
+  
   if (exists(&quot;xover_basin_all&quot;)) {
     xover_basin_all &lt;-
       bind_rows(xover_basin_all, xover_basin)
@@ -18938,6 +18987,102 @@ for (i_basin in basins) {
   if (!exists(&quot;xover_basin_all&quot;)) {
     xover_basin_all &lt;- xover_basin
   }
+  
+  print(
+    xover_basin %&gt;%
+      filter(
+        !is.na(offset_adj),
+        parameter %in% c(&quot;talk&quot;, &quot;tco2&quot;),
+        parameter_coverage == &quot;full&quot;
+      ) %&gt;%
+      mutate(offset_adj = cut(
+        offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf)
+      )) %&gt;%
+      group_split(parameter) %&gt;%
+      # head(1) %&gt;%
+      map(
+        ~ ggplot(data = .x,
+                 aes(
+                   date_A, date_B, fill = offset_adj, size = n
+                 )) +
+          geom_point(alpha = 0.5, shape = 21) +
+          scale_fill_discrete_diverging(palette = &quot;Blue-Red&quot;) +
+          labs(title = paste(i_basin, &quot;|&quot;, .x$parameter, &quot;| full&quot;)) +
+          coord_fixed(xlim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)),
+                      ylim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)))
+      )
+  )
+  
+  print(
+    xover_basin %&gt;%
+      filter(
+        !is.na(offset_adj),
+        parameter %in% c(&quot;phosphate&quot;),
+        parameter_coverage == &quot;full&quot;
+      ) %&gt;%
+      mutate(offset_adj = cut(
+        offset_adj, 1 + c(-Inf, -5, -2, -1, 1, 2, 5, Inf) /
+          100
+      )) %&gt;%
+      group_split(parameter) %&gt;%
+      # head(1) %&gt;%
+      map(
+        ~ ggplot(data = .x,
+                 aes(
+                   date_A, date_B, fill = offset_adj, size = n
+                 )) +
+          geom_point(alpha = 0.5, shape = 21) +
+          scale_fill_discrete_diverging(palette = &quot;Blue-Red&quot;) +
+          labs(title = paste(i_basin, &quot;|&quot;, .x$parameter, &quot;| full&quot;)) +
+          coord_fixed(xlim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)),
+                      ylim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)))
+      )
+  )
+  
+  print(
+    xover_basin %&gt;%
+      filter(!is.na(offset_adj),
+             parameter %in% c(&quot;talk&quot;, &quot;tco2&quot;)) %&gt;%
+      mutate(offset_adj = cut(
+        offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf)
+      )) %&gt;%
+      group_split(parameter) %&gt;%
+      # head(1) %&gt;%
+      map(
+        ~ ggplot(data = .x,
+                 aes(
+                   date_A, date_B, fill = offset_adj, size = n
+                 )) +
+          geom_point(alpha = 0.5, shape = 21) +
+          scale_fill_discrete_diverging(palette = &quot;Blue-Red&quot;) +
+          labs(title = paste(i_basin, &quot;|&quot;, .x$parameter, &quot;| partial&quot;)) +
+          coord_fixed(xlim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)),
+                      ylim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)))
+      )
+  )
+  
+  print(
+    xover_basin %&gt;%
+      filter(!is.na(offset_adj),
+             parameter %in% c(&quot;phosphate&quot;)) %&gt;%
+      mutate(offset_adj = cut(
+        offset_adj, 1 + c(-Inf, -5, -2, -1, 1, 2, 5, Inf) /
+          100
+      )) %&gt;%
+      group_split(basin, parameter) %&gt;%
+      # head(1) %&gt;%
+      map(
+        ~ ggplot(data = .x,
+                 aes(
+                   date_A, date_B, fill = offset_adj, size = n
+                 )) +
+          geom_point(alpha = 0.5, shape = 21) +
+          scale_fill_discrete_diverging(palette = &quot;Blue-Red&quot;) +
+          labs(title = paste(i_basin, &quot;|&quot;, .x$parameter, &quot;| partial&quot;)) +
+          coord_fixed(xlim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)),
+                      ylim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)))
+      )
+  )
   
 }</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -19016,6 +19161,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>[[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-3.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-3">
@@ -19054,6 +19200,8 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[2]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-4.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-4">
@@ -19092,6 +19240,8 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-5.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-5">
@@ -19130,6 +19280,8 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-6.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-6">
@@ -19168,6 +19320,8 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[2]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-7.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-7">
@@ -19206,6 +19360,8 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-8.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-8">
@@ -19320,339 +19476,81 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-11.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-12.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-13.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-14.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-15.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-16.png" width="672" style="display: block; margin: auto;" /> <img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-17.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-18.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-19.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-20.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-21.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-22.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-23.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-24.png" width="672" style="display: block; margin: auto;" /> <img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-25.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-26.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-27.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-28.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-29.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-30.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-31.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-32.png" width="672" style="display: block; margin: auto;" /> <img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-33.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-34.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-35.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-36.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-37.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-38.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-39.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[1]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-40.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>rm(xover_basin, GLODAP_basin, GLODAP_basin_grid, expocodes_basin)
 
 xover_basin &lt;- xover_basin_all
 rm(xover_basin_all)</code></pre>
 </div>
-<div id="cruise-by-cruise-full" class="section level3" number="7.3.3">
-<h3><span class="header-section-number">7.3.3</span> Cruise-by-cruise full</h3>
-<pre class="r"><code>xover_basin_A &lt;- xover_basin %&gt;%
-    filter(date_A &gt; date_B)
-
-xover_basin_B &lt;- xover_basin %&gt;%
-  filter(date_A &lt;= date_B)
-  
-xover_basin_B_rev &lt;- m_xover_reverse(df = xover_basin_B)
-
-xover_basin &lt;- bind_rows(xover_basin_A,
-                         xover_basin_B_rev)
-
-rm(xover_basin_A,
-   xover_basin_B,
-   xover_basin_B_rev)</code></pre>
-<pre class="r"><code>xover_basin %&gt;%
-  filter(!is.na(offset_adj),
-         parameter %in% c(&quot;talk&quot;, &quot;tco2&quot;),
-         parameter_coverage == &quot;full&quot;) %&gt;%
-  mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf))) %&gt;%
-  group_split(basin, parameter) %&gt;%
-  # head(1) %&gt;%
-  map(
-    ~ ggplot(data = .x,
-             aes(
-               date_A, date_B, fill = offset_adj, size = n
-             )) +
-      geom_point(alpha = 0.5, shape = 21) +
-      scale_fill_discrete_diverging(palette = &quot;Blue-Red&quot;) +
-      labs(title = paste(i_basin, &quot;|&quot;, .x$parameter)) +
-      coord_fixed(xlim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)),
-                  ylim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)))
-  )</code></pre>
-<pre><code>[[1]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_full-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-xover_cruise_by_cruise_full-1">
-Past versions of xover_cruise_by_cruise_full-1.png
-</button>
-</p>
-<div id="fig-xover_cruise_by_cruise_full-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_full-1.png" target="_blank">25fef5b</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-03-11
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[2]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_full-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-xover_cruise_by_cruise_full-2">
-Past versions of xover_cruise_by_cruise_full-2.png
-</button>
-</p>
-<div id="fig-xover_cruise_by_cruise_full-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_full-2.png" target="_blank">25fef5b</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-03-11
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[3]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_full-3.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[4]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_full-4.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[5]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_full-5.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[6]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_full-6.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[7]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_full-7.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[8]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_full-8.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[9]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_full-9.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[10]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_full-10.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>xover_basin %&gt;%
-  filter(!is.na(offset_adj),
-         parameter %in% c(&quot;phosphate&quot;),
-         parameter_coverage == &quot;full&quot;) %&gt;%
-  mutate(offset_adj = cut(offset_adj, 1 + c(-Inf, -5, -2, -1, 1, 2, 5, Inf) /
-                            100)) %&gt;%
-  group_split(basin, parameter) %&gt;%
-  # head(1) %&gt;%
-  map(
-    ~ ggplot(data = .x,
-             aes(
-               date_A, date_B, fill = offset_adj, size = n
-             )) +
-      geom_point(alpha = 0.5, shape = 21) +
-      scale_fill_discrete_diverging(palette = &quot;Blue-Red&quot;) +
-      labs(title = paste(i_basin, &quot;|&quot;, .x$parameter)) +
-      coord_fixed(xlim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)),
-                  ylim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)))
-  )</code></pre>
-<pre><code>[[1]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_full-11.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[2]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_full-12.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[3]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_full-13.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[4]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_full-14.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[5]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_full-15.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="cruise-by-cruise-partial" class="section level3" number="7.3.4">
-<h3><span class="header-section-number">7.3.4</span> Cruise-by-cruise partial</h3>
-<pre class="r"><code>xover_basin %&gt;%
-  filter(!is.na(offset_adj),
-         parameter %in% c(&quot;talk&quot;, &quot;tco2&quot;)) %&gt;%
-  mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf))) %&gt;%
-  group_split(basin, parameter) %&gt;%
-  # head(1) %&gt;%
-  map(
-    ~ ggplot(data = .x,
-             aes(
-               date_A, date_B, fill = offset_adj, size = n
-             )) +
-      geom_point(alpha = 0.5, shape = 21) +
-      scale_fill_discrete_diverging(palette = &quot;Blue-Red&quot;) +
-      labs(title = paste(i_basin, &quot;|&quot;, .x$parameter)) +
-      coord_fixed(xlim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)),
-                  ylim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)))
-  )</code></pre>
-<pre><code>[[1]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_partial-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-xover_cruise_by_cruise_partial-1">
-Past versions of xover_cruise_by_cruise_partial-1.png
-</button>
-</p>
-<div id="fig-xover_cruise_by_cruise_partial-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_partial-1.png" target="_blank">25fef5b</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-03-11
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[2]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_partial-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-xover_cruise_by_cruise_partial-2">
-Past versions of xover_cruise_by_cruise_partial-2.png
-</button>
-</p>
-<div id="fig-xover_cruise_by_cruise_partial-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_partial-2.png" target="_blank">25fef5b</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-03-11
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre><code>
-[[3]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_partial-3.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[4]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_partial-4.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[5]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_partial-5.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[6]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_partial-6.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[7]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_partial-7.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[8]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_partial-8.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[9]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_partial-9.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[10]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_partial-10.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>xover_basin %&gt;%
-  filter(!is.na(offset_adj),
-         parameter %in% c(&quot;phosphate&quot;)) %&gt;%
-  mutate(offset_adj = cut(offset_adj, 1 + c(-Inf, -5, -2, -1, 1, 2, 5, Inf) /
-                            100)) %&gt;%
-  group_split(basin, parameter) %&gt;%
-  # head(1) %&gt;%
-  map(
-    ~ ggplot(data = .x,
-             aes(
-               date_A, date_B, fill = offset_adj, size = n
-             )) +
-      geom_point(alpha = 0.5, shape = 21) +
-      scale_fill_discrete_diverging(palette = &quot;Blue-Red&quot;) +
-      labs(title = paste(i_basin, &quot;|&quot;, .x$parameter)) +
-      coord_fixed(xlim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)),
-                  ylim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)))
-  )</code></pre>
-<pre><code>[[1]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_partial-11.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[2]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_partial-12.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[3]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_partial-13.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[4]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_partial-14.png" width="672" style="display: block; margin: auto;" /></p>
-<pre><code>
-[[5]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_by_cruise_partial-15.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="decadal" class="section level3" number="7.3.5">
-<h3><span class="header-section-number">7.3.5</span> Decadal</h3>
+<div id="decadal" class="section level3" number="7.3.3">
+<h3><span class="header-section-number">7.3.3</span> Decadal</h3>
 <p>The aim of the decadal scale analysis is to investigate mean crossover offsets between all cruises from two decades.</p>
 <pre class="r"><code># reformat basin labels
 basinmask_5 &lt;- basinmask_5 %&gt;%
@@ -19944,8 +19842,8 @@ for (i_basin in unique(basinmask_5$basin)) {
 
 rm(xover_subbasin, xover_cruise_stats, xover_subbasin_decade, xover_subbasin_decade_stats)</code></pre>
 </div>
-<div id="decadal-averages" class="section level3" number="7.3.6">
-<h3><span class="header-section-number">7.3.6</span> Decadal averages</h3>
+<div id="decadal-averages" class="section level3" number="7.3.4">
+<h3><span class="header-section-number">7.3.4</span> Decadal averages</h3>
 <pre class="r"><code>xover_subbasin_decade_stats_all &lt;- xover_subbasin_decade_stats_all %&gt;%
     mutate(
     basin = fct_relevel(
@@ -20001,8 +19899,8 @@ xover_subbasin_decade_stats_all %&gt;%
   scale_x_continuous(breaks = seq(1990, 2010, 10)) +
   facet_grid(parameter ~ decade, scales = &quot;free_y&quot;)</code></pre>
 </div>
-<div id="cruise-mean-offsets" class="section level3" number="7.3.7">
-<h3><span class="header-section-number">7.3.7</span> Cruise mean offsets</h3>
+<div id="cruise-mean-offsets" class="section level3" number="7.3.5">
+<h3><span class="header-section-number">7.3.5</span> Cruise mean offsets</h3>
 <pre class="r"><code>xover_cruise_stats_all &lt;- xover_cruise_stats_all %&gt;%
   mutate(basin = fct_relevel(
     basin,
@@ -20060,8 +19958,8 @@ xover_cruise_stats_all_cstar %&gt;%
       facet_grid(parameter ~ decade, scales = &quot;free_y&quot;)
   )</code></pre>
 </div>
-<div id="cruise-by-cruise" class="section level3" number="7.3.8">
-<h3><span class="header-section-number">7.3.8</span> Cruise by cruise</h3>
+<div id="cruise-by-cruise-1" class="section level3" number="7.3.6">
+<h3><span class="header-section-number">7.3.6</span> Cruise by cruise</h3>
 <pre class="r"><code>for (i_basin in unique(basinmask_5$basin)) {
   # i_basin &lt;- unique(basinmask_5$basin)[4]
   
