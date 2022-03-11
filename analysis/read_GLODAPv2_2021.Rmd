@@ -1991,7 +1991,7 @@ xover_basin %>%
          parameter_coverage == "full") %>%
   mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf))) %>%
   group_split(basin, parameter) %>%
-  head(1) %>%
+  # head(1) %>%
   map(
     ~ ggplot(data = .x,
              aes(
@@ -2011,7 +2011,7 @@ xover_basin %>%
   mutate(offset_adj = cut(offset_adj, 1 + c(-Inf, -5, -2, -1, 1, 2, 5, Inf) /
                             100)) %>%
   group_split(basin, parameter) %>%
-  head(1) %>%
+  # head(1) %>%
   map(
     ~ ggplot(data = .x,
              aes(
@@ -2035,7 +2035,7 @@ xover_basin %>%
          parameter %in% c("talk", "tco2")) %>%
   mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf))) %>%
   group_split(basin, parameter) %>%
-  head(1) %>%
+  # head(1) %>%
   map(
     ~ ggplot(data = .x,
              aes(
@@ -2054,7 +2054,7 @@ xover_basin %>%
   mutate(offset_adj = cut(offset_adj, 1 + c(-Inf, -5, -2, -1, 1, 2, 5, Inf) /
                             100)) %>%
   group_split(basin, parameter) %>%
-  head(1) %>%
+  # head(1) %>%
   map(
     ~ ggplot(data = .x,
              aes(
