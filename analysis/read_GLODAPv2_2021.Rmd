@@ -1376,6 +1376,20 @@ glodapv2_xover <- left_join(
     )
 )
 
+glodapv2_xover <- glodapv2_xover %>% 
+  mutate(adjustment_A = if_else(
+    parameter %in% c("salinity", "talk", "tco2"),
+    replace_na(adjustment_A, 0),
+    replace_na(adjustment_A, 1)
+  )) %>% 
+  mutate(adjustment_B = if_else(
+    parameter %in% c("salinity", "talk", "tco2"),
+    replace_na(adjustment_B, 0),
+    replace_na(adjustment_B, 1)
+  ))
+
+
+
 # apply adjustment to crossover
 glodapv2_xover <- glodapv2_xover  %>%
   mutate(offset_adj = 
@@ -1413,6 +1427,19 @@ glodapv2_2021_xover <- left_join(
     )
 )
 
+glodapv2_2021_xover <- glodapv2_2021_xover %>% 
+  mutate(adjustment_A = if_else(
+    parameter %in% c("salinity", "talk", "tco2"),
+    replace_na(adjustment_A, 0),
+    replace_na(adjustment_A, 1)
+  )) %>% 
+  mutate(adjustment_B = if_else(
+    parameter %in% c("salinity", "talk", "tco2"),
+    replace_na(adjustment_B, 0),
+    replace_na(adjustment_B, 1)
+  ))
+
+
 # apply adjustment to crossover
 glodapv2_2021_xover <- glodapv2_2021_xover  %>%
   mutate(offset_adj = 
@@ -1431,31 +1458,48 @@ xover <- bind_rows(glodapv2_xover,
 rm(glodapv2_xover,
    glodapv2_2021_xover)
 
+
+xover <- xover %>%
+  mutate(date_A = ymd(str_sub(cruise_A, 5, 12)),
+         date_B = ymd(str_sub(cruise_B, 5, 12)))
+
+# Remove cruises with expocodes starting with "OMEX"
+# for which dates cannot be extracted from expocode
+
+xover <- xover %>%
+  filter(!is.na(date_A),
+         !is.na(date_B))
+
+
+xover <- xover %>% 
+  filter(!is.na(offset_adj))
+
 ```
 
 
 
 # Crossover analysis
 
+### Functions
 
-```{r function_extract_xover_single_cruise}
+```{r define_functions_for_xover_analysis}
 
-
-xover_cruise_extractation <- function (df, expocode) {
-  xover_cruise_A <- df %>%
-    filter(cruise_A %in% expocode)
-  
-  xover_cruise_B <- df %>%
-    filter(cruise_B %in% expocode)
-  
-  xover_cruise_B_rev <- xover_cruise_B %>%
+# reverse cruise A and B
+m_xover_reverse <- function(df) {
+  df_rev <- df %>%
     rename(
       cruise_A_back = cruise_A,
       cruise_A = cruise_B,
+      date_A_back = date_A,
+      date_A = date_B,
+      n_A_back = n_A,
+      n_A = n_B,
       adjustment_A_back = adjustment_A,
       adjustment_A = adjustment_B
     ) %>%
     rename(cruise_B = cruise_A_back,
+           date_B = date_A_back,
+           n_B = n_A_back,
            adjustment_B = adjustment_A_back) %>%
     mutate(
       offset = if_else(
@@ -1469,17 +1513,28 @@ xover_cruise_extractation <- function (df, expocode) {
         1 / offset_adj
       )
     )
+  return(df_rev)
+}
+
+
+# extract cruise based on expocode
+m_xover_cruise_extractation <- function (df, expocode) {
+  
+  xover_cruise_A <- df %>%
+    filter(cruise_A %in% expocode)
+  
+  xover_cruise_B <- df %>%
+    filter(cruise_B %in% expocode)
+  
+  xover_cruise_B_rev <- m_xover_reverse(df = xover_cruise_B)
   
   xover_cruise <- bind_rows(xover_cruise_A,
                             xover_cruise_B_rev)
   
-  xover_cruise <- xover_cruise %>%
-  mutate(date_A = ymd(str_sub(cruise_A, 5, 12)),
-         date_B = ymd(str_sub(cruise_B, 5, 12)))
-  
   return(xover_cruise)
 }
 
+  
 ```
 
 
@@ -1551,8 +1606,9 @@ for (i_expocodes_missing in expocodes_missing) {
   rm(parameter_qc, parameter_f, parameter_f9)
   
 
-  xover_cruise <- xover_cruise_extractation(
-    df = xover,
+  xover_cruise <- m_xover_cruise_extractation(
+    df = xover %>% mutate(n_A = 0,
+                          n_B = 0),
     expocode = i_expocodes_missing
   )
 
@@ -1609,8 +1665,7 @@ for (i_expocodes_missing in expocodes_missing) {
   
   xover_cruise_decade <- xover_cruise %>%
     mutate(decade = m_grid_decade(year(date_B))) %>%
-    filter(!is.na(decade),
-           !is.na(offset_adj)) %>%
+    filter(!is.na(decade)) %>%
     group_by(parameter, decade) %>%
     mutate(n = n()) %>%
     ungroup() %>% 
@@ -1659,8 +1714,10 @@ IO_1990_expocodes <- GLODAP %>%
   distinct(cruise_expocode) %>%
   pull()
 
-xover_IO_1990 <- xover_cruise_extractation(df = xover,
-                                           expocode = IO_1990_expocodes)
+xover_IO_1990 <-
+  m_xover_cruise_extractation(df = xover %>% mutate(n_A = 0,
+                                                    n_B = 0),
+                              expocode = IO_1990_expocodes)
 
 
 xover_IO_1990 <- xover_IO_1990 %>%
@@ -1672,8 +1729,6 @@ xover_IO_1990 <- xover_IO_1990 %>%
 xover_IO_1990_decade <- xover_IO_1990 %>%
     mutate(decade = m_grid_decade(year(date_B))) %>%
     filter(!is.na(decade),
-           !is.na(offset_adj),
-           !is.na(offset),
            RV != "316N") %>% 
   arrange(date_B)
 
@@ -1761,39 +1816,6 @@ rm(xover_IO_1990, xover_IO_1990_decade)
 
 In this section, I analyse GLODAP's crossover data separately for each of 5 subbasins. For this purpose, each cruise is taken into account that provided at least one measurement in the respective subbasin, irrespective of measurements done outside this subbasin.
 
-### Functions
-
-```{r define_functions}
-
-m_xover_reverse <- function(df) {
-  df_rev <- df %>%
-    rename(
-      cruise_A_back = cruise_A,
-      cruise_A = cruise_B,
-      date_A_back = date_A,
-      date_A = date_B,
-      adjustment_A_back = adjustment_A,
-      adjustment_A = adjustment_B
-    ) %>%
-    rename(cruise_B = cruise_A_back,
-           date_B = date_A_back,
-           adjustment_B = adjustment_A_back) %>%
-    mutate(
-      offset = if_else(
-        parameter %in% c("salinity", "talk", "tco2"),
-        -offset,
-        1 / offset
-      ),
-      offset_adj = if_else(
-        parameter %in% c("salinity", "talk", "tco2"),
-        -offset_adj,
-        1 / offset_adj
-      )
-    )
-  return(df_rev)
-}
-  
-```
 
 
 ### Cruise-by-cruise
@@ -1905,7 +1927,11 @@ for (i_basin in basins) {
       cruise_A %in% expocodes_basin$cruise_expocode &
         cruise_B %in% expocodes_basin$cruise_expocode
     )
-  
+
+  xover_basin <- xover_basin %>%
+    mutate(basin = i_basin)
+
+  # combine with cruise meta data
   xover_basin <- left_join(
     xover_basin,
     expocodes_basin %>%
@@ -1935,16 +1961,10 @@ for (i_basin in basins) {
       ),
       n = n_A + n_B
     ) %>%
-    select(-c(parameter_coverage_A, parameter_coverage_B,
-              n_A, n_B))
+    select(-c(parameter_coverage_A, parameter_coverage_B))
   
-  xover_basin <- xover_basin %>%
-    mutate(date_A = ymd(str_sub(cruise_A, 5, 12)),
-           date_B = ymd(str_sub(cruise_B, 5, 12)))
   
-  xover_basin <- xover_basin %>%
-    mutate(basin = i_basin)
-  
+  # reverse later cruise to cruise A
   xover_basin_A <- xover_basin %>%
     filter(date_A > date_B)
   
@@ -1953,12 +1973,14 @@ for (i_basin in basins) {
   
   xover_basin_B_rev <- m_xover_reverse(df = xover_basin_B)
   
+  
   xover_basin <- bind_rows(xover_basin_A,
                            xover_basin_B_rev)
   
   rm(xover_basin_A,
      xover_basin_B,
      xover_basin_B_rev)
+  
   
   if (exists("xover_basin_all")) {
     xover_basin_all <-
@@ -2072,303 +2094,290 @@ rm(xover_basin, GLODAP_basin, GLODAP_basin_grid, expocodes_basin)
 
 xover_basin <- xover_basin_all
 rm(xover_basin_all)
+
 ```
 
-### Decadal
+### Cruise mean offsets
 
 The aim of the decadal scale analysis is to investigate mean crossover offsets between all cruises from two decades. 
 
-```{r crossover_analysis_5_basin_decadal, fig.asp=1.2, results='asis', eval=FALSE}
+```{r crossover_analysis_5_basin_decadal, fig.asp=1.2, results='asis'}
 
-# reformat basin labels
-basinmask_5 <- basinmask_5 %>%
-  mutate(
-    basin = str_replace(basin, "_", ". "),
-    basin = fct_relevel(
-      basin,
-      "N. Pacific",
-      "S. Pacific",
-      "N. Atlantic",
-      "S. Atlantic",
-      "Indian"
-    )
-  )
+expocodes_basin <- unique(c(xover_basin$cruise_A, xover_basin$cruise_B)) 
 
 
-# loop over all 5 subbasins
-for (i_basin in unique(basinmask_5$basin)) {
-  # i_basin <- unique(basinmask_5$basin)[5]
+# loop over each cruises
+# determine the mean decadal crossover from other cruises
+for (i_cruise_expocode in expocodes_basin) {
+  # i_cruise_expocode <- expocodes_basin[1]
   
-  # retrieve subbasin expocodes
-  expocodes_subbasin <- inner_join(GLODAP, basinmask_5) %>%
-    filter(basin == i_basin)
-
-  # subset cruise with all qc flag = 1
-  expocodes_subbasin_qc <- expocodes_subbasin %>%
-    select(row_number, cruise_expocode, ends_with("qc")) %>%
-    pivot_longer(ends_with("qc"),
-                 names_to = "parameter",
-                 values_to = "value") %>%
-    filter(value == 1) %>%
-    pivot_wider(names_from = parameter,
-                values_from = value) %>%
-    drop_na() %>%
-    count(cruise_expocode)
+  xover_cruise <- m_xover_cruise_extractation(df = xover_basin,
+                                              expocode = i_cruise_expocode)
   
-  # subset cruise with all f flag = 2
-  expocodes_subbasin_f <- expocodes_subbasin %>%
-    select(row_number, cruise_expocode, ends_with("f")) %>%
-    pivot_longer(ends_with("f"),
-                 names_to = "parameter",
-                 values_to = "value") %>%
-    filter(value == 2) %>%
-    pivot_wider(names_from = parameter,
-                values_from = value) %>%
-    drop_na() %>%
-    count(cruise_expocode)
-  
-  # join qc and f cruises and identify lower number of observations
-  expocodes_subbasin <-
-    inner_join(expocodes_subbasin_f %>% rename(n_f = n),
-               expocodes_subbasin_qc %>% rename(n_qc = n)) %>%
-    mutate(n = if_else(n_f < n_qc, n_f, n_qc)) %>% 
-    select(-starts_with("n_"))
-  
-  rm(expocodes_subbasin_f, expocodes_subbasin_qc)
+  # calculate mean cruise-by-cruise offset (in case more than one leg was compared)
+  xover_cruise <- xover_cruise %>%
+    group_by(basin,
+             cruise_A,
+             cruise_B,
+             date_A,
+             date_B,
+             n_A,
+             n_B,
+             n,
+             parameter,
+             parameter_coverage) %>%
+    summarise(
+      offset = mean(offset, na.rm = TRUE),
+      offset_adj = mean(offset_adj, na.rm = TRUE)
+    ) %>%
+    ungroup()
   
   
-  expocodes_subbasin_all <- inner_join(GLODAP, basinmask_5) %>%
-    filter(basin == i_basin)
+  # calculate long-term mean offsets for cruise
+  # Note: weighting is only done based on size of cruise B
+  xover_cruise_partial <- xover_cruise %>%
+    group_by(cruise_A, date_A, n_A, parameter, basin) %>%
+    summarise(
+      offset_adj_mean = mean(offset_adj, na.rm = TRUE),
+      offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n_B, na.rm = TRUE)
+    ) %>%
+    ungroup()
   
-  expocodes_subbasin_clean <- inner_join(GLODAP, basinmask_5) %>%
-    filter(basin == i_basin,
-           cruise_expocode %in% expocodes_subbasin$cruise_expocode)
+  xover_cruise_full <- xover_cruise %>%
+    filter(parameter_coverage == "full") %>%
+    group_by(cruise_A, date_A, n_A, parameter, basin) %>%
+    summarise(
+      offset_adj_mean = mean(offset_adj, na.rm = TRUE),
+      offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n_B, na.rm = TRUE)
+    ) %>%
+    ungroup()
   
-  print(
-    map +
-      geom_tile(
-        data = expocodes_subbasin_all %>%
-          mutate(decade = m_grid_decade(year)) %>%
-          distinct(lon, lat, decade) %>% 
-          drop_na(),
-        aes(lon, lat, fill="all")
-      ) +
-      geom_tile(
-        data = expocodes_subbasin_clean %>%
-          mutate(decade = m_grid_decade(year)) %>%
-          distinct(lon, lat, decade) %>% 
-          drop_na(),
-        aes(lon, lat, fill="filtered")
-      ) +
-      scale_fill_brewer(palette = "Set1", direction = -1) +
-      labs(title = i_basin) +
-      facet_grid(decade ~ .) +
-      theme(legend.title = element_blank())
+  xover_cruise_long_term <- bind_rows(
+    xover_cruise_full %>% mutate(parameter_coverage = "full"),
+    xover_cruise_partial %>% mutate(parameter_coverage = "partial")
   )
   
-  rm(expocodes_subbasin_all, expocodes_subbasin_clean)
   
-  # filter crossover with both cruises falling into subbasin
-  xover_subbasin <- xover %>%
-    filter(
-      cruise_A %in% expocodes_subbasin$cruise_expocode &
-        cruise_B %in% expocodes_subbasin$cruise_expocode
-    )
+  rm(xover_cruise_full,
+     xover_cruise_partial)
   
-  # loop over each cruises
-  # determine the mean decadal crossover from other cruises
-  for (i_cruise_expocode in expocodes_subbasin$cruise_expocode){
-    # i_cruise_expocode <- expocodes_subbasin$cruise_expocode[1]
-    
-    xover_cruise <- xover_cruise_extractation(
-      df = xover_subbasin,
-      expocode = i_cruise_expocode
-    )
-    
-    # calculate mean cruise-by-cruise offset (in case more than one leg was compared)
-    xover_cruise <- xover_cruise %>% 
-      group_by(cruise_A, cruise_B, date_A, date_B, parameter) %>% 
-      summarise(offset = mean(offset, na.rm = TRUE),
-                offset_adj = mean(offset_adj, na.rm = TRUE)) %>% 
-      ungroup()
-    
-    # join with number of samples from cruise B
-    xover_cruise <- left_join(xover_cruise,
-                              expocodes_subbasin %>% rename(cruise_B = cruise_expocode))
-    
-    # cut cruise B date into decades
-    xover_cruise <- xover_cruise %>%
-      mutate(decade = m_grid_decade(year(date_B))) %>%
-      filter(!is.na(decade),
-             !is.na(offset_adj),
-             !is.na(offset)) %>%
-      arrange(date_B, date_A)
-    
-    # calculate decadal mean offsets for cruise
-    # Note: weighting is only done based on size of cruise B
-    xover_cruise_stats <- xover_cruise %>%
-      group_by(parameter, date_A, decade) %>%
-      summarise(
-        offset_adj_mean = mean(offset_adj, na.rm = TRUE),
-        offset_adj_sd = sd(offset_adj, na.rm = TRUE),
-        offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n, na.rm = TRUE),
-        offset_adj_median = median(offset_adj, na.rm = TRUE)
-      )
-    
-    # assign expocode and basin
-    xover_cruise_stats <- xover_cruise_stats %>% 
-      mutate(basin = i_basin,
-             cruise_expocode = i_cruise_expocode)
-    
-    if (exists("xover_cruise_stats_all")) {
-      xover_cruise_stats_all <-
-        bind_rows(xover_cruise_stats_all, xover_cruise_stats)
-    }
-    
-    if (!exists("xover_cruise_stats_all")) {
-      xover_cruise_stats_all <- xover_cruise_stats
-    }
-    
+  if (exists("xover_cruise_long_term_all")) {
+    xover_cruise_long_term_all <-
+      bind_rows(xover_cruise_long_term_all, xover_cruise_long_term)
+  }
+  
+  if (!exists("xover_cruise_long_term_all")) {
+    xover_cruise_long_term_all <- xover_cruise_long_term
   }
   
   
-  # loop over decades
-  # Note this starts from the original crossover data for the subbasin
-  for (i_decade_start in seq(1990, 2010, 10)) {
-    # i_decade_start <- seq(1990, 2010, 10)[3]
-    
-    xover_subbasin <- xover_subbasin %>%
-      mutate(date_A = ymd(str_sub(cruise_A, 5, 12)),
-             date_B = ymd(str_sub(cruise_B, 5, 12)))
-    
-    # filter cruises that took place in decade
-    xover_subbasin_A <- xover_subbasin %>%
-      filter(year(date_A) >= i_decade_start &
-               year(date_A) < i_decade_start + 10)
-    
-    xover_subbasin_B <- xover_subbasin %>%
-      filter(year(date_B) >= i_decade_start & 
-               year(date_B) < i_decade_start + 10)
-    
-    xover_subbasin_B_rev <- xover_subbasin_B %>%
-      rename(
-        cruise_A_back = cruise_A,
-        cruise_A = cruise_B,
-        date_A_back = date_A,
-        date_A = date_B,
-        adjustment_A_back = adjustment_A,
-        adjustment_A = adjustment_B
-      ) %>%
-      rename(cruise_B = cruise_A_back,
-             date_B = date_A_back,
-             adjustment_B = adjustment_A_back) %>%
-      mutate(
-        offset = if_else(
-          parameter %in% c("salinity", "talk", "tco2"),
-          -offset,
-          1 / offset
-        ),
-        offset_adj = if_else(
-          parameter %in% c("salinity", "talk", "tco2"),
-          -offset_adj,
-          1 / offset_adj
-        )
-      )
-    
-    xover_subbasin_decade <- bind_rows(xover_subbasin_A,
-                                       xover_subbasin_B_rev)
-    
-    rm(xover_subbasin_A, xover_subbasin_B, xover_subbasin_B_rev)
-    
-    # assign number of observations to both cruises
-    xover_subbasin_decade <- left_join(xover_subbasin_decade,
-                          expocodes_subbasin %>% rename(cruise_A = cruise_expocode,
-                                                  n_A = n))
-    
-    xover_subbasin_decade <- left_join(xover_subbasin_decade,
-                          expocodes_subbasin %>% rename(cruise_B = cruise_expocode,
-                                                  n_B = n))
-    
-    # calculate total number of observations
-    xover_subbasin_decade <- xover_subbasin_decade %>%
-      mutate(n = n_A + n_B) %>%
-      select(-starts_with("n_"))
-    
-    # but cruise B date into decades
-    xover_subbasin_decade <- xover_subbasin_decade %>%
-      mutate(decade = m_grid_decade(year(date_B))) %>%
-      filter(!is.na(decade),
-             !is.na(offset_adj),
-             !is.na(offset)) %>%
-      arrange(date_B, date_A)
-    
-    xover_subbasin_decade_stats <- xover_subbasin_decade %>%
-      group_by(parameter, decade) %>%
-      summarise(
-        offset_adj_mean = mean(offset_adj, na.rm = TRUE),
-        offset_adj_sd = sd(offset_adj, na.rm = TRUE),
-        offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n, na.rm = TRUE),
-        offset_adj_median = median(offset_adj, na.rm = TRUE)
-      )
-    
-    xover_subbasin_decade_stats <- xover_subbasin_decade_stats %>% 
-      mutate(basin = i_basin,
-             decade_start = i_decade_start)
-    
-    if (exists("xover_subbasin_decade_stats_all")) {
-      xover_subbasin_decade_stats_all <-
-        bind_rows(xover_subbasin_decade_stats_all, xover_subbasin_decade_stats)
-    }
-    
-    if (!exists("xover_subbasin_decade_stats_all")) {
-      xover_subbasin_decade_stats_all <- xover_subbasin_decade_stats
-    }
-    
-    
-    print(
-      xover_subbasin_decade_stats %>%
-        kable(caption = paste0(i_basin, " | ", i_decade_start, "s")) %>%
-        kable_styling() %>%
-        scroll_box(height = "300px")
-    )
-    
-    
-    p_crossover_ts <- xover_subbasin_decade %>%
-      ggplot(aes(date_B, offset_adj)) +
-      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
-      geom_point(shape = 21) +
-      scale_color_brewer(palette = "Set1") +
-      facet_grid(parameter ~ ., scales = "free_y") +
-      labs(title = paste0(i_basin, " | ", i_decade_start, "s")) +
-      theme(
-        legend.position = "bottom",
-        legend.direction = "vertical",
-        axis.title.x = element_blank()
-      )
-    
-    p_crossover_decadal <-
-      ggplot() +
-      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
-      geom_violin(data = xover_subbasin_decade,
-                  aes(x = decade, y = offset_adj),
-                  fill = "gold") +
-      geom_boxplot(data = xover_subbasin_decade,
-                   aes(x = decade, y = offset_adj),
-                   width = 0.2) +
-      facet_grid(parameter ~ ., scales = "free_y") +
-      labs(title = "Decadal offsets") +
-      theme(axis.title.x = element_blank(),
-            axis.text.x = element_text(angle = 90))
-    
-    print(p_crossover_ts + p_crossover_decadal +
-            plot_layout(widths = c(2, 1)))
-    
-    rm(p_crossover_ts, p_crossover_decadal)
-    
+  # cut cruise B date into decades
+  xover_cruise <- xover_cruise %>%
+    mutate(decade = m_grid_decade(year(date_B))) %>%
+    arrange(date_B)
+  
+  # calculate decadal mean offsets for cruise
+  # Note: weighting is only done based on size of cruise B
+  xover_cruise_decade_partial <- xover_cruise %>%
+    group_by(cruise_A, date_A, n_A, parameter, decade, basin) %>%
+    summarise(
+      offset_adj_mean = mean(offset_adj, na.rm = TRUE),
+      offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n_B, na.rm = TRUE)
+    ) %>%
+    ungroup()
+  
+  xover_cruise_decade_full <- xover_cruise %>%
+    filter(parameter_coverage == "full") %>%
+    group_by(cruise_A, date_A, n_A, parameter, decade, basin) %>%
+    summarise(
+      offset_adj_mean = mean(offset_adj, na.rm = TRUE),
+      offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n_B, na.rm = TRUE)
+    ) %>%
+    ungroup()
+  
+  xover_cruise_decade <- bind_rows(
+    xover_cruise_decade_full %>% mutate(parameter_coverage = "full"),
+    xover_cruise_decade_partial %>% mutate(parameter_coverage = "partial")
+  )
+  
+  
+  rm(xover_cruise_decade_full,
+     xover_cruise_decade_partial)
+  
+  if (exists("xover_cruise_decade_all")) {
+    xover_cruise_decade_all <-
+      bind_rows(xover_cruise_decade_all, xover_cruise_decade)
   }
+  
+  if (!exists("xover_cruise_decade_all")) {
+    xover_cruise_decade_all <- xover_cruise_decade
+  }
+  
 }
 
-rm(xover_subbasin, xover_cruise_stats, xover_subbasin_decade, xover_subbasin_decade_stats)
+
+xover_cruise_long_term_all %>%
+  group_split(basin, parameter_coverage) %>%
+  # head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(date_A, offset_adj_mean_weighted, size = n_A)) +
+      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_point(alpha = 0.3) +
+      labs(title = paste(.x$basin, "|", .x$parameter_coverage)) +
+      facet_grid(parameter ~ ., scales = "free_y")
+  )
+
+xover_cruise_decade_all %>%
+  group_split(basin, parameter_coverage) %>%
+  # head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(date_A, offset_adj_mean_weighted, size = n_A)) +
+      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_point(alpha = 0.3) +
+      labs(title = paste(.x$basin, "|", .x$parameter_coverage)) +
+      facet_grid(parameter ~ decade, scales = "free_y")
+  )
+
+
+#   # loop over decades
+#   # Note this starts from the original crossover data for the subbasin
+#   for (i_decade_start in seq(1990, 2010, 10)) {
+#     # i_decade_start <- seq(1990, 2010, 10)[3]
+#
+#     xover_subbasin <- xover_subbasin %>%
+#       mutate(date_A = ymd(str_sub(cruise_A, 5, 12)),
+#              date_B = ymd(str_sub(cruise_B, 5, 12)))
+#
+#     # filter cruises that took place in decade
+#     xover_subbasin_A <- xover_subbasin %>%
+#       filter(year(date_A) >= i_decade_start &
+#                year(date_A) < i_decade_start + 10)
+#
+#     xover_subbasin_B <- xover_subbasin %>%
+#       filter(year(date_B) >= i_decade_start &
+#                year(date_B) < i_decade_start + 10)
+#
+#     xover_subbasin_B_rev <- xover_subbasin_B %>%
+#       rename(
+#         cruise_A_back = cruise_A,
+#         cruise_A = cruise_B,
+#         date_A_back = date_A,
+#         date_A = date_B,
+#         adjustment_A_back = adjustment_A,
+#         adjustment_A = adjustment_B
+#       ) %>%
+#       rename(cruise_B = cruise_A_back,
+#              date_B = date_A_back,
+#              adjustment_B = adjustment_A_back) %>%
+#       mutate(
+#         offset = if_else(
+#           parameter %in% c("salinity", "talk", "tco2"),
+#           -offset,
+#           1 / offset
+#         ),
+#         offset_adj = if_else(
+#           parameter %in% c("salinity", "talk", "tco2"),
+#           -offset_adj,
+#           1 / offset_adj
+#         )
+#       )
+#
+#     xover_subbasin_decade <- bind_rows(xover_subbasin_A,
+#                                        xover_subbasin_B_rev)
+#
+#     rm(xover_subbasin_A, xover_subbasin_B, xover_subbasin_B_rev)
+#
+#     # assign number of observations to both cruises
+#     xover_subbasin_decade <- left_join(xover_subbasin_decade,
+#                           expocodes_subbasin %>% rename(cruise_A = cruise_expocode,
+#                                                   n_A = n))
+#
+#     xover_subbasin_decade <- left_join(xover_subbasin_decade,
+#                           expocodes_subbasin %>% rename(cruise_B = cruise_expocode,
+#                                                   n_B = n))
+#
+#     # calculate total number of observations
+#     xover_subbasin_decade <- xover_subbasin_decade %>%
+#       mutate(n = n_A + n_B) %>%
+#       select(-starts_with("n_"))
+#
+#     # but cruise B date into decades
+#     xover_subbasin_decade <- xover_subbasin_decade %>%
+#       mutate(decade = m_grid_decade(year(date_B))) %>%
+#       filter(!is.na(decade),
+#              !is.na(offset_adj),
+#              !is.na(offset)) %>%
+#       arrange(date_B, date_A)
+#
+#     xover_subbasin_decade_stats <- xover_subbasin_decade %>%
+#       group_by(parameter, decade) %>%
+#       summarise(
+#         offset_adj_mean = mean(offset_adj, na.rm = TRUE),
+#         offset_adj_sd = sd(offset_adj, na.rm = TRUE),
+#         offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n, na.rm = TRUE),
+#         offset_adj_median = median(offset_adj, na.rm = TRUE)
+#       )
+#
+#     xover_subbasin_decade_stats <- xover_subbasin_decade_stats %>%
+#       mutate(basin = i_basin,
+#              decade_start = i_decade_start)
+#
+#     if (exists("xover_subbasin_decade_stats_all")) {
+#       xover_subbasin_decade_stats_all <-
+#         bind_rows(xover_subbasin_decade_stats_all, xover_subbasin_decade_stats)
+#     }
+#
+#     if (!exists("xover_subbasin_decade_stats_all")) {
+#       xover_subbasin_decade_stats_all <- xover_subbasin_decade_stats
+#     }
+#
+#
+#     print(
+#       xover_subbasin_decade_stats %>%
+#         kable(caption = paste0(i_basin, " | ", i_decade_start, "s")) %>%
+#         kable_styling() %>%
+#         scroll_box(height = "300px")
+#     )
+#
+#
+#     p_crossover_ts <- xover_subbasin_decade %>%
+#       ggplot(aes(date_B, offset_adj)) +
+#       geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+#       geom_point(shape = 21) +
+#       scale_color_brewer(palette = "Set1") +
+#       facet_grid(parameter ~ ., scales = "free_y") +
+#       labs(title = paste0(i_basin, " | ", i_decade_start, "s")) +
+#       theme(
+#         legend.position = "bottom",
+#         legend.direction = "vertical",
+#         axis.title.x = element_blank()
+#       )
+#
+#     p_crossover_decadal <-
+#       ggplot() +
+#       geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+#       geom_violin(data = xover_subbasin_decade,
+#                   aes(x = decade, y = offset_adj),
+#                   fill = "gold") +
+#       geom_boxplot(data = xover_subbasin_decade,
+#                    aes(x = decade, y = offset_adj),
+#                    width = 0.2) +
+#       facet_grid(parameter ~ ., scales = "free_y") +
+#       labs(title = "Decadal offsets") +
+#       theme(axis.title.x = element_blank(),
+#             axis.text.x = element_text(angle = 90))
+#
+#     print(p_crossover_ts + p_crossover_decadal +
+#             plot_layout(widths = c(2, 1)))
+#
+#     rm(p_crossover_ts, p_crossover_decadal)
+#
+#   }
+# }
+#
+# rm(xover_subbasin, xover_cruise_decade, xover_subbasin_decade, xover_subbasin_decade_stats)
 
 ```
 
@@ -2439,7 +2448,7 @@ xover_subbasin_decade_stats_all %>%
 ```{r cruise_mean_crossover_analysis, eval=FALSE}
 
 
-xover_cruise_stats_all <- xover_cruise_stats_all %>%
+xover_cruise_decade_all <- xover_cruise_decade_all %>%
   mutate(basin = fct_relevel(
     basin,
     "N. Pacific",
@@ -2455,10 +2464,10 @@ expocodes <- expocodes %>%
   count(basin, cruise_expocode)
 
 
-xover_cruise_stats_all <- left_join(xover_cruise_stats_all,
+xover_cruise_decade_all <- left_join(xover_cruise_decade_all,
                                     expocodes)
 
-xover_cruise_stats_all_cstar <- xover_cruise_stats_all %>%
+xover_cruise_decade_all_cstar <- xover_cruise_decade_all %>%
   filter(parameter %in% c("talk", "phosphate", "tco2")) %>%
   select(parameter,
          date_A,
@@ -2477,12 +2486,12 @@ xover_cruise_stats_all_cstar <- xover_cruise_stats_all %>%
                names_to = "parameter")
 
 hline_intercept <-
-  tibble(parameter = unique(xover_cruise_stats_all_cstar$parameter)) %>%
+  tibble(parameter = unique(xover_cruise_decade_all_cstar$parameter)) %>%
   mutate(intercept = if_else(parameter %in% c("cstar", "talk", "tco2"),
                              0,
                              1))
 
-xover_cruise_stats_all_cstar %>%
+xover_cruise_decade_all_cstar %>%
   filter(year(date_A) >= 1989) %>%
   group_by(basin) %>%
   group_split() %>%
@@ -2737,7 +2746,7 @@ for (i_basin in unique(basinmask_5$basin)) {
 
 ```{r cruise_mean_crossover_analysis_NP, eval=FALSE}
 
-xover_cruise_stats_all_cstar %>%
+xover_cruise_decade_all_cstar %>%
   filter(basin == "N. Pacific",
          decade == "2000-2009",
          year(date_A) >= 1989) %>%
@@ -2754,7 +2763,7 @@ xover_cruise_stats_all_cstar %>%
   )
 
 
-xover_cruise_stats_all_cstar %>%
+xover_cruise_decade_all_cstar %>%
   filter(basin == "N. Pacific",
          decade == "2000-2009",
          year(date_A) >= 2010) %>%
@@ -2770,7 +2779,7 @@ xover_cruise_stats_all_cstar %>%
       facet_grid(parameter ~ decade, scales = "free_y")
   )
 
-xover_cruise_stats_all_cstar %>%
+xover_cruise_decade_all_cstar %>%
   filter(basin == "N. Pacific",
          decade == "2010-2019",
          year(date_A) >= 1989) %>%
@@ -2786,7 +2795,7 @@ xover_cruise_stats_all_cstar %>%
       facet_grid(parameter ~ decade, scales = "free_y")
   )
 
-xover_cruise_stats_all_cstar %>%
+xover_cruise_decade_all_cstar %>%
   filter(basin == "N. Pacific",
          decade == "2010-2019",
          year(date_A) >= 2000,
