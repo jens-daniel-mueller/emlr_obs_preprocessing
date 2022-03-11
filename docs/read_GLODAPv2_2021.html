@@ -565,16 +565,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreef9a4a5b8f784672a29dd35ed4edf3a92a6ea1fc2targetblankf9a4a5ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/f9a4a5b8f784672a29dd35ed4edf3a92a6ea1fc2" target="_blank">f9a4a5b</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeaae5fc50b92f387faea6eb582f7813d75baf9efdtargetblankaae5fc5a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/aae5fc50b92f387faea6eb582f7813d75baf9efd" target="_blank">aae5fc5</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreef9a4a5b8f784672a29dd35ed4edf3a92a6ea1fc2targetblankf9a4a5ba" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeaae5fc50b92f387faea6eb582f7813d75baf9efdtargetblankaae5fc5a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/f9a4a5b8f784672a29dd35ed4edf3a92a6ea1fc2" target="_blank">f9a4a5b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/aae5fc50b92f387faea6eb582f7813d75baf9efd" target="_blank">aae5fc5</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -583,6 +583,7 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
     Ignored:    data/
     Ignored:    output/
 
@@ -627,6 +628,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/aae5fc50b92f387faea6eb582f7813d75baf9efd/analysis/read_GLODAPv2_2021.Rmd" target="_blank">aae5fc5</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+<td>
+revised cruise mean offsets
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/84ca07866648d23ee8c154ca28572f604ed961c3/docs/read_GLODAPv2_2021.html" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -8517,6 +8552,20 @@ glodapv2_xover &lt;- left_join(
     )
 )
 
+glodapv2_xover &lt;- glodapv2_xover %&gt;% 
+  mutate(adjustment_A = if_else(
+    parameter %in% c(&quot;salinity&quot;, &quot;talk&quot;, &quot;tco2&quot;),
+    replace_na(adjustment_A, 0),
+    replace_na(adjustment_A, 1)
+  )) %&gt;% 
+  mutate(adjustment_B = if_else(
+    parameter %in% c(&quot;salinity&quot;, &quot;talk&quot;, &quot;tco2&quot;),
+    replace_na(adjustment_B, 0),
+    replace_na(adjustment_B, 1)
+  ))
+
+
+
 # apply adjustment to crossover
 glodapv2_xover &lt;- glodapv2_xover  %&gt;%
   mutate(offset_adj = 
@@ -8548,6 +8597,19 @@ glodapv2_2021_xover &lt;- left_join(
     )
 )
 
+glodapv2_2021_xover &lt;- glodapv2_2021_xover %&gt;% 
+  mutate(adjustment_A = if_else(
+    parameter %in% c(&quot;salinity&quot;, &quot;talk&quot;, &quot;tco2&quot;),
+    replace_na(adjustment_A, 0),
+    replace_na(adjustment_A, 1)
+  )) %&gt;% 
+  mutate(adjustment_B = if_else(
+    parameter %in% c(&quot;salinity&quot;, &quot;talk&quot;, &quot;tco2&quot;),
+    replace_na(adjustment_B, 0),
+    replace_na(adjustment_B, 1)
+  ))
+
+
 # apply adjustment to crossover
 glodapv2_2021_xover &lt;- glodapv2_2021_xover  %&gt;%
   mutate(offset_adj = 
@@ -8558,26 +8620,45 @@ glodapv2_2021_xover &lt;- glodapv2_2021_xover  %&gt;%
                    glodapv2_2021_xover)
 
 rm(glodapv2_xover,
-   glodapv2_2021_xover)</code></pre>
+   glodapv2_2021_xover)
+
+
+xover &lt;- xover %&gt;%
+  mutate(date_A = ymd(str_sub(cruise_A, 5, 12)),
+         date_B = ymd(str_sub(cruise_B, 5, 12)))
+
+# Remove cruises with expocodes starting with &quot;OMEX&quot;
+# for which dates cannot be extracted from expocode
+
+xover &lt;- xover %&gt;%
+  filter(!is.na(date_A),
+         !is.na(date_B))
+
+
+xover &lt;- xover %&gt;% 
+  filter(!is.na(offset_adj))</code></pre>
 </div>
 </div>
 <div id="crossover-analysis" class="section level1" number="7">
 <h1><span class="header-section-number">7</span> Crossover analysis</h1>
-<pre class="r"><code>xover_cruise_extractation &lt;- function (df, expocode) {
-  xover_cruise_A &lt;- df %&gt;%
-    filter(cruise_A %in% expocode)
-  
-  xover_cruise_B &lt;- df %&gt;%
-    filter(cruise_B %in% expocode)
-  
-  xover_cruise_B_rev &lt;- xover_cruise_B %&gt;%
+<div id="functions" class="section level3" number="7.0.1">
+<h3><span class="header-section-number">7.0.1</span> Functions</h3>
+<pre class="r"><code># reverse cruise A and B
+m_xover_reverse &lt;- function(df) {
+  df_rev &lt;- df %&gt;%
     rename(
       cruise_A_back = cruise_A,
       cruise_A = cruise_B,
+      date_A_back = date_A,
+      date_A = date_B,
+      n_A_back = n_A,
+      n_A = n_B,
       adjustment_A_back = adjustment_A,
       adjustment_A = adjustment_B
     ) %&gt;%
     rename(cruise_B = cruise_A_back,
+           date_B = date_A_back,
+           n_B = n_A_back,
            adjustment_B = adjustment_A_back) %&gt;%
     mutate(
       offset = if_else(
@@ -8591,16 +8672,27 @@ rm(glodapv2_xover,
         1 / offset_adj
       )
     )
+  return(df_rev)
+}
+
+
+# extract cruise based on expocode
+m_xover_cruise_extractation &lt;- function (df, expocode) {
+  
+  xover_cruise_A &lt;- df %&gt;%
+    filter(cruise_A %in% expocode)
+  
+  xover_cruise_B &lt;- df %&gt;%
+    filter(cruise_B %in% expocode)
+  
+  xover_cruise_B_rev &lt;- m_xover_reverse(df = xover_cruise_B)
   
   xover_cruise &lt;- bind_rows(xover_cruise_A,
                             xover_cruise_B_rev)
   
-  xover_cruise &lt;- xover_cruise %&gt;%
-  mutate(date_A = ymd(str_sub(cruise_A, 5, 12)),
-         date_B = ymd(str_sub(cruise_B, 5, 12)))
-  
   return(xover_cruise)
 }</code></pre>
+</div>
 <div id="missingflagged-data" class="section level2" number="7.1">
 <h2><span class="header-section-number">7.1</span> Missing/flagged data</h2>
 <p>Analyse crossover results for cruises that cause a relevant data gap, with the aim to inform the use of data from these cruises.</p>
@@ -8666,8 +8758,9 @@ for (i_expocodes_missing in expocodes_missing) {
   rm(parameter_qc, parameter_f, parameter_f9)
   
 
-  xover_cruise &lt;- xover_cruise_extractation(
-    df = xover,
+  xover_cruise &lt;- m_xover_cruise_extractation(
+    df = xover %&gt;% mutate(n_A = 0,
+                          n_B = 0),
     expocode = i_expocodes_missing
   )
 
@@ -8724,8 +8817,7 @@ for (i_expocodes_missing in expocodes_missing) {
   
   xover_cruise_decade &lt;- xover_cruise %&gt;%
     mutate(decade = m_grid_decade(year(date_B))) %&gt;%
-    filter(!is.na(decade),
-           !is.na(offset_adj)) %&gt;%
+    filter(!is.na(decade)) %&gt;%
     group_by(parameter, decade) %&gt;%
     mutate(n = n()) %&gt;%
     ungroup() %&gt;% 
@@ -18217,8 +18309,10 @@ jens-daniel-mueller
   distinct(cruise_expocode) %&gt;%
   pull()
 
-xover_IO_1990 &lt;- xover_cruise_extractation(df = xover,
-                                           expocode = IO_1990_expocodes)
+xover_IO_1990 &lt;-
+  m_xover_cruise_extractation(df = xover %&gt;% mutate(n_A = 0,
+                                                    n_B = 0),
+                              expocode = IO_1990_expocodes)
 
 
 xover_IO_1990 &lt;- xover_IO_1990 %&gt;%
@@ -18230,8 +18324,6 @@ xover_IO_1990 &lt;- xover_IO_1990 %&gt;%
 xover_IO_1990_decade &lt;- xover_IO_1990 %&gt;%
     mutate(decade = m_grid_decade(year(date_B))) %&gt;%
     filter(!is.na(decade),
-           !is.na(offset_adj),
-           !is.na(offset),
            RV != &quot;316N&quot;) %&gt;% 
   arrange(date_B)
 
@@ -18313,10 +18405,10 @@ oxygen
 1989-1999
 </td>
 <td style="text-align:right;">
-0.9963580
+0.9986282
 </td>
 <td style="text-align:right;">
-0.9968205
+0.9974067
 </td>
 </tr>
 <tr>
@@ -18327,10 +18419,10 @@ oxygen
 2000-2009
 </td>
 <td style="text-align:right;">
-0.9984347
+0.9983700
 </td>
 <td style="text-align:right;">
-1.0003001
+1.0002000
 </td>
 </tr>
 <tr>
@@ -18355,10 +18447,10 @@ phosphate
 1989-1999
 </td>
 <td style="text-align:right;">
-0.9921185
+0.9926563
 </td>
 <td style="text-align:right;">
-0.9961152
+0.9962076
 </td>
 </tr>
 <tr>
@@ -18495,10 +18587,10 @@ talk
 2000-2009
 </td>
 <td style="text-align:right;">
-2.9318063
+2.3614576
 </td>
 <td style="text-align:right;">
-3.4280000
+2.9766000
 </td>
 </tr>
 <tr>
@@ -18789,38 +18881,8 @@ rm(xover_IO_1990, xover_IO_1990_decade)</code></pre>
 <div id="basin" class="section level2" number="7.3">
 <h2><span class="header-section-number">7.3</span> 5 basin</h2>
 <p>In this section, I analyse GLODAP’s crossover data separately for each of 5 subbasins. For this purpose, each cruise is taken into account that provided at least one measurement in the respective subbasin, irrespective of measurements done outside this subbasin.</p>
-<div id="functions" class="section level3" number="7.3.1">
-<h3><span class="header-section-number">7.3.1</span> Functions</h3>
-<pre class="r"><code>m_xover_reverse &lt;- function(df) {
-  df_rev &lt;- df %&gt;%
-    rename(
-      cruise_A_back = cruise_A,
-      cruise_A = cruise_B,
-      date_A_back = date_A,
-      date_A = date_B,
-      adjustment_A_back = adjustment_A,
-      adjustment_A = adjustment_B
-    ) %&gt;%
-    rename(cruise_B = cruise_A_back,
-           date_B = date_A_back,
-           adjustment_B = adjustment_A_back) %&gt;%
-    mutate(
-      offset = if_else(
-        parameter %in% c(&quot;salinity&quot;, &quot;talk&quot;, &quot;tco2&quot;),
-        -offset,
-        1 / offset
-      ),
-      offset_adj = if_else(
-        parameter %in% c(&quot;salinity&quot;, &quot;talk&quot;, &quot;tco2&quot;),
-        -offset_adj,
-        1 / offset_adj
-      )
-    )
-  return(df_rev)
-}</code></pre>
-</div>
-<div id="cruise-by-cruise" class="section level3" number="7.3.2">
-<h3><span class="header-section-number">7.3.2</span> Cruise-by-cruise</h3>
+<div id="cruise-by-cruise" class="section level3" number="7.3.1">
+<h3><span class="header-section-number">7.3.1</span> Cruise-by-cruise</h3>
 <p>Here, I filter all crossover and use only those were both cruises covered the basin of interest.</p>
 <pre class="r"><code># reformat basin labels
 basinmask_5 &lt;- basinmask_5 %&gt;%
@@ -18924,7 +18986,11 @@ for (i_basin in basins) {
       cruise_A %in% expocodes_basin$cruise_expocode &amp;
         cruise_B %in% expocodes_basin$cruise_expocode
     )
-  
+
+  xover_basin &lt;- xover_basin %&gt;%
+    mutate(basin = i_basin)
+
+  # combine with cruise meta data
   xover_basin &lt;- left_join(
     xover_basin,
     expocodes_basin %&gt;%
@@ -18954,16 +19020,10 @@ for (i_basin in basins) {
       ),
       n = n_A + n_B
     ) %&gt;%
-    select(-c(parameter_coverage_A, parameter_coverage_B,
-              n_A, n_B))
+    select(-c(parameter_coverage_A, parameter_coverage_B))
   
-  xover_basin &lt;- xover_basin %&gt;%
-    mutate(date_A = ymd(str_sub(cruise_A, 5, 12)),
-           date_B = ymd(str_sub(cruise_B, 5, 12)))
   
-  xover_basin &lt;- xover_basin %&gt;%
-    mutate(basin = i_basin)
-  
+  # reverse later cruise to cruise A
   xover_basin_A &lt;- xover_basin %&gt;%
     filter(date_A &gt; date_B)
   
@@ -18972,12 +19032,14 @@ for (i_basin in basins) {
   
   xover_basin_B_rev &lt;- m_xover_reverse(df = xover_basin_B)
   
+  
   xover_basin &lt;- bind_rows(xover_basin_A,
                            xover_basin_B_rev)
   
   rm(xover_basin_A,
      xover_basin_B,
      xover_basin_B_rev)
+  
   
   if (exists(&quot;xover_basin_all&quot;)) {
     xover_basin_all &lt;-
@@ -19187,6 +19249,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-3.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-3.png" target="_blank">25fef5b</a>
 </td>
 <td>
@@ -19225,6 +19298,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-4.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-4.png" target="_blank">25fef5b</a>
@@ -19267,6 +19351,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-5.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-5.png" target="_blank">25fef5b</a>
 </td>
 <td>
@@ -19305,6 +19400,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-6.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-6.png" target="_blank">25fef5b</a>
@@ -19347,6 +19453,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-7.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-7.png" target="_blank">25fef5b</a>
 </td>
 <td>
@@ -19387,6 +19504,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-8.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-8.png" target="_blank">25fef5b</a>
 </td>
 <td>
@@ -19423,6 +19551,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-9.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-9.png" target="_blank">25fef5b</a>
@@ -19463,6 +19602,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-10.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-10.png" target="_blank">25fef5b</a>
 </td>
 <td>
@@ -19478,372 +19628,3584 @@ jens-daniel-mueller
 </div>
 <pre><code>[[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-11.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-11">
+Past versions of filter_xover_basin-11.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-11" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-11.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[2]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-12.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-12">
+Past versions of filter_xover_basin-12.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-12" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-12.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-13.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-13">
+Past versions of filter_xover_basin-13.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-13" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-13.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-14.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-14">
+Past versions of filter_xover_basin-14.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-14" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-14.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[2]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-15.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-15">
+Past versions of filter_xover_basin-15.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-15" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-15.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[1]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-16.png" width="672" style="display: block; margin: auto;" /> <img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-17.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-18.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-16.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-16">
+Past versions of filter_xover_basin-16.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-16" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-16.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-17.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-17">
+Past versions of filter_xover_basin-17.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-17" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-17.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-18.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-18">
+Past versions of filter_xover_basin-18.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-18" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-18.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>[[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-19.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-19">
+Past versions of filter_xover_basin-19.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-19" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-19.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[2]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-20.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-20">
+Past versions of filter_xover_basin-20.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-20" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-20.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-21.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-21">
+Past versions of filter_xover_basin-21.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-21" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-21.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-22.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-22">
+Past versions of filter_xover_basin-22.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-22" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-22.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[2]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-23.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-23">
+Past versions of filter_xover_basin-23.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-23" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-23.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[1]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-24.png" width="672" style="display: block; margin: auto;" /> <img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-25.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-26.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-24.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-24">
+Past versions of filter_xover_basin-24.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-24" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-24.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-25.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-25">
+Past versions of filter_xover_basin-25.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-25" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-25.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-26.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-26">
+Past versions of filter_xover_basin-26.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-26" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-26.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>[[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-27.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-27">
+Past versions of filter_xover_basin-27.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-27" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-27.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[2]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-28.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-28">
+Past versions of filter_xover_basin-28.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-28" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-28.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-29.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-29">
+Past versions of filter_xover_basin-29.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-29" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-29.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-30.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-30">
+Past versions of filter_xover_basin-30.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-30" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-30.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[2]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-31.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-31">
+Past versions of filter_xover_basin-31.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-31" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-31.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[1]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-32.png" width="672" style="display: block; margin: auto;" /> <img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-33.png" width="672" style="display: block; margin: auto;" /><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-34.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-32.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-32">
+Past versions of filter_xover_basin-32.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-32" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-32.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-33.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-33">
+Past versions of filter_xover_basin-33.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-33" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-33.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-34.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-34">
+Past versions of filter_xover_basin-34.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-34" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-34.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>[[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-35.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-35">
+Past versions of filter_xover_basin-35.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-35" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-35.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[2]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-36.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-36">
+Past versions of filter_xover_basin-36.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-36" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-36.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-37.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-37">
+Past versions of filter_xover_basin-37.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-37" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-37.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-38.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-38">
+Past versions of filter_xover_basin-38.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-38" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-38.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[2]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-39.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-39">
+Past versions of filter_xover_basin-39.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-39" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-39.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-40.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-filter_xover_basin-40">
+Past versions of filter_xover_basin-40.png
+</button>
+</p>
+<div id="fig-filter_xover_basin-40" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/84ca07866648d23ee8c154ca28572f604ed961c3/docs/figure/read_GLODAPv2_2021.Rmd/filter_xover_basin-40.png" target="_blank">84ca078</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>rm(xover_basin, GLODAP_basin, GLODAP_basin_grid, expocodes_basin)
 
 xover_basin &lt;- xover_basin_all
 rm(xover_basin_all)</code></pre>
 </div>
-<div id="decadal" class="section level3" number="7.3.3">
-<h3><span class="header-section-number">7.3.3</span> Decadal</h3>
+<div id="cruise-mean-offsets" class="section level3" number="7.3.2">
+<h3><span class="header-section-number">7.3.2</span> Cruise mean offsets</h3>
 <p>The aim of the decadal scale analysis is to investigate mean crossover offsets between all cruises from two decades.</p>
-<pre class="r"><code># reformat basin labels
-basinmask_5 &lt;- basinmask_5 %&gt;%
-  mutate(
-    basin = str_replace(basin, &quot;_&quot;, &quot;. &quot;),
-    basin = fct_relevel(
-      basin,
-      &quot;N. Pacific&quot;,
-      &quot;S. Pacific&quot;,
-      &quot;N. Atlantic&quot;,
-      &quot;S. Atlantic&quot;,
-      &quot;Indian&quot;
-    )
-  )
+<pre class="r"><code>expocodes_basin &lt;- unique(c(xover_basin$cruise_A, xover_basin$cruise_B)) 
 
 
-# loop over all 5 subbasins
-for (i_basin in unique(basinmask_5$basin)) {
-  # i_basin &lt;- unique(basinmask_5$basin)[5]
+# loop over each cruises
+# determine the mean decadal crossover from other cruises
+for (i_cruise_expocode in expocodes_basin) {
+  # i_cruise_expocode &lt;- expocodes_basin[1]
   
-  # retrieve subbasin expocodes
-  expocodes_subbasin &lt;- inner_join(GLODAP, basinmask_5) %&gt;%
-    filter(basin == i_basin)
-
-  # subset cruise with all qc flag = 1
-  expocodes_subbasin_qc &lt;- expocodes_subbasin %&gt;%
-    select(row_number, cruise_expocode, ends_with(&quot;qc&quot;)) %&gt;%
-    pivot_longer(ends_with(&quot;qc&quot;),
-                 names_to = &quot;parameter&quot;,
-                 values_to = &quot;value&quot;) %&gt;%
-    filter(value == 1) %&gt;%
-    pivot_wider(names_from = parameter,
-                values_from = value) %&gt;%
-    drop_na() %&gt;%
-    count(cruise_expocode)
+  xover_cruise &lt;- m_xover_cruise_extractation(df = xover_basin,
+                                              expocode = i_cruise_expocode)
   
-  # subset cruise with all f flag = 2
-  expocodes_subbasin_f &lt;- expocodes_subbasin %&gt;%
-    select(row_number, cruise_expocode, ends_with(&quot;f&quot;)) %&gt;%
-    pivot_longer(ends_with(&quot;f&quot;),
-                 names_to = &quot;parameter&quot;,
-                 values_to = &quot;value&quot;) %&gt;%
-    filter(value == 2) %&gt;%
-    pivot_wider(names_from = parameter,
-                values_from = value) %&gt;%
-    drop_na() %&gt;%
-    count(cruise_expocode)
-  
-  # join qc and f cruises and identify lower number of observations
-  expocodes_subbasin &lt;-
-    inner_join(expocodes_subbasin_f %&gt;% rename(n_f = n),
-               expocodes_subbasin_qc %&gt;% rename(n_qc = n)) %&gt;%
-    mutate(n = if_else(n_f &lt; n_qc, n_f, n_qc)) %&gt;% 
-    select(-starts_with(&quot;n_&quot;))
-  
-  rm(expocodes_subbasin_f, expocodes_subbasin_qc)
+  # calculate mean cruise-by-cruise offset (in case more than one leg was compared)
+  xover_cruise &lt;- xover_cruise %&gt;%
+    group_by(basin,
+             cruise_A,
+             cruise_B,
+             date_A,
+             date_B,
+             n_A,
+             n_B,
+             n,
+             parameter,
+             parameter_coverage) %&gt;%
+    summarise(
+      offset = mean(offset, na.rm = TRUE),
+      offset_adj = mean(offset_adj, na.rm = TRUE)
+    ) %&gt;%
+    ungroup()
   
   
-  expocodes_subbasin_all &lt;- inner_join(GLODAP, basinmask_5) %&gt;%
-    filter(basin == i_basin)
+  # calculate long-term mean offsets for cruise
+  # Note: weighting is only done based on size of cruise B
+  xover_cruise_partial &lt;- xover_cruise %&gt;%
+    group_by(cruise_A, date_A, n_A, parameter, basin) %&gt;%
+    summarise(
+      offset_adj_mean = mean(offset_adj, na.rm = TRUE),
+      offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n_B, na.rm = TRUE)
+    ) %&gt;%
+    ungroup()
   
-  expocodes_subbasin_clean &lt;- inner_join(GLODAP, basinmask_5) %&gt;%
-    filter(basin == i_basin,
-           cruise_expocode %in% expocodes_subbasin$cruise_expocode)
+  xover_cruise_full &lt;- xover_cruise %&gt;%
+    filter(parameter_coverage == &quot;full&quot;) %&gt;%
+    group_by(cruise_A, date_A, n_A, parameter, basin) %&gt;%
+    summarise(
+      offset_adj_mean = mean(offset_adj, na.rm = TRUE),
+      offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n_B, na.rm = TRUE)
+    ) %&gt;%
+    ungroup()
   
-  print(
-    map +
-      geom_tile(
-        data = expocodes_subbasin_all %&gt;%
-          mutate(decade = m_grid_decade(year)) %&gt;%
-          distinct(lon, lat, decade) %&gt;% 
-          drop_na(),
-        aes(lon, lat, fill=&quot;all&quot;)
-      ) +
-      geom_tile(
-        data = expocodes_subbasin_clean %&gt;%
-          mutate(decade = m_grid_decade(year)) %&gt;%
-          distinct(lon, lat, decade) %&gt;% 
-          drop_na(),
-        aes(lon, lat, fill=&quot;filtered&quot;)
-      ) +
-      scale_fill_brewer(palette = &quot;Set1&quot;, direction = -1) +
-      labs(title = i_basin) +
-      facet_grid(decade ~ .) +
-      theme(legend.title = element_blank())
+  xover_cruise_long_term &lt;- bind_rows(
+    xover_cruise_full %&gt;% mutate(parameter_coverage = &quot;full&quot;),
+    xover_cruise_partial %&gt;% mutate(parameter_coverage = &quot;partial&quot;)
   )
   
-  rm(expocodes_subbasin_all, expocodes_subbasin_clean)
   
-  # filter crossover with both cruises falling into subbasin
-  xover_subbasin &lt;- xover %&gt;%
-    filter(
-      cruise_A %in% expocodes_subbasin$cruise_expocode &amp;
-        cruise_B %in% expocodes_subbasin$cruise_expocode
-    )
+  rm(xover_cruise_full,
+     xover_cruise_partial)
   
-  # loop over each cruises
-  # determine the mean decadal crossover from other cruises
-  for (i_cruise_expocode in expocodes_subbasin$cruise_expocode){
-    # i_cruise_expocode &lt;- expocodes_subbasin$cruise_expocode[1]
-    
-    xover_cruise &lt;- xover_cruise_extractation(
-      df = xover_subbasin,
-      expocode = i_cruise_expocode
-    )
-    
-    # calculate mean cruise-by-cruise offset (in case more than one leg was compared)
-    xover_cruise &lt;- xover_cruise %&gt;% 
-      group_by(cruise_A, cruise_B, date_A, date_B, parameter) %&gt;% 
-      summarise(offset = mean(offset, na.rm = TRUE),
-                offset_adj = mean(offset_adj, na.rm = TRUE)) %&gt;% 
-      ungroup()
-    
-    # join with number of samples from cruise B
-    xover_cruise &lt;- left_join(xover_cruise,
-                              expocodes_subbasin %&gt;% rename(cruise_B = cruise_expocode))
-    
-    # cut cruise B date into decades
-    xover_cruise &lt;- xover_cruise %&gt;%
-      mutate(decade = m_grid_decade(year(date_B))) %&gt;%
-      filter(!is.na(decade),
-             !is.na(offset_adj),
-             !is.na(offset)) %&gt;%
-      arrange(date_B, date_A)
-    
-    # calculate decadal mean offsets for cruise
-    # Note: weighting is only done based on size of cruise B
-    xover_cruise_stats &lt;- xover_cruise %&gt;%
-      group_by(parameter, date_A, decade) %&gt;%
-      summarise(
-        offset_adj_mean = mean(offset_adj, na.rm = TRUE),
-        offset_adj_sd = sd(offset_adj, na.rm = TRUE),
-        offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n, na.rm = TRUE),
-        offset_adj_median = median(offset_adj, na.rm = TRUE)
-      )
-    
-    # assign expocode and basin
-    xover_cruise_stats &lt;- xover_cruise_stats %&gt;% 
-      mutate(basin = i_basin,
-             cruise_expocode = i_cruise_expocode)
-    
-    if (exists(&quot;xover_cruise_stats_all&quot;)) {
-      xover_cruise_stats_all &lt;-
-        bind_rows(xover_cruise_stats_all, xover_cruise_stats)
-    }
-    
-    if (!exists(&quot;xover_cruise_stats_all&quot;)) {
-      xover_cruise_stats_all &lt;- xover_cruise_stats
-    }
-    
+  if (exists(&quot;xover_cruise_long_term_all&quot;)) {
+    xover_cruise_long_term_all &lt;-
+      bind_rows(xover_cruise_long_term_all, xover_cruise_long_term)
+  }
+  
+  if (!exists(&quot;xover_cruise_long_term_all&quot;)) {
+    xover_cruise_long_term_all &lt;- xover_cruise_long_term
   }
   
   
-  # loop over decades
-  # Note this starts from the original crossover data for the subbasin
-  for (i_decade_start in seq(1990, 2010, 10)) {
-    # i_decade_start &lt;- seq(1990, 2010, 10)[3]
-    
-    xover_subbasin &lt;- xover_subbasin %&gt;%
-      mutate(date_A = ymd(str_sub(cruise_A, 5, 12)),
-             date_B = ymd(str_sub(cruise_B, 5, 12)))
-    
-    # filter cruises that took place in decade
-    xover_subbasin_A &lt;- xover_subbasin %&gt;%
-      filter(year(date_A) &gt;= i_decade_start &amp;
-               year(date_A) &lt; i_decade_start + 10)
-    
-    xover_subbasin_B &lt;- xover_subbasin %&gt;%
-      filter(year(date_B) &gt;= i_decade_start &amp; 
-               year(date_B) &lt; i_decade_start + 10)
-    
-    xover_subbasin_B_rev &lt;- xover_subbasin_B %&gt;%
-      rename(
-        cruise_A_back = cruise_A,
-        cruise_A = cruise_B,
-        date_A_back = date_A,
-        date_A = date_B,
-        adjustment_A_back = adjustment_A,
-        adjustment_A = adjustment_B
-      ) %&gt;%
-      rename(cruise_B = cruise_A_back,
-             date_B = date_A_back,
-             adjustment_B = adjustment_A_back) %&gt;%
-      mutate(
-        offset = if_else(
-          parameter %in% c(&quot;salinity&quot;, &quot;talk&quot;, &quot;tco2&quot;),
-          -offset,
-          1 / offset
-        ),
-        offset_adj = if_else(
-          parameter %in% c(&quot;salinity&quot;, &quot;talk&quot;, &quot;tco2&quot;),
-          -offset_adj,
-          1 / offset_adj
-        )
-      )
-    
-    xover_subbasin_decade &lt;- bind_rows(xover_subbasin_A,
-                                       xover_subbasin_B_rev)
-    
-    rm(xover_subbasin_A, xover_subbasin_B, xover_subbasin_B_rev)
-    
-    # assign number of observations to both cruises
-    xover_subbasin_decade &lt;- left_join(xover_subbasin_decade,
-                          expocodes_subbasin %&gt;% rename(cruise_A = cruise_expocode,
-                                                  n_A = n))
-    
-    xover_subbasin_decade &lt;- left_join(xover_subbasin_decade,
-                          expocodes_subbasin %&gt;% rename(cruise_B = cruise_expocode,
-                                                  n_B = n))
-    
-    # calculate total number of observations
-    xover_subbasin_decade &lt;- xover_subbasin_decade %&gt;%
-      mutate(n = n_A + n_B) %&gt;%
-      select(-starts_with(&quot;n_&quot;))
-    
-    # but cruise B date into decades
-    xover_subbasin_decade &lt;- xover_subbasin_decade %&gt;%
-      mutate(decade = m_grid_decade(year(date_B))) %&gt;%
-      filter(!is.na(decade),
-             !is.na(offset_adj),
-             !is.na(offset)) %&gt;%
-      arrange(date_B, date_A)
-    
-    xover_subbasin_decade_stats &lt;- xover_subbasin_decade %&gt;%
-      group_by(parameter, decade) %&gt;%
-      summarise(
-        offset_adj_mean = mean(offset_adj, na.rm = TRUE),
-        offset_adj_sd = sd(offset_adj, na.rm = TRUE),
-        offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n, na.rm = TRUE),
-        offset_adj_median = median(offset_adj, na.rm = TRUE)
-      )
-    
-    xover_subbasin_decade_stats &lt;- xover_subbasin_decade_stats %&gt;% 
-      mutate(basin = i_basin,
-             decade_start = i_decade_start)
-    
-    if (exists(&quot;xover_subbasin_decade_stats_all&quot;)) {
-      xover_subbasin_decade_stats_all &lt;-
-        bind_rows(xover_subbasin_decade_stats_all, xover_subbasin_decade_stats)
-    }
-    
-    if (!exists(&quot;xover_subbasin_decade_stats_all&quot;)) {
-      xover_subbasin_decade_stats_all &lt;- xover_subbasin_decade_stats
-    }
-    
-    
-    print(
-      xover_subbasin_decade_stats %&gt;%
-        kable(caption = paste0(i_basin, &quot; | &quot;, i_decade_start, &quot;s&quot;)) %&gt;%
-        kable_styling() %&gt;%
-        scroll_box(height = &quot;300px&quot;)
-    )
-    
-    
-    p_crossover_ts &lt;- xover_subbasin_decade %&gt;%
-      ggplot(aes(date_B, offset_adj)) +
-      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
-      geom_point(shape = 21) +
-      scale_color_brewer(palette = &quot;Set1&quot;) +
-      facet_grid(parameter ~ ., scales = &quot;free_y&quot;) +
-      labs(title = paste0(i_basin, &quot; | &quot;, i_decade_start, &quot;s&quot;)) +
-      theme(
-        legend.position = &quot;bottom&quot;,
-        legend.direction = &quot;vertical&quot;,
-        axis.title.x = element_blank()
-      )
-    
-    p_crossover_decadal &lt;-
-      ggplot() +
-      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
-      geom_violin(data = xover_subbasin_decade,
-                  aes(x = decade, y = offset_adj),
-                  fill = &quot;gold&quot;) +
-      geom_boxplot(data = xover_subbasin_decade,
-                   aes(x = decade, y = offset_adj),
-                   width = 0.2) +
-      facet_grid(parameter ~ ., scales = &quot;free_y&quot;) +
-      labs(title = &quot;Decadal offsets&quot;) +
-      theme(axis.title.x = element_blank(),
-            axis.text.x = element_text(angle = 90))
-    
-    print(p_crossover_ts + p_crossover_decadal +
-            plot_layout(widths = c(2, 1)))
-    
-    rm(p_crossover_ts, p_crossover_decadal)
-    
+  # cut cruise B date into decades
+  xover_cruise &lt;- xover_cruise %&gt;%
+    mutate(decade = m_grid_decade(year(date_B))) %&gt;%
+    arrange(date_B)
+  
+  # calculate decadal mean offsets for cruise
+  # Note: weighting is only done based on size of cruise B
+  xover_cruise_decade_partial &lt;- xover_cruise %&gt;%
+    group_by(cruise_A, date_A, n_A, parameter, decade, basin) %&gt;%
+    summarise(
+      offset_adj_mean = mean(offset_adj, na.rm = TRUE),
+      offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n_B, na.rm = TRUE)
+    ) %&gt;%
+    ungroup()
+  
+  xover_cruise_decade_full &lt;- xover_cruise %&gt;%
+    filter(parameter_coverage == &quot;full&quot;) %&gt;%
+    group_by(cruise_A, date_A, n_A, parameter, decade, basin) %&gt;%
+    summarise(
+      offset_adj_mean = mean(offset_adj, na.rm = TRUE),
+      offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n_B, na.rm = TRUE)
+    ) %&gt;%
+    ungroup()
+  
+  xover_cruise_decade &lt;- bind_rows(
+    xover_cruise_decade_full %&gt;% mutate(parameter_coverage = &quot;full&quot;),
+    xover_cruise_decade_partial %&gt;% mutate(parameter_coverage = &quot;partial&quot;)
+  )
+  
+  
+  rm(xover_cruise_decade_full,
+     xover_cruise_decade_partial)
+  
+  if (exists(&quot;xover_cruise_decade_all&quot;)) {
+    xover_cruise_decade_all &lt;-
+      bind_rows(xover_cruise_decade_all, xover_cruise_decade)
   }
+  
+  if (!exists(&quot;xover_cruise_decade_all&quot;)) {
+    xover_cruise_decade_all &lt;- xover_cruise_decade
+  }
+  
 }
 
-rm(xover_subbasin, xover_cruise_stats, xover_subbasin_decade, xover_subbasin_decade_stats)</code></pre>
+
+xover_cruise_long_term_all %&gt;%
+  group_split(basin, parameter_coverage) %&gt;%
+  # head(1) %&gt;%
+  map(
+    ~ ggplot(data = .x,
+             aes(date_A, offset_adj_mean_weighted, size = n_A)) +
+      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_point(alpha = 0.3) +
+      labs(title = paste(.x$basin, &quot;|&quot;, .x$parameter_coverage)) +
+      facet_grid(parameter ~ ., scales = &quot;free_y&quot;)
+  )</code></pre>
+<p>[[1]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-1">
+Past versions of crossover_analysis_5_basin_decadal-1.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-1.png" target="_blank">25fef5b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e3d1a2bf19f77944b362352346b325a7ebd9d110/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-1.png" target="_blank">e3d1a2b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/070ca03f9a0abc8949a3a294170efef800b9f19c/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-1.png" target="_blank">070ca03</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9db485e40946817da08da539198567e07b705f1e/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-1.png" target="_blank">9db485e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-25
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-1.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-1.png" target="_blank">8804a83</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-1.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="decadal-averages" class="section level3" number="7.3.4">
-<h3><span class="header-section-number">7.3.4</span> Decadal averages</h3>
+</div>
+<p>[[2]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-2">
+Past versions of crossover_analysis_5_basin_decadal-2.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-2.png" target="_blank">25fef5b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e3d1a2bf19f77944b362352346b325a7ebd9d110/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-2.png" target="_blank">e3d1a2b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/070ca03f9a0abc8949a3a294170efef800b9f19c/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-2.png" target="_blank">070ca03</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6e65117873da381f301c05463db6061611f178b7/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-2.png" target="_blank">6e65117</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-2.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-2.png" target="_blank">8804a83</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-2.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>[[3]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-3">
+Past versions of crossover_analysis_5_basin_decadal-3.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-3.png" target="_blank">25fef5b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e3d1a2bf19f77944b362352346b325a7ebd9d110/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-3.png" target="_blank">e3d1a2b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/070ca03f9a0abc8949a3a294170efef800b9f19c/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-3.png" target="_blank">070ca03</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6e65117873da381f301c05463db6061611f178b7/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-3.png" target="_blank">6e65117</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-3.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-3.png" target="_blank">8804a83</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-3.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>[[4]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-4">
+Past versions of crossover_analysis_5_basin_decadal-4.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-4.png" target="_blank">25fef5b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e3d1a2bf19f77944b362352346b325a7ebd9d110/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-4.png" target="_blank">e3d1a2b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/070ca03f9a0abc8949a3a294170efef800b9f19c/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-4.png" target="_blank">070ca03</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6e65117873da381f301c05463db6061611f178b7/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-4.png" target="_blank">6e65117</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-4.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-4.png" target="_blank">8804a83</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-4.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>[[5]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-5">
+Past versions of crossover_analysis_5_basin_decadal-5.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-5.png" target="_blank">25fef5b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e3d1a2bf19f77944b362352346b325a7ebd9d110/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-5.png" target="_blank">e3d1a2b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/070ca03f9a0abc8949a3a294170efef800b9f19c/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-5.png" target="_blank">070ca03</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9db485e40946817da08da539198567e07b705f1e/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-5.png" target="_blank">9db485e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-25
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6e65117873da381f301c05463db6061611f178b7/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-5.png" target="_blank">6e65117</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-5.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-5.png" target="_blank">8804a83</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-5.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>[[6]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-6">
+Past versions of crossover_analysis_5_basin_decadal-6.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-6.png" target="_blank">25fef5b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e3d1a2bf19f77944b362352346b325a7ebd9d110/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-6.png" target="_blank">e3d1a2b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/070ca03f9a0abc8949a3a294170efef800b9f19c/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-6.png" target="_blank">070ca03</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6e65117873da381f301c05463db6061611f178b7/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-6.png" target="_blank">6e65117</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-6.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-6.png" target="_blank">8804a83</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-6.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>[[7]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-7">
+Past versions of crossover_analysis_5_basin_decadal-7.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-7.png" target="_blank">25fef5b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e3d1a2bf19f77944b362352346b325a7ebd9d110/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-7.png" target="_blank">e3d1a2b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/070ca03f9a0abc8949a3a294170efef800b9f19c/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-7.png" target="_blank">070ca03</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6e65117873da381f301c05463db6061611f178b7/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-7.png" target="_blank">6e65117</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-7.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-7.png" target="_blank">8804a83</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-7.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>[[8]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-8">
+Past versions of crossover_analysis_5_basin_decadal-8.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-8.png" target="_blank">25fef5b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e3d1a2bf19f77944b362352346b325a7ebd9d110/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-8.png" target="_blank">e3d1a2b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/070ca03f9a0abc8949a3a294170efef800b9f19c/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-8.png" target="_blank">070ca03</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6e65117873da381f301c05463db6061611f178b7/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-8.png" target="_blank">6e65117</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-8.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-8.png" target="_blank">8804a83</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-8.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>[[9]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-9">
+Past versions of crossover_analysis_5_basin_decadal-9.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-9" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-9.png" target="_blank">25fef5b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e3d1a2bf19f77944b362352346b325a7ebd9d110/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-9.png" target="_blank">e3d1a2b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/070ca03f9a0abc8949a3a294170efef800b9f19c/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-9.png" target="_blank">070ca03</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9db485e40946817da08da539198567e07b705f1e/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-9.png" target="_blank">9db485e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-25
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6e65117873da381f301c05463db6061611f178b7/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-9.png" target="_blank">6e65117</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-9.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-9.png" target="_blank">8804a83</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-9.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>[[10]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-10.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-10">
+Past versions of crossover_analysis_5_basin_decadal-10.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-10" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-10.png" target="_blank">25fef5b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e3d1a2bf19f77944b362352346b325a7ebd9d110/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-10.png" target="_blank">e3d1a2b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/070ca03f9a0abc8949a3a294170efef800b9f19c/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-10.png" target="_blank">070ca03</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6e65117873da381f301c05463db6061611f178b7/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-10.png" target="_blank">6e65117</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-10.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-10.png" target="_blank">8804a83</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-10.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>xover_cruise_decade_all %&gt;%
+  group_split(basin, parameter_coverage) %&gt;%
+  # head(1) %&gt;%
+  map(
+    ~ ggplot(data = .x,
+             aes(date_A, offset_adj_mean_weighted, size = n_A)) +
+      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_point(alpha = 0.3) +
+      labs(title = paste(.x$basin, &quot;|&quot;, .x$parameter_coverage)) +
+      facet_grid(parameter ~ decade, scales = &quot;free_y&quot;)
+  )</code></pre>
+<p>[[1]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-11.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-11">
+Past versions of crossover_analysis_5_basin_decadal-11.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-11" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-11.png" target="_blank">25fef5b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e3d1a2bf19f77944b362352346b325a7ebd9d110/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-11.png" target="_blank">e3d1a2b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/070ca03f9a0abc8949a3a294170efef800b9f19c/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-11.png" target="_blank">070ca03</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6e65117873da381f301c05463db6061611f178b7/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-11.png" target="_blank">6e65117</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-11.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-11.png" target="_blank">8804a83</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-11.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>[[2]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-12">
+Past versions of crossover_analysis_5_basin_decadal-12.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-12" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" target="_blank">25fef5b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e3d1a2bf19f77944b362352346b325a7ebd9d110/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" target="_blank">e3d1a2b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/070ca03f9a0abc8949a3a294170efef800b9f19c/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" target="_blank">070ca03</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6e65117873da381f301c05463db6061611f178b7/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" target="_blank">6e65117</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" target="_blank">8804a83</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>[[3]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-13.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-13">
+Past versions of crossover_analysis_5_basin_decadal-13.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-13" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-13.png" target="_blank">25fef5b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e3d1a2bf19f77944b362352346b325a7ebd9d110/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-13.png" target="_blank">e3d1a2b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/070ca03f9a0abc8949a3a294170efef800b9f19c/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-13.png" target="_blank">070ca03</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9db485e40946817da08da539198567e07b705f1e/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-13.png" target="_blank">9db485e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-25
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6e65117873da381f301c05463db6061611f178b7/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-13.png" target="_blank">6e65117</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-13.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-13.png" target="_blank">8804a83</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-13.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>[[4]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-14.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-14">
+Past versions of crossover_analysis_5_basin_decadal-14.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-14" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-14.png" target="_blank">25fef5b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e3d1a2bf19f77944b362352346b325a7ebd9d110/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-14.png" target="_blank">e3d1a2b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/070ca03f9a0abc8949a3a294170efef800b9f19c/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-14.png" target="_blank">070ca03</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6e65117873da381f301c05463db6061611f178b7/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-14.png" target="_blank">6e65117</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-14.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-14.png" target="_blank">8804a83</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-14.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>[[5]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-15.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-15">
+Past versions of crossover_analysis_5_basin_decadal-15.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-15" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-15.png" target="_blank">25fef5b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e3d1a2bf19f77944b362352346b325a7ebd9d110/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-15.png" target="_blank">e3d1a2b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/070ca03f9a0abc8949a3a294170efef800b9f19c/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-15.png" target="_blank">070ca03</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6e65117873da381f301c05463db6061611f178b7/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-15.png" target="_blank">6e65117</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-15.png" target="_blank">8804a83</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-15.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>[[6]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-16.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-16">
+Past versions of crossover_analysis_5_basin_decadal-16.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-16" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-16.png" target="_blank">25fef5b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e3d1a2bf19f77944b362352346b325a7ebd9d110/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-16.png" target="_blank">e3d1a2b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/070ca03f9a0abc8949a3a294170efef800b9f19c/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-16.png" target="_blank">070ca03</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6e65117873da381f301c05463db6061611f178b7/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-16.png" target="_blank">6e65117</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-16.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-16.png" target="_blank">8804a83</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-16.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>[[7]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-17.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-17">
+Past versions of crossover_analysis_5_basin_decadal-17.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-17" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-17.png" target="_blank">25fef5b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e3d1a2bf19f77944b362352346b325a7ebd9d110/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-17.png" target="_blank">e3d1a2b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/070ca03f9a0abc8949a3a294170efef800b9f19c/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-17.png" target="_blank">070ca03</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9db485e40946817da08da539198567e07b705f1e/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-17.png" target="_blank">9db485e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-25
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6e65117873da381f301c05463db6061611f178b7/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-17.png" target="_blank">6e65117</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-17.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-17.png" target="_blank">8804a83</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-17.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>[[8]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-18.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-18">
+Past versions of crossover_analysis_5_basin_decadal-18.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-18" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-18.png" target="_blank">25fef5b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e3d1a2bf19f77944b362352346b325a7ebd9d110/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-18.png" target="_blank">e3d1a2b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/070ca03f9a0abc8949a3a294170efef800b9f19c/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-18.png" target="_blank">070ca03</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6e65117873da381f301c05463db6061611f178b7/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-18.png" target="_blank">6e65117</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-18.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-18.png" target="_blank">8804a83</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-18.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>[[9]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-19.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-19">
+Past versions of crossover_analysis_5_basin_decadal-19.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-19" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-19.png" target="_blank">25fef5b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e3d1a2bf19f77944b362352346b325a7ebd9d110/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-19.png" target="_blank">e3d1a2b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/070ca03f9a0abc8949a3a294170efef800b9f19c/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-19.png" target="_blank">070ca03</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6e65117873da381f301c05463db6061611f178b7/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-19.png" target="_blank">6e65117</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-19.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-19.png" target="_blank">8804a83</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-19.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>[[10]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-20.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-20">
+Past versions of crossover_analysis_5_basin_decadal-20.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-20" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-20.png" target="_blank">25fef5b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e3d1a2bf19f77944b362352346b325a7ebd9d110/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-20.png" target="_blank">e3d1a2b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/070ca03f9a0abc8949a3a294170efef800b9f19c/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-20.png" target="_blank">070ca03</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6e65117873da381f301c05463db6061611f178b7/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-20.png" target="_blank">6e65117</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-20.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-20.png" target="_blank">8804a83</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-20.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>#   # loop over decades
+#   # Note this starts from the original crossover data for the subbasin
+#   for (i_decade_start in seq(1990, 2010, 10)) {
+#     # i_decade_start &lt;- seq(1990, 2010, 10)[3]
+#
+#     xover_subbasin &lt;- xover_subbasin %&gt;%
+#       mutate(date_A = ymd(str_sub(cruise_A, 5, 12)),
+#              date_B = ymd(str_sub(cruise_B, 5, 12)))
+#
+#     # filter cruises that took place in decade
+#     xover_subbasin_A &lt;- xover_subbasin %&gt;%
+#       filter(year(date_A) &gt;= i_decade_start &amp;
+#                year(date_A) &lt; i_decade_start + 10)
+#
+#     xover_subbasin_B &lt;- xover_subbasin %&gt;%
+#       filter(year(date_B) &gt;= i_decade_start &amp;
+#                year(date_B) &lt; i_decade_start + 10)
+#
+#     xover_subbasin_B_rev &lt;- xover_subbasin_B %&gt;%
+#       rename(
+#         cruise_A_back = cruise_A,
+#         cruise_A = cruise_B,
+#         date_A_back = date_A,
+#         date_A = date_B,
+#         adjustment_A_back = adjustment_A,
+#         adjustment_A = adjustment_B
+#       ) %&gt;%
+#       rename(cruise_B = cruise_A_back,
+#              date_B = date_A_back,
+#              adjustment_B = adjustment_A_back) %&gt;%
+#       mutate(
+#         offset = if_else(
+#           parameter %in% c(&quot;salinity&quot;, &quot;talk&quot;, &quot;tco2&quot;),
+#           -offset,
+#           1 / offset
+#         ),
+#         offset_adj = if_else(
+#           parameter %in% c(&quot;salinity&quot;, &quot;talk&quot;, &quot;tco2&quot;),
+#           -offset_adj,
+#           1 / offset_adj
+#         )
+#       )
+#
+#     xover_subbasin_decade &lt;- bind_rows(xover_subbasin_A,
+#                                        xover_subbasin_B_rev)
+#
+#     rm(xover_subbasin_A, xover_subbasin_B, xover_subbasin_B_rev)
+#
+#     # assign number of observations to both cruises
+#     xover_subbasin_decade &lt;- left_join(xover_subbasin_decade,
+#                           expocodes_subbasin %&gt;% rename(cruise_A = cruise_expocode,
+#                                                   n_A = n))
+#
+#     xover_subbasin_decade &lt;- left_join(xover_subbasin_decade,
+#                           expocodes_subbasin %&gt;% rename(cruise_B = cruise_expocode,
+#                                                   n_B = n))
+#
+#     # calculate total number of observations
+#     xover_subbasin_decade &lt;- xover_subbasin_decade %&gt;%
+#       mutate(n = n_A + n_B) %&gt;%
+#       select(-starts_with(&quot;n_&quot;))
+#
+#     # but cruise B date into decades
+#     xover_subbasin_decade &lt;- xover_subbasin_decade %&gt;%
+#       mutate(decade = m_grid_decade(year(date_B))) %&gt;%
+#       filter(!is.na(decade),
+#              !is.na(offset_adj),
+#              !is.na(offset)) %&gt;%
+#       arrange(date_B, date_A)
+#
+#     xover_subbasin_decade_stats &lt;- xover_subbasin_decade %&gt;%
+#       group_by(parameter, decade) %&gt;%
+#       summarise(
+#         offset_adj_mean = mean(offset_adj, na.rm = TRUE),
+#         offset_adj_sd = sd(offset_adj, na.rm = TRUE),
+#         offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n, na.rm = TRUE),
+#         offset_adj_median = median(offset_adj, na.rm = TRUE)
+#       )
+#
+#     xover_subbasin_decade_stats &lt;- xover_subbasin_decade_stats %&gt;%
+#       mutate(basin = i_basin,
+#              decade_start = i_decade_start)
+#
+#     if (exists(&quot;xover_subbasin_decade_stats_all&quot;)) {
+#       xover_subbasin_decade_stats_all &lt;-
+#         bind_rows(xover_subbasin_decade_stats_all, xover_subbasin_decade_stats)
+#     }
+#
+#     if (!exists(&quot;xover_subbasin_decade_stats_all&quot;)) {
+#       xover_subbasin_decade_stats_all &lt;- xover_subbasin_decade_stats
+#     }
+#
+#
+#     print(
+#       xover_subbasin_decade_stats %&gt;%
+#         kable(caption = paste0(i_basin, &quot; | &quot;, i_decade_start, &quot;s&quot;)) %&gt;%
+#         kable_styling() %&gt;%
+#         scroll_box(height = &quot;300px&quot;)
+#     )
+#
+#
+#     p_crossover_ts &lt;- xover_subbasin_decade %&gt;%
+#       ggplot(aes(date_B, offset_adj)) +
+#       geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+#       geom_point(shape = 21) +
+#       scale_color_brewer(palette = &quot;Set1&quot;) +
+#       facet_grid(parameter ~ ., scales = &quot;free_y&quot;) +
+#       labs(title = paste0(i_basin, &quot; | &quot;, i_decade_start, &quot;s&quot;)) +
+#       theme(
+#         legend.position = &quot;bottom&quot;,
+#         legend.direction = &quot;vertical&quot;,
+#         axis.title.x = element_blank()
+#       )
+#
+#     p_crossover_decadal &lt;-
+#       ggplot() +
+#       geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+#       geom_violin(data = xover_subbasin_decade,
+#                   aes(x = decade, y = offset_adj),
+#                   fill = &quot;gold&quot;) +
+#       geom_boxplot(data = xover_subbasin_decade,
+#                    aes(x = decade, y = offset_adj),
+#                    width = 0.2) +
+#       facet_grid(parameter ~ ., scales = &quot;free_y&quot;) +
+#       labs(title = &quot;Decadal offsets&quot;) +
+#       theme(axis.title.x = element_blank(),
+#             axis.text.x = element_text(angle = 90))
+#
+#     print(p_crossover_ts + p_crossover_decadal +
+#             plot_layout(widths = c(2, 1)))
+#
+#     rm(p_crossover_ts, p_crossover_decadal)
+#
+#   }
+# }
+#
+# rm(xover_subbasin, xover_cruise_decade, xover_subbasin_decade, xover_subbasin_decade_stats)</code></pre>
+</div>
+<div id="decadal-averages" class="section level3" number="7.3.3">
+<h3><span class="header-section-number">7.3.3</span> Decadal averages</h3>
 <pre class="r"><code>xover_subbasin_decade_stats_all &lt;- xover_subbasin_decade_stats_all %&gt;%
     mutate(
     basin = fct_relevel(
@@ -19899,9 +23261,9 @@ xover_subbasin_decade_stats_all %&gt;%
   scale_x_continuous(breaks = seq(1990, 2010, 10)) +
   facet_grid(parameter ~ decade, scales = &quot;free_y&quot;)</code></pre>
 </div>
-<div id="cruise-mean-offsets" class="section level3" number="7.3.5">
-<h3><span class="header-section-number">7.3.5</span> Cruise mean offsets</h3>
-<pre class="r"><code>xover_cruise_stats_all &lt;- xover_cruise_stats_all %&gt;%
+<div id="cruise-mean-offsets-1" class="section level3" number="7.3.4">
+<h3><span class="header-section-number">7.3.4</span> Cruise mean offsets</h3>
+<pre class="r"><code>xover_cruise_decade_all &lt;- xover_cruise_decade_all %&gt;%
   mutate(basin = fct_relevel(
     basin,
     &quot;N. Pacific&quot;,
@@ -19917,10 +23279,10 @@ expocodes &lt;- expocodes %&gt;%
   count(basin, cruise_expocode)
 
 
-xover_cruise_stats_all &lt;- left_join(xover_cruise_stats_all,
+xover_cruise_decade_all &lt;- left_join(xover_cruise_decade_all,
                                     expocodes)
 
-xover_cruise_stats_all_cstar &lt;- xover_cruise_stats_all %&gt;%
+xover_cruise_decade_all_cstar &lt;- xover_cruise_decade_all %&gt;%
   filter(parameter %in% c(&quot;talk&quot;, &quot;phosphate&quot;, &quot;tco2&quot;)) %&gt;%
   select(parameter,
          date_A,
@@ -19939,12 +23301,12 @@ xover_cruise_stats_all_cstar &lt;- xover_cruise_stats_all %&gt;%
                names_to = &quot;parameter&quot;)
 
 hline_intercept &lt;-
-  tibble(parameter = unique(xover_cruise_stats_all_cstar$parameter)) %&gt;%
+  tibble(parameter = unique(xover_cruise_decade_all_cstar$parameter)) %&gt;%
   mutate(intercept = if_else(parameter %in% c(&quot;cstar&quot;, &quot;talk&quot;, &quot;tco2&quot;),
                              0,
                              1))
 
-xover_cruise_stats_all_cstar %&gt;%
+xover_cruise_decade_all_cstar %&gt;%
   filter(year(date_A) &gt;= 1989) %&gt;%
   group_by(basin) %&gt;%
   group_split() %&gt;%
@@ -19958,8 +23320,8 @@ xover_cruise_stats_all_cstar %&gt;%
       facet_grid(parameter ~ decade, scales = &quot;free_y&quot;)
   )</code></pre>
 </div>
-<div id="cruise-by-cruise-1" class="section level3" number="7.3.6">
-<h3><span class="header-section-number">7.3.6</span> Cruise by cruise</h3>
+<div id="cruise-by-cruise-1" class="section level3" number="7.3.5">
+<h3><span class="header-section-number">7.3.5</span> Cruise by cruise</h3>
 <pre class="r"><code>for (i_basin in unique(basinmask_5$basin)) {
   # i_basin &lt;- unique(basinmask_5$basin)[4]
   
@@ -20186,9 +23548,9 @@ xover_cruise_stats_all_cstar %&gt;%
 </div>
 <div id="n-pacific-2010s" class="section level2" number="7.4">
 <h2><span class="header-section-number">7.4</span> N Pacific 2010s</h2>
-<div id="cruise-mean-offsets-1" class="section level3" number="7.4.1">
+<div id="cruise-mean-offsets-2" class="section level3" number="7.4.1">
 <h3><span class="header-section-number">7.4.1</span> Cruise mean offsets</h3>
-<pre class="r"><code>xover_cruise_stats_all_cstar %&gt;%
+<pre class="r"><code>xover_cruise_decade_all_cstar %&gt;%
   filter(basin == &quot;N. Pacific&quot;,
          decade == &quot;2000-2009&quot;,
          year(date_A) &gt;= 1989) %&gt;%
@@ -20205,7 +23567,7 @@ xover_cruise_stats_all_cstar %&gt;%
   )
 
 
-xover_cruise_stats_all_cstar %&gt;%
+xover_cruise_decade_all_cstar %&gt;%
   filter(basin == &quot;N. Pacific&quot;,
          decade == &quot;2000-2009&quot;,
          year(date_A) &gt;= 2010) %&gt;%
@@ -20221,7 +23583,7 @@ xover_cruise_stats_all_cstar %&gt;%
       facet_grid(parameter ~ decade, scales = &quot;free_y&quot;)
   )
 
-xover_cruise_stats_all_cstar %&gt;%
+xover_cruise_decade_all_cstar %&gt;%
   filter(basin == &quot;N. Pacific&quot;,
          decade == &quot;2010-2019&quot;,
          year(date_A) &gt;= 1989) %&gt;%
@@ -20237,7 +23599,7 @@ xover_cruise_stats_all_cstar %&gt;%
       facet_grid(parameter ~ decade, scales = &quot;free_y&quot;)
   )
 
-xover_cruise_stats_all_cstar %&gt;%
+xover_cruise_decade_all_cstar %&gt;%
   filter(basin == &quot;N. Pacific&quot;,
          decade == &quot;2010-2019&quot;,
          year(date_A) &gt;= 2000,
