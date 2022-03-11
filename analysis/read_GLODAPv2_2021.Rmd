@@ -1796,11 +1796,12 @@ m_xover_reverse <- function(df) {
 ```
 
 
-### Filter xover basin
+### Cruise-by-cruise
 
-Here, I filter all crossover and use only those were both cruises covered the subbasin of interest.
+Here, I filter all crossover and use only those were both cruises covered the basin of interest.
 
 ```{r filter_xover_basin}
+
 
 # reformat basin labels
 basinmask_5 <- basinmask_5 %>%
@@ -1941,9 +1942,24 @@ for (i_basin in basins) {
     mutate(date_A = ymd(str_sub(cruise_A, 5, 12)),
            date_B = ymd(str_sub(cruise_B, 5, 12)))
   
-  xover_basin <- xover_basin %>% 
+  xover_basin <- xover_basin %>%
     mutate(basin = i_basin)
-      
+  
+  xover_basin_A <- xover_basin %>%
+    filter(date_A > date_B)
+  
+  xover_basin_B <- xover_basin %>%
+    filter(date_A <= date_B)
+  
+  xover_basin_B_rev <- m_xover_reverse(df = xover_basin_B)
+  
+  xover_basin <- bind_rows(xover_basin_A,
+                           xover_basin_B_rev)
+  
+  rm(xover_basin_A,
+     xover_basin_B,
+     xover_basin_B_rev)
+  
   if (exists("xover_basin_all")) {
     xover_basin_all <-
       bind_rows(xover_basin_all, xover_basin)
@@ -1953,120 +1969,109 @@ for (i_basin in basins) {
     xover_basin_all <- xover_basin
   }
   
+  print(
+    xover_basin %>%
+      filter(
+        !is.na(offset_adj),
+        parameter %in% c("talk", "tco2"),
+        parameter_coverage == "full"
+      ) %>%
+      mutate(offset_adj = cut(
+        offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf)
+      )) %>%
+      group_split(parameter) %>%
+      # head(1) %>%
+      map(
+        ~ ggplot(data = .x,
+                 aes(
+                   date_A, date_B, fill = offset_adj, size = n
+                 )) +
+          geom_point(alpha = 0.5, shape = 21) +
+          scale_fill_discrete_diverging(palette = "Blue-Red") +
+          labs(title = paste(i_basin, "|", .x$parameter, "| full")) +
+          coord_fixed(xlim = c(ymd("1990-01-01"), ymd("2021-01-01")),
+                      ylim = c(ymd("1990-01-01"), ymd("2021-01-01")))
+      )
+  )
+  
+  print(
+    xover_basin %>%
+      filter(
+        !is.na(offset_adj),
+        parameter %in% c("phosphate"),
+        parameter_coverage == "full"
+      ) %>%
+      mutate(offset_adj = cut(
+        offset_adj, 1 + c(-Inf, -5, -2, -1, 1, 2, 5, Inf) /
+          100
+      )) %>%
+      group_split(parameter) %>%
+      # head(1) %>%
+      map(
+        ~ ggplot(data = .x,
+                 aes(
+                   date_A, date_B, fill = offset_adj, size = n
+                 )) +
+          geom_point(alpha = 0.5, shape = 21) +
+          scale_fill_discrete_diverging(palette = "Blue-Red") +
+          labs(title = paste(i_basin, "|", .x$parameter, "| full")) +
+          coord_fixed(xlim = c(ymd("1990-01-01"), ymd("2021-01-01")),
+                      ylim = c(ymd("1990-01-01"), ymd("2021-01-01")))
+      )
+  )
+  
+  print(
+    xover_basin %>%
+      filter(!is.na(offset_adj),
+             parameter %in% c("talk", "tco2")) %>%
+      mutate(offset_adj = cut(
+        offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf)
+      )) %>%
+      group_split(parameter) %>%
+      # head(1) %>%
+      map(
+        ~ ggplot(data = .x,
+                 aes(
+                   date_A, date_B, fill = offset_adj, size = n
+                 )) +
+          geom_point(alpha = 0.5, shape = 21) +
+          scale_fill_discrete_diverging(palette = "Blue-Red") +
+          labs(title = paste(i_basin, "|", .x$parameter, "| partial")) +
+          coord_fixed(xlim = c(ymd("1990-01-01"), ymd("2021-01-01")),
+                      ylim = c(ymd("1990-01-01"), ymd("2021-01-01")))
+      )
+  )
+  
+  print(
+    xover_basin %>%
+      filter(!is.na(offset_adj),
+             parameter %in% c("phosphate")) %>%
+      mutate(offset_adj = cut(
+        offset_adj, 1 + c(-Inf, -5, -2, -1, 1, 2, 5, Inf) /
+          100
+      )) %>%
+      group_split(basin, parameter) %>%
+      # head(1) %>%
+      map(
+        ~ ggplot(data = .x,
+                 aes(
+                   date_A, date_B, fill = offset_adj, size = n
+                 )) +
+          geom_point(alpha = 0.5, shape = 21) +
+          scale_fill_discrete_diverging(palette = "Blue-Red") +
+          labs(title = paste(i_basin, "|", .x$parameter, "| partial")) +
+          coord_fixed(xlim = c(ymd("1990-01-01"), ymd("2021-01-01")),
+                      ylim = c(ymd("1990-01-01"), ymd("2021-01-01")))
+      )
+  )
+  
 }
+
 
 rm(xover_basin, GLODAP_basin, GLODAP_basin_grid, expocodes_basin)
 
 xover_basin <- xover_basin_all
 rm(xover_basin_all)
-```
-
-### Cruise-by-cruise full
-
-```{r xover_cruise_by_cruise_data_prep}
-
-xover_basin_A <- xover_basin %>%
-    filter(date_A > date_B)
-
-xover_basin_B <- xover_basin %>%
-  filter(date_A <= date_B)
-  
-xover_basin_B_rev <- m_xover_reverse(df = xover_basin_B)
-
-xover_basin <- bind_rows(xover_basin_A,
-                         xover_basin_B_rev)
-
-rm(xover_basin_A,
-   xover_basin_B,
-   xover_basin_B_rev)
-
-
-```
-
-```{r xover_cruise_by_cruise_full}
-
-xover_basin %>%
-  filter(!is.na(offset_adj),
-         parameter %in% c("talk", "tco2"),
-         parameter_coverage == "full") %>%
-  mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf))) %>%
-  group_split(basin, parameter) %>%
-  # head(1) %>%
-  map(
-    ~ ggplot(data = .x,
-             aes(
-               date_A, date_B, fill = offset_adj, size = n
-             )) +
-      geom_point(alpha = 0.5, shape = 21) +
-      scale_fill_discrete_diverging(palette = "Blue-Red") +
-      labs(title = paste(i_basin, "|", .x$parameter)) +
-      coord_fixed(xlim = c(ymd("1990-01-01"), ymd("2021-01-01")),
-                  ylim = c(ymd("1990-01-01"), ymd("2021-01-01")))
-  )
-
-xover_basin %>%
-  filter(!is.na(offset_adj),
-         parameter %in% c("phosphate"),
-         parameter_coverage == "full") %>%
-  mutate(offset_adj = cut(offset_adj, 1 + c(-Inf, -5, -2, -1, 1, 2, 5, Inf) /
-                            100)) %>%
-  group_split(basin, parameter) %>%
-  # head(1) %>%
-  map(
-    ~ ggplot(data = .x,
-             aes(
-               date_A, date_B, fill = offset_adj, size = n
-             )) +
-      geom_point(alpha = 0.5, shape = 21) +
-      scale_fill_discrete_diverging(palette = "Blue-Red") +
-      labs(title = paste(i_basin, "|", .x$parameter)) +
-      coord_fixed(xlim = c(ymd("1990-01-01"), ymd("2021-01-01")),
-                  ylim = c(ymd("1990-01-01"), ymd("2021-01-01")))
-  )
-
-```
-
-### Cruise-by-cruise partial
-
-```{r xover_cruise_by_cruise_partial}
-
-xover_basin %>%
-  filter(!is.na(offset_adj),
-         parameter %in% c("talk", "tco2")) %>%
-  mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf))) %>%
-  group_split(basin, parameter) %>%
-  # head(1) %>%
-  map(
-    ~ ggplot(data = .x,
-             aes(
-               date_A, date_B, fill = offset_adj, size = n
-             )) +
-      geom_point(alpha = 0.5, shape = 21) +
-      scale_fill_discrete_diverging(palette = "Blue-Red") +
-      labs(title = paste(i_basin, "|", .x$parameter)) +
-      coord_fixed(xlim = c(ymd("1990-01-01"), ymd("2021-01-01")),
-                  ylim = c(ymd("1990-01-01"), ymd("2021-01-01")))
-  )
-
-xover_basin %>%
-  filter(!is.na(offset_adj),
-         parameter %in% c("phosphate")) %>%
-  mutate(offset_adj = cut(offset_adj, 1 + c(-Inf, -5, -2, -1, 1, 2, 5, Inf) /
-                            100)) %>%
-  group_split(basin, parameter) %>%
-  # head(1) %>%
-  map(
-    ~ ggplot(data = .x,
-             aes(
-               date_A, date_B, fill = offset_adj, size = n
-             )) +
-      geom_point(alpha = 0.5, shape = 21) +
-      scale_fill_discrete_diverging(palette = "Blue-Red") +
-      labs(title = paste(i_basin, "|", .x$parameter)) +
-      coord_fixed(xlim = c(ymd("1990-01-01"), ymd("2021-01-01")),
-                  ylim = c(ymd("1990-01-01"), ymd("2021-01-01")))
-  )
-
 ```
 
 ### Decadal
