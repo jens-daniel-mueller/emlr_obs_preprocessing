@@ -5,7 +5,7 @@
 
 # commit regular changes (locally) and rebuild site
 # this takes only changed files into account
-wflow_publish(all = TRUE, message = "revised crossover analysis")
+wflow_publish(all = TRUE, message = "revised cruise-by_cruise")
 
 # commit changes including _site.yml (locally) and rebuild site in the specified order
 # you can also run this code with only some of the files. In this case remove the rebuild=TRUE command
