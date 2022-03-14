@@ -1,5 +1,5 @@
 ---
-title: "GLODAPv2_2020"
+title: "GLODAPv2_2021"
 author: "Jens Daniel Müller"
 date:  "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
@@ -2170,8 +2170,9 @@ xover_basin <- xover_basin %>%
 ```{r cruise_by_cruise_cstar}
 
 xover_basin %>%
+  filter(parameter_coverage == "full") %>% 
   mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, 2, 5, Inf))) %>%
-  group_split(parameter, parameter_coverage) %>%
+  group_split(basin, parameter) %>%
   # head(1) %>%
   map(
     ~ ggplot(data = .x,
@@ -2180,7 +2181,23 @@ xover_basin %>%
              )) +
       geom_point(alpha = 0.5, shape = 21) +
       scale_fill_discrete_diverging(palette = "Blue-Red") +
-      labs(title = paste(i_basin, "|", .x$parameter, "| partial")) +
+      labs(title = paste(.x$basin, "|", .x$parameter, "| full")) +
+      coord_fixed(xlim = c(ymd("1990-01-01"), ymd("2021-01-01")),
+                  ylim = c(ymd("1990-01-01"), ymd("2021-01-01")))
+  )
+
+xover_basin %>%
+  mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, 2, 5, Inf))) %>%
+  group_split(basin, parameter) %>%
+  # head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(
+               date_A, date_B, fill = offset_adj, size = n
+             )) +
+      geom_point(alpha = 0.5, shape = 21) +
+      scale_fill_discrete_diverging(palette = "Blue-Red") +
+      labs(title = paste(.x$basin, "|", .x$parameter, "| partial")) +
       coord_fixed(xlim = c(ymd("1990-01-01"), ymd("2021-01-01")),
                   ylim = c(ymd("1990-01-01"), ymd("2021-01-01")))
   )
@@ -2194,6 +2211,35 @@ xover_basin %>%
   coord_fixed(xlim = c(ymd("1990-01-01"), ymd("2021-01-01")),
               ylim = c(ymd("1990-01-01"), ymd("2021-01-01"))) +
   facet_grid(basin ~ parameter)
+
+
+```
+
+```{r cruise_by_cruise_cstar_annual_mean}
+
+xover_basin_annual <- xover_basin %>% 
+  filter(parameter_coverage == "full") %>% 
+  mutate(date_A = year(date_A),
+         date_B = year(date_B)) %>% 
+  group_by(date_A, date_B, parameter, basin) %>% 
+  summarise(offset_adj_weighted_mean = weighted.mean(offset_adj, w = n),
+            n = mean(n)) %>% 
+  ungroup()
+
+xover_basin_annual %>%
+  mutate(offset_adj_weighted_mean = cut(offset_adj_weighted_mean, c(-Inf, -5, -2, 2, 5, Inf))) %>%
+  group_split(basin, parameter) %>%
+  head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(
+               date_A, date_B, fill = offset_adj_weighted_mean, size = n)) +
+      geom_point(alpha = 0.5, shape = 21) +
+      scale_fill_discrete_diverging(palette = "Blue-Red") +
+      labs(title = paste(.x$basin, "|", .x$parameter, "| full"))
+      # coord_fixed(xlim = c(ymd("1990-01-01"), ymd("2021-01-01")),
+      #             ylim = c(ymd("1990-01-01"), ymd("2021-01-01")))
+  )
 
 
 ```
