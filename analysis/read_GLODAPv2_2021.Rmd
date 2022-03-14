@@ -1549,6 +1549,7 @@ hline_intercept <-
   mutate(intercept = if_else(parameter %in% c("salinity", "talk", "tco2"),
                              0,
                              1))
+
 for (i_expocodes_missing in expocodes_missing) {
   # i_expocodes_missing <- expocodes_missing[1]
   
@@ -2101,7 +2102,7 @@ rm(xover_basin_all)
 
 The aim of the decadal scale analysis is to investigate mean crossover offsets between all cruises from two decades. 
 
-```{r crossover_analysis_5_basin_decadal, fig.asp=1.2, results='asis'}
+```{r crossover_analysis_5_basin_decadal, fig.asp=1, results='asis'}
 
 expocodes_basin <- unique(c(xover_basin$cruise_A, xover_basin$cruise_B)) 
 
@@ -2216,7 +2217,11 @@ for (i_cruise_expocode in expocodes_basin) {
 }
 
 
+hline_intercept <- hline_intercept %>% 
+  filter(parameter %in% c("talk", "tco2", "phosphate"))
+
 xover_cruise_long_term_all %>%
+  filter(parameter %in% c("talk", "tco2", "phosphate")) %>%
   group_split(basin, parameter_coverage) %>%
   # head(1) %>%
   map(
@@ -2229,6 +2234,7 @@ xover_cruise_long_term_all %>%
   )
 
 xover_cruise_decade_all %>%
+  filter(parameter %in% c("talk", "tco2", "phosphate")) %>%
   group_split(basin, parameter_coverage) %>%
   # head(1) %>%
   map(
@@ -2240,99 +2246,6 @@ xover_cruise_decade_all %>%
       facet_grid(parameter ~ decade, scales = "free_y")
   )
 
-
-#   # loop over decades
-#   # Note this starts from the original crossover data for the subbasin
-#   for (i_decade_start in seq(1990, 2010, 10)) {
-#     # i_decade_start <- seq(1990, 2010, 10)[3]
-#
-#     xover_subbasin <- xover_subbasin %>%
-#       mutate(date_A = ymd(str_sub(cruise_A, 5, 12)),
-#              date_B = ymd(str_sub(cruise_B, 5, 12)))
-#
-#     # filter cruises that took place in decade
-#     xover_subbasin_A <- xover_subbasin %>%
-#       filter(year(date_A) >= i_decade_start &
-#                year(date_A) < i_decade_start + 10)
-#
-#     xover_subbasin_B <- xover_subbasin %>%
-#       filter(year(date_B) >= i_decade_start &
-#                year(date_B) < i_decade_start + 10)
-#
-#     xover_subbasin_B_rev <- xover_subbasin_B %>%
-#       rename(
-#         cruise_A_back = cruise_A,
-#         cruise_A = cruise_B,
-#         date_A_back = date_A,
-#         date_A = date_B,
-#         adjustment_A_back = adjustment_A,
-#         adjustment_A = adjustment_B
-#       ) %>%
-#       rename(cruise_B = cruise_A_back,
-#              date_B = date_A_back,
-#              adjustment_B = adjustment_A_back) %>%
-#       mutate(
-#         offset = if_else(
-#           parameter %in% c("salinity", "talk", "tco2"),
-#           -offset,
-#           1 / offset
-#         ),
-#         offset_adj = if_else(
-#           parameter %in% c("salinity", "talk", "tco2"),
-#           -offset_adj,
-#           1 / offset_adj
-#         )
-#       )
-#
-#     xover_subbasin_decade <- bind_rows(xover_subbasin_A,
-#                                        xover_subbasin_B_rev)
-#
-#     rm(xover_subbasin_A, xover_subbasin_B, xover_subbasin_B_rev)
-#
-#     # assign number of observations to both cruises
-#     xover_subbasin_decade <- left_join(xover_subbasin_decade,
-#                           expocodes_subbasin %>% rename(cruise_A = cruise_expocode,
-#                                                   n_A = n))
-#
-#     xover_subbasin_decade <- left_join(xover_subbasin_decade,
-#                           expocodes_subbasin %>% rename(cruise_B = cruise_expocode,
-#                                                   n_B = n))
-#
-#     # calculate total number of observations
-#     xover_subbasin_decade <- xover_subbasin_decade %>%
-#       mutate(n = n_A + n_B) %>%
-#       select(-starts_with("n_"))
-#
-#     # but cruise B date into decades
-#     xover_subbasin_decade <- xover_subbasin_decade %>%
-#       mutate(decade = m_grid_decade(year(date_B))) %>%
-#       filter(!is.na(decade),
-#              !is.na(offset_adj),
-#              !is.na(offset)) %>%
-#       arrange(date_B, date_A)
-#
-#     xover_subbasin_decade_stats <- xover_subbasin_decade %>%
-#       group_by(parameter, decade) %>%
-#       summarise(
-#         offset_adj_mean = mean(offset_adj, na.rm = TRUE),
-#         offset_adj_sd = sd(offset_adj, na.rm = TRUE),
-#         offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n, na.rm = TRUE),
-#         offset_adj_median = median(offset_adj, na.rm = TRUE)
-#       )
-#
-#     xover_subbasin_decade_stats <- xover_subbasin_decade_stats %>%
-#       mutate(basin = i_basin,
-#              decade_start = i_decade_start)
-#
-#     if (exists("xover_subbasin_decade_stats_all")) {
-#       xover_subbasin_decade_stats_all <-
-#         bind_rows(xover_subbasin_decade_stats_all, xover_subbasin_decade_stats)
-#     }
-#
-#     if (!exists("xover_subbasin_decade_stats_all")) {
-#       xover_subbasin_decade_stats_all <- xover_subbasin_decade_stats
-#     }
-#
 #
 #     print(
 #       xover_subbasin_decade_stats %>%
@@ -2380,6 +2293,70 @@ xover_cruise_decade_all %>%
 # rm(xover_subbasin, xover_cruise_decade, xover_subbasin_decade, xover_subbasin_decade_stats)
 
 ```
+
+```{r xover_cruise_mean_by_cruise_size, fig.asp=1}
+
+xover_cruise_long_term_all %>%
+  filter(parameter %in% c("talk", "tco2", "phosphate")) %>%
+  group_split(basin, parameter_coverage) %>%
+  # head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(n_A, offset_adj_mean_weighted, size = n_A)) +
+      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_point(alpha = 0.3) +
+      labs(title = paste(.x$basin, "|", .x$parameter_coverage)) +
+      facet_grid(parameter ~ ., scales = "free_y")
+  )
+
+xover_cruise_decade_all %>%
+  filter(parameter %in% c("talk", "tco2", "phosphate")) %>%
+  group_split(basin, parameter_coverage) %>%
+  # head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(n_A, offset_adj_mean_weighted, size = n_A)) +
+      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_point(alpha = 0.3) +
+      labs(title = paste(.x$basin, "|", .x$parameter_coverage)) +
+      facet_grid(parameter ~ decade, scales = "free_y")
+  )
+
+```
+
+
+```{r xover_cruise_mean_by_offset, fig.asp=1, eval=FALSE}
+
+xover_cruise_long_term_all %>%
+  filter(parameter %in% c("talk", "tco2", "phosphate")) %>%
+  group_split(basin, parameter_coverage) %>%
+  # head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(n_A, offset_adj_mean_weighted, size = n_A)) +
+      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_point(alpha = 0.3) +
+      labs(title = paste(.x$basin, "|", .x$parameter_coverage)) +
+      facet_grid(parameter ~ ., scales = "free_y")
+  )
+
+xover_cruise_decade_all %>%
+  filter(parameter %in% c("talk", "tco2", "phosphate")) %>%
+  group_split(basin, parameter_coverage) %>%
+  # head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(n_A, offset_adj_mean_weighted, size = n_A)) +
+      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_point(alpha = 0.3) +
+      labs(title = paste(.x$basin, "|", .x$parameter_coverage)) +
+      facet_grid(parameter ~ decade, scales = "free_y")
+  )
+
+```
+
+
+
 
 ### Decadal averages
 
