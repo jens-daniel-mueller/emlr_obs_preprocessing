@@ -2229,7 +2229,7 @@ xover_basin_annual <- xover_basin %>%
 xover_basin_annual %>%
   mutate(offset_adj_weighted_mean = cut(offset_adj_weighted_mean, c(-Inf, -5, -2, 2, 5, Inf))) %>%
   group_split(basin, parameter) %>%
-  head(1) %>%
+  # head(1) %>%
   map(
     ~ ggplot(data = .x,
              aes(
