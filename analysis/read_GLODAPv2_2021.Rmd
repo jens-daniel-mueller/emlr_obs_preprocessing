@@ -2011,7 +2011,7 @@ for (i_basin in basins) {
                    date_A, date_B, fill = offset_adj, size = n
                  )) +
           geom_point(alpha = 0.5, shape = 21) +
-          scale_fill_discrete_diverging(palette = "Blue-Red") +
+          scale_fill_discrete_diverging(palette = "Blue-Red", drop = FALSE) +
           labs(title = paste(i_basin, "|", .x$parameter, "| full")) +
           coord_fixed(xlim = c(ymd("1990-01-01"), ymd("2021-01-01")),
                       ylim = c(ymd("1990-01-01"), ymd("2021-01-01")))
@@ -2037,7 +2037,7 @@ for (i_basin in basins) {
                    date_A, date_B, fill = offset_adj, size = n
                  )) +
           geom_point(alpha = 0.5, shape = 21) +
-          scale_fill_discrete_diverging(palette = "Blue-Red") +
+          scale_fill_discrete_diverging(palette = "Blue-Red", drop = FALSE) +
           labs(title = paste(i_basin, "|", .x$parameter, "| full")) +
           coord_fixed(xlim = c(ymd("1990-01-01"), ymd("2021-01-01")),
                       ylim = c(ymd("1990-01-01"), ymd("2021-01-01")))
@@ -2059,7 +2059,7 @@ for (i_basin in basins) {
                    date_A, date_B, fill = offset_adj, size = n
                  )) +
           geom_point(alpha = 0.5, shape = 21) +
-          scale_fill_discrete_diverging(palette = "Blue-Red") +
+          scale_fill_discrete_diverging(palette = "Blue-Red", drop = FALSE) +
           labs(title = paste(i_basin, "|", .x$parameter, "| partial")) +
           coord_fixed(xlim = c(ymd("1990-01-01"), ymd("2021-01-01")),
                       ylim = c(ymd("1990-01-01"), ymd("2021-01-01")))
@@ -2082,7 +2082,7 @@ for (i_basin in basins) {
                    date_A, date_B, fill = offset_adj, size = n
                  )) +
           geom_point(alpha = 0.5, shape = 21) +
-          scale_fill_discrete_diverging(palette = "Blue-Red") +
+          scale_fill_discrete_diverging(palette = "Blue-Red", drop = FALSE) +
           labs(title = paste(i_basin, "|", .x$parameter, "| partial")) +
           coord_fixed(xlim = c(ymd("1990-01-01"), ymd("2021-01-01")),
                       ylim = c(ymd("1990-01-01"), ymd("2021-01-01")))
@@ -2229,13 +2229,13 @@ xover_basin_annual <- xover_basin %>%
 xover_basin_annual %>%
   mutate(offset_adj_weighted_mean = cut(offset_adj_weighted_mean, c(-Inf, -5, -2, 2, 5, Inf))) %>%
   group_split(basin, parameter) %>%
-  # head(1) %>%
+  head(1) %>%
   map(
     ~ ggplot(data = .x,
              aes(
                date_A, date_B, fill = offset_adj_weighted_mean, size = n)) +
-      geom_point(alpha = 0.5, shape = 21) +
-      scale_fill_discrete_diverging(palette = "Blue-Red") +
+      geom_point(shape = 21) +
+      scale_fill_discrete_diverging(palette = "Blue-Red", drop = FALSE) +
       labs(title = paste(.x$basin, "|", .x$parameter, "| full"))
       # coord_fixed(xlim = c(ymd("1990-01-01"), ymd("2021-01-01")),
       #             ylim = c(ymd("1990-01-01"), ymd("2021-01-01")))
