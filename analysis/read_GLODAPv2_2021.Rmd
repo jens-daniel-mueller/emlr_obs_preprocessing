@@ -2140,7 +2140,7 @@ xover_basin <- xover_basin %>%
     cstar_tco2 = tco2,
     cstar_talk = -0.5 * talk,
     phosphate = 1 - phosphate,
-    cstar_phosphate = - 117 * phosphate * phosphate_mean + 16 * 0.5 * phosphate * phosphate_mean
+    cstar_phosphate = - 117 * phosphate * phosphate_mean - 16 * 0.5 * phosphate * phosphate_mean
   )
 
 
@@ -2166,6 +2166,8 @@ xover_basin <- xover_basin %>%
   drop_na()
 
 ```
+
+### Cruise-by-cruise C*
 
 ```{r cruise_by_cruise_cstar}
 
@@ -2214,6 +2216,8 @@ xover_basin %>%
 
 
 ```
+
+### Cruise-by-cruise annual mean
 
 ```{r cruise_by_cruise_cstar_annual_mean}
 
@@ -2464,10 +2468,34 @@ xover_cruise_decade_all %>%
 
 ```
 
+#### PO
+
+```{r xover_cruise_mean_by_cruise_size_PO, fig.asp=1}
+
+xover_cruise_decade_all %>%
+  filter(parameter_coverage == "full",
+         basin == "N. Pacific",
+         decade != unique(xover_cruise_decade_all$decade)[1]) %>% 
+  group_split(basin) %>%
+  # head(1) %>%
+  map(
+    ~ ggplot(data = .x,
+             aes(n_A, offset_adj_mean_weighted, size = n_A, fill = decade_A)) +
+      geom_hline(yintercept = 0) +
+      geom_point(alpha = 0.5, shape = 21) +
+      scale_fill_discrete_sequential(palette = "viridis") +
+      labs(title = paste(.x$basin, "| full")) +
+      facet_grid(parameter ~ decade) +
+      coord_cartesian(ylim = c(-10,10))
+  )
+
+```
+
+
+
 ### Decadal averages
 
 ```{r xover_decadal_averages, fig.asp=1}
-
 
 xover_cruise_long_term_all %>%
   filter(parameter_coverage == "full") %>% 
@@ -2481,7 +2509,8 @@ xover_cruise_long_term_all %>%
       geom_point(aes(size = n_A), alpha = 0.3) +
       scale_fill_discrete_sequential(palette = "viridis") +
       labs(title = paste(.x$basin, "| full")) +
-      facet_grid(parameter ~ .)
+      facet_grid(parameter ~ .) +
+      coord_cartesian(ylim = c(-10,10))
   )
 
 xover_cruise_long_term_all %>% 
@@ -2499,7 +2528,8 @@ xover_cruise_long_term_all %>%
   geom_linerange() +
   geom_point() +
   facet_grid(basin ~ parameter) +
-  theme(axis.text.x = element_text(angle = 90))
+  theme(axis.text.x = element_text(angle = 90)) +
+  coord_cartesian(ylim = c(-10,10))
 
 
 xover_cruise_decade_all %>%
@@ -2514,23 +2544,25 @@ xover_cruise_decade_all %>%
       geom_point(aes(size = n_A), alpha = 0.3) +
       scale_fill_discrete_sequential(palette = "viridis") +
       labs(title = paste(.x$basin, "| full")) +
-      facet_grid(parameter ~ decade)
+      facet_grid(parameter ~ decade) +
+      coord_cartesian(ylim = c(-10,10))
   )
 
 
-xover_cruise_decade_all %>% 
-  group_by(basin, decade_A, decade, parameter_coverage, parameter) %>% 
-  summarise(offset_adj_sd = sd(offset_adj_mean_weighted, na.rm = TRUE),
-            offset_adj_mean_weighted = weighted.mean(offset_adj_mean_weighted, w = n_A)
-            ) %>% 
-  ungroup() %>% 
-  drop_na() %>% 
-  filter(parameter_coverage == "full") %>% 
-  ggplot(aes(decade_A, offset_adj_mean_weighted, fill=decade)) +
+xover_cruise_decade_all %>%
+  group_by(basin, decade_A, decade, parameter_coverage, parameter) %>%
+  summarise(
+    offset_adj_mean_weighted = weighted.mean(offset_adj_mean_weighted, w = n_A)
+  ) %>%
+  ungroup() %>%
+  drop_na() %>%
+  filter(parameter_coverage == "full") %>%
+  ggplot(aes(decade_A, offset_adj_mean_weighted, fill = decade)) +
   geom_hline(yintercept = 0) +
   geom_point(shape = 21) +
   facet_grid(basin ~ parameter) +
-  theme(axis.text.x = element_text(angle = 90))
+  theme(axis.text.x = element_text(angle = 90)) +
+  coord_cartesian(ylim = c(-10, 10))
 
 ```
 
