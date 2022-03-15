@@ -2173,7 +2173,7 @@ xover_basin <- xover_basin %>%
 
 xover_basin %>%
   filter(parameter_coverage == "full") %>% 
-  mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, 2, 5, Inf))) %>%
+  mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf))) %>%
   group_split(basin, parameter) %>%
   # head(1) %>%
   map(
@@ -2182,14 +2182,14 @@ xover_basin %>%
                date_A, date_B, fill = offset_adj, size = n
              )) +
       geom_point(alpha = 0.5, shape = 21) +
-      scale_fill_discrete_diverging(palette = "Blue-Red") +
+      scale_fill_discrete_diverging(palette = "Blue-Red", drop = FALSE) +
       labs(title = paste(.x$basin, "|", .x$parameter, "| full")) +
       coord_fixed(xlim = c(ymd("1990-01-01"), ymd("2021-01-01")),
                   ylim = c(ymd("1990-01-01"), ymd("2021-01-01")))
   )
 
 xover_basin %>%
-  mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, 2, 5, Inf))) %>%
+  mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf))) %>%
   group_split(basin, parameter) %>%
   # head(1) %>%
   map(
@@ -2198,18 +2198,18 @@ xover_basin %>%
                date_A, date_B, fill = offset_adj, size = n
              )) +
       geom_point(alpha = 0.5, shape = 21) +
-      scale_fill_discrete_diverging(palette = "Blue-Red") +
+      scale_fill_discrete_diverging(palette = "Blue-Red", drop = FALSE) +
       labs(title = paste(.x$basin, "|", .x$parameter, "| partial")) +
       coord_fixed(xlim = c(ymd("1990-01-01"), ymd("2021-01-01")),
                   ylim = c(ymd("1990-01-01"), ymd("2021-01-01")))
   )
 
 xover_basin %>%
-  mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, 2, 5, Inf))) %>%
+  mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf))) %>%
   filter(parameter_coverage == "full") %>%
   ggplot(aes(date_A, date_B, fill = offset_adj, size = n)) +
   geom_point(alpha = 0.5, shape = 21) +
-  scale_fill_discrete_diverging(palette = "Blue-Red") +
+  scale_fill_discrete_diverging(palette = "Blue-Red", drop = FALSE) +
   coord_fixed(xlim = c(ymd("1990-01-01"), ymd("2021-01-01")),
               ylim = c(ymd("1990-01-01"), ymd("2021-01-01"))) +
   facet_grid(basin ~ parameter)
@@ -2231,7 +2231,7 @@ xover_basin_annual <- xover_basin %>%
   ungroup()
 
 xover_basin_annual %>%
-  mutate(offset_adj_weighted_mean = cut(offset_adj_weighted_mean, c(-Inf, -5, -2, 2, 5, Inf))) %>%
+  mutate(offset_adj_weighted_mean = cut(offset_adj_weighted_mean, c(-Inf, -5, -2, -1, 1, 2, 5, Inf))) %>%
   group_split(basin, parameter) %>%
   # head(1) %>%
   map(
@@ -2240,9 +2240,9 @@ xover_basin_annual %>%
                date_A, date_B, fill = offset_adj_weighted_mean, size = n)) +
       geom_point(shape = 21) +
       scale_fill_discrete_diverging(palette = "Blue-Red", drop = FALSE) +
-      labs(title = paste(.x$basin, "|", .x$parameter, "| full"))
-      # coord_fixed(xlim = c(ymd("1990-01-01"), ymd("2021-01-01")),
-      #             ylim = c(ymd("1990-01-01"), ymd("2021-01-01")))
+      labs(title = paste(.x$basin, "|", .x$parameter, "| full")) +
+      coord_fixed(xlim = c(1990,2021),
+                  ylim = c(1990,2021))
   )
 
 
@@ -2365,7 +2365,8 @@ xover_cruise_long_term_all %>%
       geom_hline(yintercept = 0) +
       geom_point(alpha = 0.3) +
       labs(title = paste(.x$basin, "| full")) +
-      facet_grid(parameter ~ ., scales = "free_y")
+      facet_grid(parameter ~ ., scales = "free_y") +
+      coord_cartesian(ylim = c(-10,10))
   )
 
 xover_cruise_decade_all %>%
@@ -2378,54 +2379,10 @@ xover_cruise_decade_all %>%
       geom_hline(yintercept = 0) +
       geom_point(alpha = 0.3) +
       labs(title = paste(.x$basin, "| full")) +
-      facet_grid(parameter ~ decade, scales = "free_y")
+      facet_grid(parameter ~ decade, scales = "free_y") +
+      coord_cartesian(ylim = c(-10,10))
   )
 
-#
-#     print(
-#       xover_subbasin_decade_stats %>%
-#         kable(caption = paste0(i_basin, " | ", i_decade_start, "s")) %>%
-#         kable_styling() %>%
-#         scroll_box(height = "300px")
-#     )
-#
-#
-#     p_crossover_ts <- xover_subbasin_decade %>%
-#       ggplot(aes(date_B, offset_adj)) +
-#       geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
-#       geom_point(shape = 21) +
-#       scale_color_brewer(palette = "Set1") +
-#       facet_grid(parameter ~ ., scales = "free_y") +
-#       labs(title = paste0(i_basin, " | ", i_decade_start, "s")) +
-#       theme(
-#         legend.position = "bottom",
-#         legend.direction = "vertical",
-#         axis.title.x = element_blank()
-#       )
-#
-#     p_crossover_decadal <-
-#       ggplot() +
-#       geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
-#       geom_violin(data = xover_subbasin_decade,
-#                   aes(x = decade, y = offset_adj),
-#                   fill = "gold") +
-#       geom_boxplot(data = xover_subbasin_decade,
-#                    aes(x = decade, y = offset_adj),
-#                    width = 0.2) +
-#       facet_grid(parameter ~ ., scales = "free_y") +
-#       labs(title = "Decadal offsets") +
-#       theme(axis.title.x = element_blank(),
-#             axis.text.x = element_text(angle = 90))
-#
-#     print(p_crossover_ts + p_crossover_decadal +
-#             plot_layout(widths = c(2, 1)))
-#
-#     rm(p_crossover_ts, p_crossover_decadal)
-#
-#   }
-# }
-#
-# rm(xover_subbasin, xover_cruise_decade, xover_subbasin_decade, xover_subbasin_decade_stats)
 
 ```
 
@@ -2445,7 +2402,8 @@ xover_cruise_long_term_all %>%
       geom_point(alpha = 0.5, shape = 21) +
       scale_fill_discrete_sequential(palette = "viridis") +
       labs(title = paste(.x$basin, "| full")) +
-      facet_grid(parameter ~ .)
+      facet_grid(parameter ~ .) +
+      coord_cartesian(ylim = c(-10,10))
   )
 
 xover_cruise_decade_all <- xover_cruise_decade_all %>%
@@ -2462,7 +2420,8 @@ xover_cruise_decade_all %>%
       geom_point(alpha = 0.5, shape = 21) +
       scale_fill_discrete_sequential(palette = "viridis") +
       labs(title = paste(.x$basin, "| full")) +
-      facet_grid(parameter ~ decade)
+      facet_grid(parameter ~ decade) +
+      coord_cartesian(ylim = c(-10,10))
   )
 
 
