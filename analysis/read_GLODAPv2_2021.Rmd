@@ -2099,6 +2099,9 @@ rm(xover_basin_all)
 
 ```
 
+### Cruise-by-cruise C*
+
+
 ```{r convert_offset_to_cstar_units}
 
 xover_basin <- xover_basin %>% 
@@ -2139,7 +2142,7 @@ xover_basin <- xover_basin %>%
   mutate(
     cstar_tco2 = tco2,
     cstar_talk = -0.5 * talk,
-    phosphate = 1 - phosphate,
+    phosphate = phosphate - 1,
     cstar_phosphate = - 117 * phosphate * phosphate_mean - 16 * 0.5 * phosphate * phosphate_mean
   )
 
@@ -2157,7 +2160,8 @@ xover_basin <- xover_basin %>%
   select(-c(phosphate, tco2, talk, phosphate_mean))
 
 xover_basin <- xover_basin %>% 
-  mutate(cstar_total = cstar_tco2 + cstar_talk + cstar_phosphate) %>% 
+  mutate(cstar_total = cstar_tco2 + cstar_talk + cstar_phosphate,
+         cstar_tco2_talk = cstar_tco2 + cstar_talk) %>% 
   pivot_longer(starts_with("cstar"),
                names_to = "parameter",
                values_to = "offset_adj")
@@ -2167,7 +2171,6 @@ xover_basin <- xover_basin %>%
 
 ```
 
-### Cruise-by-cruise C*
 
 ```{r cruise_by_cruise_cstar}
 
