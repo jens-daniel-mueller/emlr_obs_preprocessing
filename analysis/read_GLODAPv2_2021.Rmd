@@ -31,7 +31,6 @@ path_preprocessing  <- paste(path_root, "/observations/preprocessing/", sep = ""
 library(lubridate)
 library(ggrepel)
 library(kableExtra)
-library(colorspace)
 ```
 
 # Read files
@@ -365,7 +364,7 @@ basinmask_5 <- basinmask %>%
   select(lat, lon, basin)
 
 basinmask <- basinmask %>% 
-  filter(MLR_basins == "2") %>% 
+  filter(MLR_basins == "4") %>% 
   select(lat, lon, basin_AIP)
 
 GLODAP <- inner_join(GLODAP, basinmask)
@@ -2511,20 +2510,27 @@ xover_cruise_decade_all %>%
   )
 
 
-xover_cruise_decade_all %>%
+xover_cruise_decade_all_stats <- xover_cruise_decade_all %>%
   group_by(basin, decade_A, decade, parameter_coverage, parameter) %>%
   summarise(
     offset_adj_mean_weighted = weighted.mean(offset_adj_mean_weighted, w = n_A)
   ) %>%
   ungroup() %>%
   drop_na() %>%
-  filter(parameter_coverage == "full") %>%
+  filter(parameter_coverage == "full")
+
+xover_cruise_decade_all_stats %>%
   ggplot(aes(decade_A, offset_adj_mean_weighted, fill = decade)) +
   geom_hline(yintercept = 0) +
   geom_point(shape = 21) +
   facet_grid(basin ~ parameter) +
   theme(axis.text.x = element_text(angle = 90)) +
   coord_cartesian(ylim = c(-10, 10))
+
+xover_cruise_decade_all_stats %>% 
+  kable() %>%
+  kable_styling() %>%
+  scroll_box(height = "300px")
 
 ```
 

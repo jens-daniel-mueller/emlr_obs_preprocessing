@@ -159,7 +159,7 @@ V101 <- V101 %>%
 # use only three basin to assign general basin mask
 # ie this is not specific to the MLR fitting
 basinmask <- basinmask %>% 
-  filter(MLR_basins == "2") %>% 
+  filter(MLR_basins == "4") %>% 
   select(lat, lon, basin_AIP)
 
 dcant <- inner_join(dcant, basinmask)

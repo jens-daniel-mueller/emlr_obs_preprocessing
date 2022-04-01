@@ -12,447 +12,30 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r global_options, include = FALSE}
-knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```{r parent, child = "/nfs/kryo/work/jenmueller/emlr_cant/utilities/setup_obs.Rmd"}
+# this chunk runs the code stored in setup.Rmd
+# if required, please refer to instructions given here:
+# https://jdblischak.github.io/workflowr/articles/wflow-07-common-code.html
 ```
 
 ```{r library, include=FALSE}
-library(tidyverse)
 library(tidync)
 library(reticulate)
 library(oce)
 library(gsw)
 library(geosphere)
-library(patchwork)
+library(stars)
 ```
 
 ```{r define_paths, include=FALSE}
 
 path_woa2018        <- "/nfs/kryo/work/updata/woa2018/"
-
-path_root           <- "/nfs/kryo/work/jenmueller/emlr_cant"
-path_functions      <- paste(path_root, "/utilities/functions/", sep = "")
-path_files          <- paste(path_root, "/utilities/files/", sep = "")
 path_preprocessing  <- paste(path_root, "/observations/preprocessing/", sep = "")
 
 ```
 
-```{r read_params_global, include = FALSE}
-params_global <-
-  read_rds(paste(path_files,
-                 "params_global.rds",
-                 sep = ""))
-```
-
-```{r read_functions, include = FALSE}
-source(paste(path_functions,
-             "plotting_functions_obs.R",
-             sep = ""))
-```
-
-```{r set_ggplot_theme_global, include = FALSE}
-theme_set(theme_bw())
-```
-
 # Data source
 - Data source: [World Ocean Atlas 2018](https://www.nodc.noaa.gov/OC5/woa18/woa18data.html){target="_blank"}
-
-# Masks
-
-
-## Land
-
-### Read mask
-
-The land sea mask with 1x1° resolution from the file `landsea_01.msk` was used.
-
-```{r read_landsea_mask}
-
-landsea_01 <- read_csv(
-  paste(
-    path_woa2018,
-    "masks/landsea_01.msk",
-    sep = ""),
-  skip = 1,
-  col_types = list(.default = "d"))
-
-```
-
-### Label
-
-According to the [WOA18 documentation](https://data.nodc.noaa.gov/woa/WOA18/DOC/woa18documentation.pdf){target="_blank"} document:  
-
-*"The landsea_XX.msk contains the standard depth level number at which the bottom of the ocean is first encountered at each quarter-degree or one-degree square for the entire world.  Land will have a value of 1, corresponding to the surface."*
-
-The landmask was derived as coordinates with value 1.
-
-```{r format_landmask}
-
-landmask <- landsea_01 %>%
-  mutate(region = if_else(Bottom_Standard_Level == "1",
-                          "land", "ocean")) %>%
-  select(-Bottom_Standard_Level)
-
-landmask <- landmask %>%
-  rename(lat = Latitude,
-         lon = Longitude) %>%
-  mutate(lon = if_else(lon < 20, lon + 360, lon)) %>%
-  filter(lat >= params_global$lat_min,
-         lat <= params_global$lat_max
-         )
-
-landseamask <- landmask
-
-landmask <- landmask %>%
-  filter(region == "land") %>%
-  select(-region)
-
-rm(landsea_01)
-
-```
-
-## Basins
-
-### Read mask
-
-The surface mask (0m) with 1x1° resolution from the file `basinmask_01.msk` was used.
-
-```{r read_and_format_basinmask}
-
-basinmask_01 <- read_csv(
-  paste(
-    path_woa2018,
-    "masks/basinmask_01.msk",
-    sep = ""),
-  skip = 1,
-  col_types = list(.default = "d"))
-
-basinmask_01 <- basinmask_01 %>% 
-  select(Latitude:Basin_0m) %>% 
-  mutate(Basin_0m = as.factor(Basin_0m)) %>% 
-  rename(lat = Latitude, lon = Longitude)
-  
-```
-
-
-### Basins for budgets
-
-According to [WOA FAQ](https://www.nodc.noaa.gov/OC5/WOD/wod-woa-faqs.html){target="_blank"} website and [WOA18 documentation](https://data.nodc.noaa.gov/woa/WOA18/DOC/woa18documentation.pdf){target="_blank"}, number codes in the mask files were used to assign ocean basins as follows:  
-
-Atlantic Ocean:  
-
-- 1: Atlantic Ocean
-- 10: Southern Ocean between 63°W and 20°E
-- 11: Arctic Ocean (restricted by northern latitude limit `r params_global$lat_max`N)
-
-Indian Ocean:  
-
-- 3: Indian Ocean 
-- 10: Southern Ocean between 20°E and 147°E
-- 56: Bay of Bengal
-
-Pacific Ocean:  
-
-- 2: Pacific Ocean
-- 10: Southern Ocean between 147°E and 63°W
-- (12: Sea of Japan; currently not included)
-
-```{r assign_standard_basin_labels}
-
-# assign basin labels
-basinmask_01 <- basinmask_01 %>%
-  filter(Basin_0m %in% c("1", "2", "3", "10", "11", "56")) %>%
-  mutate(
-    basin_AIP = "none",
-    basin_AIP = case_when(
-      Basin_0m == "1" ~ "Atlantic",
-      Basin_0m == "10" & lon >= -63 & lon < 20 ~ "Atlantic",
-      Basin_0m == "11" ~ "Atlantic",
-      Basin_0m == "3" ~ "Indian",
-      Basin_0m == "56" ~ "Indian",
-      Basin_0m == "10" & lon >= 20 & lon < 147 ~ "Indian",
-      Basin_0m == "2" ~ "Pacific",
-      # Basin_0m == "12" ~ "Pacific",
-      Basin_0m == "10" &
-        lon >= 147 | lon < -63 ~ "Pacific"
-    )
-  ) %>%
-  select(-Basin_0m)
-
-# apply northern latitude boundary
-basinmask_01 <- basinmask_01 %>%
-  filter(lat <= params_global$lat_max)
-
-# harmonize lon scale
-basinmask_01 <- basinmask_01  %>%
-  mutate(lon = if_else(lon < 20, lon + 360, lon))
-
-```
-
-```{r basin_AIP_masks_WOA18_map, fig.asp=0.5}
-
-# generate base map, which is further used throughout the project
-map <-
-  ggplot() +
-  geom_tile(data = landmask,
-            aes(lon, lat), fill = "grey80") +
-  coord_quickmap(expand = 0) +
-  theme(axis.title = element_blank())
-
-# plot basin_AIP map
-map +
-  geom_raster(data = basinmask_01,
-              aes(lon, lat, fill = basin_AIP)) +
-  scale_fill_brewer(palette = "Dark2")
-
-```
-
-```{r landsea_masks_WOA18_map, fig.asp=0.5}
-
-# generate base map, which is further used throughout the project
-ggplot() +
-  geom_raster(data = landseamask,
-              aes(lon, lat, fill = region)) +
-  coord_quickmap(expand = 0) +
-  scale_fill_brewer(palette = "Paired") +
-  theme(axis.title = element_blank())
-
-```
-
-### Basins for MLR fitting
-
-For the MLR fitting, ocean basins are further split up, as plotted below.
-
-```{r assign_alternative_basin_labels}
-
-# 1 basins
-basinmask_01 <- basinmask_01 %>%
-  mutate(basin = "global",
-         MLR_basins = "1")
-
-# 2 basins
-basinmask_2 <- basinmask_01 %>%
-  mutate(basin = if_else(basin_AIP == "Atlantic",
-                         "Atlantic",
-                         "Indo-Pacific"),
-         MLR_basins = "2")
-
-# 5 basins
-basinmask_5 <- basinmask_01 %>%
-  mutate(
-    basin = case_when(
-      basin_AIP ==  "Atlantic" & lat > params_global$lat_equator ~ "N_Atlantic",
-      basin_AIP ==  "Atlantic" & lat < params_global$lat_equator ~ "S_Atlantic",
-      basin_AIP ==  "Pacific" & lat > params_global$lat_equator ~ "N_Pacific",
-      basin_AIP ==  "Pacific" & lat < params_global$lat_equator ~ "S_Pacific",
-      basin_AIP ==  "Indian" ~ "Indian"
-    )
-  ) %>%
-  mutate(MLR_basins = "5")
-
-# SO basin separate
-basinmask_SO <- basinmask_01 %>%
-  mutate(
-    basin = if_else(
-      lat < params_global$lat_min_SO, "SO", basin)
-  ) %>%
-  mutate(MLR_basins = "SO")
-
-# SO_2 basin separate
-basinmask_SO_2 <- basinmask_01 %>%
-  mutate(
-    basin = if_else(basin_AIP == "Atlantic",
-                         "Atlantic",
-                         "Indo-Pacific"),
-    basin = if_else(
-      lat < params_global$lat_min_SO, "SO", basin)
-  ) %>%
-  mutate(MLR_basins = "SO_2")
-
-
-# SO_5 basin separate
-basinmask_SO_5 <- basinmask_01 %>%
-  mutate(
-    basin = case_when(
-      basin_AIP ==  "Atlantic" & lat > 35 ~ "N_Atlantic",
-      basin_AIP ==  "Atlantic" & lat < 35 ~ "Atlantic",
-      basin_AIP ==  "Pacific" & lat > 35 ~ "N_Pacific",
-      basin_AIP ==  "Pacific" & lat < 35 ~ "Pacific",
-      basin_AIP ==  "Indian" ~ "Indian"
-    ),
-    basin = if_else(lat < params_global$lat_min_SO, "SO", basin)
-  ) %>%
-  mutate(MLR_basins = "SO_5")
-
-# SO basin separate, with others being AIP
-basinmask_SO_AIP <- basinmask_01 %>%
-  mutate(
-    basin = if_else(
-      lat < params_global$lat_min_SO, "SO", basin_AIP)
-  ) %>%
-  mutate(MLR_basins = "SO_AIP")
-
-# 3 basins
-basinmask_AIP <- basinmask_01 %>%
-  mutate(
-    basin = basin_AIP) %>%
-  mutate(MLR_basins = "AIP")
-
-# Indian ocean lat bands test
-basinmask_IO_test_lat <- basinmask_01 %>%
-  mutate(
-    basin = case_when(
-      basin_AIP ==  "Indian" & lat > 0 ~ "Indian1",
-      basin_AIP ==  "Indian" & lat <= 0 & lat > -20 ~ "Indian2",
-      basin_AIP ==  "Indian" & lat <= -20 & lat > -40 ~ "Indian3",
-      basin_AIP ==  "Indian" & lat <= -40 & lat > -60 ~ "Indian4",
-      basin_AIP ==  "Indian" & lat <= -60 ~ "Indian5",
-      basin_AIP ==  "Atlantic" ~ "Atlantic",
-      basin_AIP ==  "Pacific" ~ "Pacific"
-    ),
-    MLR_basins = "IO_test_lat"
-  )
-
-# Indian ocean lon bands test
-basinmask_IO_test_lon <- basinmask_01 %>%
-  mutate(
-    basin = case_when(
-      basin_AIP ==  "Indian" & lon <= 50 & lon > 20 ~ "Indian1",
-      basin_AIP ==  "Indian" & lon <= 80 & lon > 50 ~ "Indian2",
-      basin_AIP ==  "Indian" & lon <= 110 & lon > 80 ~ "Indian3",
-      basin_AIP ==  "Indian" & lon > 110 ~ "Indian4",
-      basin_AIP ==  "Atlantic" ~ "Atlantic",
-      basin_AIP ==  "Pacific" ~ "Pacific"
-    ),
-    MLR_basins = "IO_test_lon"
-  )
-
-
-# join basin masks into one file
-basinmask_01 <- bind_rows(basinmask_01, basinmask_2, basinmask_5,
-                          basinmask_SO, basinmask_SO_2, basinmask_SO_5,
-                          basinmask_SO_AIP, basinmask_AIP,
-                          basinmask_IO_test_lat, basinmask_IO_test_lon)
-
-```
-
-```{r basin_masks_WOA18_map, fig.asp=0.5}
-
-for (i_MLR_basins in unique(basinmask_01$MLR_basins)) {
-  
-  print(
-    map +
-      geom_raster(
-        data = basinmask_01 %>% filter(MLR_basins == i_MLR_basins),
-        aes(lon, lat, fill = basin)
-      ) +
-      scale_fill_brewer(palette = "Dark2") +
-      labs(title = paste("MLR basin label:", i_MLR_basins))
-  )
-  
-}
-
-```
-
-
-## Global section
-
-To plot sections from the North Atlantic south to the Southern Ocean, around Antarctica and back North across the Pacific Ocean, corresponding coordinates were subsetted from the basin mask and distances between coordinate grid points calculated.
-
-```{r Create_coordinates_of_section_global}
-
-section <- basinmask_01 %>%
-  select(lon, lat)
-
-# subset individual section parts
-Atl_NS <- section %>%
-  filter(
-    lon == params_global$lon_Atl_section,
-    lat <= params_global$lat_section_N,
-    lat >= params_global$lat_section_S
-  ) %>%
-  arrange(-lat)
-
-Atl_SO <- section %>%
-  filter(lon > params_global$lon_Atl_section,
-         lat == params_global$lat_section_S) %>%
-  arrange(lon)
-
-Pac_SO <- section %>%
-  filter(lon < params_global$lon_Pac_section,
-         lat == params_global$lat_section_S) %>%
-  arrange(lon)
-
-Pac_SN <- section %>%
-  filter(
-    lon == params_global$lon_Pac_section,
-    lat <= params_global$lat_section_N,
-    lat >= params_global$lat_section_S
-  ) %>%
-  arrange(lat)
-
-# join individual section parts
-section_global_coordinates <- bind_rows(Atl_NS,
-                     Atl_SO,
-                     Pac_SO,
-                     Pac_SN)
-
-# convert to regular lon coordinates for distance calculation
-section_global_coordinates <- section_global_coordinates %>%
-  mutate(lon_180 = if_else(lon > 180, lon - 360, lon))
-
-# calculate distance along section
-section_global_coordinates <- section_global_coordinates %>%
-  mutate(dist_int = distGeo(cbind(lon_180, lat)) / 1e6) %>%
-  mutate(dist = cumsum(dist_int))
-
-section_global_coordinates <- section_global_coordinates %>%
-  select(lon, lat, dist) %>% 
-  drop_na()
-
-rm(Atl_NS, Atl_SO, Pac_SN, Pac_SO, section)
-
-```
-
-```{r section_global_map, fig.asp=0.5}
-
-map +
-  geom_point(data = section_global_coordinates,
-             aes(lon, lat, col = dist)) +
-  scale_colour_viridis_b(name = "Distance (Mm)")
-
-```
-
-
-## Write files
-
-```{r write_files}
-
-# land sea mask
-landseamask %>%
-  write_csv(paste(path_files,
-                  "land_sea_mask_WOA18.csv",
-                  sep = ""))
-
-# basin mask
-basinmask_01 %>%
-  write_csv(paste(path_files,
-                  "basin_mask_WOA18.csv",
-                  sep = ""))
-# global section
-section_global_coordinates %>%
-  write_csv(paste(path_files,
-                  "section_global_coordinates.csv",
-                  sep = ""))
-
-# base map ggplot
-map %>%
-  write_rds(paste(path_files,
-                  "map_landmask_WOA18.rds",
-                  sep = ""))
-
-```
-
 
 # Climatology S and T
 
@@ -541,13 +124,13 @@ rm(WOA18_sal_tibble, WOA18_temp_tibble)
 # use only three basin to assign general basin mask
 # ie this is not specific to the MLR fitting
 
-basinmask_01 <- basinmask_01 %>% 
-  filter(MLR_basins == "2") %>% 
+basinmask <- basinmask %>% 
+  filter(MLR_basins == "4") %>% 
   select(lat, lon, basin_AIP)
 
 # restrict predictor fields to basin mask grid
 
-WOA18_sal_temp <- inner_join(WOA18_sal_temp, basinmask_01)
+WOA18_sal_temp <- inner_join(WOA18_sal_temp, basinmask)
 
 ```
 
@@ -788,7 +371,7 @@ for (file in file_list) {
     mutate(lon = if_else(lon < 20, lon + 360, lon))
   
   # apply general basin mask
-  WOA18_tibble <- inner_join(WOA18_tibble, basinmask_01)
+  WOA18_tibble <- inner_join(WOA18_tibble, basinmask)
   
   # subset depth levels
   WOA18_tibble <- WOA18_tibble %>%

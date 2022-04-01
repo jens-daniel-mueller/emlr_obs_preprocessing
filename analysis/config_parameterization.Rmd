@@ -31,10 +31,12 @@ Following global parameterizations were chosen to run all analysis and display r
 
 ```{r define_global_params_global, class.source = 'fold-show'}
 
-depth_levels = c(0, 150,  500, 2000, #GLODAP depth levels
-                 5, 155, 483, 1969, # CESM depth levels
+# CESM depth levels
+depth_levels = c(0, 150,  500, 2000,
+                 5, 155, 483, 1969,
                  3, 160, 534, 2054)
 
+#GLODAP depth levels
 depth_levels_33 <- c(
   0,
   10,
@@ -70,12 +72,13 @@ depth_levels_33 <- c(
   5000,
   5500
 )
+
 longitude_sections_basin <- c(335.5, 190.5, 70.5)
 longitude_sections_regular <- seq(30.5, 380.5, 20)
 
 params_global <-
   lst(
-    lat_max = 65,
+    lat_max = 90,
     lat_min = -85,
     lat_min_SO = -35,
     lat_equator = 0,
