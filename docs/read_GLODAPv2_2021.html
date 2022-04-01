@@ -357,6 +357,9 @@ div.tocify {
     </li>
   </ul>
 </li>
+<li>
+  <a href="read_regions.html">Regions</a>
+</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Predictors
@@ -369,9 +372,6 @@ div.tocify {
     </li>
     <li>
       <a href="read_GLODAPv2_2016_MappedClimatologies.html">GLODAPv2_2016_MappedClimatologies</a>
-    </li>
-    <li>
-      <a href="read_OceanSODA.html">OceanSODA</a>
     </li>
   </ul>
 </li>
@@ -403,16 +403,25 @@ div.tocify {
     <li>
       <a href="read_Sabine_2004.html">Sabine 2004</a>
     </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    CO2
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="read_CO2_atm.html">Atmospheric CO2</a>
+    </li>
+    <li>
+      <a href="read_OceanSODA.html">OceanSODA</a>
+    </li>
     <li>
       <a href="read_RECCAP2_flux_products.html">Flux products</a>
     </li>
   </ul>
-</li>
-<li>
-  <a href="read_CO2_atm.html">Atmospheric CO2</a>
-</li>
-<li>
-  <a href="analysis_regional_clusters.html">Clustering</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -449,7 +458,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">GLODAPv2_2021</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">15 March, 2022</h4>
+<h4 class="date">01 April, 2022</h4>
 
 </div>
 
@@ -474,7 +483,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-03-15
+<strong>Last updated:</strong> 2022-04-01
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -565,16 +574,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreea49100c92fc1a4ebcd8ba4b3a33ca02a858ac421targetblanka49100ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/a49100c92fc1a4ebcd8ba4b3a33ca02a858ac421" target="_blank">a49100c</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreea1ea47d7b85c4fd6e00eff79e352229de197d0ectargetblanka1ea47da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/a1ea47d7b85c4fd6e00eff79e352229de197d0ec" target="_blank">a1ea47d</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreea49100c92fc1a4ebcd8ba4b3a33ca02a858ac421targetblanka49100ca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreea1ea47d7b85c4fd6e00eff79e352229de197d0ectargetblanka1ea47da" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/a49100c92fc1a4ebcd8ba4b3a33ca02a858ac421" target="_blank">a49100c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/a1ea47d7b85c4fd6e00eff79e352229de197d0ec" target="_blank">a1ea47d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -588,7 +597,14 @@ Ignored files:
 
 Untracked files:
     Untracked:  code/IO_1990_own_crossover_analysis_backup.R
+    Untracked:  code/analysis_regional_clusters.Rmd
     Untracked:  code/read_GLODAPv2_2020.Rmd
+
+Unstaged changes:
+    Modified:   analysis/_site.yml
+    Deleted:    analysis/analysis_regional_clusters.Rmd
+    Modified:   analysis/read_OceanSODA.Rmd
+    Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
 <p>
@@ -627,6 +643,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a1ea47d7b85c4fd6e00eff79e352229de197d0ec/analysis/read_GLODAPv2_2021.Rmd" target="_blank">a1ea47d</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+<td>
+rerun all including arctic and North Atlantic biome
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/68c52784c6196129839597c0890597d97adce769/docs/read_GLODAPv2_2021.html" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -3676,7 +3726,7 @@ basinmask_5 &lt;- basinmask %&gt;%
   select(lat, lon, basin)
 
 basinmask &lt;- basinmask %&gt;% 
-  filter(MLR_basins == &quot;2&quot;) %&gt;% 
+  filter(MLR_basins == &quot;4&quot;) %&gt;% 
   select(lat, lon, basin_AIP)
 
 GLODAP &lt;- inner_join(GLODAP, basinmask)</code></pre>
@@ -4808,6 +4858,9 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[4]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/qc_loss-4.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>loss_qc_cruise %&gt;%
   filter(loss != 0) %&gt;%
   select(basin_AIP,
@@ -4847,7 +4900,67 @@ loss
 <tbody>
 <tr>
 <td style="text-align:left;">
-Atlantic
+Arctic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+18RD19980404
+</td>
+<td style="text-align:left;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+18SN19970801
+</td>
+<td style="text-align:left;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+18SN19970803
+</td>
+<td style="text-align:left;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
 </td>
 <td style="text-align:left;">
 1989-1999
@@ -4856,18 +4969,18 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-11
+5
 </td>
 <td style="text-align:left;">
-06MT19900123
+18RD19980404
 </td>
 <td style="text-align:left;">
-1
+3
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Atlantic
+Arctic
 </td>
 <td style="text-align:left;">
 1989-1999
@@ -4876,18 +4989,38 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-12
+6
 </td>
 <td style="text-align:left;">
-33LK19960415
+18SN19970801
 </td>
 <td style="text-align:left;">
-1
+3
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-Atlantic
+Arctic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+18SN19970803
+</td>
+<td style="text-align:left;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
 </td>
 <td style="text-align:left;">
 2000-2009
@@ -4896,10 +5029,370 @@ Atlantic
 predictor
 </td>
 <td style="text-align:right;">
-8
+3
 </td>
 <td style="text-align:left;">
-35TH20010823
+49NZ20020822
+</td>
+<td style="text-align:left;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+90JS20080815
+</td>
+<td style="text-align:left;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+32H120040718
+</td>
+<td style="text-align:left;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+58AA20000923
+</td>
+<td style="text-align:left;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+32H120020505
+</td>
+<td style="text-align:left;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+49NZ20000803
+</td>
+<td style="text-align:left;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+32H120040515
+</td>
+<td style="text-align:left;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+49NZ20020822
+</td>
+<td style="text-align:left;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+90JS20080815
+</td>
+<td style="text-align:left;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+32H120040718
+</td>
+<td style="text-align:left;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+32H120020718
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+58AA20000923
+</td>
+<td style="text-align:left;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+32H120020505
+</td>
+<td style="text-align:left;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+49NZ20000803
+</td>
+<td style="text-align:left;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+32H120040515
+</td>
+<td style="text-align:left;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+06AQ20110805
+</td>
+<td style="text-align:left;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+316N20150906
+</td>
+<td style="text-align:left;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+06AQ20110805
+</td>
+<td style="text-align:left;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+316N20150906
 </td>
 <td style="text-align:left;">
 3
@@ -4916,13 +5409,13 @@ Atlantic
 predictor
 </td>
 <td style="text-align:right;">
-14
+10
 </td>
 <td style="text-align:left;">
-33RO20070710
+35TH20010823
 </td>
 <td style="text-align:left;">
-1
+3
 </td>
 </tr>
 <tr>
@@ -4936,7 +5429,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-8
+10
 </td>
 <td style="text-align:left;">
 35TH20010823
@@ -4956,7 +5449,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-9
+11
 </td>
 <td style="text-align:left;">
 74DI20040404
@@ -4976,7 +5469,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-10
+12
 </td>
 <td style="text-align:left;">
 35TH20080610
@@ -4996,7 +5489,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-12
+14
 </td>
 <td style="text-align:left;">
 35TH20040604
@@ -5016,7 +5509,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-13
+15
 </td>
 <td style="text-align:left;">
 35TH20020611
@@ -5060,26 +5553,6 @@ target
 </td>
 <td style="text-align:left;">
 35TH20100608
-</td>
-<td style="text-align:left;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-2010-2020
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-13
-</td>
-<td style="text-align:left;">
-29AH20160617
 </td>
 <td style="text-align:left;">
 1
@@ -5179,7 +5652,7 @@ target
 6
 </td>
 <td style="text-align:left;">
-316N19930222
+316N19921006
 </td>
 <td style="text-align:left;">
 1
@@ -5199,7 +5672,7 @@ target
 7
 </td>
 <td style="text-align:left;">
-316N19921006
+316N19930222
 </td>
 <td style="text-align:left;">
 1
@@ -5983,6 +6456,9 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[4]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/f_loss-4.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>loss_f_cruise %&gt;%
   filter(loss != 0) %&gt;%
   select(basin_AIP,
@@ -6020,6 +6496,66 @@ loss
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+06AQ19960712
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+33HQ20150809
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+06AQ20150817
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 Atlantic
@@ -6085,53 +6621,13 @@ target
 Atlantic
 </td>
 <td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:left;">
-06MT19900123
-</td>
-<td style="text-align:left;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-12
-</td>
-<td style="text-align:left;">
-33LK19960415
-</td>
-<td style="text-align:left;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
 2000-2009
 </td>
 <td style="text-align:left;">
 target
 </td>
 <td style="text-align:right;">
-8
+10
 </td>
 <td style="text-align:left;">
 35TH20010823
@@ -6151,7 +6647,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-9
+11
 </td>
 <td style="text-align:left;">
 74DI20040404
@@ -6171,7 +6667,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-10
+12
 </td>
 <td style="text-align:left;">
 35TH20080610
@@ -6191,7 +6687,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-12
+14
 </td>
 <td style="text-align:left;">
 35TH20040604
@@ -6211,7 +6707,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-13
+15
 </td>
 <td style="text-align:left;">
 35TH20020611
@@ -6255,26 +6751,6 @@ target
 </td>
 <td style="text-align:left;">
 35TH20100608
-</td>
-<td style="text-align:left;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-2010-2020
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-13
-</td>
-<td style="text-align:left;">
-29AH20160617
 </td>
 <td style="text-align:left;">
 1
@@ -6354,7 +6830,7 @@ target
 6
 </td>
 <td style="text-align:left;">
-316N19930222
+316N19921006
 </td>
 <td style="text-align:left;">
 1
@@ -6374,7 +6850,7 @@ target
 7
 </td>
 <td style="text-align:left;">
-316N19921006
+316N19930222
 </td>
 <td style="text-align:left;">
 1
@@ -6431,7 +6907,7 @@ Pacific
 target
 </td>
 <td style="text-align:right;">
-6
+7
 </td>
 <td style="text-align:left;">
 318M20091121
@@ -7002,6 +7478,9 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[4]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/f9_loss-4.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>loss_f9_cruise %&gt;% 
   filter(loss != 0) %&gt;% 
   select(basin_AIP, decade, parameter_class, rank_n_cruise, cruise_expocode) %&gt;% 
@@ -7033,6 +7512,329 @@ cruise_expocode
 <tbody>
 <tr>
 <td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+18RD19980404
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+32L919930718
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+18RD19990827
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:left;">
+77DN19910726
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:left;">
+06AQ19930806
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+18SN19940724
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+18RD19980404
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+32L919930718
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+18SN19970924
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+18RD19990827
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+90JS20080815
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+77DN20070812
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+18DL20040625
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:left;">
+90JS20080815
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:left;">
+77DN20070812
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:left;">
+18DL20040625
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+316N20111002
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:left;">
+316N20100804
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:left;">
+316N20130914
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 Atlantic
 </td>
 <td style="text-align:left;">
@@ -7042,7 +7844,7 @@ Atlantic
 predictor
 </td>
 <td style="text-align:right;">
-2
+1
 </td>
 <td style="text-align:left;">
 316N19871123
@@ -7073,27 +7875,10 @@ Atlantic
 1989-1999
 </td>
 <td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:left;">
-74DI19970807
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
 target
 </td>
 <td style="text-align:right;">
-2
+1
 </td>
 <td style="text-align:left;">
 316N19871123
@@ -7131,40 +7916,6 @@ target
 </td>
 <td style="text-align:left;">
 06AQ19980328
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:left;">
-74DI19970807
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:left;">
-33MW19930704
 </td>
 </tr>
 <tr>
@@ -7230,6 +7981,23 @@ target
 </td>
 <td style="text-align:right;">
 4
+</td>
+<td style="text-align:left;">
+58GS20090528
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+5
 </td>
 <td style="text-align:left;">
 06AQ20080210
@@ -21717,6 +22485,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/convert_offset_to_cstar_units-1.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9e284d1826dc5bb44d0fd77797b01a26adfb1c62/docs/figure/read_GLODAPv2_2021.Rmd/convert_offset_to_cstar_units-1.png" target="_blank">9e284d1</a>
 </td>
 <td>
@@ -21793,6 +22572,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-1.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-1.png" target="_blank">8fd2480</a>
@@ -21992,6 +22782,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-4.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-4.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -22063,6 +22864,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-5.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-5.png" target="_blank">8fd2480</a>
@@ -22138,6 +22950,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-6.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-6.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -22200,6 +23023,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-7.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-7.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -22260,6 +23094,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-8.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-8.png" target="_blank">8fd2480</a>
@@ -22335,6 +23180,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-9.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-9.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -22408,6 +23264,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-10.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-10.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -22459,6 +23326,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-11.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-11.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -22508,6 +23386,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-12.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-12.png" target="_blank">8fd2480</a>
@@ -22572,6 +23461,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-13.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-13.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -22634,6 +23534,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-14.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-14.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -22685,6 +23596,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-15.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-15.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -22734,6 +23656,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-16.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-16.png" target="_blank">8fd2480</a>
@@ -22798,6 +23731,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-17.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-17.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -22860,6 +23804,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-18.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-18.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -22911,6 +23866,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-19.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-19.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -22960,6 +23926,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-20.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-20.png" target="_blank">8fd2480</a>
@@ -23024,6 +24001,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-21.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-21.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -23086,6 +24074,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-22.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-22.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -23137,6 +24136,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-23.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-23.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -23186,6 +24196,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-24.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-24.png" target="_blank">8fd2480</a>
@@ -23248,6 +24269,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-25.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-25.png" target="_blank">8fd2480</a>
@@ -23326,6 +24358,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-26.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-26.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -23377,6 +24420,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-27.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-27.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -23426,6 +24480,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-28.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-28.png" target="_blank">8fd2480</a>
@@ -23490,6 +24555,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-29.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-29.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -23552,6 +24628,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-30.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-30.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -23603,6 +24690,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-31.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-31.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -23652,6 +24750,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-32.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-32.png" target="_blank">8fd2480</a>
@@ -23716,6 +24825,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-33.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-33.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -23778,6 +24898,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-34.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-34.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -23829,6 +24960,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-35.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-35.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -23878,6 +25020,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-36.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-36.png" target="_blank">8fd2480</a>
@@ -23942,6 +25095,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-37.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-37.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -24004,6 +25168,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-38.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-38.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -24055,6 +25230,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-39.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-39.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -24104,6 +25290,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-40.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-40.png" target="_blank">8fd2480</a>
@@ -24168,6 +25365,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-41.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-41.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -24206,30 +25414,363 @@ jens-daniel-mueller
 <pre><code>
 [[17]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-42.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-42">
+Past versions of cruise_by_cruise_cstar-42.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-42" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-42.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[18]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-43.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-43">
+Past versions of cruise_by_cruise_cstar-43.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-43" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-43.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[19]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-44.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-44">
+Past versions of cruise_by_cruise_cstar-44.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-44" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-44.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[20]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-45.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-45">
+Past versions of cruise_by_cruise_cstar-45.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-45" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-45.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[21]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-46.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-46">
+Past versions of cruise_by_cruise_cstar-46.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-46" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-46.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[22]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-47.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-47">
+Past versions of cruise_by_cruise_cstar-47.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-47" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-47.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[23]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-48.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-48">
+Past versions of cruise_by_cruise_cstar-48.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-48" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-48.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[24]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-49.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-49">
+Past versions of cruise_by_cruise_cstar-49.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-49" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-49.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[25]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-50.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-50">
+Past versions of cruise_by_cruise_cstar-50.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-50" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-50.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>xover_basin %&gt;%
   mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf))) %&gt;%
   filter(parameter_coverage == &quot;full&quot;) %&gt;%
@@ -24240,6 +25781,43 @@ jens-daniel-mueller
               ylim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;))) +
   facet_grid(basin ~ parameter)</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-51.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-51">
+Past versions of cruise_by_cruise_cstar-51.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-51" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-51.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="cruise-by-cruise-annual-mean" class="section level3" number="7.3.3">
 <h3><span class="header-section-number">7.3.3</span> Cruise-by-cruise annual mean</h3>
@@ -24290,6 +25868,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-1.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-1.png" target="_blank">8fd2480</a>
@@ -24511,6 +26100,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-4.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-4.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -24593,6 +26193,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-5.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-5.png" target="_blank">8fd2480</a>
@@ -24679,6 +26290,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-6.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-6.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -24752,6 +26374,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-7.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-7.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -24823,6 +26456,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-8.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-8.png" target="_blank">8fd2480</a>
@@ -24909,6 +26553,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-9.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-9.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -24993,6 +26648,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-10.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-10.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -25066,6 +26732,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-11.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-11.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -25137,6 +26814,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-12.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-12.png" target="_blank">8fd2480</a>
@@ -25223,6 +26911,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-13.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-13.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -25307,6 +27006,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-14.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-14.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -25378,6 +27088,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-15.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-15.png" target="_blank">8fd2480</a>
@@ -25453,6 +27174,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-16.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-16.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -25524,6 +27256,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-17.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-17.png" target="_blank">8fd2480</a>
@@ -25610,6 +27353,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-18.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-18.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -25681,6 +27435,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-19.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-19.png" target="_blank">8fd2480</a>
@@ -25756,6 +27521,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-20.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-20.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -25816,18 +27592,203 @@ jens-daniel-mueller
 <pre><code>
 [[21]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-21.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar_annual_mean-21">
+Past versions of cruise_by_cruise_cstar_annual_mean-21.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar_annual_mean-21" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-21.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[22]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-22.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar_annual_mean-22">
+Past versions of cruise_by_cruise_cstar_annual_mean-22.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar_annual_mean-22" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-22.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[23]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-23.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar_annual_mean-23">
+Past versions of cruise_by_cruise_cstar_annual_mean-23.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar_annual_mean-23" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-23.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[24]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-24.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar_annual_mean-24">
+Past versions of cruise_by_cruise_cstar_annual_mean-24.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar_annual_mean-24" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-24.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[25]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-25.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar_annual_mean-25">
+Past versions of cruise_by_cruise_cstar_annual_mean-25.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar_annual_mean-25" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-25.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="cruise-mean-offsets" class="section level3" number="7.3.4">
 <h3><span class="header-section-number">7.3.4</span> Cruise mean offsets</h3>
@@ -25968,6 +27929,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-1.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-1.png" target="_blank">8fd2480</a>
@@ -26127,6 +28099,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-2.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-2.png" target="_blank">8fd2480</a>
@@ -26299,6 +28282,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-3.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-3.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -26469,6 +28463,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-4.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-4.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -26637,6 +28642,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-5.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-5.png" target="_blank">8fd2480</a>
@@ -26833,6 +28849,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-6.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-6.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -27001,6 +29028,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-7.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-7.png" target="_blank">8fd2480</a>
@@ -27173,6 +29211,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-8.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-8.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -27341,6 +29390,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-9.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-9.png" target="_blank">8fd2480</a>
@@ -27522,6 +29582,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-10.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-10.png" target="_blank">8fd2480</a>
@@ -27712,6 +29783,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-1.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-1.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -27794,6 +29876,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-2.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-2.png" target="_blank">8fd2480</a>
@@ -27880,6 +29973,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-3.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-3.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -27964,6 +30068,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-4.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-4.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -28046,6 +30161,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-5.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-5.png" target="_blank">8fd2480</a>
@@ -28148,6 +30274,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-6.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-6.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -28230,6 +30367,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-7.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-7.png" target="_blank">8fd2480</a>
@@ -28316,6 +30464,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-8.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-8.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -28400,6 +30559,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-9.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-9.png" target="_blank">8fd2480</a>
 </td>
 <td>
@@ -28482,6 +30652,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-10.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8fd2480cc86a99fa1d308a297b39d29fa3d7db68/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-10.png" target="_blank">8fd2480</a>
@@ -28585,6 +30766,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size_PO-1.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9e284d1826dc5bb44d0fd77797b01a26adfb1c62/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size_PO-1.png" target="_blank">9e284d1</a>
 </td>
 <td>
@@ -28643,6 +30835,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-1.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9e284d1826dc5bb44d0fd77797b01a26adfb1c62/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-1.png" target="_blank">9e284d1</a>
 </td>
 <td>
@@ -28692,6 +30895,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-2.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9e284d1826dc5bb44d0fd77797b01a26adfb1c62/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-2.png" target="_blank">9e284d1</a>
@@ -28745,6 +30959,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-3.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9e284d1826dc5bb44d0fd77797b01a26adfb1c62/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-3.png" target="_blank">9e284d1</a>
 </td>
 <td>
@@ -28796,6 +31021,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-4.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9e284d1826dc5bb44d0fd77797b01a26adfb1c62/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-4.png" target="_blank">9e284d1</a>
 </td>
 <td>
@@ -28845,6 +31081,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-5.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9e284d1826dc5bb44d0fd77797b01a26adfb1c62/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-5.png" target="_blank">9e284d1</a>
@@ -28913,6 +31160,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-6.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9e284d1826dc5bb44d0fd77797b01a26adfb1c62/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-6.png" target="_blank">9e284d1</a>
 </td>
 <td>
@@ -28978,6 +31236,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-7.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9e284d1826dc5bb44d0fd77797b01a26adfb1c62/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-7.png" target="_blank">9e284d1</a>
 </td>
 <td>
@@ -29027,6 +31296,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-8.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9e284d1826dc5bb44d0fd77797b01a26adfb1c62/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-8.png" target="_blank">9e284d1</a>
@@ -29080,6 +31360,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-9.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9e284d1826dc5bb44d0fd77797b01a26adfb1c62/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-9.png" target="_blank">9e284d1</a>
 </td>
 <td>
@@ -29129,6 +31420,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-10.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9e284d1826dc5bb44d0fd77797b01a26adfb1c62/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-10.png" target="_blank">9e284d1</a>
@@ -29182,6 +31484,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-11.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9e284d1826dc5bb44d0fd77797b01a26adfb1c62/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-11.png" target="_blank">9e284d1</a>
 </td>
 <td>
@@ -29206,14 +31519,16 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>xover_cruise_decade_all %&gt;%
+<pre class="r"><code>xover_cruise_decade_all_stats &lt;- xover_cruise_decade_all %&gt;%
   group_by(basin, decade_A, decade, parameter_coverage, parameter) %&gt;%
   summarise(
     offset_adj_mean_weighted = weighted.mean(offset_adj_mean_weighted, w = n_A)
   ) %&gt;%
   ungroup() %&gt;%
   drop_na() %&gt;%
-  filter(parameter_coverage == &quot;full&quot;) %&gt;%
+  filter(parameter_coverage == &quot;full&quot;)
+
+xover_cruise_decade_all_stats %&gt;%
   ggplot(aes(decade_A, offset_adj_mean_weighted, fill = decade)) +
   geom_hline(yintercept = 0) +
   geom_point(shape = 21) +
@@ -29245,6 +31560,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/68c52784c6196129839597c0890597d97adce769/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-12.png" target="_blank">68c5278</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-15
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/9e284d1826dc5bb44d0fd77797b01a26adfb1c62/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-12.png" target="_blank">9e284d1</a>
 </td>
 <td>
@@ -29268,6 +31594,4538 @@ jens-daniel-mueller
 </tbody>
 </table>
 </div>
+</div>
+<pre class="r"><code>xover_cruise_decade_all_stats %&gt;% 
+  kable() %&gt;%
+  kable_styling() %&gt;%
+  scroll_box(height = &quot;300px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+basin
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+decade_A
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+decade
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+parameter_coverage
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+parameter
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_mean_weighted
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+-0.1356225
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+0.0253065
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+0.2257387
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+0.2327913
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+0.0856884
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+-0.3807364
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+-1.3750766
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+-1.9293618
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+0.2492776
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+-3.5935467
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+-0.6898998
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+-1.0770823
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+-1.9946501
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+0.4627522
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+-3.8005109
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+-0.2224713
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+1.1826263
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+1.3615686
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+2.5430323
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+2.5074499
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+-0.5529424
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+0.5404907
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+0.3283246
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+-0.0291293
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+0.1944792
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+-0.8114030
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+0.3226376
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+-0.9890842
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+0.8872783
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+-1.4748483
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+0.1759741
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+1.3568291
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+2.1569313
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+3.5208086
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+3.7741381
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+0.5974689
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+0.2381677
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+0.5137855
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+0.8070007
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+1.5609386
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+-0.0378470
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+-0.0222409
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+0.3833612
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+1.4728253
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+0.3232734
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+-0.0069326
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+0.0209213
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+-0.0832953
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+0.6886569
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+-0.0693065
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+0.5797209
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+-0.2220823
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+-2.0456161
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+0.3267156
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+-1.9269166
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+0.4619073
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+0.0867817
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+-4.5065017
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+0.3021716
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+-3.2409610
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+-0.9330458
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+0.2397795
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+2.4667373
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+2.7065168
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+1.9769583
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+-0.1632725
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+0.0055008
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+0.1719532
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+1.7875254
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+-0.1334129
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+-0.5023083
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+0.5089028
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+-2.4028329
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+0.4965766
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+-2.8585665
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+-0.5978431
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+0.1037918
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+3.8742167
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+4.1565279
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+3.7058486
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+-0.0561622
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+-0.4084845
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+2.1499159
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+1.9891450
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+2.0930806
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+-0.4664717
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+-0.0914332
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+-0.2766830
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+0.4860451
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+-0.9016926
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+0.3388906
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+0.2918820
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+0.2454546
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+0.3392417
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+-0.1223613
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+1.9002864
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+-0.7681008
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+-0.9350579
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+0.7585997
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+-0.0634562
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+-0.0593387
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+-1.1094497
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+-0.6626231
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+0.2247928
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+-2.7571978
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+-1.7309642
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+0.6827272
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+0.6209667
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+1.2743631
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+-0.3954030
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+0.5476955
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+-0.0934746
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+0.0574401
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+0.9300100
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+0.0204029
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+-2.1133363
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+-1.2526285
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+0.2087070
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+-16.5915953
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+-2.9727190
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+0.8947218
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+1.3644330
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+1.3769975
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+2.7668864
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+4.0954464
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+2.4649674
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+0.9965329
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+0.5664428
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+1.5952564
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+3.8694545
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+-0.0018951
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+0.0185797
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+0.3148970
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+0.1279070
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+0.4668651
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+0.7482366
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+-0.1393136
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+-0.0230838
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+1.3491721
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+0.5858393
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+2.1549217
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+0.7927268
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+-2.1313267
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+1.9594433
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+0.4590089
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+0.5690507
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+-0.3229785
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+-2.9778036
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+0.0414107
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+-2.5878272
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+-3.5368704
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+-0.6776755
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+6.5315308
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+5.2948158
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+2.4323519
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+0.0007782
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+0.0418076
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+-0.0528907
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+0.1445333
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+-0.0103049
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+0.0969410
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+-0.4723329
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+-0.0763753
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+0.0370285
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+-0.2087466
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+-0.8015668
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+0.8359405
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+4.4076054
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+4.5396495
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+3.4650382
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+0.1792763
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+-0.0221292
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+0.6349522
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+0.5865709
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+0.0844323
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+0.0323678
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+-0.1260574
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+-0.1686088
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+-0.6584451
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+-0.4354532
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+0.7918179
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+1.4486098
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+-0.1635956
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+2.1450590
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+2.0768321
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+0.5853210
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+-1.5613919
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+-0.8204193
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+0.3853739
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+-1.7270197
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+-2.0928343
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+-1.9512069
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+-1.0326788
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+0.9185263
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+-5.7458502
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+-0.7921425
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+1.5998272
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+0.7289133
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+2.3287406
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+1.5196740
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+0.0358965
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+0.2854831
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+0.1725936
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+-2.0206319
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+0.4939731
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+-2.6378062
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+-0.0597706
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+-0.1629690
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+-1.9471120
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+-2.7806517
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+1.3675539
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+2.3793068
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+1.1867768
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+3.5660836
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+5.5310990
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+2.3700657
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+0.1192664
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+0.5092742
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+0.6285405
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+2.8599553
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_phosphate
+</td>
+<td style="text-align:right;">
+0.4600498
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_talk
+</td>
+<td style="text-align:right;">
+-0.1424101
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2
+</td>
+<td style="text-align:right;">
+0.2468974
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_tco2_talk
+</td>
+<td style="text-align:right;">
+5.7244069
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total
+</td>
+<td style="text-align:right;">
+0.4833806
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -29470,16 +36328,84 @@ cruise_expocode
 1989-1999
 </td>
 <td style="text-align:left;">
-Atlantic
+Arctic
 </td>
 <td style="text-align:right;">
-1
+1.0
+</td>
+<td style="text-align:right;">
+28.2
+</td>
+<td style="text-align:left;">
+18HU19970509
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:right;">
+2.0
+</td>
+<td style="text-align:right;">
+15.9
+</td>
+<td style="text-align:left;">
+58AA19980308
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:right;">
+13.0
+</td>
+<td style="text-align:left;">
+58JH19980801
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:right;">
+4.0
+</td>
+<td style="text-align:right;">
+10.5
+</td>
+<td style="text-align:left;">
+58JH19940525
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+Arctic
 </td>
 <td style="text-align:right;">
 5.0
 </td>
+<td style="text-align:right;">
+9.3
+</td>
 <td style="text-align:left;">
-323019940104
+32L919930718
 </td>
 </tr>
 <tr>
@@ -29490,10 +36416,10 @@ Atlantic
 Atlantic
 </td>
 <td style="text-align:right;">
-2
+1.0
 </td>
 <td style="text-align:right;">
-4.9
+5.1
 </td>
 <td style="text-align:left;">
 316N19871123
@@ -29507,10 +36433,27 @@ Atlantic
 Atlantic
 </td>
 <td style="text-align:right;">
-3
+2.0
 </td>
 <td style="text-align:right;">
-3.5
+4.7
+</td>
+<td style="text-align:left;">
+323019940104
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:right;">
+3.2
 </td>
 <td style="text-align:left;">
 33RO19980123
@@ -29524,10 +36467,10 @@ Atlantic
 Atlantic
 </td>
 <td style="text-align:right;">
-4
+4.0
 </td>
 <td style="text-align:right;">
-3.5
+3.1
 </td>
 <td style="text-align:left;">
 06AQ19980328
@@ -29541,10 +36484,10 @@ Atlantic
 Atlantic
 </td>
 <td style="text-align:right;">
-5
+5.0
 </td>
 <td style="text-align:right;">
-3.3
+3.0
 </td>
 <td style="text-align:left;">
 316N19970530
@@ -29558,7 +36501,7 @@ Atlantic
 Indian
 </td>
 <td style="text-align:right;">
-1
+1.0
 </td>
 <td style="text-align:right;">
 7.8
@@ -29575,10 +36518,10 @@ Indian
 Indian
 </td>
 <td style="text-align:right;">
-2
+2.0
 </td>
 <td style="text-align:right;">
-7.8
+7.6
 </td>
 <td style="text-align:left;">
 316N19950124
@@ -29592,7 +36535,7 @@ Indian
 Indian
 </td>
 <td style="text-align:right;">
-3
+3.0
 </td>
 <td style="text-align:right;">
 7.5
@@ -29609,7 +36552,24 @@ Indian
 Indian
 </td>
 <td style="text-align:right;">
-4
+4.5
+</td>
+<td style="text-align:right;">
+7.1
+</td>
+<td style="text-align:left;">
+316N19941201
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:right;">
+4.5
 </td>
 <td style="text-align:right;">
 7.1
@@ -29623,27 +36583,10 @@ Indian
 1989-1999
 </td>
 <td style="text-align:left;">
-Indian
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-6.8
-</td>
-<td style="text-align:left;">
-316N19941201
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
 Pacific
 </td>
 <td style="text-align:right;">
-1
+1.0
 </td>
 <td style="text-align:right;">
 5.7
@@ -29660,7 +36603,7 @@ Pacific
 Pacific
 </td>
 <td style="text-align:right;">
-2
+2.0
 </td>
 <td style="text-align:right;">
 5.6
@@ -29677,10 +36620,10 @@ Pacific
 Pacific
 </td>
 <td style="text-align:right;">
-3
+3.0
 </td>
 <td style="text-align:right;">
-5.6
+5.5
 </td>
 <td style="text-align:left;">
 31DS19940126
@@ -29694,7 +36637,7 @@ Pacific
 Pacific
 </td>
 <td style="text-align:right;">
-4
+4.0
 </td>
 <td style="text-align:right;">
 5.5
@@ -29711,7 +36654,7 @@ Pacific
 Pacific
 </td>
 <td style="text-align:right;">
-5
+5.0
 </td>
 <td style="text-align:right;">
 4.2
@@ -29725,13 +36668,98 @@ Pacific
 2000-2009
 </td>
 <td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:right;">
+38.5
+</td>
+<td style="text-align:left;">
+77DN20020420
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:right;">
+2.0
+</td>
+<td style="text-align:right;">
+13.2
+</td>
+<td style="text-align:left;">
+58GS20060721
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:right;">
+8.6
+</td>
+<td style="text-align:left;">
+316N20080901
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:right;">
+4.0
+</td>
+<td style="text-align:right;">
+7.7
+</td>
+<td style="text-align:left;">
+58AA20010527
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:right;">
+5.0
+</td>
+<td style="text-align:right;">
+7.5
+</td>
+<td style="text-align:left;">
+316N20091006
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
 Atlantic
 </td>
 <td style="text-align:right;">
-1
+1.0
 </td>
 <td style="text-align:right;">
-4.6
+4.5
 </td>
 <td style="text-align:left;">
 33RO20050111
@@ -29745,10 +36773,10 @@ Atlantic
 Atlantic
 </td>
 <td style="text-align:right;">
-2
+2.0
 </td>
 <td style="text-align:right;">
-4.5
+4.0
 </td>
 <td style="text-align:left;">
 33RO20030604
@@ -29762,10 +36790,10 @@ Atlantic
 Atlantic
 </td>
 <td style="text-align:right;">
-3
+3.0
 </td>
 <td style="text-align:right;">
-4.1
+3.6
 </td>
 <td style="text-align:left;">
 06AQ20050122
@@ -29779,13 +36807,13 @@ Atlantic
 Atlantic
 </td>
 <td style="text-align:right;">
-4
+4.0
 </td>
 <td style="text-align:right;">
 3.5
 </td>
 <td style="text-align:left;">
-06AQ20080210
+58GS20090528
 </td>
 </tr>
 <tr>
@@ -29796,13 +36824,13 @@ Atlantic
 Atlantic
 </td>
 <td style="text-align:right;">
-5
+5.0
 </td>
 <td style="text-align:right;">
-2.7
+3.1
 </td>
 <td style="text-align:left;">
-35MF20080207
+06AQ20080210
 </td>
 </tr>
 <tr>
@@ -29813,10 +36841,10 @@ Atlantic
 Indian
 </td>
 <td style="text-align:right;">
-1
+1.0
 </td>
 <td style="text-align:right;">
-19.4
+19.3
 </td>
 <td style="text-align:left;">
 33RR20090320
@@ -29830,10 +36858,10 @@ Indian
 Indian
 </td>
 <td style="text-align:right;">
-2
+2.0
 </td>
 <td style="text-align:right;">
-10.4
+10.3
 </td>
 <td style="text-align:left;">
 33RR20070322
@@ -29847,27 +36875,10 @@ Indian
 Indian
 </td>
 <td style="text-align:right;">
-3
+3.0
 </td>
 <td style="text-align:right;">
-9.1
-</td>
-<td style="text-align:left;">
-33RR20070204
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-Indian
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:right;">
-9.0
+9.4
 </td>
 <td style="text-align:left;">
 33RR20080204
@@ -29881,10 +36892,27 @@ Indian
 Indian
 </td>
 <td style="text-align:right;">
-5
+4.0
 </td>
 <td style="text-align:right;">
-8.2
+9.0
+</td>
+<td style="text-align:left;">
+33RR20070204
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:right;">
+5.0
+</td>
+<td style="text-align:right;">
+7.9
 </td>
 <td style="text-align:left;">
 49NZ20031209
@@ -29898,7 +36926,7 @@ Indian
 Pacific
 </td>
 <td style="text-align:right;">
-1
+1.0
 </td>
 <td style="text-align:right;">
 7.0
@@ -29915,7 +36943,7 @@ Pacific
 Pacific
 </td>
 <td style="text-align:right;">
-2
+2.0
 </td>
 <td style="text-align:right;">
 6.0
@@ -29932,7 +36960,7 @@ Pacific
 Pacific
 </td>
 <td style="text-align:right;">
-3
+3.0
 </td>
 <td style="text-align:right;">
 4.9
@@ -29949,13 +36977,13 @@ Pacific
 Pacific
 </td>
 <td style="text-align:right;">
-4
+4.0
 </td>
 <td style="text-align:right;">
-4.6
+4.7
 </td>
 <td style="text-align:left;">
-49NZ20090410
+33RR20050109
 </td>
 </tr>
 <tr>
@@ -29966,13 +36994,98 @@ Pacific
 Pacific
 </td>
 <td style="text-align:right;">
-5
+5.0
 </td>
 <td style="text-align:right;">
 4.6
 </td>
 <td style="text-align:left;">
-49NZ20051031
+49NZ20090410
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:right;">
+1.0
+</td>
+<td style="text-align:right;">
+24.6
+</td>
+<td style="text-align:left;">
+06AQ20120614
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:right;">
+2.0
+</td>
+<td style="text-align:right;">
+22.3
+</td>
+<td style="text-align:left;">
+316N20111002
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:right;">
+3.0
+</td>
+<td style="text-align:right;">
+16.6
+</td>
+<td style="text-align:left;">
+316N20150906
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:right;">
+4.0
+</td>
+<td style="text-align:right;">
+14.9
+</td>
+<td style="text-align:left;">
+316N20100804
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+Arctic
+</td>
+<td style="text-align:right;">
+5.0
+</td>
+<td style="text-align:right;">
+7.7
+</td>
+<td style="text-align:left;">
+58GS20130717
 </td>
 </tr>
 <tr>
@@ -29983,10 +37096,10 @@ Pacific
 Atlantic
 </td>
 <td style="text-align:right;">
-1
+1.0
 </td>
 <td style="text-align:right;">
-6.8
+6.5
 </td>
 <td style="text-align:left;">
 33RO20100308
@@ -30000,10 +37113,10 @@ Atlantic
 Atlantic
 </td>
 <td style="text-align:right;">
-2
+2.0
 </td>
 <td style="text-align:right;">
-6.3
+6.0
 </td>
 <td style="text-align:left;">
 33RO20130803
@@ -30017,10 +37130,10 @@ Atlantic
 Atlantic
 </td>
 <td style="text-align:right;">
-3
+3.0
 </td>
 <td style="text-align:right;">
-5.7
+5.4
 </td>
 <td style="text-align:left;">
 33RO20110926
@@ -30034,27 +37147,10 @@ Atlantic
 Atlantic
 </td>
 <td style="text-align:right;">
-4
+4.0
 </td>
 <td style="text-align:right;">
-5.5
-</td>
-<td style="text-align:left;">
-740H20180228
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-2010-2020
-</td>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:right;">
-5.1
+5.3
 </td>
 <td style="text-align:left;">
 33RO20131223
@@ -30065,13 +37161,30 @@ Atlantic
 2010-2020
 </td>
 <td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:right;">
+5.0
+</td>
+<td style="text-align:right;">
+5.3
+</td>
+<td style="text-align:left;">
+740H20180228
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
 Indian
 </td>
 <td style="text-align:right;">
-1
+1.0
 </td>
 <td style="text-align:right;">
-17.7
+17.6
 </td>
 <td style="text-align:left;">
 33RO20180423
@@ -30085,7 +37198,7 @@ Indian
 Indian
 </td>
 <td style="text-align:right;">
-2
+2.0
 </td>
 <td style="text-align:right;">
 16.8
@@ -30102,7 +37215,7 @@ Indian
 Indian
 </td>
 <td style="text-align:right;">
-3
+3.0
 </td>
 <td style="text-align:right;">
 11.4
@@ -30119,7 +37232,7 @@ Indian
 Indian
 </td>
 <td style="text-align:right;">
-4
+4.0
 </td>
 <td style="text-align:right;">
 9.6
@@ -30136,13 +37249,13 @@ Indian
 Indian
 </td>
 <td style="text-align:right;">
-5
+5.0
 </td>
 <td style="text-align:right;">
-8.8
+9.2
 </td>
 <td style="text-align:left;">
-325020190403
+49NZ20191229
 </td>
 </tr>
 <tr>
@@ -30153,7 +37266,7 @@ Indian
 Pacific
 </td>
 <td style="text-align:right;">
-1
+1.0
 </td>
 <td style="text-align:right;">
 5.9
@@ -30170,7 +37283,7 @@ Pacific
 Pacific
 </td>
 <td style="text-align:right;">
-2
+2.0
 </td>
 <td style="text-align:right;">
 4.1
@@ -30187,7 +37300,7 @@ Pacific
 Pacific
 </td>
 <td style="text-align:right;">
-3
+3.0
 </td>
 <td style="text-align:right;">
 4.1
@@ -30204,7 +37317,7 @@ Pacific
 Pacific
 </td>
 <td style="text-align:right;">
-4
+4.0
 </td>
 <td style="text-align:right;">
 4.0
@@ -30221,13 +37334,13 @@ Pacific
 Pacific
 </td>
 <td style="text-align:right;">
-5
+5.0
 </td>
 <td style="text-align:right;">
-3.6
+3.7
 </td>
 <td style="text-align:left;">
-49RY20110515
+320620140320
 </td>
 </tr>
 </tbody>
@@ -34159,7 +41272,7 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] colorspace_2.0-2 kableExtra_1.3.4 ggrepel_0.9.1    lubridate_1.8.0 
+ [1] kableExtra_1.3.4 ggrepel_0.9.1    lubridate_1.8.0  colorspace_2.0-2
  [5] marelac_2.1.10   shape_1.4.6      ggforce_0.3.3    metR_0.11.0     
  [9] scico_1.3.0      patchwork_1.1.1  collapse_1.7.0   forcats_0.5.1   
 [13] stringr_1.4.0    dplyr_1.0.7      purrr_0.3.4      readr_2.1.1     
