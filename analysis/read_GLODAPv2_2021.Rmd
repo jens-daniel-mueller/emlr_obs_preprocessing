@@ -2702,7 +2702,7 @@ IO_CRM_offset %>%
 
 # Write files
 
-```{r write_clean_data_files, eval=FALSE}
+```{r write_clean_data_files}
 
 GLODAP  %>%
   select(-cruise_expocode) %>% 
@@ -2828,7 +2828,7 @@ map +
 
 ```
 
-```{r coverage_map_variable_year, message=FALSE}
+```{r coverage_map_variable_year, message=FALSE, results='hide'}
 
 GLODAP_obs_grid_all_vars <- GLODAP %>% 
   select(year, lat, lon, cruise, sal, temp, oxygen,
@@ -2876,53 +2876,12 @@ dev.off()
 
 ```
 
-## Time series
-
-```{r timeseries, fig.asp=1.5, eval=FALSE}
-
-GLODAP_time_series <- GLODAP %>% 
-  select(year, basin_AIP, lat, depth, sal, temp,
-         oxygen, aou, nitrate, silicate, phosphate,
-         tco2, talk)
-
-GLODAP_time_series <- GLODAP_time_series %>% 
-  mutate(depth_grid = cut(depth, seq(0,1e4,1000)))
-
-GLODAP_time_series <- GLODAP_time_series %>% 
-  pivot_longer(sal:talk,
-               names_to = "parameter",
-               values_to = "value") %>% 
-  filter(!is.na(value),
-         !is.na(depth_grid))
-
-GLODAP_time_series %>%
-  group_split(basin_AIP, depth_grid) %>%
-  # head(1) %>%
-  map(
-    ~ ggplot(data = .x,
-             aes(year, value, col = lat)) +
-      geom_jitter(alpha = 0.1) +
-      scale_color_divergent() +
-      facet_grid(parameter ~ depth_grid,
-                 scales = "free_y") +
-      labs(title = paste(
-        "basin_AIP:",
-        unique(.x$basin_AIP),
-        "| depth_grid:",
-        unique(.x$depth_grid)
-      ))
-  )
-
-
-
-```
-
 
 # CANYON-B
 
 ## Prediction
 
-```{r calc_CANYON-B, eval=FALSE}
+```{r calc_CANYON-B}
 
 source("/net/kryo/work/uptools/co2_calculation/CANYON-B/CANYONB.R")
 
@@ -2971,7 +2930,7 @@ GLODAP_CB <- GLODAP_CB %>%
 
 ## Comparison to observations
 
-```{r CANYON-B_vs_observationd, fig.asp=0.4, eval=FALSE}
+```{r CANYON-B_vs_observationd, fig.asp=0.4}
 
 
 variables <- c("talk", "tco2", "nitrate", "phosphate", "silicate")
@@ -3042,7 +3001,7 @@ for (i_variable in variables) {
 
 ## Write files
 
-```{r write_Canyon-B_data_file, eval=FALSE}
+```{r write_Canyon-B_data_file}
 
 GLODAP_CB %>% 
   select(row_number,
@@ -3098,11 +3057,7 @@ cruises_talk_calc <-
 xover_add_decade <- glodapv2_2021_xover_add %>%
   mutate(date_A = ymd(str_sub(cruise_A, 5, 12)),
          date_B = ymd(str_sub(cruise_B, 5, 12))) %>%
-  mutate(decade = cut(
-    year(date_B),
-    c(1989, 1999, 2009, 2019),
-    labels = c("1989-1999", "2000-2009", "2010-2019")
-  )) %>%
+  mutate(decade = m_grid_decade(year(date_B))) %>%
   filter(!is.na(decade),
          !is.na(offset)) %>%
   arrange(date_B)

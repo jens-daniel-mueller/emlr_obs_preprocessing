@@ -72,6 +72,12 @@ region_masks_all <-
 region_masks_all <- region_masks_all %>%
   select(-seamask)
 
+region_masks_all <- region_masks_all %>% 
+  mutate(arctic = if_else(arctic != 0 & atlantic != 0, 0, arctic),
+         southern = if_else(southern != 0 & atlantic != 0, 0, southern),
+         southern = if_else(southern != 0 & pacific != 0, 0, southern),
+         southern = if_else(southern != 0 & indian != 0, 0, southern))
+
 region_masks_all <- region_masks_all %>%
   pivot_longer(open_ocean:southern,
                names_to = "region",
@@ -86,7 +92,6 @@ region_masks_all %>%
   geom_raster() +
   scale_fill_brewer(palette = "Dark2") +
   coord_quickmap(expand = 0)
-
 
 reccap2_region_mask <- region_masks_all %>%
   filter(value != 0,

@@ -206,6 +206,7 @@ Neutral density gamma was calculated with a Python script provided by Serazin et
 WOA18_sal_temp <- WOA18_sal_temp %>%
   mutate(CTDPRS = gsw_p_from_z(-depth,
                                lat))
+
 # rename variables according to python script
 
 WOA18_sal_temp_gamma_prep <- WOA18_sal_temp %>%
