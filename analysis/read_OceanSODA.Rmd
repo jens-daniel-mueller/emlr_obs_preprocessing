@@ -43,7 +43,7 @@ basinmask_5 <- basinmask %>%
   select(lat, lon, basin)
 
 basinmask <- basinmask %>% 
-  filter(MLR_basins == "2") %>% 
+  filter(MLR_basins == "4") %>% 
   select(lat, lon, basin_AIP)
 
 
@@ -85,18 +85,18 @@ OceanSODA <- OceanSODA %>%
 path_SeaFlux <- 
 paste0(path_updata,"pco2_seaflux/")
 
-icefrac <-
+ice <-
   tidync(paste0(path_SeaFlux,
-                "SeaFluxV2021.01_icefrac_1988-2018.nc")) %>% 
+                "SeaFlux_v2021.04_ice_1982-2020.nc")) %>% 
   hyper_tibble()
 
-icefrac <- icefrac %>%
-  mutate(date = as.Date(time, origin = '1988-01-15'),
+ice <- ice %>%
+  mutate(date = as.Date(time, origin = '1982-01-15'),
          year = year(date))
 
 kw <-
   tidync(paste0(path_SeaFlux,
-                "SeaFluxV2021.01_kwScaled16.5cmhr_1988-2018.nc"))
+                "SeaFlux_v2021.04_kw_quadratic_scaled_1982-2020.nc"))
 
 kw <- kw %>% 
   hyper_filter(wind = wind == "ERA5") %>% 
@@ -106,12 +106,12 @@ kw <- kw %>%
 
 pCO2atm <-
   tidync(paste0(path_SeaFlux,
-                "SeaFluxV2021.01_pCO2atm_NOAAmbl_ERA5mslp_1988-2018.nc")) %>% 
+                "SeaFlux_v2021.04_pco2atm_1982-2020.nc")) %>% 
   hyper_tibble()
 
 sol <-
   tidync(paste0(path_SeaFlux,
-                "SeaFluxV2021.01_solWeis74.nc")) %>% 
+                "SeaFlux_v2021.04_solWeis74_1982-2020.nc")) %>% 
   hyper_tibble()
 
 
@@ -121,7 +121,7 @@ sol <-
 
 ```{r join_data}
 
-all_variables <- full_join(icefrac, kw)
+all_variables <- full_join(ice, kw)
 all_variables <- full_join(all_variables, pCO2atm)
 all_variables <- full_join(all_variables, sol)
 
@@ -161,10 +161,10 @@ all_variables <- OceanSODA %>%
     lon,
     lat,
     spco2 = pCO2,
-    pco2atm = pCO2atm,
+    pco2atm = pco2atm,
     fice = ice,
-    alpha = sol_Weiss74,
-    Kw = kw_scaled
+    alpha = sol,
+    Kw = kw
   ) %>%
   drop_na()
 
@@ -205,7 +205,7 @@ delta_pco2_annual <- delta_pco2_monthly %>%
   ) %>%
   ungroup()
 
-delta_pco2_annual <- delta_pco2_annual %>% 
+delta_pco2_annual <- delta_pco2_annual %>%
   mutate(fgco2_glob_roll = zoo::rollmean(fgco2_glob, 10, fill = NA))
 
 
@@ -217,42 +217,36 @@ ggplot() +
   scale_color_brewer(palette = "Set1", name = "Average") +
   labs(x = "year")
 
-print(
-  ggplot() +
-    geom_path(data = delta_pco2_monthly,
-              aes(decimal_date(time_mon), fgco2_glob, col = "monthly")) +
-    geom_path(data = delta_pco2_annual,
-              aes(year, fgco2_glob, col = "annual")) +
-    geom_path(data = delta_pco2_annual,
-              aes(year, fgco2_glob_roll, col = "5yr roll ave")) +
-    scale_color_brewer(palette = "Set1", name = "Average") +
-    labs(x = "year")
-)
+ggplot() +
+  geom_path(data = delta_pco2_monthly,
+            aes(decimal_date(time_mon), fgco2_glob, col = "monthly")) +
+  geom_path(data = delta_pco2_annual,
+            aes(year, fgco2_glob, col = "annual")) +
+  geom_path(data = delta_pco2_annual,
+            aes(year, fgco2_glob_roll, col = "5yr roll ave")) +
+  scale_color_brewer(palette = "Set1", name = "Average") +
+  labs(x = "year")
 
-print(ggplot() +
-        geom_path(data = delta_pco2_annual,
-                  aes(
-                    year,
-                    scaling_glob * unit_conversion_to_PgCyr
-                  )))
 
-print(
-  ggplot() +
-    geom_path(
-      data = delta_pco2_annual,
-      aes(
-        year,
-        scaling_glob * delta_pco2_glob * unit_conversion_to_PgCyr,
-        col = "scaled"
-      )
-    ) +
-    geom_path(data = delta_pco2_annual,
-              aes(year, fgco2_glob, col = "integrated")) +
-    scale_color_brewer(palette = "Set1", name = "Estimate") +
-    scale_y_continuous(name = "Air-sea flux [PgC yr-1]") +
-    labs(x = "year")
-)
+ggplot() +
+  geom_path(data = delta_pco2_annual,
+            aes(year,
+                scaling_glob * unit_conversion_to_PgCyr))
 
+ggplot() +
+  geom_path(
+    data = delta_pco2_annual,
+    aes(
+      year,
+      scaling_glob * delta_pco2_glob * unit_conversion_to_PgCyr,
+      col = "scaled"
+    )
+  ) +
+  geom_path(data = delta_pco2_annual,
+            aes(year, fgco2_glob, col = "integrated")) +
+  scale_color_brewer(palette = "Set1", name = "Estimate") +
+  scale_y_continuous(name = "Air-sea flux [PgC yr-1]") +
+  labs(x = "year")
 
 ```
 
