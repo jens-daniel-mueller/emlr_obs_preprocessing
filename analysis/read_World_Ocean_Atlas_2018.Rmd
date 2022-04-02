@@ -244,6 +244,74 @@ rm(WOA18_sal_temp_gamma_calc, WOA18_sal_temp_gamma_prep)
 
 ```
 
+```{r calculate_sigma_density}
+
+# calculate pressure from depth
+
+WOA18_sal_temp_dens <- WOA18_sal_temp %>%
+  mutate(
+    p = gsw_p_from_z(z = -depth, latitude = lat),
+    CT = gsw_CT_from_t(SA = sal, t = temp, p = p),
+    sigma0 = gsw_sigma0(SA = sal, CT = CT),
+    sigma1 = gsw_sigma1(SA = sal, CT = CT),
+    sigma4 = gsw_sigma4(SA = sal, CT = CT),
+    rho = gsw_rho(SA = sal, CT = CT, p = p) -1000
+    )
+
+WOA18_sal_temp_dens <- WOA18_sal_temp_dens %>% 
+  select(lon, lat, depth, basin_AIP,
+         gamma, starts_with("sigma"), rho) %>% 
+  pivot_longer(gamma:rho,
+               names_to = "estimate",
+               values_to = "value")
+
+WOA18_sal_temp_dens %>%
+  group_split(estimate) %>%
+  # head(1) %>%
+  map(~ p_map_climatology(df = .x,
+                          var = "value",
+                          title_text = unique(.x$estimate)))
+
+WOA18_sal_temp_dens %>%
+  group_split(estimate) %>%
+  # head(1) %>%
+  map(~ p_section_global(df = .x,
+                          var = "value",
+                          title_text = unique(.x$estimate)))
+
+WOA18_sal_temp_dens <- WOA18_sal_temp_dens %>% 
+  group_by(lon, lat, depth) %>% 
+  mutate(delta_value = value - first(value),
+         delta_estimate = paste(estimate, first(estimate), sep = "-")) %>% 
+  ungroup()
+
+
+
+
+WOA18_sal_temp_dens %>%
+  group_split(delta_estimate) %>%
+  # head(2) %>%
+  map( ~ p_map_climatology(
+    df = .x,
+    var = "delta_value",
+    col = "divergent",
+    title_text = unique(.x$delta_estimate)
+  ))
+
+WOA18_sal_temp_dens %>%
+  group_split(delta_estimate) %>%
+  # head(2) %>%
+  map( ~ p_section_global(
+    df = .x,
+    var = "value",
+    col = "divergent",
+    subtitle_text = unique(.x$delta_estimate)
+  ))
+
+rm(WOA18_sal_temp_dens)
+
+```
+
 ## Write file
 
 ```{r write_WOA18_sal_temp_predictor_file}
