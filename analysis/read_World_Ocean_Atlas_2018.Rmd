@@ -280,6 +280,7 @@ WOA18_sal_temp_dens %>%
                           title_text = unique(.x$estimate)))
 
 WOA18_sal_temp_dens <- WOA18_sal_temp_dens %>% 
+  arrange(estimate) %>% 
   group_by(lon, lat, depth) %>% 
   mutate(delta_value = value - first(value),
          delta_estimate = paste(estimate, first(estimate), sep = "-")) %>% 
@@ -303,7 +304,7 @@ WOA18_sal_temp_dens %>%
   # head(2) %>%
   map( ~ p_section_global(
     df = .x,
-    var = "value",
+    var = "delta_value",
     col = "divergent",
     subtitle_text = unique(.x$delta_estimate)
   ))
