@@ -341,6 +341,7 @@ GLODAP <- GLODAP  %>%
 
 ```
 
+
 ## Horizontal gridding
 
 For merging with other data sets, all observations were grouped into latitude intervals of:
@@ -350,6 +351,26 @@ For merging with other data sets, all observations were grouped into latitude in
 ```{r grid_spatially_1x1}
 
 GLODAP <- m_grid_horizontal(GLODAP)
+
+```
+
+
+```{r check_gamma_availability, eval=FALSE}
+
+map + 
+  geom_tile(
+    data = GLODAP %>% 
+      filter(!is.na(gamma)) %>% 
+      count(lon, lat),
+    aes(lon, lat, fill = n)) +
+  scale_fill_viridis_c(direction = -1)
+
+GLODAP %>% 
+  ggplot(aes(depth, gamma-sigma0)) +
+  geom_hline(yintercept = 0) +
+  geom_bin2d() +
+  ylim(c(-1,1)) +
+  scale_fill_viridis_c(trans = "log10")
 
 ```
 
@@ -1852,12 +1873,13 @@ for (i_basin in basins) {
   # i_basin <- basins[5]
   
   # retrieve subbasin expocodes
-  GLODAP_basin <- GLODAP %>%
+  expocodes_basin <- GLODAP %>%
     filter(basin == i_basin,
-           !is.na(decade))
-  
-  expocodes_basin <- GLODAP_basin %>%
+           !is.na(decade)) %>% 
     count(cruise_expocode)
+  
+  GLODAP_basin <- GLODAP %>% 
+    filter(cruise_expocode %in% expocodes_basin$cruise_expocode)
   
   # subset cruise with all qc flag = 1
   expocodes_basin_qc <- GLODAP_basin %>%
@@ -1921,6 +1943,26 @@ for (i_basin in basins) {
       facet_grid(decade ~ .) +
       theme(legend.title = element_blank())
   )
+  
+  expocodes_basin_removed_40S <- GLODAP_basin_grid %>% 
+    filter(lat < -40) %>% 
+    distinct(cruise_expocode) %>% 
+    pull()
+
+  print(
+    map +
+      geom_tile(
+        data = GLODAP_basin_grid %>% 
+          filter(cruise_expocode %in% expocodes_basin_removed_40S),
+        aes(lon, lat)
+      ) +
+      labs(title = i_basin) +
+      facet_grid(decade ~ .) +
+      theme(legend.title = element_blank())
+  )
+  
+  expocodes_basin <- expocodes_basin %>% 
+    filter(!(cruise_expocode %in% expocodes_basin_removed_40S))
   
   # filter crossover with both cruises falling into subbasin
   xover_basin <- xover %>%
