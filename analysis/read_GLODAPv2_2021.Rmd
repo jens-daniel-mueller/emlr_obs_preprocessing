@@ -1529,7 +1529,7 @@ m_xover_reverse <- function(df) {
       ),
       offset_adj = if_else(
         parameter %in% c("salinity", "talk", "tco2",
-                         "cstar_total", "cstar_phosphate", "cstar_talk", "cstar_tco2"),
+                         "cstar_total", "cstar_phosphate", "cstar_talk", "cstar_tco2", "cstar_tco2_talk"),
         -offset_adj,
         1 / offset_adj
       )
@@ -1862,6 +1862,7 @@ basinmask_5 <- basinmask_5 %>%
   )
 
 basins <- unique(basinmask_5$basin)
+basins <- basins[5]
 
 GLODAP <- inner_join(GLODAP, basinmask_5)
 
@@ -2222,7 +2223,7 @@ xover_basin <- xover_basin %>%
     cstar_tco2 = tco2,
     cstar_talk = -0.5 * talk,
     phosphate = phosphate - 1,
-    cstar_phosphate = - 117 * phosphate * phosphate_mean - 16 * 0.5 * phosphate * phosphate_mean
+    cstar_phosphate = -117 * phosphate * phosphate_mean - 16 * 0.5 * phosphate * phosphate_mean
   )
 
 
@@ -2248,6 +2249,7 @@ xover_basin <- xover_basin %>%
 xover_basin <- xover_basin %>% 
   drop_na()
 
+
 ```
 
 
@@ -2255,6 +2257,7 @@ xover_basin <- xover_basin %>%
 
 xover_basin %>%
   filter(parameter_coverage == "full") %>% 
+  # filter(basin == "N. Pacific") %>% 
   mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf))) %>%
   group_split(basin, parameter) %>%
   # head(1) %>%
@@ -2272,6 +2275,7 @@ xover_basin %>%
 
 xover_basin %>%
   mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf))) %>%
+  # filter(basin == "N. Pacific") %>% 
   group_split(basin, parameter) %>%
   # head(1) %>%
   map(
@@ -2339,11 +2343,15 @@ The aim of the decadal scale analysis is to investigate mean crossover offsets b
 
 expocodes_basin <- unique(c(xover_basin$cruise_A, xover_basin$cruise_B)) 
 
+# xover_basin %>% 
+#   filter(cruise_B == "49NZ20070216",
+#          cruise_A == "49UP20170623")
 
 # loop over each cruises
 # determine the mean decadal crossover from other cruises
 for (i_cruise_expocode in expocodes_basin) {
   # i_cruise_expocode <- expocodes_basin[1]
+  # i_cruise_expocode <- "49NZ20070216"
   
   xover_cruise <- m_xover_cruise_extractation(
     df = xover_basin %>% mutate(adjustment_A = 0,
@@ -2437,8 +2445,23 @@ for (i_cruise_expocode in expocodes_basin) {
 }
 
 
+# xover_basin %>%
+#   filter(cruise_A == "49NZ20070216" |
+#            cruise_B == "49NZ20070216") %>%
+#   filter(abs(offset_adj) > 10)
+# 
+# 
+# xover_cruise_long_term_all %>%
+#   filter(parameter_coverage == "full") %>%
+#   filter(basin == "N. Pacific") %>%
+#   filter(parameter == "cstar_tco2_talk",
+#          abs(offset_adj_mean_weighted) > 10)
+
+
+
 xover_cruise_long_term_all %>%
   filter(parameter_coverage == "full") %>% 
+  # filter(basin == "N. Pacific") %>% 
   group_split(basin) %>%
   # head(1) %>%
   map(
@@ -2447,12 +2470,13 @@ xover_cruise_long_term_all %>%
       geom_hline(yintercept = 0) +
       geom_point(alpha = 0.3) +
       labs(title = paste(.x$basin, "| full")) +
-      facet_grid(parameter ~ ., scales = "free_y") +
-      coord_cartesian(ylim = c(-10,10))
+      # coord_cartesian(ylim = c(-10,10)) +
+      facet_grid(parameter ~ ., scales = "free_y")
   )
 
 xover_cruise_decade_all %>%
   filter(parameter_coverage == "full") %>% 
+  # filter(basin == "N. Pacific") %>% 
   group_split(basin) %>%
   # head(1) %>%
   map(
@@ -2461,8 +2485,8 @@ xover_cruise_decade_all %>%
       geom_hline(yintercept = 0) +
       geom_point(alpha = 0.3) +
       labs(title = paste(.x$basin, "| full")) +
-      facet_grid(parameter ~ decade, scales = "free_y") +
-      coord_cartesian(ylim = c(-10,10))
+      # coord_cartesian(ylim = c(-10,10)) +
+      facet_grid(parameter ~ decade, scales = "free_y")
   )
 
 
@@ -2484,8 +2508,8 @@ xover_cruise_long_term_all %>%
       geom_point(alpha = 0.5, shape = 21) +
       scale_fill_discrete_sequential(palette = "viridis") +
       labs(title = paste(.x$basin, "| full")) +
-      facet_grid(parameter ~ .) +
-      coord_cartesian(ylim = c(-10,10))
+      # coord_cartesian(ylim = c(-10,10)) +
+      facet_grid(parameter ~ .)
   )
 
 xover_cruise_decade_all <- xover_cruise_decade_all %>%
@@ -2502,8 +2526,8 @@ xover_cruise_decade_all %>%
       geom_point(alpha = 0.5, shape = 21) +
       scale_fill_discrete_sequential(palette = "viridis") +
       labs(title = paste(.x$basin, "| full")) +
-      facet_grid(parameter ~ decade) +
-      coord_cartesian(ylim = c(-10,10))
+      # coord_cartesian(ylim = c(-10,10)) +
+      facet_grid(parameter ~ decade)
   )
 
 
@@ -2526,8 +2550,8 @@ xover_cruise_decade_all %>%
       geom_point(alpha = 0.5, shape = 21) +
       scale_fill_discrete_sequential(palette = "viridis") +
       labs(title = paste(.x$basin, "| full")) +
-      facet_grid(parameter ~ decade) +
-      coord_cartesian(ylim = c(-10,10))
+      # coord_cartesian(ylim = c(-10,10)) +
+      facet_grid(parameter ~ decade)
   )
 
 ```
@@ -2550,8 +2574,8 @@ xover_cruise_long_term_all %>%
       geom_point(aes(size = n_A), alpha = 0.3) +
       scale_fill_discrete_sequential(palette = "viridis") +
       labs(title = paste(.x$basin, "| full")) +
-      facet_grid(parameter ~ .) +
-      coord_cartesian(ylim = c(-10,10))
+      # coord_cartesian(ylim = c(-10,10)) +
+      facet_grid(parameter ~ .)
   )
 
 xover_cruise_long_term_all %>% 
@@ -2569,8 +2593,8 @@ xover_cruise_long_term_all %>%
   geom_linerange() +
   geom_point() +
   facet_grid(basin ~ parameter) +
-  theme(axis.text.x = element_text(angle = 90)) +
-  coord_cartesian(ylim = c(-10,10))
+  # coord_cartesian(ylim = c(-10,10)) +
+  theme(axis.text.x = element_text(angle = 90))
 
 
 xover_cruise_decade_all %>%
@@ -2585,8 +2609,8 @@ xover_cruise_decade_all %>%
       geom_point(aes(size = n_A), alpha = 0.3) +
       scale_fill_discrete_sequential(palette = "viridis") +
       labs(title = paste(.x$basin, "| full")) +
-      facet_grid(parameter ~ decade) +
-      coord_cartesian(ylim = c(-10,10))
+      # coord_cartesian(ylim = c(-10,10)) +
+      facet_grid(parameter ~ decade)
   )
 
 
@@ -2604,8 +2628,8 @@ xover_cruise_decade_all_stats %>%
   geom_hline(yintercept = 0) +
   geom_point(shape = 21) +
   facet_grid(basin ~ parameter) +
-  theme(axis.text.x = element_text(angle = 90)) +
-  coord_cartesian(ylim = c(-10, 10))
+  # coord_cartesian(ylim = c(-10,10)) +
+  theme(axis.text.x = element_text(angle = 90))
 
 xover_cruise_decade_all_stats %>% 
   kable() %>%
