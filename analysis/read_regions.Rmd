@@ -359,9 +359,16 @@ basinmask_AIP <- basinmask_01 %>%
 
 
 # join basin masks into one file
-basinmask_all <- bind_rows(basinmask_04, basinmask_01, basinmask_2, basinmask_5,
-                          basinmask_SO_2, basinmask_SO_5,
-                          basinmask_SO_AIP, basinmask_AIP)
+basinmask_all <- bind_rows(
+  basinmask_04,
+  basinmask_01,
+  basinmask_2,
+  basinmask_5,
+  basinmask_SO_2,
+  basinmask_SO_5,
+  basinmask_SO_AIP,
+  basinmask_AIP
+)
 
 ```
 

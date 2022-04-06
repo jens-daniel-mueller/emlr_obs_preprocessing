@@ -78,7 +78,7 @@ longitude_sections_regular <- seq(30.5, 380.5, 20)
 
 params_global <-
   lst(
-    lat_max = 90,
+    lat_max = 65,
     lat_min = -85,
     lat_min_SO = -35,
     lat_equator = 0,
