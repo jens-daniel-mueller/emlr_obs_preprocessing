@@ -572,16 +572,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree8d52a4b1bc0d59a2231451f2373b59f93b548299targetblank8d52a4ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/8d52a4b1bc0d59a2231451f2373b59f93b548299" target="_blank">8d52a4b</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree5d7b7c95e386f316d2f8e491dd3417bfeb3b1ec6targetblank5d7b7c9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/5d7b7c95e386f316d2f8e491dd3417bfeb3b1ec6" target="_blank">5d7b7c9</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree8d52a4b1bc0d59a2231451f2373b59f93b548299targetblank8d52a4ba" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree5d7b7c95e386f316d2f8e491dd3417bfeb3b1ec6targetblank5d7b7c9a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/8d52a4b1bc0d59a2231451f2373b59f93b548299" target="_blank">8d52a4b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/5d7b7c95e386f316d2f8e491dd3417bfeb3b1ec6" target="_blank">5d7b7c9</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -599,7 +599,12 @@ Untracked files:
     Untracked:  code/read_GLODAPv2_2020.Rmd
 
 Unstaged changes:
+    Modified:   analysis/read_GLODAPv2_2016_MappedClimatologies.Rmd
     Modified:   analysis/read_GLODAPv2_2021.Rmd
+    Modified:   analysis/read_Gruber_2019.Rmd
+    Modified:   analysis/read_Key_2004.Rmd
+    Modified:   analysis/read_OceanSODA.Rmd
+    Modified:   analysis/read_Sabine_2004.Rmd
     Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
@@ -639,6 +644,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5d7b7c95e386f316d2f8e491dd3417bfeb3b1ec6/analysis/read_regions.Rmd" target="_blank">5d7b7c9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+<td>
+rerun all with lat max 65N
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/7e94d738b0f9e1e5ebfe2c6cf48515f230a3e884/docs/read_regions.html" target="_blank">7e94d73</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -765,57 +804,9 @@ region_masks_all %&gt;%
   ggplot(aes(lon, lat, fill = region)) +
   geom_raster() +
   scale_fill_brewer(palette = &quot;Dark2&quot;) +
-  coord_quickmap(expand = 0)</code></pre>
-<p><img src="figure/read_regions.Rmd/read_reccap2_region_mask-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-read_reccap2_region_mask-1">
-Past versions of read_reccap2_region_mask-1.png
-</button>
-</p>
-<div id="fig-read_reccap2_region_mask-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_regions.Rmd/read_reccap2_region_mask-1.png" target="_blank">f088f55</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-01
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_regions.Rmd/read_reccap2_region_mask-1.png" target="_blank">dde77eb</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-01
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>reccap2_region_mask &lt;- region_masks_all %&gt;%
+  coord_quickmap(expand = 0)
+
+reccap2_region_mask &lt;- region_masks_all %&gt;%
   filter(value != 0,
          region != &quot;open_ocean&quot;) %&gt;% 
   select(lon, lat, region)
@@ -972,6 +963,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7e94d738b0f9e1e5ebfe2c6cf48515f230a3e884/docs/figure/read_regions.Rmd/basin_AIP_masks_WOA18_map-1.png" target="_blank">7e94d73</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_regions.Rmd/basin_AIP_masks_WOA18_map-1.png" target="_blank">f088f55</a>
 </td>
 <td>
@@ -1028,6 +1030,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7e94d738b0f9e1e5ebfe2c6cf48515f230a3e884/docs/figure/read_regions.Rmd/landsea_masks_WOA18_map-1.png" target="_blank">7e94d73</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_regions.Rmd/landsea_masks_WOA18_map-1.png" target="_blank">dde77eb</a>
 </td>
 <td>
@@ -1045,17 +1058,17 @@ jens-daniel-mueller
 <div id="basins-for-mlr-fitting" class="section level3" number="2.2.3">
 <h3><span class="header-section-number">2.2.3</span> Basins for MLR fitting</h3>
 <p>For the MLR fitting, ocean basins are further split up, as plotted below.</p>
-<pre class="r"><code>basinmask_01 &lt;- basinmask_01 %&gt;% 
-  select(-region)
+<pre class="r"><code># basinmask_01 &lt;- basinmask_01 %&gt;% 
+#   select(-region)
 
 # 4 basins incl arctic
-basinmask_04 &lt;- basinmask_01 %&gt;%
-  mutate(basin = basin_AIP) %&gt;%
-  mutate(MLR_basins = &quot;4&quot;)
+# basinmask_04 &lt;- basinmask_01 %&gt;%
+#   mutate(basin = basin_AIP) %&gt;%
+#   mutate(MLR_basins = &quot;4&quot;)
 
 # 1 basins
 basinmask_01 &lt;- basinmask_01 %&gt;%
-  filter(basin_AIP != &quot;Arctic&quot;) %&gt;% 
+  # filter(basin_AIP != &quot;Arctic&quot;) %&gt;% 
   mutate(basin = &quot;global&quot;,
          MLR_basins = &quot;1&quot;)
 
@@ -1123,7 +1136,7 @@ basinmask_AIP &lt;- basinmask_01 %&gt;%
 
 # join basin masks into one file
 basinmask_all &lt;- bind_rows(
-  basinmask_04,
+  # basinmask_04,
   basinmask_01,
   basinmask_2,
   basinmask_5,
@@ -1133,7 +1146,7 @@ basinmask_all &lt;- bind_rows(
   basinmask_AIP
 )</code></pre>
 <pre class="r"><code>for (i_MLR_basins in unique(basinmask_all$MLR_basins)) {
-  i_MLR_basins &lt;- unique(basinmask_all$MLR_basins)[6]
+  # i_MLR_basins &lt;- unique(basinmask_all$MLR_basins)[6]
   
   print(
     map +
@@ -1169,6 +1182,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7e94d738b0f9e1e5ebfe2c6cf48515f230a3e884/docs/figure/read_regions.Rmd/basin_masks_WOA18_map-1.png" target="_blank">7e94d73</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_regions.Rmd/basin_masks_WOA18_map-1.png" target="_blank">dde77eb</a>
@@ -1209,6 +1233,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7e94d738b0f9e1e5ebfe2c6cf48515f230a3e884/docs/figure/read_regions.Rmd/basin_masks_WOA18_map-2.png" target="_blank">7e94d73</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_regions.Rmd/basin_masks_WOA18_map-2.png" target="_blank">dde77eb</a>
 </td>
 <td>
@@ -1245,6 +1280,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7e94d738b0f9e1e5ebfe2c6cf48515f230a3e884/docs/figure/read_regions.Rmd/basin_masks_WOA18_map-3.png" target="_blank">7e94d73</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_regions.Rmd/basin_masks_WOA18_map-3.png" target="_blank">dde77eb</a>
@@ -1285,6 +1331,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7e94d738b0f9e1e5ebfe2c6cf48515f230a3e884/docs/figure/read_regions.Rmd/basin_masks_WOA18_map-4.png" target="_blank">7e94d73</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_regions.Rmd/basin_masks_WOA18_map-4.png" target="_blank">dde77eb</a>
 </td>
 <td>
@@ -1321,6 +1378,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7e94d738b0f9e1e5ebfe2c6cf48515f230a3e884/docs/figure/read_regions.Rmd/basin_masks_WOA18_map-5.png" target="_blank">7e94d73</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_regions.Rmd/basin_masks_WOA18_map-5.png" target="_blank">dde77eb</a>
@@ -1361,6 +1429,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7e94d738b0f9e1e5ebfe2c6cf48515f230a3e884/docs/figure/read_regions.Rmd/basin_masks_WOA18_map-6.png" target="_blank">7e94d73</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_regions.Rmd/basin_masks_WOA18_map-6.png" target="_blank">dde77eb</a>
 </td>
 <td>
@@ -1399,45 +1478,18 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_regions.Rmd/basin_masks_WOA18_map-7.png" target="_blank">dde77eb</a>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7e94d738b0f9e1e5ebfe2c6cf48515f230a3e884/docs/figure/read_regions.Rmd/basin_masks_WOA18_map-7.png" target="_blank">7e94d73</a>
 </td>
 <td>
 jens-daniel-mueller
 </td>
 <td>
-2022-04-01
+2022-04-06
 </td>
 </tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/read_regions.Rmd/basin_masks_WOA18_map-8.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-basin_masks_WOA18_map-8">
-Past versions of basin_masks_WOA18_map-8.png
-</button>
-</p>
-<div id="fig-basin_masks_WOA18_map-8" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
 <tr>
 <td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_regions.Rmd/basin_masks_WOA18_map-8.png" target="_blank">dde77eb</a>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_regions.Rmd/basin_masks_WOA18_map-7.png" target="_blank">dde77eb</a>
 </td>
 <td>
 jens-daniel-mueller
@@ -1532,6 +1584,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/7e94d738b0f9e1e5ebfe2c6cf48515f230a3e884/docs/figure/read_regions.Rmd/section_global_map-1.png" target="_blank">7e94d73</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_regions.Rmd/section_global_map-1.png" target="_blank">f088f55</a>
