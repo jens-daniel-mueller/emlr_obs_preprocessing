@@ -2244,9 +2244,7 @@ xover_basin %>%
   facet_wrap(~parameter, scales = "free_x")
 
 xover_basin <- xover_basin %>% 
-  select(-c(phosphate_mean))
-# xover_basin <- xover_basin %>% 
-#   select(-c(phosphate, tco2, talk, phosphate_mean))
+  select(-c(phosphate_mean, tco2, talk))
 
 xover_basin <- xover_basin %>% 
   mutate(cstar_total = cstar_tco2 + cstar_talk + cstar_phosphate,
@@ -2451,6 +2449,13 @@ for (i_cruise_expocode in expocodes_basin) {
   
 }
 
+
+hline_intercept <-
+  tibble(parameter = unique(xover_basin$parameter)) %>%
+  mutate(intercept = if_else(parameter %in% c("phosphate"),
+                             1,
+                             0))
+
 xover_cruise_long_term_all %>%
   filter(parameter_coverage == "full") %>% 
   group_split(basin) %>%
@@ -2458,7 +2463,7 @@ xover_cruise_long_term_all %>%
   map(
     ~ ggplot(data = .x,
              aes(date_A, offset_adj_mean_weighted, size = n_A)) +
-      geom_hline(yintercept = 0) +
+        geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
       geom_point(alpha = 0.3) +
       labs(title = paste(.x$basin, "| full")) +
       # coord_cartesian(ylim = c(-10,10)) +
@@ -2472,7 +2477,7 @@ xover_cruise_decade_all %>%
   map(
     ~ ggplot(data = .x,
              aes(date_A, offset_adj_mean_weighted, size = n_A)) +
-      geom_hline(yintercept = 0) +
+        geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
       geom_point(alpha = 0.3) +
       labs(title = paste(.x$basin, "| full")) +
       # coord_cartesian(ylim = c(-10,10)) +
@@ -2494,12 +2499,12 @@ xover_cruise_long_term_all %>%
   map(
     ~ ggplot(data = .x,
              aes(n_A, offset_adj_mean_weighted, size = n_A, fill = decade_A)) +
-      geom_hline(yintercept = 0) +
+        geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
       geom_point(alpha = 0.5, shape = 21) +
       scale_fill_discrete_sequential(palette = "viridis") +
       labs(title = paste(.x$basin, "| full")) +
       # coord_cartesian(ylim = c(-10,10)) +
-      facet_grid(parameter ~ .)
+      facet_grid(parameter ~ ., scales = "free_y")
   )
 
 xover_cruise_decade_all <- xover_cruise_decade_all %>%
@@ -2512,12 +2517,12 @@ xover_cruise_decade_all %>%
   map(
     ~ ggplot(data = .x,
              aes(n_A, offset_adj_mean_weighted, size = n_A, fill = decade_A)) +
-      geom_hline(yintercept = 0) +
+        geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
       geom_point(alpha = 0.5, shape = 21) +
       scale_fill_discrete_sequential(palette = "viridis") +
       labs(title = paste(.x$basin, "| full")) +
       # coord_cartesian(ylim = c(-10,10)) +
-      facet_grid(parameter ~ decade)
+      facet_grid(parameter ~ decade, scales = "free_y")
   )
 
 
@@ -2528,20 +2533,29 @@ xover_cruise_decade_all %>%
 ```{r xover_cruise_mean_by_cruise_size_PO, fig.asp=1.5}
 
 xover_cruise_decade_all %>%
-  filter(parameter_coverage == "full",
-         basin == "N. Pacific",
-         decade != unique(xover_cruise_decade_all$decade)[1]) %>% 
+  filter(
+    parameter_coverage == "full",
+    basin == "N. Pacific",
+    decade != unique(xover_cruise_decade_all$decade)[1]
+  ) %>%
   group_split(basin) %>%
   # head(1) %>%
   map(
-    ~ ggplot(data = .x,
-             aes(n_A, offset_adj_mean_weighted, size = n_A, fill = decade_A)) +
-      geom_hline(yintercept = 0) +
+    ~ ggplot(
+      data = .x,
+      aes(
+        n_A,
+        offset_adj_mean_weighted,
+        size = n_A,
+        fill = decade_A
+      )
+    ) +
+      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
       geom_point(alpha = 0.5, shape = 21) +
       scale_fill_discrete_sequential(palette = "viridis") +
       labs(title = paste(.x$basin, "| full")) +
       # coord_cartesian(ylim = c(-10,10)) +
-      facet_grid(parameter ~ decade)
+      facet_grid(parameter ~ decade, scales = "free_y")
   )
 
 ```
@@ -2559,13 +2573,13 @@ xover_cruise_long_term_all %>%
   map(
     ~ ggplot(data = .x,
              aes(decade_A, offset_adj_mean_weighted)) +
-      geom_hline(yintercept = 0) +
+        geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
       geom_boxplot() +
       geom_point(aes(size = n_A), alpha = 0.3) +
       scale_fill_discrete_sequential(palette = "viridis") +
       labs(title = paste(.x$basin, "| full")) +
       # coord_cartesian(ylim = c(-10,10)) +
-      facet_grid(parameter ~ .)
+      facet_grid(parameter ~ ., scales = "free_y")
   )
 
 xover_cruise_long_term_all %>%
@@ -2585,10 +2599,10 @@ xover_cruise_long_term_all %>%
       ymax = offset_adj_mean_weighted + offset_adj_sd
     )
   ) +
-  geom_hline(yintercept = 0) +
+    geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
   geom_linerange() +
   geom_point() +
-  facet_grid(basin ~ parameter) +
+  facet_grid(parameter ~ basin, scales = "free_y") +
   # coord_cartesian(ylim = c(-10,10)) +
   theme(axis.text.x = element_text(angle = 90))
 
@@ -2605,13 +2619,13 @@ xover_cruise_decade_all %>%
         offset_adj_mean_weighted
       )
     ) +
-      geom_hline(yintercept = 0) +
+        geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
       geom_boxplot() +
       geom_point(aes(size = n_A), alpha = 0.3) +
       scale_fill_discrete_sequential(palette = "viridis") +
       labs(title = paste(.x$basin, "| full")) +
       # coord_cartesian(ylim = c(-10,10)) +
-      facet_grid(parameter ~ decade)
+      facet_grid(parameter ~ decade, scales = "free_y")
   )
 
 
@@ -2626,16 +2640,26 @@ xover_cruise_decade_all_stats <- xover_cruise_decade_all %>%
   filter(parameter_coverage == "full")
 
 xover_cruise_decade_all_stats %>%
-  ggplot(aes(decade_A, offset_adj_mean_weighted, col = decade,
+  group_split(basin) %>%
+  # head(1) %>%
+  map(
+    ~ ggplot(
+      data = .x,
+      aes(
+        decade_A,
+        offset_adj_mean_weighted,
         ymin = offset_adj_mean_weighted - offset_adj_sd,
-        ymax = offset_adj_mean_weighted + offset_adj_sd)) +
-  geom_hline(yintercept = 0) +
-  geom_linerange() +
-  geom_point() +
-  scale_color_brewer(palette = "Set1") +
-  facet_grid(basin ~ parameter) +
-  # coord_cartesian(ylim = c(-10,10)) +
-  theme(axis.text.x = element_text(angle = 90))
+        ymax = offset_adj_mean_weighted + offset_adj_sd
+      )
+    ) +
+      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_linerange() +
+      geom_point() +
+      labs(title = .x$basin) +
+      facet_grid(parameter ~ decade, scales = "free_y") +
+      # coord_cartesian(ylim = c(-10,10)) +
+      theme(axis.text.x = element_text(angle = 90))
+  )
 
 xover_cruise_decade_all_stats %>% 
   kable() %>%
@@ -3231,9 +3255,11 @@ xover_add_decade %>%
 
 
 
-hline_intercept <- hline_intercept %>% 
-  filter(parameter %in% unique(xover_add_decade$parameter))
-
+hline_intercept <-
+  tibble(parameter = unique(xover_add_decade$parameter)) %>%
+  mutate(intercept = if_else(parameter %in% c("phosphate"),
+                             1,
+                             0))
 
 p_crossover_ts <- xover_add_decade %>%
   ggplot(aes(date_B, offset)) +
