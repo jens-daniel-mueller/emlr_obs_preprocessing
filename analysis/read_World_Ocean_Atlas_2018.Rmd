@@ -125,7 +125,7 @@ rm(WOA18_sal_tibble, WOA18_temp_tibble)
 # ie this is not specific to the MLR fitting
 
 basinmask <- basinmask %>% 
-  filter(MLR_basins == "4") %>% 
+  filter(MLR_basins == "2") %>% 
   select(lat, lon, basin_AIP)
 
 # restrict predictor fields to basin mask grid

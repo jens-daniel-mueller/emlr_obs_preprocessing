@@ -60,7 +60,7 @@ theme_set(theme_bw())
 - Data source: [World Ocean Atlas 2018](https://www.nodc.noaa.gov/OC5/woa18/woa18data.html){target="_blank"}
 
 
-```{r read_reccap2_region_mask}
+```{r read_reccap2_region_mask, eval=FALSE}
 
 region_masks_all <-
   read_ncdf(paste(path_reccap2, "RECCAP2_region_masks_all_v20210412.nc", sep = "")) %>%
@@ -235,7 +235,7 @@ basinmask_01 <- basinmask_01  %>%
 
 ```
 
-```{r join_WOA_and_reccap2_mask}
+```{r join_WOA_and_reccap2_mask, eval=FALSE}
 
 basinmask_01 <- inner_join(basinmask_01,reccap2_region_mask)
 
@@ -282,17 +282,17 @@ For the MLR fitting, ocean basins are further split up, as plotted below.
 
 ```{r assign_alternative_basin_labels}
 
-basinmask_01 <- basinmask_01 %>% 
-  select(-region)
+# basinmask_01 <- basinmask_01 %>% 
+#   select(-region)
 
 # 4 basins incl arctic
-basinmask_04 <- basinmask_01 %>%
-  mutate(basin = basin_AIP) %>%
-  mutate(MLR_basins = "4")
+# basinmask_04 <- basinmask_01 %>%
+#   mutate(basin = basin_AIP) %>%
+#   mutate(MLR_basins = "4")
 
 # 1 basins
 basinmask_01 <- basinmask_01 %>%
-  filter(basin_AIP != "Arctic") %>% 
+  # filter(basin_AIP != "Arctic") %>% 
   mutate(basin = "global",
          MLR_basins = "1")
 
@@ -360,7 +360,7 @@ basinmask_AIP <- basinmask_01 %>%
 
 # join basin masks into one file
 basinmask_all <- bind_rows(
-  basinmask_04,
+  # basinmask_04,
   basinmask_01,
   basinmask_2,
   basinmask_5,
@@ -375,7 +375,7 @@ basinmask_all <- bind_rows(
 ```{r basin_masks_WOA18_map, fig.asp=0.5}
 
 for (i_MLR_basins in unique(basinmask_all$MLR_basins)) {
-  i_MLR_basins <- unique(basinmask_all$MLR_basins)[6]
+  # i_MLR_basins <- unique(basinmask_all$MLR_basins)[6]
   
   print(
     map +
