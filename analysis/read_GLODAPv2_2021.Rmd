@@ -1862,7 +1862,7 @@ basinmask_5 <- basinmask_5 %>%
   )
 
 basins <- unique(basinmask_5$basin)
-basins <- basins[5]
+# basins <- basins[5]
 
 GLODAP <- inner_join(GLODAP, basinmask_5)
 
@@ -2410,6 +2410,7 @@ for (i_cruise_expocode in expocodes_basin) {
   xover_cruise_decade_partial <- xover_cruise %>%
     group_by(cruise_A, date_A, n_A, parameter, decade, basin) %>%
     summarise(
+      # offset_adj_sd = sd(offset_adj, na.rm = TRUE),
       offset_adj_mean = mean(offset_adj, na.rm = TRUE),
       offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n_B, na.rm = TRUE)
     ) %>%
@@ -2419,6 +2420,7 @@ for (i_cruise_expocode in expocodes_basin) {
     filter(parameter_coverage == "full") %>%
     group_by(cruise_A, date_A, n_A, parameter, decade, basin) %>%
     summarise(
+      # offset_adj_sd = sd(offset_adj, na.rm = TRUE),
       offset_adj_mean = mean(offset_adj, na.rm = TRUE),
       offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n_B, na.rm = TRUE)
     ) %>%
@@ -2563,7 +2565,7 @@ xover_cruise_decade_all %>%
 ```{r xover_decadal_averages, fig.asp=1}
 
 xover_cruise_long_term_all %>%
-  filter(parameter_coverage == "full") %>% 
+  filter(parameter_coverage == "full") %>%
   group_split(basin) %>%
   # head(1) %>%
   map(
@@ -2578,17 +2580,23 @@ xover_cruise_long_term_all %>%
       facet_grid(parameter ~ .)
   )
 
-xover_cruise_long_term_all %>% 
-  group_by(basin, decade_A, parameter_coverage, parameter) %>% 
-  summarise(offset_adj_sd = sd(offset_adj_mean_weighted, na.rm = TRUE),
-            offset_adj_mean_weighted = weighted.mean(offset_adj_mean_weighted, w = n_A)
-            ) %>% 
-  ungroup() %>% 
-  drop_na() %>% 
-  filter(parameter_coverage == "full") %>% 
-  ggplot(aes(decade_A, offset_adj_mean_weighted,
-             ymin = offset_adj_mean_weighted - offset_adj_sd,
-             ymax = offset_adj_mean_weighted + offset_adj_sd)) +
+xover_cruise_long_term_all %>%
+  group_by(basin, decade_A, parameter_coverage, parameter) %>%
+  summarise(
+    offset_adj_sd = sd(offset_adj_mean_weighted, na.rm = TRUE),
+    offset_adj_mean_weighted = weighted.mean(offset_adj_mean_weighted, w = n_A)
+  ) %>%
+  ungroup() %>%
+  drop_na() %>%
+  filter(parameter_coverage == "full") %>%
+  ggplot(
+    aes(
+      decade_A,
+      offset_adj_mean_weighted,
+      ymin = offset_adj_mean_weighted - offset_adj_sd,
+      ymax = offset_adj_mean_weighted + offset_adj_sd
+    )
+  ) +
   geom_hline(yintercept = 0) +
   geom_linerange() +
   geom_point() +
@@ -2598,12 +2606,17 @@ xover_cruise_long_term_all %>%
 
 
 xover_cruise_decade_all %>%
-  filter(parameter_coverage == "full") %>% 
+  filter(parameter_coverage == "full") %>%
   group_split(basin) %>%
   # head(1) %>%
   map(
-    ~ ggplot(data = .x,
-             aes(decade_A, offset_adj_mean_weighted)) +
+    ~ ggplot(
+      data = .x,
+      aes(
+        decade_A,
+        offset_adj_mean_weighted
+      )
+    ) +
       geom_hline(yintercept = 0) +
       geom_boxplot() +
       geom_point(aes(size = n_A), alpha = 0.3) +
@@ -2617,6 +2630,7 @@ xover_cruise_decade_all %>%
 xover_cruise_decade_all_stats <- xover_cruise_decade_all %>%
   group_by(basin, decade_A, decade, parameter_coverage, parameter) %>%
   summarise(
+    offset_adj_sd = sd(offset_adj_mean_weighted),
     offset_adj_mean_weighted = weighted.mean(offset_adj_mean_weighted, w = n_A)
   ) %>%
   ungroup() %>%
@@ -2624,9 +2638,13 @@ xover_cruise_decade_all_stats <- xover_cruise_decade_all %>%
   filter(parameter_coverage == "full")
 
 xover_cruise_decade_all_stats %>%
-  ggplot(aes(decade_A, offset_adj_mean_weighted, fill = decade)) +
+  ggplot(aes(decade_A, offset_adj_mean_weighted, col = decade,
+        ymin = offset_adj_mean_weighted - offset_adj_sd,
+        ymax = offset_adj_mean_weighted + offset_adj_sd)) +
   geom_hline(yintercept = 0) +
-  geom_point(shape = 21) +
+  geom_linerange() +
+  geom_point() +
+  scale_color_brewer(palette = "Set1") +
   facet_grid(basin ~ parameter) +
   # coord_cartesian(ylim = c(-10,10)) +
   theme(axis.text.x = element_text(angle = 90))
