@@ -1945,6 +1945,10 @@ for (i_basin in basins) {
       theme(legend.title = element_blank())
   )
   
+  
+  # only for the N Pacifc we remove xover from cruises that go further south than 40S
+  if(i_basin == "N. Pacific"){
+  
   expocodes_basin_removed_40S <- GLODAP_basin_grid %>%
     filter(lat < -40) %>%
     distinct(cruise_expocode) %>%
@@ -1980,14 +1984,14 @@ for (i_basin in basins) {
   
   print(
     map +
-      # geom_tile(
-      #   data = GLODAP_basin_grid %>%
-      #     filter(
-      #       parameter_coverage == "partial" &
-      #         cruise_expocode %in% expocodes_basin$cruise_expocode
-      #     ),
-      #   aes(lon, lat, fill = "partial")
-      # ) +
+      geom_tile(
+        data = GLODAP_basin_grid %>%
+          filter(
+            parameter_coverage == "partial" &
+              cruise_expocode %in% expocodes_basin$cruise_expocode
+          ),
+        aes(lon, lat, fill = "partial")
+      ) +
       geom_tile(
         data = GLODAP_basin_grid %>%
           filter(
@@ -2002,6 +2006,8 @@ for (i_basin in basins) {
       facet_grid(decade ~ .) +
       theme(legend.title = element_blank())
   )
+  
+  }
   
   # filter crossover with both cruises falling into subbasin
   xover_basin <- xover %>%
@@ -2222,9 +2228,10 @@ xover_basin <- xover_basin %>%
   mutate(
     cstar_tco2 = tco2,
     cstar_talk = -0.5 * talk,
-    phosphate = phosphate - 1,
-    cstar_phosphate = -117 * phosphate * phosphate_mean - 16 * 0.5 * phosphate * phosphate_mean
-  )
+    phosphate_fac = phosphate - 1,
+    cstar_phosphate = -117 * phosphate_fac * phosphate_mean - 16 * 0.5 * phosphate_fac * phosphate_mean
+  ) %>% 
+  select(-phosphate_fac)
 
 
 xover_basin %>%
@@ -2237,12 +2244,14 @@ xover_basin %>%
   facet_wrap(~parameter, scales = "free_x")
 
 xover_basin <- xover_basin %>% 
-  select(-c(phosphate, tco2, talk, phosphate_mean))
+  select(-c(phosphate_mean))
+# xover_basin <- xover_basin %>% 
+#   select(-c(phosphate, tco2, talk, phosphate_mean))
 
 xover_basin <- xover_basin %>% 
   mutate(cstar_total = cstar_tco2 + cstar_talk + cstar_phosphate,
          cstar_tco2_talk = cstar_tco2 + cstar_talk) %>% 
-  pivot_longer(starts_with("cstar"),
+  pivot_longer(phosphate:cstar_tco2_talk,
                names_to = "parameter",
                values_to = "offset_adj")
 
@@ -2339,20 +2348,16 @@ xover_basin_annual %>%
 
 The aim of the decadal scale analysis is to investigate mean crossover offsets between all cruises from two decades. 
 
-```{r crossover_analysis_5_basin_decadal, fig.asp=1, results='asis'}
+```{r crossover_analysis_5_basin_decadal, fig.asp=1.5, results='asis'}
 
 expocodes_basin <- unique(c(xover_basin$cruise_A, xover_basin$cruise_B)) 
 
-# xover_basin %>% 
-#   filter(cruise_B == "49NZ20070216",
-#          cruise_A == "49UP20170623")
 
 # loop over each cruises
 # determine the mean decadal crossover from other cruises
 for (i_cruise_expocode in expocodes_basin) {
   # i_cruise_expocode <- expocodes_basin[1]
-  # i_cruise_expocode <- "49NZ20070216"
-  
+
   xover_cruise <- m_xover_cruise_extractation(
     df = xover_basin %>% mutate(adjustment_A = 0,
                                 adjustment_B = 0,
@@ -2446,24 +2451,8 @@ for (i_cruise_expocode in expocodes_basin) {
   
 }
 
-
-# xover_basin %>%
-#   filter(cruise_A == "49NZ20070216" |
-#            cruise_B == "49NZ20070216") %>%
-#   filter(abs(offset_adj) > 10)
-# 
-# 
-# xover_cruise_long_term_all %>%
-#   filter(parameter_coverage == "full") %>%
-#   filter(basin == "N. Pacific") %>%
-#   filter(parameter == "cstar_tco2_talk",
-#          abs(offset_adj_mean_weighted) > 10)
-
-
-
 xover_cruise_long_term_all %>%
   filter(parameter_coverage == "full") %>% 
-  # filter(basin == "N. Pacific") %>% 
   group_split(basin) %>%
   # head(1) %>%
   map(
@@ -2478,7 +2467,6 @@ xover_cruise_long_term_all %>%
 
 xover_cruise_decade_all %>%
   filter(parameter_coverage == "full") %>% 
-  # filter(basin == "N. Pacific") %>% 
   group_split(basin) %>%
   # head(1) %>%
   map(
@@ -2494,7 +2482,7 @@ xover_cruise_decade_all %>%
 
 ```
 
-```{r xover_cruise_mean_by_cruise_size, fig.asp=1}
+```{r xover_cruise_mean_by_cruise_size, fig.asp=1.5}
 
 xover_cruise_long_term_all <- xover_cruise_long_term_all %>%
   mutate(decade_A = m_grid_decade(year(date_A)))
@@ -2537,7 +2525,7 @@ xover_cruise_decade_all %>%
 
 #### PO
 
-```{r xover_cruise_mean_by_cruise_size_PO, fig.asp=1}
+```{r xover_cruise_mean_by_cruise_size_PO, fig.asp=1.5}
 
 xover_cruise_decade_all %>%
   filter(parameter_coverage == "full",
@@ -2562,7 +2550,7 @@ xover_cruise_decade_all %>%
 
 ### Decadal averages
 
-```{r xover_decadal_averages, fig.asp=1}
+```{r xover_decadal_averages, fig.asp=1.5}
 
 xover_cruise_long_term_all %>%
   filter(parameter_coverage == "full") %>%
