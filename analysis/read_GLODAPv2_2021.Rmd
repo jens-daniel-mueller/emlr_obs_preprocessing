@@ -1870,7 +1870,7 @@ GLODAP <- GLODAP %>%
 
 # loop over all 5 subbasins
 for (i_basin in basins) {
-  # i_basin <- basins[5]
+  # i_basin <- basins[3]
   
   # retrieve subbasin expocodes
   expocodes_basin <- GLODAP %>%
@@ -1944,25 +1944,63 @@ for (i_basin in basins) {
       theme(legend.title = element_blank())
   )
   
-  expocodes_basin_removed_40S <- GLODAP_basin_grid %>% 
-    filter(lat < -40) %>% 
-    distinct(cruise_expocode) %>% 
+  expocodes_basin_removed_40S <- GLODAP_basin_grid %>%
+    filter(lat < -40) %>%
+    distinct(cruise_expocode) %>%
     pull()
-
+  
   print(
     map +
       geom_tile(
-        data = GLODAP_basin_grid %>% 
-          filter(cruise_expocode %in% expocodes_basin_removed_40S),
-        aes(lon, lat)
+        data = GLODAP_basin_grid %>%
+          filter(
+            parameter_coverage == "partial" &
+              cruise_expocode %in% expocodes_basin_removed_40S
+          ),
+        aes(lon, lat, fill = "partial")
       ) +
-      labs(title = i_basin) +
+      geom_tile(
+        data = GLODAP_basin_grid %>%
+          filter(
+            parameter_coverage == "full" &
+              cruise_expocode %in% expocodes_basin_removed_40S
+          ),
+        aes(lon, lat, fill = "full")
+      ) +
+      scale_fill_brewer(palette = "Set1") +
+      labs(title = i_basin,
+           subtitle = "Removed cruises") +
       facet_grid(decade ~ .) +
       theme(legend.title = element_blank())
   )
   
   expocodes_basin <- expocodes_basin %>% 
     filter(!(cruise_expocode %in% expocodes_basin_removed_40S))
+  
+  print(
+    map +
+      # geom_tile(
+      #   data = GLODAP_basin_grid %>%
+      #     filter(
+      #       parameter_coverage == "partial" &
+      #         cruise_expocode %in% expocodes_basin$cruise_expocode
+      #     ),
+      #   aes(lon, lat, fill = "partial")
+      # ) +
+      geom_tile(
+        data = GLODAP_basin_grid %>%
+          filter(
+            parameter_coverage == "full" &
+              cruise_expocode %in% expocodes_basin$cruise_expocode
+          ),
+        aes(lon, lat, fill = "full")
+      ) +
+      scale_fill_brewer(palette = "Set1") +
+      labs(title = i_basin,
+           subtitle = "Maintained cruises") +
+      facet_grid(decade ~ .) +
+      theme(legend.title = element_blank())
+  )
   
   # filter crossover with both cruises falling into subbasin
   xover_basin <- xover %>%
@@ -2923,7 +2961,7 @@ dev.off()
 
 ## Prediction
 
-```{r calc_CANYON-B}
+```{r calc_CANYON-B, eval=FALSE}
 
 source("/net/kryo/work/uptools/co2_calculation/CANYON-B/CANYONB.R")
 
@@ -2972,7 +3010,7 @@ GLODAP_CB <- GLODAP_CB %>%
 
 ## Comparison to observations
 
-```{r CANYON-B_vs_observationd, fig.asp=0.4}
+```{r CANYON-B_vs_observationd, fig.asp=0.4, eval=FALSE}
 
 
 variables <- c("talk", "tco2", "nitrate", "phosphate", "silicate")
@@ -3043,7 +3081,7 @@ for (i_variable in variables) {
 
 ## Write files
 
-```{r write_Canyon-B_data_file}
+```{r write_Canyon-B_data_file, eval=FALSE}
 
 GLODAP_CB %>% 
   select(row_number,
