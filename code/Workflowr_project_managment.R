@@ -5,7 +5,7 @@
 
 # commit regular changes (locally) and rebuild site
 # this takes only changed files into account
-wflow_publish(all = TRUE, message = "added offset analysis for phosphate")
+wflow_publish(all = TRUE, message = "rerun all with lat max 65N and without arcic")
 
 # commit changes including _site.yml (locally) and rebuild site in the specified order
 # you can also run this code with only some of the files. In this case remove the rebuild=TRUE command
@@ -27,17 +27,8 @@ wflow_publish(here::here(
     "read_RECCAP2_flux_products.Rmd"
   )
 ),
-message = "rerun all including arctic and North Atlantic biome",
+message = "rerun all with lat max 65N and without arcic",
 republish = TRUE)
-
-wflow_publish(here::here(
-  "analysis",
-  c(
-    "read_OceanSODA.Rmd",
-    "read_RECCAP2_flux_products.Rmd"  )
-),
-message = "rerun all including arctic and North Atlantic biome")
-
 
 
 # Push latest version to GitHub

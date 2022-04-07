@@ -66,6 +66,10 @@ products <-
 products <-
   products[!str_detect(products, pattern = "AOML_EXTRAT_v20211130")]
 
+
+products <-
+  products[!str_detect(products, pattern = "archive")]
+
 ### loop
 
 for (i_products in products) {
