@@ -1869,9 +1869,13 @@ GLODAP <- inner_join(GLODAP, basinmask_5)
 GLODAP <- GLODAP %>%
   mutate(decade = m_grid_decade(year))
 
+# remove cruise with phosphate offset > 1.3
+GLODAP <- GLODAP %>% 
+  filter(cruise_expocode != "18LU20080702")
+
 # loop over all 5 subbasins
 for (i_basin in basins) {
-  # i_basin <- basins[3]
+  # i_basin <- basins[5]
   
   # retrieve subbasin expocodes
   expocodes_basin <- GLODAP %>%
@@ -2183,6 +2187,19 @@ rm(xover_basin, GLODAP_basin, GLODAP_basin_grid, expocodes_basin)
 xover_basin <- xover_basin_all
 rm(xover_basin_all)
 
+
+# xover_basin_18LU20080702 <- xover_basin %>%
+#   filter(cruise_A == "18LU20080702" |
+#            cruise_B == "18LU20080702",
+#          parameter_coverage == "full")
+# 
+# 
+# map +
+#   geom_tile(data = GLODAP %>%
+#               filter(cruise_expocode == "18LU20080702") %>%
+#               distinct(lon, lat),
+#             aes(lon, lat))
+
 ```
 
 ### Cruise-by-cruise C*
@@ -2457,9 +2474,15 @@ hline_intercept <-
                              0))
 
 xover_cruise_long_term_all %>%
+  filter(parameter_coverage == "full",
+         basin == "N. Pacific",
+         parameter == "phosphate",
+         abs(offset_adj_mean_weighted) > 1.05)
+
+xover_cruise_long_term_all %>%
   filter(parameter_coverage == "full") %>% 
   group_split(basin) %>%
-  # head(1) %>%
+  head(1) %>%
   map(
     ~ ggplot(data = .x,
              aes(date_A, offset_adj_mean_weighted, size = n_A)) +
@@ -3015,7 +3038,7 @@ dev.off()
 
 ## Prediction
 
-```{r calc_CANYON-B}
+```{r calc_CANYON-B, eval=FALSE}
 
 source("/net/kryo/work/uptools/co2_calculation/CANYON-B/CANYONB.R")
 
@@ -3064,7 +3087,7 @@ GLODAP_CB <- GLODAP_CB %>%
 
 ## Comparison to observations
 
-```{r CANYON-B_vs_observationd, fig.asp=0.4}
+```{r CANYON-B_vs_observationd, fig.asp=0.4, eval=FALSE}
 
 
 variables <- c("talk", "tco2", "nitrate", "phosphate", "silicate")
@@ -3135,7 +3158,7 @@ for (i_variable in variables) {
 
 ## Write files
 
-```{r write_Canyon-B_data_file}
+```{r write_Canyon-B_data_file, eval=FALSE}
 
 GLODAP_CB %>% 
   select(row_number,
