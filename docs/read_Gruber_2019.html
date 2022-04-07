@@ -456,7 +456,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Anthropogenic CO2 from 1994 to 2007</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">01 April, 2022</h4>
+<h4 class="date">07 April, 2022</h4>
 
 </div>
 
@@ -481,7 +481,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-04-01
+<strong>Last updated:</strong> 2022-04-07
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -572,16 +572,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreed23e4250f2657f2e3fb33dfcec045b46e64ac6fatargetblankd23e425a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/d23e4250f2657f2e3fb33dfcec045b46e64ac6fa" target="_blank">d23e425</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeaf08e3886b8602094a7e1f4bc0a0251daa31b2d1targetblankaf08e38a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/af08e3886b8602094a7e1f4bc0a0251daa31b2d1" target="_blank">af08e38</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreed23e4250f2657f2e3fb33dfcec045b46e64ac6fatargetblankd23e425a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeaf08e3886b8602094a7e1f4bc0a0251daa31b2d1targetblankaf08e38a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/d23e4250f2657f2e3fb33dfcec045b46e64ac6fa" target="_blank">d23e425</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/af08e3886b8602094a7e1f4bc0a0251daa31b2d1" target="_blank">af08e38</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -599,8 +599,6 @@ Untracked files:
     Untracked:  code/read_GLODAPv2_2020.Rmd
 
 Unstaged changes:
-    Modified:   analysis/_site.yml
-    Deleted:    analysis/analysis_regional_clusters.Rmd
     Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
@@ -640,6 +638,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/af08e3886b8602094a7e1f4bc0a0251daa31b2d1/analysis/read_Gruber_2019.Rmd" target="_blank">af08e38</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-07
+</td>
+<td>
+rerun all with lat max 65N and without arcic
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/read_Gruber_2019.html" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1030,7 +1062,7 @@ V101 &lt;- V101 %&gt;%
 <pre class="r"><code># use only three basin to assign general basin mask
 # ie this is not specific to the MLR fitting
 basinmask &lt;- basinmask %&gt;% 
-  filter(MLR_basins == &quot;4&quot;) %&gt;% 
+  filter(MLR_basins == &quot;2&quot;) %&gt;% 
   select(lat, lon, basin_AIP)
 
 dcant &lt;- inner_join(dcant, basinmask)
@@ -1089,6 +1121,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_Gruber_2019.Rmd/G19_cant_inv_maps-1.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_Gruber_2019.Rmd/G19_cant_inv_maps-1.png" target="_blank">dde77eb</a>
@@ -1166,6 +1209,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_Gruber_2019.Rmd/G19_cant_pos_inventory_maps-1.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_Gruber_2019.Rmd/G19_cant_pos_inventory_maps-1.png" target="_blank">dde77eb</a>
@@ -1331,6 +1385,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_Gruber_2019.Rmd/G19_cant_pos_inventory_maps_published-1.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_Gruber_2019.Rmd/G19_cant_pos_inventory_maps_published-1.png" target="_blank">dde77eb</a>
 </td>
 <td>
@@ -1431,6 +1496,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_Gruber_2019.Rmd/G19_cant_offset_inventory-1.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_Gruber_2019.Rmd/G19_cant_offset_inventory-1.png" target="_blank">dde77eb</a>
@@ -1726,6 +1802,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_Gruber_2019.Rmd/Cant_pos_zonal_mean_sections-1.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_Gruber_2019.Rmd/Cant_pos_zonal_mean_sections-1.png" target="_blank">dde77eb</a>
 </td>
 <td>
@@ -1796,6 +1883,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_Gruber_2019.Rmd/Cant_sections_V101-1.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_Gruber_2019.Rmd/Cant_sections_V101-1.png" target="_blank">dde77eb</a>
 </td>
 <td>
@@ -1849,6 +1947,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_Gruber_2019.Rmd/Cant_sections-1.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_Gruber_2019.Rmd/Cant_sections-1.png" target="_blank">dde77eb</a>
@@ -1908,6 +2017,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_Gruber_2019.Rmd/Cant_sections_regular-1.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_Gruber_2019.Rmd/Cant_sections_regular-1.png" target="_blank">dde77eb</a>
@@ -2300,7 +2420,7 @@ dcant_reopen</code></pre>
     3 global attributes:
         Conventions: CF-1.4
         created_by: R, packages ncdf4 and raster (version 3.5-11)
-        date: 2022-04-01 17:49:55</code></pre>
+        date: 2022-04-07 09:35:24</code></pre>
 <pre class="r"><code>print(dcant_reopen)</code></pre>
 <pre><code>File /nfs/kryo/work/jenmueller/emlr_cant/observations/preprocessing/dcant_Gruber2019_1994-2007_v20211012.nc (NC_FORMAT_CLASSIC):
 
@@ -2392,7 +2512,7 @@ dcant_reopen</code></pre>
     3 global attributes:
         Conventions: CF-1.4
         created_by: R, packages ncdf4 and raster (version 3.5-11)
-        date: 2022-04-01 17:49:55</code></pre>
+        date: 2022-04-07 09:35:24</code></pre>
 <pre class="r"><code>names(dcant_reopen$var)</code></pre>
 <pre><code>[1] &quot;crs&quot;   &quot;dcant&quot;</code></pre>
 <pre class="r"><code># add units
@@ -2530,7 +2650,7 @@ volume_reopen</code></pre>
     3 global attributes:
         Conventions: CF-1.4
         created_by: R, packages ncdf4 and raster (version 3.5-11)
-        date: 2022-04-01 17:49:55</code></pre>
+        date: 2022-04-07 09:35:24</code></pre>
 <pre class="r"><code>print(volume_reopen)</code></pre>
 <pre><code>File /nfs/kryo/work/jenmueller/emlr_cant/observations/preprocessing/volume_Gruber2019_1994-2007_v20211012.nc (NC_FORMAT_CLASSIC):
 
@@ -2622,7 +2742,7 @@ volume_reopen</code></pre>
     3 global attributes:
         Conventions: CF-1.4
         created_by: R, packages ncdf4 and raster (version 3.5-11)
-        date: 2022-04-01 17:49:55</code></pre>
+        date: 2022-04-07 09:35:24</code></pre>
 <pre class="r"><code>names(volume_reopen$var)</code></pre>
 <pre><code>[1] &quot;crs&quot;    &quot;volume&quot;</code></pre>
 <pre class="r"><code># add units

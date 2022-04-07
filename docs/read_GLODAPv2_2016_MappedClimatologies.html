@@ -456,7 +456,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">GLODAPv2_2016: Mapped Climatologies</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">01 April, 2022</h4>
+<h4 class="date">07 April, 2022</h4>
 
 </div>
 
@@ -481,7 +481,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-04-01
+<strong>Last updated:</strong> 2022-04-07
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -572,16 +572,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreed23e4250f2657f2e3fb33dfcec045b46e64ac6fatargetblankd23e425a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/d23e4250f2657f2e3fb33dfcec045b46e64ac6fa" target="_blank">d23e425</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeaf08e3886b8602094a7e1f4bc0a0251daa31b2d1targetblankaf08e38a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/af08e3886b8602094a7e1f4bc0a0251daa31b2d1" target="_blank">af08e38</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreed23e4250f2657f2e3fb33dfcec045b46e64ac6fatargetblankd23e425a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeaf08e3886b8602094a7e1f4bc0a0251daa31b2d1targetblankaf08e38a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/d23e4250f2657f2e3fb33dfcec045b46e64ac6fa" target="_blank">d23e425</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/af08e3886b8602094a7e1f4bc0a0251daa31b2d1" target="_blank">af08e38</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -599,8 +599,6 @@ Untracked files:
     Untracked:  code/read_GLODAPv2_2020.Rmd
 
 Unstaged changes:
-    Modified:   analysis/_site.yml
-    Deleted:    analysis/analysis_regional_clusters.Rmd
     Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
@@ -640,6 +638,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/af08e3886b8602094a7e1f4bc0a0251daa31b2d1/analysis/read_GLODAPv2_2016_MappedClimatologies.Rmd" target="_blank">af08e38</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-07
+</td>
+<td>
+rerun all with lat max 65N and without arcic
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/read_GLODAPv2_2016_MappedClimatologies.html" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1327,7 +1359,7 @@ Initial commit
 <pre class="r"><code># use only three basin to assign general basin mask
 # ie this is not specific to the MLR fitting
 basinmask &lt;- basinmask %&gt;% 
-  filter(MLR_basins == &quot;4&quot;) %&gt;% 
+  filter(MLR_basins == &quot;2&quot;) %&gt;% 
   select(lat, lon, basin_AIP)</code></pre>
 </div>
 <div id="plot-data-and-write-csv" class="section level1" number="2">
@@ -1460,6 +1492,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-1.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-1.png" target="_blank">dde77eb</a>
 </td>
 <td>
@@ -1586,6 +1629,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-2.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-2.png" target="_blank">dde77eb</a>
 </td>
 <td>
@@ -1689,6 +1743,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-3.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-3.png" target="_blank">dde77eb</a>
@@ -1815,6 +1880,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-4.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-4.png" target="_blank">dde77eb</a>
@@ -2048,6 +2124,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-6.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-6.png" target="_blank">dde77eb</a>
 </td>
 <td>
@@ -2279,6 +2366,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-8.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-8.png" target="_blank">dde77eb</a>
 </td>
 <td>
@@ -2382,6 +2480,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-9.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-9.png" target="_blank">dde77eb</a>
@@ -2508,6 +2617,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-10.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-10.png" target="_blank">dde77eb</a>
@@ -2741,6 +2861,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-12.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-12.png" target="_blank">dde77eb</a>
 </td>
 <td>
@@ -2844,6 +2975,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-13.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-13.png" target="_blank">dde77eb</a>
@@ -2972,6 +3114,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-14.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-14.png" target="_blank">dde77eb</a>
 </td>
 <td>
@@ -3075,6 +3228,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-15.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-15.png" target="_blank">dde77eb</a>
@@ -3201,6 +3365,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-16.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-16.png" target="_blank">dde77eb</a>
@@ -3434,6 +3609,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-18.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/GLODAPv2_2016_Mappedclimatologies-18.png" target="_blank">dde77eb</a>
 </td>
 <td>
@@ -3585,6 +3771,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/calculate_revelle_factor-1.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/calculate_revelle_factor-1.png" target="_blank">dde77eb</a>
 </td>
 <td>
@@ -3657,6 +3854,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/calculate_revelle_factor-2.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_GLODAPv2_2016_MappedClimatologies.Rmd/calculate_revelle_factor-2.png" target="_blank">dde77eb</a>

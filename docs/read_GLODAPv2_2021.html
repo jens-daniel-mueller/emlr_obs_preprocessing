@@ -458,7 +458,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">GLODAPv2_2021</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">06 April, 2022</h4>
+<h4 class="date">07 April, 2022</h4>
 
 </div>
 
@@ -483,7 +483,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-04-06
+<strong>Last updated:</strong> 2022-04-07
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -574,16 +574,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree91cc53e7f4a1e0ce27f7c3e7891ffc5a86a4aebftargetblank91cc53ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/91cc53e7f4a1e0ce27f7c3e7891ffc5a86a4aebf" target="_blank">91cc53e</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeaf08e3886b8602094a7e1f4bc0a0251daa31b2d1targetblankaf08e38a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/af08e3886b8602094a7e1f4bc0a0251daa31b2d1" target="_blank">af08e38</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree91cc53e7f4a1e0ce27f7c3e7891ffc5a86a4aebftargetblank91cc53ea" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeaf08e3886b8602094a7e1f4bc0a0251daa31b2d1targetblankaf08e38a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/91cc53e7f4a1e0ce27f7c3e7891ffc5a86a4aebf" target="_blank">91cc53e</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/af08e3886b8602094a7e1f4bc0a0251daa31b2d1" target="_blank">af08e38</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -599,6 +599,9 @@ Untracked files:
     Untracked:  code/IO_1990_own_crossover_analysis_backup.R
     Untracked:  code/analysis_regional_clusters.Rmd
     Untracked:  code/read_GLODAPv2_2020.Rmd
+
+Unstaged changes:
+    Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
 <p>
@@ -637,6 +640,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/af08e3886b8602094a7e1f4bc0a0251daa31b2d1/analysis/read_GLODAPv2_2021.Rmd" target="_blank">af08e38</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-07
+</td>
+<td>
+rerun all with lat max 65N and without arcic
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/read_GLODAPv2_2021.html" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -3972,7 +4009,7 @@ basinmask_5 &lt;- basinmask %&gt;%
   select(lat, lon, basin)
 
 basinmask &lt;- basinmask %&gt;% 
-  filter(MLR_basins == &quot;4&quot;) %&gt;% 
+  filter(MLR_basins == &quot;2&quot;) %&gt;% 
   select(lat, lon, basin_AIP)
 
 GLODAP &lt;- inner_join(GLODAP, basinmask)</code></pre>
@@ -5357,57 +5394,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>
-[[4]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/qc_loss-4.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-qc_loss-4">
-Past versions of qc_loss-4.png
-</button>
-</p>
-<div id="fig-qc_loss-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2021.Rmd/qc_loss-4.png" target="_blank">f088f55</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-01
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_GLODAPv2_2021.Rmd/qc_loss-4.png" target="_blank">dde77eb</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-01
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 <pre class="r"><code>loss_qc_cruise %&gt;%
   filter(loss != 0) %&gt;%
   select(basin_AIP,
@@ -5447,339 +5433,19 @@ loss
 <tbody>
 <tr>
 <td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:left;">
-18RD19980404
-</td>
-<td style="text-align:left;">
-4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:left;">
-18SN19970801
-</td>
-<td style="text-align:left;">
-4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:left;">
-18SN19970803
-</td>
-<td style="text-align:left;">
-4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
+Atlantic
 </td>
 <td style="text-align:left;">
 1989-1999
 </td>
 <td style="text-align:left;">
 target
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:left;">
-18RD19980404
-</td>
-<td style="text-align:left;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:left;">
-18SN19970801
-</td>
-<td style="text-align:left;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:left;">
-18SN19970803
-</td>
-<td style="text-align:left;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-49NZ20020822
-</td>
-<td style="text-align:left;">
-2
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:left;">
-90JS20080815
-</td>
-<td style="text-align:left;">
-4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:left;">
-32H120040718
-</td>
-<td style="text-align:left;">
-4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:left;">
-58AA20000923
-</td>
-<td style="text-align:left;">
-4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:left;">
-32H120020505
-</td>
-<td style="text-align:left;">
-4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:left;">
-49NZ20000803
-</td>
-<td style="text-align:left;">
-4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-predictor
 </td>
 <td style="text-align:right;">
 11
 </td>
 <td style="text-align:left;">
-32H120040515
-</td>
-<td style="text-align:left;">
-4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-49NZ20020822
-</td>
-<td style="text-align:left;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:left;">
-90JS20080815
-</td>
-<td style="text-align:left;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:left;">
-32H120040718
-</td>
-<td style="text-align:left;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:left;">
-32H120020718
+06MT19900123
 </td>
 <td style="text-align:left;">
 1
@@ -5787,162 +5453,22 @@ target
 </tr>
 <tr>
 <td style="text-align:left;">
-Arctic
+Atlantic
 </td>
 <td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:left;">
-58AA20000923
-</td>
-<td style="text-align:left;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2000-2009
+1989-1999
 </td>
 <td style="text-align:left;">
 target
 </td>
 <td style="text-align:right;">
-9
+12
 </td>
 <td style="text-align:left;">
-32H120020505
+33LK19960415
 </td>
 <td style="text-align:left;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-10
-</td>
-<td style="text-align:left;">
-49NZ20000803
-</td>
-<td style="text-align:left;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:left;">
-32H120040515
-</td>
-<td style="text-align:left;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2010-2020
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
 1
-</td>
-<td style="text-align:left;">
-06AQ20110805
-</td>
-<td style="text-align:left;">
-4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2010-2020
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:left;">
-316N20150906
-</td>
-<td style="text-align:left;">
-4
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2010-2020
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-06AQ20110805
-</td>
-<td style="text-align:left;">
-3
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2010-2020
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-11
-</td>
-<td style="text-align:left;">
-316N20150906
-</td>
-<td style="text-align:left;">
-3
 </td>
 </tr>
 <tr>
@@ -5956,7 +5482,7 @@ Atlantic
 predictor
 </td>
 <td style="text-align:right;">
-10
+8
 </td>
 <td style="text-align:left;">
 35TH20010823
@@ -5976,7 +5502,7 @@ Atlantic
 predictor
 </td>
 <td style="text-align:right;">
-16
+14
 </td>
 <td style="text-align:left;">
 33RO20070710
@@ -5996,7 +5522,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-10
+8
 </td>
 <td style="text-align:left;">
 35TH20010823
@@ -6016,7 +5542,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-11
+9
 </td>
 <td style="text-align:left;">
 74DI20040404
@@ -6036,7 +5562,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-12
+10
 </td>
 <td style="text-align:left;">
 35TH20080610
@@ -6056,7 +5582,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-14
+12
 </td>
 <td style="text-align:left;">
 35TH20040604
@@ -6076,7 +5602,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-15
+13
 </td>
 <td style="text-align:left;">
 35TH20020611
@@ -7219,57 +6745,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>
-[[4]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/f_loss-4.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-f_loss-4">
-Past versions of f_loss-4.png
-</button>
-</p>
-<div id="fig-f_loss-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2021.Rmd/f_loss-4.png" target="_blank">f088f55</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-01
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_GLODAPv2_2021.Rmd/f_loss-4.png" target="_blank">dde77eb</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-01
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 <pre class="r"><code>loss_f_cruise %&gt;%
   filter(loss != 0) %&gt;%
   select(basin_AIP,
@@ -7307,66 +6782,6 @@ loss
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-1
-</td>
-<td style="text-align:left;">
-06AQ19960712
-</td>
-<td style="text-align:left;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2010-2020
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-33HQ20150809
-</td>
-<td style="text-align:left;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2010-2020
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:left;">
-06AQ20150817
-</td>
-<td style="text-align:left;">
-1
-</td>
-</tr>
 <tr>
 <td style="text-align:left;">
 Atlantic
@@ -7432,13 +6847,53 @@ target
 Atlantic
 </td>
 <td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:left;">
+06MT19900123
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:left;">
+33LK19960415
+</td>
+<td style="text-align:left;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
 2000-2009
 </td>
 <td style="text-align:left;">
 target
 </td>
 <td style="text-align:right;">
-10
+8
 </td>
 <td style="text-align:left;">
 35TH20010823
@@ -7458,7 +6913,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-11
+9
 </td>
 <td style="text-align:left;">
 74DI20040404
@@ -7478,7 +6933,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-12
+10
 </td>
 <td style="text-align:left;">
 35TH20080610
@@ -7498,7 +6953,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-14
+12
 </td>
 <td style="text-align:left;">
 35TH20040604
@@ -7518,7 +6973,7 @@ Atlantic
 target
 </td>
 <td style="text-align:right;">
-15
+13
 </td>
 <td style="text-align:left;">
 35TH20020611
@@ -8441,57 +7896,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>
-[[4]]</code></pre>
-<p><img src="figure/read_GLODAPv2_2021.Rmd/f9_loss-4.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-f9_loss-4">
-Past versions of f9_loss-4.png
-</button>
-</p>
-<div id="fig-f9_loss-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2021.Rmd/f9_loss-4.png" target="_blank">f088f55</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-01
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dde77ebc76aaaad9cc86f2c971bae9e143a6614e/docs/figure/read_GLODAPv2_2021.Rmd/f9_loss-4.png" target="_blank">dde77eb</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-01
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 <pre class="r"><code>loss_f9_cruise %&gt;% 
   filter(loss != 0) %&gt;% 
   select(basin_AIP, decade, parameter_class, rank_n_cruise, cruise_expocode) %&gt;% 
@@ -8521,346 +7925,6 @@ cruise_expocode
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:left;">
-18RD19980404
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:left;">
-32L919930718
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:left;">
-18RD19990827
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-9
-</td>
-<td style="text-align:left;">
-49NZ19990911
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-2
-</td>
-<td style="text-align:left;">
-77DN19910726
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:left;">
-06AQ19930806
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:left;">
-18SN19940724
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:left;">
-18RD19980404
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-6
-</td>
-<td style="text-align:left;">
-32L919930718
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-7
-</td>
-<td style="text-align:left;">
-18SN19970924
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-1989-1999
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:left;">
-18RD19990827
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:left;">
-90JS20080815
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:left;">
-77DN20070812
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:left;">
-18DL20040625
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-4
-</td>
-<td style="text-align:left;">
-90JS20080815
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-5
-</td>
-<td style="text-align:left;">
-77DN20070812
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-8
-</td>
-<td style="text-align:left;">
-18DL20040625
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2010-2020
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-12
-</td>
-<td style="text-align:left;">
-316N20130914
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2010-2020
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-13
-</td>
-<td style="text-align:left;">
-316N20111002
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Arctic
-</td>
-<td style="text-align:left;">
-2010-2020
-</td>
-<td style="text-align:left;">
-predictor
-</td>
-<td style="text-align:right;">
-14
-</td>
-<td style="text-align:left;">
-316N20100804
-</td>
-</tr>
 <tr>
 <td style="text-align:left;">
 Atlantic
@@ -8893,6 +7957,23 @@ predictor
 </td>
 <td style="text-align:left;">
 06AQ19980328
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+74DI19970807
 </td>
 </tr>
 <tr>
@@ -8944,6 +8025,40 @@ target
 </td>
 <td style="text-align:left;">
 06AQ19980328
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:left;">
+74DI19970807
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+target
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+33MW19930704
 </td>
 </tr>
 <tr>
@@ -9009,23 +8124,6 @@ target
 </td>
 <td style="text-align:right;">
 4
-</td>
-<td style="text-align:left;">
-58GS20090528
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Atlantic
-</td>
-<td style="text-align:left;">
-2000-2009
-</td>
-<td style="text-align:left;">
-target
-</td>
-<td style="text-align:right;">
-5
 </td>
 <td style="text-align:left;">
 06AQ20080210
@@ -28573,6 +27671,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-7.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-7.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -28710,6 +27819,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-8.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-8.png" target="_blank">b788368</a>
@@ -28862,6 +27982,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-9.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-9.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -29012,6 +28143,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-10.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-10.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -29140,6 +28282,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-11.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-11.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -29255,6 +28408,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-12.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-12.png" target="_blank">b788368</a>
@@ -29374,6 +28538,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-13.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-13.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -29491,6 +28666,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-14.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-14.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -29597,6 +28783,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-15.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-15.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -29701,6 +28898,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-16.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-16.png" target="_blank">b788368</a>
@@ -29842,6 +29050,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-17.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-17.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -29981,6 +29200,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-18.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-18.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -30109,6 +29339,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-19.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-19.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -30235,6 +29476,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-20.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-20.png" target="_blank">b788368</a>
@@ -30376,6 +29628,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-21.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-21.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -30515,6 +29778,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-22.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-22.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -30643,6 +29917,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-23.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-23.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -30769,6 +30054,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-24.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-24.png" target="_blank">b788368</a>
@@ -30910,6 +30206,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-25.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-25.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -31049,6 +30356,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-26.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-26.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -31177,6 +30495,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-27.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-27.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -31303,6 +30632,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-28.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-28.png" target="_blank">b788368</a>
@@ -31444,6 +30784,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-29.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-29.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -31581,6 +30932,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-30.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-30.png" target="_blank">b788368</a>
@@ -31726,6 +31088,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-31.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-31.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -31852,6 +31225,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-32.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-32.png" target="_blank">b788368</a>
@@ -31993,6 +31377,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-33.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-33.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -32132,6 +31527,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-34.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-34.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -32258,6 +31664,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-35.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-35.png" target="_blank">b788368</a>
@@ -32388,6 +31805,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-36.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-36.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -32516,6 +31944,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-37.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-37.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -32633,6 +32072,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-38.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-38.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -32739,6 +32189,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-39.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-39.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -32843,6 +32304,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-40.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-40.png" target="_blank">b788368</a>
@@ -32960,6 +32432,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-41.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-41.png" target="_blank">b788368</a>
@@ -33101,6 +32584,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-42.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-42.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -33205,6 +32699,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-43.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-43.png" target="_blank">b788368</a>
@@ -33313,6 +32818,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-44.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-44.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -33417,6 +32933,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-45.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-45.png" target="_blank">b788368</a>
@@ -33525,6 +33052,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-46.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-46.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -33629,6 +33167,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-47.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-47.png" target="_blank">b788368</a>
@@ -33737,6 +33286,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-48.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-48.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -33841,6 +33401,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-49.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-49.png" target="_blank">b788368</a>
@@ -33949,6 +33520,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-50.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-50.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -34053,6 +33635,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-51.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-51.png" target="_blank">b788368</a>
@@ -34161,6 +33754,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-52.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-52.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -34199,6 +33803,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-53.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-53.png" target="_blank">b788368</a>
@@ -34241,6 +33856,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-54.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-54.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -34279,6 +33905,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-55.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-55.png" target="_blank">b788368</a>
@@ -34321,6 +33958,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-56.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-56.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -34359,6 +34007,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-57.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-57.png" target="_blank">b788368</a>
@@ -34401,6 +34060,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-58.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-58.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -34441,6 +34111,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-59.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-59.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -34479,6 +34160,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-60.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-60.png" target="_blank">b788368</a>
@@ -34526,6 +34218,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-61.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-61.png" target="_blank">b788368</a>
@@ -35493,6 +35196,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-7.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-7.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -35641,6 +35355,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-8.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-8.png" target="_blank">b788368</a>
@@ -35804,6 +35529,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-9.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-9.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -35965,6 +35701,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-10.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-10.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -36115,6 +35862,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-11.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-11.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -36252,6 +36010,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-12.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-12.png" target="_blank">b788368</a>
@@ -36393,6 +36162,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-13.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-13.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -36532,6 +36312,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-14.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-14.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -36660,6 +36451,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-15.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-15.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -36786,6 +36588,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-16.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-16.png" target="_blank">b788368</a>
@@ -36936,6 +36749,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-17.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-17.png" target="_blank">b788368</a>
@@ -37099,6 +36923,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-18.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-18.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -37249,6 +37084,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-19.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-19.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -37397,6 +37243,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-20.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-20.png" target="_blank">b788368</a>
@@ -37560,6 +37417,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-21.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-21.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -37664,6 +37532,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-22.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-22.png" target="_blank">b788368</a>
@@ -37772,6 +37651,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-23.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-23.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -37876,6 +37766,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-24.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-24.png" target="_blank">b788368</a>
@@ -37984,6 +37885,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-25.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-25.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -38090,6 +38002,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-26.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-26.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -38128,6 +38051,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-27.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-27.png" target="_blank">b788368</a>
@@ -38170,6 +38104,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-28.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-28.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -38210,6 +38155,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-29.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-29.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -38248,6 +38204,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-30.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-30.png" target="_blank">b788368</a>
@@ -38411,6 +38378,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-1.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-1.png" target="_blank">b788368</a>
@@ -38647,6 +38625,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-2.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-2.png" target="_blank">b788368</a>
@@ -38896,6 +38885,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-3.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-3.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -39130,6 +39130,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-4.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-4.png" target="_blank">b788368</a>
@@ -39377,6 +39388,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-5.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-5.png" target="_blank">b788368</a>
@@ -39650,6 +39672,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-6.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-6.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -39895,6 +39928,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-7.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-7.png" target="_blank">b788368</a>
@@ -40144,6 +40188,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-8.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-8.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -40378,6 +40433,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-9.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-9.png" target="_blank">b788368</a>
@@ -40636,6 +40702,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-10.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-10.png" target="_blank">b788368</a>
@@ -40903,6 +40980,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-1.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-1.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -41062,6 +41150,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-2.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-2.png" target="_blank">b788368</a>
@@ -41225,6 +41324,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-3.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-3.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -41373,6 +41483,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-4.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-4.png" target="_blank">b788368</a>
@@ -41534,6 +41655,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-5.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-5.png" target="_blank">b788368</a>
@@ -41713,6 +41845,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-6.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-6.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -41872,6 +42015,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-7.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-7.png" target="_blank">b788368</a>
@@ -42035,6 +42189,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-8.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-8.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -42183,6 +42348,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-9.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-9.png" target="_blank">b788368</a>
@@ -42344,6 +42520,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-10.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size-10.png" target="_blank">b788368</a>
@@ -42533,6 +42720,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size_PO-1.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size_PO-1.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -42644,6 +42842,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-1.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-1.png" target="_blank">b788368</a>
@@ -42774,6 +42983,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-2.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-2.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -42902,6 +43122,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-3.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-3.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -43017,6 +43248,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-4.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-4.png" target="_blank">b788368</a>
@@ -43145,6 +43387,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-5.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-5.png" target="_blank">b788368</a>
@@ -43296,6 +43549,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-6.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-6.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -43443,6 +43707,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-7.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-7.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -43569,6 +43844,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-8.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-8.png" target="_blank">b788368</a>
@@ -43699,6 +43985,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-9.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-9.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -43814,6 +44111,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-10.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-10.png" target="_blank">b788368</a>
@@ -43942,6 +44250,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-11.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-11.png" target="_blank">b788368</a>
@@ -44102,6 +44421,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-12.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-12.png" target="_blank">b788368</a>
 </td>
 <td>
@@ -44206,15 +44536,163 @@ jens-daniel-mueller
 <pre><code>
 [[2]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-13.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-xover_decadal_averages-13">
+Past versions of xover_decadal_averages-13.png
+</button>
+</p>
+<div id="fig-xover_decadal_averages-13" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-13.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[3]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-14.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-xover_decadal_averages-14">
+Past versions of xover_decadal_averages-14.png
+</button>
+</p>
+<div id="fig-xover_decadal_averages-14" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-14.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[4]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-15.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-xover_decadal_averages-15">
+Past versions of xover_decadal_averages-15.png
+</button>
+</p>
+<div id="fig-xover_decadal_averages-15" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-15.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre><code>
 [[5]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-16.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-xover_decadal_averages-16">
+Past versions of xover_decadal_averages-16.png
+</button>
+</p>
+<div id="fig-xover_decadal_averages-16" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/xover_decadal_averages-16.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>xover_cruise_decade_all_stats %&gt;% 
   kable() %&gt;%
   kable_styling() %&gt;%
@@ -44264,10 +44742,10 @@ full
 cstar_phosphate
 </td>
 <td style="text-align:right;">
-2.6777201
+2.6821949
 </td>
 <td style="text-align:right;">
--0.1446490
+-0.1443391
 </td>
 </tr>
 <tr>
@@ -44287,10 +44765,10 @@ full
 cstar_talk
 </td>
 <td style="text-align:right;">
-1.1358849
+1.1389589
 </td>
 <td style="text-align:right;">
-0.0272120
+0.0327715
 </td>
 </tr>
 <tr>
@@ -44310,10 +44788,10 @@ full
 cstar_tco2
 </td>
 <td style="text-align:right;">
-1.2366988
+1.2380499
 </td>
 <td style="text-align:right;">
-0.2277879
+0.2255268
 </td>
 </tr>
 <tr>
@@ -44333,10 +44811,10 @@ full
 cstar_tco2_talk
 </td>
 <td style="text-align:right;">
-1.6145509
+1.6138365
 </td>
 <td style="text-align:right;">
-0.2573640
+0.2606462
 </td>
 </tr>
 <tr>
@@ -44356,10 +44834,10 @@ full
 cstar_total
 </td>
 <td style="text-align:right;">
-2.3283777
+2.3292336
 </td>
 <td style="text-align:right;">
-0.0854396
+0.0921623
 </td>
 </tr>
 <tr>
@@ -44379,10 +44857,10 @@ full
 phosphate
 </td>
 <td style="text-align:right;">
-0.0092009
+0.0092139
 </td>
 <td style="text-align:right;">
-1.0005958
+1.0005947
 </td>
 </tr>
 <tr>
@@ -44402,10 +44880,10 @@ full
 cstar_phosphate
 </td>
 <td style="text-align:right;">
-2.9832677
+2.9828990
 </td>
 <td style="text-align:right;">
--0.3894344
+-0.3984183
 </td>
 </tr>
 <tr>
@@ -44425,10 +44903,10 @@ full
 cstar_talk
 </td>
 <td style="text-align:right;">
-1.2229710
+1.2219676
 </td>
 <td style="text-align:right;">
--1.3769072
+-1.3739236
 </td>
 </tr>
 <tr>
@@ -44448,10 +44926,10 @@ full
 cstar_tco2
 </td>
 <td style="text-align:right;">
-1.2992004
+1.2991495
 </td>
 <td style="text-align:right;">
--1.9311959
+-1.9381300
 </td>
 </tr>
 <tr>
@@ -44471,10 +44949,10 @@ full
 cstar_tco2_talk
 </td>
 <td style="text-align:right;">
-1.9085176
+1.9079601
 </td>
 <td style="text-align:right;">
--3.3027485
+-3.3061311
 </td>
 </tr>
 <tr>
@@ -44494,10 +44972,10 @@ full
 cstar_total
 </td>
 <td style="text-align:right;">
-4.0501601
+4.0485771
 </td>
 <td style="text-align:right;">
--3.6067041
+-3.6057571
 </td>
 </tr>
 <tr>
@@ -44517,10 +44995,10 @@ full
 phosphate
 </td>
 <td style="text-align:right;">
-0.0103643
+0.0103619
 </td>
 <td style="text-align:right;">
-1.0014814
+1.0015120
 </td>
 </tr>
 <tr>
@@ -44540,10 +45018,10 @@ full
 cstar_phosphate
 </td>
 <td style="text-align:right;">
-2.6227966
+2.6230729
 </td>
 <td style="text-align:right;">
--0.7014841
+-0.7032867
 </td>
 </tr>
 <tr>
@@ -44566,7 +45044,7 @@ cstar_talk
 1.4697480
 </td>
 <td style="text-align:right;">
--1.0725953
+-1.0747299
 </td>
 </tr>
 <tr>
@@ -44589,7 +45067,7 @@ cstar_tco2
 1.6222661
 </td>
 <td style="text-align:right;">
--1.9904582
+-1.9894972
 </td>
 </tr>
 <tr>
@@ -44612,7 +45090,7 @@ cstar_tco2_talk
 1.4695359
 </td>
 <td style="text-align:right;">
--3.0846663
+-3.0857844
 </td>
 </tr>
 <tr>
@@ -44632,10 +45110,10 @@ full
 cstar_total
 </td>
 <td style="text-align:right;">
-3.2138369
+3.2140910
 </td>
 <td style="text-align:right;">
--3.8038169
+-3.8074040
 </td>
 </tr>
 <tr>
@@ -44658,7 +45136,7 @@ phosphate
 0.0091254
 </td>
 <td style="text-align:right;">
-1.0025299
+1.0025357
 </td>
 </tr>
 <tr>
@@ -44678,10 +45156,10 @@ full
 cstar_phosphate
 </td>
 <td style="text-align:right;">
-2.5081167
+2.5083087
 </td>
 <td style="text-align:right;">
--0.1902688
+-0.1898132
 </td>
 </tr>
 <tr>
@@ -44701,10 +45179,10 @@ full
 cstar_talk
 </td>
 <td style="text-align:right;">
-1.4306744
+1.4301458
 </td>
 <td style="text-align:right;">
-1.1953134
+1.1968651
 </td>
 </tr>
 <tr>
@@ -44724,10 +45202,10 @@ full
 cstar_tco2
 </td>
 <td style="text-align:right;">
-1.7642232
+1.7642144
 </td>
 <td style="text-align:right;">
-1.3789320
+1.3797104
 </td>
 </tr>
 <tr>
@@ -44747,10 +45225,10 @@ full
 cstar_tco2_talk
 </td>
 <td style="text-align:right;">
-2.9650458
+2.9651684
 </td>
 <td style="text-align:right;">
-2.5731030
+2.5755574
 </td>
 </tr>
 <tr>
@@ -44770,10 +45248,10 @@ full
 cstar_total
 </td>
 <td style="text-align:right;">
-3.7241056
+3.7221188
 </td>
 <td style="text-align:right;">
-2.5738706
+2.5753518
 </td>
 </tr>
 <tr>
@@ -44793,10 +45271,10 @@ full
 phosphate
 </td>
 <td style="text-align:right;">
-0.0087031
+0.0087029
 </td>
 <td style="text-align:right;">
-1.0006602
+1.0006586
 </td>
 </tr>
 <tr>
@@ -44816,10 +45294,10 @@ full
 cstar_phosphate
 </td>
 <td style="text-align:right;">
-2.4999361
+2.4983363
 </td>
 <td style="text-align:right;">
--0.5450800
+-0.5411961
 </td>
 </tr>
 <tr>
@@ -44839,10 +45317,10 @@ full
 cstar_talk
 </td>
 <td style="text-align:right;">
-1.4961700
+1.4958843
 </td>
 <td style="text-align:right;">
-0.5224567
+0.5198996
 </td>
 </tr>
 <tr>
@@ -44862,10 +45340,10 @@ full
 cstar_tco2
 </td>
 <td style="text-align:right;">
-1.8102820
+1.8103743
 </td>
 <td style="text-align:right;">
-0.3195246
+0.3185069
 </td>
 </tr>
 <tr>
@@ -44885,10 +45363,10 @@ full
 cstar_tco2_talk
 </td>
 <td style="text-align:right;">
-2.5551142
+2.5547742
 </td>
 <td style="text-align:right;">
-0.8419813
+0.8384065
 </td>
 </tr>
 <tr>
@@ -44908,10 +45386,10 @@ full
 cstar_total
 </td>
 <td style="text-align:right;">
-1.8837211
+1.8856633
 </td>
 <td style="text-align:right;">
-0.1745755
+0.1753204
 </td>
 </tr>
 <tr>
@@ -44931,10 +45409,10 @@ full
 phosphate
 </td>
 <td style="text-align:right;">
-0.0086715
+0.0086651
 </td>
 <td style="text-align:right;">
-1.0019401
+1.0019264
 </td>
 </tr>
 <tr>
@@ -44954,10 +45432,10 @@ full
 cstar_phosphate
 </td>
 <td style="text-align:right;">
-2.7466586
+2.7469480
 </td>
 <td style="text-align:right;">
--0.8333649
+-0.8340042
 </td>
 </tr>
 <tr>
@@ -44980,7 +45458,7 @@ cstar_talk
 0.8531728
 </td>
 <td style="text-align:right;">
-0.3259660
+0.3231042
 </td>
 </tr>
 <tr>
@@ -45003,7 +45481,7 @@ cstar_tco2
 1.8383771
 </td>
 <td style="text-align:right;">
--0.9834798
+-0.9778715
 </td>
 </tr>
 <tr>
@@ -45026,7 +45504,7 @@ cstar_tco2_talk
 1.6748242
 </td>
 <td style="text-align:right;">
--0.7455240
+-0.7425436
 </td>
 </tr>
 <tr>
@@ -45046,10 +45524,10 @@ full
 cstar_total
 </td>
 <td style="text-align:right;">
-2.4345637
+2.4347261
 </td>
 <td style="text-align:right;">
--1.4846093
+-1.4826715
 </td>
 </tr>
 <tr>
@@ -45072,7 +45550,7 @@ phosphate
 0.0094923
 </td>
 <td style="text-align:right;">
-1.0029672
+1.0029691
 </td>
 </tr>
 <tr>
@@ -45092,10 +45570,10 @@ full
 cstar_phosphate
 </td>
 <td style="text-align:right;">
-2.4201557
+2.4200093
 </td>
 <td style="text-align:right;">
-0.1663727
+0.1661843
 </td>
 </tr>
 <tr>
@@ -45115,10 +45593,10 @@ full
 cstar_talk
 </td>
 <td style="text-align:right;">
-1.0206561
+1.0204434
 </td>
 <td style="text-align:right;">
-1.3572231
+1.3582607
 </td>
 </tr>
 <tr>
@@ -45138,10 +45616,10 @@ full
 cstar_tco2
 </td>
 <td style="text-align:right;">
-1.8004870
+1.8008583
 </td>
 <td style="text-align:right;">
-2.1405453
+2.1401040
 </td>
 </tr>
 <tr>
@@ -45161,10 +45639,10 @@ full
 cstar_tco2_talk
 </td>
 <td style="text-align:right;">
-1.7359070
+1.7379244
 </td>
 <td style="text-align:right;">
-3.5048760
+3.5054724
 </td>
 </tr>
 <tr>
@@ -45184,10 +45662,10 @@ full
 cstar_total
 </td>
 <td style="text-align:right;">
-3.3232272
+3.3249829
 </td>
 <td style="text-align:right;">
-3.7493308
+3.7514950
 </td>
 </tr>
 <tr>
@@ -45207,10 +45685,10 @@ full
 phosphate
 </td>
 <td style="text-align:right;">
-0.0083979
+0.0083965
 </td>
 <td style="text-align:right;">
-0.9994227
+0.9994234
 </td>
 </tr>
 <tr>
@@ -45230,10 +45708,10 @@ full
 cstar_phosphate
 </td>
 <td style="text-align:right;">
-1.6819827
+1.6805928
 </td>
 <td style="text-align:right;">
-0.5933157
+0.5952649
 </td>
 </tr>
 <tr>
@@ -45253,10 +45731,10 @@ full
 cstar_talk
 </td>
 <td style="text-align:right;">
-1.0638022
+1.0641994
 </td>
 <td style="text-align:right;">
-0.2469790
+0.2474689
 </td>
 </tr>
 <tr>
@@ -45322,10 +45800,10 @@ full
 cstar_total
 </td>
 <td style="text-align:right;">
-1.6265399
+1.6265359
 </td>
 <td style="text-align:right;">
-1.5552584
+1.5553366
 </td>
 </tr>
 <tr>
@@ -45345,10 +45823,10 @@ full
 phosphate
 </td>
 <td style="text-align:right;">
-0.0058364
+0.0058310
 </td>
 <td style="text-align:right;">
-0.9979412
+0.9979347
 </td>
 </tr>
 <tr>
@@ -45368,10 +45846,10 @@ full
 cstar_phosphate
 </td>
 <td style="text-align:right;">
-2.2185113
+2.2187450
 </td>
 <td style="text-align:right;">
--0.0759412
+-0.0759492
 </td>
 </tr>
 <tr>
@@ -45460,10 +45938,10 @@ full
 cstar_total
 </td>
 <td style="text-align:right;">
-3.3993324
+3.3994984
 </td>
 <td style="text-align:right;">
-0.2700708
+0.2700628
 </td>
 </tr>
 <tr>
@@ -45506,10 +45984,10 @@ full
 cstar_phosphate
 </td>
 <td style="text-align:right;">
-2.3398835
+1.8522680
 </td>
 <td style="text-align:right;">
-0.0125888
+0.0380725
 </td>
 </tr>
 <tr>
@@ -45529,10 +46007,10 @@ full
 cstar_talk
 </td>
 <td style="text-align:right;">
-1.1730993
+0.7821484
 </td>
 <td style="text-align:right;">
-0.0143543
+0.0300445
 </td>
 </tr>
 <tr>
@@ -45552,10 +46030,10 @@ full
 cstar_tco2
 </td>
 <td style="text-align:right;">
-3.5805270
+2.7996690
 </td>
 <td style="text-align:right;">
--0.0827889
+-0.0817260
 </td>
 </tr>
 <tr>
@@ -45575,10 +46053,10 @@ full
 cstar_tco2_talk
 </td>
 <td style="text-align:right;">
-4.1969634
+2.3104955
 </td>
 <td style="text-align:right;">
--0.0684347
+-0.0516815
 </td>
 </tr>
 <tr>
@@ -45598,10 +46076,10 @@ full
 cstar_total
 </td>
 <td style="text-align:right;">
-4.2395700
+3.6864755
 </td>
 <td style="text-align:right;">
--0.0558459
+-0.0136091
 </td>
 </tr>
 <tr>
@@ -45621,10 +46099,10 @@ full
 phosphate
 </td>
 <td style="text-align:right;">
-0.0156751
+0.0125717
 </td>
 <td style="text-align:right;">
-1.0000500
+0.9998684
 </td>
 </tr>
 <tr>
@@ -45644,10 +46122,10 @@ full
 cstar_phosphate
 </td>
 <td style="text-align:right;">
-4.2342566
+4.8433632
 </td>
 <td style="text-align:right;">
-0.5371646
+0.0539574
 </td>
 </tr>
 <tr>
@@ -45667,10 +46145,10 @@ full
 cstar_talk
 </td>
 <td style="text-align:right;">
-1.6162350
+1.2732581
 </td>
 <td style="text-align:right;">
--0.2225116
+-0.2241677
 </td>
 </tr>
 <tr>
@@ -45690,10 +46168,10 @@ full
 cstar_tco2
 </td>
 <td style="text-align:right;">
-2.8231135
+1.6783162
 </td>
 <td style="text-align:right;">
--2.0621113
+-1.9948989
 </td>
 </tr>
 <tr>
@@ -45713,10 +46191,10 @@ full
 cstar_tco2_talk
 </td>
 <td style="text-align:right;">
-3.8340029
+1.4210953
 </td>
 <td style="text-align:right;">
--2.2846229
+-2.2190666
 </td>
 </tr>
 <tr>
@@ -45736,10 +46214,10 @@ full
 cstar_total
 </td>
 <td style="text-align:right;">
-4.1256440
+2.9743525
 </td>
 <td style="text-align:right;">
--1.9920421
+-2.4779484
 </td>
 </tr>
 <tr>
@@ -45759,10 +46237,10 @@ full
 phosphate
 </td>
 <td style="text-align:right;">
-0.0265176
+0.0298682
 </td>
 <td style="text-align:right;">
-0.9970890
+1.0002473
 </td>
 </tr>
 <tr>
@@ -45782,10 +46260,10 @@ full
 cstar_phosphate
 </td>
 <td style="text-align:right;">
-2.0598712
+1.6190169
 </td>
 <td style="text-align:right;">
-0.4857875
+0.6525501
 </td>
 </tr>
 <tr>
@@ -45805,10 +46283,10 @@ full
 cstar_talk
 </td>
 <td style="text-align:right;">
-0.9827732
+1.2065681
 </td>
 <td style="text-align:right;">
-0.0876473
+-0.0100468
 </td>
 </tr>
 <tr>
@@ -45828,10 +46306,10 @@ full
 cstar_tco2
 </td>
 <td style="text-align:right;">
-3.8797421
+3.5527365
 </td>
 <td style="text-align:right;">
--4.4563227
+-4.2445403
 </td>
 </tr>
 <tr>
@@ -45851,10 +46329,10 @@ full
 cstar_tco2_talk
 </td>
 <td style="text-align:right;">
-2.4437914
+3.0584075
 </td>
 <td style="text-align:right;">
--4.2586334
+-4.0768213
 </td>
 </tr>
 <tr>
@@ -45874,10 +46352,10 @@ full
 cstar_total
 </td>
 <td style="text-align:right;">
-3.7896315
+4.5807196
 </td>
 <td style="text-align:right;">
--3.1455264
+-2.6425977
 </td>
 </tr>
 <tr>
@@ -45897,10 +46375,10 @@ full
 phosphate
 </td>
 <td style="text-align:right;">
-0.0136711
+0.0104615
 </td>
 <td style="text-align:right;">
-0.9970467
+0.9958570
 </td>
 </tr>
 <tr>
@@ -45920,10 +46398,10 @@ full
 cstar_phosphate
 </td>
 <td style="text-align:right;">
-3.9237281
+4.2749016
 </td>
 <td style="text-align:right;">
--0.9101705
+-0.5778945
 </td>
 </tr>
 <tr>
@@ -45943,10 +46421,10 @@ full
 cstar_talk
 </td>
 <td style="text-align:right;">
-1.0944866
+1.1714038
 </td>
 <td style="text-align:right;">
-0.2446951
+0.3841504
 </td>
 </tr>
 <tr>
@@ -45966,10 +46444,10 @@ full
 cstar_tco2
 </td>
 <td style="text-align:right;">
-2.3934727
+2.5424426
 </td>
 <td style="text-align:right;">
-2.4937115
+2.3950842
 </td>
 </tr>
 <tr>
@@ -45989,10 +46467,10 @@ full
 cstar_tco2_talk
 </td>
 <td style="text-align:right;">
-2.2611537
+2.3725451
 </td>
 <td style="text-align:right;">
-2.7384066
+2.7792345
 </td>
 </tr>
 <tr>
@@ -46012,10 +46490,10 @@ full
 cstar_total
 </td>
 <td style="text-align:right;">
-3.6572310
+4.3430704
 </td>
 <td style="text-align:right;">
-2.0362829
+2.5051509
 </td>
 </tr>
 <tr>
@@ -46035,10 +46513,10 @@ full
 phosphate
 </td>
 <td style="text-align:right;">
-0.0259611
+0.0279895
 </td>
 <td style="text-align:right;">
-1.0060221
+1.0037837
 </td>
 </tr>
 <tr>
@@ -46058,10 +46536,10 @@ full
 cstar_phosphate
 </td>
 <td style="text-align:right;">
-2.3459573
+2.1723560
 </td>
 <td style="text-align:right;">
--0.1698938
+-0.1020065
 </td>
 </tr>
 <tr>
@@ -46081,10 +46559,10 @@ full
 cstar_talk
 </td>
 <td style="text-align:right;">
-1.2940364
+1.3523082
 </td>
 <td style="text-align:right;">
-0.0023999
+0.0211256
 </td>
 </tr>
 <tr>
@@ -46104,10 +46582,10 @@ full
 cstar_tco2
 </td>
 <td style="text-align:right;">
-1.7753396
+1.8578489
 </td>
 <td style="text-align:right;">
-0.1789591
+0.1695433
 </td>
 </tr>
 <tr>
@@ -46127,10 +46605,10 @@ full
 cstar_tco2_talk
 </td>
 <td style="text-align:right;">
-2.1460687
+2.2189836
 </td>
 <td style="text-align:right;">
-0.1813591
+0.1906689
 </td>
 </tr>
 <tr>
@@ -46150,10 +46628,10 @@ full
 cstar_total
 </td>
 <td style="text-align:right;">
-3.2849543
+3.1817616
 </td>
 <td style="text-align:right;">
--0.1389921
+-0.1220870
 </td>
 </tr>
 <tr>
@@ -46173,10 +46651,10 @@ full
 phosphate
 </td>
 <td style="text-align:right;">
-0.0156742
+0.0144409
 </td>
 <td style="text-align:right;">
-1.0012764
+1.0008083
 </td>
 </tr>
 <tr>
@@ -46196,10 +46674,10 @@ full
 cstar_phosphate
 </td>
 <td style="text-align:right;">
-1.8421109
+1.6924360
 </td>
 <td style="text-align:right;">
--0.5195621
+-0.0797780
 </td>
 </tr>
 <tr>
@@ -46219,10 +46697,10 @@ full
 cstar_talk
 </td>
 <td style="text-align:right;">
-1.4780685
+1.7415208
 </td>
 <td style="text-align:right;">
-0.5102090
+0.4601185
 </td>
 </tr>
 <tr>
@@ -46242,10 +46720,10 @@ full
 cstar_tco2
 </td>
 <td style="text-align:right;">
-1.6325847
+1.5809408
 </td>
 <td style="text-align:right;">
--2.3664848
+-2.1016211
 </td>
 </tr>
 <tr>
@@ -46265,10 +46743,10 @@ full
 cstar_tco2_talk
 </td>
 <td style="text-align:right;">
-1.8246073
+1.9126218
 </td>
 <td style="text-align:right;">
--2.0635828
+-1.9470059
 </td>
 </tr>
 <tr>
@@ -46288,10 +46766,10 @@ full
 cstar_total
 </td>
 <td style="text-align:right;">
-2.7053911
+2.7052815
 </td>
 <td style="text-align:right;">
--2.8465141
+-2.4149582
 </td>
 </tr>
 <tr>
@@ -46311,10 +46789,10 @@ full
 phosphate
 </td>
 <td style="text-align:right;">
-0.0123313
+0.0112367
 </td>
 <td style="text-align:right;">
-1.0038834
+1.0006677
 </td>
 </tr>
 <tr>
@@ -46334,10 +46812,10 @@ full
 cstar_phosphate
 </td>
 <td style="text-align:right;">
-2.9148941
+1.8121239
 </td>
 <td style="text-align:right;">
--0.6045426
+-0.7423459
 </td>
 </tr>
 <tr>
@@ -46357,10 +46835,10 @@ full
 cstar_talk
 </td>
 <td style="text-align:right;">
-2.9401797
+3.4551205
 </td>
 <td style="text-align:right;">
-0.1074902
+0.1980788
 </td>
 </tr>
 <tr>
@@ -46380,10 +46858,10 @@ full
 cstar_tco2
 </td>
 <td style="text-align:right;">
-4.6691129
+4.4816869
 </td>
 <td style="text-align:right;">
-3.8769606
+3.7545364
 </td>
 </tr>
 <tr>
@@ -46403,10 +46881,10 @@ full
 cstar_tco2_talk
 </td>
 <td style="text-align:right;">
-4.9762721
+5.8781328
 </td>
 <td style="text-align:right;">
-4.1579293
+4.0287865
 </td>
 </tr>
 <tr>
@@ -46426,10 +46904,10 @@ full
 cstar_total
 </td>
 <td style="text-align:right;">
-6.4630117
+7.1281814
 </td>
 <td style="text-align:right;">
-3.7036211
+3.4634167
 </td>
 </tr>
 <tr>
@@ -46449,10 +46927,10 @@ full
 phosphate
 </td>
 <td style="text-align:right;">
-0.0192862
+0.0118647
 </td>
 <td style="text-align:right;">
-1.0039999
+1.0048604
 </td>
 </tr>
 <tr>
@@ -46472,10 +46950,10 @@ full
 cstar_phosphate
 </td>
 <td style="text-align:right;">
-2.6085530
+1.5687865
 </td>
 <td style="text-align:right;">
--0.0519276
+-0.2176621
 </td>
 </tr>
 <tr>
@@ -46495,10 +46973,10 @@ full
 cstar_talk
 </td>
 <td style="text-align:right;">
-3.3879088
+4.0006327
 </td>
 <td style="text-align:right;">
--0.4086618
+-0.3790497
 </td>
 </tr>
 <tr>
@@ -46518,10 +46996,10 @@ full
 cstar_tco2
 </td>
 <td style="text-align:right;">
-1.7087123
+1.8189240
 </td>
 <td style="text-align:right;">
-2.1388410
+2.0536913
 </td>
 </tr>
 <tr>
@@ -46541,10 +47019,10 @@ full
 cstar_tco2_talk
 </td>
 <td style="text-align:right;">
-4.0217455
+4.7110837
 </td>
 <td style="text-align:right;">
-1.9759762
+1.9294120
 </td>
 </tr>
 <tr>
@@ -46564,10 +47042,10 @@ full
 cstar_total
 </td>
 <td style="text-align:right;">
-5.2490508
+5.3005704
 </td>
 <td style="text-align:right;">
-2.0863168
+1.8472916
 </td>
 </tr>
 <tr>
@@ -46587,10 +47065,10 @@ full
 phosphate
 </td>
 <td style="text-align:right;">
-0.0172593
+0.0102715
 </td>
 <td style="text-align:right;">
-1.0003436
+1.0014251
 </td>
 </tr>
 <tr>
@@ -46610,10 +47088,10 @@ full
 cstar_phosphate
 </td>
 <td style="text-align:right;">
-2.4833878
+1.6764219
 </td>
 <td style="text-align:right;">
--0.4694138
+-0.5296656
 </td>
 </tr>
 <tr>
@@ -46633,10 +47111,10 @@ full
 cstar_talk
 </td>
 <td style="text-align:right;">
-4.0791442
+4.8546717
 </td>
 <td style="text-align:right;">
--0.0931016
+-0.1181060
 </td>
 </tr>
 <tr>
@@ -46656,10 +47134,10 @@ full
 cstar_tco2
 </td>
 <td style="text-align:right;">
-2.1307277
+2.3214161
 </td>
 <td style="text-align:right;">
--0.2725354
+-0.2500351
 </td>
 </tr>
 <tr>
@@ -46679,10 +47157,10 @@ full
 cstar_tco2_talk
 </td>
 <td style="text-align:right;">
-5.4545502
+6.4542485
 </td>
 <td style="text-align:right;">
--0.4736101
+-0.4887707
 </td>
 </tr>
 <tr>
@@ -46702,10 +47180,10 @@ full
 cstar_total
 </td>
 <td style="text-align:right;">
-5.7354853
+6.2593449
 </td>
 <td style="text-align:right;">
--0.9024035
+-0.9725758
 </td>
 </tr>
 <tr>
@@ -46725,10 +47203,10 @@ full
 phosphate
 </td>
 <td style="text-align:right;">
-0.0165574
+0.0109467
 </td>
 <td style="text-align:right;">
-1.0032045
+1.0035063
 </td>
 </tr>
 <tr>
@@ -46886,10 +47364,10 @@ full
 cstar_phosphate
 </td>
 <td style="text-align:right;">
-2.2106020
+2.2386168
 </td>
 <td style="text-align:right;">
-1.9013209
+1.9685157
 </td>
 </tr>
 <tr>
@@ -47001,10 +47479,10 @@ full
 phosphate
 </td>
 <td style="text-align:right;">
-0.0065463
+0.0066086
 </td>
 <td style="text-align:right;">
-0.9944274
+0.9942742
 </td>
 </tr>
 <tr>
@@ -47162,10 +47640,10 @@ full
 cstar_phosphate
 </td>
 <td style="text-align:right;">
-1.7564117
+18.9440093
 </td>
 <td style="text-align:right;">
--1.7332870
+-1.9511220
 </td>
 </tr>
 <tr>
@@ -47277,10 +47755,10 @@ full
 phosphate
 </td>
 <td style="text-align:right;">
-0.0052770
+0.0569162
 </td>
 <td style="text-align:right;">
-1.0052076
+1.0058620
 </td>
 </tr>
 <tr>
@@ -47300,10 +47778,10 @@ full
 cstar_phosphate
 </td>
 <td style="text-align:right;">
-1.4722027
+19.8709396
 </td>
 <td style="text-align:right;">
-0.0578617
+-0.1454139
 </td>
 </tr>
 <tr>
@@ -47415,10 +47893,10 @@ full
 phosphate
 </td>
 <td style="text-align:right;">
-0.0044159
+0.0596928
 </td>
 <td style="text-align:right;">
-0.9998675
+1.0004970
 </td>
 </tr>
 <tr>
@@ -50711,7 +51189,7 @@ Atlantic
 1
 </td>
 <td style="text-align:right;">
-4.5
+5.0
 </td>
 <td style="text-align:left;">
 323019940104
@@ -50728,7 +51206,7 @@ Atlantic
 2
 </td>
 <td style="text-align:right;">
-4.4
+4.9
 </td>
 <td style="text-align:left;">
 316N19871123
@@ -50745,7 +51223,7 @@ Atlantic
 3
 </td>
 <td style="text-align:right;">
-3.2
+3.5
 </td>
 <td style="text-align:left;">
 33RO19980123
@@ -50762,7 +51240,7 @@ Atlantic
 4
 </td>
 <td style="text-align:right;">
-3.2
+3.5
 </td>
 <td style="text-align:left;">
 06AQ19980328
@@ -50779,7 +51257,7 @@ Atlantic
 5
 </td>
 <td style="text-align:right;">
-3.0
+3.3
 </td>
 <td style="text-align:left;">
 316N19970530
@@ -50796,7 +51274,7 @@ Indian
 1
 </td>
 <td style="text-align:right;">
-7.9
+7.8
 </td>
 <td style="text-align:left;">
 316N19951202
@@ -50813,7 +51291,7 @@ Indian
 2
 </td>
 <td style="text-align:right;">
-7.7
+7.8
 </td>
 <td style="text-align:left;">
 316N19950124
@@ -50966,7 +51444,7 @@ Atlantic
 1
 </td>
 <td style="text-align:right;">
-4.1
+4.6
 </td>
 <td style="text-align:left;">
 33RO20050111
@@ -50983,7 +51461,7 @@ Atlantic
 2
 </td>
 <td style="text-align:right;">
-4.0
+4.5
 </td>
 <td style="text-align:left;">
 33RO20030604
@@ -51000,7 +51478,7 @@ Atlantic
 3
 </td>
 <td style="text-align:right;">
-3.7
+4.1
 </td>
 <td style="text-align:left;">
 06AQ20050122
@@ -51020,7 +51498,7 @@ Atlantic
 3.5
 </td>
 <td style="text-align:left;">
-58GS20090528
+06AQ20080210
 </td>
 </tr>
 <tr>
@@ -51034,10 +51512,10 @@ Atlantic
 5
 </td>
 <td style="text-align:right;">
-3.1
+2.7
 </td>
 <td style="text-align:left;">
-06AQ20080210
+35MF20080207
 </td>
 </tr>
 <tr>
@@ -51051,7 +51529,7 @@ Indian
 1
 </td>
 <td style="text-align:right;">
-19.5
+19.4
 </td>
 <td style="text-align:left;">
 33RR20090320
@@ -51119,7 +51597,7 @@ Indian
 5
 </td>
 <td style="text-align:right;">
-8.0
+8.2
 </td>
 <td style="text-align:left;">
 49NZ20031209
@@ -51221,7 +51699,7 @@ Atlantic
 1
 </td>
 <td style="text-align:right;">
-6.5
+6.8
 </td>
 <td style="text-align:left;">
 33RO20100308
@@ -51238,7 +51716,7 @@ Atlantic
 2
 </td>
 <td style="text-align:right;">
-6.1
+6.3
 </td>
 <td style="text-align:left;">
 33RO20130803
@@ -51255,7 +51733,7 @@ Atlantic
 3
 </td>
 <td style="text-align:right;">
-5.5
+5.7
 </td>
 <td style="text-align:left;">
 33RO20110926
@@ -51272,7 +51750,7 @@ Atlantic
 4
 </td>
 <td style="text-align:right;">
-5.3
+5.5
 </td>
 <td style="text-align:left;">
 740H20180228
@@ -51289,7 +51767,7 @@ Atlantic
 5
 </td>
 <td style="text-align:right;">
-4.9
+5.1
 </td>
 <td style="text-align:left;">
 33RO20131223
@@ -51323,7 +51801,7 @@ Indian
 2
 </td>
 <td style="text-align:right;">
-16.9
+16.8
 </td>
 <td style="text-align:left;">
 33RR20160321
@@ -51340,7 +51818,7 @@ Indian
 3
 </td>
 <td style="text-align:right;">
-11.5
+11.4
 </td>
 <td style="text-align:left;">
 33RR20160208
@@ -51374,7 +51852,7 @@ Indian
 5
 </td>
 <td style="text-align:right;">
-8.9
+8.8
 </td>
 <td style="text-align:left;">
 325020190403
@@ -52184,6 +52662,471 @@ for (i_variable in variables) {
   # }
   
 }</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-CANYON-B_vs_observationd-1">
+Past versions of CANYON-B_vs_observationd-1.png
+</button>
+</p>
+<div id="fig-CANYON-B_vs_observationd-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/37dce62466f2317adc80ef13875e762dab080451/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-1.png" target="_blank">37dce62</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-1.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/efc20258927d08a48eeac1f7056d244f6005e840/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-1.png" target="_blank">efc2025</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4d9d1cde1674f19b4920a0cc40cb32573c3bdfcb/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-1.png" target="_blank">4d9d1cd</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-01-17
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/494beda4944077d633d2c1f1e6e5367e2cccf719/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-1.png" target="_blank">494beda</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-01-03
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/51ec1fef7790143424d19628ff64ec44f121e081/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-1.png" target="_blank">51ec1fe</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-CANYON-B_vs_observationd-2">
+Past versions of CANYON-B_vs_observationd-2.png
+</button>
+</p>
+<div id="fig-CANYON-B_vs_observationd-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/37dce62466f2317adc80ef13875e762dab080451/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-2.png" target="_blank">37dce62</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-2.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/efc20258927d08a48eeac1f7056d244f6005e840/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-2.png" target="_blank">efc2025</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4d9d1cde1674f19b4920a0cc40cb32573c3bdfcb/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-2.png" target="_blank">4d9d1cd</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-01-17
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/494beda4944077d633d2c1f1e6e5367e2cccf719/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-2.png" target="_blank">494beda</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-01-03
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/51ec1fef7790143424d19628ff64ec44f121e081/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-2.png" target="_blank">51ec1fe</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-CANYON-B_vs_observationd-3">
+Past versions of CANYON-B_vs_observationd-3.png
+</button>
+</p>
+<div id="fig-CANYON-B_vs_observationd-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/37dce62466f2317adc80ef13875e762dab080451/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-3.png" target="_blank">37dce62</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-3.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/efc20258927d08a48eeac1f7056d244f6005e840/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-3.png" target="_blank">efc2025</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4d9d1cde1674f19b4920a0cc40cb32573c3bdfcb/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-3.png" target="_blank">4d9d1cd</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-01-17
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/494beda4944077d633d2c1f1e6e5367e2cccf719/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-3.png" target="_blank">494beda</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-01-03
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/51ec1fef7790143424d19628ff64ec44f121e081/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-3.png" target="_blank">51ec1fe</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-CANYON-B_vs_observationd-4">
+Past versions of CANYON-B_vs_observationd-4.png
+</button>
+</p>
+<div id="fig-CANYON-B_vs_observationd-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/37dce62466f2317adc80ef13875e762dab080451/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-4.png" target="_blank">37dce62</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-4.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/efc20258927d08a48eeac1f7056d244f6005e840/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-4.png" target="_blank">efc2025</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4d9d1cde1674f19b4920a0cc40cb32573c3bdfcb/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-4.png" target="_blank">4d9d1cd</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-01-17
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/494beda4944077d633d2c1f1e6e5367e2cccf719/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-4.png" target="_blank">494beda</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-01-03
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/51ec1fef7790143424d19628ff64ec44f121e081/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-4.png" target="_blank">51ec1fe</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-CANYON-B_vs_observationd-5">
+Past versions of CANYON-B_vs_observationd-5.png
+</button>
+</p>
+<div id="fig-CANYON-B_vs_observationd-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/37dce62466f2317adc80ef13875e762dab080451/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-5.png" target="_blank">37dce62</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f088f55627b59da92907c2b6deaf2f4735d8fb9e/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-5.png" target="_blank">f088f55</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/efc20258927d08a48eeac1f7056d244f6005e840/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-5.png" target="_blank">efc2025</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4d9d1cde1674f19b4920a0cc40cb32573c3bdfcb/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-5.png" target="_blank">4d9d1cd</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-01-17
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/494beda4944077d633d2c1f1e6e5367e2cccf719/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-5.png" target="_blank">494beda</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-01-03
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/51ec1fef7790143424d19628ff64ec44f121e081/docs/figure/read_GLODAPv2_2021.Rmd/CANYON-B_vs_observationd-5.png" target="_blank">51ec1fe</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2021-12-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="write-files-1" class="section level2" number="13.3">
 <h2><span class="header-section-number">13.3</span> Write files</h2>
@@ -55541,37 +56484,36 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] kableExtra_1.3.4 ggrepel_0.9.1    lubridate_1.8.0  colorspace_2.0-2
- [5] marelac_2.1.10   shape_1.4.6      ggforce_0.3.3    metR_0.11.0     
- [9] scico_1.3.0      patchwork_1.1.1  collapse_1.7.0   forcats_0.5.1   
-[13] stringr_1.4.0    dplyr_1.0.7      purrr_0.3.4      readr_2.1.1     
-[17] tidyr_1.1.4      tibble_3.1.6     ggplot2_3.3.5    tidyverse_1.3.1 
-[21] workflowr_1.7.0 
+ [1] mgcv_1.8-38      nlme_3.1-155     kableExtra_1.3.4 ggrepel_0.9.1   
+ [5] lubridate_1.8.0  colorspace_2.0-2 marelac_2.1.10   shape_1.4.6     
+ [9] ggforce_0.3.3    metR_0.11.0      scico_1.3.0      patchwork_1.1.1 
+[13] collapse_1.7.0   forcats_0.5.1    stringr_1.4.0    dplyr_1.0.7     
+[17] purrr_0.3.4      readr_2.1.1      tidyr_1.1.4      tibble_3.1.6    
+[21] ggplot2_3.3.5    tidyverse_1.3.1  workflowr_1.7.0 
 
 loaded via a namespace (and not attached):
- [1] nlme_3.1-155       fs_1.5.2           bit64_4.0.5        gsw_1.0-6         
- [5] RColorBrewer_1.1-2 webshot_0.5.2      httr_1.4.2         rprojroot_2.0.2   
- [9] tools_4.1.2        backports_1.4.1    bslib_0.3.1        utf8_1.2.2        
-[13] R6_2.5.1           mgcv_1.8-38        DBI_1.1.2          withr_2.4.3       
-[17] tidyselect_1.1.1   processx_3.5.2     bit_4.0.4          compiler_4.1.2    
-[21] git2r_0.29.0       cli_3.1.1          rvest_1.0.2        xml2_1.3.3        
-[25] labeling_0.4.2     sass_0.4.0         scales_1.1.1       checkmate_2.0.0   
-[29] SolveSAPHE_2.1.0   callr_3.7.0        systemfonts_1.0.3  digest_0.6.29     
-[33] svglite_2.0.0      rmarkdown_2.11     oce_1.5-0          pkgconfig_2.0.3   
-[37] htmltools_0.5.2    highr_0.9          dbplyr_2.1.1       fastmap_1.1.0     
-[41] rlang_0.4.12       readxl_1.3.1       rstudioapi_0.13    jquerylib_0.1.4   
-[45] generics_0.1.1     farver_2.1.0       jsonlite_1.7.3     vroom_1.5.7       
-[49] magrittr_2.0.1     Matrix_1.4-0       Rcpp_1.0.8         munsell_0.5.0     
-[53] fansi_1.0.2        lifecycle_1.0.1    stringi_1.7.6      whisker_0.4       
-[57] yaml_2.2.1         MASS_7.3-55        grid_4.1.2         parallel_4.1.2    
-[61] promises_1.2.0.1   crayon_1.4.2       lattice_0.20-45    splines_4.1.2     
-[65] haven_2.4.3        hms_1.1.1          seacarb_3.3.0      knitr_1.37        
-[69] ps_1.6.0           pillar_1.6.4       reprex_2.0.1       glue_1.6.0        
-[73] evaluate_0.14      getPass_0.2-2      data.table_1.14.2  modelr_0.1.8      
-[77] vctrs_0.3.8        tzdb_0.2.0         tweenr_1.0.2       httpuv_1.6.5      
-[81] cellranger_1.1.0   gtable_0.3.0       polyclip_1.10-0    assertthat_0.2.1  
-[85] xfun_0.29          broom_0.7.11       later_1.3.0        viridisLite_0.4.0 
-[89] ellipsis_0.3.2    </code></pre>
+ [1] fs_1.5.2           bit64_4.0.5        gsw_1.0-6          RColorBrewer_1.1-2
+ [5] webshot_0.5.2      httr_1.4.2         rprojroot_2.0.2    tools_4.1.2       
+ [9] backports_1.4.1    bslib_0.3.1        utf8_1.2.2         R6_2.5.1          
+[13] DBI_1.1.2          withr_2.4.3        tidyselect_1.1.1   processx_3.5.2    
+[17] bit_4.0.4          compiler_4.1.2     git2r_0.29.0       cli_3.1.1         
+[21] rvest_1.0.2        xml2_1.3.3         labeling_0.4.2     sass_0.4.0        
+[25] scales_1.1.1       checkmate_2.0.0    SolveSAPHE_2.1.0   callr_3.7.0       
+[29] systemfonts_1.0.3  digest_0.6.29      svglite_2.0.0      rmarkdown_2.11    
+[33] oce_1.5-0          pkgconfig_2.0.3    htmltools_0.5.2    highr_0.9         
+[37] dbplyr_2.1.1       fastmap_1.1.0      rlang_0.4.12       readxl_1.3.1      
+[41] rstudioapi_0.13    jquerylib_0.1.4    generics_0.1.1     farver_2.1.0      
+[45] jsonlite_1.7.3     vroom_1.5.7        magrittr_2.0.1     Matrix_1.4-0      
+[49] Rcpp_1.0.8         munsell_0.5.0      fansi_1.0.2        lifecycle_1.0.1   
+[53] stringi_1.7.6      whisker_0.4        yaml_2.2.1         MASS_7.3-55       
+[57] grid_4.1.2         parallel_4.1.2     promises_1.2.0.1   crayon_1.4.2      
+[61] lattice_0.20-45    splines_4.1.2      haven_2.4.3        hms_1.1.1         
+[65] seacarb_3.3.0      knitr_1.37         ps_1.6.0           pillar_1.6.4      
+[69] reprex_2.0.1       glue_1.6.0         evaluate_0.14      getPass_0.2-2     
+[73] data.table_1.14.2  modelr_0.1.8       vctrs_0.3.8        tzdb_0.2.0        
+[77] tweenr_1.0.2       httpuv_1.6.5       cellranger_1.1.0   gtable_0.3.0      
+[81] polyclip_1.10-0    assertthat_0.2.1   xfun_0.29          broom_0.7.11      
+[85] later_1.3.0        viridisLite_0.4.0  ellipsis_0.3.2    </code></pre>
 </div>
 </div>
 </div>
