@@ -43,7 +43,7 @@ basinmask_5 <- basinmask %>%
   select(lat, lon, basin)
 
 basinmask <- basinmask %>% 
-  filter(MLR_basins == "4") %>% 
+  filter(MLR_basins == "2") %>% 
   select(lat, lon, basin_AIP)
 
 
