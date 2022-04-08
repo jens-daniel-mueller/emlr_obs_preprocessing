@@ -225,11 +225,20 @@ GLODAP_cruises_missing <-
 
 ```{r read_IO_CRM}
 
-CRM_IO_meas <-
+CRM_IO_meas_talk <-
   read_csv(
     paste(
       path_glodapv2_CRM,
       "/Millero_1998_Tab2.csv",
+      sep = ""
+    )
+  )
+
+CRM_IO_meas_tco2 <-
+  read_csv(
+    paste(
+      path_glodapv2_CRM,
+      "/Johnson_1998_Tab3.csv",
       sep = ""
     )
   )
@@ -1829,7 +1838,7 @@ p_crossover_ts + p_crossover_decadal +
 
 
 rm(p_crossover_ts, p_crossover_decadal)
-rm(xover_IO_1990, xover_IO_1990_decade)
+# rm(xover_IO_1990, xover_IO_1990_decade)
 
 ```
 
@@ -1985,6 +1994,8 @@ for (i_basin in basins) {
   
   expocodes_basin <- expocodes_basin %>% 
     filter(!(cruise_expocode %in% expocodes_basin_removed_40S))
+  
+  expocodes_xover_NP <- expocodes_basin
   
   print(
     map +
@@ -2219,11 +2230,15 @@ xover_basin <- xover_basin %>%
              parameter,
              parameter_coverage) %>%
     summarise(
+      # offset_adj_sd = sd(offset_adj, na.rm = TRUE),
       offset_adj = mean(offset_adj, na.rm = TRUE)
     ) %>%
     ungroup()
 
-
+# xover_basin %>% 
+#   ggplot(aes(offset_adj_sd)) +
+#   geom_histogram() +
+#   facet_grid(basin ~ parameter, scales = "free_x")
 
 xover_basin <- xover_basin %>% 
   filter(parameter %in% c("tco2", "talk", "phosphate")) %>% 
@@ -2482,7 +2497,7 @@ xover_cruise_long_term_all %>%
 xover_cruise_long_term_all %>%
   filter(parameter_coverage == "full") %>% 
   group_split(basin) %>%
-  head(1) %>%
+  # head(1) %>%
   map(
     ~ ggplot(data = .x,
              aes(date_A, offset_adj_mean_weighted, size = n_A)) +
@@ -2786,62 +2801,46 @@ rm(GLODAP_count, large_cruises)
 
 ```{r IO_1990_CRM}
 
-CRM_IO_meas <- CRM_IO_meas %>%
+CRM_IO_meas_talk <- CRM_IO_meas_talk %>%
   fill(cruise:batch) %>% 
-  select(-starts_with("ph")) %>% 
-  rename(talk_meas = talk_ave,
-         tco2_meas = tco2_ave)
+  select(-starts_with(c("ph", "tco2"))) %>% 
+  rename(talk_meas = talk_ave)
   
 CRM_ref_values <- CRM_ref_values %>% 
   select(-c(date, comment, sal)) %>% 
   rename(talk_ref = talk,
          tco2_ref = tco2)
 
-IO_CRM_offset <-
-  left_join(CRM_IO_meas,
-            CRM_ref_values) %>% 
+IO_CRM_offset_talk <-
+  left_join(CRM_IO_meas_talk,
+            CRM_ref_values %>% select(-tco2_ref)) %>% 
   mutate(batch = as.factor(batch))
 
-IO_CRM_offset <- IO_CRM_offset %>% 
-  mutate(talk_offset = talk_meas - talk_ref,
-         tco2_offset = tco2_meas - tco2_ref)
+IO_CRM_offset_talk <- IO_CRM_offset_talk %>% 
+  mutate(offset = talk_meas - talk_ref)
 
-IO_CRM_offset <- IO_CRM_offset %>% 
+IO_CRM_offset_talk <- IO_CRM_offset_talk %>% 
+  filter(cell != "All") %>% 
   select(-c(talk_meas:talk_ref)) %>% 
-  pivot_longer(ends_with("_offset"),
-               values_to = "offset",
-               names_to = "parameter") %>% 
-  mutate(parameter = str_remove(parameter, "_offset"),
-         start_date = mdy(start_date))
+  mutate(start_date = mdy(start_date))
 
-IO_CRM_offset %>% 
-  ggplot(aes(offset)) +
-  geom_histogram(binwidth = 1) +
-  facet_wrap(~ parameter)
-
-IO_CRM_offset <- IO_CRM_offset %>% 
-  filter(cell != "All")
-
-IO_CRM_offset_mean <- IO_CRM_offset %>% 
-  group_by(parameter) %>% 
+IO_CRM_offset_talk_mean <- IO_CRM_offset_talk %>%
   summarise(offset_mean = mean(offset),
-            offset_sd = sd(offset)) %>% 
-  ungroup()
+            offset_sd = sd(offset))
 
-IO_CRM_offset %>%
-  filter(parameter == "talk") %>%
+IO_CRM_offset_talk %>%
   ggplot() +
   scale_fill_brewer(palette = "Set1",
                     name = "CRM batch") +
-  geom_hline(data = IO_CRM_offset_mean %>% filter(parameter == "talk"),
+  geom_hline(data = IO_CRM_offset_talk_mean,
              aes(yintercept = offset_mean)) +
   geom_hline(
-    data = IO_CRM_offset_mean %>% filter(parameter == "talk"),
+    data = IO_CRM_offset_talk_mean,
     aes(yintercept = offset_mean - offset_sd),
     linetype = 2
   ) +
   geom_hline(
-    data = IO_CRM_offset_mean %>% filter(parameter == "talk"),
+    data = IO_CRM_offset_talk_mean,
     aes(yintercept = offset_mean + offset_sd),
     linetype = 2
   ) +
@@ -2854,8 +2853,85 @@ IO_CRM_offset %>%
        subtitle = "Data source: Tables 1 and 2 from Millero et al. (1998)")
 
 
+
+
+IO_CRM_offset_talk <- IO_CRM_offset_talk %>% 
+  group_by(cruise, start_date) %>%
+  summarise(
+    offset_mean = mean(offset, na.rm = TRUE),
+    offset_sd = sd(offset, na.rm = TRUE)
+  ) %>%
+  ungroup()
+
+IO_CRM_offset_tco2 <- CRM_IO_meas_tco2 %>% 
+  group_by(cruise) %>%
+  summarise(
+    offset_mean = mean(-`Const-vp`, na.rm = TRUE),
+    offset_sd = sd(`Const-vp`, na.rm = TRUE)
+  ) %>%
+  ungroup()
+
+IO_CRM_offset_tco2 <- left_join(
+  IO_CRM_offset_tco2,
+  IO_CRM_offset_talk %>% select(cruise, start_date)
+)
+
+
+IO_CRM_offset <- bind_rows(IO_CRM_offset_tco2 %>% mutate(parameter = "tco2"),
+                           IO_CRM_offset_talk %>% mutate(parameter = "talk"))
+
+
 ```
 
+## Xover comparison
+
+```{r IO_1990_CRM_vs_xover, eval=FALSE}
+
+xover_IO_1990_decade %>% 
+  filter(parameter %in% c("tco2", "talk"),
+         decade == "2000-2009") %>% 
+  ggplot(aes(date_A, offset)) +
+  geom_hline(yintercept = 0) +
+  geom_point() +
+  facet_grid(parameter~., scales = "free_y")
+
+
+xover_IO <- xover_cruise_decade_all %>%
+  filter(
+    parameter_coverage == "full",
+    basin == "Indian",
+    decade == "2000-2009",
+    date_A > ymd("1993-01-01"),
+    date_A < ymd("1997-01-01"),
+    parameter %in% c("cstar_talk", "cstar_tco2"),
+    str_sub(cruise_A, 1, 4) == "316N"
+  )
+
+xover_IO <- xover_IO %>% 
+  mutate(parameter = str_remove(parameter, "cstar_")) %>% 
+  select(start_date = date_A,
+         parameter,
+         offset_mean = offset_adj_mean_weighted) %>% 
+  mutate(offset_mean = if_else(parameter == "talk",
+                               offset_mean * -2,
+                               offset_mean))
+
+IO_CRM_xover <- bind_rows(
+  xover_IO %>% mutate(type = "xover"),
+  IO_CRM_offset %>% mutate(type = "crm")
+)
+
+
+IO_CRM_xover %>%
+  ggplot(aes(start_date, offset_mean, col = type)) +
+  geom_hline(yintercept = 0) +
+  geom_linerange(aes(ymin = offset_mean - offset_sd,
+                     ymax = offset_mean + offset_sd)) +
+  geom_point() +
+  facet_grid(parameter ~., scales = "free_y") +
+  scale_color_brewer(palette = "Set1")
+
+```
 
 # Write files
 
@@ -2877,6 +2953,11 @@ GLODAP_tracer  %>%
 GLODAP_adjustments  %>%
   write_csv(paste(path_preprocessing,
                   "GLODAPv2.2021_adustments.csv",
+                  sep = ""))
+
+expocodes_xover_NP  %>%
+  write_csv(paste(path_preprocessing,
+                  "expocodes_xover_NP.csv",
                   sep = ""))
 
 # GLODAP_adjustments_NA_cruises  %>%
