@@ -1884,7 +1884,7 @@ GLODAP <- GLODAP %>%
 
 # loop over all 5 subbasins
 for (i_basin in basins) {
-  # i_basin <- basins[5]
+  # i_basin <- basins[3]
   
   # retrieve subbasin expocodes
   expocodes_basin <- GLODAP %>%
@@ -1960,7 +1960,7 @@ for (i_basin in basins) {
   
   
   # only for the N Pacifc we remove xover from cruises that go further south than 40S
-  if(i_basin == "N. Pacific"){
+  if(i_basin %in% c("N. Pacific", "Indian")){
   
   expocodes_basin_removed_40S <- GLODAP_basin_grid %>%
     filter(lat < -40) %>%
@@ -1995,18 +1995,24 @@ for (i_basin in basins) {
   expocodes_basin <- expocodes_basin %>% 
     filter(!(cruise_expocode %in% expocodes_basin_removed_40S))
   
-  expocodes_xover_NP <- expocodes_basin
+  if (i_basin %in% c("N. Pacific")) {
+    expocodes_xover_NP <- expocodes_basin
+  }
+  
+  if (i_basin %in% c("Indian")) {
+    expocodes_xover_IO <- expocodes_basin
+  }
   
   print(
     map +
-      geom_tile(
-        data = GLODAP_basin_grid %>%
-          filter(
-            parameter_coverage == "partial" &
-              cruise_expocode %in% expocodes_basin$cruise_expocode
-          ),
-        aes(lon, lat, fill = "partial")
-      ) +
+      # geom_tile(
+      #   data = GLODAP_basin_grid %>%
+      #     filter(
+      #       parameter_coverage == "partial" &
+      #         cruise_expocode %in% expocodes_basin$cruise_expocode
+      #     ),
+      #   aes(lon, lat, fill = "partial")
+      # ) +
       geom_tile(
         data = GLODAP_basin_grid %>%
           filter(
@@ -2445,7 +2451,7 @@ for (i_cruise_expocode in expocodes_basin) {
   xover_cruise_decade_partial <- xover_cruise %>%
     group_by(cruise_A, date_A, n_A, parameter, decade, basin) %>%
     summarise(
-      # offset_adj_sd = sd(offset_adj, na.rm = TRUE),
+      offset_adj_sd = sd(offset_adj, na.rm = TRUE),
       offset_adj_mean = mean(offset_adj, na.rm = TRUE),
       offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n_B, na.rm = TRUE)
     ) %>%
@@ -2455,7 +2461,7 @@ for (i_cruise_expocode in expocodes_basin) {
     filter(parameter_coverage == "full") %>%
     group_by(cruise_A, date_A, n_A, parameter, decade, basin) %>%
     summarise(
-      # offset_adj_sd = sd(offset_adj, na.rm = TRUE),
+      offset_adj_sd = sd(offset_adj, na.rm = TRUE),
       offset_adj_mean = mean(offset_adj, na.rm = TRUE),
       offset_adj_mean_weighted = weighted.mean(x = offset_adj, w = n_B, na.rm = TRUE)
     ) %>%
@@ -2911,10 +2917,14 @@ xover_IO <- xover_IO %>%
   mutate(parameter = str_remove(parameter, "cstar_")) %>% 
   select(start_date = date_A,
          parameter,
-         offset_mean = offset_adj_mean_weighted) %>% 
+         offset_mean = offset_adj_mean_weighted,
+         offset_sd = offset_adj_sd) %>% 
   mutate(offset_mean = if_else(parameter == "talk",
                                offset_mean * -2,
-                               offset_mean))
+                               offset_mean),
+         offset_sd = if_else(parameter == "talk",
+                               offset_sd * 2,
+                               offset_sd))
 
 IO_CRM_xover <- bind_rows(
   xover_IO %>% mutate(type = "xover"),
@@ -2958,6 +2968,16 @@ GLODAP_adjustments  %>%
 expocodes_xover_NP  %>%
   write_csv(paste(path_preprocessing,
                   "expocodes_xover_NP.csv",
+                  sep = ""))
+
+expocodes_xover_IO  %>%
+  write_csv(paste(path_preprocessing,
+                  "expocodes_xover_IO.csv",
+                  sep = ""))
+
+xover_cruise_decade_all  %>%
+  write_csv(paste(path_preprocessing,
+                  "xover_cruise_decade_all.csv",
                   sep = ""))
 
 # GLODAP_adjustments_NA_cruises  %>%
