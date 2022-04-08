@@ -2488,11 +2488,11 @@ hline_intercept <-
                              1,
                              0))
 
-xover_cruise_long_term_all %>%
-  filter(parameter_coverage == "full",
-         basin == "N. Pacific",
-         parameter == "phosphate",
-         abs(offset_adj_mean_weighted) > 1.05)
+# xover_cruise_long_term_all %>%
+#   filter(parameter_coverage == "full",
+#          basin == "N. Pacific",
+#          parameter == "phosphate",
+#          abs(offset_adj_mean_weighted) > 1.05)
 
 xover_cruise_long_term_all %>%
   filter(parameter_coverage == "full") %>% 
@@ -2885,7 +2885,7 @@ IO_CRM_offset <- bind_rows(IO_CRM_offset_tco2 %>% mutate(parameter = "tco2"),
 
 ## Xover comparison
 
-```{r IO_1990_CRM_vs_xover, eval=FALSE}
+```{r IO_1990_CRM_vs_xover}
 
 xover_IO_1990_decade %>% 
   filter(parameter %in% c("tco2", "talk"),
