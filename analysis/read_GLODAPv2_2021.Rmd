@@ -1884,17 +1884,30 @@ GLODAP <- GLODAP %>%
 
 # loop over all 5 subbasins
 for (i_basin in basins) {
-  # i_basin <- basins[3]
+  # i_basin <- basins[2]
   
   # retrieve subbasin expocodes
   expocodes_basin <- GLODAP %>%
     filter(basin == i_basin,
-           !is.na(decade)) %>% 
+           !is.na(decade)) %>%
     count(cruise_expocode)
+
+  # remove expocodes with observations outside decades
+  expocodes_basin_out <- GLODAP %>%
+    filter(basin == i_basin,
+           is.na(decade)) %>%
+    distinct(cruise_expocode) %>% 
+    pull()
+  
+  expocodes_basin <- expocodes_basin %>% 
+    filter(!(cruise_expocode %in% expocodes_basin_out))
+  
+  rm(expocodes_basin_out)
+  
   
   GLODAP_basin <- GLODAP %>% 
     filter(cruise_expocode %in% expocodes_basin$cruise_expocode)
-  
+
   # subset cruise with all qc flag = 1
   expocodes_basin_qc <- GLODAP_basin %>%
     select(cruise_expocode, ends_with("qc")) %>%
@@ -2494,12 +2507,6 @@ hline_intercept <-
                              1,
                              0))
 
-# xover_cruise_long_term_all %>%
-#   filter(parameter_coverage == "full",
-#          basin == "N. Pacific",
-#          parameter == "phosphate",
-#          abs(offset_adj_mean_weighted) > 1.05)
-
 xover_cruise_long_term_all %>%
   filter(parameter_coverage == "full") %>% 
   group_split(basin) %>%
@@ -2704,6 +2711,38 @@ xover_cruise_decade_all_stats %>%
       # coord_cartesian(ylim = c(-10,10)) +
       theme(axis.text.x = element_text(angle = 90))
   )
+
+
+xover_cruise_decade_all %>%
+  filter(parameter_coverage == "full",
+         parameter == "cstar_total") %>%
+  ggplot(aes(decade_A,
+             offset_adj_mean_weighted,
+             col = basin)) +
+  geom_hline(yintercept = 0) +
+  geom_boxplot(position = position_dodge(width = 0.5), width = 0.4) +
+  geom_point(aes(size = n_A), alpha = 0.3, position = position_dodge(width = 0.5)) +
+  scale_color_brewer(palette = "Set1") +
+  facet_grid(decade ~ ., scales = "free_y")
+
+
+xover_cruise_decade_all_stats %>%
+  filter(parameter == "cstar_total") %>%
+  ggplot(
+    aes(
+      decade_A,
+      offset_adj_mean_weighted,
+      ymin = offset_adj_mean_weighted - offset_adj_sd,
+      ymax = offset_adj_mean_weighted + offset_adj_sd,
+      col = basin
+    )
+  ) +
+  geom_hline(yintercept = 0) +
+  geom_linerange(position = position_dodge(width = 0.5)) +
+  geom_point(position = position_dodge(width = 0.5)) +
+  scale_color_brewer(palette = "Set1") +
+  facet_grid(decade ~ ., scales = "free_y") +
+  theme(axis.text.x = element_text(angle = 90))
 
 xover_cruise_decade_all_stats %>% 
   kable() %>%
