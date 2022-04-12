@@ -1973,7 +1973,7 @@ for (i_basin in basins) {
   
   
   # only for the N Pacifc we remove xover from cruises that go further south than 40S
-  if(i_basin %in% c("N. Pacific", "Indian")){
+  # if(i_basin %in% c("N. Pacific", "Indian")){
   
   expocodes_basin_removed_40S <- GLODAP_basin_grid %>%
     filter(lat < -40) %>%
@@ -2041,7 +2041,7 @@ for (i_basin in basins) {
       theme(legend.title = element_blank())
   )
   
-  }
+  # }
   
   # filter crossover with both cruises falling into subbasin
   xover_basin <- xover %>%
@@ -2955,6 +2955,7 @@ xover_IO <- xover_cruise_decade_all %>%
 xover_IO <- xover_IO %>% 
   mutate(parameter = str_remove(parameter, "cstar_")) %>% 
   select(start_date = date_A,
+         cruise_expocode = cruise_A,
          parameter,
          offset_mean = offset_adj_mean_weighted,
          offset_sd = offset_adj_sd) %>% 
@@ -2964,6 +2965,32 @@ xover_IO <- xover_IO %>%
          offset_sd = if_else(parameter == "talk",
                                offset_sd * 2,
                                offset_sd))
+
+IO_1990_start_dates <- GLODAP %>% 
+  filter(str_sub(cruise_expocode, 1, 7) == "316N199",
+         basin == "Indian") %>% 
+  distinct(cruise_expocode) %>% 
+  mutate(start_date = ymd(str_sub(cruise_expocode, 5, 12)))
+
+
+
+IO_CRM_offset <- IO_CRM_offset %>%
+    mutate(
+      start_date = if_else(start_date == ymd("1995-04-20"),
+                           ymd("1995-04-23"),
+                           start_date),
+      start_date = if_else(start_date == ymd("1995-11-06"),
+                           ymd("1995-11-11"),
+                           start_date),
+      start_date = if_else(start_date == ymd("1995-11-28"),
+                           ymd("1995-12-02"),
+                           start_date)
+    )
+
+IO_CRM_offset <- full_join(IO_CRM_offset, IO_1990_start_dates) %>% 
+  select(-cruise) %>% 
+  drop_na()
+
 
 IO_CRM_xover <- bind_rows(
   xover_IO %>% mutate(type = "xover"),
@@ -2975,8 +3002,10 @@ IO_CRM_xover %>%
   ggplot(aes(start_date, offset_mean, col = type)) +
   geom_hline(yintercept = 0) +
   geom_linerange(aes(ymin = offset_mean - offset_sd,
-                     ymax = offset_mean + offset_sd)) +
-  geom_point() +
+                     ymax = offset_mean + offset_sd),
+                 position = position_dodge(width = 5)
+                 ) +
+  geom_point(position = position_dodge(width = 5)) +
   facet_grid(parameter ~., scales = "free_y") +
   scale_color_brewer(palette = "Set1")
 
@@ -3017,6 +3046,11 @@ expocodes_xover_IO  %>%
 xover_cruise_decade_all  %>%
   write_csv(paste(path_preprocessing,
                   "xover_cruise_decade_all.csv",
+                  sep = ""))
+
+IO_CRM_xover %>%
+  write_csv(paste(path_preprocessing,
+                  "IO_CRM_xover_1990.csv",
                   sep = ""))
 
 # GLODAP_adjustments_NA_cruises  %>%
