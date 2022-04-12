@@ -2713,6 +2713,11 @@ xover_cruise_decade_all_stats %>%
   )
 
 
+
+```
+
+```{r mean_decadal_cstar_xover_offsets, fig.asp=1}
+
 xover_cruise_decade_all %>%
   filter(parameter_coverage == "full",
          parameter == "cstar_total") %>%
@@ -2746,16 +2751,13 @@ xover_cruise_decade_all_stats %>%
   scale_color_brewer(palette = "Set1",
                      name = "Cruise decade") +
   facet_grid(decade ~ ., scales = "free_y") +
-  labs(y = "Mean C* xover offset (µmol/kg)") +
-  theme(axis.text.x = element_text(angle = 90))
+  labs(y = "Mean C* xover offset (µmol/kg)")
 
 xover_cruise_decade_all_stats %>% 
   kable() %>%
   kable_styling() %>%
   scroll_box(height = "300px")
-
 ```
-
 
 
 # RV activity
