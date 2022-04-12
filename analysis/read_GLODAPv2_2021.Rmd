@@ -1884,7 +1884,7 @@ GLODAP <- GLODAP %>%
 
 # loop over all 5 subbasins
 for (i_basin in basins) {
-  # i_basin <- basins[2]
+  # i_basin <- basins[5]
   
   # retrieve subbasin expocodes
   expocodes_basin <- GLODAP %>%
@@ -2018,21 +2018,17 @@ for (i_basin in basins) {
   
   print(
     map +
-      # geom_tile(
-      #   data = GLODAP_basin_grid %>%
-      #     filter(
-      #       parameter_coverage == "partial" &
-      #         cruise_expocode %in% expocodes_basin$cruise_expocode
-      #     ),
-      #   aes(lon, lat, fill = "partial")
-      # ) +
+      geom_tile(
+        data = GLODAP_basin_grid %>% filter(parameter_coverage == "full"),
+        aes(lon, lat, fill = "full - all")
+      ) +
       geom_tile(
         data = GLODAP_basin_grid %>%
           filter(
             parameter_coverage == "full" &
               cruise_expocode %in% expocodes_basin$cruise_expocode
           ),
-        aes(lon, lat, fill = "full")
+        aes(lon, lat, fill = "full - used")
       ) +
       scale_fill_brewer(palette = "Set1") +
       labs(title = i_basin,
@@ -2676,7 +2672,8 @@ xover_cruise_decade_all %>%
       scale_fill_discrete_sequential(palette = "viridis") +
       labs(title = paste(.x$basin, "| full")) +
       # coord_cartesian(ylim = c(-10,10)) +
-      facet_grid(parameter ~ decade, scales = "free_y")
+      facet_grid(parameter ~ decade, scales = "free_y") +
+      theme(axis.text.x = element_text(angle = 90))
   )
 
 
