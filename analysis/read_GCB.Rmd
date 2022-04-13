@@ -1,0 +1,268 @@
+---
+title: "Global Carbon Budget"
+author: "Jens Daniel Müller"
+date:  "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  workflowr::wflow_html:
+    number_sections: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+editor_options:
+  chunk_output_type: console
+---
+
+```{r parent, child = "/nfs/kryo/work/jenmueller/emlr_cant/utilities/setup_obs.Rmd"}
+# this chunk runs the code stored in setup.Rmd
+# if required, please refer to instructions given here:
+# https://jdblischak.github.io/workflowr/articles/wflow-07-common-code.html
+```
+
+```{r define_paths, include=FALSE}
+file_GCB_xlsx    <- "/nfs/kryo/work/updata/Global_Carbon_Budget/2021v1.0/Global_Carbon_Budget_2021v1.0.xlsx"
+path_preprocessing  <- paste0(path_root, "/observations/preprocessing/")
+```
+
+```{r load_libraries_specific, include=FALSE}
+library(readxl)
+```
+
+
+# Data source
+
+- Carbon flux estimates from Global Carbon Budget 2021 by Friedlingstein et al. (2021) downloaded in April 2022 from [ICOS](https://www.icos-cp.eu/science-and-impact/global-carbon-budget/2021){target="_blank"}
+
+```{r read_GCB_data}
+
+Global_Carbon_Budget <-
+  read_excel(
+    file_GCB_xlsx,
+    sheet = "Global Carbon Budget",
+    skip = 20
+  )
+
+Historical_Budget <-
+  read_excel(
+    file_GCB_xlsx,
+    sheet = "Historical Budget",
+    skip = 15
+  )
+
+Fossil_Emissions_by_Category <-
+  read_excel(
+    file_GCB_xlsx,
+    sheet = "Fossil Emissions by Category",
+    skip = 8
+  )
+
+Ocean_Sink <-
+  read_excel(
+    file_GCB_xlsx,
+    sheet = "Ocean Sink",
+    col_types = c(
+      "numeric",
+      "numeric",
+      "numeric",
+      "skip",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "skip",
+      "numeric",
+      "numeric",
+      "skip",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric"
+    ),
+    skip = 27
+  )
+
+
+Terrestrial_Sink <-
+  read_excel(
+    file_GCB_xlsx,
+    sheet = "Terrestrial Sink",
+    col_types = c(
+      "numeric",
+      "numeric",
+      "skip",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "numeric",
+      "skip",
+      "numeric",
+      "numeric"
+    ),
+    skip = 24
+  )
+
+
+Cement_Carbonation_Sink <-
+  read_excel(
+    file_GCB_xlsx,
+    sheet = "Cement Carbonation Sink",
+    col_types = c("numeric",
+                  "numeric", "skip", "numeric", "numeric"),
+    skip = 9
+  )
+
+```
+
+# Global Carbon Budget
+
+```{r Global_Carbon_Budget}
+
+Global_Carbon_Budget <- Global_Carbon_Budget %>% 
+  rename(year = Year) %>% 
+  pivot_longer(-year,
+               names_to = "estimate",
+               values_to = "GtC_yr") %>%
+  drop_na() %>% 
+  arrange(year) %>% 
+  group_by(estimate) %>% 
+  mutate(GtC = cumsum(GtC_yr)) %>% 
+  ungroup()
+
+Global_Carbon_Budget %>% 
+  ggplot(aes(year, GtC_yr)) + 
+  geom_hline(yintercept = 0) +
+  geom_path(col = "red") +
+  facet_wrap(~ estimate, ncol = 2)
+
+Global_Carbon_Budget %>% 
+  ggplot(aes(year, GtC, col = estimate)) + 
+  geom_hline(yintercept = 0) +
+  geom_path()
+
+```
+
+# Historical Budget
+
+```{r Historical_Budget}
+
+Historical_Budget <- 
+  Historical_Budget %>% 
+  rename(year = Year) %>% 
+  pivot_longer(-year,
+               names_to = "estimate",
+               values_to = "GtC_yr") %>%
+  drop_na() %>% 
+  arrange(year) %>% 
+  group_by(estimate) %>% 
+  mutate(GtC = cumsum(GtC_yr)) %>% 
+  ungroup()
+
+Historical_Budget %>% 
+  ggplot(aes(year, GtC_yr)) + 
+  geom_hline(yintercept = 0) +
+  geom_path(col = "red") +
+  facet_wrap(~ estimate, ncol = 2)
+
+Historical_Budget %>% 
+  ggplot(aes(year, GtC, col = estimate)) + 
+  geom_hline(yintercept = 0) +
+  geom_path()
+
+
+```
+
+
+# Ocean Sink
+
+```{r Ocean_Sink}
+
+Ocean_Sink_models <- Ocean_Sink %>%
+  select(year, `CESM-ETH`:`MOM6-COBALT (Princeton)`) %>%
+  pivot_longer(-year,
+               names_to = "product",
+               values_to = "GtC_yr") %>% 
+  mutate(type = "models")
+
+Ocean_Sink_data_products <- Ocean_Sink %>%
+  select(year, Landschutzer:Watson) %>%
+  drop_na() %>% 
+  pivot_longer(-year,
+               names_to = "product",
+               values_to = "GtC_yr") %>% 
+  mutate(type = "data_products")
+
+Ocean_Sink <- bind_rows(
+  Ocean_Sink_models,
+  Ocean_Sink_data_products
+)
+
+rm(
+  Ocean_Sink_models,
+  Ocean_Sink_data_products
+)
+
+Ocean_Sink <- Ocean_Sink %>% 
+  arrange(year) %>% 
+  group_by(type, product) %>% 
+  mutate(GtC = cumsum(GtC_yr)) %>% 
+  ungroup()
+
+Ocean_Sink %>% 
+  ggplot(aes(year, GtC_yr, group = product, col = type)) + 
+  geom_path() +
+  scale_color_brewer(palette = "Set1")
+
+Ocean_Sink %>% 
+  ggplot(aes(year, GtC, group = product, col = type)) + 
+  geom_path() +
+  scale_color_brewer(palette = "Set1")
+
+```
+
+
+# Write files
+
+```{r write_GCB_files}
+
+Historical_Budget %>%
+  write_csv(paste(path_preprocessing,
+                  "GCB_Historical_Budget.csv",
+                  sep = ""))
+
+Global_Carbon_Budget %>%
+  write_csv(paste(path_preprocessing,
+                  "GCB_Global_Carbon_Budget.csv",
+                  sep = ""))
+
+Ocean_Sink %>%
+  write_csv(paste(path_preprocessing,
+                  "Ocean_Sink.csv",
+                  sep = ""))
+
+```
+
+
+
+
