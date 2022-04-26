@@ -116,7 +116,20 @@ basinmask <- basinmask %>%
   filter(MLR_basins == "2") %>% 
   select(lat, lon, basin_AIP)
 
+tcant_3d_unmasked <- tcant_3d
 tcant_3d <- inner_join(tcant_3d, basinmask)
+
+
+ggplot() +
+  geom_tile(data = tcant_3d_unmasked %>% 
+              distinct(lon, lat),
+            aes(lon, lat, fill = "basin mask not applied")) +
+  geom_tile(data = tcant_3d %>% 
+              distinct(lon, lat),
+            aes(lon, lat, fill = "basin mask applied")) +
+  coord_quickmap()
+
+rm(tcant_3d_unmasked)
 
 ```
 
@@ -173,6 +186,11 @@ m_dcant_budget(
 p_map_cant_inv(
   df = tcant_inv,
   var = "tcant_pos",
+  breaks = seq(0,max(tcant_inv$tcant_pos),5))
+
+p_map_cant_inv(
+  df = tcant_inv,
+  var = "tcant",
   breaks = seq(0,max(tcant_inv$tcant_pos),5))
 
 ```
