@@ -80,17 +80,17 @@ rm(dcant_gamma)
 
 ```{r read_Gruber_dcant_inv_v101}
 
-dcant_inv <- tidync(paste(
+dcant_inv_publ <- tidync(paste(
   path_gruber_2019,
   "inv_dcant_emlr_cstar_gruber_94-07_vs1.nc",
   sep = ""
 ))
 
-dcant_inv <- dcant_inv %>%  activate(DCANT_INV01)
-dcant_inv <- dcant_inv %>% hyper_tibble()
+dcant_inv_publ <- dcant_inv_publ %>%  activate(DCANT_INV01)
+dcant_inv_publ <- dcant_inv_publ %>% hyper_tibble()
 
 # harmonize column names and coordinates
-dcant_inv <- dcant_inv %>% 
+dcant_inv_publ <- dcant_inv_publ %>% 
   rename(lon = LONGITUDE,
          lat = LATITUDE,
          dcant_pos = DCANT_INV01) %>% 
@@ -100,7 +100,7 @@ dcant_inv <- dcant_inv %>%
 
 ```{r read_Gruber_dcant_inv_all}
 
-dcant_inv_all <- read_ncdf(
+dcant_inv_publ_all <- read_ncdf(
   paste(
     path_gruber_2019,
     "inv_dcant_emlr_cstar_gruber_94-07_vs1.nc",
@@ -110,16 +110,16 @@ dcant_inv_all <- read_ncdf(
   make_units = FALSE
 )
 
-dcant_inv_all <- dcant_inv_all %>% as_tibble()
+dcant_inv_publ_all <- dcant_inv_publ_all %>% as_tibble()
 
-dcant_inv_all <- dcant_inv_all %>% 
+dcant_inv_publ_all <- dcant_inv_publ_all %>% 
   pivot_longer(DCANT_INV01:DCANT_INV14,
                names_to = "Version_ID",
                values_to = "dcant_pos",
                names_prefix = "DCANT_INV")
 
 # harmonize column names and coordinates
-dcant_inv_all <- dcant_inv_all %>%
+dcant_inv_publ_all <- dcant_inv_publ_all %>%
   rename(lon = LONGITUDE,
          lat = LATITUDE) %>%
   mutate(lon = if_else(lon < 20, lon + 360, lon))
@@ -163,9 +163,17 @@ basinmask <- basinmask %>%
   select(lat, lon, basin_AIP)
 
 dcant <- inner_join(dcant, basinmask)
-dcant_inv_publ <- inner_join(dcant_inv, basinmask)
-dcant_inv_all <- inner_join(dcant_inv_all, basinmask)
+dcant_inv_publ_masked <- inner_join(dcant_inv_publ, basinmask)
+dcant_inv_publ_all <- inner_join(dcant_inv_publ_all, basinmask)
 V101 <- inner_join(V101, basinmask)
+
+ggplot() +
+  geom_tile(data = dcant_inv_publ,
+            aes(lon, lat, fill = "basin mask not applied")) +
+  geom_tile(data = dcant_inv_publ_masked,
+            aes(lon, lat, fill = "basin mask applied")) +
+  coord_quickmap()
+
 
 ```
 
@@ -227,7 +235,7 @@ p_map_cant_inv(
 ```{r G19_cant_pos_inventory_maps_all, fig.asp=1.5}
 
 p_map_cant_inv(
-  df = dcant_inv_all %>% mutate(dcant_pos = dcant_pos*(10/13)),
+  df = dcant_inv_publ_all %>% mutate(dcant_pos = dcant_pos*(10/13)),
   var = "dcant_pos") +
   facet_wrap(~ Version_ID, ncol = 2)
 
@@ -238,8 +246,14 @@ p_map_cant_inv(
 ```{r G19_cant_pos_inventory_maps_published, fig.asp=0.6}
 
 p_map_cant_inv(
-  df = dcant_inv,
-  var = "dcant_pos")
+  df = dcant_inv_publ,
+  var = "dcant_pos",
+  title_text = "Published column inventories - unmasked")
+
+p_map_cant_inv(
+  df = dcant_inv_publ_masked,
+  var = "dcant_pos",
+  title_text = "Published column inventories - masked")
 
 ```
 
@@ -250,7 +264,7 @@ p_map_cant_inv(
 # join published and calculated data sets
 dcant_inv_offset <- inner_join(
   dcant_inv %>% rename(dcant_re = dcant_pos),
-  dcant_inv_publ %>% rename(dcant_pub = dcant_pos)
+  dcant_inv_publ_masked %>% rename(dcant_pub = dcant_pos)
 )
 
 # calculate offset
@@ -261,11 +275,11 @@ dcant_inv_offset <- dcant_inv_offset %>%
 p_map_cant_inv(
   df = dcant_inv_offset,
   var = "dcant_offset",
-  col = "divergent",
+  col = "bias",
   breaks = seq(-3, 3, 0.25)
 )
 
-rm(dcant_inv_offset, dcant_inv_publ)
+rm(dcant_inv_offset)
 
 ```
 
@@ -312,7 +326,7 @@ p_map_climatology(
 
 dcant_zonal %>%
   group_split(basin_AIP) %>%
-  head(1) %>%
+  # head(1) %>%
   map(
     ~ p_section_zonal(
       df = .x,
@@ -395,7 +409,12 @@ dcant_inv %>%
                   "G19_dcant_inv.csv",
                   sep = ""))
 
-dcant_inv_all %>%
+dcant_inv_publ %>%
+  write_csv(paste(path_preprocessing,
+                  "G19_dcant_inv_publ.csv",
+                  sep = ""))
+
+dcant_inv_publ_all %>%
   write_csv(paste(path_preprocessing,
                   "G19_dcant_inv_all.csv",
                   sep = ""))
@@ -411,7 +430,7 @@ dcant_zonal %>%
 # RECCAP2-ocean
 
 
-```{r format_Gruber_dcant_for_RECCAP2}
+```{r format_Gruber_dcant_for_RECCAP2, eval=FALSE}
 
 # extract coordinate reference system
 G19_raster <- raster::brick(paste0(

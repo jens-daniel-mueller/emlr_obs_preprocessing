@@ -23,14 +23,14 @@ navbar:
       href: read_GLODAPv2_2021.html
     - text: GLODAPv1_1_gridded
       href: read_Key_2004.html
-  - text: Cant
+  - text: CO2 data
     menu:
     - text: Gruber 2019
       href: read_Gruber_2019.html
     - text: Sabine 2004
       href: read_Sabine_2004.html
-  - text: CO2
-    menu:
+    - text: GCB
+      href: read_GCB.html
     - text: Atmospheric CO2
       href: read_CO2_atm.html
     - text: OceanSODA
