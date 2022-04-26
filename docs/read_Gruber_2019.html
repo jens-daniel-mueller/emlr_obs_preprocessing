@@ -450,7 +450,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Anthropogenic CO2 from 1994 to 2007</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">13 April, 2022</h4>
+<h4 class="date">26 April, 2022</h4>
 
 </div>
 
@@ -475,7 +475,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-04-13
+<strong>Last updated:</strong> 2022-04-26
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -566,16 +566,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree20ce2b77bfcdbb0fd5e29c493faef7d262380310targetblank20ce2b7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/20ce2b77bfcdbb0fd5e29c493faef7d262380310" target="_blank">20ce2b7</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreed145737921e61d04cefb43cace823d260e044299targetblankd145737a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/d145737921e61d04cefb43cace823d260e044299" target="_blank">d145737</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree20ce2b77bfcdbb0fd5e29c493faef7d262380310targetblank20ce2b7a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreed145737921e61d04cefb43cace823d260e044299targetblankd145737a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/20ce2b77bfcdbb0fd5e29c493faef7d262380310" target="_blank">20ce2b7</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/d145737921e61d04cefb43cace823d260e044299" target="_blank">d145737</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -584,12 +584,9 @@ Note that you need to be careful to ensure that all relevant files for the analy
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/figure/
     Ignored:    data/
     Ignored:    output/
-
-Unstaged changes:
-    Modified:   analysis/_site.yml
-    Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
 <p>
@@ -628,6 +625,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/d145737921e61d04cefb43cace823d260e044299/analysis/read_Gruber_2019.Rmd" target="_blank">d145737</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-26
+</td>
+<td>
+write published, unmasked column inventories of G19 to files
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/e9495677e322e7dc37743df5edea9f88b05514c8/docs/read_Gruber_2019.html" target="_blank">e949567</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-13
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1003,22 +1034,22 @@ rm(dcant_gamma)</code></pre>
 </div>
 <div id="column-inventories" class="section level3" number="2.1.2">
 <h3><span class="header-section-number">2.1.2</span> Column inventories</h3>
-<pre class="r"><code>dcant_inv &lt;- tidync(paste(
+<pre class="r"><code>dcant_inv_publ &lt;- tidync(paste(
   path_gruber_2019,
   &quot;inv_dcant_emlr_cstar_gruber_94-07_vs1.nc&quot;,
   sep = &quot;&quot;
 ))
 
-dcant_inv &lt;- dcant_inv %&gt;%  activate(DCANT_INV01)
-dcant_inv &lt;- dcant_inv %&gt;% hyper_tibble()
+dcant_inv_publ &lt;- dcant_inv_publ %&gt;%  activate(DCANT_INV01)
+dcant_inv_publ &lt;- dcant_inv_publ %&gt;% hyper_tibble()
 
 # harmonize column names and coordinates
-dcant_inv &lt;- dcant_inv %&gt;% 
+dcant_inv_publ &lt;- dcant_inv_publ %&gt;% 
   rename(lon = LONGITUDE,
          lat = LATITUDE,
          dcant_pos = DCANT_INV01) %&gt;% 
   mutate(lon = if_else(lon &lt; 20, lon + 360, lon))</code></pre>
-<pre class="r"><code>dcant_inv_all &lt;- read_ncdf(
+<pre class="r"><code>dcant_inv_publ_all &lt;- read_ncdf(
   paste(
     path_gruber_2019,
     &quot;inv_dcant_emlr_cstar_gruber_94-07_vs1.nc&quot;,
@@ -1028,16 +1059,16 @@ dcant_inv &lt;- dcant_inv %&gt;%
   make_units = FALSE
 )
 
-dcant_inv_all &lt;- dcant_inv_all %&gt;% as_tibble()
+dcant_inv_publ_all &lt;- dcant_inv_publ_all %&gt;% as_tibble()
 
-dcant_inv_all &lt;- dcant_inv_all %&gt;% 
+dcant_inv_publ_all &lt;- dcant_inv_publ_all %&gt;% 
   pivot_longer(DCANT_INV01:DCANT_INV14,
                names_to = &quot;Version_ID&quot;,
                values_to = &quot;dcant_pos&quot;,
                names_prefix = &quot;DCANT_INV&quot;)
 
 # harmonize column names and coordinates
-dcant_inv_all &lt;- dcant_inv_all %&gt;%
+dcant_inv_publ_all &lt;- dcant_inv_publ_all %&gt;%
   rename(lon = LONGITUDE,
          lat = LATITUDE) %&gt;%
   mutate(lon = if_else(lon &lt; 20, lon + 360, lon))</code></pre>
@@ -1073,9 +1104,17 @@ basinmask &lt;- basinmask %&gt;%
   select(lat, lon, basin_AIP)
 
 dcant &lt;- inner_join(dcant, basinmask)
-dcant_inv_publ &lt;- inner_join(dcant_inv, basinmask)
-dcant_inv_all &lt;- inner_join(dcant_inv_all, basinmask)
-V101 &lt;- inner_join(V101, basinmask)</code></pre>
+dcant_inv_publ_masked &lt;- inner_join(dcant_inv_publ, basinmask)
+dcant_inv_publ_all &lt;- inner_join(dcant_inv_publ_all, basinmask)
+V101 &lt;- inner_join(V101, basinmask)
+
+ggplot() +
+  geom_tile(data = dcant_inv_publ,
+            aes(lon, lat, fill = &quot;basin mask not applied&quot;)) +
+  geom_tile(data = dcant_inv_publ_masked,
+            aes(lon, lat, fill = &quot;basin mask applied&quot;)) +
+  coord_quickmap()</code></pre>
+<p><img src="figure/read_Gruber_2019.Rmd/apply_basin_mask-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="join-pos-and-all-delta-cant" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Join pos and all delta Cant</h1>
@@ -1309,7 +1348,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre class="r"><code>p_map_cant_inv(
-  df = dcant_inv_all %&gt;% mutate(dcant_pos = dcant_pos*(10/13)),
+  df = dcant_inv_publ_all %&gt;% mutate(dcant_pos = dcant_pos*(10/13)),
   var = &quot;dcant_pos&quot;) +
   facet_wrap(~ Version_ID, ncol = 2)</code></pre>
 <p><img src="figure/read_Gruber_2019.Rmd/G19_cant_pos_inventory_maps_all-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -1398,8 +1437,9 @@ jens-daniel-mueller
 <div id="published-inventories" class="section level3" number="6.2.3">
 <h3><span class="header-section-number">6.2.3</span> Published inventories</h3>
 <pre class="r"><code>p_map_cant_inv(
-  df = dcant_inv,
-  var = &quot;dcant_pos&quot;)</code></pre>
+  df = dcant_inv_publ,
+  var = &quot;dcant_pos&quot;,
+  title_text = &quot;Published column inventories - unmasked&quot;)</code></pre>
 <p><img src="figure/read_Gruber_2019.Rmd/G19_cant_pos_inventory_maps_published-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-G19_cant_pos_inventory_maps_published-1">
@@ -1504,13 +1544,18 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre class="r"><code>p_map_cant_inv(
+  df = dcant_inv_publ_masked,
+  var = &quot;dcant_pos&quot;,
+  title_text = &quot;Published column inventories - masked&quot;)</code></pre>
+<p><img src="figure/read_Gruber_2019.Rmd/G19_cant_pos_inventory_maps_published-2.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="published-vs-calculated" class="section level3" number="6.2.4">
 <h3><span class="header-section-number">6.2.4</span> Published vs calculated</h3>
 <pre class="r"><code># join published and calculated data sets
 dcant_inv_offset &lt;- inner_join(
   dcant_inv %&gt;% rename(dcant_re = dcant_pos),
-  dcant_inv_publ %&gt;% rename(dcant_pub = dcant_pos)
+  dcant_inv_publ_masked %&gt;% rename(dcant_pub = dcant_pos)
 )
 
 # calculate offset
@@ -1521,7 +1566,7 @@ dcant_inv_offset &lt;- dcant_inv_offset %&gt;%
 p_map_cant_inv(
   df = dcant_inv_offset,
   var = &quot;dcant_offset&quot;,
-  col = &quot;divergent&quot;,
+  col = &quot;bias&quot;,
   breaks = seq(-3, 3, 0.25)
 )</code></pre>
 <p><img src="figure/read_Gruber_2019.Rmd/G19_cant_offset_inventory-1.png" width="672" style="display: block; margin: auto;" /></p>
@@ -1617,7 +1662,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>rm(dcant_inv_offset, dcant_inv_publ)</code></pre>
+<pre class="r"><code>rm(dcant_inv_offset)</code></pre>
 </div>
 </div>
 </div>
@@ -1862,7 +1907,7 @@ jens-daniel-mueller
 <h2><span class="header-section-number">8.1</span> Positive Cant</h2>
 <pre class="r"><code>dcant_zonal %&gt;%
   group_split(basin_AIP) %&gt;%
-  head(1) %&gt;%
+  # head(1) %&gt;%
   map(
     ~ p_section_zonal(
       df = .x,
@@ -1954,6 +1999,12 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_Gruber_2019.Rmd/Cant_pos_zonal_mean_sections-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/read_Gruber_2019.Rmd/Cant_pos_zonal_mean_sections-3.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="global-sections-plot" class="section level1" number="9">
@@ -2317,7 +2368,12 @@ dcant_inv %&gt;%
                   &quot;G19_dcant_inv.csv&quot;,
                   sep = &quot;&quot;))
 
-dcant_inv_all %&gt;%
+dcant_inv_publ %&gt;%
+  write_csv(paste(path_preprocessing,
+                  &quot;G19_dcant_inv_publ.csv&quot;,
+                  sep = &quot;&quot;))
+
+dcant_inv_publ_all %&gt;%
   write_csv(paste(path_preprocessing,
                   &quot;G19_dcant_inv_all.csv&quot;,
                   sep = &quot;&quot;))
@@ -2381,21 +2437,15 @@ dcant &lt;- dcant %&gt;%
 
 # check total volume
 dcant %&gt;% 
-  summarise(total_ocean_volume = sum(volume, na.rm = TRUE))</code></pre>
-<pre><code># A tibble: 1 × 1
-  total_ocean_volume
-               &lt;dbl&gt;
-1            1.25e18</code></pre>
-<pre class="r"><code># check total dcant
+  summarise(total_ocean_volume = sum(volume, na.rm = TRUE))
+
+# check total dcant
 dcant %&gt;% 
   filter(depth &lt;= 3000) %&gt;% 
   mutate(dcant_inv = dcant * volume) %&gt;% 
-  summarise(total_dcant = sum(dcant_inv, na.rm = TRUE)*12*1e-15)</code></pre>
-<pre><code># A tibble: 1 × 1
-  total_dcant
-        &lt;dbl&gt;
-1        31.8</code></pre>
-<pre class="r"><code># select relevant columns
+  summarise(total_dcant = sum(dcant_inv, na.rm = TRUE)*12*1e-15)
+
+# select relevant columns
 dcant &lt;- dcant %&gt;% 
   select(lon, lat, depth, dcant, volume)
 
@@ -2420,28 +2470,18 @@ raster::crs(volume_raster) &lt;- coord_ref
 
 # assign NA values
 raster::NAvalue(dcant_raster) &lt;- -9999
-raster::NAvalue(dcant_raster)</code></pre>
-<pre><code>[1] -9999</code></pre>
-<pre class="r"><code>raster::NAvalue(volume_raster) &lt;- -9999
-raster::NAvalue(volume_raster)</code></pre>
-<pre><code>[1] -9999</code></pre>
-<pre class="r"><code># check object
-dim(dcant_raster)</code></pre>
-<pre><code>[1] 180 360  33</code></pre>
-<pre class="r"><code>raster::nbands(dcant_raster)</code></pre>
-<pre><code>[1] 1</code></pre>
-<pre class="r"><code>raster::nlayers(dcant_raster)</code></pre>
-<pre><code>[1] 33</code></pre>
-<pre class="r"><code>names(dcant_raster) #get the names of layers</code></pre>
-<pre><code> [1] &quot;X0&quot;    &quot;X10&quot;   &quot;X20&quot;   &quot;X30&quot;   &quot;X50&quot;   &quot;X75&quot;   &quot;X100&quot;  &quot;X125&quot;  &quot;X150&quot; 
-[10] &quot;X200&quot;  &quot;X250&quot;  &quot;X300&quot;  &quot;X400&quot;  &quot;X500&quot;  &quot;X600&quot;  &quot;X700&quot;  &quot;X800&quot;  &quot;X900&quot; 
-[19] &quot;X1000&quot; &quot;X1100&quot; &quot;X1200&quot; &quot;X1300&quot; &quot;X1400&quot; &quot;X1500&quot; &quot;X1750&quot; &quot;X2000&quot; &quot;X2500&quot;
-[28] &quot;X3000&quot; &quot;X3500&quot; &quot;X4000&quot; &quot;X4500&quot; &quot;X5000&quot; &quot;X5500&quot;</code></pre>
-<pre class="r"><code>raster::getZ(dcant_raster)</code></pre>
-<pre><code> [1]    0   10   20   30   50   75  100  125  150  200  250  300  400  500  600
-[16]  700  800  900 1000 1100 1200 1300 1400 1500 1750 2000 2500 3000 3500 4000
-[31] 4500 5000 5500</code></pre>
-<pre class="r"><code># write netcdf file
+raster::NAvalue(dcant_raster)
+raster::NAvalue(volume_raster) &lt;- -9999
+raster::NAvalue(volume_raster)
+
+# check object
+dim(dcant_raster)
+raster::nbands(dcant_raster)
+raster::nlayers(dcant_raster)
+names(dcant_raster) #get the names of layers
+raster::getZ(dcant_raster)
+
+# write netcdf file
 raster::writeRaster(
   dcant_raster,
   filename = paste0(path_preprocessing,
@@ -2468,223 +2508,17 @@ dcant_reopen &lt;- nc_open(
          &quot;dcant_Gruber2019_1994-2007_v20211012.nc&quot;),
   write = TRUE)
 
-dcant_reopen</code></pre>
-<pre><code>File /nfs/kryo/work/jenmueller/emlr_cant/observations/preprocessing/dcant_Gruber2019_1994-2007_v20211012.nc (NC_FORMAT_CLASSIC):
+dcant_reopen
+print(dcant_reopen)
+names(dcant_reopen$var)
 
-     2 variables (excluding dimension variables):
-        int crs[]   
-            proj4: +proj=longlat +datum=WGS84 +no_defs
-        float dcant[longitude,latitude,z]   
-            _FillValue: -3.39999995214436e+38
-            grid_mapping: crs
-            proj4: +proj=longlat +datum=WGS84 +no_defs
-            min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-            max: 0.0248421741701018
-             max: 0.0263988532810143
-             max: 0.0259323226992999
-             max: 0.0468319294577161
-             max: 0.0539228878337458
-             max: 0.0579115449847562
-             max: 0.0591300899669754
-             max: 0.0595068498539064
-             max: 0.0591967236903614
-             max: 0.0622757641709907
-             max: 0.0701156483511376
-             max: 0.0822125437177265
-             max: 0.0895806756023294
-             max: 0.0465109463416744
-             max: 0.0447200492198721
-             max: 0.022305883055381
-             max: 0.0186725092366003
-             max: 0.0160326506043697
-             max: 0.0148016268892587
-             max: 0.011432505514404
-             max: 0.0127706811725398
-             max: 0.0131554593368835
-             max: 0.0110274898367661
-             max: 0.0123063573857286
-             max: 0.0129442649462616
-             max: 0.00788267650599191
-             max: 0.00889479200777699
-             max: 0.00910296888252653
-             max: 0.016749840595237
-             max: 0.0143819581236115
-             max: 0.0205526824791368
-             max: 0.0269090482439296
-             max: 0.0229962165359498
-
-     3 dimensions:
-        longitude  Size:360 
-            units: degrees_east
-            long_name: longitude
-        latitude  Size:180 
-            units: degrees_north
-            long_name: latitude
-        z  Size:33   *** is unlimited *** 
-            units: unknown
-            long_name: z
-
-    3 global attributes:
-        Conventions: CF-1.4
-        created_by: R, packages ncdf4 and raster (version 3.5-11)
-        date: 2022-04-13 17:11:42</code></pre>
-<pre class="r"><code>print(dcant_reopen)</code></pre>
-<pre><code>File /nfs/kryo/work/jenmueller/emlr_cant/observations/preprocessing/dcant_Gruber2019_1994-2007_v20211012.nc (NC_FORMAT_CLASSIC):
-
-     2 variables (excluding dimension variables):
-        int crs[]   
-            proj4: +proj=longlat +datum=WGS84 +no_defs
-        float dcant[longitude,latitude,z]   
-            _FillValue: -3.39999995214436e+38
-            grid_mapping: crs
-            proj4: +proj=longlat +datum=WGS84 +no_defs
-            min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-            max: 0.0248421741701018
-             max: 0.0263988532810143
-             max: 0.0259323226992999
-             max: 0.0468319294577161
-             max: 0.0539228878337458
-             max: 0.0579115449847562
-             max: 0.0591300899669754
-             max: 0.0595068498539064
-             max: 0.0591967236903614
-             max: 0.0622757641709907
-             max: 0.0701156483511376
-             max: 0.0822125437177265
-             max: 0.0895806756023294
-             max: 0.0465109463416744
-             max: 0.0447200492198721
-             max: 0.022305883055381
-             max: 0.0186725092366003
-             max: 0.0160326506043697
-             max: 0.0148016268892587
-             max: 0.011432505514404
-             max: 0.0127706811725398
-             max: 0.0131554593368835
-             max: 0.0110274898367661
-             max: 0.0123063573857286
-             max: 0.0129442649462616
-             max: 0.00788267650599191
-             max: 0.00889479200777699
-             max: 0.00910296888252653
-             max: 0.016749840595237
-             max: 0.0143819581236115
-             max: 0.0205526824791368
-             max: 0.0269090482439296
-             max: 0.0229962165359498
-
-     3 dimensions:
-        longitude  Size:360 
-            units: degrees_east
-            long_name: longitude
-        latitude  Size:180 
-            units: degrees_north
-            long_name: latitude
-        z  Size:33   *** is unlimited *** 
-            units: unknown
-            long_name: z
-
-    3 global attributes:
-        Conventions: CF-1.4
-        created_by: R, packages ncdf4 and raster (version 3.5-11)
-        date: 2022-04-13 17:11:42</code></pre>
-<pre class="r"><code>names(dcant_reopen$var)</code></pre>
-<pre><code>[1] &quot;crs&quot;   &quot;dcant&quot;</code></pre>
-<pre class="r"><code># add units
-ncatt_get(dcant_reopen, varid = &quot;dcant&quot;)</code></pre>
-<pre><code>$`_FillValue`
-[1] -3.4e+38
-
-$grid_mapping
-[1] &quot;crs&quot;
-
-$proj4
-[1] &quot;+proj=longlat +datum=WGS84 +no_defs&quot;
-
-$min
- [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-
-$max
- [1] 0.024842174 0.026398853 0.025932323 0.046831929 0.053922888 0.057911545
- [7] 0.059130090 0.059506850 0.059196724 0.062275764 0.070115648 0.082212544
-[13] 0.089580676 0.046510946 0.044720049 0.022305883 0.018672509 0.016032651
-[19] 0.014801627 0.011432506 0.012770681 0.013155459 0.011027490 0.012306357
-[25] 0.012944265 0.007882677 0.008894792 0.009102969 0.016749841 0.014381958
-[31] 0.020552682 0.026909048 0.022996217</code></pre>
-<pre class="r"><code>ncatt_put(dcant_reopen, varid = &quot;dcant&quot;,
+# add units
+ncatt_get(dcant_reopen, varid = &quot;dcant&quot;)
+ncatt_put(dcant_reopen, varid = &quot;dcant&quot;,
           attname = &quot;units&quot;, attval = &quot;mol m-3&quot;)
 
-ncatt_get(dcant_reopen, varid = &quot;z&quot;)</code></pre>
-<pre><code>$units
-[1] &quot;unknown&quot;
-
-$long_name
-[1] &quot;z&quot;</code></pre>
-<pre class="r"><code>ncatt_put(dcant_reopen, varid = &quot;z&quot;,
+ncatt_get(dcant_reopen, varid = &quot;z&quot;)
+ncatt_put(dcant_reopen, varid = &quot;z&quot;,
           attname = &quot;units&quot;, attval = &quot;metres&quot;)
 
 nc_close(dcant_reopen)
@@ -2698,230 +2532,17 @@ volume_reopen &lt;- nc_open(
          &quot;volume_Gruber2019_1994-2007_v20211012.nc&quot;),
   write = TRUE)
 
-volume_reopen</code></pre>
-<pre><code>File /nfs/kryo/work/jenmueller/emlr_cant/observations/preprocessing/volume_Gruber2019_1994-2007_v20211012.nc (NC_FORMAT_CLASSIC):
+volume_reopen
+print(volume_reopen)
+names(volume_reopen$var)
 
-     2 variables (excluding dimension variables):
-        int crs[]   
-            proj4: +proj=longlat +datum=WGS84 +no_defs
-        float volume[longitude,latitude,z]   
-            _FillValue: -3.39999995214436e+38
-            grid_mapping: crs
-            proj4: +proj=longlat +datum=WGS84 +no_defs
-            min: 13557913860.915
-             min: 27115827721.8299
-             min: 27115827721.8299
-             min: 40673741582.7449
-             min: 61010612374.1174
-             min: 67789569304.5748
-             min: 67789569304.5748
-             min: 67789569304.5748
-             min: 101684353956.862
-             min: 135579138609.15
-             min: 135579138609.15
-             min: 203368707913.725
-             min: 271158277218.299
-             min: 271158277218.299
-             min: 271158277218.299
-             min: 314515048709.952
-             min: 314515048709.952
-             min: 314515048709.952
-             min: 314515048709.952
-             min: 314515048709.952
-             min: 314515048709.952
-             min: 314515048709.952
-             min: 314515048709.952
-             min: 550401335242.417
-             min: 786287621774.881
-             min: 1179431432662.32
-             min: 1572575243549.76
-             min: 1777833760784.07
-             min: 1878515185661.79
-             min: 1979171773639.54
-             min: 2079803524717.3
-             min: 2482082160028.49
-             min: 1631799437103.27
-            max: 62002375113.084
-             max: 124004750226.168
-             max: 124004750226.168
-             max: 186007125339.252
-             max: 279010688008.878
-             max: 310011875565.42
-             max: 310011875565.42
-             max: 310011875565.42
-             max: 465017813348.13
-             max: 620023751130.84
-             max: 620023751130.84
-             max: 930035626696.26
-             max: 1240047502261.68
-             max: 1240047502261.68
-             max: 1240047502261.68
-             max: 1240047502261.68
-             max: 1240047502261.68
-             max: 1240047502261.68
-             max: 1240047502261.68
-             max: 1240047502261.68
-             max: 1240047502261.68
-             max: 1240047502261.68
-             max: 1240047502261.68
-             max: 2170083128957.94
-             max: 3100118755654.2
-             max: 4650178133481.3
-             max: 6200237511308.4
-             max: 6200237511308.4
-             max: 6200237511308.4
-             max: 6200237511308.4
-             max: 6200237511308.4
-             max: 6200237511308.4
-             max: 3100118755654.2
-
-     3 dimensions:
-        longitude  Size:360 
-            units: degrees_east
-            long_name: longitude
-        latitude  Size:180 
-            units: degrees_north
-            long_name: latitude
-        z  Size:33   *** is unlimited *** 
-            units: unknown
-            long_name: z
-
-    3 global attributes:
-        Conventions: CF-1.4
-        created_by: R, packages ncdf4 and raster (version 3.5-11)
-        date: 2022-04-13 17:11:43</code></pre>
-<pre class="r"><code>print(volume_reopen)</code></pre>
-<pre><code>File /nfs/kryo/work/jenmueller/emlr_cant/observations/preprocessing/volume_Gruber2019_1994-2007_v20211012.nc (NC_FORMAT_CLASSIC):
-
-     2 variables (excluding dimension variables):
-        int crs[]   
-            proj4: +proj=longlat +datum=WGS84 +no_defs
-        float volume[longitude,latitude,z]   
-            _FillValue: -3.39999995214436e+38
-            grid_mapping: crs
-            proj4: +proj=longlat +datum=WGS84 +no_defs
-            min: 13557913860.915
-             min: 27115827721.8299
-             min: 27115827721.8299
-             min: 40673741582.7449
-             min: 61010612374.1174
-             min: 67789569304.5748
-             min: 67789569304.5748
-             min: 67789569304.5748
-             min: 101684353956.862
-             min: 135579138609.15
-             min: 135579138609.15
-             min: 203368707913.725
-             min: 271158277218.299
-             min: 271158277218.299
-             min: 271158277218.299
-             min: 314515048709.952
-             min: 314515048709.952
-             min: 314515048709.952
-             min: 314515048709.952
-             min: 314515048709.952
-             min: 314515048709.952
-             min: 314515048709.952
-             min: 314515048709.952
-             min: 550401335242.417
-             min: 786287621774.881
-             min: 1179431432662.32
-             min: 1572575243549.76
-             min: 1777833760784.07
-             min: 1878515185661.79
-             min: 1979171773639.54
-             min: 2079803524717.3
-             min: 2482082160028.49
-             min: 1631799437103.27
-            max: 62002375113.084
-             max: 124004750226.168
-             max: 124004750226.168
-             max: 186007125339.252
-             max: 279010688008.878
-             max: 310011875565.42
-             max: 310011875565.42
-             max: 310011875565.42
-             max: 465017813348.13
-             max: 620023751130.84
-             max: 620023751130.84
-             max: 930035626696.26
-             max: 1240047502261.68
-             max: 1240047502261.68
-             max: 1240047502261.68
-             max: 1240047502261.68
-             max: 1240047502261.68
-             max: 1240047502261.68
-             max: 1240047502261.68
-             max: 1240047502261.68
-             max: 1240047502261.68
-             max: 1240047502261.68
-             max: 1240047502261.68
-             max: 2170083128957.94
-             max: 3100118755654.2
-             max: 4650178133481.3
-             max: 6200237511308.4
-             max: 6200237511308.4
-             max: 6200237511308.4
-             max: 6200237511308.4
-             max: 6200237511308.4
-             max: 6200237511308.4
-             max: 3100118755654.2
-
-     3 dimensions:
-        longitude  Size:360 
-            units: degrees_east
-            long_name: longitude
-        latitude  Size:180 
-            units: degrees_north
-            long_name: latitude
-        z  Size:33   *** is unlimited *** 
-            units: unknown
-            long_name: z
-
-    3 global attributes:
-        Conventions: CF-1.4
-        created_by: R, packages ncdf4 and raster (version 3.5-11)
-        date: 2022-04-13 17:11:43</code></pre>
-<pre class="r"><code>names(volume_reopen$var)</code></pre>
-<pre><code>[1] &quot;crs&quot;    &quot;volume&quot;</code></pre>
-<pre class="r"><code># add units
-ncatt_get(volume_reopen, varid = &quot;volume&quot;)</code></pre>
-<pre><code>$`_FillValue`
-[1] -3.4e+38
-
-$grid_mapping
-[1] &quot;crs&quot;
-
-$proj4
-[1] &quot;+proj=longlat +datum=WGS84 +no_defs&quot;
-
-$min
- [1] 1.355791e+10 2.711583e+10 2.711583e+10 4.067374e+10 6.101061e+10
- [6] 6.778957e+10 6.778957e+10 6.778957e+10 1.016844e+11 1.355791e+11
-[11] 1.355791e+11 2.033687e+11 2.711583e+11 2.711583e+11 2.711583e+11
-[16] 3.145150e+11 3.145150e+11 3.145150e+11 3.145150e+11 3.145150e+11
-[21] 3.145150e+11 3.145150e+11 3.145150e+11 5.504013e+11 7.862876e+11
-[26] 1.179431e+12 1.572575e+12 1.777834e+12 1.878515e+12 1.979172e+12
-[31] 2.079804e+12 2.482082e+12 1.631799e+12
-
-$max
- [1] 6.200238e+10 1.240048e+11 1.240048e+11 1.860071e+11 2.790107e+11
- [6] 3.100119e+11 3.100119e+11 3.100119e+11 4.650178e+11 6.200238e+11
-[11] 6.200238e+11 9.300356e+11 1.240048e+12 1.240048e+12 1.240048e+12
-[16] 1.240048e+12 1.240048e+12 1.240048e+12 1.240048e+12 1.240048e+12
-[21] 1.240048e+12 1.240048e+12 1.240048e+12 2.170083e+12 3.100119e+12
-[26] 4.650178e+12 6.200238e+12 6.200238e+12 6.200238e+12 6.200238e+12
-[31] 6.200238e+12 6.200238e+12 3.100119e+12</code></pre>
-<pre class="r"><code>ncatt_put(volume_reopen, varid = &quot;volume&quot;,
+# add units
+ncatt_get(volume_reopen, varid = &quot;volume&quot;)
+ncatt_put(volume_reopen, varid = &quot;volume&quot;,
           attname = &quot;units&quot;, attval = &quot;m3&quot;)
 
-ncatt_get(volume_reopen, varid = &quot;z&quot;)</code></pre>
-<pre><code>$units
-[1] &quot;unknown&quot;
-
-$long_name
-[1] &quot;z&quot;</code></pre>
-<pre class="r"><code>ncatt_put(volume_reopen, varid = &quot;z&quot;,
+ncatt_get(volume_reopen, varid = &quot;z&quot;)
+ncatt_put(volume_reopen, varid = &quot;z&quot;,
           attname = &quot;units&quot;, attval = &quot;metres&quot;)
 
 nc_close(volume_reopen)
@@ -2939,135 +2560,25 @@ dcant_reopen %&gt;%
   filter(z == 0) %&gt;% 
   ggplot(aes(longitude, latitude, fill=dcant)) +
   geom_raster() +
-  scale_fill_viridis_c()</code></pre>
-<p><img src="figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-format_Gruber_dcant_for_RECCAP2-1">
-Past versions of format_Gruber_dcant_for_RECCAP2-1.png
-</button>
-</p>
-<div id="fig-format_Gruber_dcant_for_RECCAP2-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2dad8c70b4eca6157dd42273d75637fb41e39748/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-1.png" target="_blank">2dad8c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-12
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>dcant_reopen %&gt;% 
+  scale_fill_viridis_c()
+
+dcant_reopen %&gt;% 
   filter(longitude == 200.5) %&gt;% 
   ggplot(aes(latitude, z, z=dcant)) +
   scale_y_reverse() +
   geom_contour_filled() +
-  scale_fill_viridis_d()</code></pre>
-<p><img src="figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-format_Gruber_dcant_for_RECCAP2-2">
-Past versions of format_Gruber_dcant_for_RECCAP2-2.png
-</button>
-</p>
-<div id="fig-format_Gruber_dcant_for_RECCAP2-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2dad8c70b4eca6157dd42273d75637fb41e39748/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-2.png" target="_blank">2dad8c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-12
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>dcant_reopen &lt;- read_ncdf(
+  scale_fill_viridis_d()
+
+
+dcant_reopen &lt;- read_ncdf(
   paste0(path_preprocessing,
-         &quot;dcant_Gruber2019_1994-2007_v20211012.nc&quot;))</code></pre>
-<pre><code>Error in UseMethod(&quot;GPFN&quot;) : 
-  no applicable method for &#39;GPFN&#39; applied to an object of class &quot;list&quot;</code></pre>
-<pre class="r"><code>plot(dcant_reopen,
-     axes = TRUE)</code></pre>
-<p><img src="figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-3.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-format_Gruber_dcant_for_RECCAP2-3">
-Past versions of format_Gruber_dcant_for_RECCAP2-3.png
-</button>
-</p>
-<div id="fig-format_Gruber_dcant_for_RECCAP2-3" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2dad8c70b4eca6157dd42273d75637fb41e39748/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-3.png" target="_blank">2dad8c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-12
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code># final check volume
+         &quot;dcant_Gruber2019_1994-2007_v20211012.nc&quot;))
+
+plot(dcant_reopen,
+     axes = TRUE)
+
+
+# final check volume
 
 volume_reopen &lt;- tidync(
   paste0(path_preprocessing,
@@ -3078,134 +2589,22 @@ volume_reopen %&gt;%
   filter(z == 0) %&gt;% 
   ggplot(aes(longitude, latitude, fill=volume)) +
   geom_raster() +
-  scale_fill_viridis_c()</code></pre>
-<p><img src="figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-4.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-format_Gruber_dcant_for_RECCAP2-4">
-Past versions of format_Gruber_dcant_for_RECCAP2-4.png
-</button>
-</p>
-<div id="fig-format_Gruber_dcant_for_RECCAP2-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2dad8c70b4eca6157dd42273d75637fb41e39748/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-4.png" target="_blank">2dad8c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-12
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>volume_reopen %&gt;% 
+  scale_fill_viridis_c()
+
+volume_reopen %&gt;% 
   filter(longitude == 200.5) %&gt;% 
   ggplot(aes(latitude, z, z=volume)) +
   scale_y_reverse() +
   geom_contour_filled() +
-  scale_fill_viridis_d()</code></pre>
-<p><img src="figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-5.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-format_Gruber_dcant_for_RECCAP2-5">
-Past versions of format_Gruber_dcant_for_RECCAP2-5.png
-</button>
-</p>
-<div id="fig-format_Gruber_dcant_for_RECCAP2-5" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2dad8c70b4eca6157dd42273d75637fb41e39748/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-5.png" target="_blank">2dad8c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-12
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>volume_reopen &lt;- read_ncdf(
+  scale_fill_viridis_d()
+
+
+volume_reopen &lt;- read_ncdf(
   paste0(path_preprocessing,
-         &quot;volume_Gruber2019_1994-2007_v20211012.nc&quot;))</code></pre>
-<pre><code>Error in UseMethod(&quot;GPFN&quot;) : 
-  no applicable method for &#39;GPFN&#39; applied to an object of class &quot;list&quot;</code></pre>
-<pre class="r"><code>plot(volume_reopen,
+         &quot;volume_Gruber2019_1994-2007_v20211012.nc&quot;))
+
+plot(volume_reopen,
      axes = TRUE)</code></pre>
-<p><img src="figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-6.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-format_Gruber_dcant_for_RECCAP2-6">
-Past versions of format_Gruber_dcant_for_RECCAP2-6.png
-</button>
-</p>
-<div id="fig-format_Gruber_dcant_for_RECCAP2-6" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2dad8c70b4eca6157dd42273d75637fb41e39748/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-6.png" target="_blank">2dad8c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-12
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -3234,39 +2633,37 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] ncdf4_1.19       stars_0.5-5      sf_1.0-5         abind_1.4-5     
- [5] tidync_0.2.4     colorspace_2.0-2 marelac_2.1.10   shape_1.4.6     
- [9] ggforce_0.3.3    metR_0.11.0      scico_1.3.0      patchwork_1.1.1 
-[13] collapse_1.7.0   forcats_0.5.1    stringr_1.4.0    dplyr_1.0.7     
-[17] purrr_0.3.4      readr_2.1.1      tidyr_1.1.4      tibble_3.1.6    
-[21] ggplot2_3.3.5    tidyverse_1.3.1  workflowr_1.7.0 
+ [1] stars_0.5-5      sf_1.0-5         abind_1.4-5      tidync_0.2.4    
+ [5] colorspace_2.0-2 marelac_2.1.10   shape_1.4.6      ggforce_0.3.3   
+ [9] metR_0.11.0      scico_1.3.0      patchwork_1.1.1  collapse_1.7.0  
+[13] forcats_0.5.1    stringr_1.4.0    dplyr_1.0.7      purrr_0.3.4     
+[17] readr_2.1.1      tidyr_1.1.4      tibble_3.1.6     ggplot2_3.3.5   
+[21] tidyverse_1.3.1  workflowr_1.7.0 
 
 loaded via a namespace (and not attached):
- [1] ellipsis_0.3.2     class_7.3-20       rgdal_1.5-28       rprojroot_2.0.2   
- [5] fs_1.5.2           rstudioapi_0.13    proxy_0.4-26       farver_2.1.0      
- [9] bit64_4.0.5        fansi_1.0.2        lubridate_1.8.0    xml2_1.3.3        
-[13] codetools_0.2-18   knitr_1.37         polyclip_1.10-0    jsonlite_1.7.3    
-[17] gsw_1.0-6          broom_0.7.11       dbplyr_2.1.1       compiler_4.1.2    
-[21] httr_1.4.2         backports_1.4.1    assertthat_0.2.1   fastmap_1.1.0     
-[25] cli_3.1.1          later_1.3.0        tweenr_1.0.2       htmltools_0.5.2   
-[29] tools_4.1.2        gtable_0.3.0       glue_1.6.0         Rcpp_1.0.8        
-[33] cellranger_1.1.0   jquerylib_0.1.4    RNetCDF_2.5-2      raster_3.5-11     
-[37] vctrs_0.3.8        lwgeom_0.2-8       xfun_0.29          ps_1.6.0          
-[41] rvest_1.0.2        lifecycle_1.0.1    ncmeta_0.3.0       terra_1.5-12      
-[45] oce_1.5-0          getPass_0.2-2      MASS_7.3-55        scales_1.1.1      
-[49] vroom_1.5.7        hms_1.1.1          promises_1.2.0.1   parallel_4.1.2    
-[53] yaml_2.2.1         sass_0.4.0         stringi_1.7.6      highr_0.9         
-[57] e1071_1.7-9        checkmate_2.0.0    rlang_0.4.12       pkgconfig_2.0.3   
-[61] lattice_0.20-45    evaluate_0.14      SolveSAPHE_2.1.0   labeling_0.4.2    
-[65] bit_4.0.4          processx_3.5.2     tidyselect_1.1.1   seacarb_3.3.0     
-[69] magrittr_2.0.1     R6_2.5.1           generics_0.1.1     DBI_1.1.2         
-[73] pillar_1.6.4       haven_2.4.3        whisker_0.4        withr_2.4.3       
-[77] units_0.7-2        sp_1.4-6           modelr_0.1.8       crayon_1.4.2      
-[81] KernSmooth_2.23-20 utf8_1.2.2         tzdb_0.2.0         rmarkdown_2.11    
-[85] grid_4.1.2         readxl_1.3.1       isoband_0.2.5      data.table_1.14.2 
-[89] callr_3.7.0        git2r_0.29.0       reprex_2.0.1       digest_0.6.29     
-[93] classInt_0.4-3     httpuv_1.6.5       munsell_0.5.0      viridisLite_0.4.0 
-[97] bslib_0.3.1       </code></pre>
+ [1] fs_1.5.2           bit64_4.0.5        lubridate_1.8.0    gsw_1.0-6         
+ [5] httr_1.4.2         rprojroot_2.0.2    tools_4.1.2        backports_1.4.1   
+ [9] bslib_0.3.1        utf8_1.2.2         R6_2.5.1           KernSmooth_2.23-20
+[13] DBI_1.1.2          withr_2.4.3        tidyselect_1.1.1   processx_3.5.2    
+[17] bit_4.0.4          compiler_4.1.2     git2r_0.29.0       cli_3.1.1         
+[21] rvest_1.0.2        RNetCDF_2.5-2      xml2_1.3.3         isoband_0.2.5     
+[25] labeling_0.4.2     sass_0.4.0         scales_1.1.1       checkmate_2.0.0   
+[29] classInt_0.4-3     proxy_0.4-26       SolveSAPHE_2.1.0   callr_3.7.0       
+[33] digest_0.6.29      rmarkdown_2.11     oce_1.5-0          pkgconfig_2.0.3   
+[37] htmltools_0.5.2    highr_0.9          dbplyr_2.1.1       fastmap_1.1.0     
+[41] rlang_0.4.12       readxl_1.3.1       rstudioapi_0.13    jquerylib_0.1.4   
+[45] generics_0.1.1     farver_2.1.0       jsonlite_1.7.3     vroom_1.5.7       
+[49] magrittr_2.0.1     ncmeta_0.3.0       Rcpp_1.0.8         munsell_0.5.0     
+[53] fansi_1.0.2        lifecycle_1.0.1    stringi_1.7.6      whisker_0.4       
+[57] yaml_2.2.1         MASS_7.3-55        grid_4.1.2         parallel_4.1.2    
+[61] promises_1.2.0.1   crayon_1.4.2       haven_2.4.3        hms_1.1.1         
+[65] seacarb_3.3.0      knitr_1.37         ps_1.6.0           pillar_1.6.4      
+[69] reprex_2.0.1       glue_1.6.0         evaluate_0.14      getPass_0.2-2     
+[73] data.table_1.14.2  modelr_0.1.8       vctrs_0.3.8        tzdb_0.2.0        
+[77] tweenr_1.0.2       httpuv_1.6.5       cellranger_1.1.0   gtable_0.3.0      
+[81] polyclip_1.10-0    assertthat_0.2.1   xfun_0.29          lwgeom_0.2-8      
+[85] broom_0.7.11       e1071_1.7-9        later_1.3.0        viridisLite_0.4.0 
+[89] class_7.3-20       ncdf4_1.19         units_0.7-2        ellipsis_0.3.2    </code></pre>
 </div>
 </div>
 
