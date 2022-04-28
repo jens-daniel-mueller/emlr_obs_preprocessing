@@ -2756,6 +2756,77 @@ xover_cruise_decade_all_stats %>%
   scroll_box(height = "300px")
 ```
 
+```{r GLODAP_RG_cstar_offsets}
+
+xover_cruise_decade_all %>%
+  filter(parameter_coverage == "full",
+         parameter == "cstar_total",
+         basin == "Indian",
+         decade != "2010-2020") %>%
+  ggplot(aes(decade_A,
+             offset_adj_mean_weighted)) +
+  geom_hline(yintercept = 0) +
+  geom_boxplot(position = position_dodge(width = 0.5), width = 0.4) +
+  geom_point(aes(size = n_A), alpha = 0.3, position = position_dodge(width = 0.5)) +
+  scale_color_brewer(palette = "Set1") +
+  scale_size(name = "Cruise size") +
+  labs(y = "Mean C* xover offset (µmol/kg)",
+       x = "Cruise decade") +
+  facet_grid(decade ~ ., scales = "free_y")
+
+xover_cruise_decade_all %>%
+  filter(parameter_coverage == "full",
+         parameter == "cstar_total",
+         basin == "N. Pacific",
+         decade != "1989-1999") %>%
+  ggplot(aes(decade_A,
+             offset_adj_mean_weighted)) +
+  geom_hline(yintercept = 0) +
+  geom_boxplot(position = position_dodge(width = 0.5), width = 0.4) +
+  geom_point(aes(size = n_A), alpha = 0.3, position = position_dodge(width = 0.5)) +
+  scale_color_brewer(palette = "Set1") +
+  scale_size(name = "Cruise size") +
+  labs(y = "Mean C* xover offset (µmol/kg)",
+       x = "Cruise decade") +
+  facet_grid(decade ~ ., scales = "free_y")
+
+
+```
+
+
+
+
+### Test weighted average
+
+```{r test_xover_averaging, eval=FALSE}
+
+offset_test <- tibble(
+  cruise_A = c(1, 1, 2, 2, 2),
+  n_A = c(11, 11, 12, 12, 12),
+  cruise_B = c(1, 2, 1, 2, 3),
+  n_B = c(21, 22, 21, 22, 3),
+  offset = c(1, 3, -1, 1, -4)
+)
+
+offset_test %>% 
+  group_by(cruise_A, n_A) %>% 
+  summarise(offset = weighted.mean(offset, w = n_B)) %>% 
+  ungroup() %>% 
+  summarise(offset = weighted.mean(offset, w = n_A))
+
+offset_test %>% 
+  group_by(cruise_B, n_B) %>% 
+  summarise(offset = weighted.mean(-offset, w = n_A)) %>% 
+  ungroup() %>% 
+  summarise(offset = weighted.mean(offset, w = n_B))
+
+
+
+```
+
+
+
+
 
 # RV activity
 
