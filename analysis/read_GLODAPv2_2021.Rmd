@@ -2794,6 +2794,55 @@ xover_cruise_decade_all %>%
 ```
 
 
+```{r GLODAP_RG_parameter_offsets, fig.asp=1}
+
+hline_intercept <- hline_intercept %>% 
+  filter(parameter %in% c("cstar_tco2", "cstar_talk", "cstar_phosphate"))
+
+xover_cruise_decade_all %>%
+  filter(
+    parameter_coverage == "full",
+    parameter %in% c("cstar_tco2", "cstar_talk", "cstar_phosphate"),
+    basin == "Indian",
+    decade != "2010-2020"
+  ) %>%
+  ggplot(aes(decade_A,
+             offset_adj_mean_weighted)) +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_boxplot() +
+  geom_point(aes(size = n_A), alpha = 0.3) +
+  scale_size(name = "Cruise size") +
+  scale_fill_discrete_sequential(palette = "viridis") +
+  facet_grid(decade ~ parameter) +
+  labs(y = "Mean C* xover offset (µmol/kg)",
+       x = "Cruise decade") +
+  scale_x_discrete(guide = guide_axis(n.dodge = 2))
+
+xover_cruise_decade_all %>%
+  filter(
+    parameter_coverage == "full",
+    parameter %in% c("cstar_tco2", "cstar_talk", "cstar_phosphate"),
+         basin == "N. Pacific",
+         decade != "1989-1999"
+  ) %>%
+  ggplot(aes(decade_A,
+             offset_adj_mean_weighted)) +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_boxplot() +
+  geom_point(aes(size = n_A), alpha = 0.3) +
+  scale_size(name = "Cruise size") +
+  scale_fill_discrete_sequential(palette = "viridis") +
+  facet_grid(decade ~ parameter) +
+  labs(y = "Mean C* xover offset (µmol/kg)",
+       x = "Cruise decade") +
+  scale_x_discrete(guide = guide_axis(n.dodge = 2))
+
+
+
+
+```
+
+
 
 
 ### Test weighted average
