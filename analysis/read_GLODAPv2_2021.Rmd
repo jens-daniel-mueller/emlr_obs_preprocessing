@@ -2627,10 +2627,13 @@ xover_cruise_decade_all %>%
     ) +
       geom_hline(yintercept = 0) +
       geom_point(alpha = 0.5, shape = 21) +
-      scale_fill_discrete_sequential(palette = "viridis") +
-      labs(title = paste(.x$basin, "| full")) +
+      scale_fill_discrete_sequential(palette = "viridis",
+                                     name = "Cruise decade") +
+      labs(title = paste(.x$basin, "| full"),
+           y = "Mean C* xover offset (µmol/kg)",
+           x = "Cruise size") +
       # coord_cartesian(ylim = c(-10,10)) +
-      facet_grid(decade ~ parameter)
+      facet_grid(decade ~ .)
   )
 
 NPO_2010_small_cruises <- xover_cruise_decade_all %>%
@@ -2639,12 +2642,13 @@ NPO_2010_small_cruises <- xover_cruise_decade_all %>%
     parameter %in% c("cstar_total"),
     basin == "N. Pacific",
     decade == "2000-2009",
-    n_A < 750,
+    n_A < 500,
     decade_A == "2010-2020"
   ) %>% 
   distinct(cruise_A) %>% 
   pull()
 
+unique(str_sub(NPO_2010_small_cruises, 1, 4))
 
 # retrieve subbasin expocodes
   expocodes_basin <- GLODAP %>%
