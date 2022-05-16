@@ -12,7 +12,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r parent, child = "/nfs/kryo/work/jenmueller/emlr_cant/utilities/setup_obs.Rmd"}
+```{r parent, child = "/nfs/kryo/work/jenmueller/emlr_cant/utilities/setup.Rmd"}
 # this chunk runs the code stored in setup.Rmd
 # if required, please refer to instructions given here:
 # https://jdblischak.github.io/workflowr/articles/wflow-07-common-code.html
@@ -2575,15 +2575,16 @@ xover_cruise_decade_all %>%
 
 ```
 
-#### PO
+#### NPO
 
-```{r xover_cruise_mean_by_cruise_size_PO, fig.asp=1.5}
+```{r xover_cruise_mean_by_cruise_size_PO, fig.asp= 0.5}
 
 xover_cruise_decade_all %>%
   filter(
     parameter_coverage == "full",
-    basin == "N. Pacific",
-    decade != unique(xover_cruise_decade_all$decade)[1]
+    parameter %in% c("cstar_tco2", "cstar_talk", "cstar_phosphate"),
+         basin == "N. Pacific",
+         decade != "1989-1999"
   ) %>%
   group_split(basin) %>%
   # head(1) %>%
@@ -2602,8 +2603,151 @@ xover_cruise_decade_all %>%
       scale_fill_discrete_sequential(palette = "viridis") +
       labs(title = paste(.x$basin, "| full")) +
       # coord_cartesian(ylim = c(-10,10)) +
-      facet_grid(parameter ~ decade, scales = "free_y")
+      facet_grid(decade ~ parameter)
   )
+
+xover_cruise_decade_all %>%
+  filter(
+    parameter_coverage == "full",
+    parameter %in% c("cstar_total"),
+         basin == "N. Pacific",
+         decade == "2000-2009"
+  ) %>%
+  group_split(basin) %>%
+  # head(1) %>%
+  map(
+    ~ ggplot(
+      data = .x,
+      aes(
+        n_A,
+        offset_adj_mean_weighted,
+        size = n_A,
+        fill = decade_A
+      )
+    ) +
+      geom_hline(yintercept = 0) +
+      geom_point(alpha = 0.5, shape = 21) +
+      scale_fill_discrete_sequential(palette = "viridis") +
+      labs(title = paste(.x$basin, "| full")) +
+      # coord_cartesian(ylim = c(-10,10)) +
+      facet_grid(decade ~ parameter)
+  )
+
+NPO_2010_small_cruises <- xover_cruise_decade_all %>%
+  filter(
+    parameter_coverage == "full",
+    parameter %in% c("cstar_total"),
+    basin == "N. Pacific",
+    decade == "2000-2009",
+    n_A < 750,
+    decade_A == "2010-2020"
+  ) %>% 
+  distinct(cruise_A) %>% 
+  pull()
+
+
+# retrieve subbasin expocodes
+  expocodes_basin <- GLODAP %>%
+    filter(basin == "N. Pacific",
+           !is.na(decade)) %>%
+    count(cruise_expocode)
+
+  # remove expocodes with observations outside decades
+  expocodes_basin_out <- GLODAP %>%
+    filter(basin == i_basin,
+           is.na(decade)) %>%
+    distinct(cruise_expocode) %>% 
+    pull()
+  
+  expocodes_basin <- expocodes_basin %>% 
+    filter(!(cruise_expocode %in% expocodes_basin_out))
+  
+  rm(expocodes_basin_out)
+  
+  
+  GLODAP_basin <- GLODAP %>% 
+    filter(cruise_expocode %in% expocodes_basin$cruise_expocode)
+
+  # subset cruise with all qc flag = 1
+  expocodes_basin_qc <- GLODAP_basin %>%
+    select(cruise_expocode, ends_with("qc")) %>%
+    filter(if_all(ends_with("qc"), ~ . == 1)) %>%
+    distinct(cruise_expocode) %>%
+    pull(cruise_expocode)
+  
+  # subset cruise with all f flag = 2
+  expocodes_basin_f <- GLODAP_basin %>%
+    select(cruise_expocode, ends_with("f")) %>%
+    filter(if_all(ends_with("f"), ~ . == 2)) %>%
+    distinct(cruise_expocode) %>%
+    pull(cruise_expocode)
+  
+  # join qc and f cruises and identify lower number of observations
+  expocodes_basin <- expocodes_basin %>%
+    mutate(
+      parameter_coverage = if_else(
+        cruise_expocode %in% expocodes_basin_qc &
+          cruise_expocode %in% expocodes_basin_f,
+        "full",
+        "partial"
+      )
+    )
+  
+  rm(expocodes_basin_f, expocodes_basin_qc)
+  
+  GLODAP_basin_grid <- GLODAP_basin %>%
+    count(cruise_expocode, lat, lon, decade)
+  
+
+  GLODAP_basin_grid <- full_join(GLODAP_basin_grid %>% select(-n),
+                                 expocodes_basin)
+  
+  map +
+    geom_tile(data = GLODAP_basin_grid %>% filter(parameter_coverage == "full"),
+              aes(lon, lat, fill = "full")) +
+    scale_fill_brewer(palette = "Set1") +
+    labs(title = i_basin) +
+    facet_grid(decade ~ .) +
+    theme(legend.title = element_blank())
+  
+  expocodes_basin_removed_40S <- GLODAP_basin_grid %>%
+    filter(lat < -40) %>%
+    distinct(cruise_expocode) %>%
+    pull()
+  
+  expocodes_basin <- expocodes_basin %>% 
+    filter(!(cruise_expocode %in% expocodes_basin_removed_40S))
+  
+  expocodes_xover_NP <- expocodes_basin
+  
+  map +
+    geom_tile(
+      data = GLODAP_basin_grid %>%
+        filter(
+          parameter_coverage == "full" &
+            cruise_expocode %in% expocodes_basin$cruise_expocode &
+            decade == "2010-2020"
+        ),
+      aes(lon, lat, fill = "all cruises")
+    ) +
+    geom_tile(
+      data = GLODAP_basin_grid %>%
+        filter(
+          parameter_coverage == "full" &
+            cruise_expocode %in% expocodes_basin$cruise_expocode &
+            cruise_expocode %in% NPO_2010_small_cruises &
+            decade == "2010-2020"
+        ),
+      aes(lon, lat, fill = "n_A < 500")
+    ) +
+    coord_quickmap(xlim = c(100,280),
+                   ylim = c(-20,60))+
+    # scale_fill_brewer(palette = "Dark2") +
+    scale_fill_manual(values = c("#8dd3c7", "#e41a1c")) +
+    labs(title = i_basin,
+         subtitle = "Maintained cruises") +
+    facet_grid(decade ~ .) +
+    theme(legend.title = element_blank())
 
 ```
 
@@ -2794,7 +2938,7 @@ xover_cruise_decade_all %>%
 ```
 
 
-```{r GLODAP_RG_parameter_offsets, fig.asp=1}
+```{r GLODAP_RG_parameter_offsets_IO, fig.asp=1}
 
 hline_intercept <- hline_intercept %>% 
   filter(parameter %in% c("cstar_tco2", "cstar_talk", "cstar_phosphate"))
@@ -2841,7 +2985,6 @@ xover_cruise_decade_all %>%
 
 
 ```
-
 
 
 
