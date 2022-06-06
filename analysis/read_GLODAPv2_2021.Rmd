@@ -183,7 +183,8 @@ rm(glodapv2_2021_xover_files)
 # provided by Nico Lange
 
 glodapv2_2021_xover_files_add <-
-  fs::dir_ls(paste0(path_crossover, "/glodapv2_2021_additional_crossover"))
+  fs::dir_ls(paste0(path_crossover, "/glodapv2_2021_additional_crossover"),
+             glob = "*.xlsx")
 
 glodapv2_2021_xover_add <- glodapv2_2021_xover_files_add %>% 
   map_dfr(readxl::read_excel)
@@ -201,6 +202,28 @@ glodapv2_2021_xover_add <- glodapv2_2021_xover_add %>%
          cruise_B = Cruise_B)
 
 rm(glodapv2_2021_xover_files_add)
+
+
+# tables for RV Knorr crossover after adjustment
+# provided by Nico Lange
+
+glodapv2_2021_xover_files_Knorr <-
+  fs::dir_ls(paste0(path_crossover, "/glodapv2_2021_additional_crossover"),
+             glob = "*.csv")
+
+glodapv2_2021_xover_Knorr <- glodapv2_2021_xover_files_Knorr %>% 
+  map_dfr(read_csv, .id = "adjustment")
+
+glodapv2_2021_xover_Knorr <- glodapv2_2021_xover_Knorr %>%
+  mutate(
+    adjustment = str_remove(adjustment, ".csv"),
+    adjustment = str_remove(
+      adjustment,
+      paste0(path_crossover, "/glodapv2_2021_additional_crossover/Knorr_")
+    )
+  )
+
+rm(glodapv2_2021_xover_files_Knorr)
 
 ```
 
@@ -3282,6 +3305,71 @@ IO_CRM_xover %>%
   scale_color_brewer(palette = "Set1")
 
 ```
+
+```{r xover_adj_Knorr_data}
+
+
+glodapv2_2021_xover_Knorr %>%
+  ggplot(aes(adjustment, Mean)) +
+  geom_hline(yintercept = 0) +
+  geom_point(shape = 21) +
+  facet_wrap( ~ Parameter)
+
+glodapv2_2021_xover_Knorr_wide <- glodapv2_2021_xover_Knorr %>%
+  pivot_wider(names_from = adjustment,
+              values_from = Mean) 
+
+glodapv2_2021_xover_Knorr_wide %>%
+  ggplot(aes(adj, unadj)) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0) +
+  geom_point(shape = 21) +
+  facet_wrap( ~ Parameter) +
+  coord_equal()
+
+
+IO_adj <- full_join(
+  IO_CRM_xover %>% filter(type == "CRM"),
+  glodapv2_2021_xover_Knorr_wide %>%
+    rename(parameter = Parameter,
+           cruise_expocode = Cruise) %>%
+    mutate(parameter = if_else(parameter == "alk",
+                               "talk", parameter))
+)
+
+IO_adj %>%
+  ggplot(aes(adj - unadj, offset_mean)) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0) +
+  geom_point(shape = 21) +
+  facet_wrap(~ parameter) +
+  coord_equal()
+
+
+
+
+IO_adj %>%
+  ggplot(aes(start_date, offset_mean, col = type)) +
+  geom_hline(yintercept = 0) +
+  geom_linerange(
+    aes(
+      start_date,
+      offset_mean,
+      col = type,
+      ymin = offset_mean - offset_sd,
+      ymax = offset_mean + offset_sd
+    )
+  ) +
+  geom_point(aes(start_date, offset_mean, col = type)) +
+  geom_point(aes(start_date, unadj, col = "unadj")) +
+  geom_point(aes(start_date, adj, col = "adj")) +
+  facet_grid(parameter ~ ., scales = "free_y") +
+  labs(y = "Mean xover offset (µmol/kg)") +
+  scale_color_brewer(palette = "Set1")
+
+```
+
+
 
 # Write files
 

@@ -5,7 +5,7 @@
 
 # commit regular changes (locally) and rebuild site
 # this takes only changed files into account
-wflow_publish(all = TRUE, message = "plots for GLODAP RG meeting")
+wflow_publish(all = TRUE, message = "included Nicos xover analysis for adjusted Knorr data")
 
 # commit changes including _site.yml (locally) and rebuild site in the specified order
 # you can also run this code with only some of the files. In this case remove the rebuild=TRUE command
@@ -30,6 +30,14 @@ wflow_publish(here::here(
 ),
 message = "added GCB data read-in and rebuild",
 republish = TRUE)
+
+wflow_publish(here::here(
+  "analysis",
+  c(
+    "read_GLODAPv2_2021.Rmd"
+  )
+),
+message = "revised NPO analysis for GLODAP")
 
 
 # Push latest version to GitHub

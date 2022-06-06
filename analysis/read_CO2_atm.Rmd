@@ -12,7 +12,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r parent, child = "/nfs/kryo/work/jenmueller/emlr_cant/utilities/setup_obs.Rmd"}
+```{r parent, child = "/nfs/kryo/work/jenmueller/emlr_cant/utilities/setup.Rmd"}
 # this chunk runs the code stored in setup.Rmd
 # if required, please refer to instructions given here:
 # https://jdblischak.github.io/workflowr/articles/wflow-07-common-code.html
