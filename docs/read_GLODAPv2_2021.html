@@ -452,7 +452,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">GLODAPv2_2021</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">16 May, 2022</h4>
+<h4 class="date">06 June, 2022</h4>
 
 </div>
 
@@ -477,7 +477,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-05-16
+<strong>Last updated:</strong> 2022-06-06
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -568,16 +568,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree251b8d98d2dabe7966936566eb67c5eee14b4ff7targetblank251b8d9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/251b8d98d2dabe7966936566eb67c5eee14b4ff7" target="_blank">251b8d9</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree46f2c6b8862c4571bffa4cc731c7e28505f022b6targetblank46f2c6ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/46f2c6b8862c4571bffa4cc731c7e28505f022b6" target="_blank">46f2c6b</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree251b8d98d2dabe7966936566eb67c5eee14b4ff7targetblank251b8d9a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree46f2c6b8862c4571bffa4cc731c7e28505f022b6targetblank46f2c6ba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/251b8d98d2dabe7966936566eb67c5eee14b4ff7" target="_blank">251b8d9</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/46f2c6b8862c4571bffa4cc731c7e28505f022b6" target="_blank">46f2c6b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -588,18 +588,6 @@ Ignored files:
     Ignored:    .Rproj.user/
     Ignored:    data/
     Ignored:    output/
-
-Unstaged changes:
-    Modified:   analysis/read_CO2_atm.Rmd
-    Modified:   analysis/read_GCB.Rmd
-    Modified:   analysis/read_GLODAPv2_2016_MappedClimatologies.Rmd
-    Modified:   analysis/read_Gruber_2019.Rmd
-    Modified:   analysis/read_Key_2004.Rmd
-    Modified:   analysis/read_Sabine_2004.Rmd
-    Modified:   analysis/read_World_Ocean_Atlas_2018.Rmd
-    Modified:   code/Workflowr_project_managment.R
-    Modified:   code/analysis_regional_clusters.Rmd
-    Modified:   code/read_GLODAPv2_2020.Rmd
 
 </code></pre>
 <p>
@@ -638,6 +626,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/46f2c6b8862c4571bffa4cc731c7e28505f022b6/analysis/read_GLODAPv2_2021.Rmd" target="_blank">46f2c6b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-06-06
+</td>
+<td>
+included Nicos xover analysis for adjusted Knorr data
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/5fd6f6c11252738aed9f0c29bb557189b52a486f/docs/read_GLODAPv2_2021.html" target="_blank">5fd6f6c</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -4304,7 +4326,8 @@ rm(glodapv2_2021_xover_files)
 # provided by Nico Lange
 
 glodapv2_2021_xover_files_add &lt;-
-  fs::dir_ls(paste0(path_crossover, &quot;/glodapv2_2021_additional_crossover&quot;))
+  fs::dir_ls(paste0(path_crossover, &quot;/glodapv2_2021_additional_crossover&quot;),
+             glob = &quot;*.xlsx&quot;)
 
 glodapv2_2021_xover_add &lt;- glodapv2_2021_xover_files_add %&gt;% 
   map_dfr(readxl::read_excel)
@@ -4321,7 +4344,29 @@ glodapv2_2021_xover_add &lt;- glodapv2_2021_xover_add %&gt;%
          cruise_A = Cruise_A,
          cruise_B = Cruise_B)
 
-rm(glodapv2_2021_xover_files_add)</code></pre>
+rm(glodapv2_2021_xover_files_add)
+
+
+# tables for RV Knorr crossover after adjustment
+# provided by Nico Lange
+
+glodapv2_2021_xover_files_Knorr &lt;-
+  fs::dir_ls(paste0(path_crossover, &quot;/glodapv2_2021_additional_crossover&quot;),
+             glob = &quot;*.csv&quot;)
+
+glodapv2_2021_xover_Knorr &lt;- glodapv2_2021_xover_files_Knorr %&gt;% 
+  map_dfr(read_csv, .id = &quot;adjustment&quot;)
+
+glodapv2_2021_xover_Knorr &lt;- glodapv2_2021_xover_Knorr %&gt;%
+  mutate(
+    adjustment = str_remove(adjustment, &quot;.csv&quot;),
+    adjustment = str_remove(
+      adjustment,
+      paste0(path_crossover, &quot;/glodapv2_2021_additional_crossover/Knorr_&quot;)
+    )
+  )
+
+rm(glodapv2_2021_xover_files_Knorr)</code></pre>
 </div>
 <div id="missingflagged-cruises" class="section level2" number="1.5">
 <h2><span class="header-section-number">1.5</span> Missing/flagged cruises</h2>
@@ -49375,6 +49420,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5fd6f6c11252738aed9f0c29bb557189b52a486f/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size_PO-2.png" target="_blank">5fd6f6c</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e5a1aa7a3b832461dd552cce5527dc79fc200048/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size_PO-2.png" target="_blank">e5a1aa7</a>
 </td>
 <td>
@@ -49564,6 +49620,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5fd6f6c11252738aed9f0c29bb557189b52a486f/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size_PO-4.png" target="_blank">5fd6f6c</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-05-16
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e5a1aa7a3b832461dd552cce5527dc79fc200048/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size_PO-4.png" target="_blank">e5a1aa7</a>
@@ -59847,6 +59914,60 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre class="r"><code>glodapv2_2021_xover_Knorr %&gt;%
+  ggplot(aes(adjustment, Mean)) +
+  geom_hline(yintercept = 0) +
+  geom_point(shape = 21) +
+  facet_wrap( ~ Parameter)</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_adj_Knorr_data-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>glodapv2_2021_xover_Knorr_wide &lt;- glodapv2_2021_xover_Knorr %&gt;%
+  pivot_wider(names_from = adjustment,
+              values_from = Mean) 
+
+glodapv2_2021_xover_Knorr_wide %&gt;%
+  ggplot(aes(adj, unadj)) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0) +
+  geom_point(shape = 21) +
+  facet_wrap( ~ Parameter) +
+  coord_equal()</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_adj_Knorr_data-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>IO_adj &lt;- full_join(
+  IO_CRM_xover %&gt;% filter(type == &quot;CRM&quot;),
+  glodapv2_2021_xover_Knorr_wide %&gt;%
+    rename(parameter = Parameter,
+           cruise_expocode = Cruise) %&gt;%
+    mutate(parameter = if_else(parameter == &quot;alk&quot;,
+                               &quot;talk&quot;, parameter))
+)
+
+IO_adj %&gt;%
+  ggplot(aes(adj - unadj, offset_mean)) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0) +
+  geom_point(shape = 21) +
+  facet_wrap(~ parameter) +
+  coord_equal()</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_adj_Knorr_data-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>IO_adj %&gt;%
+  ggplot(aes(start_date, offset_mean, col = type)) +
+  geom_hline(yintercept = 0) +
+  geom_linerange(
+    aes(
+      start_date,
+      offset_mean,
+      col = type,
+      ymin = offset_mean - offset_sd,
+      ymax = offset_mean + offset_sd
+    )
+  ) +
+  geom_point(aes(start_date, offset_mean, col = type)) +
+  geom_point(aes(start_date, unadj, col = &quot;unadj&quot;)) +
+  geom_point(aes(start_date, adj, col = &quot;adj&quot;)) +
+  facet_grid(parameter ~ ., scales = &quot;free_y&quot;) +
+  labs(y = &quot;Mean xover offset (µmol/kg)&quot;) +
+  scale_color_brewer(palette = &quot;Set1&quot;)</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/xover_adj_Knorr_data-4.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="write-files" class="section level1" number="11">
