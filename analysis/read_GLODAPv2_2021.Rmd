@@ -3306,7 +3306,7 @@ IO_CRM_xover %>%
 
 ```
 
-```{r xover_adj_Knorr_data}
+```{r xover_adj_Knorr_data, fig.asp=1.2}
 
 
 glodapv2_2021_xover_Knorr %>%
@@ -3328,17 +3328,64 @@ glodapv2_2021_xover_Knorr_wide %>%
   coord_equal()
 
 
-IO_adj <- full_join(
-  IO_CRM_xover %>% filter(type == "CRM"),
-  glodapv2_2021_xover_Knorr_wide %>%
+IO_adj <- bind_rows(
+  IO_CRM_xover %>% select(-start_date),
+  glodapv2_2021_xover_Knorr %>%
     rename(parameter = Parameter,
-           cruise_expocode = Cruise) %>%
+           cruise_expocode = Cruise,
+           type = adjustment,
+           offset_mean = Mean,
+           offset_sd = Std) %>%
     mutate(parameter = if_else(parameter == "alk",
                                "talk", parameter))
 )
 
+IO_adj <- full_join(
+  IO_CRM_xover %>% distinct(start_date, cruise_expocode),
+  IO_adj
+)
+
 IO_adj %>%
-  ggplot(aes(adj - unadj, offset_mean)) +
+  ggplot(aes(start_date, offset_mean)) +
+  geom_hline(yintercept = 0) +
+  geom_linerange(
+    aes(
+      start_date,
+      offset_mean,
+      ymin = offset_mean - offset_sd,
+      ymax = offset_mean + offset_sd
+    )
+  ) +
+  geom_point() +
+  geom_line() +
+  facet_grid(type ~ parameter) +
+  labs(y = "Mean xover offset (µmol/kg)") +
+  scale_color_brewer(palette = "Set1")
+
+
+IO_adj_wide <- IO_adj %>% 
+  # select(-offset_sd) %>% 
+  pivot_wider(names_from = type,
+              values_from = c(offset_mean, offset_sd))
+  
+IO_adj_wide %>%
+  ggplot(aes(offset_mean_adj - offset_mean_unadj, offset_mean_CRM)) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0) +
+  geom_point(shape = 21) +
+  facet_wrap(~ parameter) +
+  coord_equal()
+
+IO_adj_wide %>%
+  ggplot(aes(offset_mean_adj, offset_mean_unadj)) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0) +
+  geom_point(shape = 21) +
+  facet_wrap(~ parameter) +
+  coord_equal()
+
+IO_adj_wide %>%
+  ggplot(aes(offset_mean_CRM, offset_mean_unadj)) +
   geom_hline(yintercept = 0) +
   geom_vline(xintercept = 0) +
   geom_point(shape = 21) +
@@ -3346,26 +3393,62 @@ IO_adj %>%
   coord_equal()
 
 
+IO_adj_wide <- IO_adj_wide %>%
+  group_by(parameter) %>% 
+  mutate(offset_mean_adj.mean = offset_mean_unadj - mean(offset_mean_CRM)) %>% 
+  ungroup()
+
+
+IO_adj_wide <- IO_adj_wide %>%
+  mutate(offset_sd_adj.mean = offset_sd_adj)
+
+IO_adj_wide %>%
+  ggplot(aes(offset_mean_adj.mean, offset_mean_unadj)) +
+  geom_hline(yintercept = 0) +
+  geom_vline(xintercept = 0) +
+  geom_point(shape = 21) +
+  facet_wrap(~ parameter) +
+  coord_equal()
+
+IO_adj <- IO_adj_wide %>%  
+  pivot_longer(starts_with("offset"), 
+               names_prefix = "offset_",
+               names_to = c("offset", ".value"), 
+               names_sep="_" )
+
+IO_adj <- IO_adj %>% 
+  pivot_longer(xover:adj.mean,
+               names_to = "type",
+               values_to = "value")
+
+IO_adj <- IO_adj %>% 
+  pivot_wider(names_from = offset,
+              values_from = value,
+              names_prefix = "offset_")
 
 
 IO_adj %>%
-  ggplot(aes(start_date, offset_mean, col = type)) +
+  ggplot(aes(start_date, offset_mean)) +
   geom_hline(yintercept = 0) +
-  geom_linerange(
-    aes(
-      start_date,
-      offset_mean,
-      col = type,
-      ymin = offset_mean - offset_sd,
-      ymax = offset_mean + offset_sd
-    )
-  ) +
-  geom_point(aes(start_date, offset_mean, col = type)) +
-  geom_point(aes(start_date, unadj, col = "unadj")) +
-  geom_point(aes(start_date, adj, col = "adj")) +
-  facet_grid(parameter ~ ., scales = "free_y") +
+  geom_point() +
+  geom_line() +
+  facet_grid(type ~ parameter) +
   labs(y = "Mean xover offset (µmol/kg)") +
   scale_color_brewer(palette = "Set1")
+
+
+IO_adj %>%
+  ggplot(aes(type, offset_mean)) +
+  geom_hline(yintercept = 0) +
+  geom_point(shape = 21) +
+  facet_wrap( ~ parameter)
+
+IO_adj %>% 
+  group_by(parameter, type) %>% 
+  summarise(offset_sd = sd(offset_mean, na.rm = TRUE),
+            offset_mean = mean(offset_mean, na.rm = TRUE)) %>% 
+  ungroup()
+
 
 ```
 
