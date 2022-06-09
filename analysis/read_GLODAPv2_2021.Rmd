@@ -3433,7 +3433,7 @@ IO_adj %>%
   geom_point() +
   geom_line() +
   facet_grid(type ~ parameter) +
-  labs(y = "Mean xover offset (µmol/kg)") +
+  labs(y = "Mean offset (µmol/kg)") +
   scale_color_brewer(palette = "Set1")
 
 
