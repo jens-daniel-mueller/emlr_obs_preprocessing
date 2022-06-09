@@ -3427,14 +3427,37 @@ IO_adj <- IO_adj %>%
               names_prefix = "offset_")
 
 
+IO_adj_stat <- IO_adj %>% 
+  group_by(parameter, type) %>% 
+  summarise(offset_sd = sd(offset_mean, na.rm = TRUE),
+            offset_mean = mean(offset_mean, na.rm = TRUE)) %>% 
+  ungroup()
+
 IO_adj %>%
   ggplot(aes(start_date, offset_mean)) +
-  geom_hline(yintercept = 0) +
-  geom_point() +
-  geom_line() +
+  geom_hline(yintercept = 0, col = "lightblue") +
+  geom_hline(data = IO_adj_stat,
+             aes(yintercept = offset_mean, linetype = "Mean")) +
+  geom_hline(data = IO_adj_stat,
+             aes(yintercept = offset_mean + offset_sd, linetype = "Std")) +
+  geom_hline(data = IO_adj_stat,
+             aes(yintercept = offset_mean - offset_sd, linetype = "Std")) +
+  scale_linetype(name = "") +
+  scale_color_brewer(palette = "Set1",
+                     name = "") +
+  # geom_ribbon(data = IO_adj_stat,
+  #            aes(ymin = offset_mean - offset_sd,
+  #                ymax = offset_mean + offset_sd,
+  #                xmin = min(IO_adj$start_date),
+  #                xmax = max(IO_adj$start_date),
+  #                fill = "Std")) +
+  geom_linerange(aes(ymin = offset_mean - offset_sd,
+                     ymax = offset_mean + offset_sd,
+                     col = "Individual\nCruise")) +
+  geom_point(aes(col = "Individual\nCruise")) +
+  geom_line(aes(col = "Individual\nCruise")) +
   facet_grid(type ~ parameter) +
-  labs(y = "Mean offset (µmol/kg)") +
-  scale_color_brewer(palette = "Set1")
+  labs(y = "Mean offset (µmol/kg)")
 
 
 IO_adj %>%
@@ -3443,12 +3466,7 @@ IO_adj %>%
   geom_point(shape = 21) +
   facet_wrap( ~ parameter)
 
-IO_adj %>% 
-  group_by(parameter, type) %>% 
-  summarise(offset_sd = sd(offset_mean, na.rm = TRUE),
-            offset_mean = mean(offset_mean, na.rm = TRUE)) %>% 
-  ungroup()
-
+IO_adj_stat
 
 ```
 
