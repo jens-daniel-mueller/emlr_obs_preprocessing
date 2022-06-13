@@ -2540,6 +2540,41 @@ xover_cruise_long_term_all %>%
       facet_grid(parameter ~ ., scales = "free_y")
   )
 
+xover_cruise_long_term_all %>%
+  filter(parameter_coverage == "full",
+         basin == "N. Pacific") %>%
+  group_split(basin) %>%
+  # head(1) %>%
+  map(
+    ~ ggplot() +
+      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_point(
+        data = .x %>% filter(!(
+          str_sub(cruise_A, 1, 4) %in% c("49UP", "49UF")
+        )),
+        aes(
+          date_A,
+          offset_adj_mean_weighted,
+          size = n_A,
+          color = "other cruises"
+        ),
+        alpha = 0.3
+      ) +
+      geom_point(
+        data = .x %>% filter(str_sub(cruise_A, 1, 4) %in% c("49UP", "49UF")),
+        aes(
+          date_A,
+          offset_adj_mean_weighted,
+          size = n_A,
+          color = "49UP or 49UF"
+        ),
+        alpha = 0.3
+      ) +
+      labs(title = paste(.x$basin, "| full")) +
+      scale_color_brewer(palette = "Set1") +
+      facet_grid(parameter ~ ., scales = "free_y")
+  )
+
 xover_cruise_decade_all %>%
   filter(parameter_coverage == "full") %>% 
   group_split(basin) %>%
@@ -2672,6 +2707,34 @@ NPO_2010_small_cruises <- xover_cruise_decade_all %>%
   pull()
 
 unique(str_sub(NPO_2010_small_cruises, 1, 4))
+
+xover_cruise_decade_all %>%
+  filter(
+    parameter_coverage == "full",
+    basin == "N. Pacific",
+    str_sub(cruise_A, 1, 4) %in% c("49UF", "49UP")
+  ) %>%
+  group_split(basin) %>%
+  # head(1) %>%
+  map(
+    ~ ggplot(
+      data = .x,
+      aes(
+        date_A,
+        offset_adj_mean_weighted,
+        size = n_A
+      )
+    ) +
+      geom_hline(data = hline_intercept,
+                 aes(yintercept = intercept)) +
+      geom_point(alpha = 0.5) +
+      scale_fill_discrete_sequential(palette = "viridis") +
+      labs(title = paste(.x$basin, "| full | 49UF and 49UP"),
+           y = "Mean C* xover offset (µmol/kg)") +
+      # coord_cartesian(ylim = c(-10,10)) +
+      facet_grid(parameter ~ decade, scales = "free_y")
+  )
+
 
 # retrieve subbasin expocodes
   expocodes_basin <- GLODAP %>%
