@@ -452,7 +452,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">GLODAPv2_2021</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">13 June, 2022</h4>
+<h4 class="date">14 June, 2022</h4>
 
 </div>
 
@@ -477,7 +477,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-06-13
+<strong>Last updated:</strong> 2022-06-14
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -568,16 +568,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree5da29a29c06ec1c69eeb9a5e34b5db9863f1ce17targetblank5da29a2a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/5da29a29c06ec1c69eeb9a5e34b5db9863f1ce17" target="_blank">5da29a2</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree42c58e6e5c146e5544c4f867dc62fbee3e0db635targetblank42c58e6a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/42c58e6e5c146e5544c4f867dc62fbee3e0db635" target="_blank">42c58e6</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree5da29a29c06ec1c69eeb9a5e34b5db9863f1ce17targetblank5da29a2a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree42c58e6e5c146e5544c4f867dc62fbee3e0db635targetblank42c58e6a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/5da29a29c06ec1c69eeb9a5e34b5db9863f1ce17" target="_blank">5da29a2</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/42c58e6e5c146e5544c4f867dc62fbee3e0db635" target="_blank">42c58e6</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -626,6 +626,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/42c58e6e5c146e5544c4f867dc62fbee3e0db635/analysis/read_GLODAPv2_2021.Rmd" target="_blank">42c58e6</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-06-14
+</td>
+<td>
+included nitrate xover analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/8bd1b27935ccde1f387cd560dc2abd4cd02d0f08/docs/read_GLODAPv2_2021.html" target="_blank">8bd1b27</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-06-13
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -4544,6 +4578,23 @@ CRM_ref_values &lt;-
       sep = &quot;&quot;
     )
   )</code></pre>
+</div>
+<div id="others" class="section level2" number="1.7">
+<h2><span class="header-section-number">1.7</span> Others</h2>
+<pre class="r"><code>countrylist &lt;-
+  read_csv(
+    paste0(
+      path_glodapv2_2021,
+      &quot;/countrylist.txt&quot;
+    ),
+    skip = 9,
+    col_names = FALSE
+  )
+
+countrylist &lt;- countrylist %&gt;% 
+  mutate(code = str_sub(X1,1,2),
+         country_name = str_sub(X1, start = 6)) %&gt;% 
+  select(-X1)</code></pre>
 </div>
 </div>
 <div id="data-preparation" class="section level1" number="2">
@@ -11119,7 +11170,9 @@ m_xover_reverse &lt;- function(df) {
       ),
       offset_adj = if_else(
         parameter %in% c(&quot;salinity&quot;, &quot;talk&quot;, &quot;tco2&quot;,
-                         &quot;cstar_total&quot;, &quot;cstar_phosphate&quot;, &quot;cstar_talk&quot;, &quot;cstar_tco2&quot;, &quot;cstar_tco2_talk&quot;),
+                         &quot;cstar_total_phosphate&quot;, &quot;cstar_phosphate&quot;,
+                         &quot;cstar_total_nitrate&quot;, &quot;cstar_nitrate&quot;,
+                         &quot;cstar_talk&quot;, &quot;cstar_tco2&quot;, &quot;cstar_tco2_talk&quot;),
         -offset_adj,
         1 / offset_adj
       )
@@ -30244,29 +30297,25 @@ rm(xover_basin_all)
              parameter,
              parameter_coverage) %&gt;%
     summarise(
-      # offset_adj_sd = sd(offset_adj, na.rm = TRUE),
       offset_adj = mean(offset_adj, na.rm = TRUE)
     ) %&gt;%
     ungroup()
 
-# xover_basin %&gt;% 
-#   ggplot(aes(offset_adj_sd)) +
-#   geom_histogram() +
-#   facet_grid(basin ~ parameter, scales = &quot;free_x&quot;)
-
-xover_basin &lt;- xover_basin %&gt;% 
-  filter(parameter %in% c(&quot;tco2&quot;, &quot;talk&quot;, &quot;phosphate&quot;)) %&gt;% 
+xover_basin &lt;- xover_basin %&gt;%
+  filter(parameter %in%
+           c(&quot;tco2&quot;, &quot;talk&quot;, &quot;phosphate&quot;, &quot;nitrate&quot;, &quot;silicate&quot;)) %&gt;%
   pivot_wider(names_from = parameter,
               values_from = offset_adj)
 
-GLODAP_deep_phosphate &lt;- GLODAP %&gt;% 
+GLODAP_deep_nuts &lt;- GLODAP %&gt;% 
   filter(depth &gt; 1500) %&gt;% 
   group_by(basin) %&gt;% 
-  summarise(phosphate_mean = mean(phosphate, na.rm = TRUE)) %&gt;% 
+  summarise(phosphate_mean = mean(phosphate, na.rm = TRUE),
+            nitrate_mean = mean(nitrate, na.rm = TRUE)) %&gt;% 
   ungroup()
 
 xover_basin &lt;- full_join(xover_basin,
-                               GLODAP_deep_phosphate)
+                               GLODAP_deep_nuts)
 
 rm(GLODAP_deep_phosphate)
 
@@ -30275,19 +30324,21 @@ xover_basin &lt;- xover_basin %&gt;%
     cstar_tco2 = tco2,
     cstar_talk = -0.5 * talk,
     phosphate_fac = phosphate - 1,
-    cstar_phosphate = -117 * phosphate_fac * phosphate_mean - 16 * 0.5 * phosphate_fac * phosphate_mean
+    nitrate_fac = nitrate - 1,
+    cstar_phosphate = -117 * phosphate_fac * phosphate_mean - 16 * 0.5 * phosphate_fac * phosphate_mean,
+    cstar_nitrate = -117/16 * nitrate_fac * nitrate_mean - 0.5 * nitrate_fac * nitrate_mean
   ) %&gt;% 
-  select(-phosphate_fac)
+  select(-c(phosphate_fac, nitrate_fac))
 
 
 xover_basin %&gt;%
-  select(starts_with(&quot;cstar&quot;)) %&gt;% 
+  select(starts_with(&quot;cstar&quot;)) %&gt;%
   pivot_longer(starts_with(&quot;cstar&quot;),
-              names_to = &quot;parameter&quot;,
-              values_to = &quot;value&quot;) %&gt;% 
+               names_to = &quot;parameter&quot;,
+               values_to = &quot;value&quot;) %&gt;%
   ggplot(aes(value)) +
   geom_histogram() +
-  facet_wrap(~parameter, scales = &quot;free_x&quot;)</code></pre>
+  facet_wrap( ~ parameter, scales = &quot;free_x&quot;)</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/convert_offset_to_cstar_units-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-convert_offset_to_cstar_units-1">
@@ -30481,12 +30532,13 @@ jens-daniel-mueller
 </div>
 </div>
 <pre class="r"><code>xover_basin &lt;- xover_basin %&gt;% 
-  select(-c(phosphate_mean, tco2, talk))
+  select(-c(phosphate_mean, nitrate_mean, tco2, talk))
 
 xover_basin &lt;- xover_basin %&gt;% 
-  mutate(cstar_total = cstar_tco2 + cstar_talk + cstar_phosphate,
+  mutate(cstar_total_phosphate = cstar_tco2 + cstar_talk + cstar_phosphate,
+         cstar_total_nitrate = cstar_tco2 + cstar_talk + cstar_nitrate,
          cstar_tco2_talk = cstar_tco2 + cstar_talk) %&gt;% 
-  pivot_longer(phosphate:cstar_tco2_talk,
+  pivot_longer(nitrate:cstar_tco2_talk,
                names_to = &quot;parameter&quot;,
                values_to = &quot;offset_adj&quot;)
 
@@ -35459,23 +35511,8 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>xover_basin %&gt;%
-  mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf))) %&gt;%
-  # filter(basin == &quot;N. Pacific&quot;) %&gt;% 
-  group_split(basin, parameter) %&gt;%
-  # head(1) %&gt;%
-  map(
-    ~ ggplot(data = .x,
-             aes(
-               date_A, date_B, fill = offset_adj, size = n
-             )) +
-      geom_point(alpha = 0.5, shape = 21) +
-      scale_fill_discrete_diverging(palette = &quot;Blue-Red&quot;, drop = FALSE) +
-      labs(title = paste(.x$basin, &quot;|&quot;, .x$parameter, &quot;| partial&quot;)) +
-      coord_fixed(xlim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)),
-                  ylim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)))
-  )</code></pre>
-<pre><code>[[1]]</code></pre>
+<pre><code>
+[[31]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-31.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-31">
@@ -35636,7 +35673,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[2]]</code></pre>
+[[32]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-32.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-32">
@@ -35808,7 +35845,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[3]]</code></pre>
+[[33]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-33.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-33">
@@ -35980,7 +36017,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[4]]</code></pre>
+[[34]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-34.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-34">
@@ -36141,7 +36178,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[5]]</code></pre>
+[[35]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-35.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-35">
@@ -36302,7 +36339,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[6]]</code></pre>
+[[36]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-36.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-36">
@@ -36463,7 +36500,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[7]]</code></pre>
+[[37]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-37.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-37">
@@ -36624,7 +36661,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[8]]</code></pre>
+[[38]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-38.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-38">
@@ -36774,7 +36811,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[9]]</code></pre>
+[[39]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-39.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-39">
@@ -36924,7 +36961,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[10]]</code></pre>
+[[40]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-40.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-40">
@@ -37085,7 +37122,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[11]]</code></pre>
+[[41]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-41.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-41">
@@ -37268,7 +37305,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[12]]</code></pre>
+[[42]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-42.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-42">
@@ -37418,7 +37455,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[13]]</code></pre>
+[[43]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-43.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-43">
@@ -37557,7 +37594,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[14]]</code></pre>
+[[44]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-44.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-44">
@@ -37674,7 +37711,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[15]]</code></pre>
+[[45]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-45.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-45">
@@ -37791,7 +37828,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[16]]</code></pre>
+[[46]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-46.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-46">
@@ -37908,7 +37945,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[17]]</code></pre>
+[[47]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-47.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-47">
@@ -38025,7 +38062,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[18]]</code></pre>
+[[48]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-48.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-48">
@@ -38164,7 +38201,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[19]]</code></pre>
+[[49]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-49.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-49">
@@ -38314,7 +38351,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[20]]</code></pre>
+[[50]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-50.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-50">
@@ -38463,8 +38500,23 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>
-[[21]]</code></pre>
+<pre class="r"><code>xover_basin %&gt;%
+  mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf))) %&gt;%
+  # filter(basin == &quot;N. Pacific&quot;) %&gt;% 
+  group_split(basin, parameter) %&gt;%
+  # head(1) %&gt;%
+  map(
+    ~ ggplot(data = .x,
+             aes(
+               date_A, date_B, fill = offset_adj, size = n
+             )) +
+      geom_point(alpha = 0.5, shape = 21) +
+      scale_fill_discrete_diverging(palette = &quot;Blue-Red&quot;, drop = FALSE) +
+      labs(title = paste(.x$basin, &quot;|&quot;, .x$parameter, &quot;| partial&quot;)) +
+      coord_fixed(xlim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)),
+                  ylim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)))
+  )</code></pre>
+<pre><code>[[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-51.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-51">
@@ -38614,7 +38666,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[22]]</code></pre>
+[[2]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-52.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-52">
@@ -38698,7 +38750,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[23]]</code></pre>
+[[3]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-53.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-53">
@@ -38782,7 +38834,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[24]]</code></pre>
+[[4]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-54.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-54">
@@ -38866,7 +38918,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[25]]</code></pre>
+[[5]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-55.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-55">
@@ -38939,7 +38991,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[26]]</code></pre>
+[[6]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-56.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-56">
@@ -39012,7 +39064,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[27]]</code></pre>
+[[7]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-57.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-57">
@@ -39085,7 +39137,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[28]]</code></pre>
+[[8]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-58.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-58">
@@ -39158,7 +39210,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[29]]</code></pre>
+[[9]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-59.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-59">
@@ -39231,7 +39283,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[30]]</code></pre>
+[[10]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-60.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-60">
@@ -39303,15 +39355,8 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>xover_basin %&gt;%
-  mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf))) %&gt;%
-  filter(parameter_coverage == &quot;full&quot;) %&gt;%
-  ggplot(aes(date_A, date_B, fill = offset_adj, size = n)) +
-  geom_point(alpha = 0.5, shape = 21) +
-  scale_fill_discrete_diverging(palette = &quot;Blue-Red&quot;, drop = FALSE) +
-  coord_fixed(xlim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)),
-              ylim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;))) +
-  facet_grid(basin ~ parameter)</code></pre>
+<pre><code>
+[[11]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-61.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-61">
@@ -39427,6 +39472,1093 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[12]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-62.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-62">
+Past versions of cruise_by_cruise_cstar-62.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-62" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-62.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-62.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[13]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-63.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-63">
+Past versions of cruise_by_cruise_cstar-63.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-63" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-63.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-63.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[14]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-64.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-64">
+Past versions of cruise_by_cruise_cstar-64.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-64" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-64.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-64.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[15]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-65.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-65">
+Past versions of cruise_by_cruise_cstar-65.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-65" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-65.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-65.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[16]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-66.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-66">
+Past versions of cruise_by_cruise_cstar-66.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-66" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-66.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-66.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[17]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-67.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-67">
+Past versions of cruise_by_cruise_cstar-67.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-67" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-67.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-67.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[18]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-68.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-68">
+Past versions of cruise_by_cruise_cstar-68.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-68" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-68.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-68.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[19]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-69.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-69">
+Past versions of cruise_by_cruise_cstar-69.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-69" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-69.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-69.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[20]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-70.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-70">
+Past versions of cruise_by_cruise_cstar-70.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-70" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-70.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-70.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[21]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-71.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-71">
+Past versions of cruise_by_cruise_cstar-71.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-71" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-71.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-71.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[22]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-72.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-72">
+Past versions of cruise_by_cruise_cstar-72.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-72" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-72.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-72.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[23]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-73.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-73">
+Past versions of cruise_by_cruise_cstar-73.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-73" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-73.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-73.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[24]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-74.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-74">
+Past versions of cruise_by_cruise_cstar-74.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-74" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-74.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-74.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[25]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-75.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-75">
+Past versions of cruise_by_cruise_cstar-75.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-75" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-75.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-75.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[26]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-76.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-76">
+Past versions of cruise_by_cruise_cstar-76.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-76" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-76.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-76.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[27]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-77.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-77">
+Past versions of cruise_by_cruise_cstar-77.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-77" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-77.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-77.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[28]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-78.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-78">
+Past versions of cruise_by_cruise_cstar-78.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-78" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-78.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-78.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[29]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-79.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-79">
+Past versions of cruise_by_cruise_cstar-79.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-79" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-79.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-79.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[30]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-80.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-80">
+Past versions of cruise_by_cruise_cstar-80.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-80" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-80.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-80.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[31]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-81.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-81">
+Past versions of cruise_by_cruise_cstar-81.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar-81" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-81.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-81.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[32]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-82.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[33]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-83.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[34]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-84.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[35]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-85.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[36]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-86.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[37]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-87.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[38]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-88.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[39]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-89.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[40]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-90.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[41]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-91.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[42]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-92.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[43]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-93.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[44]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-94.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[45]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-95.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[46]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-96.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[47]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-97.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[48]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-98.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[49]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-99.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[50]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-100.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>xover_basin %&gt;%
+  mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf))) %&gt;%
+  filter(parameter_coverage == &quot;full&quot;) %&gt;%
+  ggplot(aes(date_A, date_B, fill = offset_adj, size = n)) +
+  geom_point(alpha = 0.5, shape = 21) +
+  scale_fill_discrete_diverging(palette = &quot;Blue-Red&quot;, drop = FALSE) +
+  coord_fixed(xlim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)),
+              ylim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;))) +
+  facet_grid(basin ~ parameter)</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-101.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="cruise-by-cruise-annual-mean" class="section level3" number="7.3.3">
 <h3><span class="header-section-number">7.3.3</span> Cruise-by-cruise annual mean</h3>
@@ -44117,6 +45249,546 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[31]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-31.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar_annual_mean-31">
+Past versions of cruise_by_cruise_cstar_annual_mean-31.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar_annual_mean-31" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-31.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-31.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[32]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-32.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar_annual_mean-32">
+Past versions of cruise_by_cruise_cstar_annual_mean-32.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar_annual_mean-32" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-32.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-32.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[33]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-33.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar_annual_mean-33">
+Past versions of cruise_by_cruise_cstar_annual_mean-33.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar_annual_mean-33" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-33.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-33.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[34]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-34.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar_annual_mean-34">
+Past versions of cruise_by_cruise_cstar_annual_mean-34.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar_annual_mean-34" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-34.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-34.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[35]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-35.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar_annual_mean-35">
+Past versions of cruise_by_cruise_cstar_annual_mean-35.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar_annual_mean-35" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-35.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-35.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[36]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-36.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar_annual_mean-36">
+Past versions of cruise_by_cruise_cstar_annual_mean-36.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar_annual_mean-36" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-36.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-36.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[37]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-37.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar_annual_mean-37">
+Past versions of cruise_by_cruise_cstar_annual_mean-37.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar_annual_mean-37" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-37.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-37.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[38]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-38.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar_annual_mean-38">
+Past versions of cruise_by_cruise_cstar_annual_mean-38.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar_annual_mean-38" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-38.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-38.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[39]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-39.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar_annual_mean-39">
+Past versions of cruise_by_cruise_cstar_annual_mean-39.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar_annual_mean-39" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-39.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-39.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[40]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-40.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar_annual_mean-40">
+Past versions of cruise_by_cruise_cstar_annual_mean-40.png
+</button>
+</p>
+<div id="fig-cruise_by_cruise_cstar_annual_mean-40" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/278cf749ce0513dc738f6ee30d689dbc031a3b6f/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-40.png" target="_blank">278cf74</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b788368b228e64616ea8d620f762b240ccabeb33/docs/figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-40.png" target="_blank">b788368</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-04-06
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre><code>
+[[41]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-41.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[42]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-42.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[43]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-43.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[44]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-44.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[45]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-45.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[46]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-46.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[47]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-47.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[48]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-48.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[49]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-49.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[50]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-50.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="cruise-mean-offsets" class="section level3" number="7.3.4">
 <h3><span class="header-section-number">7.3.4</span> Cruise mean offsets</h3>
@@ -44225,7 +45897,7 @@ for (i_cruise_expocode in expocodes_basin) {
 
 hline_intercept &lt;-
   tibble(parameter = unique(xover_basin$parameter)) %&gt;%
-  mutate(intercept = if_else(parameter %in% c(&quot;phosphate&quot;),
+  mutate(intercept = if_else(parameter %in% c(&quot;phosphate&quot;, &quot;nitrate&quot;, &quot;silicate&quot;),
                              1,
                              0))
 
@@ -45800,6 +47472,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8bd1b27935ccde1f387cd560dc2abd4cd02d0f08/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-6.png" target="_blank">8bd1b27</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-06-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/552e4bc09aa189e6757973ee3a5ca6ef7801e302/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-6.png" target="_blank">552e4bc</a>
 </td>
 <td>
@@ -46077,18 +47760,39 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>xover_cruise_decade_all %&gt;%
-  filter(parameter_coverage == &quot;full&quot;) %&gt;% 
+<pre class="r"><code>xover_cruise_long_term_all %&gt;%
+  filter(parameter_coverage == &quot;full&quot;,
+         basin == &quot;N. Pacific&quot;) %&gt;%
   group_split(basin) %&gt;%
   # head(1) %&gt;%
   map(
-    ~ ggplot(data = .x,
-             aes(date_A, offset_adj_mean_weighted, size = n_A)) +
-        geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
-      geom_point(alpha = 0.3) +
+    ~ ggplot() +
+      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_point(
+        data = .x %&gt;% filter(!(
+          str_sub(cruise_A, 1, 2) %in% c(&quot;49&quot;)
+        )),
+        aes(
+          date_A,
+          offset_adj_mean_weighted,
+          size = n_A,
+          color = &quot;other cruises&quot;
+        ),
+        alpha = 0.3
+      ) +
+      geom_point(
+        data = .x %&gt;% filter(str_sub(cruise_A, 1, 2) %in% c(&quot;49&quot;)),
+        aes(
+          date_A,
+          offset_adj_mean_weighted,
+          size = n_A,
+          color = &quot;49&quot;
+        ),
+        alpha = 0.3
+      ) +
       labs(title = paste(.x$basin, &quot;| full&quot;)) +
-      # coord_cartesian(ylim = c(-10,10)) +
-      facet_grid(parameter ~ decade, scales = &quot;free_y&quot;)
+      scale_color_brewer(palette = &quot;Set1&quot;) +
+      facet_grid(parameter ~ ., scales = &quot;free_y&quot;)
   )</code></pre>
 <p>[[1]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-7.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -46113,6 +47817,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8bd1b27935ccde1f387cd560dc2abd4cd02d0f08/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-7.png" target="_blank">8bd1b27</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-06-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/15c6091034ac0c7d4543612320f186e8fd6cee99/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-7.png" target="_blank">15c6091</a>
@@ -46403,7 +48118,20 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<p>[[2]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>xover_cruise_decade_all %&gt;%
+  filter(parameter_coverage == &quot;full&quot;) %&gt;% 
+  group_split(basin) %&gt;%
+  # head(1) %&gt;%
+  map(
+    ~ ggplot(data = .x,
+             aes(date_A, offset_adj_mean_weighted, size = n_A)) +
+        geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_point(alpha = 0.3) +
+      labs(title = paste(.x$basin, &quot;| full&quot;)) +
+      # coord_cartesian(ylim = c(-10,10)) +
+      facet_grid(parameter ~ decade, scales = &quot;free_y&quot;)
+  )</code></pre>
+<p>[[1]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-8.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-8">
 Past versions of crossover_analysis_5_basin_decadal-8.png
@@ -46426,6 +48154,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8bd1b27935ccde1f387cd560dc2abd4cd02d0f08/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-8.png" target="_blank">8bd1b27</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-06-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ebfaa8139200a89a1975b702c0c61f85c58f8e5a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-8.png" target="_blank">ebfaa81</a>
@@ -46683,7 +48422,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<p>[[3]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-9.png" width="672" style="display: block; margin: auto;" /></p>
+<p>[[2]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-9.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-9">
 Past versions of crossover_analysis_5_basin_decadal-9.png
@@ -46706,6 +48445,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8bd1b27935ccde1f387cd560dc2abd4cd02d0f08/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-9.png" target="_blank">8bd1b27</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-06-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/15c6091034ac0c7d4543612320f186e8fd6cee99/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-9.png" target="_blank">15c6091</a>
@@ -47018,7 +48768,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<p>[[4]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-10.png" width="672" style="display: block; margin: auto;" /></p>
+<p>[[3]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-10.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-10">
 Past versions of crossover_analysis_5_basin_decadal-10.png
@@ -47041,6 +48791,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8bd1b27935ccde1f387cd560dc2abd4cd02d0f08/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-10.png" target="_blank">8bd1b27</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-06-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/15c6091034ac0c7d4543612320f186e8fd6cee99/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-10.png" target="_blank">15c6091</a>
@@ -47331,7 +49092,7 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<p>[[5]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-11.png" width="672" style="display: block; margin: auto;" /></p>
+<p>[[4]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-11.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-11">
 Past versions of crossover_analysis_5_basin_decadal-11.png
@@ -47354,6 +49115,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8bd1b27935ccde1f387cd560dc2abd4cd02d0f08/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-11.png" target="_blank">8bd1b27</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-06-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/253dc152cc93f7fd8c6f305319263ce1e2b1068f/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-11.png" target="_blank">253dc15</a>
@@ -47467,6 +49239,154 @@ jens-daniel-mueller
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-11.png" target="_blank">e1243c2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>[[5]] <img src="figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-crossover_analysis_5_basin_decadal-12">
+Past versions of crossover_analysis_5_basin_decadal-12.png
+</button>
+</p>
+<div id="fig-crossover_analysis_5_basin_decadal-12" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/253dc152cc93f7fd8c6f305319263ce1e2b1068f/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" target="_blank">253dc15</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6aedeb88d1fa1c8960e15794aea121547de0708a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" target="_blank">6aedeb8</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/ceae601a1cf04e9c3bd7783b67e58474f17503a7/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" target="_blank">ceae601</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-14
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/744b90f2e30434ac930d983ef040f199f9965709/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" target="_blank">744b90f</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/25fef5b5565b06dac74b77005109c77db52d50e6/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" target="_blank">25fef5b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e3d1a2bf19f77944b362352346b325a7ebd9d110/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" target="_blank">e3d1a2b</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-10
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/070ca03f9a0abc8949a3a294170efef800b9f19c/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" target="_blank">070ca03</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-03-09
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6e65117873da381f301c05463db6061611f178b7/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" target="_blank">6e65117</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-16
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/4a7550e36960693453e185e87c6dfbd896652d3a/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" target="_blank">4a7550e</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8804a837dc9b38bd4ab75416d7b8757fa26155ab/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" target="_blank">8804a83</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-02-15
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e1243c2dac90bc2f950ddc51d7a8298cc3bfc5d2/docs/figure/read_GLODAPv2_2021.Rmd/crossover_analysis_5_basin_decadal-12.png" target="_blank">e1243c2</a>
 </td>
 <td>
 jens-daniel-mueller
@@ -49519,12 +51439,14 @@ jens-daniel-mueller
 </div>
 <div id="npo" class="section level4" number="7.3.4.1">
 <h4><span class="header-section-number">7.3.4.1</span> NPO</h4>
-<pre class="r"><code>xover_cruise_decade_all %&gt;%
+<pre class="r"><code>parameter_print &lt;- c(&quot;cstar_tco2&quot;, &quot;cstar_talk&quot;, &quot;cstar_phosphate&quot;, &quot;cstar_nitrate&quot;)
+
+xover_cruise_decade_all %&gt;%
   filter(
     parameter_coverage == &quot;full&quot;,
-    parameter %in% c(&quot;cstar_tco2&quot;, &quot;cstar_talk&quot;, &quot;cstar_phosphate&quot;),
-         basin == &quot;N. Pacific&quot;,
-         decade != &quot;1989-1999&quot;
+    parameter %in% parameter_print,
+    basin == &quot;N. Pacific&quot;,
+    decade != &quot;1989-1999&quot;
   ) %&gt;%
   group_split(basin) %&gt;%
   # head(1) %&gt;%
@@ -49538,7 +51460,10 @@ jens-daniel-mueller
         fill = decade_A
       )
     ) +
-      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_hline(
+        data = hline_intercept %&gt;% filter(parameter %in% parameter_print),
+        aes(yintercept = intercept)
+      ) +
       geom_point(alpha = 0.5, shape = 21) +
       scale_fill_discrete_sequential(palette = &quot;viridis&quot;) +
       labs(title = paste(.x$basin, &quot;| full&quot;)) +
@@ -49686,7 +51611,7 @@ jens-daniel-mueller
 <pre class="r"><code>xover_cruise_decade_all %&gt;%
   filter(
     parameter_coverage == &quot;full&quot;,
-    parameter %in% c(&quot;cstar_total&quot;),
+    parameter %in% c(&quot;cstar_total_phosphate&quot;),
          basin == &quot;N. Pacific&quot;,
          decade == &quot;2000-2009&quot;
   ) %&gt;%
@@ -49765,7 +51690,7 @@ jens-daniel-mueller
 <pre class="r"><code>NPO_2010_small_cruises &lt;- xover_cruise_decade_all %&gt;%
   filter(
     parameter_coverage == &quot;full&quot;,
-    parameter %in% c(&quot;cstar_total&quot;),
+    parameter %in% c(&quot;cstar_total_phosphate&quot;),
     basin == &quot;N. Pacific&quot;,
     decade == &quot;2000-2009&quot;,
     n_A &lt; 500,
@@ -49828,6 +51753,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8bd1b27935ccde1f387cd560dc2abd4cd02d0f08/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size_PO-3.png" target="_blank">8bd1b27</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-06-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/e5a1aa7a3b832461dd552cce5527dc79fc200048/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size_PO-3.png" target="_blank">e5a1aa7</a>
 </td>
 <td>
@@ -49842,68 +51778,68 @@ jens-daniel-mueller
 </div>
 </div>
 <pre class="r"><code># retrieve subbasin expocodes
-  expocodes_basin &lt;- GLODAP %&gt;%
-    filter(basin == &quot;N. Pacific&quot;,
-           !is.na(decade)) %&gt;%
-    count(cruise_expocode)
+expocodes_basin &lt;- GLODAP %&gt;%
+  filter(basin == &quot;N. Pacific&quot;,
+         !is.na(decade)) %&gt;%
+  count(cruise_expocode)
 
-  # remove expocodes with observations outside decades
-  expocodes_basin_out &lt;- GLODAP %&gt;%
-    filter(basin == i_basin,
-           is.na(decade)) %&gt;%
-    distinct(cruise_expocode) %&gt;% 
-    pull()
-  
-  expocodes_basin &lt;- expocodes_basin %&gt;% 
-    filter(!(cruise_expocode %in% expocodes_basin_out))
-  
-  rm(expocodes_basin_out)
-  
-  
-  GLODAP_basin &lt;- GLODAP %&gt;% 
-    filter(cruise_expocode %in% expocodes_basin$cruise_expocode)
+# remove expocodes with observations outside decades
+expocodes_basin_out &lt;- GLODAP %&gt;%
+  filter(basin == i_basin,
+         is.na(decade)) %&gt;%
+  distinct(cruise_expocode) %&gt;%
+  pull()
 
-  # subset cruise with all qc flag = 1
-  expocodes_basin_qc &lt;- GLODAP_basin %&gt;%
-    select(cruise_expocode, ends_with(&quot;qc&quot;)) %&gt;%
-    filter(if_all(ends_with(&quot;qc&quot;), ~ . == 1)) %&gt;%
-    distinct(cruise_expocode) %&gt;%
-    pull(cruise_expocode)
-  
-  # subset cruise with all f flag = 2
-  expocodes_basin_f &lt;- GLODAP_basin %&gt;%
-    select(cruise_expocode, ends_with(&quot;f&quot;)) %&gt;%
-    filter(if_all(ends_with(&quot;f&quot;), ~ . == 2)) %&gt;%
-    distinct(cruise_expocode) %&gt;%
-    pull(cruise_expocode)
-  
-  # join qc and f cruises and identify lower number of observations
-  expocodes_basin &lt;- expocodes_basin %&gt;%
-    mutate(
-      parameter_coverage = if_else(
-        cruise_expocode %in% expocodes_basin_qc &amp;
-          cruise_expocode %in% expocodes_basin_f,
-        &quot;full&quot;,
-        &quot;partial&quot;
-      )
+expocodes_basin &lt;- expocodes_basin %&gt;%
+  filter(!(cruise_expocode %in% expocodes_basin_out))
+
+rm(expocodes_basin_out)
+
+
+GLODAP_basin &lt;- GLODAP %&gt;%
+  filter(cruise_expocode %in% expocodes_basin$cruise_expocode)
+
+# subset cruise with all qc flag = 1
+expocodes_basin_qc &lt;- GLODAP_basin %&gt;%
+  select(cruise_expocode, ends_with(&quot;qc&quot;)) %&gt;%
+  filter(if_all(ends_with(&quot;qc&quot;), ~ . == 1)) %&gt;%
+  distinct(cruise_expocode) %&gt;%
+  pull(cruise_expocode)
+
+# subset cruise with all f flag = 2
+expocodes_basin_f &lt;- GLODAP_basin %&gt;%
+  select(cruise_expocode, ends_with(&quot;f&quot;)) %&gt;%
+  filter(if_all(ends_with(&quot;f&quot;), ~ . == 2)) %&gt;%
+  distinct(cruise_expocode) %&gt;%
+  pull(cruise_expocode)
+
+# join qc and f cruises and identify lower number of observations
+expocodes_basin &lt;- expocodes_basin %&gt;%
+  mutate(
+    parameter_coverage = if_else(
+      cruise_expocode %in% expocodes_basin_qc &amp;
+        cruise_expocode %in% expocodes_basin_f,
+      &quot;full&quot;,
+      &quot;partial&quot;
     )
-  
-  rm(expocodes_basin_f, expocodes_basin_qc)
-  
-  GLODAP_basin_grid &lt;- GLODAP_basin %&gt;%
-    count(cruise_expocode, lat, lon, decade)
-  
+  )
 
-  GLODAP_basin_grid &lt;- full_join(GLODAP_basin_grid %&gt;% select(-n),
-                                 expocodes_basin)
-  
-  map +
-    geom_tile(data = GLODAP_basin_grid %&gt;% filter(parameter_coverage == &quot;full&quot;),
-              aes(lon, lat, fill = &quot;full&quot;)) +
-    scale_fill_brewer(palette = &quot;Set1&quot;) +
-    labs(title = i_basin) +
-    facet_grid(decade ~ .) +
-    theme(legend.title = element_blank())</code></pre>
+rm(expocodes_basin_f, expocodes_basin_qc)
+
+GLODAP_basin_grid &lt;- GLODAP_basin %&gt;%
+  count(cruise_expocode, lat, lon, decade)
+
+
+GLODAP_basin_grid &lt;- full_join(GLODAP_basin_grid %&gt;% select(-n),
+                               expocodes_basin)
+
+map +
+  geom_tile(data = GLODAP_basin_grid %&gt;% filter(parameter_coverage == &quot;full&quot;),
+            aes(lon, lat, fill = &quot;full&quot;)) +
+  scale_fill_brewer(palette = &quot;Set1&quot;) +
+  labs(title = i_basin) +
+  facet_grid(decade ~ .) +
+  theme(legend.title = element_blank())</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size_PO-4.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-xover_cruise_mean_by_cruise_size_PO-4">
@@ -49927,6 +51863,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8bd1b27935ccde1f387cd560dc2abd4cd02d0f08/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size_PO-4.png" target="_blank">8bd1b27</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-06-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5fd6f6c11252738aed9f0c29bb557189b52a486f/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size_PO-4.png" target="_blank">5fd6f6c</a>
@@ -49953,45 +51900,82 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>  expocodes_basin_removed_40S &lt;- GLODAP_basin_grid %&gt;%
-    filter(lat &lt; -40) %&gt;%
-    distinct(cruise_expocode) %&gt;%
-    pull()
-  
-  expocodes_basin &lt;- expocodes_basin %&gt;% 
-    filter(!(cruise_expocode %in% expocodes_basin_removed_40S))
-  
-  expocodes_xover_NP &lt;- expocodes_basin
-  
-  map +
-    geom_tile(
-      data = GLODAP_basin_grid %&gt;%
-        filter(
-          parameter_coverage == &quot;full&quot; &amp;
-            cruise_expocode %in% expocodes_basin$cruise_expocode &amp;
-            decade == &quot;2010-2020&quot;
-        ),
-      aes(lon, lat, fill = &quot;all cruises&quot;)
-    ) +
-    geom_tile(
-      data = GLODAP_basin_grid %&gt;%
-        filter(
-          parameter_coverage == &quot;full&quot; &amp;
-            cruise_expocode %in% expocodes_basin$cruise_expocode &amp;
-            cruise_expocode %in% NPO_2010_small_cruises &amp;
-            decade == &quot;2010-2020&quot;
-        ),
-      aes(lon, lat, fill = &quot;n_A &lt; 500&quot;)
-    ) +
-    coord_quickmap(xlim = c(100,280),
-                   ylim = c(-20,60))+
-    # scale_fill_brewer(palette = &quot;Dark2&quot;) +
-    scale_fill_manual(values = c(&quot;#8dd3c7&quot;, &quot;#e41a1c&quot;)) +
-    labs(title = i_basin,
-         subtitle = &quot;Maintained cruises&quot;) +
-    facet_grid(decade ~ .) +
-    theme(legend.title = element_blank())</code></pre>
+<pre class="r"><code>expocodes_basin_removed_40S &lt;- GLODAP_basin_grid %&gt;%
+  filter(lat &lt; -40) %&gt;%
+  distinct(cruise_expocode) %&gt;%
+  pull()
+
+expocodes_basin &lt;- expocodes_basin %&gt;%
+  filter(!(cruise_expocode %in% expocodes_basin_removed_40S))
+
+expocodes_xover_NP &lt;- expocodes_basin
+
+map +
+  geom_tile(
+    data = GLODAP_basin_grid %&gt;%
+      filter(
+        parameter_coverage == &quot;full&quot; &amp;
+          cruise_expocode %in% expocodes_basin$cruise_expocode &amp;
+          decade == &quot;2010-2020&quot;
+      ),
+    aes(lon, lat, fill = &quot;all cruises&quot;)
+  ) +
+  geom_tile(
+    data = GLODAP_basin_grid %&gt;%
+      filter(
+        parameter_coverage == &quot;full&quot; &amp;
+          cruise_expocode %in% expocodes_basin$cruise_expocode &amp;
+          cruise_expocode %in% NPO_2010_small_cruises &amp;
+          decade == &quot;2010-2020&quot;
+      ),
+    aes(lon, lat, fill = &quot;n_A &lt; 500&quot;)
+  ) +
+  coord_quickmap(xlim = c(100, 280),
+                 ylim = c(-20, 60)) +
+  # scale_fill_brewer(palette = &quot;Dark2&quot;) +
+  scale_fill_manual(values = c(&quot;#8dd3c7&quot;, &quot;#e41a1c&quot;)) +
+  labs(title = i_basin,
+       subtitle = &quot;Maintained cruises&quot;) +
+  facet_grid(decade ~ .) +
+  theme(legend.title = element_blank())</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size_PO-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-xover_cruise_mean_by_cruise_size_PO-5">
+Past versions of xover_cruise_mean_by_cruise_size_PO-5.png
+</button>
+</p>
+<div id="fig-xover_cruise_mean_by_cruise_size_PO-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8bd1b27935ccde1f387cd560dc2abd4cd02d0f08/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size_PO-5.png" target="_blank">8bd1b27</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-06-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="decadal-averages" class="section level3" number="7.3.5">
@@ -50865,7 +52849,7 @@ jens-daniel-mueller
       ymax = offset_adj_mean_weighted + offset_adj_sd
     )
   ) +
-    geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
   geom_linerange() +
   geom_point() +
   facet_grid(parameter ~ basin, scales = &quot;free_y&quot;) +
@@ -52439,7 +54423,7 @@ jens-daniel-mueller
 </div>
 <pre class="r"><code>xover_cruise_decade_all %&gt;%
   filter(parameter_coverage == &quot;full&quot;,
-         parameter == &quot;cstar_total&quot;) %&gt;%
+         parameter %in% c(&quot;cstar_total_phosphate&quot;, &quot;cstar_total_nitrate&quot;)) %&gt;%
   ggplot(aes(basin,
              offset_adj_mean_weighted,
              col = decade_A)) +
@@ -52450,7 +54434,8 @@ jens-daniel-mueller
                      name = &quot;Cruise decade&quot;) +
   scale_size(name = &quot;Cruise size&quot;) +
   labs(y = &quot;Mean C* xover offset (µmol/kg)&quot;) +
-  facet_grid(decade ~ ., scales = &quot;free_y&quot;)</code></pre>
+  facet_grid(decade ~ parameter, scales = &quot;free_y&quot;) +
+  scale_x_discrete(guide = guide_axis(n.dodge = 2))</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/mean_decadal_cstar_xover_offsets-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-mean_decadal_cstar_xover_offsets-1">
@@ -52490,7 +54475,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre class="r"><code>xover_cruise_decade_all_stats %&gt;%
-  filter(parameter == &quot;cstar_total&quot;) %&gt;%
+  filter(parameter %in% c(&quot;cstar_total_phosphate&quot;, &quot;cstar_total_nitrate&quot;)) %&gt;%
   ggplot(
     aes(
       basin,
@@ -52505,8 +54490,9 @@ jens-daniel-mueller
   geom_point(position = position_dodge(width = 0.5)) +
   scale_color_brewer(palette = &quot;Set1&quot;,
                      name = &quot;Cruise decade&quot;) +
-  facet_grid(decade ~ ., scales = &quot;free_y&quot;) +
-  labs(y = &quot;Mean C* xover offset (µmol/kg)&quot;)</code></pre>
+  facet_grid(decade ~ parameter, scales = &quot;free_y&quot;) +
+  labs(y = &quot;Mean C* xover offset (µmol/kg)&quot;) +
+  scale_x_discrete(guide = guide_axis(n.dodge = 2))</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/mean_decadal_cstar_xover_offsets-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-mean_decadal_cstar_xover_offsets-2">
@@ -52577,6 +54563,29 @@ offset_adj_mean_weighted
 </tr>
 </thead>
 <tbody>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+0.8421469
+</td>
+<td style="text-align:right;">
+0.0185224
+</td>
+</tr>
 <tr>
 <td style="text-align:left;">
 Indian
@@ -52683,13 +54692,59 @@ Indian
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+1.5353909
+</td>
+<td style="text-align:right;">
+0.2686268
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 1.3419899
 </td>
 <td style="text-align:right;">
 0.1392754
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0032866
+</td>
+<td style="text-align:right;">
+0.9999385
 </td>
 </tr>
 <tr>
@@ -52713,6 +54768,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0006577
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0132746
+</td>
+<td style="text-align:right;">
+0.9995457
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+2.1363885
+</td>
+<td style="text-align:right;">
+-0.1500471
 </td>
 </tr>
 <tr>
@@ -52821,13 +54922,59 @@ Indian
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+2.8228818
+</td>
+<td style="text-align:right;">
+-4.5787086
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 3.4564378
 </td>
 <td style="text-align:right;">
 -5.7626271
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0083392
+</td>
+<td style="text-align:right;">
+1.0006588
 </td>
 </tr>
 <tr>
@@ -52851,6 +54998,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0050585
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0185534
+</td>
+<td style="text-align:right;">
+1.0056503
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+1.6927774
+</td>
+<td style="text-align:right;">
+1.1434585
 </td>
 </tr>
 <tr>
@@ -52959,13 +55152,59 @@ Indian
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+3.0269062
+</td>
+<td style="text-align:right;">
+-2.0033786
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 2.3768977
 </td>
 <td style="text-align:right;">
 -4.8299192
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0065227
+</td>
+<td style="text-align:right;">
+0.9956343
 </td>
 </tr>
 <tr>
@@ -52989,6 +55228,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0054067
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0145914
+</td>
+<td style="text-align:right;">
+1.0045224
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+1.9334292
+</td>
+<td style="text-align:right;">
+0.2114375
 </td>
 </tr>
 <tr>
@@ -53097,13 +55382,59 @@ Indian
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+1.8224143
+</td>
+<td style="text-align:right;">
+4.7655763
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 2.5521002
 </td>
 <td style="text-align:right;">
 5.9071792
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0075174
+</td>
+<td style="text-align:right;">
+0.9991779
 </td>
 </tr>
 <tr>
@@ -53127,6 +55458,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9952751
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0053266
+</td>
+<td style="text-align:right;">
+0.9940355
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+0.6830743
+</td>
+<td style="text-align:right;">
+0.0013928
 </td>
 </tr>
 <tr>
@@ -53235,13 +55612,59 @@ Indian
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+2.6686783
+</td>
+<td style="text-align:right;">
+-0.5013052
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 3.2327337
 </td>
 <td style="text-align:right;">
 -1.2080222
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0026573
+</td>
+<td style="text-align:right;">
+0.9999963
 </td>
 </tr>
 <tr>
@@ -53265,6 +55688,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0024547
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0063712
+</td>
+<td style="text-align:right;">
+0.9995683
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+0.6297983
+</td>
+<td style="text-align:right;">
+0.6358955
 </td>
 </tr>
 <tr>
@@ -53373,13 +55842,59 @@ Indian
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+1.5821315
+</td>
+<td style="text-align:right;">
+0.5306266
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 1.7084040
 </td>
 <td style="text-align:right;">
 -1.0971634
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0024401
+</td>
+<td style="text-align:right;">
+0.9975410
 </td>
 </tr>
 <tr>
@@ -53403,6 +55918,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0021605
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0030217
+</td>
+<td style="text-align:right;">
+1.0020828
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+1.5418055
+</td>
+<td style="text-align:right;">
+-1.2740259
 </td>
 </tr>
 <tr>
@@ -53511,13 +56072,59 @@ Indian
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+3.6025009
+</td>
+<td style="text-align:right;">
+2.7986715
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 2.4527398
 </td>
 <td style="text-align:right;">
 5.3403599
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0059947
+</td>
+<td style="text-align:right;">
+1.0049536
 </td>
 </tr>
 <tr>
@@ -53541,6 +56148,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9956380
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0093910
+</td>
+<td style="text-align:right;">
+0.9935872
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+0.7705401
+</td>
+<td style="text-align:right;">
+-0.9751385
 </td>
 </tr>
 <tr>
@@ -53649,13 +56302,59 @@ Indian
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+3.5796352
+</td>
+<td style="text-align:right;">
+-1.1119590
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 1.6905531
 </td>
 <td style="text-align:right;">
 0.8995135
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0029959
+</td>
+<td style="text-align:right;">
+1.0037914
 </td>
 </tr>
 <tr>
@@ -53679,6 +56378,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9968119
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0046490
+</td>
+<td style="text-align:right;">
+0.9990059
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+2.2356667
+</td>
+<td style="text-align:right;">
+0.0843774
 </td>
 </tr>
 <tr>
@@ -53787,13 +56532,59 @@ N. Atlantic
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+3.3314594
+</td>
+<td style="text-align:right;">
+0.0326959
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 3.6864755
 </td>
 <td style="text-align:right;">
 -0.0136091
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0156899
+</td>
+<td style="text-align:right;">
+0.9995928
 </td>
 </tr>
 <tr>
@@ -53817,6 +56608,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9998684
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0322941
+</td>
+<td style="text-align:right;">
+1.0008099
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+3.5167939
+</td>
+<td style="text-align:right;">
+0.3330465
 </td>
 </tr>
 <tr>
@@ -53925,13 +56762,59 @@ N. Atlantic
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+2.4584928
+</td>
+<td style="text-align:right;">
+-2.0942232
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 2.9743525
 </td>
 <td style="text-align:right;">
 -2.4779484
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0230835
+</td>
+<td style="text-align:right;">
+0.9979106
 </td>
 </tr>
 <tr>
@@ -53955,6 +56838,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0002473
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0506030
+</td>
+<td style="text-align:right;">
+0.9985557
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+1.5012399
+</td>
+<td style="text-align:right;">
+-0.0087493
 </td>
 </tr>
 <tr>
@@ -54063,13 +56992,59 @@ N. Atlantic
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+5.3365210
+</td>
+<td style="text-align:right;">
+-2.3781746
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 4.5807196
 </td>
 <td style="text-align:right;">
 -2.6425977
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0104822
+</td>
+<td style="text-align:right;">
+1.0002442
 </td>
 </tr>
 <tr>
@@ -54093,6 +57068,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9958570
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0133131
+</td>
+<td style="text-align:right;">
+0.9814543
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+2.7352527
+</td>
+<td style="text-align:right;">
+-0.4008083
 </td>
 </tr>
 <tr>
@@ -54201,13 +57222,59 @@ N. Atlantic
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+2.9715915
+</td>
+<td style="text-align:right;">
+2.6950853
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 4.3430704
 </td>
 <td style="text-align:right;">
 2.5051509
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0189818
+</td>
+<td style="text-align:right;">
+1.0027815
 </td>
 </tr>
 <tr>
@@ -54231,6 +57298,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0037837
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0279026
+</td>
+<td style="text-align:right;">
+1.0111480
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+1.3781880
+</td>
+<td style="text-align:right;">
+-0.1271802
 </td>
 </tr>
 <tr>
@@ -54339,13 +57452,59 @@ N. Atlantic
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+2.1619753
+</td>
+<td style="text-align:right;">
+0.0363528
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 3.1817616
 </td>
 <td style="text-align:right;">
 -0.1220870
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0094859
+</td>
+<td style="text-align:right;">
+1.0009307
 </td>
 </tr>
 <tr>
@@ -54369,6 +57528,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0008083
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0306035
+</td>
+<td style="text-align:right;">
+1.0014420
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+1.5034759
+</td>
+<td style="text-align:right;">
+-0.4600591
 </td>
 </tr>
 <tr>
@@ -54477,13 +57682,59 @@ N. Atlantic
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+3.1259216
+</td>
+<td style="text-align:right;">
+-2.1666016
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 2.7052815
 </td>
 <td style="text-align:right;">
 -2.4149582
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0105802
+</td>
+<td style="text-align:right;">
+1.0033337
 </td>
 </tr>
 <tr>
@@ -54507,6 +57758,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0006677
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0179183
+</td>
+<td style="text-align:right;">
+0.9842534
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+2.3723063
+</td>
+<td style="text-align:right;">
+-0.4545830
 </td>
 </tr>
 <tr>
@@ -54615,13 +57912,59 @@ N. Atlantic
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+7.9415147
+</td>
+<td style="text-align:right;">
+3.1178950
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 7.1281814
 </td>
 <td style="text-align:right;">
 3.4634167
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0164631
+</td>
+<td style="text-align:right;">
+1.0031547
 </td>
 </tr>
 <tr>
@@ -54645,6 +57988,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0048604
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0217566
+</td>
+<td style="text-align:right;">
+1.0185418
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+1.4610317
+</td>
+<td style="text-align:right;">
+0.0824273
 </td>
 </tr>
 <tr>
@@ -54753,13 +58142,59 @@ N. Atlantic
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+5.5068149
+</td>
+<td style="text-align:right;">
+1.8389360
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 5.3005704
 </td>
 <td style="text-align:right;">
 1.8472916
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0101391
+</td>
+<td style="text-align:right;">
+0.9994280
 </td>
 </tr>
 <tr>
@@ -54783,6 +58218,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0014251
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0157351
+</td>
+<td style="text-align:right;">
+1.0133270
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+1.4975667
+</td>
+<td style="text-align:right;">
+-0.0463468
 </td>
 </tr>
 <tr>
@@ -54891,13 +58372,59 @@ N. Atlantic
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+5.6890570
+</td>
+<td style="text-align:right;">
+-0.7556823
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 6.2593449
 </td>
 <td style="text-align:right;">
 -0.9725758
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0103804
+</td>
+<td style="text-align:right;">
+1.0003586
 </td>
 </tr>
 <tr>
@@ -54921,6 +58448,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0035063
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0139519
+</td>
+<td style="text-align:right;">
+1.0043511
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+2.1768954
+</td>
+<td style="text-align:right;">
+0.5541417
 </td>
 </tr>
 <tr>
@@ -55029,13 +58602,59 @@ N. Pacific
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+3.1713752
+</td>
+<td style="text-align:right;">
+0.7250073
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 4.6338280
 </td>
 <td style="text-align:right;">
 -0.1223613
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0073538
+</td>
+<td style="text-align:right;">
+0.9982062
 </td>
 </tr>
 <tr>
@@ -55059,6 +58678,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9990988
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0101131
+</td>
+<td style="text-align:right;">
+1.0002798
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+1.8536843
+</td>
+<td style="text-align:right;">
+2.1216507
 </td>
 </tr>
 <tr>
@@ -55167,13 +58832,59 @@ N. Pacific
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+2.7973467
+</td>
+<td style="text-align:right;">
+0.4541584
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 2.9806332
 </td>
 <td style="text-align:right;">
 -0.0628394
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0061809
+</td>
+<td style="text-align:right;">
+0.9929532
 </td>
 </tr>
 <tr>
@@ -55197,6 +58908,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9944274
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0069521
+</td>
+<td style="text-align:right;">
+0.9969324
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+1.4000166
+</td>
+<td style="text-align:right;">
+1.9175755
 </td>
 </tr>
 <tr>
@@ -55305,13 +59062,59 @@ N. Pacific
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+4.0398697
+</td>
+<td style="text-align:right;">
+0.0138951
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 5.4933185
 </td>
 <td style="text-align:right;">
 -2.7533715
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0046618
+</td>
+<td style="text-align:right;">
+0.9936298
 </td>
 </tr>
 <tr>
@@ -55335,6 +59138,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0003003
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0068524
+</td>
+<td style="text-align:right;">
+0.9965649
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+1.5174396
+</td>
+<td style="text-align:right;">
+-1.8024063
 </td>
 </tr>
 <tr>
@@ -55443,13 +59292,59 @@ N. Pacific
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+2.3091640
+</td>
+<td style="text-align:right;">
+-0.6878927
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 2.8283687
 </td>
 <td style="text-align:right;">
 -0.3992048
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0051334
+</td>
+<td style="text-align:right;">
+1.0060975
 </td>
 </tr>
 <tr>
@@ -55473,6 +59368,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0052076
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0081253
+</td>
+<td style="text-align:right;">
+1.0043989
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+1.3633445
+</td>
+<td style="text-align:right;">
+0.0667762
 </td>
 </tr>
 <tr>
@@ -55581,13 +59522,59 @@ N. Pacific
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+1.5231707
+</td>
+<td style="text-align:right;">
+0.0286506
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 2.0223104
 </td>
 <td style="text-align:right;">
 0.0204029
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0045868
+</td>
+<td style="text-align:right;">
+0.9997917
 </td>
 </tr>
 <tr>
@@ -55611,6 +59598,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9998675
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0039622
+</td>
+<td style="text-align:right;">
+0.9996157
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+1.4556986
+</td>
+<td style="text-align:right;">
+-0.2329159
 </td>
 </tr>
 <tr>
@@ -55719,13 +59752,59 @@ N. Pacific
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+1.5339806
+</td>
+<td style="text-align:right;">
+-1.2704785
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 2.2252692
 </td>
 <td style="text-align:right;">
 -2.9708510
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0048870
+</td>
+<td style="text-align:right;">
+1.0008176
 </td>
 </tr>
 <tr>
@@ -55749,6 +59828,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0063129
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0043774
+</td>
+<td style="text-align:right;">
+0.9970988
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+3.0875531
+</td>
+<td style="text-align:right;">
+-2.2473720
 </td>
 </tr>
 <tr>
@@ -55857,13 +59982,59 @@ N. Pacific
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+5.0438213
+</td>
+<td style="text-align:right;">
+0.4873295
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 3.9362856
 </td>
 <td style="text-align:right;">
 4.0920284
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0104450
+</td>
+<td style="text-align:right;">
+1.0076027
 </td>
 </tr>
 <tr>
@@ -55887,6 +60058,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9973219
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0066618
+</td>
+<td style="text-align:right;">
+1.0044582
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+1.2236953
+</td>
+<td style="text-align:right;">
+0.5797952
 </td>
 </tr>
 <tr>
@@ -55995,13 +60212,59 @@ N. Pacific
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+1.7682271
+</td>
+<td style="text-align:right;">
+1.3205739
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 3.2604867
 </td>
 <td style="text-align:right;">
 3.9058408
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0041397
+</td>
+<td style="text-align:right;">
+0.9980386
 </td>
 </tr>
 <tr>
@@ -56025,6 +60288,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9926640
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0052138
+</td>
+<td style="text-align:right;">
+1.0020732
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+1.1754466
+</td>
+<td style="text-align:right;">
+0.1774433
 </td>
 </tr>
 <tr>
@@ -56133,13 +60442,59 @@ N. Pacific
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+2.0820321
+</td>
+<td style="text-align:right;">
+0.5101032
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 2.7134913
 </td>
 <td style="text-align:right;">
 0.4668651
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0039672
+</td>
+<td style="text-align:right;">
+0.9994135
 </td>
 </tr>
 <tr>
@@ -56163,6 +60518,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0000280
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0067290
+</td>
+<td style="text-align:right;">
+1.0005458
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+3.2017878
+</td>
+<td style="text-align:right;">
+0.5935036
 </td>
 </tr>
 <tr>
@@ -56271,13 +60672,59 @@ S. Atlantic
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+2.4088382
+</td>
+<td style="text-align:right;">
+0.4465175
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 2.8604170
 </td>
 <td style="text-align:right;">
 0.5302250
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0147864
+</td>
+<td style="text-align:right;">
+0.9973138
 </td>
 </tr>
 <tr>
@@ -56301,6 +60748,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9972416
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0240394
+</td>
+<td style="text-align:right;">
+0.9956884
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+2.1886435
+</td>
+<td style="text-align:right;">
+3.1877780
 </td>
 </tr>
 <tr>
@@ -56409,13 +60902,59 @@ S. Atlantic
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+9.6626081
+</td>
+<td style="text-align:right;">
+1.4619582
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 5.8241503
 </td>
 <td style="text-align:right;">
 0.3667068
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0098403
+</td>
+<td style="text-align:right;">
+0.9855474
 </td>
 </tr>
 <tr>
@@ -56439,6 +60978,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9911257
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0344531
+</td>
+<td style="text-align:right;">
+0.9998905
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+2.9525204
+</td>
+<td style="text-align:right;">
+1.3909889
 </td>
 </tr>
 <tr>
@@ -56547,13 +61132,59 @@ S. Atlantic
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+7.0880303
+</td>
+<td style="text-align:right;">
+-1.2413013
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 5.4092137
 </td>
 <td style="text-align:right;">
 -2.5732439
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0137991
+</td>
+<td style="text-align:right;">
+0.9939138
 </td>
 </tr>
 <tr>
@@ -56577,6 +61208,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9974669
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0515728
+</td>
+<td style="text-align:right;">
+0.9836613
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+5.8202535
+</td>
+<td style="text-align:right;">
+-2.6150143
 </td>
 </tr>
 <tr>
@@ -56685,13 +61362,59 @@ S. Atlantic
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+9.8826945
+</td>
+<td style="text-align:right;">
+3.3901658
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 5.7778471
 </td>
 <td style="text-align:right;">
 2.4695920
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0270194
+</td>
+<td style="text-align:right;">
+1.0121397
 </td>
 </tr>
 <tr>
@@ -56715,6 +61438,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0147863
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0282610
+</td>
+<td style="text-align:right;">
+0.9848125
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+1.1065339
+</td>
+<td style="text-align:right;">
+0.0480361
 </td>
 </tr>
 <tr>
@@ -56823,13 +61592,59 @@ S. Atlantic
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+3.0712409
+</td>
+<td style="text-align:right;">
+0.0798853
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 1.1911401
 </td>
 <td style="text-align:right;">
 0.0040758
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0051398
+</td>
+<td style="text-align:right;">
+0.9997932
 </td>
 </tr>
 <tr>
@@ -56853,6 +61668,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0001700
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0133374
+</td>
+<td style="text-align:right;">
+1.0001049
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+2.1283530
+</td>
+<td style="text-align:right;">
+-1.3794739
 </td>
 </tr>
 <tr>
@@ -56961,13 +61822,59 @@ S. Atlantic
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+2.5655816
+</td>
+<td style="text-align:right;">
+-1.7570665
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 2.0043336
 </td>
 <td style="text-align:right;">
 -0.2365135
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0100653
+</td>
+<td style="text-align:right;">
+1.0065479
 </td>
 </tr>
 <tr>
@@ -56991,6 +61898,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9998224
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0132271
+</td>
+<td style="text-align:right;">
+0.9909651
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+6.1827804
+</td>
+<td style="text-align:right;">
+0.3301104
 </td>
 </tr>
 <tr>
@@ -57099,13 +62052,59 @@ S. Atlantic
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+7.1604690
+</td>
+<td style="text-align:right;">
+2.9311951
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 5.7454956
 </td>
 <td style="text-align:right;">
 3.4593799
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0287023
+</td>
+<td style="text-align:right;">
+0.9984675
 </td>
 </tr>
 <tr>
@@ -57129,6 +62128,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0037168
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0421944
+</td>
+<td style="text-align:right;">
+0.9966133
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+1.9560587
+</td>
+<td style="text-align:right;">
+0.8642713
 </td>
 </tr>
 <tr>
@@ -57237,13 +62282,59 @@ S. Atlantic
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+1.3377659
+</td>
+<td style="text-align:right;">
+1.3235643
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 2.1756294
 </td>
 <td style="text-align:right;">
 0.1192100
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0090806
+</td>
+<td style="text-align:right;">
+0.9959878
 </td>
 </tr>
 <tr>
@@ -57267,6 +62358,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9992328
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0173109
+</td>
+<td style="text-align:right;">
+1.0069251
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+1.3114310
+</td>
+<td style="text-align:right;">
+0.0152155
 </td>
 </tr>
 <tr>
@@ -57375,13 +62512,59 @@ S. Atlantic
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+1.5256999
+</td>
+<td style="text-align:right;">
+-0.2934211
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 2.1585380
 </td>
 <td style="text-align:right;">
 -0.4428466
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0060901
+</td>
+<td style="text-align:right;">
+0.9999606
 </td>
 </tr>
 <tr>
@@ -57405,6 +62588,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9998886
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0093821
+</td>
+<td style="text-align:right;">
+0.9986376
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+2.8274191
+</td>
+<td style="text-align:right;">
+0.8668421
 </td>
 </tr>
 <tr>
@@ -57513,13 +62742,59 @@ S. Pacific
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+8.5686902
+</td>
+<td style="text-align:right;">
+2.2464595
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 4.6394862
 </td>
 <td style="text-align:right;">
 2.0770613
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0106283
+</td>
+<td style="text-align:right;">
+0.9967763
 </td>
 </tr>
 <tr>
@@ -57543,6 +62818,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9973662
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0359439
+</td>
+<td style="text-align:right;">
+0.9984965
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+1.8115087
+</td>
+<td style="text-align:right;">
+0.1582317
 </td>
 </tr>
 <tr>
@@ -57651,13 +62972,59 @@ S. Pacific
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+3.9924228
+</td>
+<td style="text-align:right;">
+-2.2293289
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 2.8186849
 </td>
 <td style="text-align:right;">
 -1.7299117
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0067719
+</td>
+<td style="text-align:right;">
+0.9994722
 </td>
 </tr>
 <tr>
@@ -57681,6 +63048,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9981938
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0076357
+</td>
+<td style="text-align:right;">
+0.9954096
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+3.9646496
+</td>
+<td style="text-align:right;">
+-0.9780246
 </td>
 </tr>
 <tr>
@@ -57789,13 +63202,59 @@ S. Pacific
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+5.4102467
+</td>
+<td style="text-align:right;">
+-4.1699758
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 4.6502488
 </td>
 <td style="text-align:right;">
 -5.3178726
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0147008
+</td>
+<td style="text-align:right;">
+1.0037260
 </td>
 </tr>
 <tr>
@@ -57819,6 +63278,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0069120
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0084153
+</td>
+<td style="text-align:right;">
+1.0011466
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+2.2242034
+</td>
+<td style="text-align:right;">
+-0.5578898
 </td>
 </tr>
 <tr>
@@ -57927,13 +63432,59 @@ S. Pacific
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+3.4974264
+</td>
+<td style="text-align:right;">
+1.7652167
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 3.3417172
 </td>
 <td style="text-align:right;">
 1.5530038
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0083160
+</td>
+<td style="text-align:right;">
+1.0020859
 </td>
 </tr>
 <tr>
@@ -57957,6 +63508,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0025197
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0085679
+</td>
+<td style="text-align:right;">
+1.0056806
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+1.5282542
+</td>
+<td style="text-align:right;">
+0.2832211
 </td>
 </tr>
 <tr>
@@ -58065,13 +63662,59 @@ S. Pacific
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+2.3080864
+</td>
+<td style="text-align:right;">
+0.7302893
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 2.5610377
 </td>
 <td style="text-align:right;">
 0.4910475
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0056728
+</td>
+<td style="text-align:right;">
+0.9989802
 </td>
 </tr>
 <tr>
@@ -58095,6 +63738,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9998962
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0073616
+</td>
+<td style="text-align:right;">
+1.0010256
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+1.9972720
+</td>
+<td style="text-align:right;">
+-0.6427604
 </td>
 </tr>
 <tr>
@@ -58203,13 +63892,59 @@ S. Pacific
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+3.0252882
+</td>
+<td style="text-align:right;">
+-0.9197405
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 2.6914748
 </td>
 <td style="text-align:right;">
 -2.7956901
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0075849
+</td>
+<td style="text-align:right;">
+1.0024642
 </td>
 </tr>
 <tr>
@@ -58233,6 +63968,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 1.0088555
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0116323
+</td>
+<td style="text-align:right;">
+0.9938146
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+3.3475156
+</td>
+<td style="text-align:right;">
+0.5785555
 </td>
 </tr>
 <tr>
@@ -58341,13 +64122,59 @@ S. Pacific
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+5.3444236
+</td>
+<td style="text-align:right;">
+4.8777854
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 3.6135539
 </td>
 <td style="text-align:right;">
 4.8656204
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0125159
+</td>
+<td style="text-align:right;">
+0.9978369
 </td>
 </tr>
 <tr>
@@ -58371,6 +64198,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9960631
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0109160
+</td>
+<td style="text-align:right;">
+1.0002316
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+1.2172835
+</td>
+<td style="text-align:right;">
+0.7358118
 </td>
 </tr>
 <tr>
@@ -58479,13 +64352,59 @@ S. Pacific
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+2.4234204
+</td>
+<td style="text-align:right;">
+1.3491000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 4.5422088
 </td>
 <td style="text-align:right;">
 2.5728304
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0045513
+</td>
+<td style="text-align:right;">
+0.9972489
 </td>
 </tr>
 <tr>
@@ -58509,6 +64428,52 @@ phosphate
 </td>
 <td style="text-align:right;">
 0.9930335
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0132755
+</td>
+<td style="text-align:right;">
+1.0088039
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_nitrate
+</td>
+<td style="text-align:right;">
+1.3732743
+</td>
+<td style="text-align:right;">
+0.1559236
 </td>
 </tr>
 <tr>
@@ -58617,13 +64582,59 @@ S. Pacific
 full
 </td>
 <td style="text-align:left;">
-cstar_total
+cstar_total_nitrate
+</td>
+<td style="text-align:right;">
+1.9972688
+</td>
+<td style="text-align:right;">
+0.3178610
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+cstar_total_phosphate
 </td>
 <td style="text-align:right;">
 2.0109284
 </td>
 <td style="text-align:right;">
 0.5202557
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:right;">
+0.0050977
+</td>
+<td style="text-align:right;">
+0.9994467
 </td>
 </tr>
 <tr>
@@ -58649,12 +64660,35 @@ phosphate
 0.9984722
 </td>
 </tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:right;">
+0.0095306
+</td>
+<td style="text-align:right;">
+0.9989008
+</td>
+</tr>
 </tbody>
 </table>
 </div>
 <pre class="r"><code>xover_cruise_decade_all %&gt;%
   filter(parameter_coverage == &quot;full&quot;,
-         parameter == &quot;cstar_total&quot;,
+         parameter %in% c(&quot;cstar_total_phosphate&quot;, &quot;cstar_total_nitrate&quot;),
          basin == &quot;Indian&quot;,
          decade != &quot;2010-2020&quot;) %&gt;%
   ggplot(aes(decade_A,
@@ -58666,7 +64700,8 @@ phosphate
   scale_size(name = &quot;Cruise size&quot;) +
   labs(y = &quot;Mean C* xover offset (µmol/kg)&quot;,
        x = &quot;Cruise decade&quot;) +
-  facet_grid(decade ~ ., scales = &quot;free_y&quot;)</code></pre>
+  facet_grid(decade ~ parameter, scales = &quot;free_y&quot;) +
+  scale_x_discrete(guide = guide_axis(n.dodge = 2))</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/GLODAP_RG_cstar_offsets-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-GLODAP_RG_cstar_offsets-1">
@@ -58707,7 +64742,7 @@ jens-daniel-mueller
 </div>
 <pre class="r"><code>xover_cruise_decade_all %&gt;%
   filter(parameter_coverage == &quot;full&quot;,
-         parameter == &quot;cstar_total&quot;,
+         parameter %in% c(&quot;cstar_total_phosphate&quot;, &quot;cstar_total_nitrate&quot;),
          basin == &quot;N. Pacific&quot;,
          decade != &quot;1989-1999&quot;) %&gt;%
   ggplot(aes(decade_A,
@@ -58719,7 +64754,8 @@ jens-daniel-mueller
   scale_size(name = &quot;Cruise size&quot;) +
   labs(y = &quot;Mean C* xover offset (µmol/kg)&quot;,
        x = &quot;Cruise decade&quot;) +
-  facet_grid(decade ~ ., scales = &quot;free_y&quot;)</code></pre>
+  facet_grid(decade ~ parameter, scales = &quot;free_y&quot;) +
+  scale_x_discrete(guide = guide_axis(n.dodge = 2))</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/GLODAP_RG_cstar_offsets-2.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-GLODAP_RG_cstar_offsets-2">
@@ -58758,19 +64794,17 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>hline_intercept &lt;- hline_intercept %&gt;% 
-  filter(parameter %in% c(&quot;cstar_tco2&quot;, &quot;cstar_talk&quot;, &quot;cstar_phosphate&quot;))
-
-xover_cruise_decade_all %&gt;%
+<pre class="r"><code>xover_cruise_decade_all %&gt;%
   filter(
     parameter_coverage == &quot;full&quot;,
-    parameter %in% c(&quot;cstar_tco2&quot;, &quot;cstar_talk&quot;, &quot;cstar_phosphate&quot;),
+    parameter %in% parameter_print,
     basin == &quot;Indian&quot;,
     decade != &quot;2010-2020&quot;
   ) %&gt;%
   ggplot(aes(decade_A,
              offset_adj_mean_weighted)) +
-  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_hline(data = hline_intercept %&gt;% filter(parameter %in% parameter_print),
+             aes(yintercept = intercept)) +
   geom_boxplot() +
   geom_point(aes(size = n_A), alpha = 0.3) +
   scale_size(name = &quot;Cruise size&quot;) +
@@ -58820,13 +64854,14 @@ jens-daniel-mueller
 <pre class="r"><code>xover_cruise_decade_all %&gt;%
   filter(
     parameter_coverage == &quot;full&quot;,
-    parameter %in% c(&quot;cstar_tco2&quot;, &quot;cstar_talk&quot;, &quot;cstar_phosphate&quot;),
-         basin == &quot;N. Pacific&quot;,
-         decade != &quot;1989-1999&quot;
+    parameter %in% parameter_print,
+    basin == &quot;N. Pacific&quot;,
+    decade != &quot;1989-1999&quot;
   ) %&gt;%
   ggplot(aes(decade_A,
              offset_adj_mean_weighted)) +
-  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_hline(data = hline_intercept %&gt;% filter(parameter %in% parameter_print),
+             aes(yintercept = intercept)) +
   geom_boxplot() +
   geom_point(aes(size = n_A), alpha = 0.3) +
   scale_size(name = &quot;Cruise size&quot;) +
@@ -58898,8 +64933,54 @@ offset_test %&gt;%
 </div>
 </div>
 </div>
-<div id="rv-activity" class="section level1" number="8">
-<h1><span class="header-section-number">8</span> RV activity</h1>
+<div id="data-source" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Data source</h1>
+<div id="country" class="section level2" number="8.1">
+<h2><span class="header-section-number">8.1</span> country</h2>
+<pre class="r"><code>GLODAP_counts &lt;- GLODAP %&gt;%
+  mutate(decade = m_grid_decade(year),
+         .after = year) %&gt;% 
+  filter(!is.na(decade))
+
+GLODAP_counts &lt;- GLODAP_counts %&gt;% 
+  mutate(code = str_sub(cruise_expocode, 1, 2))
+
+GLODAP_counts &lt;- left_join(GLODAP_counts,
+                           countrylist %&gt;% rename(country = country_name))
+
+country_activity &lt;- GLODAP_counts %&gt;% 
+  count(decade, basin_AIP, country) %&gt;% 
+  group_by(decade, basin_AIP) %&gt;% 
+  mutate(n_total = sum(n)) %&gt;% 
+  ungroup() %&gt;% 
+  mutate(n_prop = 100* n / n_total)
+
+country_activity &lt;-country_activity %&gt;% 
+  group_by(decade, basin_AIP) %&gt;% 
+  mutate(rank = rank(-n_prop)) %&gt;% 
+  ungroup()
+
+country_activity %&gt;%
+  ggplot(aes(rank, n_prop)) +
+  geom_line() +
+  geom_point() +
+  geom_label_repel(
+    data = country_activity %&gt;% filter(n_prop &gt; 10),
+    aes(rank, n_prop, label = country, col = country),
+    size = 2,
+    min.segment.length = 0,
+    nudge_x = 8,
+    nudge_y = 10,
+    force = 2
+  ) +
+  scale_color_brewer(palette = &quot;Dark2&quot;, guide = &quot;none&quot;) +
+  labs(y = &quot;proportion of tco2 samples (%)&quot;) +
+  facet_grid(decade ~ basin_AIP)</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/country_activity-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>rm(country_activity)</code></pre>
+</div>
+<div id="rv" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> RV</h2>
 <pre class="r"><code>GLODAP_counts &lt;- GLODAP %&gt;%
   mutate(decade = m_grid_decade(year),
          .after = year) %&gt;% 
@@ -59024,6 +65105,7 @@ jens-daniel-mueller
 </div>
 <pre class="r"><code>rm(RV_activity)</code></pre>
 </div>
+</div>
 <div id="largest-cruises" class="section level1" number="9">
 <h1><span class="header-section-number">9</span> Largest cruises</h1>
 <pre class="r"><code>large_cruises &lt;- GLODAP_counts %&gt;% 
@@ -59041,7 +65123,7 @@ large_cruises &lt;- large_cruises %&gt;%
 
 large_cruises %&gt;%
   group_split(decade, basin_AIP) %&gt;%
-  head(1) %&gt;%
+  # head(1) %&gt;%
   map(
     ~
       ggplot(data = .x,
@@ -59149,6 +65231,30 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[2]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/large_cruises-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[3]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/large_cruises-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[4]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/large_cruises-4.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[5]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/large_cruises-5.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[6]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/large_cruises-6.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[7]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/large_cruises-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[8]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/large_cruises-8.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[9]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/large_cruises-9.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>large_cruises %&gt;%
   filter(rank &lt;= 5) %&gt;% 
   select(decade, basin_AIP, rank, n_prop, cruise_expocode) %&gt;% 
