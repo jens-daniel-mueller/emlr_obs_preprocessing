@@ -277,6 +277,28 @@ CRM_ref_values <-
 
 ```
 
+## Others
+
+```{r read_other_data}
+
+countrylist <-
+  read_csv(
+    paste0(
+      path_glodapv2_2021,
+      "/countrylist.txt"
+    ),
+    skip = 9,
+    col_names = FALSE
+  )
+
+countrylist <- countrylist %>% 
+  mutate(code = str_sub(X1,1,2),
+         country_name = str_sub(X1, start = 6)) %>% 
+  select(-X1)
+
+```
+
+
 # Data preparation
 
 ## Correct talk qc flag
@@ -1561,7 +1583,9 @@ m_xover_reverse <- function(df) {
       ),
       offset_adj = if_else(
         parameter %in% c("salinity", "talk", "tco2",
-                         "cstar_total", "cstar_phosphate", "cstar_talk", "cstar_tco2", "cstar_tco2_talk"),
+                         "cstar_total_phosphate", "cstar_phosphate",
+                         "cstar_total_nitrate", "cstar_nitrate",
+                         "cstar_talk", "cstar_tco2", "cstar_tco2_talk"),
         -offset_adj,
         1 / offset_adj
       )
@@ -2268,29 +2292,25 @@ xover_basin <- xover_basin %>%
              parameter,
              parameter_coverage) %>%
     summarise(
-      # offset_adj_sd = sd(offset_adj, na.rm = TRUE),
       offset_adj = mean(offset_adj, na.rm = TRUE)
     ) %>%
     ungroup()
 
-# xover_basin %>% 
-#   ggplot(aes(offset_adj_sd)) +
-#   geom_histogram() +
-#   facet_grid(basin ~ parameter, scales = "free_x")
-
-xover_basin <- xover_basin %>% 
-  filter(parameter %in% c("tco2", "talk", "phosphate")) %>% 
+xover_basin <- xover_basin %>%
+  filter(parameter %in%
+           c("tco2", "talk", "phosphate", "nitrate", "silicate")) %>%
   pivot_wider(names_from = parameter,
               values_from = offset_adj)
 
-GLODAP_deep_phosphate <- GLODAP %>% 
+GLODAP_deep_nuts <- GLODAP %>% 
   filter(depth > 1500) %>% 
   group_by(basin) %>% 
-  summarise(phosphate_mean = mean(phosphate, na.rm = TRUE)) %>% 
+  summarise(phosphate_mean = mean(phosphate, na.rm = TRUE),
+            nitrate_mean = mean(nitrate, na.rm = TRUE)) %>% 
   ungroup()
 
 xover_basin <- full_join(xover_basin,
-                               GLODAP_deep_phosphate)
+                               GLODAP_deep_nuts)
 
 rm(GLODAP_deep_phosphate)
 
@@ -2299,27 +2319,30 @@ xover_basin <- xover_basin %>%
     cstar_tco2 = tco2,
     cstar_talk = -0.5 * talk,
     phosphate_fac = phosphate - 1,
-    cstar_phosphate = -117 * phosphate_fac * phosphate_mean - 16 * 0.5 * phosphate_fac * phosphate_mean
+    nitrate_fac = nitrate - 1,
+    cstar_phosphate = -117 * phosphate_fac * phosphate_mean - 16 * 0.5 * phosphate_fac * phosphate_mean,
+    cstar_nitrate = -117/16 * nitrate_fac * nitrate_mean - 0.5 * nitrate_fac * nitrate_mean
   ) %>% 
-  select(-phosphate_fac)
+  select(-c(phosphate_fac, nitrate_fac))
 
 
 xover_basin %>%
-  select(starts_with("cstar")) %>% 
+  select(starts_with("cstar")) %>%
   pivot_longer(starts_with("cstar"),
-              names_to = "parameter",
-              values_to = "value") %>% 
+               names_to = "parameter",
+               values_to = "value") %>%
   ggplot(aes(value)) +
   geom_histogram() +
-  facet_wrap(~parameter, scales = "free_x")
+  facet_wrap( ~ parameter, scales = "free_x")
 
 xover_basin <- xover_basin %>% 
-  select(-c(phosphate_mean, tco2, talk))
+  select(-c(phosphate_mean, nitrate_mean, tco2, talk))
 
 xover_basin <- xover_basin %>% 
-  mutate(cstar_total = cstar_tco2 + cstar_talk + cstar_phosphate,
+  mutate(cstar_total_phosphate = cstar_tco2 + cstar_talk + cstar_phosphate,
+         cstar_total_nitrate = cstar_tco2 + cstar_talk + cstar_nitrate,
          cstar_tco2_talk = cstar_tco2 + cstar_talk) %>% 
-  pivot_longer(phosphate:cstar_tco2_talk,
+  pivot_longer(nitrate:cstar_tco2_talk,
                names_to = "parameter",
                values_to = "offset_adj")
 
@@ -2416,7 +2439,7 @@ xover_basin_annual %>%
 
 The aim of the decadal scale analysis is to investigate mean crossover offsets between all cruises from two decades. 
 
-```{r crossover_analysis_5_basin_decadal, fig.asp=1.5, results='asis'}
+```{r crossover_analysis_5_basin_decadal, fig.asp=2, results='asis'}
 
 expocodes_basin <- unique(c(xover_basin$cruise_A, xover_basin$cruise_B)) 
 
@@ -2522,7 +2545,7 @@ for (i_cruise_expocode in expocodes_basin) {
 
 hline_intercept <-
   tibble(parameter = unique(xover_basin$parameter)) %>%
-  mutate(intercept = if_else(parameter %in% c("phosphate"),
+  mutate(intercept = if_else(parameter %in% c("phosphate", "nitrate", "silicate"),
                              1,
                              0))
 
@@ -2574,6 +2597,40 @@ xover_cruise_long_term_all %>%
       scale_color_brewer(palette = "Set1") +
       facet_grid(parameter ~ ., scales = "free_y")
   )
+xover_cruise_long_term_all %>%
+  filter(parameter_coverage == "full",
+         basin == "N. Pacific") %>%
+  group_split(basin) %>%
+  # head(1) %>%
+  map(
+    ~ ggplot() +
+      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_point(
+        data = .x %>% filter(!(
+          str_sub(cruise_A, 1, 2) %in% c("49")
+        )),
+        aes(
+          date_A,
+          offset_adj_mean_weighted,
+          size = n_A,
+          color = "other cruises"
+        ),
+        alpha = 0.3
+      ) +
+      geom_point(
+        data = .x %>% filter(str_sub(cruise_A, 1, 2) %in% c("49")),
+        aes(
+          date_A,
+          offset_adj_mean_weighted,
+          size = n_A,
+          color = "49"
+        ),
+        alpha = 0.3
+      ) +
+      labs(title = paste(.x$basin, "| full")) +
+      scale_color_brewer(palette = "Set1") +
+      facet_grid(parameter ~ ., scales = "free_y")
+  )
 
 xover_cruise_decade_all %>%
   filter(parameter_coverage == "full") %>% 
@@ -2592,7 +2649,7 @@ xover_cruise_decade_all %>%
 
 ```
 
-```{r xover_cruise_mean_by_cruise_size, fig.asp=1.5}
+```{r xover_cruise_mean_by_cruise_size, fig.asp=2}
 
 xover_cruise_long_term_all <- xover_cruise_long_term_all %>%
   mutate(decade_A = m_grid_decade(year(date_A)))
@@ -2637,12 +2694,14 @@ xover_cruise_decade_all %>%
 
 ```{r xover_cruise_mean_by_cruise_size_PO, fig.asp= 0.5}
 
+parameter_print <- c("cstar_tco2", "cstar_talk", "cstar_phosphate", "cstar_nitrate")
+
 xover_cruise_decade_all %>%
   filter(
     parameter_coverage == "full",
-    parameter %in% c("cstar_tco2", "cstar_talk", "cstar_phosphate"),
-         basin == "N. Pacific",
-         decade != "1989-1999"
+    parameter %in% parameter_print,
+    basin == "N. Pacific",
+    decade != "1989-1999"
   ) %>%
   group_split(basin) %>%
   # head(1) %>%
@@ -2656,7 +2715,10 @@ xover_cruise_decade_all %>%
         fill = decade_A
       )
     ) +
-      geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+      geom_hline(
+        data = hline_intercept %>% filter(parameter %in% parameter_print),
+        aes(yintercept = intercept)
+      ) +
       geom_point(alpha = 0.5, shape = 21) +
       scale_fill_discrete_sequential(palette = "viridis") +
       labs(title = paste(.x$basin, "| full")) +
@@ -2667,7 +2729,7 @@ xover_cruise_decade_all %>%
 xover_cruise_decade_all %>%
   filter(
     parameter_coverage == "full",
-    parameter %in% c("cstar_total"),
+    parameter %in% c("cstar_total_phosphate"),
          basin == "N. Pacific",
          decade == "2000-2009"
   ) %>%
@@ -2697,7 +2759,7 @@ xover_cruise_decade_all %>%
 NPO_2010_small_cruises <- xover_cruise_decade_all %>%
   filter(
     parameter_coverage == "full",
-    parameter %in% c("cstar_total"),
+    parameter %in% c("cstar_total_phosphate"),
     basin == "N. Pacific",
     decade == "2000-2009",
     n_A < 500,
@@ -2737,107 +2799,107 @@ xover_cruise_decade_all %>%
 
 
 # retrieve subbasin expocodes
-  expocodes_basin <- GLODAP %>%
-    filter(basin == "N. Pacific",
-           !is.na(decade)) %>%
-    count(cruise_expocode)
+expocodes_basin <- GLODAP %>%
+  filter(basin == "N. Pacific",
+         !is.na(decade)) %>%
+  count(cruise_expocode)
 
-  # remove expocodes with observations outside decades
-  expocodes_basin_out <- GLODAP %>%
-    filter(basin == i_basin,
-           is.na(decade)) %>%
-    distinct(cruise_expocode) %>% 
-    pull()
-  
-  expocodes_basin <- expocodes_basin %>% 
-    filter(!(cruise_expocode %in% expocodes_basin_out))
-  
-  rm(expocodes_basin_out)
-  
-  
-  GLODAP_basin <- GLODAP %>% 
-    filter(cruise_expocode %in% expocodes_basin$cruise_expocode)
+# remove expocodes with observations outside decades
+expocodes_basin_out <- GLODAP %>%
+  filter(basin == i_basin,
+         is.na(decade)) %>%
+  distinct(cruise_expocode) %>%
+  pull()
 
-  # subset cruise with all qc flag = 1
-  expocodes_basin_qc <- GLODAP_basin %>%
-    select(cruise_expocode, ends_with("qc")) %>%
-    filter(if_all(ends_with("qc"), ~ . == 1)) %>%
-    distinct(cruise_expocode) %>%
-    pull(cruise_expocode)
-  
-  # subset cruise with all f flag = 2
-  expocodes_basin_f <- GLODAP_basin %>%
-    select(cruise_expocode, ends_with("f")) %>%
-    filter(if_all(ends_with("f"), ~ . == 2)) %>%
-    distinct(cruise_expocode) %>%
-    pull(cruise_expocode)
-  
-  # join qc and f cruises and identify lower number of observations
-  expocodes_basin <- expocodes_basin %>%
-    mutate(
-      parameter_coverage = if_else(
-        cruise_expocode %in% expocodes_basin_qc &
-          cruise_expocode %in% expocodes_basin_f,
-        "full",
-        "partial"
-      )
+expocodes_basin <- expocodes_basin %>%
+  filter(!(cruise_expocode %in% expocodes_basin_out))
+
+rm(expocodes_basin_out)
+
+
+GLODAP_basin <- GLODAP %>%
+  filter(cruise_expocode %in% expocodes_basin$cruise_expocode)
+
+# subset cruise with all qc flag = 1
+expocodes_basin_qc <- GLODAP_basin %>%
+  select(cruise_expocode, ends_with("qc")) %>%
+  filter(if_all(ends_with("qc"), ~ . == 1)) %>%
+  distinct(cruise_expocode) %>%
+  pull(cruise_expocode)
+
+# subset cruise with all f flag = 2
+expocodes_basin_f <- GLODAP_basin %>%
+  select(cruise_expocode, ends_with("f")) %>%
+  filter(if_all(ends_with("f"), ~ . == 2)) %>%
+  distinct(cruise_expocode) %>%
+  pull(cruise_expocode)
+
+# join qc and f cruises and identify lower number of observations
+expocodes_basin <- expocodes_basin %>%
+  mutate(
+    parameter_coverage = if_else(
+      cruise_expocode %in% expocodes_basin_qc &
+        cruise_expocode %in% expocodes_basin_f,
+      "full",
+      "partial"
     )
-  
-  rm(expocodes_basin_f, expocodes_basin_qc)
-  
-  GLODAP_basin_grid <- GLODAP_basin %>%
-    count(cruise_expocode, lat, lon, decade)
-  
+  )
 
-  GLODAP_basin_grid <- full_join(GLODAP_basin_grid %>% select(-n),
-                                 expocodes_basin)
-  
-  map +
-    geom_tile(data = GLODAP_basin_grid %>% filter(parameter_coverage == "full"),
-              aes(lon, lat, fill = "full")) +
-    scale_fill_brewer(palette = "Set1") +
-    labs(title = i_basin) +
-    facet_grid(decade ~ .) +
-    theme(legend.title = element_blank())
-  
-  expocodes_basin_removed_40S <- GLODAP_basin_grid %>%
-    filter(lat < -40) %>%
-    distinct(cruise_expocode) %>%
-    pull()
-  
-  expocodes_basin <- expocodes_basin %>% 
-    filter(!(cruise_expocode %in% expocodes_basin_removed_40S))
-  
-  expocodes_xover_NP <- expocodes_basin
-  
-  map +
-    geom_tile(
-      data = GLODAP_basin_grid %>%
-        filter(
-          parameter_coverage == "full" &
-            cruise_expocode %in% expocodes_basin$cruise_expocode &
-            decade == "2010-2020"
-        ),
-      aes(lon, lat, fill = "all cruises")
-    ) +
-    geom_tile(
-      data = GLODAP_basin_grid %>%
-        filter(
-          parameter_coverage == "full" &
-            cruise_expocode %in% expocodes_basin$cruise_expocode &
-            cruise_expocode %in% NPO_2010_small_cruises &
-            decade == "2010-2020"
-        ),
-      aes(lon, lat, fill = "n_A < 500")
-    ) +
-    coord_quickmap(xlim = c(100,280),
-                   ylim = c(-20,60))+
-    # scale_fill_brewer(palette = "Dark2") +
-    scale_fill_manual(values = c("#8dd3c7", "#e41a1c")) +
-    labs(title = i_basin,
-         subtitle = "Maintained cruises") +
-    facet_grid(decade ~ .) +
-    theme(legend.title = element_blank())
+rm(expocodes_basin_f, expocodes_basin_qc)
+
+GLODAP_basin_grid <- GLODAP_basin %>%
+  count(cruise_expocode, lat, lon, decade)
+
+
+GLODAP_basin_grid <- full_join(GLODAP_basin_grid %>% select(-n),
+                               expocodes_basin)
+
+map +
+  geom_tile(data = GLODAP_basin_grid %>% filter(parameter_coverage == "full"),
+            aes(lon, lat, fill = "full")) +
+  scale_fill_brewer(palette = "Set1") +
+  labs(title = i_basin) +
+  facet_grid(decade ~ .) +
+  theme(legend.title = element_blank())
+
+expocodes_basin_removed_40S <- GLODAP_basin_grid %>%
+  filter(lat < -40) %>%
+  distinct(cruise_expocode) %>%
+  pull()
+
+expocodes_basin <- expocodes_basin %>%
+  filter(!(cruise_expocode %in% expocodes_basin_removed_40S))
+
+expocodes_xover_NP <- expocodes_basin
+
+map +
+  geom_tile(
+    data = GLODAP_basin_grid %>%
+      filter(
+        parameter_coverage == "full" &
+          cruise_expocode %in% expocodes_basin$cruise_expocode &
+          decade == "2010-2020"
+      ),
+    aes(lon, lat, fill = "all cruises")
+  ) +
+  geom_tile(
+    data = GLODAP_basin_grid %>%
+      filter(
+        parameter_coverage == "full" &
+          cruise_expocode %in% expocodes_basin$cruise_expocode &
+          cruise_expocode %in% NPO_2010_small_cruises &
+          decade == "2010-2020"
+      ),
+    aes(lon, lat, fill = "n_A < 500")
+  ) +
+  coord_quickmap(xlim = c(100, 280),
+                 ylim = c(-20, 60)) +
+  # scale_fill_brewer(palette = "Dark2") +
+  scale_fill_manual(values = c("#8dd3c7", "#e41a1c")) +
+  labs(title = i_basin,
+       subtitle = "Maintained cruises") +
+  facet_grid(decade ~ .) +
+  theme(legend.title = element_blank())
 
 ```
 
@@ -2845,7 +2907,7 @@ xover_cruise_decade_all %>%
 
 ### Decadal averages
 
-```{r xover_decadal_averages, fig.asp=1.5}
+```{r xover_decadal_averages, fig.asp=2}
 
 xover_cruise_long_term_all %>%
   filter(parameter_coverage == "full") %>%
@@ -2862,6 +2924,7 @@ xover_cruise_long_term_all %>%
       # coord_cartesian(ylim = c(-10,10)) +
       facet_grid(parameter ~ ., scales = "free_y")
   )
+
 
 xover_cruise_long_term_all %>%
   group_by(basin, decade_A, parameter_coverage, parameter) %>%
@@ -2880,7 +2943,7 @@ xover_cruise_long_term_all %>%
       ymax = offset_adj_mean_weighted + offset_adj_sd
     )
   ) +
-    geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
   geom_linerange() +
   geom_point() +
   facet_grid(parameter ~ basin, scales = "free_y") +
@@ -2951,7 +3014,7 @@ xover_cruise_decade_all_stats %>%
 
 xover_cruise_decade_all %>%
   filter(parameter_coverage == "full",
-         parameter == "cstar_total") %>%
+         parameter %in% c("cstar_total_phosphate", "cstar_total_nitrate")) %>%
   ggplot(aes(basin,
              offset_adj_mean_weighted,
              col = decade_A)) +
@@ -2962,11 +3025,11 @@ xover_cruise_decade_all %>%
                      name = "Cruise decade") +
   scale_size(name = "Cruise size") +
   labs(y = "Mean C* xover offset (µmol/kg)") +
-  facet_grid(decade ~ ., scales = "free_y")
-
+  facet_grid(decade ~ parameter, scales = "free_y") +
+  scale_x_discrete(guide = guide_axis(n.dodge = 2))
 
 xover_cruise_decade_all_stats %>%
-  filter(parameter == "cstar_total") %>%
+  filter(parameter %in% c("cstar_total_phosphate", "cstar_total_nitrate")) %>%
   ggplot(
     aes(
       basin,
@@ -2981,20 +3044,22 @@ xover_cruise_decade_all_stats %>%
   geom_point(position = position_dodge(width = 0.5)) +
   scale_color_brewer(palette = "Set1",
                      name = "Cruise decade") +
-  facet_grid(decade ~ ., scales = "free_y") +
-  labs(y = "Mean C* xover offset (µmol/kg)")
+  facet_grid(decade ~ parameter, scales = "free_y") +
+  labs(y = "Mean C* xover offset (µmol/kg)") +
+  scale_x_discrete(guide = guide_axis(n.dodge = 2))
 
 xover_cruise_decade_all_stats %>% 
   kable() %>%
   kable_styling() %>%
   scroll_box(height = "300px")
+
 ```
 
 ```{r GLODAP_RG_cstar_offsets}
 
 xover_cruise_decade_all %>%
   filter(parameter_coverage == "full",
-         parameter == "cstar_total",
+         parameter %in% c("cstar_total_phosphate", "cstar_total_nitrate"),
          basin == "Indian",
          decade != "2010-2020") %>%
   ggplot(aes(decade_A,
@@ -3006,11 +3071,12 @@ xover_cruise_decade_all %>%
   scale_size(name = "Cruise size") +
   labs(y = "Mean C* xover offset (µmol/kg)",
        x = "Cruise decade") +
-  facet_grid(decade ~ ., scales = "free_y")
+  facet_grid(decade ~ parameter, scales = "free_y") +
+  scale_x_discrete(guide = guide_axis(n.dodge = 2))
 
 xover_cruise_decade_all %>%
   filter(parameter_coverage == "full",
-         parameter == "cstar_total",
+         parameter %in% c("cstar_total_phosphate", "cstar_total_nitrate"),
          basin == "N. Pacific",
          decade != "1989-1999") %>%
   ggplot(aes(decade_A,
@@ -3022,7 +3088,8 @@ xover_cruise_decade_all %>%
   scale_size(name = "Cruise size") +
   labs(y = "Mean C* xover offset (µmol/kg)",
        x = "Cruise decade") +
-  facet_grid(decade ~ ., scales = "free_y")
+  facet_grid(decade ~ parameter, scales = "free_y") +
+  scale_x_discrete(guide = guide_axis(n.dodge = 2))
 
 
 ```
@@ -3030,19 +3097,17 @@ xover_cruise_decade_all %>%
 
 ```{r GLODAP_RG_parameter_offsets_IO, fig.asp=1}
 
-hline_intercept <- hline_intercept %>% 
-  filter(parameter %in% c("cstar_tco2", "cstar_talk", "cstar_phosphate"))
-
 xover_cruise_decade_all %>%
   filter(
     parameter_coverage == "full",
-    parameter %in% c("cstar_tco2", "cstar_talk", "cstar_phosphate"),
+    parameter %in% parameter_print,
     basin == "Indian",
     decade != "2010-2020"
   ) %>%
   ggplot(aes(decade_A,
              offset_adj_mean_weighted)) +
-  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_hline(data = hline_intercept %>% filter(parameter %in% parameter_print),
+             aes(yintercept = intercept)) +
   geom_boxplot() +
   geom_point(aes(size = n_A), alpha = 0.3) +
   scale_size(name = "Cruise size") +
@@ -3051,17 +3116,19 @@ xover_cruise_decade_all %>%
   labs(y = "Mean C* xover offset (µmol/kg)",
        x = "Cruise decade") +
   scale_x_discrete(guide = guide_axis(n.dodge = 2))
+
 
 xover_cruise_decade_all %>%
   filter(
     parameter_coverage == "full",
-    parameter %in% c("cstar_tco2", "cstar_talk", "cstar_phosphate"),
-         basin == "N. Pacific",
-         decade != "1989-1999"
+    parameter %in% parameter_print,
+    basin == "N. Pacific",
+    decade != "1989-1999"
   ) %>%
   ggplot(aes(decade_A,
              offset_adj_mean_weighted)) +
-  geom_hline(data = hline_intercept, aes(yintercept = intercept)) +
+  geom_hline(data = hline_intercept %>% filter(parameter %in% parameter_print),
+             aes(yintercept = intercept)) +
   geom_boxplot() +
   geom_point(aes(size = n_A), alpha = 0.3) +
   scale_size(name = "Cruise size") +
@@ -3070,7 +3137,6 @@ xover_cruise_decade_all %>%
   labs(y = "Mean C* xover offset (µmol/kg)",
        x = "Cruise decade") +
   scale_x_discrete(guide = guide_axis(n.dodge = 2))
-
 
 
 
@@ -3110,7 +3176,59 @@ offset_test %>%
 
 
 
-# RV activity
+# Data source
+
+## country
+
+```{r country_activity}
+
+GLODAP_counts <- GLODAP %>%
+  mutate(decade = m_grid_decade(year),
+         .after = year) %>% 
+  filter(!is.na(decade))
+
+GLODAP_counts <- GLODAP_counts %>% 
+  mutate(code = str_sub(cruise_expocode, 1, 2))
+
+GLODAP_counts <- left_join(GLODAP_counts,
+                           countrylist %>% rename(country = country_name))
+
+country_activity <- GLODAP_counts %>% 
+  count(decade, basin_AIP, country) %>% 
+  group_by(decade, basin_AIP) %>% 
+  mutate(n_total = sum(n)) %>% 
+  ungroup() %>% 
+  mutate(n_prop = 100* n / n_total)
+
+country_activity <-country_activity %>% 
+  group_by(decade, basin_AIP) %>% 
+  mutate(rank = rank(-n_prop)) %>% 
+  ungroup()
+
+country_activity %>%
+  ggplot(aes(rank, n_prop)) +
+  geom_line() +
+  geom_point() +
+  geom_label_repel(
+    data = country_activity %>% filter(n_prop > 10),
+    aes(rank, n_prop, label = country, col = country),
+    size = 2,
+    min.segment.length = 0,
+    nudge_x = 8,
+    nudge_y = 10,
+    force = 2
+  ) +
+  scale_color_brewer(palette = "Dark2", guide = "none") +
+  labs(y = "proportion of tco2 samples (%)") +
+  facet_grid(decade ~ basin_AIP)
+
+rm(country_activity)
+
+```
+
+
+
+## RV
 
 ```{r RV_activity}
 
@@ -3148,8 +3266,6 @@ rm(RV_activity)
 
 ```
 
-
-
 # Largest cruises
 
 ```{r large_cruises, fig.asp=0.5}
@@ -3169,7 +3285,7 @@ large_cruises <- large_cruises %>%
 
 large_cruises %>%
   group_split(decade, basin_AIP) %>%
-  head(1) %>%
+  # head(1) %>%
   map(
     ~
       ggplot(data = .x,
