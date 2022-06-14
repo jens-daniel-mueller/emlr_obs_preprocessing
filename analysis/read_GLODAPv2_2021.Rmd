@@ -2687,10 +2687,78 @@ xover_cruise_decade_all %>%
       facet_grid(parameter ~ decade, scales = "free_y")
   )
 
-
 ```
 
 #### NPO
+
+```{r NPO_2010_decadal_crossover, fig.asp=1.2}
+
+xover_cruise_decade_all_NPO_2010 <- 
+  xover_cruise_decade_all %>%
+  filter(parameter_coverage == "full",
+         basin == "N. Pacific",
+         decade == "2000-2009") %>%
+  mutate(RV = if_else(
+    str_sub(cruise_A, 1, 4) %in% c("49UP", "49UF"),
+    "49UF|49UP",
+    "other"
+  )) %>% 
+  filter(parameter %in% c("cstar_total_phosphate",
+                          "cstar_tco2",
+                          "cstar_talk",
+                          "nitrate",
+                          "phosphate",
+                          "silicate")) %>% 
+  mutate(parameter = case_when(
+    parameter == "cstar_talk" ~ "talk",
+    parameter == "cstar_tco2" ~ "tco2",
+    parameter == "cstar_total_phosphate" ~ "C*(P)",
+    TRUE ~ parameter
+  ))
+
+hline_intercept_NPO_2010 <-
+  tibble(parameter = unique(xover_cruise_decade_all_NPO_2010$parameter)) %>%
+  mutate(intercept = if_else(parameter %in% c("phosphate", "nitrate", "silicate"),
+                             1,
+                             0))
+
+xover_cruise_decade_all_NPO_2010 %>%
+  ggplot(aes(
+    n_A,
+    offset_adj_mean_weighted,
+    fill = RV
+  )) +
+  geom_hline(data = hline_intercept_NPO_2010, aes(yintercept = intercept)) +
+  geom_point(alpha = 0.5, shape = 21) +
+  scale_fill_discrete_sequential(palette = "viridis",
+                                 name = "platform") +
+  scale_size(name = "cruise\nsize") +
+  labs(title = "N. Pacific | reference decade 2000s",
+       y = "Mean xover offset",
+       x = "Cruise size (nr. obs)") +
+  facet_grid(parameter ~ decade_A, scales = "free_y")
+
+xover_cruise_decade_all_NPO_2010 %>%
+  ggplot(aes(
+    date_A,
+    offset_adj_mean_weighted,
+    size = n_A,
+    fill = RV
+  )) +
+  geom_hline(data = hline_intercept_NPO_2010, aes(yintercept = intercept)) +
+  geom_point(alpha = 0.5, shape = 21) +
+  scale_fill_discrete_sequential(palette = "viridis",
+                                 name = "platform") +
+  scale_size(name = "cruise\nsize") +
+  labs(title = "N. Pacific | reference decade 2000s",
+       y = "Mean xover offset",
+       x = "Cruise size (nr. obs)") +
+  facet_grid(parameter ~ ., scales = "free_y")
+
+rm(xover_cruise_decade_all_NPO_2010, hline_intercept_NPO_2010)
+
+```
+
 
 ```{r xover_cruise_mean_by_cruise_size_PO, fig.asp= 0.5}
 
