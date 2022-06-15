@@ -2714,7 +2714,11 @@ xover_cruise_decade_all_NPO_2010 <-
     parameter == "cstar_tco2" ~ "tco2",
     parameter == "cstar_total_phosphate" ~ "C*(P)",
     TRUE ~ parameter
-  ))
+  )) %>% 
+  mutate(offset_adj_mean_weighted =
+           if_else(parameter == "talk",
+                   -2 * offset_adj_mean_weighted,
+                   offset_adj_mean_weighted))
 
 hline_intercept_NPO_2010 <-
   tibble(parameter = unique(xover_cruise_decade_all_NPO_2010$parameter)) %>%
