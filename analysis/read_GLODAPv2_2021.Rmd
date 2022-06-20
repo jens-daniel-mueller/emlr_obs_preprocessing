@@ -73,6 +73,15 @@ GLODAP_adjustments <-
     skip = 2
   )
 
+JMA_adjustments <-
+  read_csv(
+    paste(path_glodapv2_2021,
+          "asjustments_by_JMA.csv",
+          sep = ""),
+    na = c("-666", "-777", "-888", "-999"),
+    skip = 2
+  )
+  
 ```
 
 ## Expocodes
@@ -2693,9 +2702,16 @@ xover_cruise_decade_all %>%
 
 ```{r NPO_2010_decadal_crossover, fig.asp=1.2}
 
+parameter_check <- c("cstar_total_phosphate",
+                          "cstar_tco2",
+                          "cstar_talk",
+                          "nitrate",
+                          "phosphate",
+                          "silicate")
+
 xover_cruise_decade_all_NPO_2010 <- 
   xover_cruise_decade_all %>%
-  filter(parameter_coverage == "full",
+  filter(#parameter_coverage == "full",
          basin == "N. Pacific",
          decade == "2000-2009") %>%
   mutate(RV = if_else(
@@ -2703,12 +2719,8 @@ xover_cruise_decade_all_NPO_2010 <-
     "49UF|49UP",
     "other"
   )) %>% 
-  filter(parameter %in% c("cstar_total_phosphate",
-                          "cstar_tco2",
-                          "cstar_talk",
-                          "nitrate",
-                          "phosphate",
-                          "silicate")) %>% 
+  mutate(country = str_sub(cruise_A, 1, 2)) %>% 
+  filter(parameter %in% parameter_check) %>% 
   mutate(parameter = case_when(
     parameter == "cstar_talk" ~ "talk",
     parameter == "cstar_tco2" ~ "tco2",
@@ -2742,6 +2754,22 @@ xover_cruise_decade_all_NPO_2010 %>%
        x = "Cruise size (nr. obs)") +
   facet_grid(parameter ~ decade_A, scales = "free_y")
 
+
+xover_cruise_decade_all_NPO_2010 %>%
+  ggplot(aes(
+    n_A,
+    offset_adj_mean_weighted,
+    fill = country
+  )) +
+  geom_hline(data = hline_intercept_NPO_2010, aes(yintercept = intercept)) +
+  geom_point(alpha = 0.5, shape = 21) +
+  scale_fill_brewer(palette = "Set1") +
+  scale_size(name = "cruise\nsize") +
+  labs(title = "N. Pacific | reference decade 2000s",
+       y = "Mean xover offset",
+       x = "Cruise size (nr. obs)") +
+  facet_grid(parameter ~ decade_A, scales = "free_y")
+
 xover_cruise_decade_all_NPO_2010 %>%
   ggplot(aes(
     date_A,
@@ -2756,8 +2784,81 @@ xover_cruise_decade_all_NPO_2010 %>%
   scale_size(name = "cruise\nsize") +
   labs(title = "N. Pacific | reference decade 2000s",
        y = "Mean xover offset",
-       x = "Cruise size (nr. obs)") +
+       x = "Cruise date") +
   facet_grid(parameter ~ ., scales = "free_y")
+
+xover_cruise_decade_all_NPO_2010 %>%
+  ggplot(aes(
+    date_A,
+    offset_adj_mean_weighted,
+    size = n_A,
+    fill = country
+  )) +
+  geom_hline(data = hline_intercept_NPO_2010, aes(yintercept = intercept)) +
+  geom_point(alpha = 0.5, shape = 21) +
+  scale_fill_brewer(palette = "Set1") +
+  scale_size(name = "cruise\nsize") +
+  labs(title = "N. Pacific | reference decade 2000s",
+       y = "Mean xover offset",
+       x = "Cruise date") +
+  facet_grid(parameter ~ ., scales = "free_y")
+
+NPO_2010_cruises <- xover_cruise_decade_all_NPO_2010 %>% 
+  distinct(cruise_A) %>% 
+  pull()
+
+GLODAP_adjustments_long %>%
+  filter(
+    cruise_expocode %in% NPO_2010_cruises,
+    parameter %in% c(parameter_check, "talk", "tco2")
+  ) %>%
+  mutate(date = ymd(str_sub(cruise_expocode, start = 5)),
+         country = str_sub(cruise_expocode, 1, 2)) %>%
+  ggplot(aes(date,
+             adjustment,
+             fill = country)) +
+  geom_hline(data = hline_intercept_NPO_2010, aes(yintercept = intercept)) +
+  geom_point(alpha = 0.5, shape = 21) +
+  scale_fill_brewer(palette = "Set1") +
+  scale_size(name = "cruise\nsize") +
+  labs(title = "N. Pacific",
+       y = "GLODAP adjustment",
+       x = "Cruise date") +
+  facet_grid(parameter ~ ., scales = "free_y")
+
+JMA_adjustments_long <- JMA_adjustments %>%
+  select(cruise_expocode = expocode,
+         phosphate = `PHSPHT_adjustment(x)`,
+         nitrate  = `NO2+NO3_adjustment(x)`,
+         silicate = `SILCAT_adjustment(x)`,
+         talk = `NALKALI_adjustment(x)`,
+         tco2 = `NTCARBN_adjustment(x)`
+         ) %>% 
+  mutate(cruise_expocode = str_split(cruise_expocode, "_", simplify = TRUE)[,1]) %>% 
+  pivot_longer(phosphate:tco2,
+               values_to = "adjustment",
+               names_to = "parameter") %>% 
+  filter(
+    cruise_expocode %in% NPO_2010_cruises,
+    parameter %in% c(parameter_check, "talk", "tco2")
+  ) %>%
+  mutate(date = ymd(str_sub(cruise_expocode, start = 5)),
+         country = str_sub(cruise_expocode, 1, 2))
+
+
+JMA_adjustments_long %>%
+  ggplot(aes(date,
+             adjustment,
+             fill = country)) +
+  geom_hline(yintercept = 1) +
+  geom_point(alpha = 0.5, shape = 21) +
+  scale_fill_brewer(palette = "Set1") +
+  scale_size(name = "cruise\nsize") +
+  labs(title = "N. Pacific",
+       y = "JMA adjustment",
+       x = "Cruise date") +
+  facet_grid(parameter ~ ., scales = "free_y")
+
 
 rm(xover_cruise_decade_all_NPO_2010, hline_intercept_NPO_2010)
 
