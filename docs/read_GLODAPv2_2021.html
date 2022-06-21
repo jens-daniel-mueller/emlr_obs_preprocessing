@@ -452,7 +452,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">GLODAPv2_2021</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">20 June, 2022</h4>
+<h4 class="date">21 June, 2022</h4>
 
 </div>
 
@@ -477,7 +477,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-06-20
+<strong>Last updated:</strong> 2022-06-21
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -568,16 +568,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreedc7fa606dc5e3aa36919c60a1667d54bde61a591targetblankdc7fa60a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/dc7fa606dc5e3aa36919c60a1667d54bde61a591" target="_blank">dc7fa60</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreedd25dcaf66c48e827cb6e6fc1146a131c36ae798targetblankdd25dcaa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/dd25dcaf66c48e827cb6e6fc1146a131c36ae798" target="_blank">dd25dca</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreedc7fa606dc5e3aa36919c60a1667d54bde61a591targetblankdc7fa60a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreedd25dcaf66c48e827cb6e6fc1146a131c36ae798targetblankdd25dcaa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/dc7fa606dc5e3aa36919c60a1667d54bde61a591" target="_blank">dc7fa60</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/dd25dcaf66c48e827cb6e6fc1146a131c36ae798" target="_blank">dd25dca</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -626,6 +626,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/dd25dcaf66c48e827cb6e6fc1146a131c36ae798/analysis/read_GLODAPv2_2021.Rmd" target="_blank">dd25dca</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-06-21
+</td>
+<td>
+revised JMA adjustments
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/f679c115d244e1912c56525a11412dd1ff19d60a/docs/read_GLODAPv2_2021.html" target="_blank">f679c11</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-06-20
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -30456,7 +30490,10 @@ GLODAP_deep_nuts &lt;- GLODAP %&gt;%
   filter(depth &gt; 1500) %&gt;% 
   group_by(basin) %&gt;% 
   summarise(phosphate_mean = mean(phosphate, na.rm = TRUE),
-            nitrate_mean = mean(nitrate, na.rm = TRUE)) %&gt;% 
+            nitrate_mean = mean(nitrate, na.rm = TRUE),
+            silicate_mean = mean(silicate, na.rm = TRUE),
+            tco2_mean = mean(tco2, na.rm = TRUE),
+            talk_mean = mean(talk, na.rm = TRUE)) %&gt;% 
   ungroup()
 
 xover_basin &lt;- full_join(xover_basin,
@@ -39206,23 +39243,8 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>xover_basin %&gt;%
-  mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf))) %&gt;%
-  # filter(basin == &quot;N. Pacific&quot;) %&gt;% 
-  group_split(basin, parameter) %&gt;%
-  # head(1) %&gt;%
-  map(
-    ~ ggplot(data = .x,
-             aes(
-               date_A, date_B, fill = offset_adj, size = n
-             )) +
-      geom_point(alpha = 0.5, shape = 21) +
-      scale_fill_discrete_diverging(palette = &quot;Blue-Red&quot;, drop = FALSE) +
-      labs(title = paste(.x$basin, &quot;|&quot;, .x$parameter, &quot;| partial&quot;)) +
-      coord_fixed(xlim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)),
-                  ylim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)))
-  )</code></pre>
-<pre><code>[[1]]</code></pre>
+<pre><code>
+[[51]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-51.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-51">
@@ -39383,7 +39405,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[2]]</code></pre>
+[[52]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-52.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-52">
@@ -39478,7 +39500,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[3]]</code></pre>
+[[53]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-53.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-53">
@@ -39573,7 +39595,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[4]]</code></pre>
+[[54]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-54.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-54">
@@ -39668,7 +39690,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[5]]</code></pre>
+[[55]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-55.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-55">
@@ -39752,7 +39774,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[6]]</code></pre>
+[[56]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-56.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-56">
@@ -39836,7 +39858,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[7]]</code></pre>
+[[57]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-57.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-57">
@@ -39920,7 +39942,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[8]]</code></pre>
+[[58]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-58.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-58">
@@ -40004,7 +40026,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[9]]</code></pre>
+[[59]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-59.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-59">
@@ -40088,7 +40110,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[10]]</code></pre>
+[[60]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-60.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-60">
@@ -40172,7 +40194,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[11]]</code></pre>
+[[61]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-61.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-61">
@@ -40300,7 +40322,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[12]]</code></pre>
+[[62]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-62.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-62">
@@ -40362,7 +40384,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[13]]</code></pre>
+[[63]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-63.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-63">
@@ -40424,7 +40446,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[14]]</code></pre>
+[[64]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-64.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-64">
@@ -40486,7 +40508,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[15]]</code></pre>
+[[65]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-65.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-65">
@@ -40547,8 +40569,23 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre><code>
-[[16]]</code></pre>
+<pre class="r"><code>xover_basin %&gt;%
+  mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf))) %&gt;%
+  # filter(basin == &quot;N. Pacific&quot;) %&gt;% 
+  group_split(basin, parameter) %&gt;%
+  # head(1) %&gt;%
+  map(
+    ~ ggplot(data = .x,
+             aes(
+               date_A, date_B, fill = offset_adj, size = n
+             )) +
+      geom_point(alpha = 0.5, shape = 21) +
+      scale_fill_discrete_diverging(palette = &quot;Blue-Red&quot;, drop = FALSE) +
+      labs(title = paste(.x$basin, &quot;|&quot;, .x$parameter, &quot;| partial&quot;)) +
+      coord_fixed(xlim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)),
+                  ylim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)))
+  )</code></pre>
+<pre><code>[[1]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-66.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-66">
@@ -40610,7 +40647,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[17]]</code></pre>
+[[2]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-67.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-67">
@@ -40672,7 +40709,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[18]]</code></pre>
+[[3]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-68.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-68">
@@ -40734,7 +40771,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[19]]</code></pre>
+[[4]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-69.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-69">
@@ -40796,7 +40833,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[20]]</code></pre>
+[[5]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-70.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-70">
@@ -40858,7 +40895,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[21]]</code></pre>
+[[6]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-71.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-71">
@@ -40920,7 +40957,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[22]]</code></pre>
+[[7]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-72.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-72">
@@ -40982,7 +41019,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[23]]</code></pre>
+[[8]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-73.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-73">
@@ -41044,7 +41081,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[24]]</code></pre>
+[[9]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-74.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-74">
@@ -41106,7 +41143,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[25]]</code></pre>
+[[10]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-75.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-75">
@@ -41168,7 +41205,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[26]]</code></pre>
+[[11]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-76.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-76">
@@ -41230,7 +41267,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[27]]</code></pre>
+[[12]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-77.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-77">
@@ -41292,7 +41329,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[28]]</code></pre>
+[[13]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-78.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-78">
@@ -41354,7 +41391,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[29]]</code></pre>
+[[14]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-79.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-79">
@@ -41416,7 +41453,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[30]]</code></pre>
+[[15]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-80.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-80">
@@ -41478,7 +41515,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[31]]</code></pre>
+[[16]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-81.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-81">
@@ -41540,7 +41577,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[32]]</code></pre>
+[[17]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-82.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-82">
@@ -41580,7 +41617,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[33]]</code></pre>
+[[18]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-83.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-83">
@@ -41620,7 +41657,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[34]]</code></pre>
+[[19]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-84.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-84">
@@ -41660,7 +41697,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[35]]</code></pre>
+[[20]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-85.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-85">
@@ -41700,7 +41737,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[36]]</code></pre>
+[[21]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-86.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-86">
@@ -41740,7 +41777,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[37]]</code></pre>
+[[22]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-87.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-87">
@@ -41780,7 +41817,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[38]]</code></pre>
+[[23]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-88.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-88">
@@ -41820,7 +41857,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[39]]</code></pre>
+[[24]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-89.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-89">
@@ -41860,7 +41897,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[40]]</code></pre>
+[[25]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-90.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-90">
@@ -41900,7 +41937,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[41]]</code></pre>
+[[26]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-91.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-91">
@@ -41940,7 +41977,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[42]]</code></pre>
+[[27]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-92.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-92">
@@ -41980,7 +42017,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[43]]</code></pre>
+[[28]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-93.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-93">
@@ -42020,7 +42057,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[44]]</code></pre>
+[[29]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-94.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-94">
@@ -42060,7 +42097,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[45]]</code></pre>
+[[30]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-95.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-95">
@@ -42100,7 +42137,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[46]]</code></pre>
+[[31]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-96.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-96">
@@ -42140,7 +42177,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[47]]</code></pre>
+[[32]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-97.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-97">
@@ -42180,7 +42217,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[48]]</code></pre>
+[[33]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-98.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-98">
@@ -42220,7 +42257,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[49]]</code></pre>
+[[34]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-99.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-99">
@@ -42260,7 +42297,7 @@ jens-daniel-mueller
 </div>
 </div>
 <pre><code>
-[[50]]</code></pre>
+[[35]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-100.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-100">
@@ -42299,15 +42336,8 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>xover_basin %&gt;%
-  mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf))) %&gt;%
-  filter(parameter_coverage == &quot;full&quot;) %&gt;%
-  ggplot(aes(date_A, date_B, fill = offset_adj, size = n)) +
-  geom_point(alpha = 0.5, shape = 21) +
-  scale_fill_discrete_diverging(palette = &quot;Blue-Red&quot;, drop = FALSE) +
-  coord_fixed(xlim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)),
-              ylim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;))) +
-  facet_grid(basin ~ parameter)</code></pre>
+<pre><code>
+[[36]]</code></pre>
 <p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-101.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-cruise_by_cruise_cstar-101">
@@ -42346,6 +42376,103 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[37]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-102.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[38]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-103.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[39]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-104.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[40]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-105.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[41]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-106.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[42]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-107.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[43]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-108.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[44]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-109.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[45]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-110.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[46]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-111.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[47]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-112.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[48]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-113.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[49]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-114.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[50]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-115.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[51]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-116.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[52]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-117.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[53]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-118.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[54]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-119.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[55]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-120.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[56]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-121.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[57]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-122.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[58]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-123.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[59]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-124.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[60]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-125.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[61]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-126.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[62]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-127.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[63]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-128.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[64]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-129.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[65]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-130.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>xover_basin %&gt;%
+  mutate(offset_adj = cut(offset_adj, c(-Inf, -5, -2, -1, 1, 2, 5, Inf))) %&gt;%
+  filter(parameter_coverage == &quot;full&quot;) %&gt;%
+  ggplot(aes(date_A, date_B, fill = offset_adj, size = n)) +
+  geom_point(alpha = 0.5, shape = 21) +
+  scale_fill_discrete_diverging(palette = &quot;Blue-Red&quot;, drop = FALSE) +
+  coord_fixed(xlim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;)),
+              ylim = c(ymd(&quot;1990-01-01&quot;), ymd(&quot;2021-01-01&quot;))) +
+  facet_grid(basin ~ parameter)</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar-131.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="cruise-by-cruise-annual-mean" class="section level3" number="7.3.3">
 <h3><span class="header-section-number">7.3.3</span> Cruise-by-cruise annual mean</h3>
@@ -48386,6 +48513,51 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre><code>
+[[51]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-51.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[52]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-52.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[53]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-53.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[54]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-54.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[55]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-55.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[56]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-56.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[57]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-57.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[58]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-58.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[59]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-59.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[60]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-60.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[61]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-61.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[62]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-62.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[63]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-63.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[64]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-64.png" width="672" style="display: block; margin: auto;" /></p>
+<pre><code>
+[[65]]</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/cruise_by_cruise_cstar_annual_mean-65.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="cruise-mean-offsets" class="section level3" number="7.3.4">
 <h3><span class="header-section-number">7.3.4</span> Cruise mean offsets</h3>
@@ -54292,7 +54464,8 @@ xover_cruise_decade_all_NPO_2010 &lt;-
   xover_cruise_decade_all %&gt;%
   filter(parameter_coverage == &quot;full&quot;,
          basin == &quot;N. Pacific&quot;,
-         decade == &quot;2000-2009&quot;) %&gt;%
+         decade == &quot;2000-2009&quot;
+         ) %&gt;%
   mutate(RV = if_else(
     str_sub(cruise_A, 1, 4) %in% c(&quot;49UP&quot;, &quot;49UF&quot;),
     &quot;49UF|49UP&quot;,
@@ -54361,6 +54534,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f679c115d244e1912c56525a11412dd1ff19d60a/docs/figure/read_GLODAPv2_2021.Rmd/NPO_2010_decadal_crossover-1.png" target="_blank">f679c11</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-06-20
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b3b75092a2353b04874dfe07cfed971a1c927165/docs/figure/read_GLODAPv2_2021.Rmd/NPO_2010_decadal_crossover-1.png" target="_blank">b3b7509</a>
@@ -54437,6 +54621,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f679c115d244e1912c56525a11412dd1ff19d60a/docs/figure/read_GLODAPv2_2021.Rmd/NPO_2010_decadal_crossover-2.png" target="_blank">f679c11</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-06-20
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b3b75092a2353b04874dfe07cfed971a1c927165/docs/figure/read_GLODAPv2_2021.Rmd/NPO_2010_decadal_crossover-2.png" target="_blank">b3b7509</a>
 </td>
 <td>
@@ -54471,6 +54666,820 @@ jens-daniel-mueller
 </tbody>
 </table>
 </div>
+</div>
+<pre class="r"><code>xover_cruise_decade_all_NPO_2010 %&gt;%
+  group_by(country_name, parameter, decade_A) %&gt;%
+  summarise(offset_adj_mean_weighted = mean(offset_adj_mean_weighted, na.rm =
+                                              TRUE)) %&gt;%
+  ungroup() %&gt;%
+  kable() %&gt;%
+  kable_styling() %&gt;%
+  scroll_box(height = &quot;300px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+country_name
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+parameter
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+decade_A
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+offset_adj_mean_weighted
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+CANADA
+</td>
+<td style="text-align:left;">
+C*(N)
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+-1.0101940
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CANADA
+</td>
+<td style="text-align:left;">
+C*(P)
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+-1.9209675
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CANADA
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9875711
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CANADA
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9917090
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CANADA
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9867396
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CANADA
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+-0.7093704
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CANADA
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+-5.1001388
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+C*(N)
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+-0.3362933
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+C*(N)
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+-0.0676983
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+C*(N)
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+1.2207375
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+C*(P)
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+-0.3248829
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+C*(P)
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+-0.8825886
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+C*(P)
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+5.8554977
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9970747
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9985510
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+0.9996372
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9973639
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0013519
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+0.9895125
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+1.0022727
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9983095
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+1.0049779
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.7816257
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.4606865
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+-1.4406414
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+-0.8361653
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+-0.0556849
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+1.8321882
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+C*(N)
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+2.1225785
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+C*(N)
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.5601043
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+C*(N)
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+2.2936433
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+C*(P)
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.7596430
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+C*(P)
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+2.5071680
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+C*(P)
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+-1.2662518
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9901093
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9993938
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+0.9925869
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9928059
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9936852
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+1.0041119
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9976807
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9965944
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+0.9965765
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+2.4336112
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.3969513
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+-2.6331532
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+-0.0490978
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.5456884
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+-1.2142313
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+USSR
+</td>
+<td style="text-align:left;">
+C*(N)
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.0207900
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+USSR
+</td>
+<td style="text-align:left;">
+C*(P)
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+-3.1243651
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+USSR
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9928322
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+USSR
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+1.0028413
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+USSR
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9862244
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+USSR
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9922795
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+USSR
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+-1.6820635
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <pre class="r"><code>xover_cruise_decade_all_NPO_2010 %&gt;%
   ggplot(aes(
@@ -54511,6 +55520,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f679c115d244e1912c56525a11412dd1ff19d60a/docs/figure/read_GLODAPv2_2021.Rmd/NPO_2010_decadal_crossover-3.png" target="_blank">f679c11</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-06-20
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b3b75092a2353b04874dfe07cfed971a1c927165/docs/figure/read_GLODAPv2_2021.Rmd/NPO_2010_decadal_crossover-3.png" target="_blank">b3b7509</a>
@@ -54564,6 +55584,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f679c115d244e1912c56525a11412dd1ff19d60a/docs/figure/read_GLODAPv2_2021.Rmd/NPO_2010_decadal_crossover-4.png" target="_blank">f679c11</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-06-20
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b3b75092a2353b04874dfe07cfed971a1c927165/docs/figure/read_GLODAPv2_2021.Rmd/NPO_2010_decadal_crossover-4.png" target="_blank">b3b7509</a>
@@ -54634,6 +55665,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f679c115d244e1912c56525a11412dd1ff19d60a/docs/figure/read_GLODAPv2_2021.Rmd/NPO_2010_decadal_crossover-5.png" target="_blank">f679c11</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-06-20
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b3b75092a2353b04874dfe07cfed971a1c927165/docs/figure/read_GLODAPv2_2021.Rmd/NPO_2010_decadal_crossover-5.png" target="_blank">b3b7509</a>
 </td>
 <td>
@@ -54647,13 +55689,620 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code>JMA_adjustments_long &lt;- JMA_adjustments %&gt;%
-  select(cruise_expocode = expocode,
-         phosphate = `PHSPHT_adjustment(x)`,
-         nitrate  = `NO2+NO3_adjustment(x)`,
-         silicate = `SILCAT_adjustment(x)`,
-         talk = `NALKALI_adjustment(x)`,
-         tco2 = `NTCARBN_adjustment(x)`
+<pre class="r"><code>GLODAP_adjustments_long_NPO_2010 %&gt;%
+  mutate(decade = m_grid_decade(year(date))) %&gt;%
+  group_by(country_name, parameter, decade) %&gt;%
+  summarise(adjustment = mean(adjustment, na.rm =
+                                TRUE)) %&gt;%
+  ungroup() %&gt;%
+  kable() %&gt;%
+  kable_styling() %&gt;%
+  scroll_box(height = &quot;300px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+country_name
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+parameter
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+decade
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+adjustment
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+CANADA
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CANADA
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CANADA
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CANADA
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+-7.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CANADA
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9973077
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9984000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9930769
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0002000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+1.0003774
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+1.0007692
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0092000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+0.9986792
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+6.2307692
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+4.6400000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+0.4339623
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+3.1538462
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.1600000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JAPAN
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+-0.1886792
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9983333
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0050000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+1.0050000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0050000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+1.0066667
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9833333
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9866667
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+1.0033333
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+-4.1666667
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+2.3333333
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.3333333
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UNITED STATES
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+USSR
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+USSR
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+USSR
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+USSR
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+USSR
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+5.0000000
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="r"><code>JMA_adjustments &lt;- JMA_adjustments %&gt;%
+  rename(
+    cruise_expocode = expocode,
+    phosphate = `PHSPHT_adjustment(x)`,
+    nitrate  = `NO2+NO3_adjustment(x)`,
+    silicate = `SILCAT_adjustment(x)`,
+    talk = `NALKALI_adjustment(x)`,
+    tco2 = `NTCARBN_adjustment(x)`
+  ) %&gt;% 
+  mutate(talk = (talk-1) * GLODAP_deep_nuts %&gt;% 
+           filter(basin == &quot;N. Pacific&quot;) %&gt;% 
+           pull(talk_mean),
+         tco2 = (tco2-1) * GLODAP_deep_nuts %&gt;% 
+           filter(basin == &quot;N. Pacific&quot;) %&gt;% 
+           pull(tco2_mean))
+
+JMA_adjustments_long &lt;- JMA_adjustments %&gt;%
+  select(cruise_expocode,
+         phosphate,
+         nitrate,
+         silicate,
+         talk,
+         tco2
          ) %&gt;% 
   mutate(cruise_expocode = str_split(cruise_expocode, &quot;_&quot;, simplify = TRUE)[,1]) %&gt;% 
   pivot_longer(phosphate:tco2,
@@ -54676,7 +56325,7 @@ JMA_adjustments_long %&gt;%
   ggplot(aes(date,
              adjustment,
              fill = country_name)) +
-  geom_hline(yintercept = 1) +
+  geom_hline(data = hline_intercept_NPO_2010, aes(yintercept = intercept)) +
   geom_point(alpha = 0.5, shape = 21) +
   scale_fill_brewer(palette = &quot;Dark2&quot;) +
   scale_size(name = &quot;cruise\nsize&quot;) +
@@ -54709,6 +56358,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f679c115d244e1912c56525a11412dd1ff19d60a/docs/figure/read_GLODAPv2_2021.Rmd/NPO_2010_decadal_crossover-6.png" target="_blank">f679c11</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-06-20
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/b3b75092a2353b04874dfe07cfed971a1c927165/docs/figure/read_GLODAPv2_2021.Rmd/NPO_2010_decadal_crossover-6.png" target="_blank">b3b7509</a>
 </td>
 <td>
@@ -54721,6 +56381,771 @@ jens-daniel-mueller
 </tbody>
 </table>
 </div>
+</div>
+<pre class="r"><code>adjustments_GLODAP_JMA &lt;-
+  bind_rows(
+    JMA_adjustments_long %&gt;%
+      filter(country_name == &quot;JAPAN&quot;) %&gt;%
+      select(cruise_expocode, parameter, adjustment, date) %&gt;%
+      mutate(source = &quot;JMA&quot;),
+    GLODAP_adjustments_long_NPO_2010 %&gt;%
+      filter(country_name == &quot;JAPAN&quot;) %&gt;%
+      select(cruise_expocode, parameter, adjustment, date) %&gt;%
+      mutate(source = &quot;GLODAPv2.2020 - adjustment&quot;),
+    xover_cruise_decade_all_NPO_2010 %&gt;%
+      filter(country_name == &quot;JAPAN&quot;) %&gt;%
+      select(cruise_expocode = cruise_A, parameter, 
+             adjustment = offset_adj_mean_weighted, date = date_A) %&gt;%
+      mutate(source = &quot;GLODAPv2.2020 - xover&quot;)
+  )
+
+
+adjustments_GLODAP_JMA %&gt;%
+  mutate(decade = m_grid_decade(year(date))) %&gt;%
+  drop_na() %&gt;% 
+  ggplot(aes(decade,
+             adjustment)) +
+  geom_hline(data = hline_intercept_NPO_2010, aes(yintercept = intercept)) +
+  geom_boxplot() +
+  geom_jitter(alpha = 0.5, shape = 21) +
+  scale_fill_brewer(palette = &quot;Dark2&quot;) +
+  scale_size(name = &quot;cruise\nsize&quot;) +
+  labs(title = &quot;N. Pacific&quot;,
+       y = &quot;JMA adjustment&quot;,
+       x = &quot;Cruise date&quot;) +
+  facet_grid(parameter ~ source, scales = &quot;free_y&quot;)</code></pre>
+<p><img src="figure/read_GLODAPv2_2021.Rmd/NPO_2010_decadal_crossover-7.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>adjustments_GLODAP_JMA %&gt;%
+  mutate(decade = m_grid_decade(year(date))) %&gt;%
+  drop_na() %&gt;%
+  group_by(source, parameter, decade) %&gt;%
+  summarise(adjustment = mean(adjustment, na.rm =
+                                TRUE)) %&gt;%
+  ungroup() %&gt;%
+  kable() %&gt;%
+  kable_styling() %&gt;%
+  scroll_box(height = &quot;300px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+source
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+parameter
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+decade
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+adjustment
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - adjustment
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9973077
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - adjustment
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9984000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - adjustment
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - adjustment
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9930769
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - adjustment
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0002000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - adjustment
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+1.0003774
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - adjustment
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+1.0007692
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - adjustment
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0092000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - adjustment
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+0.9986792
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - adjustment
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+6.2307692
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - adjustment
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+4.6400000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - adjustment
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+0.4339623
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - adjustment
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+3.1538462
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - adjustment
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.1600000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - adjustment
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+-0.1886792
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - xover
+</td>
+<td style="text-align:left;">
+C*(N)
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+-0.3362933
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - xover
+</td>
+<td style="text-align:left;">
+C*(N)
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+-0.0676983
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - xover
+</td>
+<td style="text-align:left;">
+C*(N)
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+1.2207375
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - xover
+</td>
+<td style="text-align:left;">
+C*(P)
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+-0.3248829
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - xover
+</td>
+<td style="text-align:left;">
+C*(P)
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+-0.8825886
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - xover
+</td>
+<td style="text-align:left;">
+C*(P)
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+5.8554977
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - xover
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9970747
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - xover
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9985510
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - xover
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+0.9996372
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - xover
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9973639
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - xover
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0013519
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - xover
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+0.9895125
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - xover
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+1.0022727
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - xover
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9983095
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - xover
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+1.0049779
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - xover
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.7816257
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - xover
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.4606865
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - xover
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+-1.4406414
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - xover
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+-0.8361653
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - xover
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+-0.0556849
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GLODAPv2.2020 - xover
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+1.8321882
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JMA
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9975466
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JMA
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9966109
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JMA
+</td>
+<td style="text-align:left;">
+nitrate
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+0.9992348
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JMA
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+0.9876634
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JMA
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+0.9985486
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JMA
+</td>
+<td style="text-align:left;">
+phosphate
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+0.9994866
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JMA
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+1.0241833
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JMA
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0176438
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JMA
+</td>
+<td style="text-align:left;">
+silicate
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+1.0014344
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JMA
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+1.0849224
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JMA
+</td>
+<td style="text-align:left;">
+talk
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+0.7988250
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JMA
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:right;">
+5.1139974
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JMA
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:right;">
+2.1742618
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+JMA
+</td>
+<td style="text-align:left;">
+tco2
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:right;">
+-0.6432410
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <pre class="r"><code>rm(xover_cruise_decade_all_NPO_2010, hline_intercept_NPO_2010)</code></pre>
 <pre class="r"><code>parameter_print &lt;- c(&quot;cstar_tco2&quot;, &quot;cstar_talk&quot;, &quot;cstar_phosphate&quot;, &quot;cstar_nitrate&quot;)
@@ -54957,6 +57382,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/f679c115d244e1912c56525a11412dd1ff19d60a/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size_PO-2.png" target="_blank">f679c11</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-06-20
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/5fd6f6c11252738aed9f0c29bb557189b52a486f/docs/figure/read_GLODAPv2_2021.Rmd/xover_cruise_mean_by_cruise_size_PO-2.png" target="_blank">5fd6f6c</a>
@@ -58306,6 +60742,75 @@ Indian
 1989-1999
 </td>
 <td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+40.2948875
+</td>
+<td style="text-align:right;">
+58.1863077
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+827.2127822
+</td>
+<td style="text-align:right;">
+1194.3285302
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+791.4777573
+</td>
+<td style="text-align:right;">
+1142.7343939
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
 2000-2009
 </td>
 <td style="text-align:left;">
@@ -58536,6 +61041,75 @@ Indian
 1989-1999
 </td>
 <td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0086322
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004205
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004395
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
 2010-2020
 </td>
 <td style="text-align:left;">
@@ -58756,6 +61330,75 @@ silicate
 </td>
 <td style="text-align:right;">
 1.0045224
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0086322
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004205
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004395
 </td>
 </tr>
 <tr>
@@ -58996,6 +61639,75 @@ Indian
 2000-2009
 </td>
 <td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+115.8448890
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2378.0001687
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2275.2722294
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
 2000-2009
 </td>
 <td style="text-align:left;">
@@ -59226,6 +61938,75 @@ Indian
 2000-2009
 </td>
 <td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+55.6038211
+</td>
+<td style="text-align:right;">
+88.4712191
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+1141.4895159
+</td>
+<td style="text-align:right;">
+1816.0467530
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+1092.1779516
+</td>
+<td style="text-align:right;">
+1737.5948159
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
 2010-2020
 </td>
 <td style="text-align:left;">
@@ -59446,6 +62227,75 @@ silicate
 </td>
 <td style="text-align:right;">
 1.0020828
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0086322
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004205
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004395
 </td>
 </tr>
 <tr>
@@ -59686,6 +62536,75 @@ Indian
 2010-2020
 </td>
 <td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+115.8448890
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2378.0001687
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2275.2722294
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
 2000-2009
 </td>
 <td style="text-align:left;">
@@ -59906,6 +62825,75 @@ silicate
 </td>
 <td style="text-align:right;">
 0.9990059
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+115.8448890
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2378.0001687
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Indian
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2275.2722294
 </td>
 </tr>
 <tr>
@@ -60146,6 +63134,75 @@ N. Atlantic
 1989-1999
 </td>
 <td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+10.1550076
+</td>
+<td style="text-align:right;">
+10.3703183
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+1047.8026606
+</td>
+<td style="text-align:right;">
+1065.4440365
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+979.0710625
+</td>
+<td style="text-align:right;">
+995.5552944
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
 2000-2009
 </td>
 <td style="text-align:left;">
@@ -60376,6 +63433,75 @@ N. Atlantic
 1989-1999
 </td>
 <td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0443396
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004306
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004608
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
 2010-2020
 </td>
 <td style="text-align:left;">
@@ -60596,6 +63722,75 @@ silicate
 </td>
 <td style="text-align:right;">
 0.9814543
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0443396
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004306
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004608
 </td>
 </tr>
 <tr>
@@ -60836,6 +64031,75 @@ N. Atlantic
 2000-2009
 </td>
 <td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+22.5532099
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2322.4855552
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2170.1399959
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
 2000-2009
 </td>
 <td style="text-align:left;">
@@ -61066,6 +64330,75 @@ N. Atlantic
 2000-2009
 </td>
 <td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+9.3001827
+</td>
+<td style="text-align:right;">
+11.9890715
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+959.6010700
+</td>
+<td style="text-align:right;">
+1232.4684278
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+896.6551380
+</td>
+<td style="text-align:right;">
+1151.6235641
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
 2010-2020
 </td>
 <td style="text-align:left;">
@@ -61286,6 +64619,75 @@ silicate
 </td>
 <td style="text-align:right;">
 0.9842534
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0443396
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004306
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004608
 </td>
 </tr>
 <tr>
@@ -61526,6 +64928,75 @@ N. Atlantic
 2010-2020
 </td>
 <td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+22.5532099
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2322.4855552
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2170.1399959
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
 2000-2009
 </td>
 <td style="text-align:left;">
@@ -61756,6 +65227,75 @@ N. Atlantic
 2010-2020
 </td>
 <td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+22.5532099
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2322.4855552
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2170.1399959
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
 2010-2020
 </td>
 <td style="text-align:left;">
@@ -61976,6 +65516,75 @@ silicate
 </td>
 <td style="text-align:right;">
 1.0043511
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+10.2423807
+</td>
+<td style="text-align:right;">
+15.1727883
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+1056.8178950
+</td>
+<td style="text-align:right;">
+1560.9671398
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+987.4949342
+</td>
+<td style="text-align:right;">
+1458.5740950
 </td>
 </tr>
 <tr>
@@ -62216,6 +65825,75 @@ N. Pacific
 1989-1999
 </td>
 <td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+53.3266200
+</td>
+<td style="text-align:right;">
+63.4967159
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+853.2252728
+</td>
+<td style="text-align:right;">
+1015.8410885
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+827.3619127
+</td>
+<td style="text-align:right;">
+985.0484679
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
 2000-2009
 </td>
 <td style="text-align:left;">
@@ -62446,6 +66124,75 @@ N. Pacific
 1989-1999
 </td>
 <td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0066256
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004141
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004271
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
 2010-2020
 </td>
 <td style="text-align:left;">
@@ -62666,6 +66413,75 @@ silicate
 </td>
 <td style="text-align:right;">
 0.9965649
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0066256
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004141
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004271
 </td>
 </tr>
 <tr>
@@ -62906,6 +66722,75 @@ N. Pacific
 2000-2009
 </td>
 <td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+150.9299353
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2414.7715385
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2341.5738895
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
 2000-2009
 </td>
 <td style="text-align:left;">
@@ -63136,6 +67021,75 @@ N. Pacific
 2000-2009
 </td>
 <td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+51.9563006
+</td>
+<td style="text-align:right;">
+77.0706494
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+831.3001792
+</td>
+<td style="text-align:right;">
+1233.0238605
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+806.1014227
+</td>
+<td style="text-align:right;">
+1195.6478950
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
 2010-2020
 </td>
 <td style="text-align:left;">
@@ -63356,6 +67310,75 @@ silicate
 </td>
 <td style="text-align:right;">
 0.9970988
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0066256
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004141
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004271
 </td>
 </tr>
 <tr>
@@ -63596,6 +67619,75 @@ N. Pacific
 2010-2020
 </td>
 <td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+150.9299353
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2414.7715385
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2341.5738895
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
 2000-2009
 </td>
 <td style="text-align:left;">
@@ -63826,6 +67918,75 @@ N. Pacific
 2010-2020
 </td>
 <td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+150.9299353
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2414.7715385
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2341.5738895
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
 2010-2020
 </td>
 <td style="text-align:left;">
@@ -64046,6 +68207,75 @@ silicate
 </td>
 <td style="text-align:right;">
 1.0005458
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+63.8481042
+</td>
+<td style="text-align:right;">
+74.5533540
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+1021.5688933
+</td>
+<td style="text-align:right;">
+1192.7471652
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+N. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+990.6026233
+</td>
+<td style="text-align:right;">
+1156.5920856
 </td>
 </tr>
 <tr>
@@ -64286,6 +68516,75 @@ S. Atlantic
 1989-1999
 </td>
 <td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+54.7734456
+</td>
+<td style="text-align:right;">
+28.5904300
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+1658.0123225
+</td>
+<td style="text-align:right;">
+865.0525324
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+1572.4882071
+</td>
+<td style="text-align:right;">
+820.4311646
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
 2000-2009
 </td>
 <td style="text-align:left;">
@@ -64516,6 +68815,75 @@ S. Atlantic
 1989-1999
 </td>
 <td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0129075
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004265
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004497
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
 2010-2020
 </td>
 <td style="text-align:left;">
@@ -64736,6 +69104,75 @@ silicate
 </td>
 <td style="text-align:right;">
 0.9836613
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0129075
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004265
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004497
 </td>
 </tr>
 <tr>
@@ -64976,6 +69413,75 @@ S. Atlantic
 2000-2009
 </td>
 <td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+77.4742571
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2344.7839395
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2223.8345989
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
 2000-2009
 </td>
 <td style="text-align:left;">
@@ -65206,6 +69712,75 @@ S. Atlantic
 2000-2009
 </td>
 <td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+38.0440487
+</td>
+<td style="text-align:right;">
+38.0882064
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+1151.6073314
+</td>
+<td style="text-align:right;">
+1152.5537128
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+1092.2047583
+</td>
+<td style="text-align:right;">
+1093.1023684
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
 2010-2020
 </td>
 <td style="text-align:left;">
@@ -65426,6 +70001,75 @@ silicate
 </td>
 <td style="text-align:right;">
 0.9909651
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0129075
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004265
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004497
 </td>
 </tr>
 <tr>
@@ -65666,6 +70310,75 @@ S. Atlantic
 2010-2020
 </td>
 <td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+77.4742571
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2344.7839395
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2223.8345989
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
 2000-2009
 </td>
 <td style="text-align:left;">
@@ -65896,6 +70609,75 @@ S. Atlantic
 2010-2020
 </td>
 <td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+77.4742571
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2344.7839395
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2223.8345989
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
 2010-2020
 </td>
 <td style="text-align:left;">
@@ -66116,6 +70898,75 @@ silicate
 </td>
 <td style="text-align:right;">
 0.9986376
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+32.6849322
+</td>
+<td style="text-align:right;">
+42.8825222
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+989.3849063
+</td>
+<td style="text-align:right;">
+1297.6794135
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Atlantic
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+938.3501416
+</td>
+<td style="text-align:right;">
+1230.7421493
 </td>
 </tr>
 <tr>
@@ -66356,6 +71207,75 @@ S. Pacific
 1989-1999
 </td>
 <td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+62.6047108
+</td>
+<td style="text-align:right;">
+87.7485935
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+1266.0561728
+</td>
+<td style="text-align:right;">
+1774.3699931
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+1216.2032000
+</td>
+<td style="text-align:right;">
+1704.5013900
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
 2000-2009
 </td>
 <td style="text-align:left;">
@@ -66586,6 +71506,75 @@ S. Pacific
 1989-1999
 </td>
 <td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0084944
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004201
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004373
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
 2010-2020
 </td>
 <td style="text-align:left;">
@@ -66806,6 +71795,75 @@ silicate
 </td>
 <td style="text-align:right;">
 1.0011466
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0084944
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004201
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004373
 </td>
 </tr>
 <tr>
@@ -67046,6 +72104,75 @@ S. Pacific
 2000-2009
 </td>
 <td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+117.7246260
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2380.5758290
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2286.8369083
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
 2000-2009
 </td>
 <td style="text-align:left;">
@@ -67276,6 +72403,75 @@ S. Pacific
 2000-2009
 </td>
 <td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+48.1780566
+</td>
+<td style="text-align:right;">
+52.9760375
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+974.3056888
+</td>
+<td style="text-align:right;">
+1071.1639790
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+935.9408547
+</td>
+<td style="text-align:right;">
+1028.9852297
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
 2010-2020
 </td>
 <td style="text-align:left;">
@@ -67496,6 +72692,75 @@ silicate
 </td>
 <td style="text-align:right;">
 0.9938146
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0084944
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004201
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+0.0004373
 </td>
 </tr>
 <tr>
@@ -67736,6 +73001,75 @@ S. Pacific
 2010-2020
 </td>
 <td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+117.7246260
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2380.5758290
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+1989-1999
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2286.8369083
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
 2000-2009
 </td>
 <td style="text-align:left;">
@@ -67966,6 +73300,75 @@ S. Pacific
 2010-2020
 </td>
 <td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+117.7246260
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2380.5758290
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2000-2009
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+2286.8369083
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
 2010-2020
 </td>
 <td style="text-align:left;">
@@ -68186,6 +73589,75 @@ silicate
 </td>
 <td style="text-align:right;">
 0.9989008
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+silicate_mean
+</td>
+<td style="text-align:right;">
+51.7393217
+</td>
+<td style="text-align:right;">
+60.8922503
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+talk_mean
+</td>
+<td style="text-align:right;">
+1046.3252160
+</td>
+<td style="text-align:right;">
+1231.2536914
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+S. Pacific
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+2010-2020
+</td>
+<td style="text-align:left;">
+full
+</td>
+<td style="text-align:left;">
+tco2_mean
+</td>
+<td style="text-align:right;">
+1005.1244986
+</td>
+<td style="text-align:right;">
+1182.7711554
 </td>
 </tr>
 </tbody>
