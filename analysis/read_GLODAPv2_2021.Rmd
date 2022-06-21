@@ -2949,7 +2949,7 @@ adjustments_GLODAP_JMA %>%
              adjustment)) +
   geom_hline(data = hline_intercept_NPO_2010, aes(yintercept = intercept)) +
   # geom_boxplot() +
-  geom_jitter(alpha = 0.2,
+  geom_jitter(alpha = 0.3,
               height = 0,
               width = 0.2) +
   labs(title = "N. Pacific | Japanese (49) cruises only",
@@ -2961,7 +2961,7 @@ adjustments_GLODAP_JMA %>%
   ggplot(aes(date,
              adjustment)) +
   geom_hline(data = hline_intercept_NPO_2010, aes(yintercept = intercept)) +
-  geom_point() +
+  geom_point(alpha = 0.3) +
   labs(title = "N. Pacific | Japanese (49) cruises only",
        y = "Adjustment/crossover value",
        x = "Cruise date") +
