@@ -2948,12 +2948,22 @@ adjustments_GLODAP_JMA %>%
   ggplot(aes(decade,
              adjustment)) +
   geom_hline(data = hline_intercept_NPO_2010, aes(yintercept = intercept)) +
-  geom_boxplot() +
-  geom_jitter(alpha = 0.5, shape = 21) +
-  scale_fill_brewer(palette = "Dark2") +
-  scale_size(name = "cruise\nsize") +
-  labs(title = "N. Pacific",
-       y = "JMA adjustment",
+  # geom_boxplot() +
+  geom_jitter(alpha = 0.2,
+              height = 0,
+              width = 0.2) +
+  labs(title = "N. Pacific | Japanese (49) cruises only",
+       y = "Adjustment/crossover value",
+       x = "Cruise decade") +
+  facet_grid(parameter ~ source, scales = "free_y")
+
+adjustments_GLODAP_JMA %>%
+  ggplot(aes(date,
+             adjustment)) +
+  geom_hline(data = hline_intercept_NPO_2010, aes(yintercept = intercept)) +
+  geom_point() +
+  labs(title = "N. Pacific | Japanese (49) cruises only",
+       y = "Adjustment/crossover value",
        x = "Cruise date") +
   facet_grid(parameter ~ source, scales = "free_y")
 
