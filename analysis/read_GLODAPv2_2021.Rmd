@@ -2315,7 +2315,10 @@ GLODAP_deep_nuts <- GLODAP %>%
   filter(depth > 1500) %>% 
   group_by(basin) %>% 
   summarise(phosphate_mean = mean(phosphate, na.rm = TRUE),
-            nitrate_mean = mean(nitrate, na.rm = TRUE)) %>% 
+            nitrate_mean = mean(nitrate, na.rm = TRUE),
+            silicate_mean = mean(silicate, na.rm = TRUE),
+            tco2_mean = mean(tco2, na.rm = TRUE),
+            talk_mean = mean(talk, na.rm = TRUE)) %>% 
   ungroup()
 
 xover_basin <- full_join(xover_basin,
@@ -2702,7 +2705,6 @@ xover_cruise_decade_all %>%
 
 ```{r NPO_2010_decadal_crossover, fig.asp=1.2}
 
-
 parameter_check <- c(
   "cstar_total_phosphate",
   "cstar_total_nitrate",
@@ -2717,7 +2719,8 @@ xover_cruise_decade_all_NPO_2010 <-
   xover_cruise_decade_all %>%
   filter(parameter_coverage == "full",
          basin == "N. Pacific",
-         decade == "2000-2009") %>%
+         decade == "2000-2009"
+         ) %>%
   mutate(RV = if_else(
     str_sub(cruise_A, 1, 4) %in% c("49UP", "49UF"),
     "49UF|49UP",
@@ -2779,6 +2782,17 @@ xover_cruise_decade_all_NPO_2010 %>%
        y = "Mean xover offset",
        x = "Cruise size (nr. obs)") +
   facet_grid(parameter ~ decade_A, scales = "free_y")
+
+xover_cruise_decade_all_NPO_2010 %>%
+  group_by(country_name, parameter, decade_A) %>%
+  summarise(offset_adj_mean_weighted = mean(offset_adj_mean_weighted, na.rm =
+                                              TRUE)) %>%
+  ungroup() %>%
+  kable() %>%
+  kable_styling() %>%
+  scroll_box(height = "300px")
+
+
 
 xover_cruise_decade_all_NPO_2010 %>%
   ggplot(aes(
@@ -2844,13 +2858,41 @@ GLODAP_adjustments_long_NPO_2010 %>%
        x = "Cruise date") +
   facet_grid(parameter ~ ., scales = "free_y")
 
+
+GLODAP_adjustments_long_NPO_2010 %>%
+  mutate(decade = m_grid_decade(year(date))) %>%
+  group_by(country_name, parameter, decade) %>%
+  summarise(adjustment = mean(adjustment, na.rm =
+                                TRUE)) %>%
+  ungroup() %>%
+  kable() %>%
+  kable_styling() %>%
+  scroll_box(height = "300px")
+
+
+JMA_adjustments <- JMA_adjustments %>%
+  rename(
+    cruise_expocode = expocode,
+    phosphate = `PHSPHT_adjustment(x)`,
+    nitrate  = `NO2+NO3_adjustment(x)`,
+    silicate = `SILCAT_adjustment(x)`,
+    talk = `NALKALI_adjustment(x)`,
+    tco2 = `NTCARBN_adjustment(x)`
+  ) %>% 
+  mutate(talk = (talk-1) * GLODAP_deep_nuts %>% 
+           filter(basin == "N. Pacific") %>% 
+           pull(talk_mean),
+         tco2 = (tco2-1) * GLODAP_deep_nuts %>% 
+           filter(basin == "N. Pacific") %>% 
+           pull(tco2_mean))
+
 JMA_adjustments_long <- JMA_adjustments %>%
-  select(cruise_expocode = expocode,
-         phosphate = `PHSPHT_adjustment(x)`,
-         nitrate  = `NO2+NO3_adjustment(x)`,
-         silicate = `SILCAT_adjustment(x)`,
-         talk = `NALKALI_adjustment(x)`,
-         tco2 = `NTCARBN_adjustment(x)`
+  select(cruise_expocode,
+         phosphate,
+         nitrate,
+         silicate,
+         talk,
+         tco2
          ) %>% 
   mutate(cruise_expocode = str_split(cruise_expocode, "_", simplify = TRUE)[,1]) %>% 
   pivot_longer(phosphate:tco2,
@@ -2873,7 +2915,7 @@ JMA_adjustments_long %>%
   ggplot(aes(date,
              adjustment,
              fill = country_name)) +
-  geom_hline(yintercept = 1) +
+  geom_hline(data = hline_intercept_NPO_2010, aes(yintercept = intercept)) +
   geom_point(alpha = 0.5, shape = 21) +
   scale_fill_brewer(palette = "Dark2") +
   scale_size(name = "cruise\nsize") +
@@ -2881,6 +2923,50 @@ JMA_adjustments_long %>%
        y = "JMA adjustment",
        x = "Cruise date") +
   facet_grid(parameter ~ ., scales = "free_y")
+
+adjustments_GLODAP_JMA <-
+  bind_rows(
+    JMA_adjustments_long %>%
+      filter(country_name == "JAPAN") %>%
+      select(cruise_expocode, parameter, adjustment, date) %>%
+      mutate(source = "JMA"),
+    GLODAP_adjustments_long_NPO_2010 %>%
+      filter(country_name == "JAPAN") %>%
+      select(cruise_expocode, parameter, adjustment, date) %>%
+      mutate(source = "GLODAPv2.2020 - adjustment"),
+    xover_cruise_decade_all_NPO_2010 %>%
+      filter(country_name == "JAPAN") %>%
+      select(cruise_expocode = cruise_A, parameter, 
+             adjustment = offset_adj_mean_weighted, date = date_A) %>%
+      mutate(source = "GLODAPv2.2020 - xover")
+  )
+
+
+adjustments_GLODAP_JMA %>%
+  mutate(decade = m_grid_decade(year(date))) %>%
+  drop_na() %>% 
+  ggplot(aes(decade,
+             adjustment)) +
+  geom_hline(data = hline_intercept_NPO_2010, aes(yintercept = intercept)) +
+  geom_boxplot() +
+  geom_jitter(alpha = 0.5, shape = 21) +
+  scale_fill_brewer(palette = "Dark2") +
+  scale_size(name = "cruise\nsize") +
+  labs(title = "N. Pacific",
+       y = "JMA adjustment",
+       x = "Cruise date") +
+  facet_grid(parameter ~ source, scales = "free_y")
+
+adjustments_GLODAP_JMA %>%
+  mutate(decade = m_grid_decade(year(date))) %>%
+  drop_na() %>%
+  group_by(source, parameter, decade) %>%
+  summarise(adjustment = mean(adjustment, na.rm =
+                                TRUE)) %>%
+  ungroup() %>%
+  kable() %>%
+  kable_styling() %>%
+  scroll_box(height = "300px")
 
 
 rm(xover_cruise_decade_all_NPO_2010, hline_intercept_NPO_2010)
