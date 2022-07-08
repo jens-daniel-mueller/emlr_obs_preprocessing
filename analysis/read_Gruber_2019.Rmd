@@ -595,26 +595,51 @@ dcant_boundary_profile <- dcant_3d_boundary %>%
   ungroup()
 
 dcant_boundary_profile %>% 
-  ggplot(aes(dcant_pos, depth)) +
-  geom_point() +
+  ggplot() +
+  geom_point(aes(dcant_pos, depth, fill="dcant_pos")) +
+  geom_point(aes(gamma, depth, fill="gamma")) +
   scale_color_viridis_c() +
   scale_y_reverse()
 
-dcant_boundary_profile %>% 
-  ggplot(aes(gamma, depth)) +
-  geom_point() +
-  scale_color_viridis_c() +
-  scale_y_reverse()
 
 dcant_boundary_profile <- dcant_boundary_profile %>% 
   mutate(dcant_pos = if_else(depth >= 2000, min(dcant_pos), dcant_pos))
 
-NA_basin_WOA18 <- full_join(NA_basin_WOA18 %>% filter(lat > 64),
+dcant_boundary_profile <- dcant_boundary_profile %>%
+  mutate(gamma = if_else(is.na(gamma), max(gamma, na.rm = TRUE), gamma))
+
+
+NA_basin_WOA18 <- full_join(NA_basin_WOA18 %>% filter(lat > 65),
                             dcant_boundary_profile)
 
 dcant_3d <-
   bind_rows(dcant_3d,
-            NA_basin_WOA18 %>% filter(lat > 65))
+            NA_basin_WOA18)
+
+
+dcant_3d <-
+  dcant_3d %>%
+  group_by(depth, lon) %>%
+  arrange(lat) %>%
+  fill(gamma, .direction = "down") %>%
+  ungroup() %>%
+  group_by(lat, lon) %>%
+  arrange(depth) %>%
+  fill(gamma, .direction = "downup") %>%
+  ungroup()
+
+
+ggplot() +
+  geom_tile(data = region_masks_open_ocean,
+            aes(lon, lat, fill = "region"), alpha = 0.6) +
+  geom_tile(data = dcant_3d %>% 
+              filter(is.na(gamma)) %>% 
+              distinct(lon, lat),
+            aes(lon, lat, fill = "G19 - no gamma"), alpha = 0.6) +
+  scale_fill_brewer(palette = "Dark2") +
+  coord_quickmap(expand = 0)
+
+
 
 ```
 
@@ -691,7 +716,9 @@ dcant <- dcant %>%
 
 dcant <-
   full_join(dcant_3d,
-            dcant %>% distinct(lat, lon, depth))
+            dcant %>% 
+              filter(depth <= 3000) %>% 
+              distinct(lat, lon, depth))
 
 
 # convert dcant unit from "µmol kg-1" to "mol m-3"
