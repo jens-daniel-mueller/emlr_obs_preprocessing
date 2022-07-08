@@ -69,7 +69,11 @@ dcant <- dcant %>%
          lat = LATITUDE,
          depth = DEPTH,
          gamma = GAMMA_DENS,
-         dcant_pos = DCANT_01) %>% 
+         dcant_pos = DCANT_01)
+
+dcant_3d_reccap <- dcant
+
+dcant <- dcant %>% 
   mutate(lon = if_else(lon < 20, lon + 360, lon))
 
 rm(dcant_gamma)
@@ -427,10 +431,225 @@ dcant_zonal %>%
 ```
 
 
-# RECCAP2-ocean
+# RECCAP2-ocean submission
+
+## Read WOA18
+
+```{r read_WOA18}
 
 
-```{r format_Gruber_dcant_for_RECCAP2, eval=FALSE}
+path_woa2018 <- "/nfs/kryo/work/updata/woa2018/"
+
+WOA18 <- tidync(paste(
+  path_woa2018,
+  "temperature/decav/1.00/woa18_decav_t00_01.nc",
+  sep = ""
+))
+
+WOA18 <- WOA18 %>%
+  hyper_tibble()
+
+WOA18 <- WOA18 %>%
+  distinct(lat, lon, depth)
+
+WOA18 <- WOA18 %>%
+  mutate(lon = if_else(lon < 0, lon + 360, lon))
+
+```
+
+
+## Read RECCAP2 biome mask
+
+```{r read_RECCAP2_basin_mask}
+
+
+path_basin_mask <-
+  "/nfs/kryo/work/updata/reccap2/"
+
+region_masks_all <-
+  read_ncdf(paste(
+    path_basin_mask,
+    "RECCAP2_region_masks_all_v20220620.nc",
+    sep = ""
+  )) %>%
+  as_tibble()
+
+region_masks_all <- region_masks_all %>%
+  select(-seamask)
+
+region_masks_all <- region_masks_all %>%
+  pivot_longer(open_ocean:southern,
+               names_to = "region",
+               values_to = "value") %>%
+  mutate(value = as.factor(value))
+
+region_masks_all %>%
+  filter(value != 0,
+         region == "atlantic") %>%
+  ggplot(aes(lon, lat, fill = region)) +
+  geom_raster() +
+  scale_fill_brewer(palette = "Dark2") +
+  coord_quickmap(expand = 0)
+
+region_masks_atlantic <-
+  region_masks_all %>%
+  filter(value != 0,
+         region == "atlantic")
+
+region_masks_open_ocean <-
+  region_masks_all %>%
+  filter(value != 0,
+         !(region %in% c("open_ocean", "arctic")))
+
+rm(region_masks_all)
+
+```
+
+## Extensions to N-Atlantic
+
+```{r extension_N_Atlantic}
+
+dcant_3d <- dcant_3d_reccap %>% 
+  filter(depth <= 3000)
+
+ggplot() +
+  geom_tile(data = region_masks_atlantic,
+            aes(lon, lat, fill = region), alpha = 0.6) +
+  geom_tile(data = dcant_3d %>% distinct(lon, lat),
+            aes(lon, lat, fill = "G19"), alpha = 0.6) +
+  scale_fill_brewer(palette = "Dark2") +
+  coord_quickmap(expand = 0)
+
+ggplot() +
+  geom_tile(data = region_masks_open_ocean,
+            aes(lon, lat, fill = "region"), alpha = 0.6) +
+  geom_tile(data = dcant_3d %>% distinct(lon, lat),
+            aes(lon, lat, fill = "G19"), alpha = 0.6) +
+  scale_fill_brewer(palette = "Dark2") +
+  coord_quickmap(expand = 0)
+
+dcant_3d <- inner_join(dcant_3d,
+                       region_masks_open_ocean %>% distinct(lon, lat))
+
+
+ggplot() +
+  geom_tile(data = region_masks_atlantic %>% filter(lat > 64),
+            aes(lon, lat, fill = region), alpha = 0.6) +
+  geom_tile(data = dcant_3d %>% distinct(lon, lat),
+            aes(lon, lat, fill = "G19"), alpha = 0.6) +
+  scale_fill_brewer(palette = "Dark2") +
+  coord_quickmap(expand = 0)
+
+ggplot() +
+  geom_tile(data = region_masks_atlantic %>% filter(lat > 64),
+            aes(lon, lat, fill = region), alpha = 0.6) +
+  geom_tile(data = WOA18 %>% distinct(lon, lat),
+            aes(lon, lat, fill = "WOA18"), alpha = 0.6) +
+  scale_fill_brewer(palette = "Dark2") +
+  coord_quickmap(expand = 0)
+
+NA_basin_WOA18 <- left_join(
+  region_masks_atlantic %>% filter(lat > 62) %>% distinct(lon, lat),
+  WOA18
+)
+
+
+ggplot() +
+  geom_tile(data = region_masks_atlantic,
+            aes(lon, lat),
+            alpha = 0.6) +
+  geom_tile(
+    data = NA_basin_WOA18 %>%
+      group_by(lon, lat) %>%
+      summarise(depth = max(depth)) %>%
+      ungroup(),
+    aes(lon, lat, fill = depth)
+  ) +
+  scale_fill_viridis_c(direction = -1) +
+  coord_quickmap(expand = 0)
+
+NA_basin_WOA18 <- NA_basin_WOA18 %>% 
+  filter(depth %in% unique(dcant_3d$depth))
+
+dcant_3d_boundary <- inner_join(
+  NA_basin_WOA18,
+  dcant_3d
+)
+
+dcant_3d_boundary %>% 
+  ggplot(aes(dcant_pos, depth, col = lon)) +
+  geom_point() +
+  scale_color_viridis_c() +
+  scale_y_reverse()
+
+dcant_3d_boundary %>% 
+  ggplot(aes(gamma, depth, col = lon)) +
+  geom_point() +
+  scale_color_viridis_c() +
+  scale_y_reverse()
+
+dcant_boundary_profile <- dcant_3d_boundary %>% 
+  group_by(depth) %>% 
+  summarise(dcant_pos = mean(dcant_pos, na.rm = TRUE),
+            gamma = mean(gamma, na.rm = TRUE)) %>% 
+  ungroup()
+
+dcant_boundary_profile %>% 
+  ggplot(aes(dcant_pos, depth)) +
+  geom_point() +
+  scale_color_viridis_c() +
+  scale_y_reverse()
+
+dcant_boundary_profile %>% 
+  ggplot(aes(gamma, depth)) +
+  geom_point() +
+  scale_color_viridis_c() +
+  scale_y_reverse()
+
+dcant_boundary_profile <- dcant_boundary_profile %>% 
+  mutate(dcant_pos = if_else(depth >= 2000, min(dcant_pos), dcant_pos))
+
+NA_basin_WOA18 <- full_join(NA_basin_WOA18 %>% filter(lat > 64),
+                            dcant_boundary_profile)
+
+dcant_3d <-
+  bind_rows(dcant_3d,
+            NA_basin_WOA18 %>% filter(lat > 65))
+
+```
+
+
+# Column inventory 
+
+## Calculation
+
+```{r calculate_column_inventory_G19_filled}
+
+dcant_inv_layers <- m_dcant_inv(dcant_3d %>% mutate(dcant = 0,
+                                                    basin_AIP = "global"))
+
+dcant_inv <- dcant_inv_layers %>% 
+  filter(inv_depth == params_global$inventory_depth_standard)
+
+```
+
+## Map
+
+
+```{r G19_cant_inv_maps_filled, fig.asp=0.6}
+
+dcant_inv %>% 
+  ggplot(aes(lon, lat, fill = dcant_pos)) +
+  geom_tile() +
+  scale_fill_viridis_c() +
+  coord_quickmap(expand = 0)
+
+```
+
+
+
+
+```{r format_Gruber_dcant_for_RECCAP2}
 
 # extract coordinate reference system
 G19_raster <- raster::brick(paste0(
@@ -462,16 +681,22 @@ dcant <- full_join(dcant, gamma)
 rm(gamma)
 
 # harmonize column names and coordinates
-dcant <- dcant %>% 
+dcant <- dcant %>%
   rename(lon = LONGITUDE,
          lat = LATITUDE,
          depth = DEPTH,
          dcant = DCANT_01,
-         gamma = GAMMA_DENS) %>% 
+         gamma = GAMMA_DENS) %>%
   mutate(gamma = if_else(is.na(dcant), NaN, gamma))
+
+dcant <-
+  full_join(dcant_3d,
+            dcant %>% distinct(lat, lon, depth))
+
 
 # convert dcant unit from "µmol kg-1" to "mol m-3"
 dcant <- dcant %>% 
+  rename(dcant = dcant_pos) %>%
   mutate(dens = (1000 + gamma) / 1000,
          dcant = dcant * dens * 1e-3)
 
@@ -483,12 +708,13 @@ dcant <- dcant %>%
          volume = if_else(is.na(dcant), NaN, volume))
 
 # check total volume
-dcant %>% 
+dcant %>%
+  filter(depth <= 3000) %>%
   summarise(total_ocean_volume = sum(volume, na.rm = TRUE))
 
 # check total dcant
 dcant %>% 
-  filter(depth <= 3000) %>% 
+  filter(depth <= 3000) %>%
   mutate(dcant_inv = dcant * volume) %>% 
   summarise(total_dcant = sum(dcant_inv, na.rm = TRUE)*12*1e-15)
 
@@ -532,14 +758,14 @@ raster::getZ(dcant_raster)
 raster::writeRaster(
   dcant_raster,
   filename = paste0(path_preprocessing,
-                    "dcant_Gruber2019_1994-2007_v20211012.nc"),
+                    "dcant_Gruber2019_1994-2007_v20220608.nc"),
   overwrite = T
 )
 
 raster::writeRaster(
   volume_raster,
   filename = paste0(path_preprocessing,
-                    "volume_Gruber2019_1994-2007_v20211012.nc"),
+                    "volume_Gruber2019_1994-2007_v20220608.nc"),
   overwrite = T
 )
 
@@ -552,7 +778,7 @@ library(ncdf4)
 # open file in writing mode
 dcant_reopen <- nc_open(
   paste0(path_preprocessing,
-         "dcant_Gruber2019_1994-2007_v20211012.nc"),
+         "dcant_Gruber2019_1994-2007_v20220608.nc"),
   write = TRUE)
 
 dcant_reopen
@@ -576,7 +802,7 @@ nc_close(dcant_reopen)
 # open file in writing mode
 volume_reopen <- nc_open(
   paste0(path_preprocessing,
-         "volume_Gruber2019_1994-2007_v20211012.nc"),
+         "volume_Gruber2019_1994-2007_v20220608.nc"),
   write = TRUE)
 
 volume_reopen
@@ -600,7 +826,7 @@ nc_close(volume_reopen)
 
 dcant_reopen <- tidync(
   paste0(path_preprocessing,
-         "dcant_Gruber2019_1994-2007_v20211012.nc")) %>% 
+         "dcant_Gruber2019_1994-2007_v20220608.nc")) %>% 
   hyper_tibble()
 
 dcant_reopen %>% 
@@ -610,7 +836,7 @@ dcant_reopen %>%
   scale_fill_viridis_c()
 
 dcant_reopen %>% 
-  filter(longitude == 200.5) %>% 
+  filter(longitude == 0.5) %>% 
   ggplot(aes(latitude, z, z=dcant)) +
   scale_y_reverse() +
   geom_contour_filled() +
@@ -619,7 +845,7 @@ dcant_reopen %>%
 
 dcant_reopen <- read_ncdf(
   paste0(path_preprocessing,
-         "dcant_Gruber2019_1994-2007_v20211012.nc"))
+         "dcant_Gruber2019_1994-2007_v20220608.nc"))
 
 plot(dcant_reopen,
      axes = TRUE)
@@ -629,7 +855,7 @@ plot(dcant_reopen,
 
 volume_reopen <- tidync(
   paste0(path_preprocessing,
-         "volume_Gruber2019_1994-2007_v20211012.nc")) %>% 
+         "volume_Gruber2019_1994-2007_v20220608.nc")) %>% 
   hyper_tibble()
 
 volume_reopen %>% 
@@ -648,7 +874,7 @@ volume_reopen %>%
 
 volume_reopen <- read_ncdf(
   paste0(path_preprocessing,
-         "volume_Gruber2019_1994-2007_v20211012.nc"))
+         "volume_Gruber2019_1994-2007_v20220608.nc"))
 
 plot(volume_reopen,
      axes = TRUE)
