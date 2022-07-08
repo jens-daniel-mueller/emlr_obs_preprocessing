@@ -566,16 +566,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeca773fa525d29423b2607b6759a679992042a39dtargetblankca773faa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/ca773fa525d29423b2607b6759a679992042a39d" target="_blank">ca773fa</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree6df29d53100f74b7fee93830d686254bd6fa8fb4targetblank6df29d5a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/6df29d53100f74b7fee93830d686254bd6fa8fb4" target="_blank">6df29d5</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeca773fa525d29423b2607b6759a679992042a39dtargetblankca773faa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree6df29d53100f74b7fee93830d686254bd6fa8fb4targetblank6df29d5a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/ca773fa525d29423b2607b6759a679992042a39d" target="_blank">ca773fa</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/6df29d53100f74b7fee93830d686254bd6fa8fb4" target="_blank">6df29d5</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -627,6 +627,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/6df29d53100f74b7fee93830d686254bd6fa8fb4/analysis/read_Gruber_2019.Rmd" target="_blank">6df29d5</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-07-08
+</td>
+<td>
+checked netcdf files for reccap
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/af7d04d1f17242d683ec5eabba699a40d71745a8/docs/read_Gruber_2019.html" target="_blank">af7d04d</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-07-08
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -3204,6 +3238,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/af7d04d1f17242d683ec5eabba699a40d71745a8/docs/figure/read_Gruber_2019.Rmd/extension_N_Atlantic-8.png" target="_blank">af7d04d</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-07-08
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a88dc1c1a13ac0d10fe57fe2ccd3518f03b546e0/docs/figure/read_Gruber_2019.Rmd/extension_N_Atlantic-8.png" target="_blank">a88dc1c</a>
 </td>
 <td>
@@ -3278,6 +3323,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/af7d04d1f17242d683ec5eabba699a40d71745a8/docs/figure/read_Gruber_2019.Rmd/extension_N_Atlantic-9.png" target="_blank">af7d04d</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-07-08
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a88dc1c1a13ac0d10fe57fe2ccd3518f03b546e0/docs/figure/read_Gruber_2019.Rmd/extension_N_Atlantic-9.png" target="_blank">a88dc1c</a>
 </td>
 <td>
@@ -3348,6 +3404,9 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+</div>
+<div id="write-netcdf" class="section level2" number="13.3">
+<h2><span class="header-section-number">13.3</span> Write netcdf</h2>
 <pre class="r"><code># extract coordinate reference system
 G19_raster &lt;- raster::brick(paste0(
   path_gruber_2019,
@@ -3576,89 +3635,7 @@ dcant_reopen</code></pre>
     3 global attributes:
         Conventions: CF-1.4
         created_by: R, packages ncdf4 and raster (version 3.5-11)
-        date: 2022-07-08 13:38:28</code></pre>
-<pre class="r"><code>print(dcant_reopen)</code></pre>
-<pre><code>File /nfs/kryo/work/jenmueller/emlr_cant/observations/preprocessing/dcant_Gruber2019_1994-2007_v20220608.nc (NC_FORMAT_CLASSIC):
-
-     2 variables (excluding dimension variables):
-        int crs[]   
-            proj4: +proj=longlat +datum=WGS84 +no_defs
-        float dcant[longitude,latitude,z]   
-            _FillValue: -3.39999995214436e+38
-            grid_mapping: crs
-            proj4: +proj=longlat +datum=WGS84 +no_defs
-            min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-             min: 0
-            max: 0.0248421741701018
-             max: 0.0263988532810143
-             max: 0.0259323226992999
-             max: 0.0468319294577161
-             max: 0.0539228878337458
-             max: 0.0579115449847562
-             max: 0.0591300899669754
-             max: 0.0595068498539064
-             max: 0.0591967236903614
-             max: 0.0622757641709907
-             max: 0.0701156483511376
-             max: 0.0822125437177265
-             max: 0.0895806756023294
-             max: 0.0465109463416744
-             max: 0.0447200492198721
-             max: 0.022305883055381
-             max: 0.0186725092366003
-             max: 0.0160326506043697
-             max: 0.0160672112174615
-             max: 0.0138309280953768
-             max: 0.0167029822776245
-             max: 0.0172627351586531
-             max: 0.0110274898367661
-             max: 0.0123063573857286
-             max: 0.0129442649462616
-             max: 0.00788267650599191
-             max: 0.00889479200777699
-             max: 0.00910296888252653
-
-     3 dimensions:
-        longitude  Size:360 
-            units: degrees_east
-            long_name: longitude
-        latitude  Size:180 
-            units: degrees_north
-            long_name: latitude
-        z  Size:28   *** is unlimited *** 
-            units: unknown
-            long_name: z
-
-    3 global attributes:
-        Conventions: CF-1.4
-        created_by: R, packages ncdf4 and raster (version 3.5-11)
-        date: 2022-07-08 13:38:28</code></pre>
+        date: 2022-07-08 14:20:37</code></pre>
 <pre class="r"><code>names(dcant_reopen$var)</code></pre>
 <pre><code>[1] &quot;crs&quot;   &quot;dcant&quot;</code></pre>
 <pre class="r"><code># add units
@@ -3785,7 +3762,7 @@ volume_reopen</code></pre>
     3 global attributes:
         Conventions: CF-1.4
         created_by: R, packages ncdf4 and raster (version 3.5-11)
-        date: 2022-07-08 13:38:28</code></pre>
+        date: 2022-07-08 14:20:37</code></pre>
 <pre class="r"><code>print(volume_reopen)</code></pre>
 <pre><code>File /nfs/kryo/work/jenmueller/emlr_cant/observations/preprocessing/volume_Gruber2019_1994-2007_v20220608.nc (NC_FORMAT_CLASSIC):
 
@@ -3867,7 +3844,7 @@ volume_reopen</code></pre>
     3 global attributes:
         Conventions: CF-1.4
         created_by: R, packages ncdf4 and raster (version 3.5-11)
-        date: 2022-07-08 13:38:28</code></pre>
+        date: 2022-07-08 14:20:37</code></pre>
 <pre class="r"><code>names(volume_reopen$var)</code></pre>
 <pre><code>[1] &quot;crs&quot;    &quot;volume&quot;</code></pre>
 <pre class="r"><code># add units
@@ -3908,420 +3885,58 @@ $long_name
 <pre class="r"><code>ncatt_put(volume_reopen, varid = &quot;z&quot;,
           attname = &quot;units&quot;, attval = &quot;metres&quot;)
 
-nc_close(volume_reopen)
-
-
-
-# final check dcant
-
-dcant_reopen &lt;- tidync(
-  paste0(path_preprocessing,
-         &quot;dcant_Gruber2019_1994-2007_v20220608.nc&quot;)) %&gt;% 
-  hyper_tibble()
-
-dcant_reopen %&gt;% 
-  filter(z == 0) %&gt;% 
-  ggplot(aes(longitude, latitude, fill=dcant)) +
-  geom_raster() +
-  scale_fill_viridis_c()</code></pre>
-<p><img src="figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-format_Gruber_dcant_for_RECCAP2-1">
-Past versions of format_Gruber_dcant_for_RECCAP2-1.png
-</button>
-</p>
-<div id="fig-format_Gruber_dcant_for_RECCAP2-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a88dc1c1a13ac0d10fe57fe2ccd3518f03b546e0/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-1.png" target="_blank">a88dc1c</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-07-08
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8ae2eb9cb79a6b325553ff1a0918db28b8d9d6bf/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-1.png" target="_blank">8ae2eb9</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-26
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2dad8c70b4eca6157dd42273d75637fb41e39748/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-1.png" target="_blank">2dad8c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-12
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>dcant_reopen %&gt;% 
-  filter(longitude == 0.5) %&gt;% 
-  ggplot(aes(latitude, z, z=dcant)) +
-  scale_y_reverse() +
-  geom_contour_filled() +
-  scale_fill_viridis_d()</code></pre>
-<p><img src="figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-format_Gruber_dcant_for_RECCAP2-2">
-Past versions of format_Gruber_dcant_for_RECCAP2-2.png
-</button>
-</p>
-<div id="fig-format_Gruber_dcant_for_RECCAP2-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a88dc1c1a13ac0d10fe57fe2ccd3518f03b546e0/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-2.png" target="_blank">a88dc1c</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-07-08
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8ae2eb9cb79a6b325553ff1a0918db28b8d9d6bf/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-2.png" target="_blank">8ae2eb9</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-26
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2dad8c70b4eca6157dd42273d75637fb41e39748/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-2.png" target="_blank">2dad8c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-12
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+nc_close(volume_reopen)</code></pre>
 <pre class="r"><code>dcant_reopen &lt;- read_ncdf(
   paste0(path_preprocessing,
-         &quot;dcant_Gruber2019_1994-2007_v20220608.nc&quot;))</code></pre>
+         &quot;dcant_Gruber2019_1994-2007_v20220608.nc&quot;),
+  make_units = FALSE)</code></pre>
 <pre><code>Error in UseMethod(&quot;GPFN&quot;) : 
   no applicable method for &#39;GPFN&#39; applied to an object of class &quot;list&quot;</code></pre>
-<pre class="r"><code>plot(dcant_reopen,
-     axes = TRUE)</code></pre>
-<p><img src="figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-3.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-format_Gruber_dcant_for_RECCAP2-3">
-Past versions of format_Gruber_dcant_for_RECCAP2-3.png
-</button>
-</p>
-<div id="fig-format_Gruber_dcant_for_RECCAP2-3" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a88dc1c1a13ac0d10fe57fe2ccd3518f03b546e0/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-3.png" target="_blank">a88dc1c</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-07-08
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8ae2eb9cb79a6b325553ff1a0918db28b8d9d6bf/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-3.png" target="_blank">8ae2eb9</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-26
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2dad8c70b4eca6157dd42273d75637fb41e39748/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-3.png" target="_blank">2dad8c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-12
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code># final check volume
-
-volume_reopen &lt;- tidync(
-  paste0(path_preprocessing,
-         &quot;volume_Gruber2019_1994-2007_v20220608.nc&quot;)) %&gt;% 
-  hyper_tibble()
-
-volume_reopen %&gt;% 
-  filter(z == 0) %&gt;% 
-  ggplot(aes(longitude, latitude, fill=volume)) +
-  geom_raster() +
-  scale_fill_viridis_c()</code></pre>
-<p><img src="figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-4.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-format_Gruber_dcant_for_RECCAP2-4">
-Past versions of format_Gruber_dcant_for_RECCAP2-4.png
-</button>
-</p>
-<div id="fig-format_Gruber_dcant_for_RECCAP2-4" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a88dc1c1a13ac0d10fe57fe2ccd3518f03b546e0/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-4.png" target="_blank">a88dc1c</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-07-08
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8ae2eb9cb79a6b325553ff1a0918db28b8d9d6bf/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-4.png" target="_blank">8ae2eb9</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-26
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2dad8c70b4eca6157dd42273d75637fb41e39748/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-4.png" target="_blank">2dad8c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-12
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>volume_reopen %&gt;% 
-  filter(longitude == 200.5) %&gt;% 
-  ggplot(aes(latitude, z, z=volume)) +
-  scale_y_reverse() +
-  geom_contour_filled() +
-  scale_fill_viridis_d()</code></pre>
-<p><img src="figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-5.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-format_Gruber_dcant_for_RECCAP2-5">
-Past versions of format_Gruber_dcant_for_RECCAP2-5.png
-</button>
-</p>
-<div id="fig-format_Gruber_dcant_for_RECCAP2-5" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a88dc1c1a13ac0d10fe57fe2ccd3518f03b546e0/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-5.png" target="_blank">a88dc1c</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-07-08
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8ae2eb9cb79a6b325553ff1a0918db28b8d9d6bf/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-5.png" target="_blank">8ae2eb9</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-26
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2dad8c70b4eca6157dd42273d75637fb41e39748/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-5.png" target="_blank">2dad8c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-12
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 <pre class="r"><code>volume_reopen &lt;- read_ncdf(
   paste0(path_preprocessing,
-         &quot;volume_Gruber2019_1994-2007_v20220608.nc&quot;))</code></pre>
+         &quot;volume_Gruber2019_1994-2007_v20220608.nc&quot;),
+  make_units = FALSE)</code></pre>
 <pre><code>Error in UseMethod(&quot;GPFN&quot;) : 
   no applicable method for &#39;GPFN&#39; applied to an object of class &quot;list&quot;</code></pre>
-<pre class="r"><code>plot(volume_reopen,
-     axes = TRUE)</code></pre>
-<p><img src="figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-6.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-format_Gruber_dcant_for_RECCAP2-6">
-Past versions of format_Gruber_dcant_for_RECCAP2-6.png
-</button>
-</p>
-<div id="fig-format_Gruber_dcant_for_RECCAP2-6" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a88dc1c1a13ac0d10fe57fe2ccd3518f03b546e0/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-6.png" target="_blank">a88dc1c</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-07-08
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/8ae2eb9cb79a6b325553ff1a0918db28b8d9d6bf/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-6.png" target="_blank">8ae2eb9</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2022-04-26
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/2dad8c70b4eca6157dd42273d75637fb41e39748/docs/figure/read_Gruber_2019.Rmd/format_Gruber_dcant_for_RECCAP2-6.png" target="_blank">2dad8c7</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2021-10-12
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<pre class="r"><code>gruber_reopen &lt;- c(dcant_reopen, volume_reopen) %&gt;% 
+  as_tibble() %&gt;% 
+  drop_na()
+
+
+gruber_reopen %&gt;%
+  distinct(longitude, latitude) %&gt;% 
+  ggplot(aes(longitude, latitude)) +
+  geom_tile()</code></pre>
+<p><img src="figure/read_Gruber_2019.Rmd/check_netcdf_file_content-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>gruber_reopen_integrated &lt;- gruber_reopen %&gt;%
+  mutate(dcant_vol = dcant * volume) %&gt;% 
+  group_by(longitude, latitude) %&gt;% 
+  summarise(dcant_col_inv = sum(dcant_vol)) %&gt;% 
+  ungroup()
+
+
+gruber_reopen_integrated &lt;- gruber_reopen_integrated %&gt;%
+  mutate(surf_area = earth_surf(lat = latitude, lon = longitude),
+         dcant_col_inv_area = dcant_col_inv / surf_area)
+
+gruber_reopen_integrated %&gt;%
+  ggplot(aes(longitude, latitude, fill = dcant_col_inv)) +
+  geom_tile() +
+  scale_fill_viridis_c() +
+  coord_quickmap(expand = 0)</code></pre>
+<p><img src="figure/read_Gruber_2019.Rmd/check_netcdf_file_content-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>gruber_reopen_integrated %&gt;%
+  ggplot(aes(longitude, latitude, fill = dcant_col_inv_area)) +
+  geom_tile() +
+  scale_fill_viridis_c() +
+  coord_quickmap(expand = 0)</code></pre>
+<p><img src="figure/read_Gruber_2019.Rmd/check_netcdf_file_content-3.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>gruber_reopen_integrated %&gt;%
+  ggplot(aes(longitude, latitude, fill = surf_area)) +
+  geom_tile() +
+  scale_fill_viridis_c() +
+  coord_quickmap(expand = 0)</code></pre>
+<p><img src="figure/read_Gruber_2019.Rmd/check_netcdf_file_content-4.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
