@@ -671,7 +671,7 @@ dcant_inv %>%
 
 ```
 
-
+## Write netcdf
 
 
 ```{r format_Gruber_dcant_for_RECCAP2}
@@ -809,7 +809,6 @@ dcant_reopen <- nc_open(
   write = TRUE)
 
 dcant_reopen
-print(dcant_reopen)
 names(dcant_reopen$var)
 
 # add units
@@ -849,64 +848,63 @@ nc_close(volume_reopen)
 
 
 
-# final check dcant
-
-dcant_reopen <- tidync(
-  paste0(path_preprocessing,
-         "dcant_Gruber2019_1994-2007_v20220608.nc")) %>% 
-  hyper_tibble()
-
-dcant_reopen %>% 
-  filter(z == 0) %>% 
-  ggplot(aes(longitude, latitude, fill=dcant)) +
-  geom_raster() +
-  scale_fill_viridis_c()
-
-dcant_reopen %>% 
-  filter(longitude == 0.5) %>% 
-  ggplot(aes(latitude, z, z=dcant)) +
-  scale_y_reverse() +
-  geom_contour_filled() +
-  scale_fill_viridis_d()
-
-
-dcant_reopen <- read_ncdf(
-  paste0(path_preprocessing,
-         "dcant_Gruber2019_1994-2007_v20220608.nc"))
-
-plot(dcant_reopen,
-     axes = TRUE)
-
-
-# final check volume
-
-volume_reopen <- tidync(
-  paste0(path_preprocessing,
-         "volume_Gruber2019_1994-2007_v20220608.nc")) %>% 
-  hyper_tibble()
-
-volume_reopen %>% 
-  filter(z == 0) %>% 
-  ggplot(aes(longitude, latitude, fill=volume)) +
-  geom_raster() +
-  scale_fill_viridis_c()
-
-volume_reopen %>% 
-  filter(longitude == 200.5) %>% 
-  ggplot(aes(latitude, z, z=volume)) +
-  scale_y_reverse() +
-  geom_contour_filled() +
-  scale_fill_viridis_d()
-
-
-volume_reopen <- read_ncdf(
-  paste0(path_preprocessing,
-         "volume_Gruber2019_1994-2007_v20220608.nc"))
-
-plot(volume_reopen,
-     axes = TRUE)
 
 ```
 
 
+```{r check_netcdf_file_content}
+
+dcant_reopen <- read_ncdf(
+  paste0(path_preprocessing,
+         "dcant_Gruber2019_1994-2007_v20220608.nc"),
+  make_units = FALSE)
+
+volume_reopen <- read_ncdf(
+  paste0(path_preprocessing,
+         "volume_Gruber2019_1994-2007_v20220608.nc"),
+  make_units = FALSE)
+
+
+gruber_reopen <- c(dcant_reopen, volume_reopen) %>% 
+  as_tibble() %>% 
+  drop_na()
+
+
+gruber_reopen %>%
+  distinct(longitude, latitude) %>% 
+  ggplot(aes(longitude, latitude)) +
+  geom_tile()
+
+gruber_reopen_integrated <- gruber_reopen %>%
+  mutate(dcant_vol = dcant * volume) %>% 
+  group_by(longitude, latitude) %>% 
+  summarise(dcant_col_inv = sum(dcant_vol)) %>% 
+  ungroup()
+
+
+gruber_reopen_integrated <- gruber_reopen_integrated %>%
+  mutate(surf_area = earth_surf(lat = latitude, lon = longitude),
+         dcant_col_inv_area = dcant_col_inv / surf_area)
+
+gruber_reopen_integrated %>%
+  ggplot(aes(longitude, latitude, fill = dcant_col_inv)) +
+  geom_tile() +
+  scale_fill_viridis_c() +
+  coord_quickmap(expand = 0)
+
+gruber_reopen_integrated %>%
+  ggplot(aes(longitude, latitude, fill = dcant_col_inv_area)) +
+  geom_tile() +
+  scale_fill_viridis_c() +
+  coord_quickmap(expand = 0)
+
+gruber_reopen_integrated %>%
+  ggplot(aes(longitude, latitude, fill = surf_area)) +
+  geom_tile() +
+  scale_fill_viridis_c() +
+  coord_quickmap(expand = 0)
+
+
+
+```
 
