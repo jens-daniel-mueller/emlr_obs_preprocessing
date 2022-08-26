@@ -48,7 +48,7 @@ params_global <-
 
 ```{r read_functions, include = FALSE}
 source(paste(path_functions,
-             "plotting_functions_obs.R",
+             "plotting_functions.R",
              sep = ""))
 ```
 
@@ -396,7 +396,9 @@ for (i_MLR_basins in unique(basinmask_all$MLR_basins)) {
 
 To plot sections from the North Atlantic south to the Southern Ocean, around Antarctica and back North across the Pacific Ocean, corresponding coordinates were subsetted from the basin mask and distances between coordinate grid points calculated.
 
-```{r Create_coordinates_of_section_global}
+### Line
+
+```{r create_coordinates_of_section_global_line}
 
 section <- basinmask_01 %>%
   select(lon, lat)
@@ -405,7 +407,7 @@ section <- basinmask_01 %>%
 Atl_NS <- section %>%
   filter(
     lon == params_global$lon_Atl_section,
-    lat <= params_global$lat_section_N,
+    # lat <= params_global$lat_section_N,
     lat >= params_global$lat_section_S
   ) %>%
   arrange(-lat)
@@ -423,7 +425,7 @@ Pac_SO <- section %>%
 Pac_SN <- section %>%
   filter(
     lon == params_global$lon_Pac_section,
-    lat <= params_global$lat_section_N,
+    # lat <= params_global$lat_section_N,
     lat >= params_global$lat_section_S
   ) %>%
   arrange(lat)
@@ -451,12 +453,166 @@ rm(Atl_NS, Atl_SO, Pac_SN, Pac_SO, section)
 
 ```
 
-```{r section_global_map, fig.asp=0.5}
+```{r section_global_map_line, fig.asp=0.5}
 
 map +
   geom_point(data = section_global_coordinates,
              aes(lon, lat, col = dist)) +
   scale_colour_viridis_b(name = "Distance (Mm)")
+
+```
+
+### band
+
+```{r create_coordinates_of_section_global_band}
+
+section <- basinmask_01 %>%
+  select(lon, lat)
+
+# subset individual section parts
+Atl_NS <- section %>%
+  filter(
+    lon >= params_global$lon_Atl_section - 5.5,
+    lon <= params_global$lon_Atl_section + 4.5,
+    # lat <= params_global$lat_section_N,
+    lat >= params_global$lat_section_S
+  ) %>%
+  arrange(-lat)
+
+Atl_SO <- section %>%
+  filter(lon > params_global$lon_Atl_section,
+         lat >= params_global$lat_section_S - 5.5,
+         lat <= params_global$lat_section_S + 4.5) %>%
+  arrange(lon)
+
+Pac_SO <- section %>%
+  filter(lon < params_global$lon_Pac_section,
+         lat >= params_global$lat_section_S - 5.5,
+         lat <= params_global$lat_section_S + 4.5) %>%
+  arrange(lon)
+
+Pac_SN <- section %>%
+  filter(
+    lon >= params_global$lon_Pac_section - 5.5,
+    lon <= params_global$lon_Pac_section + 4.5,
+    # lat <= params_global$lat_section_N,
+    lat >= params_global$lat_section_S
+  ) %>%
+  arrange(lat)
+
+# join individual section parts
+section_global_coordinates_band <-
+  bind_rows(Atl_NS %>% mutate(band = "Atlantic"),
+            Atl_SO %>% mutate(band = "Southern"),
+            Pac_SO %>% mutate(band = "Southern"),
+            Pac_SN %>% mutate(band = "Pacific"))
+
+section_global_coordinates_band <- 
+  full_join(section_global_coordinates_band,
+          section_global_coordinates)
+
+rm(Atl_NS, Atl_SO, Pac_SN, Pac_SO, section)
+
+```
+
+```{r section_global_map_band, fig.asp=0.5}
+
+map +
+  geom_point(data = section_global_coordinates_band,
+             aes(lon, lat, fill=band), alpha = 0.1, shape=21) +
+  geom_point(data = section_global_coordinates,
+             aes(lon, lat, col = dist)) +
+  scale_colour_viridis_b(name = "Distance (Mm)")
+
+```
+
+### whole basin
+
+```{r create_coordinates_of_section_global_basin}
+
+section <- basinmask_01 %>%
+  select(lon, lat, basin_AIP)
+
+# subset individual section parts
+Atl_NS <- section %>%
+  filter(
+    basin_AIP == "Atlantic",
+    # lat <= params_global$lat_section_N,
+    lat >= params_global$lat_section_S
+  ) %>%
+  arrange(-lat)
+
+Atl_NS <- full_join(Atl_NS,
+          section_global_coordinates %>% 
+            filter(lon == params_global$lon_Atl_section))
+
+Atl_NS <- Atl_NS %>%
+  select(-basin_AIP) %>%
+  mutate(band = "Atlantic")
+
+SO <- basinmask_SO_AIP %>%
+  filter((lon > params_global$lon_Atl_section |
+         lon < params_global$lon_Pac_section) &
+         basin == "SO",
+         lat <= params_global$lat_section_S + 4.5,
+         lat >= params_global$lat_section_S - 5.5)
+
+SO <- left_join(
+  SO,
+  section_global_coordinates %>% 
+    filter(lat == params_global$lat_section_S)
+)
+
+SO <- SO %>% 
+  select(-c(basin_AIP:MLR_basins)) %>% 
+  mutate(band = "Southern")
+
+Pac_SN <- section %>%
+  filter(
+    basin_AIP == "Pacific",
+    # lat <= params_global$lat_section_N,
+    lat >= params_global$lat_section_S
+  ) %>%
+  arrange(lat)
+
+
+Pac_SN <- full_join(Pac_SN,
+          section_global_coordinates %>% 
+            filter(lon == params_global$lon_Pac_section))
+
+Pac_SN <- Pac_SN %>%
+  select(-basin_AIP) %>%
+  mutate(band = "Pacific")
+
+# join individual section parts
+section_global_coordinates_basin <-
+  bind_rows(Atl_NS,
+            SO,
+            Pac_SN)
+
+
+rm(Atl_NS, SO, Pac_SN, section)
+
+```
+
+```{r section_global_map_basin, fig.asp=0.5}
+
+map +
+  geom_point(data = section_global_coordinates_basin,
+             aes(lon, lat, fill=band), alpha = 0.1, shape=21) +
+  geom_point(data = section_global_coordinates,
+             aes(lon, lat, col = dist)) +
+  scale_colour_viridis_b(name = "Distance (Mm)")
+
+# section_global_coordinates_basin %>% 
+#   filter(!is.na(dist)) %>% 
+#   count(lon, lat) %>% 
+#   filter(n != 1)
+# 
+# section_global_coordinates %>%  
+#   count(lon, lat) %>% 
+#   filter(n != 1)
+
 
 ```
 
@@ -480,6 +636,18 @@ basinmask_all %>%
 section_global_coordinates %>%
   write_csv(paste(path_files,
                   "section_global_coordinates.csv",
+                  sep = ""))
+
+# global section band
+section_global_coordinates_band %>%
+  write_csv(paste(path_files,
+                  "section_global_coordinates_band.csv",
+                  sep = ""))
+
+# global section band
+section_global_coordinates_basin %>%
+  write_csv(paste(path_files,
+                  "section_global_coordinates_basin.csv",
                   sep = ""))
 
 # base map ggplot
