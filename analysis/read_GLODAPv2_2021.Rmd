@@ -3321,6 +3321,50 @@ xover_cruise_decade_all %>%
   facet_grid(decade ~ parameter, scales = "free_y") +
   scale_x_discrete(guide = guide_axis(n.dodge = 2))
 
+
+xover_cruise_decade_all %>%
+  filter(
+    parameter_coverage == "full",
+    decade == "2000-2009",
+    parameter %in% c("cstar_total_phosphate")
+  ) %>%
+  ggplot(aes(basin,
+             offset_adj_mean_weighted,
+             col = decade_A)) +
+  geom_hline(yintercept = 0) +
+  geom_crossbar(
+    data = xover_cruise_decade_all_stats %>%
+      filter(
+        parameter_coverage == "full",
+        decade == "2000-2009",
+        parameter %in% c("cstar_total_phosphate")
+      ),
+    aes(
+      ymin = offset_adj_mean_weighted - offset_adj_sd,
+      ymax = offset_adj_mean_weighted + offset_adj_sd
+    ),
+    position = position_dodge(width = 0.7),
+    width = 0.5
+  ) +
+  geom_point(aes(size = n_A),
+             alpha = 0.5,
+             position = position_dodge(width = 0.7)) +
+  scale_color_brewer(palette = "Dark2",
+                     name = "Cruise decade") +
+  scale_size(name = "Cruise size") +
+  labs(y = expression("C*"~crossover~offset~(µmol~kg^{-1}))) +
+  # scale_x_discrete(guide = guide_axis(n.dodge = 2)) +
+  theme(axis.title.x = element_blank())
+
+
+ggsave(
+  path = "/UP_home/jenmueller/Projects/emlr_cant/observations/emlr_obs_analysis/output/publication",
+  filename = "FigS_crossover_offsets.png",
+  height = 4,
+  width = 6
+)
+
+
 xover_cruise_decade_all_stats %>%
   filter(parameter %in% c("cstar_total_phosphate", "cstar_total_nitrate")) %>%
   ggplot(

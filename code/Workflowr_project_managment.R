@@ -6,7 +6,7 @@
 # commit regular changes (locally) and rebuild site
 # this takes only changed files into account
 wflow_publish(all = TRUE,
-              message = "revised JMA adjustments")
+              message = "implented global section with region filter")
 
 # commit changes including _site.yml (locally) and rebuild site in the specified order
 # you can also run this code with only some of the files. In this case remove the rebuild=TRUE command
@@ -35,10 +35,10 @@ republish = TRUE)
 wflow_publish(here::here(
   "analysis",
   c(
-    "read_GLODAPv2_2021.Rmd"
+    "read_regions.Rmd"
   )
 ),
-message = "revised NPO analysis for GLODAP")
+message = "implented global section with region filter")
 
 
 # Push latest version to GitHub
