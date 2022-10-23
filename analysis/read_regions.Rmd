@@ -201,13 +201,13 @@ Pacific Ocean:
 
 - 2: Pacific Ocean
 - 10: Southern Ocean between 147°E and 63°W
-- (12: Sea of Japan; currently not included)
+- 12: Sea of Japan; currently not included
 
 ```{r assign_standard_basin_labels}
 
 # assign basin labels
 basinmask_01 <- basinmask_01 %>%
-  filter(Basin_0m %in% c("1", "2", "3", "10", "11", "56")) %>%
+  filter(Basin_0m %in% c("1", "2", "3", "10", "11", "12", "56")) %>%
   mutate(
     basin_AIP = "none",
     basin_AIP = case_when(
@@ -218,7 +218,7 @@ basinmask_01 <- basinmask_01 %>%
       Basin_0m == "56" ~ "Indian",
       Basin_0m == "10" & lon >= 20 & lon < 147 ~ "Indian",
       Basin_0m == "2" ~ "Pacific",
-      # Basin_0m == "12" ~ "Pacific",
+      Basin_0m == "12" ~ "Pacific",
       Basin_0m == "10" &
         lon >= 147 | lon < -63 ~ "Pacific"
     )
