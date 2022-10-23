@@ -300,8 +300,9 @@ WOA18_sal_temp_dens %>%
   ))
 
 WOA18_sal_temp_dens %>%
+  filter(delta_estimate != "gamma-gamma") %>% 
   group_split(delta_estimate) %>%
-  # head(2) %>%
+  # tail(1) %>%
   map( ~ p_section_global(
     df = .x,
     var = "delta_value",
