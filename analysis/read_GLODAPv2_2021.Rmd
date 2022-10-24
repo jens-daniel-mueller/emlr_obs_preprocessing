@@ -4189,7 +4189,7 @@ dev.off()
 
 ## Prediction
 
-```{r calc_CANYON-B}
+```{r calc_CANYON-B, eval=FALSE}
 
 source("/net/kryo/work/uptools/co2_calculation/CANYON-B/CANYONB.R")
 
@@ -4238,7 +4238,7 @@ GLODAP_CB <- GLODAP_CB %>%
 
 ## Comparison to observations
 
-```{r CANYON-B_vs_observationd, fig.asp=0.4}
+```{r CANYON-B_vs_observationd, fig.asp=0.4, eval=FALSE}
 
 
 variables <- c("talk", "tco2", "nitrate", "phosphate", "silicate")
@@ -4309,7 +4309,7 @@ for (i_variable in variables) {
 
 ## Write files
 
-```{r write_Canyon-B_data_file}
+```{r write_Canyon-B_data_file, eval=FALSE}
 
 GLODAP_CB %>% 
   select(row_number,
