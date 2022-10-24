@@ -450,7 +450,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Ocean regions</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">23 October, 2022</h4>
+<h4 class="date">24 October, 2022</h4>
 
 </div>
 
@@ -479,7 +479,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-10-23
+<strong>Last updated:</strong> 2022-10-24
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -610,15 +610,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree221ee12c903df723100e4eeaa2e39e534db3207ctargetblank221ee12a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree032edc2aa4becf901e1b22fda268e32750751e2atargetblank032edc2a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/221ee12c903df723100e4eeaa2e39e534db3207c" target="_blank">221ee12</a>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/032edc2aa4becf901e1b22fda268e32750751e2a" target="_blank">032edc2</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree221ee12c903df723100e4eeaa2e39e534db3207ctargetblank221ee12a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree032edc2aa4becf901e1b22fda268e32750751e2atargetblank032edc2a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -628,7 +628,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/221ee12c903df723100e4eeaa2e39e534db3207c" target="_blank">221ee12</a>.
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/032edc2aa4becf901e1b22fda268e32750751e2a" target="_blank">032edc2</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -650,9 +650,6 @@ Ignored files:
 
 Untracked files:
     Untracked:  code/read_GLODAPv2_2022.Rmd
-
-Unstaged changes:
-    Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
 <p>
@@ -698,6 +695,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/032edc2aa4becf901e1b22fda268e32750751e2a/analysis/read_regions.Rmd" target="_blank">032edc2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-10-24
+</td>
+<td>
+prepare basin mask w/o Sea of Japan
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/af8acb2f690e8a5bc29f37914fa6953c0cf6290f/docs/read_regions.html" target="_blank">af8acb2</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-10-23
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1099,8 +1130,7 @@ basinmask_01 &lt;- basinmask_01 %&gt;%
       Basin_0m == &quot;10&quot; &amp;
         lon &gt;= 147 | lon &lt; -63 ~ &quot;Pacific&quot;
     )
-  ) %&gt;%
-  select(-Basin_0m)
+  )
 
 # apply northern latitude boundary
 basinmask_01 &lt;- basinmask_01 %&gt;%
@@ -1108,7 +1138,18 @@ basinmask_01 &lt;- basinmask_01 %&gt;%
 
 # harmonize lon scale
 basinmask_01 &lt;- basinmask_01  %&gt;%
-  mutate(lon = if_else(lon &lt; 20, lon + 360, lon))</code></pre>
+  mutate(lon = if_else(lon &lt; 20, lon + 360, lon))
+
+# prepare basin mask excluding Sea of Japa
+basinmask_01_excl_Japan &lt;- basinmask_01  %&gt;%
+  filter(Basin_0m != &quot;12&quot;)
+
+
+basinmask_01_excl_Japan &lt;- basinmask_01_excl_Japan  %&gt;%
+  select(-Basin_0m)
+
+basinmask_01 &lt;- basinmask_01  %&gt;%
+  select(-Basin_0m)</code></pre>
 <pre class="r"><code>basinmask_01 &lt;- inner_join(basinmask_01,reccap2_region_mask)
 
 basinmask_01 &lt;- basinmask_01 %&gt;% 
@@ -1208,6 +1249,12 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
+<pre class="r"><code># plot basin_AIP map
+map +
+  geom_raster(data = basinmask_01_excl_Japan,
+              aes(lon, lat, fill = basin_AIP)) +
+  scale_fill_brewer(palette = &quot;Dark2&quot;)</code></pre>
+<p><img src="figure/read_regions.Rmd/basin_AIP_masks_WOA18_map-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># generate base map, which is further used throughout the project
 ggplot() +
   geom_raster(data = landseamask,
@@ -2206,6 +2253,13 @@ basinmask_all %&gt;%
   write_csv(paste(path_files,
                   &quot;basin_mask_WOA18.csv&quot;,
                   sep = &quot;&quot;))
+
+# basin mask excluding Sea of Japan
+basinmask_01_excl_Japan %&gt;%
+  write_csv(paste(path_files,
+                  &quot;basin_mask_WOA18_excl_Japan.csv&quot;,
+                  sep = &quot;&quot;))
+
 # global section
 section_global_coordinates %&gt;%
   write_csv(paste(path_files,
