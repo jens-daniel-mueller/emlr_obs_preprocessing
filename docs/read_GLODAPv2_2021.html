@@ -14,7 +14,7 @@
 
 <title>GLODAPv2_2021</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.18/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -79,6 +79,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -99,6 +100,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -156,11 +160,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -189,8 +197,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -198,16 +206,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -333,7 +334,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -343,7 +344,7 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Config
      
     <span class="caret"></span>
@@ -361,7 +362,7 @@ div.tocify {
   <a href="read_regions.html">Regions</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Predictors
      
     <span class="caret"></span>
@@ -376,7 +377,7 @@ div.tocify {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     GLODAPv2
      
     <span class="caret"></span>
@@ -391,7 +392,7 @@ div.tocify {
   </ul>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     CO2 data
      
     <span class="caret"></span>
@@ -441,7 +442,7 @@ div.tocify {
 <div id="header">
 
 <div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
 <ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
 <li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
@@ -452,7 +453,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">GLODAPv2_2021</h1>
 <h4 class="author">Jens Daniel Müller</h4>
-<h4 class="date">24 October, 2022</h4>
+<h4 class="date">17 January, 2023</h4>
 
 </div>
 
@@ -481,7 +482,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-10-24
+<strong>Last updated:</strong> 2023-01-17
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -612,15 +613,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree032edc2aa4becf901e1b22fda268e32750751e2atargetblank032edc2a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree42ca2a99aa32ec8183edb971a0c4b4f9037a0679targetblank42ca2a9a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/032edc2aa4becf901e1b22fda268e32750751e2a" target="_blank">032edc2</a>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/42ca2a99aa32ec8183edb971a0c4b4f9037a0679" target="_blank">42ca2a9</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree032edc2aa4becf901e1b22fda268e32750751e2atargetblank032edc2a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree42ca2a99aa32ec8183edb971a0c4b4f9037a0679targetblank42ca2a9a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -630,7 +631,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/032edc2aa4becf901e1b22fda268e32750751e2a" target="_blank">032edc2</a>.
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/42ca2a99aa32ec8183edb971a0c4b4f9037a0679" target="_blank">42ca2a9</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -652,6 +653,9 @@ Ignored files:
 
 Untracked files:
     Untracked:  code/read_GLODAPv2_2022.Rmd
+
+Unstaged changes:
+    Modified:   code/Workflowr_project_managment.R
 
 </code></pre>
 <p>
@@ -697,6 +701,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/42ca2a99aa32ec8183edb971a0c4b4f9037a0679/analysis/read_GLODAPv2_2021.Rmd" target="_blank">42ca2a9</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2023-01-17
+</td>
+<td>
+rerun for crossover plot
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/26838f8c886b7539cf0f38e8a172416e0a79b46c/docs/read_GLODAPv2_2021.html" target="_blank">26838f8</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2022-10-24
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -4787,6 +4825,70 @@ ingest GLODAPv2_2021 beta data
 </div>
 </div>
 </div>
+<pre class="r"><code>center &lt;- -160
+boundary &lt;- center + 180
+target_crs &lt;- paste0(&quot;+proj=robin +over +lon_0=&quot;, center)
+# target_crs &lt;- paste0(&quot;+proj=eqearth +over +lon_0=&quot;, center)
+# target_crs &lt;- paste0(&quot;+proj=eqearth +lon_0=&quot;, center)
+# target_crs &lt;- paste0(&quot;+proj=igh_o +lon_0=&quot;, center)
+
+worldmap &lt;- ne_countries(scale = &#39;small&#39;,
+                         type = &#39;map_units&#39;,
+                         returnclass = &#39;sf&#39;)
+
+worldmap &lt;- worldmap %&gt;% st_break_antimeridian(lon_0 = center)
+worldmap_trans &lt;- st_transform(worldmap, crs = target_crs)
+
+# ggplot() +
+#   geom_sf(data = worldmap_trans)
+
+coastline &lt;- ne_coastline(scale = &#39;small&#39;, returnclass = &quot;sf&quot;)
+coastline &lt;- st_break_antimeridian(coastline, lon_0 = 200)
+coastline_trans &lt;- st_transform(coastline, crs = target_crs)
+
+# ggplot() +
+#   geom_sf(data = worldmap_trans, fill = &quot;grey&quot;, col=&quot;grey&quot;) +
+#   geom_sf(data = coastline_trans)
+
+
+bbox &lt;- st_bbox(c(xmin = -180, xmax = 180, ymax = 65, ymin = -78), crs = st_crs(4326))
+bbox &lt;- st_as_sfc(bbox)
+bbox_trans &lt;- st_break_antimeridian(bbox, lon_0 = center)
+
+bbox_graticules &lt;- st_graticule(
+  x = bbox_trans,
+  crs = st_crs(bbox_trans),
+  datum = st_crs(bbox_trans),
+  lon = c(20, 20.001),
+  lat = c(-78,65),
+  ndiscr = 1e3,
+  margin = 0.001
+)
+
+bbox_graticules_trans &lt;- st_transform(bbox_graticules, crs = target_crs)
+rm(worldmap, coastline, bbox, bbox_trans, bbox_graticules)
+
+# ggplot() +
+#   geom_sf(data = worldmap_trans, fill = &quot;grey&quot;, col=&quot;grey&quot;) +
+#   geom_sf(data = coastline_trans) +
+#   geom_sf(data = bbox_graticules_trans)
+
+lat_lim &lt;- ext(bbox_graticules_trans)[c(3,4)]*1.002
+lon_lim &lt;- ext(bbox_graticules_trans)[c(1,2)]*1.005
+
+# ggplot() +
+#   geom_sf(data = worldmap_trans, fill = &quot;grey90&quot;, col = &quot;grey90&quot;) +
+#   geom_sf(data = coastline_trans) +
+#   geom_sf(data = bbox_graticules_trans, linewidth = 1) +
+#   coord_sf(crs = target_crs,
+#            ylim = lat_lim,
+#            xlim = lon_lim,
+#            expand = FALSE) +
+#   theme(
+#     panel.border = element_blank(),
+#     axis.text = element_blank(),
+#     axis.ticks = element_blank()
+#   )</code></pre>
 <pre class="r"><code>path_glodapv2_2021  &lt;- &quot;/nfs/kryo/work/updata/glodapv2_2021/&quot;
 path_glodapv2_CRM  &lt;- &quot;/nfs/kryo/work/updata/glodapv2_CRM/&quot;
 path_crossover &lt;- &quot;/nfs/kryo/work/updata/glodapv2_crossover&quot;
@@ -65376,7 +65478,7 @@ jens-daniel-mueller
              alpha = 0.5,
              position = position_dodge(width = 0.7)) +
   scale_color_brewer(palette = &quot;Dark2&quot;,
-                     name = &quot;Cruise decade&quot;) +
+                     name = &quot;Sampling\nperiod&quot;) +
   scale_size(name = &quot;Cruise size&quot;) +
   labs(y = expression(&quot;C*&quot;~crossover~offset~(µmol~kg^{-1}))) +
   # scale_x_discrete(guide = guide_axis(n.dodge = 2)) +
@@ -85601,13 +85703,13 @@ Session information
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.1.2 (2021-11-01)
+<pre><code>R version 4.2.2 (2022-10-31)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: openSUSE Leap 15.3
+Running under: openSUSE Leap 15.4
 
 Matrix products: default
-BLAS:   /usr/local/R-4.1.2/lib64/R/lib/libRblas.so
-LAPACK: /usr/local/R-4.1.2/lib64/R/lib/libRlapack.so
+BLAS:   /usr/local/R-4.2.2/lib64/R/lib/libRblas.so
+LAPACK: /usr/local/R-4.2.2/lib64/R/lib/libRlapack.so
 
 locale:
  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
@@ -85621,37 +85723,52 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] kableExtra_1.3.4   ggrepel_0.9.1      lubridate_1.8.0    geomtextpath_0.1.0
- [5] colorspace_2.0-2   marelac_2.1.10     shape_1.4.6        ggforce_0.3.3     
- [9] metR_0.11.0        scico_1.3.0        patchwork_1.1.1    collapse_1.7.0    
-[13] forcats_0.5.1      stringr_1.4.0      dplyr_1.0.7        purrr_0.3.4       
-[17] readr_2.1.1        tidyr_1.1.4        tibble_3.1.6       ggplot2_3.3.5     
-[21] tidyverse_1.3.1    workflowr_1.7.0   
+ [1] kableExtra_1.3.4    ggrepel_0.9.2       lubridate_1.9.0    
+ [4] timechange_0.1.1    terra_1.6-41        sf_1.0-9           
+ [7] rnaturalearth_0.1.0 geomtextpath_0.1.1  colorspace_2.0-3   
+[10] marelac_2.1.10      shape_1.4.6         ggforce_0.4.1      
+[13] metR_0.13.0         scico_1.3.1         patchwork_1.1.2    
+[16] collapse_1.8.9      forcats_0.5.2       stringr_1.4.1      
+[19] dplyr_1.0.10        purrr_0.3.5         readr_2.1.3        
+[22] tidyr_1.2.1         tibble_3.1.8        ggplot2_3.4.0      
+[25] tidyverse_1.3.2     workflowr_1.7.0    
 
 loaded via a namespace (and not attached):
- [1] nlme_3.1-155       fs_1.5.2           bit64_4.0.5        gsw_1.0-6         
- [5] RColorBrewer_1.1-2 webshot_0.5.2      httr_1.4.2         rprojroot_2.0.2   
- [9] tools_4.1.2        backports_1.4.1    bslib_0.3.1        utf8_1.2.2        
-[13] R6_2.5.1           mgcv_1.8-38        DBI_1.1.2          withr_2.4.3       
-[17] tidyselect_1.1.1   processx_3.5.2     bit_4.0.4          compiler_4.1.2    
-[21] git2r_0.29.0       textshaping_0.3.6  cli_3.1.1          rvest_1.0.2       
-[25] xml2_1.3.3         labeling_0.4.2     sass_0.4.0         scales_1.1.1      
-[29] checkmate_2.0.0    SolveSAPHE_2.1.0   callr_3.7.0        systemfonts_1.0.3 
-[33] digest_0.6.29      svglite_2.0.0      rmarkdown_2.11     oce_1.5-0         
-[37] pkgconfig_2.0.3    htmltools_0.5.2    highr_0.9          dbplyr_2.1.1      
-[41] fastmap_1.1.0      rlang_1.0.2        readxl_1.3.1       rstudioapi_0.13   
-[45] jquerylib_0.1.4    generics_0.1.1     farver_2.1.0       jsonlite_1.7.3    
-[49] vroom_1.5.7        magrittr_2.0.1     Matrix_1.4-0       Rcpp_1.0.8        
-[53] munsell_0.5.0      fansi_1.0.2        lifecycle_1.0.1    stringi_1.7.6     
-[57] whisker_0.4        yaml_2.2.1         MASS_7.3-55        grid_4.1.2        
-[61] parallel_4.1.2     promises_1.2.0.1   crayon_1.4.2       lattice_0.20-45   
-[65] splines_4.1.2      haven_2.4.3        hms_1.1.1          seacarb_3.3.0     
-[69] knitr_1.37         ps_1.6.0           pillar_1.6.4       reprex_2.0.1      
-[73] glue_1.6.0         evaluate_0.14      getPass_0.2-2      data.table_1.14.2 
-[77] modelr_0.1.8       vctrs_0.3.8        tzdb_0.2.0         tweenr_1.0.2      
-[81] httpuv_1.6.5       cellranger_1.1.0   gtable_0.3.0       polyclip_1.10-0   
-[85] assertthat_0.2.1   xfun_0.29          broom_0.7.11       later_1.3.0       
-[89] viridisLite_0.4.0  ellipsis_0.3.2    </code></pre>
+  [1] googledrive_2.0.0       ellipsis_0.3.2          class_7.3-20           
+  [4] rprojroot_2.0.3         fs_1.5.2                rstudioapi_0.14        
+  [7] proxy_0.4-27            farver_2.1.1            bit64_4.0.5            
+ [10] fansi_1.0.3             xml2_1.3.3              splines_4.2.2          
+ [13] codetools_0.2-18        cachem_1.0.6            knitr_1.41             
+ [16] polyclip_1.10-4         jsonlite_1.8.3          gsw_1.1-1              
+ [19] broom_1.0.1             dbplyr_2.2.1            compiler_4.2.2         
+ [22] httr_1.4.4              backports_1.4.1         Matrix_1.5-3           
+ [25] assertthat_0.2.1        fastmap_1.1.0           gargle_1.2.1           
+ [28] cli_3.4.1               later_1.3.0             tweenr_2.0.2           
+ [31] htmltools_0.5.3         tools_4.2.2             rnaturalearthdata_0.1.0
+ [34] gtable_0.3.1            glue_1.6.2              Rcpp_1.0.9             
+ [37] cellranger_1.1.0        jquerylib_0.1.4         vctrs_0.5.1            
+ [40] nlme_3.1-160            svglite_2.1.0           xfun_0.35              
+ [43] ps_1.7.2                rvest_1.0.3             lifecycle_1.0.3        
+ [46] googlesheets4_1.0.1     oce_1.7-10              getPass_0.2-2          
+ [49] MASS_7.3-58.1           scales_1.2.1            vroom_1.6.0            
+ [52] ragg_1.2.4              hms_1.1.2               promises_1.2.0.1       
+ [55] parallel_4.2.2          RColorBrewer_1.1-3      yaml_2.3.6             
+ [58] memoise_2.0.1           sass_0.4.4              stringi_1.7.8          
+ [61] highr_0.9               e1071_1.7-12            checkmate_2.1.0        
+ [64] rlang_1.0.6             pkgconfig_2.0.3         systemfonts_1.0.4      
+ [67] evaluate_0.18           lattice_0.20-45         SolveSAPHE_2.1.0       
+ [70] labeling_0.4.2          bit_4.0.5               processx_3.8.0         
+ [73] tidyselect_1.2.0        seacarb_3.3.1           magrittr_2.0.3         
+ [76] R6_2.5.1                generics_0.1.3          DBI_1.1.3              
+ [79] mgcv_1.8-41             pillar_1.8.1            haven_2.5.1            
+ [82] whisker_0.4             withr_2.5.0             units_0.8-0            
+ [85] sp_1.5-1                modelr_0.1.10           crayon_1.5.2           
+ [88] KernSmooth_2.23-20      utf8_1.2.2              tzdb_0.3.0             
+ [91] rmarkdown_2.18          grid_4.2.2              readxl_1.4.1           
+ [94] data.table_1.14.6       callr_3.7.3             git2r_0.30.1           
+ [97] webshot_0.5.4           reprex_2.0.2            digest_0.6.30          
+[100] classInt_0.4-8          httpuv_1.6.6            textshaping_0.3.6      
+[103] munsell_0.5.0           viridisLite_0.4.1       bslib_0.4.1            </code></pre>
 </div>
 </div>
 </div>
