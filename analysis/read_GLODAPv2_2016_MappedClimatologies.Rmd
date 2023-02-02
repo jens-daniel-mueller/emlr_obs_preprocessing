@@ -44,7 +44,12 @@ file_list <- c(
   "GLODAPv2.2016b.silicate.nc",
   "GLODAPv2.2016b.TAlk.nc",
   "GLODAPv2.2016b.TCO2.nc",
-  "GLODAPv2.2016b.temperature.nc"
+  "GLODAPv2.2016b.temperature.nc",
+  "GLODAPv2.2016b.pHts25p0.nc",
+  "GLODAPv2.2016b.pHts25p0.nc",
+  "GLODAPv2.2016b.PI_TCO2.nc",
+  "GLODAPv2.2016b.OmegaA.nc",
+  "GLODAPv2.2016b.OmegaC.nc"
 )
 
 ```
@@ -79,26 +84,24 @@ for (file in file_list) {
   
   print(file)
   # open file
-  
-  clim <-
-    read_stars(paste(path_glodapv2_2016b, file, sep = ""),
-               quiet = TRUE)
-  
+
   # extract parameter name
   
   parameter <-
     str_split(file, pattern = "GLODAPv2.2016b.", simplify = TRUE)[2]
   parameter <-
     str_split(parameter, pattern = ".nc", simplify = TRUE)[1]
-  
-  # extract parameter
-  
-  clim <- clim %>% select(all_of(parameter))
+    
+  clim <-
+    read_stars(paste(path_glodapv2_2016b, file, sep = ""),
+               sub = parameter)
   
   #convert to table
   
   clim_tibble <- clim %>%
     as_tibble()
+  
+  # clim_tibble %>% distinct(depth_surface)
   
   # harmonize column names
   
@@ -106,6 +109,15 @@ for (file in file_list) {
     rename(lat = y,
            lon = x,
            depth = depth_surface)
+  
+  clim_tibble <- clim_tibble %>%
+    mutate(lat = lat - 90,
+           lon = lon + 20)
+  
+  # clim_tibble %>% 
+  #   filter(depth == 0) %>% 
+  #   ggplot(aes(lon, lat, fill = NO3)) +
+  #   geom_raster()
   
   # join with basin mask and remove data outside basin mask
   
