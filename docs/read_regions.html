@@ -611,15 +611,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeaa2194cc45e864a2f4592d025c598cad3a153f6ftargetblankaa2194ca">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree16e3a09ecaf7c0d2aca39ba81d425080ecb00985targetblank16e3a09a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/aa2194cc45e864a2f4592d025c598cad3a153f6f" target="_blank">aa2194c</a>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/16e3a09ecaf7c0d2aca39ba81d425080ecb00985" target="_blank">16e3a09</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtreeaa2194cc45e864a2f4592d025c598cad3a153f6ftargetblankaa2194ca"
+id="strongRepositoryversionstrongahrefhttpsgithubcomjensdanielmuelleremlrobspreprocessingtree16e3a09ecaf7c0d2aca39ba81d425080ecb00985targetblank16e3a09a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -629,7 +629,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/aa2194cc45e864a2f4592d025c598cad3a153f6f" target="_blank">aa2194c</a>.
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/tree/16e3a09ecaf7c0d2aca39ba81d425080ecb00985" target="_blank">16e3a09</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -699,6 +699,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/16e3a09ecaf7c0d2aca39ba81d425080ecb00985/analysis/read_regions.Rmd" target="_blank">16e3a09</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2023-03-31
+</td>
+<td>
+removed global section basin mask plot
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/jens-daniel-mueller/emlr_obs_preprocessing/25d92aa90f7bee9661126e5df8c80ec4cde9a4c4/docs/read_regions.html" target="_blank">25d92aa</a>
+</td>
+<td>
+jens-daniel-mueller
+</td>
+<td>
+2023-03-31
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -2372,233 +2406,6 @@ jens-daniel-mueller
 </table>
 </div>
 </div>
-<pre class="r"><code># prepare section basin files
-
-section_global_coordinates_basin_raster &lt;-
-  rast(
-    section_global_coordinates_basin %&gt;%
-      mutate(
-        dist = 1,
-        band = case_when(band == &quot;Southern&quot; ~ &quot;Southern\nOcean&quot;,
-                         TRUE ~ band)
-      ) %&gt;%
-      pivot_wider(names_from = band,
-                  values_from = dist),
-    crs = &quot;+proj=longlat&quot;
-  )
-
-center &lt;- -160
-boundary &lt;- center + 180
-target_crs &lt;- paste0(&quot;+proj=robin +over +lon_0=&quot;, center)
-
-section_global_coordinates_basin_raster &lt;-
-  project(section_global_coordinates_basin_raster, target_crs, method = &quot;near&quot;)
-
-section_global_coordinates_basin_tibble &lt;-
-  section_global_coordinates_basin_raster %&gt;%
-  as.data.frame(xy = TRUE, na.rm = FALSE) %&gt;%
-  as_tibble() %&gt;%
-  rename(lon = x, lat = y) %&gt;%
-  pivot_longer(
-    cols = -c(&quot;lon&quot;, &quot;lat&quot;),
-    names_to = &quot;band&quot;,
-    values_to = &quot;coverage&quot;
-  ) %&gt;%
-  drop_na() %&gt;%
-  mutate(band = as.character(band))
-
-# prepare section file
-
-section_global_coordinates_raster &lt;-
-  rast(section_global_coordinates,
-       crs = &quot;+proj=longlat&quot;)
-
-section_global_coordinates_raster &lt;-
-  project(section_global_coordinates_raster, target_crs, method = &quot;near&quot;)
-
-section_global_coordinates_tibble &lt;-
-  section_global_coordinates_raster %&gt;%
-  as.data.frame(xy = TRUE, na.rm = FALSE) %&gt;%
-  as_tibble() %&gt;%
-  rename(lon = x, lat = y) %&gt;%
-  drop_na()
-
-section_global_coordinates_tibble &lt;-
-  section_global_coordinates_tibble %&gt;% 
-  group_by(dist) %&gt;% 
-  summarise(lon = mean(lon),
-            lat = mean(lat)) %&gt;% 
-  ungroup() %&gt;% 
-  mutate(dist = cut(dist, seq(0,40,10),
-                    labels = c(&quot;0-10&quot;, &quot;10-20&quot;, &quot;20-30&quot;, &quot;30-40&quot;)))
-
-library(rnaturalearth)
-
-worldmap &lt;- ne_countries(scale = &#39;small&#39;,
-                         type = &#39;map_units&#39;,
-                         returnclass = &#39;sf&#39;)
-
-worldmap &lt;- worldmap %&gt;% st_break_antimeridian(lon_0 = center)
-worldmap_trans &lt;- st_transform(worldmap, crs = target_crs)
-
-# ggplot() +
-#   geom_sf(data = worldmap_trans)
-
-coastline &lt;- ne_coastline(scale = &#39;small&#39;, returnclass = &quot;sf&quot;)
-coastline &lt;- st_break_antimeridian(coastline, lon_0 = 200)
-coastline_trans &lt;- st_transform(coastline, crs = target_crs)
-
-# ggplot() +
-#   geom_sf(data = worldmap_trans, fill = &quot;grey&quot;, col=&quot;grey&quot;) +
-#   geom_sf(data = coastline_trans)
-
-
-bbox &lt;- st_bbox(c(xmin = -180, xmax = 180, ymax = 65, ymin = -78), crs = st_crs(4326))
-bbox &lt;- st_as_sfc(bbox)
-bbox_trans &lt;- st_break_antimeridian(bbox, lon_0 = center)
-
-bbox_graticules &lt;- st_graticule(
-  x = bbox_trans,
-  crs = st_crs(bbox_trans),
-  datum = st_crs(bbox_trans),
-  lon = c(20, 20.001),
-  lat = c(-78,65),
-  ndiscr = 1e3,
-  margin = 0.001
-)
-
-bbox_graticules_trans &lt;- st_transform(bbox_graticules, crs = target_crs)
-rm(worldmap, coastline, bbox, bbox_trans, bbox_graticules)
-
-# ggplot() +
-#   geom_sf(data = worldmap_trans, fill = &quot;grey&quot;, col=&quot;grey&quot;) +
-#   geom_sf(data = coastline_trans) +
-#   geom_sf(data = bbox_graticules_trans)
-
-lat_lim &lt;- ext(bbox_graticules_trans)[c(3,4)]*1.002
-lon_lim &lt;- ext(bbox_graticules_trans)[c(1,2)]*1.005
-
-
-global_section_map &lt;-
-  ggplot() +
-  geom_raster(data = section_global_coordinates_basin_tibble %&gt;%
-                filter(band == &quot;Atlantic&quot;),
-              aes(
-                x = lon,
-                y = lat,
-                fill = band,
-                alpha = 0.3
-              )) +
-  geom_raster(data = section_global_coordinates_basin_tibble %&gt;%
-                filter(band == &quot;Southern\nOcean&quot;),
-              aes(
-                x = lon,
-                y = lat,
-                fill = band,
-                alpha = 0.3
-              )) +
-  geom_raster(data = section_global_coordinates_basin_tibble %&gt;%
-                filter(band == &quot;Pacific&quot;),
-              aes(
-                x = lon,
-                y = lat,
-                fill = band,
-                alpha = 0.3
-              )) +
-  scale_fill_mediumcontrast(name = &quot;Averaging\nareas&quot;) +
-  # scale_fill_grey() +
-  geom_path(
-    data = section_global_coordinates_tibble %&gt;%
-      filter(lon &gt; 0),
-    aes(x = lon,
-        y = lat,
-        color = dist),
-    linewidth = 1
-  ) +
-  geom_path(
-    data = section_global_coordinates_tibble %&gt;%
-      filter(lon &lt; 0),
-    aes(x = lon,
-        y = lat,
-        color = dist),
-    linewidth = 1
-  ) +
-  scale_color_grey(start = 0.7,end = 0, name = &quot;Distance\nalong\nsection\n(1000 km)&quot;) +
-  geom_sf(data = worldmap_trans, fill = &quot;grey90&quot;, col = &quot;grey90&quot;) +
-  geom_sf(data = coastline_trans, linewidth = 0.3) +
-  geom_sf(data = bbox_graticules_trans, linewidth = 0.3) +
-  coord_sf(
-    crs = target_crs,
-    ylim = lat_lim,
-    xlim = lon_lim,
-    expand = FALSE
-  ) +
-  guides(fill = guide_legend(override.aes = list(alpha = 0.3)),
-         alpha = &quot;none&quot;) +
-  theme(
-    axis.title = element_blank(),
-    axis.text = element_blank(),
-    axis.ticks = element_blank(),
-    panel.border = element_rect(colour = &quot;transparent&quot;),
-    strip.background = element_blank(),
-    panel.grid.major = element_blank()
-  )
-
-global_section_map</code></pre>
-<p><img src="figure/read_regions.Rmd/section_global_map_basin-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-section_global_map_basin-2">
-Past versions of section_global_map_basin-2.png
-</button>
-</p>
-<div id="fig-section_global_map_basin-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/jens-daniel-mueller/emlr_obs_preprocessing/blob/a74ce98e8ab16868110b6af4513678bde8b29b1f/docs/figure/read_regions.Rmd/section_global_map_basin-2.png" target="_blank">a74ce98</a>
-</td>
-<td>
-jens-daniel-mueller
-</td>
-<td>
-2023-03-30
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>ggsave(
-  path = &quot;/UP_home/jenmueller/Projects/emlr_cant/observations/emlr_obs_analysis/output/publication&quot;,
-  filename = &quot;FigS_global_section_map.png&quot;,
-  height = 4,
-  width = 8,
-  dpi = 600
-)
-
-# section_global_coordinates_basin %&gt;% 
-#   filter(!is.na(dist)) %&gt;% 
-#   count(lon, lat) %&gt;% 
-#   filter(n != 1)
-# 
-# section_global_coordinates %&gt;%  
-#   count(lon, lat) %&gt;% 
-#   filter(n != 1)</code></pre>
 </div>
 </div>
 <div id="write-files" class="section level2" number="2.4">
@@ -2673,49 +2480,46 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] rnaturalearth_0.1.0 terra_1.6-41        khroma_1.9.0       
- [4] stars_0.6-0         sf_1.0-9            abind_1.4-5        
- [7] patchwork_1.1.2     geosphere_1.5-18    oce_1.7-10         
-[10] gsw_1.1-1           reticulate_1.26     tidync_0.3.0       
-[13] forcats_0.5.2       stringr_1.4.1       dplyr_1.0.10       
-[16] purrr_0.3.5         readr_2.1.3         tidyr_1.2.1        
-[19] tibble_3.1.8        ggplot2_3.4.0       tidyverse_1.3.2    
-[22] workflowr_1.7.0    
+ [1] terra_1.6-41     khroma_1.9.0     stars_0.6-0      sf_1.0-9        
+ [5] abind_1.4-5      patchwork_1.1.2  geosphere_1.5-18 oce_1.7-10      
+ [9] gsw_1.1-1        reticulate_1.26  tidync_0.3.0     forcats_0.5.2   
+[13] stringr_1.4.1    dplyr_1.0.10     purrr_0.3.5      readr_2.1.3     
+[17] tidyr_1.2.1      tibble_3.1.8     ggplot2_3.4.0    tidyverse_1.3.2 
+[21] workflowr_1.7.0 
 
 loaded via a namespace (and not attached):
- [1] googledrive_2.0.0       colorspace_2.0-3        ellipsis_0.3.2         
- [4] class_7.3-20            rprojroot_2.0.3         fs_1.5.2               
- [7] rstudioapi_0.14         proxy_0.4-27            farver_2.1.1           
-[10] bit64_4.0.5             fansi_1.0.3             lubridate_1.9.0        
-[13] xml2_1.3.3              codetools_0.2-18        ncdf4_1.19             
-[16] cachem_1.0.6            knitr_1.41              jsonlite_1.8.3         
-[19] broom_1.0.1             dbplyr_2.2.1            png_0.1-8              
-[22] compiler_4.2.2          httr_1.4.4              backports_1.4.1        
-[25] assertthat_0.2.1        Matrix_1.5-3            fastmap_1.1.0          
-[28] gargle_1.2.1            cli_3.4.1               later_1.3.0            
-[31] htmltools_0.5.3         tools_4.2.2             rnaturalearthdata_0.1.0
-[34] gtable_0.3.1            glue_1.6.2              Rcpp_1.0.9             
-[37] cellranger_1.1.0        jquerylib_0.1.4         RNetCDF_2.6-1          
-[40] vctrs_0.5.1             lwgeom_0.2-10           xfun_0.35              
-[43] ps_1.7.2                rvest_1.0.3             timechange_0.1.1       
-[46] lifecycle_1.0.3         ncmeta_0.3.5            googlesheets4_1.0.1    
-[49] getPass_0.2-2           scales_1.2.1            vroom_1.6.0            
-[52] ragg_1.2.4              hms_1.1.2               promises_1.2.0.1       
-[55] parallel_4.2.2          RColorBrewer_1.1-3      yaml_2.3.6             
-[58] sass_0.4.4              stringi_1.7.8           highr_0.9              
-[61] e1071_1.7-12            systemfonts_1.0.4       rlang_1.0.6            
-[64] pkgconfig_2.0.3         evaluate_0.18           lattice_0.20-45        
-[67] labeling_0.4.2          bit_4.0.5               processx_3.8.0         
-[70] tidyselect_1.2.0        magrittr_2.0.3          R6_2.5.1               
-[73] generics_0.1.3          DBI_1.1.3               pillar_1.8.1           
-[76] haven_2.5.1             whisker_0.4             withr_2.5.0            
-[79] units_0.8-0             sp_1.5-1                modelr_0.1.10          
-[82] crayon_1.5.2            KernSmooth_2.23-20      utf8_1.2.2             
-[85] tzdb_0.3.0              rmarkdown_2.18          grid_4.2.2             
-[88] readxl_1.4.1            callr_3.7.3             git2r_0.30.1           
-[91] reprex_2.0.2            digest_0.6.30           classInt_0.4-8         
-[94] httpuv_1.6.6            textshaping_0.3.6       munsell_0.5.0          
-[97] viridisLite_0.4.1       bslib_0.4.1            </code></pre>
+ [1] fs_1.5.2            bit64_4.0.5         lubridate_1.9.0    
+ [4] RColorBrewer_1.1-3  httr_1.4.4          rprojroot_2.0.3    
+ [7] tools_4.2.2         backports_1.4.1     bslib_0.4.1        
+[10] utf8_1.2.2          R6_2.5.1            KernSmooth_2.23-20 
+[13] DBI_1.1.3           colorspace_2.0-3    withr_2.5.0        
+[16] sp_1.5-1            tidyselect_1.2.0    processx_3.8.0     
+[19] bit_4.0.5           compiler_4.2.2      git2r_0.30.1       
+[22] cli_3.4.1           rvest_1.0.3         RNetCDF_2.6-1      
+[25] xml2_1.3.3          labeling_0.4.2      sass_0.4.4         
+[28] scales_1.2.1        classInt_0.4-8      proxy_0.4-27       
+[31] callr_3.7.3         digest_0.6.30       rmarkdown_2.18     
+[34] pkgconfig_2.0.3     htmltools_0.5.3     highr_0.9          
+[37] dbplyr_2.2.1        fastmap_1.1.0       rlang_1.0.6        
+[40] readxl_1.4.1        rstudioapi_0.14     farver_2.1.1       
+[43] jquerylib_0.1.4     generics_0.1.3      jsonlite_1.8.3     
+[46] vroom_1.6.0         googlesheets4_1.0.1 magrittr_2.0.3     
+[49] ncmeta_0.3.5        Matrix_1.5-3        Rcpp_1.0.9         
+[52] munsell_0.5.0       fansi_1.0.3         lifecycle_1.0.3    
+[55] stringi_1.7.8       whisker_0.4         yaml_2.3.6         
+[58] grid_4.2.2          parallel_4.2.2      promises_1.2.0.1   
+[61] crayon_1.5.2        lattice_0.20-45     haven_2.5.1        
+[64] hms_1.1.2           knitr_1.41          ps_1.7.2           
+[67] pillar_1.8.1        codetools_0.2-18    reprex_2.0.2       
+[70] glue_1.6.2          evaluate_0.18       getPass_0.2-2      
+[73] modelr_0.1.10       vctrs_0.5.1         png_0.1-8          
+[76] tzdb_0.3.0          httpuv_1.6.6        cellranger_1.1.0   
+[79] gtable_0.3.1        assertthat_0.2.1    cachem_1.0.6       
+[82] xfun_0.35           lwgeom_0.2-10       broom_1.0.1        
+[85] e1071_1.7-12        later_1.3.0         viridisLite_0.4.1  
+[88] class_7.3-20        ncdf4_1.19          googledrive_2.0.0  
+[91] gargle_1.2.1        units_0.8-0         timechange_0.1.1   
+[94] ellipsis_0.3.2     </code></pre>
 </div>
 </div>
 </div>
