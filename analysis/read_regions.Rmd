@@ -628,17 +628,18 @@ map +
 
 # prepare section basin files
 
-section_global_coordinates_basin <-
-  section_global_coordinates_basin %>%
-  mutate(dist = 1,
-         band = case_when(band == "Southern" ~ "Southern\nOcean",
-                          TRUE ~ band)) %>%
-  pivot_wider(names_from = band,
-              values_from = dist)
-
 section_global_coordinates_basin_raster <-
-  rast(section_global_coordinates_basin,
-       crs = "+proj=longlat")
+  rast(
+    section_global_coordinates_basin %>%
+      mutate(
+        dist = 1,
+        band = case_when(band == "Southern" ~ "Southern\nOcean",
+                         TRUE ~ band)
+      ) %>%
+      pivot_wider(names_from = band,
+                  values_from = dist),
+    crs = "+proj=longlat"
+  )
 
 center <- -160
 boundary <- center + 180
